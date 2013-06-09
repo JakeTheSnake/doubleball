@@ -9,11 +9,12 @@ var GameCreator = {
 	collidableObjects: [],
 	movableObjects: [],
 	renderableObjects: [],
+	objectsToDestroy: [],
 	addObjFunctions: {},
 	helperFunctions: {},
 	selectedObject: undefined,
 	htmlStrings: {
-		collisionSelector: "<select id='collisionSelector'><option value='bounce'>Bounce</option><option value='stop'>Stop</option></select>"
+		collisionSelector: "<select id='collisionSelector'><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select>"
 	},
 	
 	addActiveObject: function(args){
@@ -45,6 +46,11 @@ var GameCreator = {
 			for (var i=0;i < GameCreator.collidableObjects.length;++i) {
 				GameCreator.collidableObjects[i].collide();
 			}
+			for (var i=0;i < GameCreator.objectsToDestroy.length;++i)
+			{
+				GameCreator.objectsToDestroy[i].destroy();
+			}
+			GameCreator.objectsToDestroy.length = 0;
 			for (var i=0;i < GameCreator.movableObjects.length;++i) {
 				if(!GameCreator.paused)
 				{
@@ -167,7 +173,7 @@ var GameCreator = {
 						obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objStop(obj2)}});
 					}
 				}
-				else if(selectedAction = 'bounce')
+				else if(selectedAction == 'bounce')
 				{
 					if(obj2.name == "borderLeft")
 					{
@@ -189,6 +195,29 @@ var GameCreator = {
 					else
 					{
 						obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objBounce(obj2)}});
+					}
+				}
+				else if(selectedAction == 'destroy')
+				{
+					if(obj2.name == "borderLeft")
+					{
+						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+					}
+					else if(obj2.name == "borderRight")
+					{
+						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+					}
+					else if(obj2.name == "borderTop")
+					{
+						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+					}
+					else if(obj2.name == "borderBottom")
+					{
+						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+					}
+					else
+					{
+						obj1.collisionActions.push({name: obj2.name, action: function(){GameCreator.objectsToDestroy.push(obj1)}});
 					}
 				}
 				GameCreator.resumeGame();
