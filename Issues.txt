@@ -1,0 +1,8 @@
+TODO:
+
+Fixd objBeneath for object collisions.
+Fix stop functions for platform objects.
+
+
+Alla args bör skickas in som objekt så att ordningen kvittar och man ser tydligare vad man skickar.
+Vad händer om ett objekt kolliderar med två andra objekt?

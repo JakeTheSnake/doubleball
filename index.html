@@ -1,0 +1,234 @@
+<script src="libs/jquery-min.js"></script>
+<script src="engine/gameCreator.js"></script>
+
+<script>
+	window.onload = function () {
+		GameCreator.canvas = document.createElement("canvas");
+		GameCreator.context = GameCreator.canvas.getContext("2d");
+		GameCreator.canvas.width = GameCreator.width;
+		GameCreator.canvas.height = GameCreator.height;
+		$("#mainCanvas").append(GameCreator.canvas);
+		
+		var ballImage = new Image();
+		ballImage.src = "images/ball.png";
+		var activeObj = GameCreator.activeObject.New(ballImage, {name: "ball", x:5, y:5, width:40, height:40, speedX: 200, speedY:-250});
+		ballImage.onload = function () {
+			activeObj.imageReady = true;
+			GameCreator.render();
+		};
+    	
+		var red_ballImage = new Image();
+		red_ballImage.src = "images/red_ball.gif";
+		var activeObj2 = GameCreator.activeObject.New(red_ballImage, {name: "red_ball", x:200, y:300, width:40, height:40, speedX: 250, speedY:-150});
+		red_ballImage.onload = function () {
+			activeObj2.imageReady = true;
+			GameCreator.render();
+		};
+    	
+		//var zealotImage = new Image();
+		//zealotImage.src = "images/zealot.gif";
+		//var platformObj = GameCreator.platformObject.New(zealotImage, {name: "zealot", x:100, y:300, width:50, height:50, speedX: 0, speedY: 0});
+		//zealotImage.onload = function() {
+		//	platformObj.imageReady = true;
+		//	GameCreator.render();
+		//};
+		
+		var zealotImage = new Image();
+		zealotImage.src = "images/zealot.gif";
+		var mouseObj = GameCreator.mouseObject.New(zealotImage, {name: "zealot", x:100, y:300, width:50, height:50});
+		zealotImage.onload = function() {
+			mouseObj.imageReady = true;
+			GameCreator.render();
+		};
+		
+		GameCreator.startEditing();
+		
+		//Mass create objects for test!
+		//for(var i = 0; i < 5 ; ++i)
+		//{
+		//	console.log("addActiveObject");
+		//	var name = "obj" + i;
+		//	var x = i * 5;
+		//	var y = i * 5;
+		//	var speedX = i * 5;
+		//	var speedY = i * 5;
+		//	var height = 10 + i/5;
+		//	var width = 10 + i/5;
+		//	console.log(i)
+		//	GameCreator.addActiveObject({
+		//		name: name,
+		//		width: width,
+		//		height: height,
+		//		x: x,
+		//		y: y,
+		//		speedX: speedX,
+		//		speedY: speedY,
+		//		src: "red_ball.gif"
+		//	});
+		//}
+		
+		$("#addPlayerObjectType").on("change", function(){switchPlayerObjectType($(this).val())})
+	}
+	
+	function addActiveObject(){
+		GameCreator.addActiveObject({
+			name: $("#addActiveObjectName").val(),
+			width: parseInt($("#addActiveObjectWidth").val()),
+			height: parseInt($("#addActiveObjectHeight").val()),
+			x: parseInt($("#addActiveObjectX").val()),
+			y: parseInt($("#addActiveObjectY").val()),
+			speedX: parseInt($("#addActiveObjectSpeedX").val()),
+			speedY: parseInt($("#addActiveObjectSpeedY").val()),
+			src: $("#addActiveObjectSrc").val()
+		});
+	}
+	
+	function addPlayerMouseObject(){
+		GameCreator.addPlayerMouseObject({
+			name: $("#addPlayerObjectName").val(),
+			width: parseInt($("#addPlayerObjectWidth").val()),
+			height: parseInt($("#addPlayerObjectHeight").val()),
+			x: parseInt($("#addPlayerObjectX").val()),
+			y: parseInt($("#addPlayerObjectY").val()),
+			speedX: parseInt($("#addPlayerObjectSpeedX").val()),
+			speedY: parseInt($("#addPlayerObjectSpeedY").val()),
+			src: $("#addPlayerObjectSrc").val(),
+			maxX: parseInt($("#addPlayerMouseObjectMaxX").val()),
+			maxY: parseInt($("#addPlayerMouseObjectMaxY").val()),
+			minX: parseInt($("#addPlayerMouseObjectMinX").val()),
+			minY: parseInt($("#addPlayerMouseObjectMinY").val()),
+		});
+	}
+	
+	function addPlayerPlatformObject(){
+		GameCreator.addPlayerPlatformObject({
+			name: $("#addPlayerObjectName").val(),
+			width: parseInt($("#addPlayerObjectWidth").val()),
+			height: parseInt($("#addPlayerObjectHeight").val()),
+			x: parseInt($("#addPlayerObjectX").val()),
+			y: parseInt($("#addPlayerObjectY").val()),
+			speedX: parseInt($("#addPlayerObjectSpeedX").val()),
+			speedY: parseInt($("#addPlayerObjectSpeedY").val()),
+			src: $("#addPlayerObjectSrc").val(),
+		});
+	}
+	
+	function switchPane(paneId){
+		$(".addObjectPane").hide();
+		$(paneId).show();
+	}
+	
+	function switchPlayerObjectType(paneId){
+		$(".addPlayerObjectTypePane").hide();
+		$(paneId).show();
+	}
+	
+</script>
+
+<script src="engine/baseObject.js"></script>
+<script src="engine/activeObject.js"></script>
+<script src="engine/mouseObject.js"></script>
+<script src="engine/platformObject.js"></script>
+<script src="engine/componentFunctions.js"></script>
+<script src="engine/helperFunctions.js"></script>
+
+<div id="mainCanvas" style="float:left"></div>
+<div id="mainMenu">
+	<div id="mainMenuTabs">		
+		<a href="" id="mainMenuCreateActive" onclick="switchPane('#addActiveObjectPane');return false;">Create Active Object</a>
+		<a href="" id="mainMenuCreatePlayer" onclick="switchPane('#addPlayerObjectPane');return false;">Create Player Object</a>
+	</div>
+	<div id="addActiveObjectPane" class="addObjectPane" style="display:visible;">
+		<div>
+			<label for="addActiveObjectName">Name:</label>
+			<input id="addActiveObjectName" type="text"></input>
+		</div>
+		<div>
+			<label for="addActiveObjectWidth">Width:</label>
+			<input id="addActiveObjectWidth" type="text"></input>
+			<label for="addActiveObjectHeight">Height:</label>
+			<input id="addActiveObjectHeight" type="text"></input>
+		</div>
+		<div>
+			<label for="addActiveObjectX">X:</label>
+			<input id="addActiveObjectX" type="text"></input>
+			<label for="addActiveObjectY">Y:</label>
+			<input id="addActiveObjectY" type="text"></input>
+		</div>
+		<div>
+			<label for="addActiveObjectSpeedX">SpeedX:</label>
+			<input id="addActiveObjectSpeedX" type="text"></input>
+			<label for="addActiveObjectSpeedY">SpeedY:</label>
+			<input id="addActiveObjectSpeedY" type="text"></input>
+		</div>
+		<div>
+			<label for="addActiveObjectSrc" type="text">Image Src:</label>
+			<input id="addActiveObjectSrc" type="text"></label>
+		</div>
+		<button onClick="addActiveObject()">Add Object</button>
+	</div>
+	<div id="addPlayerObjectPane" class="addObjectPane" style="display:none;">
+		<div>
+			<label for="addPlayerObjectName">Name:</label>
+			<input id="addPlayerObjectName" type="text"></input>
+		</div>
+		<div>
+			<label for="addPlayerObjectWidth">Width:</label>
+			<input id="addPlayerObjectWidth" type="text"></input>
+			<label for="addPlayerObjectHeight">Height:</label>
+			<input id="addPlayerObjectHeight" type="text"></input>
+		</div>
+		<div>
+			<label for="addPlayerObjectX">X:</label>
+			<input id="addPlayerObjectX" type="text"></input>
+			<label for="addPlayerObjectY">Y:</label>
+			<input id="addPlayerObjectY" type="text"></input>
+		</div>
+		<div>
+			<label for="addPlayerObjectSrc" type="text">Image Src:</label>
+			<input id="addPlayerObjectSrc" type="text"></label>
+		</div>
+		<div>
+			<select id="addPlayerObjectType">
+				<option value="#addPlayerMouseObjectPane">Mouse</option>
+				<option value="#addPlayerPlatformObjectPane">Platform</option>
+				<option value="#addPlayerDirectionsObjectPane">8 Directions</option>
+			</select>
+		</div>
+		<div>
+			<div id="addPlayerMouseObjectPane" class="addPlayerObjectTypePane" style="display:visible;">
+				<div>
+					<label for="addPlayerMouseObjectMaxX">Max X:</label>
+					<input id="addPlayerMouseObjectMaxX" type="text"></input>
+					<label for="addPlayerMouseObjectMaxY">Max Y:</label>
+					<input id="addPlayerMouseObjectMaxY" type="text"></input>
+				</div>
+				<div>
+					<label for="addPlayerMouseObjectMinX">Min X:</label>
+					<input id="addPlayerMouseObjectMinX" type="text"></input>
+					<label for="addPlayerMouseObjectMinY">Min Y:</label>
+					<input id="addPlayerMouseObjectMinY" type="text"></input>
+				</div>
+				<button onClick="addPlayerMouseObject()">Add Object</button>
+			</div>
+			<div id="addPlayerPlatformObjectPane" class="addPlayerObjectTypePane" style="display:none;">
+				<button onClick="addPlayerPlatformObject()">Add Object</button>
+			</div>
+			<div id="addPlayerDirectionsObjectPane" class="addPlayerObjectTypePane" style="display:none;">
+				8 Directions
+			</div>
+		</div>
+	</div>
+</div>
+<button onClick="GameCreator.startDirecting()">Start Directing</button>
+
+<div id="selectActionWindow" style="position:absolute;display:none;height:200;width:300;top:300;left:300;">
+	<span id="selectActionsHeader"></span>
+	<br/>
+	<div>
+		<div id="selectActionsContent1" style="float:left;"></div>
+		<div id="selectActionsContent2" style="float:left;"></div>
+	<div>
+	<div style="clear:both;"></div>
+	<a href="" id="saveActionsButton">Continue</a>
+</div>
