@@ -57,7 +57,7 @@ var GameCreator = {
 	findClickedObject: function(x, y) {
 		for (var i=0;i < GameCreator.renderableObjects.length;++i) {
 			var obj = GameCreator.renderableObjects[i];
-			if(x >= obj.x && x <= obj.x + obj.height && y >= obj.y && y <= obj.y + obj.width)
+			if(x >= obj.x && x <= obj.x + obj.width && y >= obj.y && y <= obj.y + obj.height)
 			{
 				this.selectedObject = obj;
 				obj.clickOffsetX = x - obj.x;
@@ -148,42 +148,42 @@ var GameCreator = {
 				{
 					if(obj2.name == "borderLeft")
 					{	
-						obj1[functionToReplace] = function(){this.stopX(0, false)};
+						obj1[functionToReplace] = function(){this.stopX(false)};
 					}
 					else if(obj2.name == "borderRight")
 					{
-						obj1[functionToReplace] = function(){this.stopX(GameCreator.width, true)};
+						obj1[functionToReplace] = function(){this.stopX(true)};
 					}
 					else if(obj2.name == "borderTop")
 					{
-						obj1[functionToReplace] = function(){this.stopY(0, false)};
+						obj1[functionToReplace] = function(){this.stopY(false)};
 					}
 					else if(obj2.name == "borderBottom")
 					{	
-						obj1[functionToReplace] = function(){this.stopY(GameCreator.height, true)};
+						obj1[functionToReplace] = function(){this.stopY(true)};
 					}
 					else
 					{
-						obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objStop()}});
+						obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objStop(obj2)}});
 					}
 				}
 				else if(selectedAction = 'bounce')
 				{
 					if(obj2.name == "borderLeft")
 					{
-						obj1[functionToReplace] = function(){this.bounceX(0, false);};
+						obj1[functionToReplace] = function(){this.bounceX(false);};
 					}
 					else if(obj2.name == "borderRight")
 					{
-						obj1[functionToReplace] = function(){this.bounceX(GameCreator.width, true)};
+						obj1[functionToReplace] = function(){this.bounceX(true)};
 					}
 					else if(obj2.name == "borderTop")
 					{
-						obj1[functionToReplace] = function(){this.bounceY(0, false)};
+						obj1[functionToReplace] = function(){this.bounceY(false)};
 					}
 					else if(obj2.name == "borderBottom")
 					{
-						obj1[functionToReplace] = function(){this.bounceY(GameCreator.height, true)};
+						obj1[functionToReplace] = function(){this.bounceY(true)};
 					}
 					//Colliding with something else than an edge.
 					else

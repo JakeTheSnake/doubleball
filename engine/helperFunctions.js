@@ -13,7 +13,7 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 	var baseEdgeTL = {x: base.x, y: base.y};
 	var baseEdgeTR = {x: base.x + baseWidth, y: base.y};
 	var baseEdgeBL = {x: base.x + baseHeight, y: base.y};
-	var baseEdgeBR = {x: base.x + baseHeight, y: base.y + baseHeight};
+	var baseEdgeBR = {x: base.x + baseWidth, y: base.y + baseHeight};
 	
 	//Top left quadrant
 	if(objMidX - baseMidX <= 0 && objMidY - baseMidY <= 0)
@@ -42,7 +42,7 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 	//Bottom right quadrant
 	else if(objMidX - baseMidX >= 0 && objMidY - baseMidY >= 0)
 	{
-		if(objMidX - baseEdgeBR.x < objMidY - baseEdgeBR.y)
+		if(objMidX - baseEdgeBR.x < objMidY - baseEdgeBR.y )
 		{
 			return 3;
 		}

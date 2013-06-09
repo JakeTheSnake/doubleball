@@ -1,7 +1,7 @@
 TODO:
 
-Fixd objBeneath for object collisions.
-Fix stop functions for platform objects.
+Add some "Frame reset function"? (reset objectBeneath here)
+Drag and drop in edit mode is not working very well.
 
 
 Alla args bör skickas in som objekt så att ordningen kvittar och man ser tydligare vad man skickar.

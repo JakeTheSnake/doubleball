@@ -21,7 +21,7 @@ GameCreator.addObjFunctions.bouncableObjectFunctions = function(object)
 		}
 	}
 	
-	object.bounceX = function(impactX, bounceLeftward){
+	object.bounceX = function(bounceLeftward){
 		if(bounceLeftward)
 		{
 			this.speedX = -Math.abs(this.speedX);
@@ -32,7 +32,7 @@ GameCreator.addObjFunctions.bouncableObjectFunctions = function(object)
 		}
 	}
 	
-	object.bounceY = function(impactY, bounceUpward){
+	object.bounceY = function(bounceUpward){
 		if(bounceUpward)
 		{
 			this.speedY = -Math.abs(this.speedY);
@@ -46,22 +46,22 @@ GameCreator.addObjFunctions.bouncableObjectFunctions = function(object)
 
 GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 {
-	object.collideBorderL = function(){this.bounceX(0, false)},
-	object.collideBorderR = function(){this.bounceX(GameCreator.width, true)},
-	object.collideBorderT = function(){this.bounceY(0, false)},
-	object.collideBorderB = function(){this.bounceY(GameCreator.height, true)},
-	//object.collideBorderL = function(){GameCreator.selectActions(this, {name: "borderLeft"}, 'collideBorderL')},
-	//object.collideBorderR = function(){GameCreator.selectActions(this, {name: "borderRight"}, 'collideBorderR')},
-	//object.collideBorderT = function(){GameCreator.selectActions(this, {name: "borderTop"}, 'collideBorderT')},
-	//object.collideBorderB = function(){GameCreator.selectActions(this, {name: "borderBottom"}, 'collideBorderB')},
-	object.objectBeneath = false;
+	//object.collideBorderL = function(){this.bounceX(false)},
+	//object.collideBorderR = function(){this.bounceX(true)},
+	//object.collideBorderT = function(){this.bounceY(false)},
+	//object.collideBorderB = function(){this.bounceY(true)},
+	object.collideBorderL = function(){GameCreator.selectActions(this, {name: "borderLeft"}, 'collideBorderL')},
+	object.collideBorderR = function(){GameCreator.selectActions(this, {name: "borderRight"}, 'collideBorderR')},
+	object.collideBorderT = function(){GameCreator.selectActions(this, {name: "borderTop"}, 'collideBorderT')},
+	object.collideBorderB = function(){GameCreator.selectActions(this, {name: "borderBottom"}, 'collideBorderB')},
 	
 	//Contains Key/Value pairs of other objs and the function to run when colliding with them.
 	object.collisionActions = [],
 	
 	object.collide = function() {
 	
-		this.objectBeneath = false;
+		if(this.objectBeneath != undefined)
+			this.objectBeneath = false;
 		
 		//Check for border collisions.
 		var x = this.x;
@@ -80,7 +80,6 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 		}
 		else if(y + height > GameCreator.height - 1){
 			this.collideBorderB();
-			this.objectBeneath = true;
 		}
 		
 		//If directing, check for collisions with all other game objs.
@@ -98,7 +97,7 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 					var objMidY = obj.y + obj.height / 2;
 					if((Math.abs(thisMidX - objMidX) < width / 2 + objWidth / 2) && (Math.abs(thisMidY - objMidY) < height / 2 + objHeight / 2))
 					{
-						console.log("obj: " + this.name + " collided with " + obj.name);
+						//console.log("obj: " + this.name + " collided with " + obj.name);
 						
 						//Look through collisionActions to see if we already have an action defined for a collision with an obj with this name, if so, run that function instead
 						var names = this.collisionActions.map(function(x){return x.name});
@@ -109,8 +108,8 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 						}
 						else
 						{
-							this.objBounce(obj);
-							//GameCreator.selectActions(this, obj);
+							//this.objBounce(obj);
+							GameCreator.selectActions(this, obj);
 						}
 					}
 				}
@@ -121,17 +120,45 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 
 GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
 {
-	object.stopX = function(impactX, moveLeftward){
-		this.speedX = 0;
+	object.objectBeneath = false;
+	
+	object.stopX = function(rightCollision){
+		if(rightCollision && this.speedX > 0 || !rightCollision && this.speedX < 0)
+			this.speedX = 0;
 	};
 	
-	object.stopY = function(impactY, moveUpward){
-		this.speedY = 0;
+	object.stopY = function(bottomCollision){
+		if(bottomCollision && this.speedY > 0 || !bottomCollision && this.speedY < 0)
+		{
+			this.speedY = 0;
+		}
+		if(bottomCollision)
+			this.objectBeneath = true;
 	};
 	
-	object.objStop = function()
+	object.objStop = function(obj)
 	{
-		this.speedX = 0;
-		this.speedY = 0;	
+		switch(GameCreator.helperFunctions.determineQuadrant(obj, this)){
+			case 1:
+			if(this.speedY > 0)
+				this.speedY = 0;
+			this.objectBeneath = true;
+			break;
+			
+			case 2:
+			if(this.speedX > 0)
+				this.speedX = 0;
+			break;
+			
+			case 3:
+			if(this.speedY < 0)
+				this.speedY = 0;
+			break;
+			
+			case 4:
+			if(this.speedX < 0)
+				this.speedX = 0;
+			break;
+		}	
 	};
 }
