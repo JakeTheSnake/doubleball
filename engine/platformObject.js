@@ -8,56 +8,12 @@ GameCreator.platformObject = {
 		GameCreator.addObjFunctions.bouncableObjectFunctions(obj);
 		obj.image = image;
 		obj.name = args.name;
-		obj.x = args.x;
-		obj.y = args.y;
 		obj.width = args.width;
 		obj.height = args.height;
-		if(args.speedX)
-			obj.speedX = args.speedX;
-		if(args.speedY)
-			obj.speedY = args.speedY;
-		GameCreator.collidableObjects.push(obj);
-		GameCreator.movableObjects.push(obj);
-		GameCreator.renderableObjects.push(obj);
-		
-		$(document).keydown(function(e){
-			console.log(e.which)
-			switch(e.which){
-				case 37:
-				obj.keyLeftPressed = true;
-				break;
-				
-				case 39:
-				obj.keyRightPressed = true;
-				break;
-				
-				case 38:
-				obj.keyUpPressed = true;
-				break;
-				
-				default: return;	
-			}
-			e.preventDefault();
-		});
-		
-		$(document).keyup(function(e){
-			switch(e.which){
-				case 37:
-				obj.keyLeftPressed = false;
-				break;
-				
-				case 39:
-				obj.keyRightPressed = false;
-				break;
-				
-				case 38:
-				obj.keyUpPressed = false;
-				break;
-				
-				default: return;	
-			}
-			e.preventDefault();
-		});
+
+		obj.isCollidable = true;
+		obj.isMovable = true;
+		obj.isRenderable = true;
 		
 		return obj;
 	}
@@ -76,14 +32,14 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	platformObject.move = function(modifier)
 	{	
 		//Should only be able to affect movement if there is something beneath object.
-		if(this.keyUpPressed && this.objectBeneath)
+		if(this.parent.keyUpPressed && this.objectBeneath)
 			this.speedY = -300;
 	
-		if(this.keyRightPressed)
+		if(this.parent.keyRightPressed)
 		{
 			this.accX = 8;
 		}
-		else if(this.keyLeftPressed)
+		else if(this.parent.keyLeftPressed)
 		{
 			this.accX = -8;
 		}
@@ -103,5 +59,47 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 			this.speedX += this.accX;
 			
 		this.speedY += this.accY;
+	}
+	
+	platformObject.instantiated = function(){
+		var that = this;
+		$(document).keydown(function(e){
+			console.log(e.which)
+			switch(e.which){
+				case 37:
+				that.keyLeftPressed = true;
+				break;
+				
+				case 39:
+				that.keyRightPressed = true;
+				break;
+				
+				case 38:
+				that.keyUpPressed = true;
+				break;
+				
+				default: return;	
+			}
+			e.preventDefault();
+		});
+		
+		$(document).keyup(function(e){
+			switch(e.which){
+				case 37:
+				that.keyLeftPressed = false;
+				break;
+				
+				case 39:
+				that.keyRightPressed = false;
+				break;
+				
+				case 38:
+				that.keyUpPressed = false;
+				break;
+				
+				default: return;	
+			}
+			e.preventDefault();
+		});
 	}
 }

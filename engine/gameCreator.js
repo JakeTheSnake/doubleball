@@ -75,6 +75,17 @@ var GameCreator = {
 		return mouseObj;
 	},
 	
+	addPlayerPlatformObject: function(args){
+		var image = new Image();
+		image.src = args.src;
+		var platformObj = this.platformObject.New(image, args);
+		image.onload = function() {
+			platformObj.imageReady = true;
+			GameCreator.render();
+		};
+		return platformObj;
+	},
+	
 	runFrame: function(modifier){
 		var obj;
 		if(!GameCreator.paused){

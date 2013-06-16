@@ -47,6 +47,10 @@ GameCreator.sceneObject = {
 		if(args.minY)
 			this.minY = args.minY;
 			
+		//PlayerPlatform properties
+		
+		this.objectBeneath = false;
+			
 		globalObj.instantiated();
 	}
 }
