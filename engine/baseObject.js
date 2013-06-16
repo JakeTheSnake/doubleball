@@ -25,5 +25,7 @@ GameCreator.baseObject = {
 		index = $.inArray(this.name, names);
 		if(index != -1)
 			GameCreator.renderableObjects.splice(index, 1);
-	}
+	},
+	
+	instantiated: function(){}
 }

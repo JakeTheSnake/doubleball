@@ -30,5 +30,23 @@ GameCreator.sceneObject = {
 		this.height = args.height != undefined ? args.height : globalObj.height;
 		this.parent = globalObj;
 		this.name = globalObj.name;
+		
+		//PlayerMouse properties
+		
+		this.maxX = GameCreator.width - this.width;
+		this.maxY = GameCreator.height - this.height;
+		this.minX = 0;
+		this.minY = 0;
+		
+		if(args.maxX)
+			this.maxX = args.maxX - this.width;
+		if(args.maxY)
+			this.maxY = args.maxY - this.height;;
+		if(args.minX)
+			this.minX = args.minX;
+		if(args.minY)
+			this.minY = args.minY;
+			
+		globalObj.instantiated();
 	}
 }

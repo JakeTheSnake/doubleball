@@ -19,7 +19,7 @@ var GameCreator = {
 	helperFunctions: {},
 	selectedObject: undefined,
 	htmlStrings: {
-		collisionSelector: "<select id='collisionSelector'><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select>"
+		collisionSelector: "<select id='collisionSelector'><option value=''>Nothing</option><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select>"
 	},
 	
 	reset: function() {
@@ -76,19 +76,21 @@ var GameCreator = {
 	},
 	
 	runFrame: function(modifier){
+		var obj;
 		if(!GameCreator.paused){
 			for (var i=0;i < GameCreator.collidableObjects.length;++i) {
 				GameCreator.helperFunctions.checkCollisions(GameCreator.collidableObjects[i]);
 			}
 			for (var i=0;i < GameCreator.objectsToDestroy.length;++i)
 			{
-				GameCreator.objectsToDestroy[i].destroy();
+				obj = GameCreator.objectsToDestroy[i];
+				obj.parent.destroy.call(obj);
 			}
 			GameCreator.objectsToDestroy.length = 0;
 			for (var i=0;i < GameCreator.movableObjects.length;++i) {
 				if(!GameCreator.paused)
 				{
-					var obj = GameCreator.movableObjects[i];
+					obj = GameCreator.movableObjects[i];
 					obj.parent.move.call(obj, modifier);
 				}
 			}
@@ -236,24 +238,32 @@ var GameCreator = {
 				{
 					if(obj2.name == "borderLeft")
 					{
-						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
 					}
 					else if(obj2.name == "borderRight")
 					{
-						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
 					}
 					else if(obj2.name == "borderTop")
 					{
-						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
 					}
 					else if(obj2.name == "borderBottom")
 					{
-						obj1[functionToReplace] = function(){GameCreator.objectsToDestroy.push(obj1)};
+						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
 					}
 					else
 					{
-						obj1.collisionActions.push({name: obj2.name, action: function(){GameCreator.objectsToDestroy.push(obj1)}});
+						obj1.parent.collisionActions.push({name: obj2.name, action: function(){GameCreator.objectsToDestroy.push(this)}});
 					}
+				}
+				else
+				{
+					console.log("set to nothing")
+					if(obj2.name == "borderLeft" || obj2.name == "borderRight" || obj2.name == "borderTop" || obj2.name == "borderBottom")
+						obj1.parent[functionToReplace] = function(){};
+					else
+						obj1.parent.collisionActions.push({name: obj2.name, action: function(){}});
 				}
 				GameCreator.resumeGame();
 				window.hide();

@@ -1,8 +1,10 @@
 TODO:
 
+Split sceneObject into different types based on global type?
 Add some "Frame reset function"? (reset objectBeneath here)
 Drag and drop in edit mode is not working very well.
-Handle destroyed player objects.
+Handle destroyed player objects. (Listeners etc)
+Clear collisionActions of empty actions when not directing, they need to be there when directing to know when a "Nothing" action is chosen for a collision.
 
 
 Alla args bör skickas in som objekt så att ordningen kvittar och man ser tydligare vad man skickar.
