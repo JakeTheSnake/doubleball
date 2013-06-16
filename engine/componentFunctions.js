@@ -61,9 +61,7 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 },
 
 GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
-{
-	object.objectBeneath = false;
-	
+{	
 	object.stopX = function(rightCollision){
 		if(rightCollision && this.speedX > 0 || !rightCollision && this.speedX < 0)
 			this.speedX = 0;
