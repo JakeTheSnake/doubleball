@@ -6,6 +6,11 @@ var GameCreator = {
 	state: 'editing',
 	then: undefined,
 	context: undefined,
+	//Contains key value pairs where key is the (unique)name of the object.
+	globalObjects: {},
+	//Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
+	scenes: [],
+	//The runtime arrays contain the current state of the game.
 	collidableObjects: [],
 	movableObjects: [],
 	renderableObjects: [],
@@ -17,16 +22,44 @@ var GameCreator = {
 		collisionSelector: "<select id='collisionSelector'><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select>"
 	},
 	
+	reset: function() {
+		this.collidableObjects = [];
+		this.movableObjects = [];
+		this.renderableObjects = [];
+		this.objectsToDestroy = [];
+	},
+	
+	loadScene: function(scene){
+		for (var i=0;i < scene.length;++i) {
+			var obj = jQuery.extend({}, scene[i]);
+			if(obj.parent.isCollidable)
+				GameCreator.collidableObjects.push(obj);
+			if(obj.parent.isMovable)
+				GameCreator.movableObjects.push(obj);
+			if(obj.parent.isRenderable)
+				GameCreator.renderableObjects.push(obj);
+		}
+		//Populate the runtime arrays with clones of objects from this scene array. How do we make sure the right object ends up in the right arrays?
+		//Do we need a new type of object? runtimeObject?
+	},
+	
+	createInstance: function(globalObj, scene, args){
+		var obj = Object.create(GameCreator.sceneObject);
+		obj.instantiate(globalObj, args);
+		scene.push(obj);
+	},
+	
 	addActiveObject: function(args){
 		console.log("adding active obj with args")
 		console.log(args)
 		var image = new Image();
 		image.src = args.src;
-		var activeObj = this.activeObject.New(image, args);
+		var activeObj = GameCreator.activeObject.New(image, args);
 		image.onload = function() {
 			activeObj.imageReady = true;
 			GameCreator.render();
 		};
+		return activeObj;
 	},
 	
 	addPlayerMouseObject: function(args){
@@ -39,12 +72,13 @@ var GameCreator = {
 			mouseObj.imageReady = true;
 			GameCreator.render();
 		};
+		return mouseObj;
 	},
 	
 	runFrame: function(modifier){
 		if(!GameCreator.paused){
 			for (var i=0;i < GameCreator.collidableObjects.length;++i) {
-				GameCreator.collidableObjects[i].collide();
+				GameCreator.helperFunctions.checkCollisions(GameCreator.collidableObjects[i]);
 			}
 			for (var i=0;i < GameCreator.objectsToDestroy.length;++i)
 			{
@@ -54,7 +88,8 @@ var GameCreator = {
 			for (var i=0;i < GameCreator.movableObjects.length;++i) {
 				if(!GameCreator.paused)
 				{
-					GameCreator.movableObjects[i].move(modifier);
+					var obj = GameCreator.movableObjects[i];
+					obj.parent.move.call(obj, modifier);
 				}
 			}
 		}
@@ -131,8 +166,8 @@ var GameCreator = {
 		this.context.clearRect(0, 0, GameCreator.width, GameCreator.height);
 		for (var i=0;i < GameCreator.renderableObjects.length;++i) {
 			var obj = GameCreator.renderableObjects[i];
-			if (obj.imageReady) {
-				this.context.drawImage(obj.image, obj.x, obj.y, obj.width, obj.height);
+			if (obj.parent.imageReady) {
+				this.context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
 			}
 		}
 	},
@@ -154,19 +189,19 @@ var GameCreator = {
 				{
 					if(obj2.name == "borderLeft")
 					{	
-						obj1[functionToReplace] = function(){this.stopX(false)};
+						obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, false)};
 					}
 					else if(obj2.name == "borderRight")
 					{
-						obj1[functionToReplace] = function(){this.stopX(true)};
+						obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, true)};
 					}
 					else if(obj2.name == "borderTop")
 					{
-						obj1[functionToReplace] = function(){this.stopY(false)};
+						obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, false)};
 					}
 					else if(obj2.name == "borderBottom")
 					{	
-						obj1[functionToReplace] = function(){this.stopY(true)};
+						obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, true)};
 					}
 					else
 					{
@@ -177,24 +212,24 @@ var GameCreator = {
 				{
 					if(obj2.name == "borderLeft")
 					{
-						obj1[functionToReplace] = function(){this.bounceX(false);};
+						obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, false);};
 					}
 					else if(obj2.name == "borderRight")
 					{
-						obj1[functionToReplace] = function(){this.bounceX(true)};
+						obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, true)};
 					}
 					else if(obj2.name == "borderTop")
 					{
-						obj1[functionToReplace] = function(){this.bounceY(false)};
+						obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, false)};
 					}
 					else if(obj2.name == "borderBottom")
 					{
-						obj1[functionToReplace] = function(){this.bounceY(true)};
+						obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, true)};
 					}
 					//Colliding with something else than an edge.
 					else
 					{
-						obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objBounce(obj2)}});
+						obj1.parent.collisionActions.push({name: obj2.name, action: function(targetObject){this.parent.objBounce.call(this, targetObject)}});
 					}
 				}
 				else if(selectedAction == 'destroy')

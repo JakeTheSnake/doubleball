@@ -9,45 +9,18 @@
 		GameCreator.canvas.height = GameCreator.height;
 		$("#mainCanvas").append(GameCreator.canvas);
 		
-		//var ballImage = new Image();
-		//ballImage.src = "images/ball.png";
-		//var activeObj = GameCreator.activeObject.New(ballImage, {name: "ball", x:5, y:5, width:40, height:40, speedX: 200, speedY:-250});
-		//ballImage.onload = function () {
-		//	activeObj.imageReady = true;
-		//	GameCreator.render();
-		//};
-    	
-		//var red_ballImage = new Image();
-		//red_ballImage.src = "images/red_ball.gif";
-		//var activeObj2 = GameCreator.activeObject.New(red_ballImage, {name: "red_ball", x:200, y:300, width:40, height:40, speedX: 250, speedY:-150});
-		//red_ballImage.onload = function () {
-		//	activeObj2.imageReady = true;
-		//	GameCreator.render();
-		//};
-    	
-		var zealotImage = new Image();
-		zealotImage.src = "images/zealot.gif";
-		var platformObj = GameCreator.platformObject.New(zealotImage, {name: "zealot", x:100, y:300, width:50, height:50, speedX: 0, speedY: 0});
-		zealotImage.onload = function() {
-			platformObj.imageReady = true;
-			GameCreator.render();
-		};
+		GameCreator.scenes.push([]);
 		
-		var red_ballImage = new Image();
-		red_ballImage.src = "images/red_ball.gif";
-		var activeObj2 = GameCreator.activeObject.New(red_ballImage, {name: "red_ball", x:1, y:400, width:500, height:50, speedX: 0, speedY:0});
-		red_ballImage.onload = function () {
-			activeObj2.imageReady = true;
-			GameCreator.render();
-		};
+		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:100, height:100})
+		var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:100, height:100})
+    	
+		GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240});
+		//GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
+		//GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
+
+		GameCreator.reset();
 		
-		//var zealotImage = new Image();
-		//zealotImage.src = "images/zealot.gif";
-		//var mouseObj = GameCreator.mouseObject.New(zealotImage, {name: "zealot", x:100, y:300, width:50, height:50});
-		//zealotImage.onload = function() {
-		//	mouseObj.imageReady = true;
-		//	GameCreator.render();
-		//};
+		GameCreator.loadScene(GameCreator.scenes[0]);
 		
 		GameCreator.startEditing();
 		
@@ -139,6 +112,7 @@
 <script src="engine/platformObject.js"></script>
 <script src="engine/componentFunctions.js"></script>
 <script src="engine/helperFunctions.js"></script>
+<script src="engine/sceneObject.js"></script>
 
 <div id="mainCanvas" style="float:left"></div>
 <div id="mainMenu">

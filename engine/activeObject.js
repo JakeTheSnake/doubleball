@@ -8,15 +8,12 @@ GameCreator.activeObject = {
 		GameCreator.addObjFunctions.bouncableObjectFunctions(obj);
 		obj.image = image;
 		obj.name = args.name;
-		obj.x = args.x;
-		obj.y = args.y;
 		obj.width = args.width;
 		obj.height = args.height;
-		obj.speedX = args.speedX;
-		obj.speedY = args.speedY;
-		GameCreator.collidableObjects.push(obj);
-		GameCreator.movableObjects.push(obj);
-		GameCreator.renderableObjects.push(obj);
+		obj.isCollidable = true;
+		obj.isMovable = true;
+		obj.isRenderable = true;
+		GameCreator.globalObjects[obj.name] = obj;
 		return obj;
 	}
 }
