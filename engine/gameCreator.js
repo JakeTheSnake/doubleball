@@ -10,6 +10,7 @@ var GameCreator = {
 	globalObjects: {},
 	//Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
 	scenes: [],
+	activeScene: 0,
 	//The runtime arrays contain the current state of the game.
 	collidableObjects: [],
 	movableObjects: [],
@@ -27,20 +28,6 @@ var GameCreator = {
 		this.movableObjects = [];
 		this.renderableObjects = [];
 		this.objectsToDestroy = [];
-	},
-	
-	loadScene: function(scene){
-		for (var i=0;i < scene.length;++i) {
-			var obj = jQuery.extend({}, scene[i]);
-			if(obj.parent.isCollidable)
-				GameCreator.collidableObjects.push(obj);
-			if(obj.parent.isMovable)
-				GameCreator.movableObjects.push(obj);
-			if(obj.parent.isRenderable)
-				GameCreator.renderableObjects.push(obj);
-		}
-		//Populate the runtime arrays with clones of objects from this scene array. How do we make sure the right object ends up in the right arrays?
-		//Do we need a new type of object? runtimeObject?
 	},
 	
 	createInstance: function(globalObj, scene, args){
@@ -120,22 +107,60 @@ var GameCreator = {
 		}
 	},
 
-	startPlaying: function() {
+	playScene: function(scene) {
+		GameCreator.reset();
+		//Populate the runtime arrays with clones of objects from this scene array. How do we make sure the right object ends up in the right arrays?
+		//Do we need a new type of object? runtimeObject?
+		for (var i=0;i < scene.length;++i) {
+			var obj = jQuery.extend({}, scene[i]);
+			if(obj.parent.isCollidable)
+				GameCreator.collidableObjects.push(obj);
+			if(obj.parent.isMovable)
+				GameCreator.movableObjects.push(obj);
+			if(obj.parent.isRenderable)
+				GameCreator.renderableObjects.push(obj);
+		}
+
 		then = Date.now();
 		GameCreator.resumeGame();
 		GameCreator.state = 'playing';
 		setInterval(this.gameLoop, 1);
 	},
 
-	startDirecting: function(){
+	directActiveScene: function(){
+		this.directScene(GameCreator.scenes[GameCreator.activeScene]);
+	},
+	
+	directScene: function(scene){
+		GameCreator.reset();
+		for (var i=0;i < scene.length;++i) {
+			var obj = jQuery.extend({}, scene[i]);
+			if(obj.parent.isCollidable)
+				GameCreator.collidableObjects.push(obj);
+			if(obj.parent.isMovable)
+				GameCreator.movableObjects.push(obj);
+			if(obj.parent.isRenderable)
+				GameCreator.renderableObjects.push(obj);
+		}
+		
 		then = Date.now();
 		GameCreator.resumeGame();
 		GameCreator.state = 'directing';
 		setInterval(this.gameLoop, 1);
 	},
 
-	startEditing: function(){
+	editScene: function(scene){
+		GameCreator.reset();
+		//Here we populate the renderableObjects only since the other arrays are unused for editing. Also we use the actual sceneObjects in the
+		//renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
+		for (var i=0;i < scene.length;++i) {
+			var obj = scene[i];
+			if(obj.parent.isRenderable)
+				GameCreator.renderableObjects.push(obj);
+		}
+		
 		$(GameCreator.canvas).on("mousedown", function(e){
+			console.log("clicked")
 			GameCreator.findClickedObject(e.pageX, e.pageY);
 		});
 		

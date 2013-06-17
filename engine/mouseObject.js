@@ -11,6 +11,7 @@ GameCreator.mouseObject = {
 		obj.isCollidable = true;
 		obj.isMovable = true;
 		obj.isRenderable = true;
+		GameCreator.globalObjects[obj.name] = obj;
 		return obj;
 	}
 }
@@ -38,10 +39,15 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject)
 	mouseObject.instantiated = function()
 	{
 		var that = this;
-		$(GameCreator.canvas).on("mousemove", function(evt)
+		$(GameCreator.canvas).on("mousemove." + this.name, function(evt)
 		{
 			that.latestMouseX = evt.pageX;
 			that.latestMouseY = evt.pageY;
 		});
+	}
+	
+	mouseObject.onDestroy = function()
+	{
+		$(GameCreator.canvas).off("mousemove." + this.name);
 	}
 }

@@ -10,6 +10,7 @@
 		$("#mainCanvas").append(GameCreator.canvas);
 		
 		GameCreator.scenes.push([]);
+		GameCreator.activeScene = 0;
 		
 		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:100, height:100})
 		//var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:100, height:100})
@@ -28,12 +29,9 @@
 		var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", name: "platformZealot", width: 80, height: 80})
 		GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
 		
-
-		GameCreator.reset();
+		//GameCreator.loadScene(GameCreator.scenes[0]);
 		
-		GameCreator.loadScene(GameCreator.scenes[0]);
-		
-		GameCreator.startEditing();
+		GameCreator.editScene(GameCreator.scenes[0]);
 		
 		//Mass create objects for test!
 		//for(var i = 0; i < 5 ; ++i)
@@ -213,7 +211,7 @@
 		</div>
 	</div>
 </div>
-<button onClick="GameCreator.startDirecting()">Start Directing</button>
+<button onClick="GameCreator.directActiveScene()">Start Directing</button>
 
 <div id="selectActionWindow" style="position:absolute;display:none;height:200;width:300;top:300;left:300;">
 	<span id="selectActionsHeader"></span>

@@ -3,7 +3,7 @@ TODO:
 Split sceneObject into different types based on global type?
 Add some "Frame reset function"? (reset objectBeneath here)
 Drag and drop in edit mode is not working very well.
-Handle destroyed player objects. (Listeners etc)
+onDestroy should probably be a collection of functions to run when an object is destroyed. So that new actions can be bound to the event.
 Clear collisionActions of empty actions when not directing, they need to be there when directing to know when a "Nothing" action is chosen for a collision.
 
 

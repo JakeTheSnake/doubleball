@@ -14,7 +14,7 @@ GameCreator.platformObject = {
 		obj.isCollidable = true;
 		obj.isMovable = true;
 		obj.isRenderable = true;
-		
+		GameCreator.globalObjects[obj.name] = obj;
 		return obj;
 	}
 }
@@ -63,7 +63,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	
 	platformObject.instantiated = function(){
 		var that = this;
-		$(document).keydown(function(e){
+		$(document).on("keydown." + this.name, function(e){
 			console.log(e.which)
 			switch(e.which){
 				case 37:
@@ -83,7 +83,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 			e.preventDefault();
 		});
 		
-		$(document).keyup(function(e){
+		$(document).on("keyup." + this.name, function(e){
 			switch(e.which){
 				case 37:
 				that.keyLeftPressed = false;
@@ -101,5 +101,10 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 			}
 			e.preventDefault();
 		});
+	}
+	
+	platformObject.onDestroy = function(){
+		$(document).off("keydown." + this.name);
+		$(document).off("keyup." + this.name);
 	}
 }
