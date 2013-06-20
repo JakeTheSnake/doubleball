@@ -43,7 +43,11 @@ var GameCreator = {
 		obj.instantiate(globalObj, args);
 		GameCreator.addToRuntime(obj);
 	},
-	
+	selectableActions: { Bounce: function(target) {this.parent.bounce.call(this, target)},
+						 Stop: function(target) {this.parent.stop.call(this, target)},
+						 Destroy: function(target) {this.parent.destroy.call(this, target)}
+		  },
+
 	addActiveObject: function(args){
 		console.log("adding active obj with args")
 		console.log(args)
@@ -222,103 +226,194 @@ var GameCreator = {
 		if(obj.parent.isEventable)
 			GameCreator.eventableObjects.push(obj);
 	},
+	
+	selectActions: function(obj1, obj2, selectedAction){
+		if(selectedAction == 'stop')
+		{
+			if(obj2.name == "borderLeft")
+			{	
+				obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, false)};
+			}
+			else if(obj2.name == "borderRight")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, true)};
+			}
+			else if(obj2.name == "borderTop")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, false)};
+			}
+			else if(obj2.name == "borderBottom")
+			{	
+				obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, true)};
+			}
+			else
+			{
+				obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objStop(obj2)}});
+			}
+		}
+		else if(selectedAction == 'bounce')
+		{
+			if(obj2.name == "borderLeft")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, false);};
+			}
+			else if(obj2.name == "borderRight")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, true)};
+			}
+			else if(obj2.name == "borderTop")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, false)};
+			}
+			else if(obj2.name == "borderBottom")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, true)};
+			}
+			//Colliding with something else than an edge.
+			else
+			{
+				obj1.parent.collisionActions.push({name: obj2.name, action: function(targetObject){this.parent.bounce.call(this, targetObject)}});
+			}
+		}
+		else if(selectedAction == 'destroy')
+		{
+			if(obj2.name == "borderLeft")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else if(obj2.name == "borderRight")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else if(obj2.name == "borderTop")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else if(obj2.name == "borderBottom")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else
+			{
+				obj1.parent.collisionActions.push({name: obj2.name, action: function(){GameCreator.objectsToDestroy.push(this)}});
+			}
+		}
+		else
+		{
+			console.log("set to nothing")
+			if(obj2.name == "borderLeft" || obj2.name == "borderRight" || obj2.name == "borderTop" || obj2.name == "borderBottom")
+				obj1.parent[functionToReplace] = function(){};
+			else
+				obj1.parent.collisionActions.push({name: obj2.name, action: function(){}});
+		}
+		GameCreator.resumeGame();
+		window.hide();
+		$("#saveActionsButton").off("click");
+		return false;
+	},
+		if(selectedAction == 'stop')
+		{
+			if(obj2.name == "borderLeft")
+			{	
+				obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, false)};
+			}
+			else if(obj2.name == "borderRight")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, true)};
+			}
+			else if(obj2.name == "borderTop")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, false)};
+			}
+			else if(obj2.name == "borderBottom")
+			{	
+				obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, true)};
+			}
+			else
+			{
+				obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objStop(obj2)}});
+			}
+		}
+		else if(selectedAction == 'bounce')
+		{
+			if(obj2.name == "borderLeft")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, false);};
+			}
+			else if(obj2.name == "borderRight")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, true)};
+			}
+			else if(obj2.name == "borderTop")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, false)};
+			}
+			else if(obj2.name == "borderBottom")
+			{
+				obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, true)};
+			}
+			//Colliding with something else than an edge.
+			else
+			{
+				obj1.parent.collisionActions.push({name: obj2.name, action: function(targetObject){this.parent.bounce.call(this, targetObject)}});
+			}
+		}
+		else if(selectedAction == 'destroy')
+		{
+			if(obj2.name == "borderLeft")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else if(obj2.name == "borderRight")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else if(obj2.name == "borderTop")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else if(obj2.name == "borderBottom")
+			{
+				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
+			}
+			else
+			{
+				obj1.parent.collisionActions.push({name: obj2.name, action: function(){GameCreator.objectsToDestroy.push(this)}});
+			}
+		}
+		else
+		{
+			console.log("set to nothing")
+			if(obj2.name == "borderLeft" || obj2.name == "borderRight" || obj2.name == "borderTop" || obj2.name == "borderBottom")
+				obj1.parent[functionToReplace] = function(){};
+			else
+				obj1.parent.collisionActions.push({name: obj2.name, action: function(){}});
+		}
+		GameCreator.resumeGame();
+		window.hide();
+		$("#saveActionsButton").off("click");
+		return false;
+	},
+		
 
-	selectActions: function(obj1, obj2, functionToReplace){
+	openSelectActionsWindow: function(text, callback, params){
 		//Only select actions if GameCreator isn't already paused for action selection.
 		if(!GameCreator.paused){
-			console.log("Selectactions for " + obj1.name + " with " + obj2.name);
+			console.log(text);
 			GameCreator.pauseGame();
-			var window = $("#selectActionWindow");
-			window.css("top", obj1.y + "");
-			window.css("left", obj1.x + 150 + "");
-			window.show();
-			$("#selectActionsHeader").html(obj1.name + " collided with " + obj2.name);
+			GameCreator.openSelectActionsWindow.setAction = callback;
+			GameCreator.openSelectActionsWindow.params = params;
+			GameCreator.openSelectActionsWindow.selectedActions = [];
+			$("#selectActionsHeader").html(text);
 			$("#selectActionsContent1").html(GameCreator.htmlStrings.collisionSelector);
-			$("#saveActionsButton").on("click", function(){
-				var selectedAction = $("#collisionSelector").val();
-				if(selectedAction == 'stop')
-				{
-					if(obj2.name == "borderLeft")
-					{	
-						obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, false)};
-					}
-					else if(obj2.name == "borderRight")
-					{
-						obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, true)};
-					}
-					else if(obj2.name == "borderTop")
-					{
-						obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, false)};
-					}
-					else if(obj2.name == "borderBottom")
-					{	
-						obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, true)};
-					}
-					else
-					{
-						obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objStop(obj2)}});
-					}
-				}
-				else if(selectedAction == 'bounce')
-				{
-					if(obj2.name == "borderLeft")
-					{
-						obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, false);};
-					}
-					else if(obj2.name == "borderRight")
-					{
-						obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, true)};
-					}
-					else if(obj2.name == "borderTop")
-					{
-						obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, false)};
-					}
-					else if(obj2.name == "borderBottom")
-					{
-						obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, true)};
-					}
-					//Colliding with something else than an edge.
-					else
-					{
-						obj1.parent.collisionActions.push({name: obj2.name, action: function(targetObject){this.parent.objBounce.call(this, targetObject)}});
-					}
-				}
-				else if(selectedAction == 'destroy')
-				{
-					if(obj2.name == "borderLeft")
-					{
-						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-					}
-					else if(obj2.name == "borderRight")
-					{
-						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-					}
-					else if(obj2.name == "borderTop")
-					{
-						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-					}
-					else if(obj2.name == "borderBottom")
-					{
-						obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-					}
-					else
-					{
-						obj1.parent.collisionActions.push({name: obj2.name, action: function(){GameCreator.objectsToDestroy.push(this)}});
-					}
-				}
-				else
-				{
-					console.log("set to nothing")
-					if(obj2.name == "borderLeft" || obj2.name == "borderRight" || obj2.name == "borderTop" || obj2.name == "borderBottom")
-						obj1.parent[functionToReplace] = function(){};
-					else
-						obj1.parent.collisionActions.push({name: obj2.name, action: function(){}});
-				}
-				GameCreator.resumeGame();
-				window.hide();
-				$("#saveActionsButton").off("click");
-				return false;
-			});
+			$("#selectActionWindow").dialog("open");
 		}
-	}
+		
+	},
+	
+	assignSelectedActions: function(actions) {
+						GameCreator.openSelectActionsWindow.setAction(actions,
+													GameCreator.openSelectActionsWindow.params);
+						GameCreator.resumeGame();
+					}
 }

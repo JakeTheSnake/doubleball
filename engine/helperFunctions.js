@@ -89,32 +89,33 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 	}
 	
 	//If directing, check for collisions with all other game objs.
-	if(GameCreator.state == 'directing')
-	{
+	if(GameCreator.state == 'directing') {
 		for (var i=0;i < GameCreator.collidableObjects.length;++i) {
 			var targetObject = GameCreator.collidableObjects[i];
-			if(!(object == targetObject))
-			{
+			if(!(object == targetObject)) {
 				var objWidth = targetObject.width;
 				var objHeight = targetObject.height;
 				var thisMidX = x + width / 2;
 				var thisMidY = y + height / 2;
 				var objMidX = targetObject.x + targetObject.width / 2;
 				var objMidY = targetObject.y + targetObject.height / 2;
-				if((Math.abs(thisMidX - objMidX) < width / 2 + objWidth / 2) && (Math.abs(thisMidY - objMidY) < height / 2 + objHeight / 2))
-				{
+				if((Math.abs(thisMidX - objMidX) < width / 2 + objWidth / 2) && (Math.abs(thisMidY - objMidY) < height / 2 + objHeight / 2)) {
 					//console.log("targetObject: " + object.name + " collided with " + targetObject.name);
 					
 					//Look through collisionActions to see if we already have an action defined for a collision with a targetObject with this name, if so, run that function instead
-					var names = object.parent.collisionActions.map(function(x){return x.name});
-					var collisionActionIndex = $.inArray(targetObject.name, names);
-					if(collisionActionIndex != -1)
+					
+					if(object.parent.collisionActions[targetObject.name] != undefined)
 					{
-						object.parent.collisionActions[collisionActionIndex].action.call(object, targetObject);
+						console.log("collision with defined action");
+						for (var j = 0; j < object.parent.collisionActions[targetObject.name].length; j++) {
+							object.parent.collisionActions[targetObject.name][j].call(object, targetObject);
+						}
 					}
 					else
 					{
-						GameCreator.selectActions(object, targetObject);
+						GameCreator.openSelectActionsWindow("'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
+									function(actions, params) {console.log("callback function " + params[0].name); console.log(actions); object.parent.collisionActions[params[0].name] = actions},
+									[targetObject]);
 					}
 				}
 			}

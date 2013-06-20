@@ -1,6 +1,6 @@
 GameCreator.addObjFunctions.bouncableObjectFunctions = function(object)
 {
-	object.objBounce = function(obj)
+	object.bounce = function(obj)
 	{
 		switch(GameCreator.helperFunctions.determineQuadrant(obj, this)){
 			case 1:
@@ -21,27 +21,6 @@ GameCreator.addObjFunctions.bouncableObjectFunctions = function(object)
 		}
 	}
 	
-	object.bounceX = function(bounceLeftward){
-		if(bounceLeftward)
-		{
-			this.speedX = -Math.abs(this.speedX);
-		}
-		else
-		{
-			this.speedX = Math.abs(this.speedX);
-		}
-	}
-	
-	object.bounceY = function(bounceUpward){
-		if(bounceUpward)
-		{
-			this.speedY = -Math.abs(this.speedY);
-		}
-		else
-		{
-			this.speedY = Math.abs(this.speedY);
-		}
-	}
 }
 
 GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
@@ -50,14 +29,14 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 	//object.collideBorderR = function(){this.bounceX(true)},
 	//object.collideBorderT = function(){this.bounceY(false)},
 	//object.collideBorderB = function(){this.bounceY(true)},
-	object.collideBorderL = function(){GameCreator.selectActions(this, {name: "borderLeft"}, 'collideBorderL')},
-	object.collideBorderR = function(){GameCreator.selectActions(this, {name: "borderRight"}, 'collideBorderR')},
-	object.collideBorderT = function(){GameCreator.selectActions(this, {name: "borderTop"}, 'collideBorderT')},
-	object.collideBorderB = function(){GameCreator.selectActions(this, {name: "borderBottom"}, 'collideBorderB')},
+	object.collideBorderL = function(){GameCreator.openSelectActionsWindow(this, {name: "borderLeft"}, 'collideBorderL')},
+	object.collideBorderR = function(){GameCreator.openSelectActionsWindow(this, {name: "borderRight"}, 'collideBorderR')},
+	object.collideBorderT = function(){GameCreator.openSelectActionsWindow(this, {name: "borderTop"}, 'collideBorderT')},
+	object.collideBorderB = function(){GameCreator.openSelectActionsWindow(this, {name: "borderBottom"}, 'collideBorderB')},
 	
 	//Contains Key/Value pairs of other objs and the function to run when colliding with them.
 	//TODO: Switch to dictionary where key is the name of the object.
-	object.collisionActions = [];
+	object.collisionActions = {};
 },
 
 GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)

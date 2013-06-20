@@ -1,119 +1,17 @@
-<script src="libs/jquery-min.js"></script>
+<!doctype html>
+<html lang="us">
+<head>
+	<meta charset="utf-8">
+	<title>PlayMaker Ultra</title>
+<link href="css/dot-luv/jquery-ui-1.10.3.custom.css" rel="stylesheet">	
+<script src="libs/jquery-1.9.1.js"></script>
 <script src="engine/gameCreator.js"></script>
+<script src="libs/jquery-ui-1.10.3.custom.min.js"></script>
 
-<script>
-	window.onload = function () {
-		GameCreator.canvas = document.createElement("canvas");
-		GameCreator.context = GameCreator.canvas.getContext("2d");
-		GameCreator.canvas.width = GameCreator.width;
-		GameCreator.canvas.height = GameCreator.height;
-		$("#mainCanvas").append(GameCreator.canvas);
+<script src="startup.js"></script>
+
 		
-		GameCreator.scenes.push([]);
-		GameCreator.activeScene = 0;
-		
-		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:100, height:100})
-		//var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:100, height:100})
-    	
-		GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240});
-		//GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
-		//GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
-		
-		//Create Mouseobject
-		
-		//var globalMousePlayer = GameCreator.addPlayerMouseObject({src: "images/zealot.gif", name: "mouseZealot", width: 80, height: 80})
-		//GameCreator.createInstance(globalMousePlayer, GameCreator.scenes[0], {x:100, y:200})
-		
-		//Create Platformobject
-		
-		var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", name: "platformZealot", width: 80, height: 80})
-		GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
-		
-		//GameCreator.loadScene(GameCreator.scenes[0]);
-		
-		GameCreator.editScene(GameCreator.scenes[0]);
-		
-		//Mass create objects for test!
-		//for(var i = 0; i < 5 ; ++i)
-		//{
-		//	console.log("addActiveObject");
-		//	var name = "obj" + i;
-		//	var x = i * 5;
-		//	var y = i * 5;
-		//	var speedX = i * 5;
-		//	var speedY = i * 5;
-		//	var height = 10 + i/5;
-		//	var width = 10 + i/5;
-		//	console.log(i)
-		//	GameCreator.addActiveObject({
-		//		name: name,
-		//		width: width,
-		//		height: height,
-		//		x: x,
-		//		y: y,
-		//		speedX: speedX,
-		//		speedY: speedY,
-		//		src: "red_ball.gif"
-		//	});
-		//}
-		
-		$("#addPlayerObjectType").on("change", function(){switchPlayerObjectType($(this).val())})
-	}
-	
-	function addActiveObject(){
-		GameCreator.addActiveObject({
-			name: $("#addActiveObjectName").val(),
-			width: parseInt($("#addActiveObjectWidth").val()),
-			height: parseInt($("#addActiveObjectHeight").val()),
-			x: parseInt($("#addActiveObjectX").val()),
-			y: parseInt($("#addActiveObjectY").val()),
-			speedX: parseInt($("#addActiveObjectSpeedX").val()),
-			speedY: parseInt($("#addActiveObjectSpeedY").val()),
-			src: $("#addActiveObjectSrc").val()
-		});
-	}
-	
-	function addPlayerMouseObject(){
-		GameCreator.addPlayerMouseObject({
-			name: $("#addPlayerObjectName").val(),
-			width: parseInt($("#addPlayerObjectWidth").val()),
-			height: parseInt($("#addPlayerObjectHeight").val()),
-			x: parseInt($("#addPlayerObjectX").val()),
-			y: parseInt($("#addPlayerObjectY").val()),
-			speedX: parseInt($("#addPlayerObjectSpeedX").val()),
-			speedY: parseInt($("#addPlayerObjectSpeedY").val()),
-			src: $("#addPlayerObjectSrc").val(),
-			maxX: parseInt($("#addPlayerMouseObjectMaxX").val()),
-			maxY: parseInt($("#addPlayerMouseObjectMaxY").val()),
-			minX: parseInt($("#addPlayerMouseObjectMinX").val()),
-			minY: parseInt($("#addPlayerMouseObjectMinY").val()),
-		});
-	}
-	
-	function addPlayerPlatformObject(){
-		GameCreator.addPlayerPlatformObject({
-			name: $("#addPlayerObjectName").val(),
-			width: parseInt($("#addPlayerObjectWidth").val()),
-			height: parseInt($("#addPlayerObjectHeight").val()),
-			x: parseInt($("#addPlayerObjectX").val()),
-			y: parseInt($("#addPlayerObjectY").val()),
-			speedX: parseInt($("#addPlayerObjectSpeedX").val()),
-			speedY: parseInt($("#addPlayerObjectSpeedY").val()),
-			src: $("#addPlayerObjectSrc").val(),
-		});
-	}
-	
-	function switchPane(paneId){
-		$(".addObjectPane").hide();
-		$(paneId).show();
-	}
-	
-	function switchPlayerObjectType(paneId){
-		$(".addPlayerObjectTypePane").hide();
-		$(paneId).show();
-	}
-	
-</script>
+
 
 <script src="engine/baseObject.js"></script>
 <script src="engine/activeObject.js"></script>
@@ -122,7 +20,8 @@
 <script src="engine/componentFunctions.js"></script>
 <script src="engine/helperFunctions.js"></script>
 <script src="engine/sceneObject.js"></script>
-
+</head>
+<body>
 <div id="mainCanvas" style="float:left"></div>
 <div id="mainMenu">
 	<div id="mainMenuTabs">		
@@ -156,7 +55,7 @@
 			<label for="addActiveObjectSrc" type="text">Image Src:</label>
 			<input id="addActiveObjectSrc" type="text"></label>
 		</div>
-		<button onClick="addActiveObject()">Add Object</button>
+		<button id="AddActiveObject" onClick="addActiveObject()">Add Object</button>
 	</div>
 	<div id="addPlayerObjectPane" class="addObjectPane" style="display:none;">
 		<div>
@@ -200,10 +99,10 @@
 					<label for="addPlayerMouseObjectMinY">Min Y:</label>
 					<input id="addPlayerMouseObjectMinY" type="text"></input>
 				</div>
-				<button onClick="addPlayerMouseObject()">Add Object</button>
+				<button id="MouseObject" onClick="addPlayerMouseObject()">Add Object</button>
 			</div>
 			<div id="addPlayerPlatformObjectPane" class="addPlayerObjectTypePane" style="display:none;">
-				<button onClick="addPlayerPlatformObject()">Add Object</button>
+				<button id="PlatformObject" onClick="addPlayerPlatformObject()">Add Object</button>
 			</div>
 			<div id="addPlayerDirectionsObjectPane" class="addPlayerObjectTypePane" style="display:none;">
 				8 Directions
@@ -211,9 +110,9 @@
 		</div>
 	</div>
 </div>
-<button onClick="GameCreator.directActiveScene()">Start Directing</button>
+<button id="direct" onClick="GameCreator.directActiveScene()">Start Directing</button>
 
-<div id="selectActionWindow" style="position:absolute;display:none;height:200;width:300;top:300;left:300;">
+<div id="selectActionWindow"  title="Dialog Title">
 	<span id="selectActionsHeader"></span>
 	<br/>
 	<div>
@@ -223,3 +122,5 @@
 	<div style="clear:both;"></div>
 	<a href="" id="saveActionsButton">Continue</a>
 </div>
+</body>
+</html>
