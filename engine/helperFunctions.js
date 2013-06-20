@@ -125,4 +125,25 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 	{
 	
 	}
+},
+
+//Args should contain "speedX/Y or Angle/Speed or targetObject/speed(needs to be an object that has been given a unique ID), originX, originY, globalObj"
+GameCreator.helperFunctions.shootObject = function(args)
+{
+	//Shoot towards target
+	if(args.targetObject && args.speed)
+	{
+	
+	}
+	//Shoot at angle
+	else if(args.angle && args.speed)
+	{
+	
+	}
+	else
+	{
+	
+	}
+	//TODO: Calculate speedX/Y towards target or angle.
+	//GameCreator.createRuntimeObject();
 }

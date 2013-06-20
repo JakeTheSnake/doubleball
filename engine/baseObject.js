@@ -31,5 +31,7 @@ GameCreator.baseObject = {
 	
 	instantiated: function(){},
 	
-	onDestroy: function(){}
+	onDestroy: function(){},
+	
+	checkEvents: function(){}
 }

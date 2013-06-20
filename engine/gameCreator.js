@@ -15,12 +15,14 @@ var GameCreator = {
 	collidableObjects: [],
 	movableObjects: [],
 	renderableObjects: [],
+	eventableObjects: [],
 	objectsToDestroy: [],
 	addObjFunctions: {},
 	helperFunctions: {},
 	selectedObject: undefined,
 	htmlStrings: {
-		collisionSelector: "<select id='collisionSelector'><option value=''>Nothing</option><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select>"
+		collisionSelector: "<div><select id='collisionSelector'><option value=''>Nothing</option><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select></div>",
+		shootObjectSelector: "<div><input type=checkbox id='shootObjectCheckbox'/>Shoot object <input type=text placeholder='Name'/></div>"
 	},
 	
 	reset: function() {
@@ -34,6 +36,12 @@ var GameCreator = {
 		var obj = Object.create(GameCreator.sceneObject);
 		obj.instantiate(globalObj, args);
 		scene.push(obj);
+	},
+	
+	createRuntimeObject: function(globalObj, args){
+		var obj = Object.create(GameCreator.sceneObject);
+		obj.instantiate(globalObj, args);
+		GameCreator.addToRuntime(obj);
 	},
 	
 	addActiveObject: function(args){
@@ -92,6 +100,10 @@ var GameCreator = {
 					obj.parent.move.call(obj, modifier);
 				}
 			}
+			for (var i=0;i < GameCreator.eventableObjects.length;++i) {
+				obj = GameCreator.eventableObjects[i];
+				obj.parent.checkEvents.call(obj);
+			}
 		}
 	},
 
@@ -113,12 +125,7 @@ var GameCreator = {
 		//Do we need a new type of object? runtimeObject?
 		for (var i=0;i < scene.length;++i) {
 			var obj = jQuery.extend({}, scene[i]);
-			if(obj.parent.isCollidable)
-				GameCreator.collidableObjects.push(obj);
-			if(obj.parent.isMovable)
-				GameCreator.movableObjects.push(obj);
-			if(obj.parent.isRenderable)
-				GameCreator.renderableObjects.push(obj);
+			GameCreator.addToRuntime(obj);
 		}
 
 		then = Date.now();
@@ -135,12 +142,7 @@ var GameCreator = {
 		GameCreator.reset();
 		for (var i=0;i < scene.length;++i) {
 			var obj = jQuery.extend({}, scene[i]);
-			if(obj.parent.isCollidable)
-				GameCreator.collidableObjects.push(obj);
-			if(obj.parent.isMovable)
-				GameCreator.movableObjects.push(obj);
-			if(obj.parent.isRenderable)
-				GameCreator.renderableObjects.push(obj);
+			GameCreator.addToRuntime(obj);
 		}
 		
 		then = Date.now();
@@ -208,6 +210,17 @@ var GameCreator = {
 				this.context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
 			}
 		}
+	},
+	
+	addToRuntime: function(obj){
+		if(obj.parent.isCollidable)
+			GameCreator.collidableObjects.push(obj);
+		if(obj.parent.isMovable)
+			GameCreator.movableObjects.push(obj);
+		if(obj.parent.isRenderable)
+			GameCreator.renderableObjects.push(obj);
+		if(obj.parent.isEventable)
+			GameCreator.eventableObjects.push(obj);
 	},
 
 	selectActions: function(obj1, obj2, functionToReplace){

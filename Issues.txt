@@ -1,11 +1,15 @@
 TODO:
 
-Split sceneObject into different types based on global type?
-Add some "Frame reset function"? (reset objectBeneath here)
+Why are collision actions handled in a separate fashion from other events. Maybe make this uniform? (Need to fix SelectActions also for this...)
+Add some cooldown to triggering of keypress events?
+
 Drag and drop in edit mode is not working very well.
 onDestroy should probably be a collection of functions to run when an object is destroyed. So that new actions can be bound to the event.
 Clear collisionActions of empty actions when not directing, they need to be there when directing to know when a "Nothing" action is chosen for a collision.
 
+POSSIBLES:
 
 Alla args bör skickas in som objekt så att ordningen kvittar och man ser tydligare vad man skickar.
 Vad händer om ett objekt kolliderar med två andra objekt?
+Split sceneObject into different types based on global type?
+Add some "Frame reset function"? (reset objectBeneath here)

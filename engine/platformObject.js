@@ -14,6 +14,7 @@ GameCreator.platformObject = {
 		obj.isCollidable = true;
 		obj.isMovable = true;
 		obj.isRenderable = true;
+		obj.isEventable = true;
 		GameCreator.globalObjects[obj.name] = obj;
 		return obj;
 	}
@@ -28,6 +29,10 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	platformObject.keyUpPressed = false;
 	platformObject.speedX = 0;
 	platformObject.speedY = 0;
+	//Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
+	platformObject.keyActions = {
+		space: {pressed: false, actions: [function(){console.log("Space pressed");}, function(){console.log("Space pressed action2!")}]}
+	};
 	
 	platformObject.move = function(modifier)
 	{	
@@ -66,6 +71,10 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 		$(document).on("keydown." + this.name, function(e){
 			console.log(e.which)
 			switch(e.which){
+				case 32:
+				that.keyActions.space.pressed = true;
+				break;
+				
 				case 37:
 				that.keyLeftPressed = true;
 				break;
@@ -78,13 +87,17 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 				that.keyUpPressed = true;
 				break;
 				
-				default: return;	
+				default: return;
 			}
 			e.preventDefault();
 		});
 		
 		$(document).on("keyup." + this.name, function(e){
 			switch(e.which){
+				case 32:
+				that.keyActions.space.pressed = false;
+				break;
+			
 				case 37:
 				that.keyLeftPressed = false;
 				break;
@@ -106,5 +119,24 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	platformObject.onDestroy = function(){
 		$(document).off("keydown." + this.name);
 		$(document).off("keyup." + this.name);
+	}
+	
+	platformObject.checkEvents = function(){
+		//Loop over keyactions, see which are pressed and perform actions of those that are pressed.
+		var keyActions = this.parent.keyActions;
+		for(var key in keyActions)
+		{
+			if(keyActions.hasOwnProperty(key))
+			{
+				var keyAction = keyActions[key];
+				if(keyAction.pressed)
+				{
+					for(var i = 0;i < keyAction.actions.length;++i)
+					{
+						keyAction.actions[i]();
+					}
+				}
+			}
+		}
 	}
 }
