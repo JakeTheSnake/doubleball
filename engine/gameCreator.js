@@ -310,7 +310,7 @@ var GameCreator = {
 		window.hide();
 		$("#saveActionsButton").off("click");
 		return false;
-	},
+	
 		if(selectedAction == 'stop')
 		{
 			if(obj2.name == "borderLeft")
