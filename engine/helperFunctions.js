@@ -74,18 +74,40 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 	var y = object.y;
 	var width = object.width;
 	var height = object.height;
+	var collidedBorder;
+	var collisionObject;
 	
 	if(x < 1){
-		object.parent.collideBorderL.call(object);
+		collidedBorder = "collideBorderL";
+		collisionObject = GameCreator.collideBorderLObject;
 	}
 	else if(x + width > GameCreator.width - 1){
-		object.parent.collideBorderR.call(object);
+		collidedBorder = "collideBorderR";
+		collisionObject = GameCreator.collideBorderRObject;
 	}
 	if(y < 1){
-		object.parent.collideBorderT.call(object);
+		collidedBorder = "collideBorderT";
+		collisionObject = GameCreator.collideBorderTObject;
 	}
 	else if(y + height > GameCreator.height - 1){
-		object.parent.collideBorderB.call(object);
+		collidedBorder = "collideBorderB";
+		collisionObject = GameCreator.collideBorderBObject;
+	}
+	
+	if(collidedBorder != undefined)
+	{
+		if(object.parent[collidedBorder] != undefined){
+			for (var i = 0; i < object.parent[collidedBorder].length; i++) {
+				object.parent[collidedBorder][i].call(object, collisionObject);
+			}
+		} 
+		else {
+			GameCreator.openSelectActionsWindow(
+				"'" + object.parent.name + "' collided with " + collidedBorder,
+				function(actions, params) {object.parent[collidedBorder] = actions},
+				[]
+			);
+		}
 	}
 	
 	//If directing, check for collisions with all other game objs.
@@ -106,16 +128,16 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 					
 					if(object.parent.collisionActions[targetObject.name] != undefined)
 					{
-						console.log("collision with defined action");
 						for (var j = 0; j < object.parent.collisionActions[targetObject.name].length; j++) {
 							object.parent.collisionActions[targetObject.name][j].call(object, targetObject);
 						}
 					}
 					else
 					{
-						GameCreator.openSelectActionsWindow("'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
-									function(actions, params) {console.log("callback function " + params[0].name); console.log(actions); object.parent.collisionActions[params[0].name] = actions},
-									[targetObject]);
+						GameCreator.openSelectActionsWindow(
+							"'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
+							function(actions, params) {object.parent.collisionActions[params[0].name] = actions},
+							[targetObject]);
 					}
 				}
 			}

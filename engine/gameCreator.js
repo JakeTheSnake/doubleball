@@ -1,6 +1,9 @@
+var GCHeight = 600;
+var GCWidth = 800;
+
 var GameCreator = {
-	height: 600,
-	width: 800,
+	height: GCHeight,
+	width: GCWidth,
 	paused: false,
 	//State can be 'editing', 'directing' or 'playing'. 
 	state: 'editing',
@@ -24,6 +27,10 @@ var GameCreator = {
 		collisionSelector: "<div><select id='collisionSelector'><option value=''>Nothing</option><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select></div>",
 		shootObjectSelector: "<div><input type=checkbox id='shootObjectCheckbox'/>Shoot object <input type=text placeholder='Name'/></div>"
 	},
+	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
+	collideBorderRObject: {x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
+	collideBorderTObject: {x: -500, y: -500, height: 500, width: GCWidth + 1000},
+	collideBorderBObject: {x: -500, y: GCHeight + 500, height: 500, width: GCWidth + 1000},
 	
 	reset: function() {
 		this.collidableObjects = [];
@@ -310,96 +317,12 @@ var GameCreator = {
 		window.hide();
 		$("#saveActionsButton").off("click");
 		return false;
-	
-		if(selectedAction == 'stop')
-		{
-			if(obj2.name == "borderLeft")
-			{	
-				obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, false)};
-			}
-			else if(obj2.name == "borderRight")
-			{
-				obj1.parent[functionToReplace] = function(){this.parent.stopX.call(this, true)};
-			}
-			else if(obj2.name == "borderTop")
-			{
-				obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, false)};
-			}
-			else if(obj2.name == "borderBottom")
-			{	
-				obj1.parent[functionToReplace] = function(){this.parent.stopY.call(this, true)};
-			}
-			else
-			{
-				obj1.collisionActions.push({name: obj2.name, action: function(){obj1.objStop(obj2)}});
-			}
-		}
-		else if(selectedAction == 'bounce')
-		{
-			if(obj2.name == "borderLeft")
-			{
-				obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, false);};
-			}
-			else if(obj2.name == "borderRight")
-			{
-				obj1.parent[functionToReplace] = function(){this.parent.bounceX.call(this, true)};
-			}
-			else if(obj2.name == "borderTop")
-			{
-				obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, false)};
-			}
-			else if(obj2.name == "borderBottom")
-			{
-				obj1.parent[functionToReplace] = function(){this.parent.bounceY.call(this, true)};
-			}
-			//Colliding with something else than an edge.
-			else
-			{
-				obj1.parent.collisionActions.push({name: obj2.name, action: function(targetObject){this.parent.bounce.call(this, targetObject)}});
-			}
-		}
-		else if(selectedAction == 'destroy')
-		{
-			if(obj2.name == "borderLeft")
-			{
-				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-			}
-			else if(obj2.name == "borderRight")
-			{
-				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-			}
-			else if(obj2.name == "borderTop")
-			{
-				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-			}
-			else if(obj2.name == "borderBottom")
-			{
-				obj1.parent[functionToReplace] = function(){GameCreator.objectsToDestroy.push(this)};
-			}
-			else
-			{
-				obj1.parent.collisionActions.push({name: obj2.name, action: function(){GameCreator.objectsToDestroy.push(this)}});
-			}
-		}
-		else
-		{
-			console.log("set to nothing")
-			if(obj2.name == "borderLeft" || obj2.name == "borderRight" || obj2.name == "borderTop" || obj2.name == "borderBottom")
-				obj1.parent[functionToReplace] = function(){};
-			else
-				obj1.parent.collisionActions.push({name: obj2.name, action: function(){}});
-		}
-		GameCreator.resumeGame();
-		window.hide();
-		$("#saveActionsButton").off("click");
-		return false;
 	},
 		
 
 	openSelectActionsWindow: function(text, callback, params){
 		//Only select actions if GameCreator isn't already paused for action selection.
 		if(!GameCreator.paused){
-			console.log(text);
 			GameCreator.pauseGame();
 			GameCreator.openSelectActionsWindow.setAction = callback;
 			GameCreator.openSelectActionsWindow.params = params;
@@ -412,8 +335,8 @@ var GameCreator = {
 	},
 	
 	assignSelectedActions: function(actions) {
-						GameCreator.openSelectActionsWindow.setAction(actions,
-													GameCreator.openSelectActionsWindow.params);
-						GameCreator.resumeGame();
-					}
+		GameCreator.openSelectActionsWindow.setAction(actions,
+			GameCreator.openSelectActionsWindow.params);
+		GameCreator.resumeGame();
+	}
 }

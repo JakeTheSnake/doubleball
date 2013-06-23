@@ -29,10 +29,10 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 	//object.collideBorderR = function(){this.bounceX(true)},
 	//object.collideBorderT = function(){this.bounceY(false)},
 	//object.collideBorderB = function(){this.bounceY(true)},
-	object.collideBorderL = function(){GameCreator.openSelectActionsWindow(this, {name: "borderLeft"}, 'collideBorderL')},
-	object.collideBorderR = function(){GameCreator.openSelectActionsWindow(this, {name: "borderRight"}, 'collideBorderR')},
-	object.collideBorderT = function(){GameCreator.openSelectActionsWindow(this, {name: "borderTop"}, 'collideBorderT')},
-	object.collideBorderB = function(){GameCreator.openSelectActionsWindow(this, {name: "borderBottom"}, 'collideBorderB')},
+	object.collideBorderL = undefined;
+	object.collideBorderR = undefined;
+	object.collideBorderT = undefined;
+	object.collideBorderB = undefined;
 	
 	//Contains Key/Value pairs of other objs and the function to run when colliding with them.
 	//TODO: Switch to dictionary where key is the name of the object.
