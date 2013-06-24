@@ -65,6 +65,21 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 	}
 }
 
+GameCreator.helperFunctions.doBorderCollision = function(object, collidedBorder, collisionObject){
+	if(object.parent[collidedBorder] != undefined){
+		for (var i = 0; i < object.parent[collidedBorder].length; i++) {
+			object.parent[collidedBorder][i].call(object, collisionObject);
+		}
+	} 
+	else {
+		GameCreator.openSelectActionsWindow(
+			"'" + object.parent.name + "' collided with " + collidedBorder,
+			function(actions, params) {object.parent[collidedBorder] = actions},
+			[]
+		);
+	}
+}
+
 GameCreator.helperFunctions.checkCollisions = function(object) {
 	if(object.objectBeneath != undefined)
 		object.objectBeneath = false;
@@ -80,34 +95,22 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 	if(x < 1){
 		collidedBorder = "collideBorderL";
 		collisionObject = GameCreator.collideBorderLObject;
+		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
 	}
-	else if(x + width > GameCreator.width - 1){
+	if(x + width > GameCreator.width - 1){
 		collidedBorder = "collideBorderR";
 		collisionObject = GameCreator.collideBorderRObject;
+		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
 	}
 	if(y < 1){
 		collidedBorder = "collideBorderT";
 		collisionObject = GameCreator.collideBorderTObject;
+		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
 	}
-	else if(y + height > GameCreator.height - 1){
+	if(y + height > GameCreator.height - 1){
 		collidedBorder = "collideBorderB";
 		collisionObject = GameCreator.collideBorderBObject;
-	}
-	
-	if(collidedBorder != undefined)
-	{
-		if(object.parent[collidedBorder] != undefined){
-			for (var i = 0; i < object.parent[collidedBorder].length; i++) {
-				object.parent[collidedBorder][i].call(object, collisionObject);
-			}
-		} 
-		else {
-			GameCreator.openSelectActionsWindow(
-				"'" + object.parent.name + "' collided with " + collidedBorder,
-				function(actions, params) {object.parent[collidedBorder] = actions},
-				[]
-			);
-		}
+		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
 	}
 	
 	//If directing, check for collisions with all other game objs.

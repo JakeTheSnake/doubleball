@@ -1,4 +1,4 @@
-GameCreator.addObjFunctions.bouncableObjectFunctions = function(object)
+GameCreator.addObjFunctions.bounceableObjectFunctions = function(object)
 {
 	object.bounce = function(obj)
 	{
@@ -40,44 +40,26 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 },
 
 GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
-{	
-	object.stopX = function(rightCollision){
-		if(rightCollision && this.speedX > 0 || !rightCollision && this.speedX < 0)
-			this.speedX = 0;
-	};
-	
-	object.stopY = function(bottomCollision){
-		if(bottomCollision && this.speedY > 0 || !bottomCollision && this.speedY < 0)
+{		
+	object.stop = function(obj)
+	{
+		var quadrant = GameCreator.helperFunctions.determineQuadrant(obj, this);
+
+		if(this.speedY > 0 && quadrant == 1)
 		{
 			this.speedY = 0;
+			this.objectBeneath = true;
 		}
-		if(bottomCollision)
-			this.objectBeneath = true;
-	};
-	
-	object.objStop = function(obj)
-	{
-		switch(GameCreator.helperFunctions.determineQuadrant(obj, this)){
-			case 1:
-			if(this.speedY > 0)
-				this.speedY = 0;
-			this.objectBeneath = true;
-			break;
-			
-			case 2:
-			if(this.speedX > 0)
-				this.speedX = 0;
-			break;
-			
-			case 3:
-			if(this.speedY < 0)
-				this.speedY = 0;
-			break;
-			
-			case 4:
-			if(this.speedX < 0)
-				this.speedX = 0;
-			break;
+		
+		if(this.speedX < 0 && quadrant == 2)
+			this.speedX = 0;
+
+		if(this.speedY < 0 && quadrant == 3)
+			this.speedY = 0;
+		
+		if(this.speedX > 0 && quadrant == 4)
+		{
+			this.speedX = 0;
 		}	
 	};
 }

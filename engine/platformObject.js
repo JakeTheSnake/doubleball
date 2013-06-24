@@ -5,7 +5,7 @@ GameCreator.platformObject = {
 		GameCreator.addObjFunctions.platformObjectFunctions(obj);
 		GameCreator.addObjFunctions.collidableObjectFunctions(obj);
 		GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
-		GameCreator.addObjFunctions.bouncableObjectFunctions(obj);
+		GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
 		obj.image = image;
 		obj.name = args.name;
 		obj.width = args.width;
@@ -31,7 +31,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	platformObject.speedY = 0;
 	//Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
 	platformObject.keyActions = {
-		space: {pressed: false, actions: [function(){console.log("Space pressed");}, function(){console.log("Space pressed action2!")}]}
+		space: {pressed: false, actions: undefined}
 	};
 	
 	platformObject.move = function(modifier)
@@ -131,9 +131,18 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 				var keyAction = keyActions[key];
 				if(keyAction.pressed)
 				{
-					for(var i = 0;i < keyAction.actions.length;++i)
+					if(keyActions.actions == undefined)
 					{
-						keyAction.actions[i]();
+						GameCreator.openSelectActionsWindow(
+							"Pressed " + key + " actions for object " + this.parent.name,
+							function(actions) {keyActions.actions = actions});
+					}
+					else
+					{
+						for(var i = 0;i < keyAction.actions.length;++i)
+						{
+							keyAction.actions[i]();
+						}
 					}
 				}
 			}
