@@ -43,23 +43,31 @@ GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
 {		
 	object.stop = function(obj)
 	{
-		var quadrant = GameCreator.helperFunctions.determineQuadrant(obj, this);
-
-		if(this.speedY > 0 && quadrant == 1)
+		if(obj == undefined)
 		{
 			this.speedY = 0;
-			this.objectBeneath = true;
+			this.speedX = 0;	
 		}
-		
-		if(this.speedX < 0 && quadrant == 2)
-			this.speedX = 0;
-
-		if(this.speedY < 0 && quadrant == 3)
-			this.speedY = 0;
-		
-		if(this.speedX > 0 && quadrant == 4)
+		else
 		{
-			this.speedX = 0;
-		}	
+			var quadrant = GameCreator.helperFunctions.determineQuadrant(obj, this);
+	
+			if(this.speedY > 0 && quadrant == 1)
+			{
+				this.speedY = 0;
+				this.objectBeneath = true;
+			}
+			
+			if(this.speedX < 0 && quadrant == 2)
+				this.speedX = 0;
+	
+			if(this.speedY < 0 && quadrant == 3)
+				this.speedY = 0;
+			
+			if(this.speedX > 0 && quadrant == 4)
+			{
+				this.speedX = 0;
+			}	
+		}
 	};
 }

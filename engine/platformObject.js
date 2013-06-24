@@ -38,7 +38,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	{	
 		//Should only be able to affect movement if there is something beneath object.
 		if(this.parent.keyUpPressed && this.objectBeneath)
-			this.speedY = -300;
+			this.speedY = -600;
 	
 		if(this.parent.keyRightPressed)
 		{
@@ -131,17 +131,17 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 				var keyAction = keyActions[key];
 				if(keyAction.pressed)
 				{
-					if(keyActions.actions == undefined)
+					if(keyAction.actions == undefined)
 					{
 						GameCreator.openSelectActionsWindow(
-							"Pressed " + key + " actions for object " + this.parent.name,
-							function(actions) {keyActions.actions = actions});
+							"Pressed " + key + " actions for " + this.parent.name,
+							function(actions) {keyAction.actions = actions});
 					}
 					else
 					{
 						for(var i = 0;i < keyAction.actions.length;++i)
 						{
-							keyAction.actions[i]();
+							keyAction.actions[i].call(this);
 						}
 					}
 				}
