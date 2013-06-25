@@ -68,7 +68,7 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 GameCreator.helperFunctions.doBorderCollision = function(object, collidedBorder, collisionObject){
 	if(object.parent[collidedBorder] != undefined){
 		for (var i = 0; i < object.parent[collidedBorder].length; i++) {
-			object.parent[collidedBorder][i].call(object, collisionObject);
+			object.parent[collidedBorder][i].action.call(object, collisionObject);
 		}
 	} 
 	else {
@@ -132,7 +132,8 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 					if(object.parent.collisionActions[targetObject.name] != undefined)
 					{
 						for (var j = 0; j < object.parent.collisionActions[targetObject.name].length; j++) {
-							object.parent.collisionActions[targetObject.name][j].call(object, targetObject);
+							
+							object.parent.collisionActions[targetObject.name][j].action.call(object, targetObject);
 						}
 					}
 					else
@@ -151,25 +152,4 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 	{
 	
 	}
-},
-
-//Args should contain "speedX/Y or Angle/Speed or targetObject/speed(needs to be an object that has been given a unique ID), originX, originY, globalObj"
-GameCreator.helperFunctions.shootObject = function(args)
-{
-	//Shoot towards target
-	if(args.targetObject && args.speed)
-	{
-	
-	}
-	//Shoot at angle
-	else if(args.angle && args.speed)
-	{
-	
-	}
-	else
-	{
-	
-	}
-	//TODO: Calculate speedX/Y towards target or angle.
-	//GameCreator.createRuntimeObject();
 }

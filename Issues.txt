@@ -1,5 +1,6 @@
 TODO:
 
+Delete objects that move too far off screen? (Currently all projectiles remain forever)
 A platform object bouncing bounces higher and higher the longer the game goes.....
 Add some cooldown to triggering of keypress events?
 

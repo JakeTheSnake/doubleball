@@ -8,10 +8,10 @@ window.onload = function () {
 		GameCreator.scenes.push([]);
 		GameCreator.activeScene = 0;
 		
-		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:100, height:100})
+		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:20, height:20})
 		//var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:100, height:100})
     	
-		GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240});
+		//GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240});
 		//GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
 		//GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
 		
@@ -23,7 +23,7 @@ window.onload = function () {
 		//Create Platformobject
 		
 		var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", name: "platformZealot", width: 80, height: 80})
-		GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
+		GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 0});
 		
 		//GameCreator.loadScene(GameCreator.scenes[0]);
 		
@@ -69,7 +69,16 @@ window.onload = function () {
 					text: "Ok",
 					click: function() {
 						$( this ).dialog( "close" );
-						selectedActions = [GameCreator.selectableActions.Bounce];
+						if($("#collisionSelector").val() == "nothing")
+							selectedActions = [];
+						else if($("#collisionSelector").val() == "bounce")
+							selectedActions = [{action: GameCreator.selectableActions.Bounce, parameters: {}}];
+						else if($("#collisionSelector").val() == "stop")
+							selectedActions = [{action: GameCreator.selectableActions.Stop, parameters: {}}];
+						else if($("#collisionSelector").val() == "destroy")
+							selectedActions = [{action: GameCreator.selectableActions.Destroy, parameters: {}}];
+						else if($("#collisionSelector").val() == "shoot")
+							selectedActions = [{action: GameCreator.selectableActions.Shoot, parameters: {projectileName: "ball"}}];
 						GameCreator.assignSelectedActions(selectedActions);
 					}
 				},
