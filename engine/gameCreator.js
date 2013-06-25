@@ -24,7 +24,7 @@ var GameCreator = {
 	helperFunctions: {},
 	selectedObject: undefined,
 	htmlStrings: {
-		collisionSelector: "<div><select id='collisionSelector'><option value=''>Nothing</option><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option></select></div>"
+		collisionSelector: "<div><select id='collisionSelector'><option value='nothing'>Nothing</option><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option><option value='shoot'>Shoot</option></select></div>"
 	},
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderRObject: {x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
@@ -52,7 +52,7 @@ var GameCreator = {
 	selectableActions: { Bounce: function(target) {this.parent.bounce.call(this, target)},
 						 Stop: function(target) {this.parent.stop.call(this, target)},
 						 Destroy: function(target) {this.parent.destroy.call(this, target)},
-						 Shoot: function() {this.parent.shoot.call(this, projectileName)}
+						 Shoot: function(staticParameters) {this.parent.shoot.call(this, staticParameters)}
 		  },
 
 	addActiveObject: function(args){

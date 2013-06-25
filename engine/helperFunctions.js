@@ -68,7 +68,7 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 GameCreator.helperFunctions.doBorderCollision = function(object, collidedBorder, collisionObject){
 	if(object.parent[collidedBorder] != undefined){
 		for (var i = 0; i < object.parent[collidedBorder].length; i++) {
-			object.parent[collidedBorder][i].call(object, collisionObject);
+			object.parent[collidedBorder][i].action.call(object, collisionObject);
 		}
 	} 
 	else {
@@ -132,7 +132,8 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 					if(object.parent.collisionActions[targetObject.name] != undefined)
 					{
 						for (var j = 0; j < object.parent.collisionActions[targetObject.name].length; j++) {
-							object.parent.collisionActions[targetObject.name][j].call(object, targetObject);
+							
+							object.parent.collisionActions[targetObject.name][j].action.call(object, targetObject);
 						}
 					}
 					else

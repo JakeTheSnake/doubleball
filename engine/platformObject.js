@@ -30,6 +30,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	platformObject.speedX = 0;
 	platformObject.speedY = 0;
 	//Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
+	platformObject.facingLeft = true;
 	platformObject.keyActions = {
 		space: {pressed: false, actions: undefined}
 	};
@@ -42,10 +43,12 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	
 		if(this.parent.keyRightPressed)
 		{
+			this.facingLeft = false;
 			this.accX = 8;
 		}
 		else if(this.parent.keyLeftPressed)
 		{
+			this.facingLeft = true;
 			this.accX = -8;
 		}
 		else if(this.objectBeneath)
@@ -116,9 +119,8 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 		});
 	}
 	
-	platformObject.shoot = function(projectileName){
-		console.log(projectilename);
-		GameCreator.createRuntimeObject(GameCreator.globalObjects[projectileName], {});
+	platformObject.shoot = function(staticParameters){
+		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.projectileName], {x: this.x, y: this.y, speedX: this.facingLeft ? -500 : 500});
 	}
 	
 	platformObject.onDestroy = function(){
@@ -140,13 +142,13 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 					{
 						GameCreator.openSelectActionsWindow(
 							"Pressed " + key + " actions for " + this.parent.name,
-							function(actions, parameters) {keyAction.actions = actions});
+							function(actions) {keyAction.actions = actions});
 					}
 					else
 					{
 						for(var i = 0;i < keyAction.actions.length;++i)
 						{
-							keyAction.actions[i].call(this);
+							keyAction.actions[i].action.call(this, keyAction.actions[i].parameters);
 						}
 					}
 				}

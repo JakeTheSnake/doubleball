@@ -69,10 +69,16 @@ window.onload = function () {
 					text: "Ok",
 					click: function() {
 						$( this ).dialog( "close" );
-						MAYBE MAKE SELECTEDACTIONS CONTAIN OBJECTS WITH FUNCTIONS AND PARAMETERS INSTEAD OF JUST FUNCTIONS
-						selectedActions = [GameCreator.selectableActions.Shoot];
-						//Only for testing shoot:
-						GameCreator.openSelectActionsWindow.params = "ball";
+						if($("#collisionSelector").val() == "nothing")
+							selectedActions = [];
+						else if($("#collisionSelector").val() == "bounce")
+							selectedActions = [{action: GameCreator.selectableActions.Bounce, parameters: {}}];
+						else if($("#collisionSelector").val() == "stop")
+							selectedActions = [{action: GameCreator.selectableActions.Stop, parameters: {}}];
+						else if($("#collisionSelector").val() == "destroy")
+							selectedActions = [{action: GameCreator.selectableActions.Destroy, parameters: {}}];
+						else if($("#collisionSelector").val() == "shoot")
+							selectedActions = [{action: GameCreator.selectableActions.Shoot, parameters: {projectileName: "ball"}}];
 						GameCreator.assignSelectedActions(selectedActions);
 					}
 				},
