@@ -116,6 +116,11 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 		});
 	}
 	
+	platformObject.shoot = function(projectileName){
+		console.log(projectilename);
+		GameCreator.createRuntimeObject(GameCreator.globalObjects[projectileName], {});
+	}
+	
 	platformObject.onDestroy = function(){
 		$(document).off("keydown." + this.name);
 		$(document).off("keyup." + this.name);
@@ -135,7 +140,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 					{
 						GameCreator.openSelectActionsWindow(
 							"Pressed " + key + " actions for " + this.parent.name,
-							function(actions) {keyAction.actions = actions});
+							function(actions, parameters) {keyAction.actions = actions});
 					}
 					else
 					{
