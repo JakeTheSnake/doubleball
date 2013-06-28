@@ -22,6 +22,7 @@ GameCreator.platformObject = {
 
 GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 {
+	platformObject.accX = 0;
 	platformObject.accY = 2;
 	platformObject.moveSpeed = 200;
 	platformObject.keyLeftPressed = false;
@@ -32,7 +33,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	//Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
 	platformObject.facingLeft = true;
 	platformObject.keyActions = {
-		space: {pressed: false, actions: undefined}
+		space: {pressed: false, onCooldown: false, actions: undefined}
 	};
 	
 	platformObject.move = function(modifier)
@@ -120,7 +121,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	}
 	
 	platformObject.shoot = function(staticParameters){
-		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.projectileName], {x: this.x, y: this.y, speedX: this.facingLeft ? -500 : 500});
+		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.projectileName], {x: this.x + (this.facingLeft ? 0 : this.width), y: this.y, speedX: this.facingLeft ? -500 : 500});
 	}
 	
 	platformObject.onDestroy = function(){
@@ -136,7 +137,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 			if(keyActions.hasOwnProperty(key))
 			{
 				var keyAction = keyActions[key];
-				if(keyAction.pressed)
+				if(keyAction.pressed && !keyAction.onCooldown)
 				{
 					if(keyAction.actions == undefined)
 					{
@@ -149,6 +150,11 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 						for(var i = 0;i < keyAction.actions.length;++i)
 						{
 							keyAction.actions[i].action.call(this, keyAction.actions[i].parameters);
+							keyAction.onCooldown = true;
+							//This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
+							(function(keyAction){
+								setTimeout(function(){keyAction.onCooldown = false}, 300);
+							})(keyAction);
 						}
 					}
 				}

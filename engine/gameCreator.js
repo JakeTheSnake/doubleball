@@ -92,6 +92,17 @@ var GameCreator = {
 		return platformObj;
 	},
 	
+	addPlayerTopDownObject: function(args){
+		var image = new Image();
+		image.src = args.src;
+		var topDownObj = this.topDownObject.New(image, args);
+		image.onload = function() {
+			topDownObj.imageReady = true;
+			GameCreator.render();
+		};
+		return topDownObj;
+	},
+	
 	runFrame: function(modifier){
 		var obj;
 		if(!GameCreator.paused){
@@ -307,7 +318,6 @@ var GameCreator = {
 		}
 		else
 		{
-			console.log("set to nothing")
 			if(obj2.name == "borderLeft" || obj2.name == "borderRight" || obj2.name == "borderTop" || obj2.name == "borderBottom")
 				obj1.parent[functionToReplace] = function(){};
 			else
@@ -335,8 +345,6 @@ var GameCreator = {
 	},
 	
 	assignSelectedActions: function(actions) {
-		console.log(GameCreator.openSelectActionsWindow.params);
-		console.log(GameCreator.openSelectActionsWindow.setAction)
 		GameCreator.openSelectActionsWindow.setAction(actions,
 			GameCreator.openSelectActionsWindow.params);
 		GameCreator.resumeGame();

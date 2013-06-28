@@ -51,6 +51,10 @@ GameCreator.sceneObject = {
 		
 		this.objectBeneath = false;
 			
+		//PlayerTopDown properties
+
+		this.facing = 1;
+		
 		globalObj.instantiated();
 	}
 }

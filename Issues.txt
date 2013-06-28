@@ -1,8 +1,9 @@
 TODO:
 
-Delete objects that move too far off screen? (Currently all projectiles remain forever)
+Probably remake platformObject to use an integer based facing system.
+Need to handle initialization of objects that have different runtime  values. (topDown and platform objects have facing for example, though maybe all objects should have this...)
+Can we use an anynomous function for runtime parameters for actions instead of the current parameters handling?
 A platform object bouncing bounces higher and higher the longer the game goes.....
-Add some cooldown to triggering of keypress events?
 
 Drag and drop in edit mode is not working very well.
 onDestroy should probably be a collection of functions to run when an object is destroyed. So that new actions can be bound to the event.

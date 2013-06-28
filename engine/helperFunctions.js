@@ -153,3 +153,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 	
 	}
 }
+
+GameCreator.helperFunctions.calcAngularSpeed = function(maxSpeed){
+	return Math.pow(Math.pow(maxSpeed, 2)/2, 0.5);
+}
