@@ -35,6 +35,9 @@ var GameCreator = {
 			};
 			result += "</select></div>";
 			return result;
+		},
+		inputLabel: function(inputId, labelText) {
+			return "<label for=" + inputId + ">" + labelText + "</label>";
 		}
 	},
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
@@ -62,26 +65,26 @@ var GameCreator = {
 	},
 	
 	selectableActions: { "Bounce": {	action: function(target) {this.parent.bounce.call(this, target)},
-										params: undefined,
-										name: "bounce"
+										params: [],
+										name: "Bounce"
 									},
 						 "Stop": 	{ 	action: function(target) {this.parent.stop.call(this, target)},
-						 				params: undefined,
-						 				name: "stop"
+						 				params: [],
+						 				name: "Stop"
 					 				},
 						 "Destroy": { 	action: function(target) {this.parent.destroy.call(this, target)},
-						 				params: undefined,
-						 				name: "destroy"	
+						 				params: [],
+						 				name: "Destroy"	
 					 				},
 						 "Shoot": 	{ 	action: function(staticParameters) {this.parent.shoot.call(this, staticParameters)},
-						 				params: {	caption: "Object to Shoot",
-						 							elementId: "objectToShoot",
-						 							input: function() {return this.htmlStrings.singleSelector(this.globalObjects)}},
-						 				name: "shoot"
+						 				params: [{	input: function() {return GameCreator.htmlStrings.singleSelector(GameCreator.globalObjects, "selectObjectToShoot")},
+						 							label: function() {return GameCreator.htmlStrings.inputLabel("selectObjectToShoot", "Object to Shoot")}
+						 						}],
+						 				name: "Shoot"
 		  							},
 		  				"Nothing": 	{	action: function(target){},
-		  								params: undefined,
-		  								name: "nothing"
+		  								params: [],
+		  								name: "Nothing"
 	  								}
 	},
 
@@ -368,11 +371,22 @@ var GameCreator = {
 			GameCreator.openSelectActionsWindow.params = params;
 			GameCreator.openSelectActionsWindow.selectedActions = [];
 			$("#selectActionsHeader").html(text);
-			$("#selectActionsContent1").html(GameCreator.htmlStrings.singleSelector(actions));
+			$("#selectActionParametersContainer").html("");
+			$("#selectActionDropdownContainer").html(GameCreator.htmlStrings.singleSelector(actions));
 			$("#selectActionWindow").dialog("open");
+			$("#actionSelector").on("change", function(){
+				$("#selectActionParametersContainer").html("");
+				for(var i = 0;i < actions[$(this).val()].params.length;++i) {
+					$("#selectActionParametersContainer").append(actions[$(this).val()].params[i].label())
+					$("#selectActionParametersContainer").append(actions[$(this).val()].params[i].input());
+				}
+			});
 		}
-		
 	},
+	
+	//params: [{	caption: "Object to Shoot",
+	//					 							elementId: "objectToShoot",
+	//					 							input: function() {return this.htmlStrings.singleSelector(this.globalObjects)}}],
 	
 	assignSelectedActions: function(actions) {
 		GameCreator.openSelectActionsWindow.setAction(actions,
