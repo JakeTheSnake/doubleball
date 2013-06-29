@@ -68,14 +68,14 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 GameCreator.helperFunctions.doBorderCollision = function(object, collidedBorder, collisionObject){
 	if(object.parent[collidedBorder] != undefined){
 		for (var i = 0; i < object.parent[collidedBorder].length; i++) {
-			object.parent[collidedBorder][i].action.call(object, collisionObject);
+			object.parent[collidedBorder][i].action.action.call(object, $.extend({collisionObject: collisionObject}, object.parent[collidedBorder][i].parameters));
 		}
 	} 
 	else {
 		GameCreator.openSelectActionsWindow(
 			"'" + object.parent.name + "' collided with " + collidedBorder,
-			function(actions, params) {object.parent[collidedBorder] = actions},
-			[], GameCreator.selectableActions
+			function(actions) {object.parent[collidedBorder] = actions},
+			$.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)
 		);
 	}
 }
@@ -129,20 +129,23 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 					
 					//Look through collisionActions to see if we already have an action defined for a collision with a targetObject with this name, if so, run that function instead
 					
-					if(object.parent.collisionActions[targetObject.name] != undefined)
+					var currentActions = object.parent.collisionActions[targetObject.name];
+					if(currentActions != undefined)
 					{
-						for (var j = 0; j < object.parent.collisionActions[targetObject.name].length; j++) {
+						for (var j = 0; j < currentActions.length; j++) {
 							
-							object.parent.collisionActions[targetObject.name][j].action.call(object, targetObject);
+							currentActions[j].action.action.call(object, $.extend({collisionObject:targetObject}, currentActions[j].parameters));
 						}
 					}
 					else
 					{
-						GameCreator.openSelectActionsWindow(
-							"'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
-							function(actions, params) {object.parent.collisionActions[params[0].name] = actions},
-							[targetObject], 
-							GameCreator.selectableActions);
+						(function(targetObject){
+							GameCreator.openSelectActionsWindow(
+								"'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
+								function(actions) {object.parent.collisionActions[targetObject.name] = actions},
+								$.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)
+							)
+						})(targetObject)
 					}
 				}
 			}

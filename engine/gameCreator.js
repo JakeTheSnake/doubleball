@@ -38,6 +38,9 @@ var GameCreator = {
 		},
 		inputLabel: function(inputId, labelText) {
 			return "<label for=" + inputId + ">" + labelText + "</label>";
+		},
+		actionRow: function(action) {
+			
 		}
 	},
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
@@ -64,29 +67,38 @@ var GameCreator = {
 		GameCreator.addToRuntime(obj);
 	},
 	
-	selectableActions: { "Bounce": {	action: function(target) {this.parent.bounce.call(this, target)},
-										params: [],
-										name: "Bounce"
-									},
-						 "Stop": 	{ 	action: function(target) {this.parent.stop.call(this, target)},
-						 				params: [],
-						 				name: "Stop"
-					 				},
-						 "Destroy": { 	action: function(target) {this.parent.destroy.call(this, target)},
-						 				params: [],
-						 				name: "Destroy"	
-					 				},
-						 "Shoot": 	{ 	action: function(staticParameters) {this.parent.shoot.call(this, staticParameters)},
-						 				params: [{	input: function() {return GameCreator.htmlStrings.singleSelector(GameCreator.globalObjects, "selectObjectToShoot")},
-						 							label: function() {return GameCreator.htmlStrings.inputLabel("selectObjectToShoot", "Object to Shoot")}
-						 						}],
-						 				name: "Shoot"
-		  							},
-		  				"Nothing": 	{	action: function(target){},
-		  								params: [],
-		  								name: "Nothing"
-	  								}
+	collisionSelectableActions: {"Bounce": {	action: function(params) {this.parent.bounce.call(this, params)},
+												params: [],
+												name: "Bounce"
+											},
+								 "Stop": 	{ 	action: function(params) {this.parent.stop.call(this, params)},
+								 				params: [],
+								 				name: "Stop"
+							 				},
 	},
+	
+	generalSelectableActions: {	"Stop":		{	action: function(params){this.parent.stop.call(this)},
+			  									params: [],
+			  									name: "Stop"
+			  								}
+	},
+	
+	commonSelectableActions: {	"Destroy": { 	action: function(params) {this.parent.destroy.call(this, params)},
+								 				params: [],
+								 				name: "Destroy"	
+							 				},
+								"Shoot": 	{ 	action: function(params) {this.parent.shoot.call(this, params)},
+								 				params: [{	inputId: "objectToShoot",
+								 							input: function() {return GameCreator.htmlStrings.singleSelector(GameCreator.globalObjects, "objectToShoot")},
+								 							label: function() {return GameCreator.htmlStrings.inputLabel("objectToShoot", "Object to Shoot")}
+								 						}],
+								 				name: "Shoot"
+				  							},
+				  				"Nothing": 	{	action: function(params){},
+				  								params: [],
+				  								name: "Nothing"
+			  								},
+		},
 
 	addActiveObject: function(args){
 		console.log("adding active obj with args")
@@ -363,13 +375,14 @@ var GameCreator = {
 	},
 		
 
-	openSelectActionsWindow: function(text, callback, params, actions){
+	openSelectActionsWindow: function(text, callback, actions){
 		//Only select actions if GameCreator isn't already paused for action selection.
 		if(!GameCreator.paused){
 			GameCreator.pauseGame();
 			GameCreator.openSelectActionsWindow.setAction = callback;
-			GameCreator.openSelectActionsWindow.params = params;
+			//GameCreator.openSelectActionsWindow.params = params;
 			GameCreator.openSelectActionsWindow.selectedActions = [];
+			GameCreator.openSelectActionsWindow.selectableActions = actions;
 			$("#selectActionsHeader").html(text);
 			$("#selectActionParametersContainer").html("");
 			$("#selectActionDropdownContainer").html(GameCreator.htmlStrings.singleSelector(actions));
@@ -381,16 +394,12 @@ var GameCreator = {
 					$("#selectActionParametersContainer").append(actions[$(this).val()].params[i].input());
 				}
 			});
+			
 		}
 	},
 	
-	//params: [{	caption: "Object to Shoot",
-	//					 							elementId: "objectToShoot",
-	//					 							input: function() {return this.htmlStrings.singleSelector(this.globalObjects)}}],
-	
 	assignSelectedActions: function(actions) {
-		GameCreator.openSelectActionsWindow.setAction(actions,
-			GameCreator.openSelectActionsWindow.params);
+		GameCreator.openSelectActionsWindow.setAction(actions);
 		GameCreator.resumeGame();
 	}
 }

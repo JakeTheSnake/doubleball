@@ -7,7 +7,6 @@ GameCreator.baseObject = {
 	
 	//Remove object from game arrays
 	destroy: function(){	
-		
 		//Collidables
 		var names = GameCreator.collidableObjects.map(function(x){return x.name});
 		var index = $.inArray(this.name, names);

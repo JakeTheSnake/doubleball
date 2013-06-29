@@ -218,7 +218,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
 			speedY = -angularSpeed;
 			break;
 		}
-		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.projectileName], {x: x, y: y, speedX: speedX, speedY: speedY});
+		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
 	}
 	
 	topDownObject.onDestroy = function(){
@@ -241,14 +241,14 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
 						GameCreator.openSelectActionsWindow(
 							"Pressed " + key + " actions for " + this.parent.name,
 							function(actions) {keyAction.actions = actions},
-							[],
-							GameCreator.selectableActions);
+							$.extend(GameCreator.commonSelectableActions, GameCreator.generalSelectableActions)
+						);
 					}
 					else
 					{
 						for(var i = 0;i < keyAction.actions.length;++i)
 						{
-							keyAction.actions[i].action.call(this, keyAction.actions[i].parameters);
+							keyAction.actions[i].action.action.call(this, keyAction.actions[i].parameters);
 							keyAction.onCooldown = true;
 							//This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
 							(function(keyAction){

@@ -1,8 +1,8 @@
 GameCreator.addObjFunctions.bounceableObjectFunctions = function(object)
 {
-	object.bounce = function(obj)
+	object.bounce = function(params)
 	{
-		switch(GameCreator.helperFunctions.determineQuadrant(obj, this)){
+		switch(GameCreator.helperFunctions.determineQuadrant(params.collisionObject, this)){
 			case 1:
 			this.speedY = -Math.abs(this.speedY);
 			break;

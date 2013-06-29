@@ -121,7 +121,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	}
 	
 	platformObject.shoot = function(staticParameters){
-		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.projectileName], {x: this.x + (this.facingLeft ? 0 : this.width), y: this.y, speedX: this.facingLeft ? -500 : 500});
+		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x + (this.facingLeft ? 0 : this.width), y: this.y, speedX: this.facingLeft ? -500 : 500});
 	}
 	
 	platformObject.onDestroy = function(){
@@ -144,8 +144,8 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 						GameCreator.openSelectActionsWindow(
 							"Pressed " + key + " actions for " + this.parent.name,
 							function(actions) {keyAction.actions = actions},
-							[], 
-							GameCreator.selectableActions);
+							$.extend(GameCreator.commonSelectableActions, GameCreator.generalSelectableActions)
+						);
 					}
 					else
 					{

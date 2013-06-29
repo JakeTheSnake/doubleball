@@ -64,25 +64,26 @@ window.onload = function () {
 		$( "#PlayerObject" ).button();
 		$( "#MouseObject" ).button();
 		$( "#AddActiveObject" ).button();
+		
 		$( "#selectActionWindow" ).dialog({
 			autoOpen: false,
+			open: function(event, ui) {$( "#selectActionAddAction" ).button();},
 			width: 400,
 			buttons: [
 				{
 					text: "Ok",
 					click: function() {
 						$( this ).dialog( "close" );
-						var selectedActions;
-						if($("#actionSelector").val() == "Nothing")
-							selectedActions = [];
-						else if($("#actionSelector").val() == "Bounce")
-							selectedActions = [{action: GameCreator.selectableActions.Bounce.action, parameters: {}}];
-						else if($("#actionSelector").val() == "Stop")
-							selectedActions = [{action: GameCreator.selectableActions.Stop.action, parameters: {}}];
-						else if($("#actionSelector").val() == "Destroy")
-							selectedActions = [{action: GameCreator.selectableActions.Destroy.action, parameters: {}}];
-						else if($("#actionSelector").val() == "Shoot")
-							selectedActions = [{action: GameCreator.selectableActions.Shoot.action, parameters: {projectileName: $("#selectObjectToShoot").val()}}];
+						var selectedActions = [];
+
+						var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
+						selectedAction = {action: action, parameters: {}};
+
+						for (var i = 0; i < action.params.length; i++) {
+							selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
+						}
+						selectedActions.push(selectedAction);
+						
 						GameCreator.assignSelectedActions(selectedActions);
 					}
 				},
