@@ -72,16 +72,17 @@ window.onload = function () {
 					text: "Ok",
 					click: function() {
 						$( this ).dialog( "close" );
-						if($("#collisionSelector").val() == "nothing")
+						var selectedActions;
+						if($("#actionSelector").val() == "nothing")
 							selectedActions = [];
-						else if($("#collisionSelector").val() == "bounce")
-							selectedActions = [{action: GameCreator.selectableActions.Bounce, parameters: {}}];
-						else if($("#collisionSelector").val() == "stop")
-							selectedActions = [{action: GameCreator.selectableActions.Stop, parameters: {}}];
-						else if($("#collisionSelector").val() == "destroy")
-							selectedActions = [{action: GameCreator.selectableActions.Destroy, parameters: {}}];
-						else if($("#collisionSelector").val() == "shoot")
-							selectedActions = [{action: GameCreator.selectableActions.Shoot, parameters: {projectileName: "ball"}}];
+						else if($("#actionSelector").val() == "bounce")
+							selectedActions = [{action: GameCreator.selectableActions.Bounce.action, parameters: {}}];
+						else if($("#actionSelector").val() == "stop")
+							selectedActions = [{action: GameCreator.selectableActions.Stop.action, parameters: {}}];
+						else if($("#actionSelector").val() == "destroy")
+							selectedActions = [{action: GameCreator.selectableActions.Destroy.action, parameters: {}}];
+						else if($("#actionSelector").val() == "shoot")
+							selectedActions = [{action: GameCreator.selectableActions.Shoot.action, parameters: {projectileName: "ball"}}];
 						GameCreator.assignSelectedActions(selectedActions);
 					}
 				},

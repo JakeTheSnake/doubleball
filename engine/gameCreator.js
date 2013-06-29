@@ -24,7 +24,18 @@ var GameCreator = {
 	helperFunctions: {},
 	selectedObject: undefined,
 	htmlStrings: {
-		collisionSelector: "<div><select id='collisionSelector'><option value='nothing'>Nothing</option><option value='bounce'>Bounce</option><option value='stop'>Stop</option><option value='destroy'>Destroy</option><option value='shoot'>Shoot</option></select></div>"
+		singleSelector: function(collection, elementId) {
+			if(elementId == undefined)
+				elementId = "actionSelector"
+			var result = "<div><select id='" + elementId + "'>";
+			for (key in collection) {
+				if (collection.hasOwnProperty(key)) {
+					result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'>" + key + "</option>";
+				}
+			};
+			result += "</select></div>";
+			return result;
+		}
 	},
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderRObject: {x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
@@ -49,11 +60,30 @@ var GameCreator = {
 		obj.instantiate(globalObj, args);
 		GameCreator.addToRuntime(obj);
 	},
-	selectableActions: { Bounce: function(target) {this.parent.bounce.call(this, target)},
-						 Stop: function(target) {this.parent.stop.call(this, target)},
-						 Destroy: function(target) {this.parent.destroy.call(this, target)},
-						 Shoot: function(staticParameters) {this.parent.shoot.call(this, staticParameters)}
-		  },
+	
+	selectableActions: { "Bounce": {	action: function(target) {this.parent.bounce.call(this, target)},
+										params: undefined,
+										name: "bounce"
+									},
+						 "Stop": 	{ 	action: function(target) {this.parent.stop.call(this, target)},
+						 				params: undefined,
+						 				name: "stop"
+					 				},
+						 "Destroy": { 	action: function(target) {this.parent.destroy.call(this, target)},
+						 				params: undefined,
+						 				name: "destroy"	
+					 				},
+						 "Shoot": 	{ 	action: function(staticParameters) {this.parent.shoot.call(this, staticParameters)},
+						 				params: {	caption: "Object to Shoot",
+						 							elementId: "objectToShoot",
+						 							input: function() {return this.htmlStrings.singleSelector(this.globalObjects)}},
+						 				name: "shoot"
+		  							},
+		  				"Nothing": 	{	action: function(target){},
+		  								params: undefined,
+		  								name: "nothing"
+	  								}
+	},
 
 	addActiveObject: function(args){
 		console.log("adding active obj with args")
@@ -330,7 +360,7 @@ var GameCreator = {
 	},
 		
 
-	openSelectActionsWindow: function(text, callback, params){
+	openSelectActionsWindow: function(text, callback, params, actions){
 		//Only select actions if GameCreator isn't already paused for action selection.
 		if(!GameCreator.paused){
 			GameCreator.pauseGame();
@@ -338,7 +368,7 @@ var GameCreator = {
 			GameCreator.openSelectActionsWindow.params = params;
 			GameCreator.openSelectActionsWindow.selectedActions = [];
 			$("#selectActionsHeader").html(text);
-			$("#selectActionsContent1").html(GameCreator.htmlStrings.collisionSelector);
+			$("#selectActionsContent1").html(GameCreator.htmlStrings.singleSelector(actions));
 			$("#selectActionWindow").dialog("open");
 		}
 		

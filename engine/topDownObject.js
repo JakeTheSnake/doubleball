@@ -165,7 +165,6 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
 		var x, y, speedX = 0, speedY = 0;
 		var projectileSpeed = 600;
 		var angularSpeed = GameCreator.helperFunctions.calcAngularSpeed(projectileSpeed);
-		console.log(facing);
 		switch(facing){
 			case 1:
 			x = this.x + this.width / 2;
@@ -241,7 +240,9 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
 					{
 						GameCreator.openSelectActionsWindow(
 							"Pressed " + key + " actions for " + this.parent.name,
-							function(actions) {keyAction.actions = actions});
+							function(actions) {keyAction.actions = actions},
+							[],
+							GameCreator.selectableActions);
 					}
 					else
 					{

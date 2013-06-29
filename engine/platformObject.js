@@ -143,7 +143,9 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 					{
 						GameCreator.openSelectActionsWindow(
 							"Pressed " + key + " actions for " + this.parent.name,
-							function(actions) {keyAction.actions = actions});
+							function(actions) {keyAction.actions = actions},
+							[], 
+							GameCreator.selectableActions);
 					}
 					else
 					{

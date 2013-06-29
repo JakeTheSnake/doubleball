@@ -75,7 +75,7 @@ GameCreator.helperFunctions.doBorderCollision = function(object, collidedBorder,
 		GameCreator.openSelectActionsWindow(
 			"'" + object.parent.name + "' collided with " + collidedBorder,
 			function(actions, params) {object.parent[collidedBorder] = actions},
-			[]
+			[], GameCreator.selectableActions
 		);
 	}
 }
@@ -141,7 +141,8 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 						GameCreator.openSelectActionsWindow(
 							"'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
 							function(actions, params) {object.parent.collisionActions[params[0].name] = actions},
-							[targetObject]);
+							[targetObject], 
+							GameCreator.selectableActions);
 					}
 				}
 			}
@@ -156,4 +157,11 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 
 GameCreator.helperFunctions.calcAngularSpeed = function(maxSpeed){
 	return Math.pow(Math.pow(maxSpeed, 2)/2, 0.5);
+}
+
+GameCreator.helperFunctions.toString = function(thing){
+	if(typeof(thing) == "object")
+		return thing.name;
+	else
+		return "" + thing;
 }

@@ -1,5 +1,6 @@
 TODO:
 
+Fix bounce and stop for topDownObject
 Probably remake platformObject to use an integer based facing system.
 Need to handle initialization of objects that have different runtime  values. (topDown and platform objects have facing for example, though maybe all objects should have this...)
 Can we use an anynomous function for runtime parameters for actions instead of the current parameters handling?
