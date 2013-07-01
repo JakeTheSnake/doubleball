@@ -46,7 +46,7 @@ var GameCreator = {
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderRObject: {x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderTObject: {x: -500, y: -500, height: 500, width: GCWidth + 1000},
-	collideBorderBObject: {x: -500, y: GCHeight + 500, height: 500, width: GCWidth + 1000},
+	collideBorderBObject: {x: -500, y: GCHeight, height: 500, width: GCWidth + 1000},
 	
 	reset: function() {
 		this.collidableObjects = [];
@@ -151,6 +151,13 @@ var GameCreator = {
 	runFrame: function(modifier){
 		var obj;
 		if(!GameCreator.paused){
+			for (var i=0;i < GameCreator.movableObjects.length;++i) {
+				if(!GameCreator.paused)
+				{
+					obj = GameCreator.movableObjects[i];
+					obj.parent.calculateSpeed.call(obj, modifier);
+				}
+			}
 			for (var i=0;i < GameCreator.collidableObjects.length;++i) {
 				GameCreator.helperFunctions.checkCollisions(GameCreator.collidableObjects[i]);
 			}

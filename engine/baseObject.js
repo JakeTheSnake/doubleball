@@ -32,5 +32,10 @@ GameCreator.baseObject = {
 	
 	onDestroy: function(){},
 	
-	checkEvents: function(){}
+	checkEvents: function(){},
+	
+	move: function(modifier){
+		this.x += this.speedX * modifier;
+		this.y += this.speedY * modifier;
+	}
 }

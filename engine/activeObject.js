@@ -20,9 +20,7 @@ GameCreator.activeObject = {
 
 GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 {	
-	activeObject.move = function(modifier){
-		this.x += this.speedX * modifier;
-		this.y += this.speedY * modifier;
+	activeObject.calculateSpeed = function(modifier){
 		this.speedY += this.accY;
 		this.speedX += this.accX;
 	}
