@@ -1,3 +1,5 @@
+debugCounter = 0;
+
 window.onload = function () {
 		GameCreator.canvas = document.createElement("canvas");
 		GameCreator.context = GameCreator.canvas.getContext("2d");
@@ -7,6 +9,8 @@ window.onload = function () {
 		
 		GameCreator.scenes.push([]);
 		GameCreator.activeScene = 0;
+		
+		//Create ActiveObjects
 		
 		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:20, height:20})
 		//var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:100, height:100})
@@ -24,6 +28,8 @@ window.onload = function () {
 		
 		//var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", name: "platformZealot", width: 80, height: 80})
 		//GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
+		
+		//Create TopDownObject
 		
 		var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
 		GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
@@ -75,15 +81,14 @@ window.onload = function () {
 					click: function() {
 						$( this ).dialog( "close" );
 						var selectedActions = [];
-
+					
 						var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
-						selectedAction = {action: action, parameters: {}};
+						selectedAction = {action: action.action, parameters: {}};
 
 						for (var i = 0; i < action.params.length; i++) {
 							selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
 						}
 						selectedActions.push(selectedAction);
-						
 						GameCreator.assignSelectedActions(selectedActions);
 					}
 				},

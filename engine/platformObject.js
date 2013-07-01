@@ -148,7 +148,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 					{
 						for(var i = 0;i < keyAction.actions.length;++i)
 						{
-							keyAction.actions[i].action.action.call(this, keyAction.actions[i].parameters);
+							keyAction.actions[i].action.call(this, keyAction.actions[i].parameters);
 							keyAction.onCooldown = true;
 							//This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
 							(function(keyAction){
