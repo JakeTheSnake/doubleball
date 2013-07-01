@@ -21,6 +21,8 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject)
 	mouseObject.latestMouseX = 0;
 	mouseObject.latestMouseY = 0;
 	
+	mouseObject.calculateSpeed = function(){};
+	
 	mouseObject.move = function()
 	{	
 		var offset = $(GameCreator.canvas).offset();
@@ -34,7 +36,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject)
 			this.y = this.maxY;
 		else if(this.y < this.minY)
 			this.y = this.minY;
-	}
+	};
 	
 	mouseObject.instantiated = function()
 	{
@@ -44,10 +46,10 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject)
 			that.latestMouseX = evt.pageX;
 			that.latestMouseY = evt.pageY;
 		});
-	}
+	};
 	
 	mouseObject.onDestroy = function()
 	{
 		$(GameCreator.canvas).off("mousemove." + this.name);
-	}
+	};
 }
