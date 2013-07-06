@@ -70,26 +70,30 @@ window.onload = function () {
 		$( "#PlayerObject" ).button();
 		$( "#MouseObject" ).button();
 		$( "#AddActiveObject" ).button();
+		$( "#selectActionAddAction" ).click(function( event ) {				
+				var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
+				selectedAction = {action: action.action, parameters: {}};
+
+				for (var i = 0; i < action.params.length; i++) {
+					selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
+				}
+				GameCreator.openSelectActionsWindow.selectedActions.push(selectedAction);
+				$("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+			});
 		
 		$( "#selectActionWindow" ).dialog({
 			autoOpen: false,
-			open: function(event, ui) {$( "#selectActionAddAction" ).button();},
+			open: function(event, ui) {
+				$( "#selectActionAddAction" ).button();
+				},
 			width: 400,
 			buttons: [
 				{
 					text: "Ok",
 					click: function() {
 						$( this ).dialog( "close" );
-						var selectedActions = [];
-					
-						var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
-						selectedAction = {action: action.action, parameters: {}};
-
-						for (var i = 0; i < action.params.length; i++) {
-							selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
-						}
-						selectedActions.push(selectedAction);
-						GameCreator.assignSelectedActions(selectedActions);
+						$("#selectActionResult").html("");
+						GameCreator.assignSelectedActions(GameCreator.openSelectActionsWindow.selectedActions);
 					}
 				},
 				{

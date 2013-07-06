@@ -39,8 +39,15 @@ var GameCreator = {
 		inputLabel: function(inputId, labelText) {
 			return "<label for=" + inputId + ">" + labelText + "</label>";
 		},
-		actionRow: function(action) {
-			
+		actionRow: function(name, action) {
+			var result = "<div>" + name + " ";
+			for (key in action.parameters) {
+				if (action.parameters.hasOwnProperty(key)) {
+					result += key + ": " + action.parameters[key];
+				}
+			}
+			result += "</div>";
+			return result;
 		}
 	},
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
