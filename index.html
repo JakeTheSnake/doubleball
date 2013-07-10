@@ -111,8 +111,14 @@
 			</div>
 		</div>
 	</div>
+	<button id="direct" onClick="GameCreator.directActiveScene()">Start Directing</button>
+	<div>
+		<textarea id="saveGameTextArea" style="width:500px;height:300px;"></textarea>
+	</div>
+	<button id="saveGameButton" onClick="$('#saveGameTextArea').val(GameCreator.saveState())">Save Game</button>
+	<button id="loadGameButton" onClick="GameCreator.restoreState($('#saveGameTextArea').val())">Load Game</button>
 </div>
-<button id="direct" onClick="GameCreator.directActiveScene()">Start Directing</button>
+
 
 <div id="selectActionWindow"  title="Dialog Title">
 	<span id="selectActionsHeader"></span>
