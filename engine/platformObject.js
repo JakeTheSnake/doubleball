@@ -15,7 +15,45 @@ GameCreator.platformObject = {
 		obj.isMovable = true;
 		obj.isRenderable = true;
 		obj.isEventable = true;
+		
+		obj.objectType = "platformObject";
+		
 		GameCreator.globalObjects[obj.name] = obj;
+		return obj;
+	},
+	
+	createFromSaved: function(savedObject){
+		var obj = Object.create(GameCreator.baseObject);
+		
+		var image = new Image();
+		image.src = savedObject.imageSrc;
+		obj.image = image;
+		
+		GameCreator.addObjFunctions.platformObjectFunctions(obj);
+		GameCreator.addObjFunctions.collidableObjectFunctions(obj);
+		GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
+		GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
+		
+		obj.isCollidable = true;
+		obj.isMovable = true;
+		obj.isRenderable = true;
+		obj.isEventable = true;
+		
+		image.onload = function() {
+			obj.imageReady = true;
+			GameCreator.render();
+		};
+		
+		for(name in savedObject){
+			if (savedObject.hasOwnProperty(name)) {
+				obj[name] = savedObject[name];	
+			}
+		}
+		
+		GameCreator.globalObjects[obj.name] = obj;
+		
+		obj.instantiated();
+		
 		return obj;
 	}
 }

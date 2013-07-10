@@ -108,8 +108,6 @@ var GameCreator = {
 		},
 
 	addActiveObject: function(args){
-		console.log("adding active obj with args")
-		console.log(args)
 		var image = new Image();
 		image.src = args.src;
 		var activeObj = GameCreator.activeObject.New(image, args);
@@ -121,8 +119,6 @@ var GameCreator = {
 	},
 	
 	addPlayerMouseObject: function(args){
-		console.log("adding mouse obj with args")
-		console.log(args)
 		var image = new Image();
 		image.src = args.src;
 		var mouseObj = this.mouseObject.New(image, args);
@@ -243,7 +239,6 @@ var GameCreator = {
 		}
 		
 		$(GameCreator.canvas).on("mousedown", function(e){
-			console.log("clicked")
 			GameCreator.findClickedObject(e.pageX, e.pageY);
 		});
 		
@@ -415,5 +410,76 @@ var GameCreator = {
 	assignSelectedActions: function(actions) {
 		GameCreator.openSelectActionsWindow.setAction(actions);
 		GameCreator.resumeGame();
+	},
+	
+	saveState: function() {
+		var results = {globalObjects: {}, scenes: []};
+		//TODO: Put this array somewhere more "configy"
+		
+		//Save global objects
+		var attrsToCopy = ["accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType"];
+		var objects = GameCreator.globalObjects;
+		for (name in objects) {
+			if (objects.hasOwnProperty(name)) {
+				var oldObject = objects[name];
+				var newObject = {};
+				for (i in attrsToCopy) {
+					var attribute = attrsToCopy[i]
+					if(oldObject.hasOwnProperty(attribute))
+						newObject[attribute] = oldObject[attribute];	
+				}
+				newObject.imageSrc = $(oldObject.image).attr("src");
+				results.globalObjects[newObject.name] = newObject;
+			}
+		};
+		
+		//Save scenes
+		for(var i = 0; i < GameCreator.scenes.length; i++){
+			var scene = GameCreator.scenes[i]
+			var newScene = [];
+			for(var n = 0; n < scene.length; n++){
+				var oldObject = scene[n];
+				var newObject = jQuery.extend({}, oldObject);
+				//Need to save the name of the global object parent rather than the reference so it can be JSONified.
+				newObject.parent = parent.name;
+				newObject.instantiate = undefined;
+				newScene.push(newObject);
+			}
+			results.scenes.push(newScene);
+		}
+		return JSONfn.stringify(results);
+	},
+	
+	restoreState: function(savedJson) {
+		//Remove old state
+		for (var i = 0; i < GameCreator.scenes.length; i++) {
+			for(var n = 0; n < GameCreator.scenes[i].length; n++) {
+				GameCreator.scenes[i][n].parent.destroy.call(GameCreator.scenes[i][n]);
+			}
+		}
+		GameCreator.scenes = [];
+		GameCreator.globalObjects = {};
+		
+		//Load globalObjects
+		var parsedSave = JSONfn.parse(savedJson);
+		for (name in parsedSave.globalObjects) {
+			if (parsedSave.globalObjects.hasOwnProperty(name)) {
+				var object = parsedSave.globalObjects[name];
+				GameCreator[object.objectType].createFromSaved(object);
+			}
+		}
+		
+		//Load scenes
+		for (var i = 0; i < parsedSave.scenes.length; i++) {
+			var newScene = [];
+			var savedScene = parsedSave.scenes[i];
+			for(var n = 0; n < savedScene.length; n++) {
+				var object = savedScene[n];
+				object.parent = GameCreator.globalObjects[object.name];
+				newScene.push(object);
+			}
+			GameCreator.scenes.push(newScene);
+		}
+		GameCreator.editScene(GameCreator.scenes[0]);
 	}
 }

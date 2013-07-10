@@ -8,10 +8,46 @@ GameCreator.mouseObject = {
 		obj.name = args.name;
 		obj.width = args.width;
 		obj.height = args.height;
+		
 		obj.isCollidable = true;
 		obj.isMovable = true;
 		obj.isRenderable = true;
+		
+		obj.objectType = "mouseObject";
+		
 		GameCreator.globalObjects[obj.name] = obj;
+		return obj;
+	},
+	
+	createFromSaved: function(savedObject){	
+		var obj = Object.create(GameCreator.baseObject);
+		
+		var image = new Image();
+		image.src = savedObject.imageSrc;
+		obj.image = image;
+		
+		GameCreator.addObjFunctions.mouseObjectFunctions(obj);
+		GameCreator.addObjFunctions.collidableObjectFunctions(obj);
+		
+		obj.isCollidable = true;
+		obj.isMovable = true;
+		obj.isRenderable = true;
+		
+		image.onload = function() {
+			obj.imageReady = true;
+			GameCreator.render();
+		};
+		
+		for(name in savedObject){
+			if (savedObject.hasOwnProperty(name)) {
+				obj[name] = savedObject[name];	
+			}
+		}
+		
+		GameCreator.globalObjects[obj.name] = obj;
+		
+		obj.instantiated();
+		
 		return obj;
 	}
 }

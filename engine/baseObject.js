@@ -4,6 +4,7 @@ GameCreator.baseObject = {
 	width: 0,
 	height: 0,
 	imageReady: false,
+	objectType: "baseObject",
 	
 	//Remove object from game arrays
 	destroy: function(){	
