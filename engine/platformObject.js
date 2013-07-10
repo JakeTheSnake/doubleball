@@ -61,7 +61,7 @@ GameCreator.platformObject = {
 GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 {
 	platformObject.accX = 0;
-	platformObject.accY = 2;
+	platformObject.accY = 0;
 	platformObject.moveSpeed = 200;
 	platformObject.keyLeftPressed = false;
 	platformObject.keyRightPressed = false;

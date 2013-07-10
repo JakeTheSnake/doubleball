@@ -31,8 +31,8 @@ window.onload = function () {
 		
 		//Create TopDownObject
 		
-		var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
-		GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
+		//var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
+		//GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
 		
 		//GameCreator.loadScene(GameCreator.scenes[0]);
 		
@@ -109,46 +109,47 @@ window.onload = function () {
 	}
 	
 	function addActiveObject(){
-		GameCreator.addActiveObject({
+		var obj = GameCreator.addActiveObject({
 			name: $("#addActiveObjectName").val(),
 			width: parseInt($("#addActiveObjectWidth").val()),
 			height: parseInt($("#addActiveObjectHeight").val()),
-			x: parseInt($("#addActiveObjectX").val()),
-			y: parseInt($("#addActiveObjectY").val()),
-			speedX: parseInt($("#addActiveObjectSpeedX").val()),
-			speedY: parseInt($("#addActiveObjectSpeedY").val()),
 			src: $("#addActiveObjectSrc").val()
 		});
+		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addActiveObjectX").val()), y: parseInt($("#addActiveObjectY").val()), speedX: parseInt($("#addActiveObjectSpeedX").val()), speedY: parseInt($("#addActiveObjectSpeedY").val())});
+		GameCreator.renderableObjects.push(sceneObj);
 	}
 	
 	function addPlayerMouseObject(){
-		GameCreator.addPlayerMouseObject({
+		var obj = GameCreator.addPlayerMouseObject({
 			name: $("#addPlayerObjectName").val(),
 			width: parseInt($("#addPlayerObjectWidth").val()),
 			height: parseInt($("#addPlayerObjectHeight").val()),
-			x: parseInt($("#addPlayerObjectX").val()),
-			y: parseInt($("#addPlayerObjectY").val()),
-			speedX: parseInt($("#addPlayerObjectSpeedX").val()),
-			speedY: parseInt($("#addPlayerObjectSpeedY").val()),
 			src: $("#addPlayerObjectSrc").val(),
-			maxX: parseInt($("#addPlayerMouseObjectMaxX").val()),
-			maxY: parseInt($("#addPlayerMouseObjectMaxY").val()),
-			minX: parseInt($("#addPlayerMouseObjectMinX").val()),
-			minY: parseInt($("#addPlayerMouseObjectMinY").val()),
 		});
+		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addPlayerObjectX").val()), y: parseInt($("#addPlayerObjectY").val()), maxX: parseInt($("#addPlayerMouseObjectMaxX").val()), maxY: parseInt($("#addPlayerMouseObjectMaxY").val()), minX: parseInt($("#addPlayerMouseObjectMinX").val()), minY: parseInt($("#addPlayerMouseObjectMinY").val())});
+		GameCreator.renderableObjects.push(sceneObj);
 	}
 	
 	function addPlayerPlatformObject(){
-		GameCreator.addPlayerPlatformObject({
+		var obj = GameCreator.addPlayerPlatformObject({
 			name: $("#addPlayerObjectName").val(),
 			width: parseInt($("#addPlayerObjectWidth").val()),
 			height: parseInt($("#addPlayerObjectHeight").val()),
-			x: parseInt($("#addPlayerObjectX").val()),
-			y: parseInt($("#addPlayerObjectY").val()),
-			speedX: parseInt($("#addPlayerObjectSpeedX").val()),
-			speedY: parseInt($("#addPlayerObjectSpeedY").val()),
 			src: $("#addPlayerObjectSrc").val(),
 		});
+		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addPlayerObjectX").val()), y: parseInt($("#addPlayerObjectY").val())});
+		GameCreator.renderableObjects.push(sceneObj);
+	}
+	
+	function addPlayerTopDownObject(){
+		var obj = GameCreator.addPlayerTopDownObject({
+			name: $("#addPlayerObjectName").val(),
+			width: parseInt($("#addPlayerObjectWidth").val()),
+			height: parseInt($("#addPlayerObjectHeight").val()),
+			src: $("#addPlayerObjectSrc").val(),
+		});
+		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addPlayerObjectX").val()), y: parseInt($("#addPlayerObjectY").val())});
+		GameCreator.renderableObjects.push(sceneObj);
 	}
 	
 	function switchPane(paneId){

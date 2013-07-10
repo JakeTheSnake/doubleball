@@ -50,6 +50,11 @@ GameCreator.sceneObject = {
 		//PlayerPlatform properties
 		
 		this.objectBeneath = false;
+		
+		//If it is a platformObject add gravity by default.
+		if(globalObj.objectType == "platformObject") {
+			this.accY = args.accY != undefined ? args.accY : 5;
+		}
 			
 		//PlayerTopDown properties
 

@@ -1,5 +1,6 @@
 TODO:
 
+Handle addition of new objects to globalObjects and to scenes. (Now new objects are put into global and immediately instantiated into the active scene).
 How do we handle selection of actions on collision events on the mouse object? Bounce and stop make no sense on this.
 Fixa destroy så inte alla objekt förstörs när det sista kolliderar
 Need to handle initialization of objects that have different runtime  values. (topDown and platform objects have facing for example, though maybe all objects should have this...)

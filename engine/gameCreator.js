@@ -66,6 +66,7 @@ var GameCreator = {
 		var obj = Object.create(GameCreator.sceneObject);
 		obj.instantiate(globalObj, args);
 		scene.push(obj);
+		return obj;
 	},
 	
 	createRuntimeObject: function(globalObj, args){
