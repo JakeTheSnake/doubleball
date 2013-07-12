@@ -43,14 +43,14 @@ GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
 {	
 	object.stop = function(params)
 	{
-		obj = params.collisionObject
-		if(obj == undefined)
+		if(!params || !params.hasOwnProperty("collisionObject"))
 		{
 			this.speedY = 0;
 			this.speedX = 0;	
 		}
 		else
 		{
+			var obj = params.collisionObject
 			var quadrant = GameCreator.helperFunctions.determineQuadrant(obj, this);
 			if(this.speedY > 0 && quadrant == 1)
 			{
