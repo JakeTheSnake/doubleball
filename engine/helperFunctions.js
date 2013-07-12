@@ -168,3 +168,8 @@ GameCreator.helperFunctions.toString = function(thing){
 	else
 		return "" + thing;
 }
+
+GameCreator.helperFunctions.calcUnitVectorFromSpeed = function(speedX, speedY){
+	var magnitude = Math.sqrt((speedX * speedX) + (speedY * speedY));
+	return {x: speedX/magnitude, y: speedY/magnitude};
+}

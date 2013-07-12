@@ -63,4 +63,10 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 		this.speedY += this.accY;
 		this.speedX += this.accX;
 	}
+	
+	activeObject.shoot = function(staticParameters){
+		var projectileSpeed = 600;
+		var unitVector = GameCreator.helperFunctions.calcUnitVectorFromSpeed(this.speedX, this.speedY);
+		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x, y: this.y, speedX: unitVector.x * projectileSpeed, speedY: unitVector.y * projectileSpeed});
+	}
 }
