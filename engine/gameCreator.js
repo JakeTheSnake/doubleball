@@ -23,6 +23,7 @@ var GameCreator = {
 	addObjFunctions: {},
 	helperFunctions: {},
 	selectedObject: undefined,
+	idCounter: 0,
 	htmlStrings: {
 		singleSelector: function(collection, elementId) {
 			if(elementId == undefined)
@@ -414,7 +415,7 @@ var GameCreator = {
 	},
 	
 	saveState: function() {
-		var results = {globalObjects: {}, scenes: []};
+		var results = {globalObjects: {}, scenes: [], idCounter: 0};
 		//TODO: Put this array somewhere more "configy"
 		
 		//Save global objects
@@ -448,6 +449,9 @@ var GameCreator = {
 			}
 			results.scenes.push(newScene);
 		}
+		
+		results.idCounter = GameCreator.idCounter;
+		
 		return JSONfn.stringify(results);
 	},
 	
@@ -481,6 +485,14 @@ var GameCreator = {
 			}
 			GameCreator.scenes.push(newScene);
 		}
+		
+		GameCreator.idCounter = parsedSave.idCounter;
+		
 		GameCreator.editScene(GameCreator.scenes[0]);
+	},
+	
+	getUniqueId: function() {
+		this.idCounter++;
+		return this.idCounter;
 	}
 }

@@ -14,9 +14,10 @@ GameCreator.sceneObject = {
 	//Global object this refers to.
 	parent: undefined,
 	
-	//Name of object, same as name of global object from which it was created.
+	//Name of object, by default same as the name of global object from which it was created.
 	name: undefined,
 	
+	//Unique ID for this specific scene object.
 	instanceId: undefined,
 	
 	instantiate: function(globalObj, args){
@@ -29,7 +30,8 @@ GameCreator.sceneObject = {
 		this.width = args.width != undefined ? args.width : globalObj.width;
 		this.height = args.height != undefined ? args.height : globalObj.height;
 		this.parent = globalObj;
-		this.name = globalObj.name;
+		this.name = args.name != undefined ? args.name : globalObj.name;
+		this.instanceId = this.name + GameCreator.getUniqueId();
 		
 		//PlayerMouse properties
 		

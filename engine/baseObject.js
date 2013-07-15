@@ -9,20 +9,20 @@ GameCreator.baseObject = {
 	//Remove object from game arrays
 	destroy: function(){	
 		//Collidables
-		var names = GameCreator.collidableObjects.map(function(x){return x.name});
-		var index = $.inArray(this.name, names);
+		var ids = GameCreator.collidableObjects.map(function(x){return x.instanceId});
+		var index = $.inArray(this.instanceId, ids);
 		if(index != -1)
 			GameCreator.collidableObjects.splice(index, 1);
 			
 		//Movables
-		names = GameCreator.movableObjects.map(function(x){return x.name});
-		index = $.inArray(this.name, names);
+		ids = GameCreator.movableObjects.map(function(x){return x.instanceId});
+		index = $.inArray(this.instanceId, ids);
 		if(index != -1)
 			GameCreator.movableObjects.splice(index, 1);
 		
 		//Renderables
-		names = GameCreator.renderableObjects.map(function(x){return x.name});
-		index = $.inArray(this.name, names);
+		ids = GameCreator.renderableObjects.map(function(x){return x.instanceId});
+		index = $.inArray(this.instanceId, ids);
 		if(index != -1)
 			GameCreator.renderableObjects.splice(index, 1);
 		
