@@ -115,8 +115,6 @@ window.onload = function () {
 			height: parseInt($("#addActiveObjectHeight").val()),
 			src: $("#addActiveObjectSrc").val()
 		});
-		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addActiveObjectX").val()), y: parseInt($("#addActiveObjectY").val()), speedX: parseInt($("#addActiveObjectSpeedX").val()), speedY: parseInt($("#addActiveObjectSpeedY").val())});
-		GameCreator.renderableObjects.push(sceneObj);
 	}
 	
 	function addPlayerMouseObject(){
@@ -126,8 +124,6 @@ window.onload = function () {
 			height: parseInt($("#addPlayerObjectHeight").val()),
 			src: $("#addPlayerObjectSrc").val(),
 		});
-		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addPlayerObjectX").val()), y: parseInt($("#addPlayerObjectY").val()), maxX: parseInt($("#addPlayerMouseObjectMaxX").val()), maxY: parseInt($("#addPlayerMouseObjectMaxY").val()), minX: parseInt($("#addPlayerMouseObjectMinX").val()), minY: parseInt($("#addPlayerMouseObjectMinY").val())});
-		GameCreator.renderableObjects.push(sceneObj);
 	}
 	
 	function addPlayerPlatformObject(){

@@ -24,8 +24,9 @@
 <script src="engine/topDownObject.js"></script>
 </head>
 <body>
-<div id="mainCanvas" style="float:left"></div>
-<div id="mainMenu">
+<div id="globalObjectList" style="float:left; width: 100px">&nbsp;</div>
+<div id="mainCanvas" style="position: absolute; left:100px"></div>
+<div id="mainMenu" style="position: absolute; left:900px">
 	<div id="mainMenuTabs">		
 		<a href="" id="mainMenuCreateActive" onclick="switchPane('#addActiveObjectPane');return false;">Create Active Object</a>
 		<a href="" id="mainMenuCreatePlayer" onclick="switchPane('#addPlayerObjectPane');return false;">Create Player Object</a>

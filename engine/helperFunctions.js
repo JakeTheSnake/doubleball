@@ -173,3 +173,23 @@ GameCreator.helperFunctions.calcUnitVectorFromSpeed = function(speedX, speedY){
 	var magnitude = Math.sqrt((speedX * speedX) + (speedY * speedY));
 	return {x: speedX/magnitude, y: speedY/magnitude};
 }
+
+/**
+ * name: Name of the object
+ * operation: function(count), that decides if the condition
+			  is fulfilled or not for this many found objects.
+			  (At least, exactly, at most)
+ */
+GameCreator.helperFunctions.exists = function(name, operation) {
+	var found = 0;
+	for (var i = 0; i < GameCreator.collidableObjects.length; i++) {
+		if (operation(found)) {
+			return true;
+		}
+		if (GameCreator.collidableObjects[i].name == name) {
+			found++;
+		}
+	}
+	return false;
+	// TODO, iterate through rest of runtime objects
+}

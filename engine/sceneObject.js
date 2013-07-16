@@ -4,8 +4,7 @@ GameCreator.sceneObject = {
 	accX: 0,
 	accY: 0,
 	speedX: 0,
-	speedY: 0,
-	
+	speedY: 0,	
 	image: undefined,
 	
 	clickOffsetX: 0,

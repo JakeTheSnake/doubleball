@@ -8,7 +8,10 @@ var GameCreator = {
 	//State can be 'editing', 'directing' or 'playing'. 
 	state: 'editing',
 	then: undefined,
+	draggedGlobalElement: undefined,
 	context: undefined,
+	canvasOffsetX: 100,
+	canvasOffsetY: 0,
 	//Contains key value pairs where key is the (unique)name of the object.
 	globalObjects: {},
 	//Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
@@ -49,6 +52,15 @@ var GameCreator = {
 			}
 			result += "</div>";
 			return result;
+		},
+		globalObjectElement: function(object) {
+			var image = object.image;
+			$(image).css("width","90");
+			var span = $(document.createElement("span")).append(object.name);
+			var div = $(document.createElement("div")).append(span).append(image);
+			$(div).attr("id", "globalObjectElement_" + object.name);
+			$(div).css("border-bottom","solid 1px");
+			return div;
 		}
 	},
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
@@ -113,6 +125,7 @@ var GameCreator = {
 		var image = new Image();
 		image.src = args.src;
 		var activeObj = GameCreator.activeObject.New(image, args);
+		GameCreator.createGlobalListElement(activeObj);
 		image.onload = function() {
 			activeObj.imageReady = true;
 			GameCreator.render();
@@ -236,26 +249,58 @@ var GameCreator = {
 		//renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
 		for (var i=0;i < scene.length;++i) {
 			var obj = scene[i];
-			if(obj.parent.isRenderable)
+			if(obj.parent.isRenderable) {
 				GameCreator.renderableObjects.push(obj);
+			}
 		}
 		
 		$(GameCreator.canvas).on("mousedown", function(e){
-			GameCreator.findClickedObject(e.pageX, e.pageY);
+			GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
 		});
 		
 		$(GameCreator.canvas).on("mouseup", function(){
 			GameCreator.selectedObject = undefined;
-		})
+		});
 		
 		$(GameCreator.canvas).on("mousemove", function(e){
 			if(GameCreator.selectedObject)
 			{
-				GameCreator.selectedObject.x = e.pageX - GameCreator.selectedObject.clickOffsetX;
-				GameCreator.selectedObject.y = e.pageY - GameCreator.selectedObject.clickOffsetY;
+				GameCreator.selectedObject.x = e.pageX - $("#mainCanvas").offset().left - GameCreator.selectedObject.clickOffsetX;
+				GameCreator.selectedObject.y = e.pageY - $("#mainCanvas").offset().top - GameCreator.selectedObject.clickOffsetY;
 				GameCreator.render();
 			}
-		})
+		});
+		
+		$(window).on("mousemove", function(e){
+			var pic = GameCreator.draggedGlobalElement;
+			if (pic) {
+				$(pic).css("top", e.pageY - 45);
+				$(pic).css("left", e.pageX - 45);
+			}
+			return false;
+		});
+		
+		$(window).on("mouseup", function(e){
+			var pic = GameCreator.draggedGlobalElement;
+			if (!pic) {
+				return;
+			}
+			$(pic).remove();
+			var x = e.pageX;
+			var y = e.pageY;
+			var offsetX = $("#mainCanvas").offset().left;
+			var offsetY = $("#mainCanvas").offset().top;
+			if (x > offsetX	&& x < offsetX + GameCreator.width
+				&& y > offsetY && y < offsetY + GameCreator.height) {
+					var newInstance = GameCreator.createInstance(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[0], {x:x-offsetX, y:y-offsetY});
+					if(newInstance.parent.isRenderable) {
+						GameCreator.renderableObjects.push(newInstance);
+						GameCreator.render();
+					}
+			}
+				
+			GameCreator.draggedGlobalElement = undefined;
+		});
 	},
 
 	gameLoop: function () {
@@ -464,13 +509,14 @@ var GameCreator = {
 		}
 		GameCreator.scenes = [];
 		GameCreator.globalObjects = {};
-		
+		$("#globalObjectList").html("");
 		//Load globalObjects
 		var parsedSave = JSONfn.parse(savedJson);
 		for (name in parsedSave.globalObjects) {
 			if (parsedSave.globalObjects.hasOwnProperty(name)) {
 				var object = parsedSave.globalObjects[name];
-				GameCreator[object.objectType].createFromSaved(object);
+				var newObject = GameCreator[object.objectType].createFromSaved(object);
+				GameCreator.createGlobalListElement(newObject);
 			}
 		}
 		
@@ -494,5 +540,22 @@ var GameCreator = {
 	getUniqueId: function() {
 		this.idCounter++;
 		return this.idCounter;
+	},
+	
+	createGlobalListElement: function(object) {
+		var listElement = GameCreator.htmlStrings.globalObjectElement(object);
+		$("#globalObjectList").append(listElement);
+		$(listElement).on("mousedown", function(e){
+			var image = new Image();
+			image.src = $(this).find("img").attr("src");
+			$(image).attr("data-name", object.name);
+			$(image).css("position", "absolute");
+			$(image).css("top", e.pageY-45);
+			$(image).css("left", e.pageX-45);
+			$(image).css("width", "90px");
+			$("body").append(image);
+			GameCreator.draggedGlobalElement = image;
+			return false;
+		});
 	}
 }
