@@ -61,6 +61,15 @@ GameCreator.sceneObject = {
 
 		this.facing = 1;
 		
+		//ActiveObject properties
+		
+		//Array of Points
+		this.route = [];
+		//Point that is currently the target
+		this.routeTarget = null;
+		//If heading backwards or forwards through the grid
+		this.routeForward = true;
+		
 		globalObj.instantiated();
 	}
 }

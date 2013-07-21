@@ -17,6 +17,8 @@ GameCreator.activeObject = {
 		
 		obj.objectType = "activeObject";
 		
+		obj.movementType = args.movementType != null ? args.movementType : "free";
+		
 		GameCreator.globalObjects[obj.name] = obj;
 		return obj;
 	},
@@ -68,5 +70,19 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 		var projectileSpeed = 600;
 		var unitVector = GameCreator.helperFunctions.calcUnitVectorFromSpeed(this.speedX, this.speedY);
 		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x, y: this.y, speedX: unitVector.x * projectileSpeed, speedY: unitVector.y * projectileSpeed});
+	}
+	
+	activeObject.move = function(modifier){
+		switch(this.parent.movementType){
+			
+			case "free":
+			this.x += this.speedX * modifier;
+			this.y += this.speedY * modifier;
+			break;
+			
+			case "route":
+			console.log("moveroute!");
+			break;
+		}
 	}
 }
