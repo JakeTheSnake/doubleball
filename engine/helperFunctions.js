@@ -169,9 +169,9 @@ GameCreator.helperFunctions.toString = function(thing){
 		return "" + thing;
 }
 
-GameCreator.helperFunctions.calcUnitVectorFromSpeed = function(speedX, speedY){
-	var magnitude = Math.sqrt((speedX * speedX) + (speedY * speedY));
-	return {x: speedX/magnitude, y: speedY/magnitude};
+GameCreator.helperFunctions.calcUnitVector = function(x, y){
+	var magnitude = Math.sqrt((x * x) + (y * y));
+	return {x: x/magnitude, y: y/magnitude};
 }
 
 /**
@@ -192,4 +192,11 @@ GameCreator.helperFunctions.exists = function(name, operation) {
 	}
 	return false;
 	// TODO, iterate through rest of runtime objects
+}
+
+GameCreator.helperFunctions.logOnce = function(obj) {
+	if(!GameCreator.loggedOnce) {
+		console.log(obj);
+	}
+	GameCreator.loggedOnce = true;
 }

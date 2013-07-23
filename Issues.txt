@@ -2,7 +2,6 @@ TODO:
 
 When an action has been selected, remove mutually exclusive actions from list.
 As the save/load functionality works now, people can embed any script they want into the game. We probably need to save actions by name instead of saving entire functions. And interpret this to recreate a usable object when the game is loaded.
-Handle addition of new objects to globalObjects and to scenes. (Now new objects are put into global and immediately instantiated into the active scene).
 How do we handle selection of actions on collision events on the mouse object? Bounce and stop make no sense on this.
 Need to handle initialization of objects that have different runtime  values. (topDown and platform objects have facing for example, though maybe all objects should have this...)
 Can we use an anynomous function for runtime parameters for actions instead of the current parameters handling?

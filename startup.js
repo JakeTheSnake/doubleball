@@ -12,12 +12,19 @@ window.onload = function () {
 		
 		//Create ActiveObjects
 		
-		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:20, height:20})
+		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:20, height:20, speed: 300, movementType: "free", routeSpeed: 1})
 		var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:20, height:20})
     	
-		GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240});
+		var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240});
 		//GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
 		//GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
+		
+		//Set route movement to sceneBall
+		//sceneBall.routeTarget = 0;
+		//sceneBall.route.push({x: 100, y: 100, next: 1, prev: null});
+		//sceneBall.route.push({x: 100, y: 300, next: 2, prev: 0});
+		//sceneBall.route.push({x: 300, y: 300, next: 3, prev: 1});
+		//sceneBall.route.push({x: 300, y: 100, next: null, prev: 2});
 		
 		//Create Mouseobject
 		
@@ -31,8 +38,8 @@ window.onload = function () {
 		
 		//Create TopDownObject
 		
-		var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
-		GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
+		//var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
+		//GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
 		
 		//GameCreator.loadScene(GameCreator.scenes[0]);
 		
@@ -133,8 +140,6 @@ window.onload = function () {
 			height: parseInt($("#addPlayerObjectHeight").val()),
 			src: $("#addPlayerObjectSrc").val(),
 		});
-		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addPlayerObjectX").val()), y: parseInt($("#addPlayerObjectY").val())});
-		GameCreator.renderableObjects.push(sceneObj);
 	}
 	
 	function addPlayerTopDownObject(){
@@ -144,8 +149,6 @@ window.onload = function () {
 			height: parseInt($("#addPlayerObjectHeight").val()),
 			src: $("#addPlayerObjectSrc").val(),
 		});
-		var sceneObj = GameCreator.createInstance(obj, GameCreator.scenes[0], {x: parseInt($("#addPlayerObjectX").val()), y: parseInt($("#addPlayerObjectY").val())});
-		GameCreator.renderableObjects.push(sceneObj);
 	}
 	
 	function switchPane(paneId){

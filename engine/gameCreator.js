@@ -137,6 +137,7 @@ var GameCreator = {
 		var image = new Image();
 		image.src = args.src;
 		var mouseObj = this.mouseObject.New(image, args);
+		GameCreator.createGlobalListElement(mouseObj);
 		image.onload = function() {
 			mouseObj.imageReady = true;
 			GameCreator.render();
@@ -148,6 +149,7 @@ var GameCreator = {
 		var image = new Image();
 		image.src = args.src;
 		var platformObj = this.platformObject.New(image, args);
+		GameCreator.createGlobalListElement(platformObj);
 		image.onload = function() {
 			platformObj.imageReady = true;
 			GameCreator.render();
@@ -159,6 +161,7 @@ var GameCreator = {
 		var image = new Image();
 		image.src = args.src;
 		var topDownObj = this.topDownObject.New(image, args);
+		GameCreator.createGlobalListElement(topDownObj);
 		image.onload = function() {
 			topDownObj.imageReady = true;
 			GameCreator.render();

@@ -17,7 +17,8 @@ GameCreator.activeObject = {
 		
 		obj.objectType = "activeObject";
 		
-		obj.movementType = args.movementType != null ? args.movementType : "free";
+		obj.movementType = args.movementType ? args.movementType : "free";
+		obj.routeSpeed = args.routeSpeed ? args.routeSpeed : undefined;
 		
 		GameCreator.globalObjects[obj.name] = obj;
 		return obj;
@@ -68,7 +69,7 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 	
 	activeObject.shoot = function(staticParameters){
 		var projectileSpeed = 600;
-		var unitVector = GameCreator.helperFunctions.calcUnitVectorFromSpeed(this.speedX, this.speedY);
+		var unitVector = GameCreator.helperFunctions.calcUnitVector(this.speedX, this.speedY);
 		GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x, y: this.y, speedX: unitVector.x * projectileSpeed, speedY: unitVector.y * projectileSpeed});
 	}
 	
@@ -76,13 +77,42 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 		switch(this.parent.movementType){
 			
 			case "free":
-			this.x += this.speedX * modifier;
-			this.y += this.speedY * modifier;
-			break;
+				this.x += this.speedX * modifier;
+				this.y += this.speedY * modifier;
+				break;
 			
 			case "route":
-			console.log("moveroute!");
-			break;
+				var targetX = this.route[this.routeTarget].x;
+				var targetY = this.route[this.routeTarget].y;
+				var preDiffX = this.x - targetX;
+				var preDiffY = this.y - targetY;
+				var unitVector = GameCreator.helperFunctions.calcUnitVector(preDiffX, preDiffY);
+				this.x -= unitVector.x * this.parent.routeSpeed;
+				this.y -= unitVector.y * this.parent.routeSpeed;
+				var postDiffX = this.x - targetX;
+				var postDiffY = this.y - targetY;
+				//Check if preDiff and postDiff have different "negativity" or are 0. If so we have reached (or moved past) our target.
+				if(preDiffX * postDiffX <= 0 && preDiffY * postDiffY <= 0) {
+					if(this.routeForward) {
+						if(this.route[this.routeTarget].next == null) {
+							this.routeForward = false;
+							this.routeTarget = this.route[this.routeTarget].prev;
+						}
+						else {
+							this.routeTarget = this.route[this.routeTarget].next;
+						}
+					} 
+					else {
+						if(this.route[this.routeTarget].prev == null) {
+							this.routeForward = true;
+							this.routeTarget = this.route[this.routeTarget].next;
+						}
+						else {
+							this.routeTarget = this.route[this.routeTarget].prev;
+						}
+					}
+				}
+				break;
 		}
 	}
 }
