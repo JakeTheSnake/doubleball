@@ -12,19 +12,18 @@ window.onload = function () {
 		
 		//Create ActiveObjects
 		
-		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:20, height:20, speed: 300, movementType: "free", routeSpeed: 1})
+		var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:20, height:20, speed: 300, movementType: "route"})
 		var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:20, height:20})
     	
-		var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240});
+		var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, routeSpeed: 200});
 		//GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
 		//GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
 		
 		//Set route movement to sceneBall
-		//sceneBall.routeTarget = 0;
-		//sceneBall.route.push({x: 100, y: 100, next: 1, prev: null});
-		//sceneBall.route.push({x: 100, y: 300, next: 2, prev: 0});
-		//sceneBall.route.push({x: 300, y: 300, next: 3, prev: 1});
-		//sceneBall.route.push({x: 300, y: 100, next: null, prev: 2});
+		sceneBall.route.push({x: 100, y: 100, next: 1, prev: null});
+		sceneBall.route.push({x: 100, y: 300, next: 2, prev: 0});
+		sceneBall.route.push({x: 300, y: 300, next: 3, prev: 1});
+		sceneBall.route.push({x: 300, y: 100, next: null, prev: 2});
 		
 		//Create Mouseobject
 		
@@ -120,7 +119,8 @@ window.onload = function () {
 			name: $("#addActiveObjectName").val(),
 			width: parseInt($("#addActiveObjectWidth").val()),
 			height: parseInt($("#addActiveObjectHeight").val()),
-			src: $("#addActiveObjectSrc").val()
+			src: $("#addActiveObjectSrc").val(),
+			movementType: $("#addActiveObjectMovementType").val()
 		});
 	}
 	

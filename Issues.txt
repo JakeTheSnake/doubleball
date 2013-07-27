@@ -1,5 +1,6 @@
 TODO:
 
+Add setting of route to UI for adding global objects
 When an action has been selected, remove mutually exclusive actions from list.
 As the save/load functionality works now, people can embed any script they want into the game. We probably need to save actions by name instead of saving entire functions. And interpret this to recreate a usable object when the game is loaded.
 How do we handle selection of actions on collision events on the mouse object? Bounce and stop make no sense on this.

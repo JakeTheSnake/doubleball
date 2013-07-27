@@ -26,6 +26,7 @@ var GameCreator = {
 	addObjFunctions: {},
 	helperFunctions: {},
 	selectedObject: undefined,
+	draggedObject: undefined,
 	idCounter: 0,
 	htmlStrings: {
 		singleSelector: function(collection, elementId) {
@@ -61,6 +62,25 @@ var GameCreator = {
 			$(div).attr("id", "globalObjectElement_" + object.name);
 			$(div).css("border-bottom","solid 1px");
 			return div;
+		},
+		editActiveObjectForm: function(object) {
+			var result = "<div>";
+			result += "<label for='editActiveObjectHeight'>Height:</label><input id='editActiveObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
+			result += "<label for='editActiveObjectWidth'>Width:</label><input id='editActiveObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			if (object.parent.movementType == "free") {
+				result += "<label for='editActiveObjectSpeedX'>SpeedX:</label><input id='editActiveObjectSpeedX' type='text' data-type='number' data-attrName='speedX'></input>"
+				result += "<label for='editActiveObjectSpeedY'>SpeedY:</label><input id='editActiveObjectSpeedY' type='text' data-type='number' data-attrName='speedY'></input>"
+			}
+			else if(object.parent.movementType == "route") {
+				result += "<label for='editActiveObjectRouteSpeed'>Speed:</label><input id='editActiveObjectRouteSpeed' type='text' data-type='number' data-attrName='routeSpeed'></input>"
+				result += "<a href='' onclick='GameCreator.editRoute(GameCreator.selectedObject);return false;'>Edit route</a>"
+			}
+			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
+		},
+		routePoint: function(point, index) {
+			var result = "<div class='routePoint' style='top:" + (point.y + GameCreator.canvasOffsetY) + "px;left:" + (point.x + GameCreator.canvasOffsetX) + "px;'>";
+			result += "<span>" + (index + 1) + "</span></div>"
+			return result;
 		}
 	},
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
@@ -207,11 +227,12 @@ var GameCreator = {
 			var obj = GameCreator.renderableObjects[i];
 			if(x >= obj.x && x <= obj.x + obj.width && y >= obj.y && y <= obj.y + obj.height)
 			{
-				this.selectedObject = obj;
 				obj.clickOffsetX = x - obj.x;
 				obj.clickOffsetY = y - obj.y;
+				return obj;
 			}
 		}
+		return null;
 	},
 
 	playScene: function(scene) {
@@ -248,7 +269,7 @@ var GameCreator = {
 
 	editScene: function(scene){
 		GameCreator.reset();
-		//Here we populate the renderableObjects only since the other arrays are unused for editing. Also we use the actual sceneObjects in the
+		//Here we populate the renderableObjects only since the other find are unused for editing. Also we use the actual sceneObjects in the
 		//renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
 		for (var i=0;i < scene.length;++i) {
 			var obj = scene[i];
@@ -258,18 +279,22 @@ var GameCreator = {
 		}
 		
 		$(GameCreator.canvas).on("mousedown", function(e){
-			GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
+			GameCreator.draggedObject = GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
+			GameCreator.selectedObject = GameCreator.draggedObject;
+			if(GameCreator.selectedObject) {
+				GameCreator.editSceneObject();
+			}
 		});
 		
 		$(GameCreator.canvas).on("mouseup", function(){
-			GameCreator.selectedObject = undefined;
+			GameCreator.draggedObject = undefined;
 		});
 		
 		$(GameCreator.canvas).on("mousemove", function(e){
-			if(GameCreator.selectedObject)
+			if(GameCreator.draggedObject)
 			{
-				GameCreator.selectedObject.x = e.pageX - $("#mainCanvas").offset().left - GameCreator.selectedObject.clickOffsetX;
-				GameCreator.selectedObject.y = e.pageY - $("#mainCanvas").offset().top - GameCreator.selectedObject.clickOffsetY;
+				GameCreator.draggedObject.x = e.pageX - $("#mainCanvas").offset().left - GameCreator.draggedObject.clickOffsetX;
+				GameCreator.draggedObject.y = e.pageY - $("#mainCanvas").offset().top - GameCreator.draggedObject.clickOffsetY;
 				GameCreator.render();
 			}
 		});
@@ -560,5 +585,49 @@ var GameCreator = {
 			GameCreator.draggedGlobalElement = image;
 			return false;
 		});
+	},
+	
+	editSceneObject: function() {
+		$("#editSceneObjectTitle").html(GameCreator.selectedObject.name)
+		if(GameCreator.selectedObject.parent.objectType == "activeObject") {
+			$("#editSceneObjectContent").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
+		}
+		else if(GameCreator.selectedObject.parent.objectType == "mouseObject") {
+			"mouseobject!"
+		}
+		else if(GameCreator.selectedObject.parent.objectType == "platformObject") {
+			"platformobject"
+		}
+		else if(GameCreator.selectedObject.parent.objectType == "topDownObject") {
+			"TOPDOWNOBJECT"
+		}
+	},
+	
+	//Since all inputs are tagged with "data-attrName" and "data-type" we have this general function for saving all object types.
+	saveSceneObjectChanges: function() {
+		var inputs = $("#editSceneObjectContent input");
+		var input;
+		for(var i = 0; i < inputs.length; i++) {
+			input = $(inputs[i]);
+			if(input.attr("data-type") == "string" && input.val().length != 0) {
+				GameCreator.selectedObject[input.attr("data-attrName")] = input.val();
+			}
+			else if(input.attr("data-type") == "number" && input.val().length != 0) {
+				GameCreator.selectedObject[input.attr("data-attrName")] = parseFloat(input.val());
+			}
+		}
+		GameCreator.render();
+	},
+	
+	editRoute: function(obj) {
+		GameCreator.drawRoute(obj.route);
+	},
+	
+	drawRoute: function(route) {
+		var point;
+		for(var i = 0; i < route.length; i++) {
+			point = route[i];
+			$("body").append(GameCreator.htmlStrings.routePoint(point, i));
+		}
 	}
 }

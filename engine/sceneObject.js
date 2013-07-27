@@ -66,9 +66,10 @@ GameCreator.sceneObject = {
 		//Array of Points. Points are {x: y: next: prev:} objects.
 		this.route = [];
 		//Index of point that is currently the target.
-		this.routeTarget = null;
+		this.routeTarget = 0;
 		//If heading backwards or forwards through the grid. (Should switch when reaching a dead end.)
 		this.routeForward = true;
+		this.routeSpeed = args.routeSpeed != undefined ? args.routeSpeed : 1;
 		
 		globalObj.instantiated();
 	}

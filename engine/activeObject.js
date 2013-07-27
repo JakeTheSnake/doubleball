@@ -18,7 +18,6 @@ GameCreator.activeObject = {
 		obj.objectType = "activeObject";
 		
 		obj.movementType = args.movementType ? args.movementType : "free";
-		obj.routeSpeed = args.routeSpeed ? args.routeSpeed : undefined;
 		
 		GameCreator.globalObjects[obj.name] = obj;
 		return obj;
@@ -82,13 +81,15 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 				break;
 			
 			case "route":
+				if(this.route.length == 0)
+					return;
 				var targetX = this.route[this.routeTarget].x;
 				var targetY = this.route[this.routeTarget].y;
 				var preDiffX = this.x - targetX;
 				var preDiffY = this.y - targetY;
 				var unitVector = GameCreator.helperFunctions.calcUnitVector(preDiffX, preDiffY);
-				this.x -= unitVector.x * this.parent.routeSpeed;
-				this.y -= unitVector.y * this.parent.routeSpeed;
+				this.x -= unitVector.x * this.routeSpeed * modifier;
+				this.y -= unitVector.y * this.routeSpeed * modifier;
 				var postDiffX = this.x - targetX;
 				var postDiffY = this.y - targetY;
 				//Check if preDiff and postDiff have different "negativity" or are 0. If so we have reached (or moved past) our target.
