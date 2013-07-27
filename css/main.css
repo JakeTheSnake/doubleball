@@ -1,6 +1,21 @@
-.routePoint {
-	position:absolute;
+.routeNode {
+	position:relative;
 	width:20px;
 	height:20px;
+	border-radius: 10px;
 	background-color:red;
+	text-align: center;	
+}
+
+.nodeActions {
+	position: relative;
+}
+
+.routeNodeLabel {
+	color: white;
+	line-height: 20px;
+}
+
+.editActiveObject {
+	width: 200px;
 }

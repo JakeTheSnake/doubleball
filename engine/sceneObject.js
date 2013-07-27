@@ -18,7 +18,15 @@ GameCreator.sceneObject = {
 	
 	//Unique ID for this specific scene object.
 	instanceId: undefined,
+	insertNode: function(index) {
+		this.route.splice(index + 1, 0, {x: 10, y:10});
+		GameCreator.drawRoute(this.route);
+	},
 	
+	removeNode: function(index) {
+		this.route.splice(index, 1);
+		GameCreator.drawRoute(this.route);
+	},
 	instantiate: function(globalObj, args){
 		this.x = args.x != undefined ? args.x : 0
 		this.y = args.y != undefined ? args.y : 0
@@ -66,9 +74,9 @@ GameCreator.sceneObject = {
 		//Array of Points. Points are {x: y: next: prev:} objects.
 		this.route = [];
 		//Index of point that is currently the target.
-		this.routeTarget = 0;
-		//If heading backwards or forwards through the grid. (Should switch when reaching a dead end.)
-		this.routeForward = true;
+		this.targetNode = args.targetNode != undefined ? args.targetNode : 0;
+		//If heading backwards or forwards through the grid. (Should switch when reaching a bounce node.)
+		this.routeForward = args.routeForward != undefined ? args.routeForward : true;
 		this.routeSpeed = args.routeSpeed != undefined ? args.routeSpeed : 1;
 		
 		globalObj.instantiated();

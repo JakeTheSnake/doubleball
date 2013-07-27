@@ -20,10 +20,10 @@ window.onload = function () {
 		//GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
 		
 		//Set route movement to sceneBall
-		sceneBall.route.push({x: 100, y: 100, next: 1, prev: null});
-		sceneBall.route.push({x: 100, y: 300, next: 2, prev: 0});
-		sceneBall.route.push({x: 300, y: 300, next: 3, prev: 1});
-		sceneBall.route.push({x: 300, y: 100, next: null, prev: 2});
+		sceneBall.route.push({x: 100, y: 100});
+		sceneBall.route.push({x: 100, y: 300});
+		sceneBall.route.push({x: 300, y: 300});
+		sceneBall.route.push({x: 300, y: 100, bounceNode: true});
 		
 		//Create Mouseobject
 		

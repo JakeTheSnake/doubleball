@@ -83,8 +83,8 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 			case "route":
 				if(this.route.length == 0)
 					return;
-				var targetX = this.route[this.routeTarget].x;
-				var targetY = this.route[this.routeTarget].y;
+				var targetX = this.route[this.targetNode].x;
+				var targetY = this.route[this.targetNode].y;
 				var preDiffX = this.x - targetX;
 				var preDiffY = this.y - targetY;
 				var unitVector = GameCreator.helperFunctions.calcUnitVector(preDiffX, preDiffY);
@@ -94,23 +94,16 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 				var postDiffY = this.y - targetY;
 				//Check if preDiff and postDiff have different "negativity" or are 0. If so we have reached (or moved past) our target.
 				if(preDiffX * postDiffX <= 0 && preDiffY * postDiffY <= 0) {
-					if(this.routeForward) {
-						if(this.route[this.routeTarget].next == null) {
-							this.routeForward = false;
-							this.routeTarget = this.route[this.routeTarget].prev;
-						}
-						else {
-							this.routeTarget = this.route[this.routeTarget].next;
-						}
-					} 
-					else {
-						if(this.route[this.routeTarget].prev == null) {
-							this.routeForward = true;
-							this.routeTarget = this.route[this.routeTarget].next;
-						}
-						else {
-							this.routeTarget = this.route[this.routeTarget].prev;
-						}
+					if( this.route[this.targetNode].bounceNode) {
+						this.routeForward = !this.routeForward;
+					}
+					var nextIndexOffset = this.routeForward ? 1 : -1;
+					if (this.targetNode + nextIndexOffset >= this.route.length) {
+						this.targetNode = 0;
+					} else if (this.targetNode + nextIndexOffset < 0) {
+						this.targetNode = this.route.length - 1;
+					} else {
+						this.targetNode = this.targetNode + nextIndexOffset;
 					}
 				}
 				break;

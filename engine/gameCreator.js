@@ -27,6 +27,7 @@ var GameCreator = {
 	helperFunctions: {},
 	selectedObject: undefined,
 	draggedObject: undefined,
+	draggedNode: undefined,
 	idCounter: 0,
 	htmlStrings: {
 		singleSelector: function(collection, elementId) {
@@ -64,7 +65,7 @@ var GameCreator = {
 			return div;
 		},
 		editActiveObjectForm: function(object) {
-			var result = "<div>";
+			var result = "<div class='editActiveObject'>";
 			result += "<label for='editActiveObjectHeight'>Height:</label><input id='editActiveObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
 			result += "<label for='editActiveObjectWidth'>Width:</label><input id='editActiveObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
 			if (object.parent.movementType == "free") {
@@ -73,13 +74,22 @@ var GameCreator = {
 			}
 			else if(object.parent.movementType == "route") {
 				result += "<label for='editActiveObjectRouteSpeed'>Speed:</label><input id='editActiveObjectRouteSpeed' type='text' data-type='number' data-attrName='routeSpeed'></input>"
-				result += "<a href='' onclick='GameCreator.editRoute(GameCreator.selectedObject);return false;'>Edit route</a>"
+				result += "<label for='editActiveObjectStartNode'>Starting Node</label><select id='editActiveObjectStartNode' data-type='number' data-attrName='targetNode'>";
+				for (var i = 0; i < object.route.length; i++) {
+					result += "<option value='" + i + "'>" + (i + 1) + "</option>";
+				}
+				result += "</select><br/>";
+				result += "<label for='editActiveObjectRouteDirection'>Direction</label><select id='editActiveObjectRouteDirection' data-type='bool' data-attrName='routeForward'> \
+					<option value='true'>Forward</option><option value='false'>Backward</option></select>"
+				result += "<a href='' onclick='GameCreator.drawRoute(GameCreator.selectedObject.route);return false;'>Edit route</a>"
 			}
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
-		routePoint: function(point, index) {
-			var result = "<div class='routePoint' style='top:" + (point.y + GameCreator.canvasOffsetY) + "px;left:" + (point.x + GameCreator.canvasOffsetX) + "px;'>";
-			result += "<span>" + (index + 1) + "</span></div>"
+		routeNode: function(node, index) {
+			var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + GameCreator.canvasOffsetY) + "px;left:" + (node.x + GameCreator.canvasOffsetX) + "px;'><div class='routeNode' data-index='" + index + "'> \
+				<span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
+				<div class='nodeActions'><a href='' onclick='GameCreator.selectedObject.insertNode(" + index + "); return false;'>+</a> \
+				<a href='' onclick='GameCreator.selectedObject.removeNode(" + index + "); return false;'>X</a></div></div>";
 			return result;
 		}
 	},
@@ -260,7 +270,7 @@ var GameCreator = {
 			var obj = jQuery.extend({}, scene[i]);
 			GameCreator.addToRuntime(obj);
 		}
-		
+		$(".routeNodeContainer").remove();
 		then = Date.now();
 		GameCreator.resumeGame();
 		GameCreator.state = 'directing';
@@ -278,10 +288,28 @@ var GameCreator = {
 			}
 		}
 		
+		$(window).on("mousemove", function(e) {
+			if (GameCreator.draggedNode) {
+				$(GameCreator.draggedNode).parent().css("top", e.pageY - 10);
+				$(GameCreator.draggedNode).parent().css("left", e.pageX - 10);
+				return false;
+			}
+		});
+		
+		$(window).on("mouseup", function(e) {
+			if (GameCreator.draggedNode) {
+				GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].x = e.pageX - GameCreator.canvasOffsetX - 10;
+				GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].y = e.pageY - GameCreator.canvasOffsetY - 10;
+				GameCreator.draggedNode = undefined;
+				GameCreator.drawRoute(GameCreator.selectedObject.route);
+				return false;
+			}
+		});
+		
 		$(GameCreator.canvas).on("mousedown", function(e){
 			GameCreator.draggedObject = GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
-			GameCreator.selectedObject = GameCreator.draggedObject;
-			if(GameCreator.selectedObject) {
+			if(GameCreator.draggedObject) {
+				GameCreator.selectedObject = GameCreator.draggedObject;
 				GameCreator.editSceneObject();
 			}
 		});
@@ -605,7 +633,7 @@ var GameCreator = {
 	
 	//Since all inputs are tagged with "data-attrName" and "data-type" we have this general function for saving all object types.
 	saveSceneObjectChanges: function() {
-		var inputs = $("#editSceneObjectContent input");
+		var inputs = $("#editSceneObjectContent input, #editSceneObjectContent select");
 		var input;
 		for(var i = 0; i < inputs.length; i++) {
 			input = $(inputs[i]);
@@ -615,19 +643,23 @@ var GameCreator = {
 			else if(input.attr("data-type") == "number" && input.val().length != 0) {
 				GameCreator.selectedObject[input.attr("data-attrName")] = parseFloat(input.val());
 			}
+			else if(input.attr("data-type") == "bool" && input.val().length != 0) {
+				GameCreator.selectedObject[input.attr("data-attrName")] = GameCreator.helperFunctions.parseBool(input.val());
+			}
 		}
 		GameCreator.render();
 	},
 	
-	editRoute: function(obj) {
-		GameCreator.drawRoute(obj.route);
-	},
-	
 	drawRoute: function(route) {
-		var point;
+		$(".routeNodeContainer").remove();
+		var node;
 		for(var i = 0; i < route.length; i++) {
-			point = route[i];
-			$("body").append(GameCreator.htmlStrings.routePoint(point, i));
+			node = route[i];
+			$("body").append(GameCreator.htmlStrings.routeNode(node, i));
 		}
+		$(".routeNode").on("mousedown", function(e) {
+			GameCreator.draggedNode = this;
+			return false;
+		});
 	}
 }

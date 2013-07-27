@@ -169,6 +169,10 @@ GameCreator.helperFunctions.toString = function(thing){
 		return "" + thing;
 }
 
+GameCreator.helperFunctions.parseBool = function(string) {
+	return string === 'true' ? true : false;
+}
+
 GameCreator.helperFunctions.calcUnitVector = function(x, y){
 	var magnitude = Math.sqrt((x * x) + (y * y));
 	return {x: x/magnitude, y: y/magnitude};
