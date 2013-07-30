@@ -83,6 +83,13 @@ var GameCreator = {
 					<option value='true'>Forward</option><option value='false'>Backward</option></select>"
 				result += "<a href='' onclick='GameCreator.drawRoute(GameCreator.selectedObject.route);return false;'>Edit route</a>"
 			}
+			result += "<br/><b>Collisions:</b><br/>";
+			for (var i = 0; i < object.parent.collisions.length; i++) {
+				result += "<a href='javascript:void()' onclick='GameCreator.openSelectActionsWindow(\"This happens when " + 
+				object.name + " collides with " + object.parent.collisions[i] + 
+				"\",function(actions){}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
+				",GameCreator.selectedObject.parent.collisionActions[\""+object.parent.collisions[i]+"\"]); return false;'>" + object.parent.collisions[i] + "</a><br/>";
+			}
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
 		routeNode: function(node, index) {
@@ -93,6 +100,13 @@ var GameCreator = {
 			return result;
 		}
 	},
+		/**
+	 * Opens a window where the user can select Actions for the current Event.
+	 * text: The text that should be show as description of the popup.
+	 * callback: Function that is called when the user clicks the OK button. Has one array of the selected Actions as parameter.
+	 * actions: The actions the user should be able to select from
+	 * existingActions: An array of Actions that are already chosen.
+	 **/
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderRObject: {x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderTObject: {x: -500, y: -500, height: 500, width: GCWidth + 1000},
@@ -486,17 +500,37 @@ var GameCreator = {
 		return false;
 	},
 		
-
-	openSelectActionsWindow: function(text, callback, actions){
+	/**
+	 * Opens a window where the user can select Actions for the current Event.
+	 * text: The text that should be show as description of the popup.
+	 * callback: Function that is called when the user clicks the OK button. Has one array of the selected Actions as parameter.
+	 * actions: The actions the user should be able to select from
+	 * existingActions: An array of Actions that are already chosen.
+	 **/
+	openSelectActionsWindow: function(text, callback, actions, existingActions){
 		//Only select actions if GameCreator isn't already paused for action selection.
 		if(!GameCreator.paused){
 			GameCreator.pauseGame();
 			GameCreator.openSelectActionsWindow.setAction = callback;
-			//GameCreator.openSelectActionsWindow.params = params;
-			GameCreator.openSelectActionsWindow.selectedActions = [];
+			$("#selectActionResult").html("");
+			
+			// Populate the selected actions with the actions from the existingActions argument.
+			if (!existingActions) {
+				GameCreator.openSelectActionsWindow.selectedActions = [];
+			} else {
+				GameCreator.openSelectActionsWindow.selectedActions = existingActions
+				for (var i = 0; i < existingActions.length; i++) {
+					var action = existingActions[i];
+					var selectedAction = {action: action.action, parameters: {}};
+
+					// TODO: View Parameters
+					$("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+				}
+			}
 			GameCreator.openSelectActionsWindow.selectableActions = actions;
 			$("#selectActionsHeader").html(text);
 			$("#selectActionParametersContainer").html("");
+			
 			$("#selectActionDropdownContainer").html(GameCreator.htmlStrings.singleSelector(actions));
 			$("#selectActionWindow").dialog("open");
 			$("#actionSelector").on("change", function(){

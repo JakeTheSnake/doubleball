@@ -78,7 +78,7 @@ window.onload = function () {
 		$( "#AddActiveObject" ).button();
 		$( "#selectActionAddAction" ).click(function( event ) {				
 				var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
-				selectedAction = {action: action.action, parameters: {}};
+				var selectedAction = {action: action.action, parameters: {}};
 
 				for (var i = 0; i < action.params.length; i++) {
 					selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
@@ -98,7 +98,6 @@ window.onload = function () {
 					text: "Ok",
 					click: function() {
 						$( this ).dialog( "close" );
-						$("#selectActionResult").html("");
 						GameCreator.assignSelectedActions(GameCreator.openSelectActionsWindow.selectedActions);
 					}
 				},

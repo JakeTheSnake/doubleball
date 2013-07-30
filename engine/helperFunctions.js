@@ -70,11 +70,10 @@ GameCreator.helperFunctions.doBorderCollision = function(object, collidedBorder,
 		for (var i = 0; i < object.parent[collidedBorder].length; i++) {
 			object.parent[collidedBorder][i].action.call(object, $.extend({collisionObject: collisionObject}, object.parent[collidedBorder][i].parameters));
 		}
-	} 
-	else {
+	} else {
 		GameCreator.openSelectActionsWindow(
 			"'" + object.parent.name + "' collided with " + collidedBorder,
-			function(actions) {object.parent[collidedBorder] = actions},
+			function(actions) {object.parent[collidedBorder] = actions; object.parent.collisions.push[collidedBorder]},
 			$.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)
 		);
 	}
@@ -142,7 +141,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 						(function(targetObject){
 							GameCreator.openSelectActionsWindow(
 								"'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
-								function(actions) {object.parent.collisionActions[targetObject.name] = actions},
+								function(actions) {object.parent.collisionActions[targetObject.name] = actions; object.parent.collisions.push(targetObject.name)},
 								$.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)
 							)
 						})(targetObject)
