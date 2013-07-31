@@ -37,8 +37,8 @@ window.onload = function () {
 		
 		//Create TopDownObject
 		
-		//var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
-		//GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
+		var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
+		GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
 		
 		//GameCreator.loadScene(GameCreator.scenes[0]);
 		
@@ -78,7 +78,7 @@ window.onload = function () {
 		$( "#AddActiveObject" ).button();
 		$( "#selectActionAddAction" ).click(function( event ) {				
 				var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
-				var selectedAction = {action: action.action, parameters: {}};
+				var selectedAction = {action: action.action, parameters: {}, name: action.name};
 
 				for (var i = 0; i < action.params.length; i++) {
 					selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();

@@ -87,7 +87,7 @@ var GameCreator = {
 			for (var i = 0; i < object.parent.collisions.length; i++) {
 				result += "<a href='javascript:void()' onclick='GameCreator.openSelectActionsWindow(\"This happens when " + 
 				object.name + " collides with " + object.parent.collisions[i] + 
-				"\",function(actions){}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
+				"\",function(actions){GameCreator.selectedObject.parent.collisionActions[\""+object.parent.collisions[i]+"\"] = actions;}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
 				",GameCreator.selectedObject.parent.collisionActions[\""+object.parent.collisions[i]+"\"]); return false;'>" + object.parent.collisions[i] + "</a><br/>";
 			}
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
@@ -100,13 +100,7 @@ var GameCreator = {
 			return result;
 		}
 	},
-		/**
-	 * Opens a window where the user can select Actions for the current Event.
-	 * text: The text that should be show as description of the popup.
-	 * callback: Function that is called when the user clicks the OK button. Has one array of the selected Actions as parameter.
-	 * actions: The actions the user should be able to select from
-	 * existingActions: An array of Actions that are already chosen.
-	 **/
+	
 	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderRObject: {x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
 	collideBorderTObject: {x: -500, y: -500, height: 500, width: GCWidth + 1000},
@@ -523,8 +517,7 @@ var GameCreator = {
 					var action = existingActions[i];
 					var selectedAction = {action: action.action, parameters: {}};
 
-					// TODO: View Parameters
-					$("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+					$("#selectActionResult").append(GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction));
 				}
 			}
 			GameCreator.openSelectActionsWindow.selectableActions = actions;
