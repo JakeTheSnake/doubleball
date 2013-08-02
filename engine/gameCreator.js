@@ -279,14 +279,21 @@ var GameCreator = {
 			GameCreator.addToRuntime(obj);
 		}
 		$(".routeNodeContainer").remove();
+		$("#directSceneButton").hide();
+		$("#editSceneButton").show();
 		then = Date.now();
 		GameCreator.resumeGame();
 		GameCreator.state = 'directing';
 		setInterval(this.gameLoop, 1);
 	},
+	
+	editActiveScene: function(){
+		this.editScene(GameCreator.scenes[GameCreator.activeScene]);
+	},
 
 	editScene: function(scene){
 		GameCreator.reset();
+		$(GameCreator.canvas).css("cursor", "default");
 		//Here we populate the renderableObjects only since the other find are unused for editing. Also we use the actual sceneObjects in the
 		//renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
 		for (var i=0;i < scene.length;++i) {
@@ -365,6 +372,9 @@ var GameCreator = {
 				
 			GameCreator.draggedGlobalElement = undefined;
 		});
+		
+		$("#directSceneButton").show();
+		$("#editSceneButton").hide();
 	},
 
 	gameLoop: function () {
@@ -648,13 +658,13 @@ var GameCreator = {
 			$("#editSceneObjectContent").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
 		}
 		else if(GameCreator.selectedObject.parent.objectType == "mouseObject") {
-			"mouseobject!"
+			$("#editSceneObjectContent").html("Mouseobject!");
 		}
 		else if(GameCreator.selectedObject.parent.objectType == "platformObject") {
-			"platformobject"
+			$("#editSceneObjectContent").html("Platformobject!");
 		}
 		else if(GameCreator.selectedObject.parent.objectType == "topDownObject") {
-			"TOPDOWNOBJECT"
+			$("#editSceneObjectContent").html("Topdownobject!");
 		}
 	},
 	

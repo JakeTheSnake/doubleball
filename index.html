@@ -51,7 +51,7 @@
 				<option value="route">Route</option>
 			</select>
 		</div>
-		<button id="AddActiveObject" onClick="addActiveObject()">Add Object</button>
+		<button id="AddActiveObject" class="ui-btn" onClick="addActiveObject()">Add Object</button>
 	</div>
 	<div id="addPlayerObjectPane" class="addObjectPane" style="display:none;">
 		<div>
@@ -89,17 +89,18 @@
 					<label for="addPlayerMouseObjectMinY">Min Y:</label>
 					<input id="addPlayerMouseObjectMinY" type="text"></input>
 				</div>
-				<button id="MouseObject" onClick="addPlayerMouseObject()">Add Object</button>
+				<button id="addMouseObjectBtn" class="ui-btn" onClick="addPlayerMouseObject()">Add Object</button>
 			</div>
 			<div id="addPlayerPlatformObjectPane" class="addPlayerObjectTypePane" style="display:none;">
-				<button id="PlatformObject" onClick="addPlayerPlatformObject()">Add Object</button>
+				<button id="addPlatformObjectBtn" class="ui-btn" onClick="addPlayerPlatformObject()">Add Object</button>
 			</div>
 			<div id="addPlayerTopDownObjectPane" class="addPlayerObjectTypePane" style="display:none;">
-				<button id="TopDownObject" onClick="addPlayerTopDownObject()">Add Object</button>
+				<button id="addTopDownObjectBtn" class="ui-btn" onClick="addPlayerTopDownObject()">Add Object</button>
 			</div>
 		</div>
 	</div>
-	<button id="direct" onClick="GameCreator.directActiveScene()">Start Directing</button>
+	<button id="directSceneButton" class="ui-btn" onClick="GameCreator.directActiveScene()">Direct Scene</button>
+	<button id="editSceneButton" class="ui-btn" onClick="GameCreator.editActiveScene()" style="display: none;">Edit Scene</button>
 	<div id="editSceneObjectPane" style="margin-top:20px;">
 		<div><span id="editSceneObjectTitle" style="font-size:20px; font-weight:bold;"></span></div>
 		<div id="editSceneObjectContent" style="margin-top:10px;">

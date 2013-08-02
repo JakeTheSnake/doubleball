@@ -72,10 +72,7 @@ window.onload = function () {
 		
 		// UI
 		
-		$( "#direct" ).button();
-		$( "#PlayerObject" ).button();
-		$( "#MouseObject" ).button();
-		$( "#AddActiveObject" ).button();
+		$( ".ui-btn" ).button();
 		$( "#selectActionAddAction" ).click(function( event ) {				
 				var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
 				var selectedAction = {action: action.action, parameters: {}, name: action.name};

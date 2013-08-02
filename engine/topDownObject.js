@@ -8,7 +8,7 @@ GameCreator.topDownObject = {
 		GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
 		
 		obj.image = image;
-		obj.name = args.name;e
+		obj.name = args.name;
 		obj.width = args.width;
 		obj.height = args.height;
 
