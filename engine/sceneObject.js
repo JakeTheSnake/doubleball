@@ -71,13 +71,13 @@ GameCreator.sceneObject = {
 		
 		//ActiveObject properties
 		
-		//Array of Points. Points are {x: y: next: prev:} objects.
-		this.route = [];
+		//Array of Points. Points are {x:, y:, bounceNode} objects.
+		this.route = [{x: this.x, y: this.y}];
 		//Index of point that is currently the target.
 		this.targetNode = args.targetNode != undefined ? args.targetNode : 0;
 		//If heading backwards or forwards through the grid. (Should switch when reaching a bounce node.)
 		this.routeForward = args.routeForward != undefined ? args.routeForward : true;
-		this.routeSpeed = args.routeSpeed != undefined ? args.routeSpeed : 1;
+		this.routeSpeed = args.routeSpeed != undefined ? args.routeSpeed : 200;
 		
 		globalObj.instantiated();
 	}

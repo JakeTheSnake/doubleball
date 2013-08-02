@@ -160,7 +160,11 @@ GameCreator.helperFunctions.parseBool = function(string) {
 
 GameCreator.helperFunctions.calcUnitVector = function(x, y){
 	var magnitude = Math.sqrt((x * x) + (y * y));
-	return {x: x/magnitude, y: y/magnitude};
+	if(magnitude === 0) {
+		return {x: 0, y: 0};
+	} else {
+		return {x: x/magnitude, y: y/magnitude};	
+	}
 }
 
 /**
