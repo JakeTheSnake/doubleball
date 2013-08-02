@@ -24,16 +24,7 @@ GameCreator.addObjFunctions.bounceableObjectFunctions = function(object)
 }
 
 GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
-{
-	//object.collideBorderL = function(){this.bounceX(false)},
-	//object.collideBorderR = function(){this.bounceX(true)},
-	//object.collideBorderT = function(){this.bounceY(false)},
-	//object.collideBorderB = function(){this.bounceY(true)},
-	object.collideBorderL = undefined;
-	object.collideBorderR = undefined;
-	object.collideBorderT = undefined;
-	object.collideBorderB = undefined;
-	
+{	
 	//Contains Key/Value pairs of other objs and the function to run when colliding with them.
 	//TODO: Switch to dictionary where key is the name of the object.
 	object.collisionActions = {};

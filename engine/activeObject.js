@@ -14,7 +14,6 @@ GameCreator.activeObject = {
 		obj.isCollidable = true;
 		obj.isMovable = true;
 		obj.isRenderable = true;
-		obj.collisions = [];
 		
 		obj.objectType = "activeObject";
 		

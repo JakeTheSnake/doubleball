@@ -84,11 +84,13 @@ var GameCreator = {
 				result += "<a href='' onclick='GameCreator.drawRoute(GameCreator.selectedObject.route);return false;'>Edit route</a>"
 			}
 			result += "<br/><b>Collisions:</b><br/>";
-			for (var i = 0; i < object.parent.collisions.length; i++) {
-				result += "<a href='javascript:void()' onclick='GameCreator.openSelectActionsWindow(\"This happens when " + 
-				object.name + " collides with " + object.parent.collisions[i] + 
-				"\",function(actions){GameCreator.selectedObject.parent.collisionActions[\""+object.parent.collisions[i]+"\"] = actions;}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
-				",GameCreator.selectedObject.parent.collisionActions[\""+object.parent.collisions[i]+"\"]); return false;'>" + object.parent.collisions[i] + "</a><br/>";
+			for (name in object.parent.collisionActions) {
+				if (object.parent.collisionActions.hasOwnProperty(name)) {
+					result += "<a href='javascript:void()' onclick='GameCreator.openSelectActionsWindow(\"This happens when " + 
+					object.name + " collides with " + name + 
+					"\",function(actions){GameCreator.selectedObject.parent.collisionActions[\""+name+"\"] = actions;}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
+					",GameCreator.selectedObject.parent.collisionActions[\""+name+"\"]); return false;'>" + name + "</a><br/>";
+				}
 			}
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
@@ -101,10 +103,10 @@ var GameCreator = {
 		}
 	},
 	
-	collideBorderLObject: {x: -500, y: -500, height: GCHeight + 1000, width: 500},
-	collideBorderRObject: {x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
-	collideBorderTObject: {x: -500, y: -500, height: 500, width: GCWidth + 1000},
-	collideBorderBObject: {x: -500, y: GCHeight, height: 500, width: GCWidth + 1000},
+	collideBorderLObject: {name: "borderL", x: -500, y: -500, height: GCHeight + 1000, width: 500},
+	collideBorderRObject: {name: "borderR", x: GCWidth, y: -500, height: GCHeight + 1000, width: 500},
+	collideBorderTObject: {name: "borderT", x: -500, y: -500, height: 500, width: GCWidth + 1000},
+	collideBorderBObject: {name: "borderB", x: -500, y: GCHeight, height: 500, width: GCWidth + 1000},
 	
 	reset: function() {
 		this.collidableObjects = [];

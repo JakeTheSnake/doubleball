@@ -65,17 +65,24 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 	}
 }
 
-GameCreator.helperFunctions.doBorderCollision = function(object, collidedBorder, collisionObject){
-	if(object.parent[collidedBorder] != undefined){
-		for (var i = 0; i < object.parent[collidedBorder].length; i++) {
-			object.parent[collidedBorder][i].action.call(object, $.extend({collisionObject: collisionObject}, object.parent[collidedBorder][i].parameters));
+GameCreator.helperFunctions.doCollision = function(object, targetObject){
+	var currentActions = object.parent.collisionActions[targetObject.name];
+	if(currentActions != undefined)
+	{
+		for (var j = 0; j < currentActions.length; j++) {
+			
+			currentActions[j].action.call(object, $.extend({collisionObject:targetObject}, currentActions[j].parameters));
 		}
-	} else {
-		GameCreator.openSelectActionsWindow(
-			"'" + object.parent.name + "' collided with " + collidedBorder,
-			function(actions) {object.parent[collidedBorder] = actions; object.parent.collisions.push[collidedBorder]},
-			$.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)
-		);
+	}
+	else
+	{
+		(function(targetObject){
+			GameCreator.openSelectActionsWindow(
+				"'" + object.parent.name + "' collided with '" + targetObject.name + "'",
+				function(actions) {object.parent.collisionActions[targetObject.name] = actions;},
+				$.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)
+			)
+		})(targetObject)
 	}
 }
 
@@ -92,24 +99,20 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 	var collisionObject;
 	
 	if(x < 1){
-		collidedBorder = "collideBorderL";
 		collisionObject = GameCreator.collideBorderLObject;
-		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
+		GameCreator.helperFunctions.doCollision(object, collisionObject);
 	}
 	if(x + width > GameCreator.width - 1){
-		collidedBorder = "collideBorderR";
 		collisionObject = GameCreator.collideBorderRObject;
-		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
+		GameCreator.helperFunctions.doCollision(object, collisionObject);
 	}
 	if(y < 1){
-		collidedBorder = "collideBorderT";
 		collisionObject = GameCreator.collideBorderTObject;
-		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
+		GameCreator.helperFunctions.doCollision(object, collisionObject);
 	}
 	if(y + height > GameCreator.height - 1){
-		collidedBorder = "collideBorderB";
 		collisionObject = GameCreator.collideBorderBObject;
-		GameCreator.helperFunctions.doBorderCollision(object, collidedBorder, collisionObject);
+		GameCreator.helperFunctions.doCollision(object, collisionObject);
 	}
 	
 	//If directing, check for collisions with all other game objs.
@@ -128,24 +131,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 					
 					//Look through collisionActions to see if we already have an action defined for a collision with a targetObject with this name, if so, run that function instead
 					
-					var currentActions = object.parent.collisionActions[targetObject.name];
-					if(currentActions != undefined)
-					{
-						for (var j = 0; j < currentActions.length; j++) {
-							
-							currentActions[j].action.call(object, $.extend({collisionObject:targetObject}, currentActions[j].parameters));
-						}
-					}
-					else
-					{
-						(function(targetObject){
-							GameCreator.openSelectActionsWindow(
-								"'" + object.parent.name + "' collided with '" + targetObject.parent.name + "'",
-								function(actions) {object.parent.collisionActions[targetObject.name] = actions; object.parent.collisions.push(targetObject.name)},
-								$.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)
-							)
-						})(targetObject)
-					}
+					GameCreator.helperFunctions.doCollision(object, targetObject);
 				}
 			}
 		}
