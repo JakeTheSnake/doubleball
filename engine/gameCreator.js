@@ -25,6 +25,7 @@ var GameCreator = {
 	objectsToDestroy: [],
 	addObjFunctions: {},
 	helperFunctions: {},
+	//The currently selected scene object.
 	selectedObject: undefined,
 	draggedObject: undefined,
 	draggedNode: undefined,
@@ -61,6 +62,12 @@ var GameCreator = {
 			var span = $(document.createElement("span")).append(object.name);
 			var div = $(document.createElement("div")).append(span).append(image);
 			$(div).attr("id", "globalObjectElement_" + object.name);
+			return div;
+		},
+		globalObjectEditButton: function(object) {
+			var button = document.createElement("button");
+			$(button).append("Edit");
+			var div = $(document.createElement("div")).append(button);
 			$(div).css("border-bottom","solid 1px");
 			return div;
 		},
@@ -83,15 +90,6 @@ var GameCreator = {
 					<option value='true'>Forward</option><option value='false'>Backward</option></select>"
 				result += "<a href='' onclick='GameCreator.drawRoute(GameCreator.selectedObject.route);return false;'>Edit route</a>"
 			}
-			result += "<br/><b>Collisions:</b><br/>";
-			for (name in object.parent.collisionActions) {
-				if (object.parent.collisionActions.hasOwnProperty(name)) {
-					result += "<a href='javascript:void()' onclick='GameCreator.openSelectActionsWindow(\"This happens when " + 
-					object.name + " collides with " + name + 
-					"\",function(actions){GameCreator.selectedObject.parent.collisionActions[\""+name+"\"] = actions;}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
-					",GameCreator.selectedObject.parent.collisionActions[\""+name+"\"]); return false;'>" + name + "</a><br/>";
-				}
-			}
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
 		routeNode: function(node, index) {
@@ -99,6 +97,19 @@ var GameCreator = {
 				<span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
 				<div class='nodeActions'><a href='' onclick='GameCreator.selectedObject.insertNode(" + index + "); return false;'>+</a> \
 				<a href='' onclick='GameCreator.selectedObject.removeNode(" + index + "); return false;'>X</a></div></div>";
+			return result;
+		},
+		editGlobalObjectWindowActions: function(object) {
+			result = "";
+			result += "<br/><b>Collisions:</b><br/>";
+			for (name in object.collisionActions) {
+				if (object.collisionActions.hasOwnProperty(name)) {
+					result += "<a href='#' onclick='GameCreator.openSelectActionsWindow(\"This happens when " + 
+					object.name + " collides with " + name + 
+					"\",function(actions){GameCreator.selectedObject.parent.collisionActions[\""+name+"\"] = actions;}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
+					",GameCreator.selectedObject.parent.collisionActions[\""+name+"\"]); return false;'>" + name + "</a><br/>";
+				}
+			}
 			return result;
 		}
 	},
@@ -640,6 +651,13 @@ var GameCreator = {
 	createGlobalListElement: function(object) {
 		var listElement = GameCreator.htmlStrings.globalObjectElement(object);
 		$("#globalObjectList").append(listElement);
+		var listElementButton = GameCreator.htmlStrings.globalObjectEditButton(object);
+		$("#globalObjectList").append(listElementButton);
+		$(listElementButton).on("click", function(e){
+			$("#editGlobalObjectWindow").html(GameCreator.htmlStrings.editGlobalObjectWindowActions(object));
+			$("#editGlobalObjectWindow").dialog( "option", "title", object.name );
+			$("#editGlobalObjectWindow").dialog("open");
+		});
 		$(listElement).on("mousedown", function(e){
 			var image = new Image();
 			image.src = $(this).find("img").attr("src");

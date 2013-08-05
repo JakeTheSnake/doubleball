@@ -1,5 +1,8 @@
 TODO:
 
+Fix adding and removing actions from the new editGlobalObject window. Fix "selectedObject". It now refers to a scene object. (rename to "selectedSceneObject" perhaps, and add "selectedGlobalObject") Or a new popup for editing actions in edit mode or something else.
+Add editing of other global attributes to this window. (Changing these should only affect new instances created, though changing actions obviously changes them for all instances)
+
 Add setting of route to UI for adding global objects
 When an action has been selected, remove mutually exclusive actions from list.
 As the save/load functionality works now, people can embed any script they want into the game. We probably need to save actions by name instead of saving entire functions. And interpret this to recreate a usable object when the game is loaded.

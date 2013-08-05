@@ -74,21 +74,21 @@ window.onload = function () {
 		
 		$( ".ui-btn" ).button();
 		$( "#selectActionAddAction" ).click(function( event ) {				
-				var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
-				var selectedAction = {action: action.action, parameters: {}, name: action.name};
+			var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
+			var selectedAction = {action: action.action, parameters: {}, name: action.name};
 
-				for (var i = 0; i < action.params.length; i++) {
-					selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
-				}
-				GameCreator.openSelectActionsWindow.selectedActions.push(selectedAction);
-				$("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
-			});
+			for (var i = 0; i < action.params.length; i++) {
+				selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
+			}
+			GameCreator.openSelectActionsWindow.selectedActions.push(selectedAction);
+			$("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+		});
 		
 		$( "#selectActionWindow" ).dialog({
 			autoOpen: false,
 			open: function(event, ui) {
 				$( "#selectActionAddAction" ).button();
-				},
+			},
 			width: 400,
 			buttons: [
 				{
@@ -107,7 +107,18 @@ window.onload = function () {
 			]
 		});	
 		
-		
+		$( "#editGlobalObjectWindow" ).dialog({
+			autoOpen: false,
+			width: 500,
+			buttons: [
+				{
+					text: "Ok",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
+		});	
 	}
 	
 	function addActiveObject(){
