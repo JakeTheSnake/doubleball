@@ -32,13 +32,13 @@ window.onload = function () {
 		
 		//Create Platformobject
 		
-		//var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", name: "platformZealot", width: 80, height: 80})
-		//GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
+		var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", name: "platformZealot", width: 80, height: 80})
+		GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
 		
 		//Create TopDownObject
 		
-		var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
-		GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
+		//var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
+		//GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
 		
 		//GameCreator.loadScene(GameCreator.scenes[0]);
 		
@@ -109,7 +109,13 @@ window.onload = function () {
 		
 		$( "#editGlobalObjectWindow" ).dialog({
 			autoOpen: false,
-			width: 500,
+			width: 700,
+			open: function() {
+				var dialogWindow = this;
+				$(dialogWindow).find(".editGlobalObjectTab").on("click", function() {
+					$(dialogWindow).find("#editGlobalObjectWindowContent").html(GameCreator.htmlStrings[$(this).data("htmlstring")]);
+				})
+			},
 			buttons: [
 				{
 					text: "Ok",

@@ -72,7 +72,7 @@ var GameCreator = {
 			return div;
 		},
 		editActiveObjectForm: function(object) {
-			var result = "<div class='editActiveObject'>";
+			var result = "<div class='editSceneObjectForm'>";
 			result += "<label for='editActiveObjectHeight'>Height:</label><input id='editActiveObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
 			result += "<label for='editActiveObjectWidth'>Width:</label><input id='editActiveObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
 			if (object.parent.movementType == "free") {
@@ -92,6 +92,40 @@ var GameCreator = {
 			}
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
+		editMouseObjectForm: function(object) {
+			var result = "<div class='editSceneObjectForm'>";
+			result += "<label for='editMouseObjectHeight'>Height:</label><input id='editMouseObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
+			result += "<label for='editMouseObjectWidth'>Width:</label><input id='editMouseObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			
+			result += "<label for='editMouseObjectMinX'>Min X:</label><input id='editMouseObjectMinX' type='text' data-type='number' data-attrName='minX'></input>"
+			result += "<label for='editMouseObjectMinY'>Min Y:</label><input id='editMouseObjectMinY' type='text' data-type='number' data-attrName='minY'></input>"
+			
+			result += "<label for='editMouseObjectMaxX'>Max X:</label><input id='editMouseObjectMaxX' type='text' data-type='number' data-attrName='maxX'></input>"
+			result += "<label for='editMouseObjectMaxY'>Max Y:</label><input id='editMouseObjectMaxY' type='text' data-type='number' data-attrName='maxY'></input>"
+			
+			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
+		},
+		editPlatformObjectForm: function(object) {
+			var result = "<div class='editSceneObjectForm'>";
+			result += "<label for='editPlatformObjectHeight'>Height:</label><input id='editPlatformObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
+			result += "<label for='editPlatformObjectWidth'>Width:</label><input id='editPlatformObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			
+			result += "<label for='editPlatformObjectAccY'>Gravity:</label><input id='editPlatformObjectAccY' type='text' data-type='number' data-attrName='accY'></input>"
+			
+			result += "<label for='editPlatformObjectMaxSpeed'>Speed:</label><input id='editPlatformObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed'></input>"
+			result += "<label for='editPlatformObjectAcceleration'>Acceleration:</label><input id='editPlatformObjectAcceleration' type='text' data-type='number' data-attrName='acceleration'></input>"
+			
+			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
+		},
+		editTopDownObjectForm: function(object) {
+			var result = "<div class='editSceneObjectForm'>";
+			result += "<label for='editTopDownObjectHeight'>Height:</label><input id='editTopDownObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
+			result += "<label for='editTopDownObjectWidth'>Width:</label><input id='editTopDownObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			
+			result += "<label for='editTopDownObjectMaxSpeed'>Speed:</label><input id='editTopDownObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed'></input>"
+			
+			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
+		},
 		routeNode: function(node, index) {
 			var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + GameCreator.canvasOffsetY) + "px;left:" + (node.x + GameCreator.canvasOffsetX) + "px;'><div class='routeNode' data-index='" + index + "'> \
 				<span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
@@ -99,18 +133,37 @@ var GameCreator = {
 				<a href='' onclick='GameCreator.selectedObject.removeNode(" + index + "); return false;'>X</a></div></div>";
 			return result;
 		},
-		editGlobalObjectWindowActions: function(object) {
+		editGlobalObjectWindow: function(object) {
 			result = "";
-			result += "<br/><b>Collisions:</b><br/>";
+			//The tabs here should depend on the kind of object. For now we just show them all.
+			result += "<div id='editGlobalObjectTabContainer'><div class='editGlobalObjectTab' data-htmlString='editGlobalObjectPropertiesContent'><span>Properties</span></div> \
+			<div class='editGlobalObjectTab' data-htmlString='editGlobalObjectCollisionsContent'><span>Collisions<span></div> \
+			<div class='editGlobalObjectTab' data-htmlString='editGlobalObjectKeyActionsContent'><span>Key Actions</span></div> \
+			<div class='editGlobalObjectTab' data-htmlString='editGlobalObjectTimerActionsContent'><span>Timer Actions</span></div> \
+			<div class='editGlobalObjectTab' data-htmlString='editGlobalObjectCounterActionsContent'><span>Counter Actions</span></div></div> \
+			<div id='editGlobalObjectWindowContent'></div>";
+			return result;
+		},
+		editGlobalObjectPropertiesContent: function(object) {
+			return "Properties!";
+		},
+		editGlobalObjectCollisionsContent: function(object) {
+			result = "Collisions!";
 			for (name in object.collisionActions) {
 				if (object.collisionActions.hasOwnProperty(name)) {
-					result += "<a href='#' onclick='GameCreator.openSelectActionsWindow(\"This happens when " + 
-					object.name + " collides with " + name + 
-					"\",function(actions){GameCreator.selectedObject.parent.collisionActions[\""+name+"\"] = actions;}, $.extend(GameCreator.commonSelectableActions, GameCreator.collisionSelectableActions)" + 
-					",GameCreator.selectedObject.parent.collisionActions[\""+name+"\"]); return false;'>" + name + "</a><br/>";
+					result += "<div><span data-objectName='" + object.name + "'>" + object.name + "</span></div>"
 				}
-			}
+			};
 			return result;
+		},
+		editGlobalObjectKeyActionsContent: function(object) {
+			return "KeyActions!";
+		},
+		editGlobalObjectTimerActionsContent: function(object) {
+			return "Timer Actions";
+		},
+		editGlobalObjectCounterActionsContent: function(object) {
+			return "Counter Actions";
 		}
 	},
 	
@@ -654,7 +707,7 @@ var GameCreator = {
 		var listElementButton = GameCreator.htmlStrings.globalObjectEditButton(object);
 		$("#globalObjectList").append(listElementButton);
 		$(listElementButton).on("click", function(e){
-			$("#editGlobalObjectWindow").html(GameCreator.htmlStrings.editGlobalObjectWindowActions(object));
+			$("#editGlobalObjectWindow").html(GameCreator.htmlStrings.editGlobalObjectWindow(object));
 			$("#editGlobalObjectWindow").dialog( "option", "title", object.name );
 			$("#editGlobalObjectWindow").dialog("open");
 		});
@@ -678,13 +731,13 @@ var GameCreator = {
 			$("#editSceneObjectContent").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
 		}
 		else if(GameCreator.selectedObject.parent.objectType == "mouseObject") {
-			$("#editSceneObjectContent").html("Mouseobject!");
+			$("#editSceneObjectContent").html(GameCreator.htmlStrings.editMouseObjectForm(GameCreator.selectedObject));
 		}
 		else if(GameCreator.selectedObject.parent.objectType == "platformObject") {
-			$("#editSceneObjectContent").html("Platformobject!");
+			$("#editSceneObjectContent").html(GameCreator.htmlStrings.editPlatformObjectForm(GameCreator.selectedObject));
 		}
 		else if(GameCreator.selectedObject.parent.objectType == "topDownObject") {
-			$("#editSceneObjectContent").html("Topdownobject!");
+			$("#editSceneObjectContent").html(GameCreator.htmlStrings.editTopDownObjectForm(GameCreator.selectedObject));
 		}
 	},
 	

@@ -59,6 +59,7 @@ GameCreator.sceneObject = {
 		//PlayerPlatform properties
 		
 		this.objectBeneath = false;
+		this.acceleration = args.acceleration != undefined ? args.acceleration : 8;
 		
 		//If it is a platformObject add gravity by default.
 		if(globalObj.objectType == "platformObject") {
@@ -68,6 +69,10 @@ GameCreator.sceneObject = {
 		//PlayerTopDown properties
 
 		this.facing = 1;
+		
+		//TopDown and Platform
+		
+		this.maxSpeed = args.maxSpeed != undefined ? args.maxSpeed : 250;
 		
 		//ActiveObject properties
 		

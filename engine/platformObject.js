@@ -62,7 +62,8 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 {
 	platformObject.accX = 0;
 	platformObject.accY = 0;
-	platformObject.moveSpeed = 200;
+	platformObject.acceleration = 8;
+	platformObject.maxSpeed = 250;
 	platformObject.keyLeftPressed = false;
 	platformObject.keyRightPressed = false;
 	platformObject.keyUpPressed = false;
@@ -83,12 +84,12 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 		if(this.parent.keyRightPressed)
 		{
 			this.facingLeft = false;
-			this.accX = 8;
+			this.accX = this.acceleration;
 		}
 		else if(this.parent.keyLeftPressed)
 		{
 			this.facingLeft = true;
-			this.accX = -8;
+			this.accX = -this.acceleration;
 		}
 		else if(this.objectBeneath)
 		{
@@ -99,7 +100,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 			this.accX = 0;
 		
 		//Add acceleration only if object is moving below max movement speed in that direction.
-		if(this.accX > 0 && this.speedX < 250 || this.accX < 0 && this.speedX > -250)
+		if(this.accX > 0 && this.speedX < this.maxSpeed || this.accX < 0 && this.speedX > -this.maxSpeed)
 			this.speedX += this.accX;
 			
 		this.speedY += this.accY;

@@ -16,6 +16,12 @@
 	line-height: 20px;
 }
 
-.editActiveObject {
+.editSceneObjectForm {
 	width: 200px;
+}
+
+.editGlobalObjectTab {
+	float:left;
+	margin-right:15px;
+	cursor: pointer;
 }

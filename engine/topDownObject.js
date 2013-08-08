@@ -80,7 +80,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
 	
 	topDownObject.calculateSpeed = function()
 	{	
-		var maxSpeed = this.parent.maxSpeed;
+		var maxSpeed = this.maxSpeed;
 		var angularMaxSpeed = GameCreator.helperFunctions.calcAngularSpeed(maxSpeed);
 		//Should only be able to affect movement if there is something beneath object.
 		if(this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
