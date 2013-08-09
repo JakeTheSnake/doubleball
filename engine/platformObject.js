@@ -109,7 +109,6 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 	platformObject.instantiated = function(){
 		var that = this;
 		$(document).on("keydown." + this.name, function(e){
-			console.log(e.which)
 			switch(e.which){
 				case 32:
 				that.keyActions.space.pressed = true;

@@ -10,7 +10,7 @@ var GameCreator = {
 	then: undefined,
 	draggedGlobalElement: undefined,
 	context: undefined,
-	canvasOffsetX: 100,
+	canvasOffsetX: 75,
 	canvasOffsetY: 0,
 	//Contains key value pairs where key is the (unique)name of the object.
 	globalObjects: {},
@@ -58,7 +58,7 @@ var GameCreator = {
 		},
 		globalObjectElement: function(object) {
 			var image = object.image;
-			$(image).css("width","90");
+			$(image).css("width","65");
 			var span = $(document.createElement("span")).append(object.name);
 			var div = $(document.createElement("div")).append(span).append(image);
 			$(div).attr("id", "globalObjectElement_" + object.name);
@@ -149,8 +149,8 @@ var GameCreator = {
 		},
 		editGlobalObjectCollisionsContent: function(object) {
 			result = "Collisions!";
-			for (name in object.collisionActions) {
-				if (object.collisionActions.hasOwnProperty(name)) {
+			for (colName in object.collisionActions) {
+				if (object.collisionActions.hasOwnProperty(colName)) {
 					result += "<div><span data-objectName='" + object.name + "'>" + object.name + "</span></div>"
 				}
 			};

@@ -22,85 +22,87 @@
 <script src="engine/topDownObject.js"></script>
 </head>
 <body>
-<div id="globalObjectList" style="float:left; width: 100px">&nbsp;</div>
-<div id="mainCanvas" style="position: absolute; left:100px"></div>
+<div id="addGlobalObjectContainer" style="float:top; width:75px">
+  <button id="addGlobalObjectButton" onClick="$('#mainMenuTabs').dialog('open')">+</button>
+</div>
+<div id="globalObjectList" style="float:left; width: 75px">&nbsp;</div>
+<div id="mainCanvas" style="position: absolute; left:75px"></div>
 <div id="mainMenu" style="position: absolute; left:900px">
-	<div id="mainMenuTabs">		
-		<a href="" id="mainMenuCreateActive" onclick="switchPane('#addActiveObjectPane');return false;">Create Active Object</a>
-		<a href="" id="mainMenuCreatePlayer" onclick="switchPane('#addPlayerObjectPane');return false;">Create Player Object</a>
-	</div>
-	<div id="addActiveObjectPane" class="addObjectPane" style="display:visible;">
-		<div>
-			<label for="addActiveObjectName">Name:</label>
-			<input id="addActiveObjectName" type="text"></input>
+	<div id="mainMenuTabs" title="Add a New Object">
+	  <ul>
+		  <li><a href="#addActiveObjectPanel" onclick="GameCreator.addObject = addActiveObject">New Active Object</a></li>
+		  <li><a href="#addPlayerObjectPanel" onclick="GameCreator.addObject = addPlayerMouseObject">New Player Object</a></li>
+	  </ul>
+	
+	  <div id="addActiveObjectPanel">
+		  <div>
+			  <label for="addActiveObjectName">Name:</label>
+			  <input id="addActiveObjectName" type="text"></input>
+		  </div>
+		  <div>
+			  <label for="addActiveObjectWidth">Width:</label>
+			  <input id="addActiveObjectWidth" type="text"></input>
+			  <label for="addActiveObjectHeight">Height:</label>
+			  <input id="addActiveObjectHeight" type="text"></input>
+		  </div>
+		  <div>
+			  <label for="addActiveObjectSrc" type="text">Image Src:</label>
+			  <input id="addActiveObjectSrc" type="text"></label>
+		  </div>
+		  <div>
+			  <label for="addActiveObjectMovementType">Movement type:</label>
+			  <select id="addActiveObjectMovementType">
+				  <option value="free">Free</option>
+				  <option value="route">Route</option>
+			  </select>
+		  </div>
+	  </div>	
+	  <div id="addPlayerObjectPanel">
+		  <div>
+			  <label for="addPlayerObjectName">Name:</label>
+			  <input id="addPlayerObjectName" type="text"></input>
+		  </div>
+		  <div>
+			  <label for="addPlayerObjectWidth">Width:</label>
+			  <input id="addPlayerObjectWidth" type="text"></input>
+			  <label for="addPlayerObjectHeight">Height:</label>
+			  <input id="addPlayerObjectHeight" type="text"></input>
+		  </div>
+		  <div>
+			  <label for="addPlayerObjectSrc" type="text">Image Src:</label>
+			  <input id="addPlayerObjectSrc" type="text"></label>
+		  </div>
+		  <div>
+		    <label for="addPlayerObjectType" type="select">Control:</label>
+			  <select id="addPlayerObjectType">
+				  <option value="addPlayerMouseObject">Mouse</option>
+				  <option value="addPlayerPlatformObject">Platform</option>
+				  <option value="addPlayerTopDownObject">Top Down</option>
+			  </select>
+			  <div id="addPlayerMouseObjectPanel">
+				  <div>
+					  <label for="addPlayerMouseObjectMaxX">Max X:</label>
+					  <input id="addPlayerMouseObjectMaxX" type="text"></input><br/>
+					  <label for="addPlayerMouseObjectMaxY">Max Y:</label>
+					  <input id="addPlayerMouseObjectMaxY" type="text"></input><br/>
+				  </div>
+				  <div>
+					  <label for="addPlayerMouseObjectMinX">Min X:</label>
+					  <input id="addPlayerMouseObjectMinX" type="text"></input><br/>
+					  <label for="addPlayerMouseObjectMinY">Min Y:</label>
+					  <input id="addPlayerMouseObjectMinY" type="text"></input>
+				  </div>
+			  </div>
+		  </div>
 		</div>
-		<div>
-			<label for="addActiveObjectWidth">Width:</label>
-			<input id="addActiveObjectWidth" type="text"></input>
-			<label for="addActiveObjectHeight">Height:</label>
-			<input id="addActiveObjectHeight" type="text"></input>
-		</div>
-		<div>
-			<label for="addActiveObjectSrc" type="text">Image Src:</label>
-			<input id="addActiveObjectSrc" type="text"></label>
-		</div>
-		<div>
-			<label for="addActiveObjectMovementType">Movement type:</label>
-			<select id="addActiveObjectMovementType">
-				<option value="free">Free</option>
-				<option value="route">Route</option>
-			</select>
-		</div>
-		<button id="AddActiveObject" class="ui-btn" onClick="addActiveObject()">Add Object</button>
-	</div>
-	<div id="addPlayerObjectPane" class="addObjectPane" style="display:none;">
-		<div>
-			<label for="addPlayerObjectName">Name:</label>
-			<input id="addPlayerObjectName" type="text"></input>
-		</div>
-		<div>
-			<label for="addPlayerObjectWidth">Width:</label>
-			<input id="addPlayerObjectWidth" type="text"></input>
-			<label for="addPlayerObjectHeight">Height:</label>
-			<input id="addPlayerObjectHeight" type="text"></input>
-		</div>
-		<div>
-			<label for="addPlayerObjectSrc" type="text">Image Src:</label>
-			<input id="addPlayerObjectSrc" type="text"></label>
-		</div>
-		<div>
-			<select id="addPlayerObjectType">
-				<option value="#addPlayerMouseObjectPane">Mouse</option>
-				<option value="#addPlayerPlatformObjectPane">Platform</option>
-				<option value="#addPlayerTopDownObjectPane">Top Down</option>
-			</select>
-		</div>
-		<div>
-			<div id="addPlayerMouseObjectPane" class="addPlayerObjectTypePane" style="display:visible;">
-				<div>
-					<label for="addPlayerMouseObjectMaxX">Max X:</label>
-					<input id="addPlayerMouseObjectMaxX" type="text"></input>
-					<label for="addPlayerMouseObjectMaxY">Max Y:</label>
-					<input id="addPlayerMouseObjectMaxY" type="text"></input>
-				</div>
-				<div>
-					<label for="addPlayerMouseObjectMinX">Min X:</label>
-					<input id="addPlayerMouseObjectMinX" type="text"></input>
-					<label for="addPlayerMouseObjectMinY">Min Y:</label>
-					<input id="addPlayerMouseObjectMinY" type="text"></input>
-				</div>
-				<button id="addMouseObjectBtn" class="ui-btn" onClick="addPlayerMouseObject()">Add Object</button>
-			</div>
-			<div id="addPlayerPlatformObjectPane" class="addPlayerObjectTypePane" style="display:none;">
-				<button id="addPlatformObjectBtn" class="ui-btn" onClick="addPlayerPlatformObject()">Add Object</button>
-			</div>
-			<div id="addPlayerTopDownObjectPane" class="addPlayerObjectTypePane" style="display:none;">
-				<button id="addTopDownObjectBtn" class="ui-btn" onClick="addPlayerTopDownObject()">Add Object</button>
-			</div>
-		</div>
-	</div>
-	<button id="directSceneButton" class="ui-btn" onClick="GameCreator.directActiveScene()">Direct Scene</button>
-	<button id="editSceneButton" class="ui-btn" onClick="GameCreator.editActiveScene()" style="display: none;">Edit Scene</button>
+	</div>	
+	
+	<form style="margin-top: 1em;">
+	  <div id="mode">
+		  <input type="radio" id="mode_edit" name="radio" onClick="GameCreator.editActiveScene()" checked="checked"><label for="mode_edit">Edit Scene</label>
+		  <input type="radio" id="mode_direct" name="radio"  onClick="GameCreator.directActiveScene()"><label for="mode_direct">Direct Scene</label>
+	  </div>
+  </form>
 	<div id="editSceneObjectPane" style="margin-top:20px;">
 		<div><span id="editSceneObjectTitle" style="font-size:20px; font-weight:bold;"></span></div>
 		<div id="editSceneObjectContent" style="margin-top:10px;">
@@ -115,7 +117,7 @@
 	<button id="saveGameButton" onClick="$('#saveGameTextArea').val(GameCreator.saveState())">Save Game</button>
 	<button id="loadGameButton" onClick="GameCreator.restoreState($('#saveGameTextArea').val())">Load Game</button>
 </div>
-<div id="selectActionWindow"  title="Dialog Title">
+<div id="selectActionWindow" title="Select Actions">
 	<span id="selectActionsHeader"></span>
 	<br/>
 	<div>

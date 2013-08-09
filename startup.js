@@ -68,20 +68,55 @@ window.onload = function () {
 		//	});
 		//}
 		
-		$("#addPlayerObjectType").on("change", function(){switchPlayerObjectType($(this).val())})
+		$("#addPlayerObjectType").on("change", function(){
+		    var fagwhore = ($(this).val());
+		    if (fagwhore === "addPlayerMouseObject") {
+		      GameCreator.addObject = addPlayerMouseObject;
+		      $("#addPlayerMouseObjectPanel").show();
+		    } else if (fagwhore === "addPlayerPlatformObject") {
+		      GameCreator.addObject = addPlayerPlatformObject;
+		      $("#addPlayerMouseObjectPanel").hide();
+		    } else if (fagwhore === "addPlayerTopDownObject") {
+		      GameCreator.addObject = addPlayerTopDownObject;
+		      $("#addPlayerMouseObjectPanel").hide();
+		    }
+		   
+		  });
 		
 		// UI
 		
 		$( ".ui-btn" ).button();
+		$("#mode").buttonset();
+		$("#mainMenuTabs").tabs();
+		$("#addGlobalObjectButton").button();
 		$( "#selectActionAddAction" ).click(function( event ) {				
 			var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
 			var selectedAction = {action: action.action, parameters: {}, name: action.name};
 
 			for (var i = 0; i < action.params.length; i++) {
-				selectedAction.parameters[action.params[i].inputId] = $("#"+action.params[i].inputId).val();
+				selectedAction.parameters[action.params[i].inputId] = $("#" + action.params[i].inputId).val();
 			}
 			GameCreator.openSelectActionsWindow.selectedActions.push(selectedAction);
 			$("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+		});
+		$("#mainMenuTabs").dialog({
+			autoOpen: false,
+			width: 550,
+			buttons: [
+				{
+					text: "Ok",
+					click: function() {
+						$( this ).dialog( "close" );
+						GameCreator.addObject();
+					}
+				},
+				{
+					text: "Cancel",
+					click: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			]
 		});
 		
 		$( "#selectActionWindow" ).dialog({
@@ -162,15 +197,5 @@ window.onload = function () {
 			height: parseInt($("#addPlayerObjectHeight").val()),
 			src: $("#addPlayerObjectSrc").val(),
 		});
-	}
-	
-	function switchPane(paneId){
-		$(".addObjectPane").hide();
-		$(paneId).show();
-	}
-	
-	function switchPlayerObjectType(paneId){
-		$(".addPlayerObjectTypePane").hide();
-		$(paneId).show();
 	}
 	
