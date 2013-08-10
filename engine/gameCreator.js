@@ -74,56 +74,56 @@ var GameCreator = {
 		},
 		editActiveObjectForm: function(object) {
 			var result = "<div class='editSceneObjectForm'>";
-			result += "<label for='editActiveObjectHeight'>Height:</label><input id='editActiveObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
-			result += "<label for='editActiveObjectWidth'>Width:</label><input id='editActiveObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			result += "<label for='editActiveObjectHeight'>Height:</label><input id='editActiveObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>"
+			result += "<label for='editActiveObjectWidth'>Width:</label><input id='editActiveObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>"
 			if (object.parent.movementType == "free") {
-				result += "<label for='editActiveObjectSpeedX'>SpeedX:</label><input id='editActiveObjectSpeedX' type='text' data-type='number' data-attrName='speedX'></input>"
-				result += "<label for='editActiveObjectSpeedY'>SpeedY:</label><input id='editActiveObjectSpeedY' type='text' data-type='number' data-attrName='speedY'></input>"
+				result += "<label for='editActiveObjectSpeedX'>SpeedX:</label><input id='editActiveObjectSpeedX' type='text' data-type='number' data-attrName='speedX' value='" + object.speedX + "'></input>"
+				result += "<label for='editActiveObjectSpeedY'>SpeedY:</label><input id='editActiveObjectSpeedY' type='text' data-type='number' data-attrName='speedY' value='" + object.speedY + "'></input>"
 			}
 			else if(object.parent.movementType == "route") {
-				result += "<label for='editActiveObjectRouteSpeed'>Speed:</label><input id='editActiveObjectRouteSpeed' type='text' data-type='number' data-attrName='routeSpeed'></input>"
+				result += "<label for='editActiveObjectRouteSpeed'>Speed:</label><input id='editActiveObjectRouteSpeed' type='text' data-type='number' data-attrName='routeSpeed' value='" + object.routeSpeed + "'></input>"
 				result += "<label for='editActiveObjectStartNode'>Starting Node</label><select id='editActiveObjectStartNode' data-type='number' data-attrName='targetNode'>";
 				for (var i = 0; i < object.route.length; i++) {
-					result += "<option value='" + i + "'>" + (i + 1) + "</option>";
+					result += "<option value='" + i + "'" + (object.targetNode == i ? 'selected' : '') + ">" + (i + 1) + "</option>";
 				}
 				result += "</select><br/>";
 				result += "<label for='editActiveObjectRouteDirection'>Direction</label><select id='editActiveObjectRouteDirection' data-type='bool' data-attrName='routeForward'> \
-					<option value='true'>Forward</option><option value='false'>Backward</option></select>"
+					<option value='true'" + (object.routeForward ? 'selected' : '') + ">Forward</option><option value='false'" + (!object.routeForward ? 'selected' : '') + ">Backward</option></select>"
 				result += "<a href='' onclick='GameCreator.drawRoute(GameCreator.selectedObject.route);return false;'>Edit route</a>"
 			}
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
 		editMouseObjectForm: function(object) {
 			var result = "<div class='editSceneObjectForm'>";
-			result += "<label for='editMouseObjectHeight'>Height:</label><input id='editMouseObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
-			result += "<label for='editMouseObjectWidth'>Width:</label><input id='editMouseObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			result += "<label for='editMouseObjectHeight'>Height:</label><input id='editMouseObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>"
+			result += "<label for='editMouseObjectWidth'>Width:</label><input id='editMouseObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>"
 			
-			result += "<label for='editMouseObjectMinX'>Min X:</label><input id='editMouseObjectMinX' type='text' data-type='number' data-attrName='minX'></input>"
-			result += "<label for='editMouseObjectMinY'>Min Y:</label><input id='editMouseObjectMinY' type='text' data-type='number' data-attrName='minY'></input>"
+			result += "<label for='editMouseObjectMinX'>Min X:</label><input id='editMouseObjectMinX' type='text' data-type='number' data-attrName='minX' value='" + object.minX + "'></input>"
+			result += "<label for='editMouseObjectMinY'>Min Y:</label><input id='editMouseObjectMinY' type='text' data-type='number' data-attrName='minY' value='" + object.minY + "'></input>"
 			
-			result += "<label for='editMouseObjectMaxX'>Max X:</label><input id='editMouseObjectMaxX' type='text' data-type='number' data-attrName='maxX'></input>"
-			result += "<label for='editMouseObjectMaxY'>Max Y:</label><input id='editMouseObjectMaxY' type='text' data-type='number' data-attrName='maxY'></input>"
+			result += "<label for='editMouseObjectMaxX'>Max X:</label><input id='editMouseObjectMaxX' type='text' data-type='number' data-attrName='maxX' value='" + object.maxX + "'></input>"
+			result += "<label for='editMouseObjectMaxY'>Max Y:</label><input id='editMouseObjectMaxY' type='text' data-type='number' data-attrName='maxY' value='" + object.maxY + "'></input>"
 			
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
 		editPlatformObjectForm: function(object) {
 			var result = "<div class='editSceneObjectForm'>";
-			result += "<label for='editPlatformObjectHeight'>Height:</label><input id='editPlatformObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
-			result += "<label for='editPlatformObjectWidth'>Width:</label><input id='editPlatformObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			result += "<label for='editPlatformObjectHeight'>Height:</label><input id='editPlatformObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>"
+			result += "<label for='editPlatformObjectWidth'>Width:</label><input id='editPlatformObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>"
 			
-			result += "<label for='editPlatformObjectAccY'>Gravity:</label><input id='editPlatformObjectAccY' type='text' data-type='number' data-attrName='accY'></input>"
+			result += "<label for='editPlatformObjectAccY'>Gravity:</label><input id='editPlatformObjectAccY' type='text' data-type='number' data-attrName='accY' value='" + object.accY + "'></input>"
 			
-			result += "<label for='editPlatformObjectMaxSpeed'>Speed:</label><input id='editPlatformObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed'></input>"
-			result += "<label for='editPlatformObjectAcceleration'>Acceleration:</label><input id='editPlatformObjectAcceleration' type='text' data-type='number' data-attrName='acceleration'></input>"
+			result += "<label for='editPlatformObjectMaxSpeed'>Speed:</label><input id='editPlatformObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + object.maxSpeed + "'></input>"
+			result += "<label for='editPlatformObjectAcceleration'>Acceleration:</label><input id='editPlatformObjectAcceleration' type='text' data-type='number' data-attrName='acceleration' value='" + object.acceleration + "'></input>"
 			
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},
 		editTopDownObjectForm: function(object) {
 			var result = "<div class='editSceneObjectForm'>";
-			result += "<label for='editTopDownObjectHeight'>Height:</label><input id='editTopDownObjectHeight' type='text' data-type='number' data-attrName='height'></input>"
-			result += "<label for='editTopDownObjectWidth'>Width:</label><input id='editTopDownObjectWidth' type='text' data-type='number' data-attrName='width'></input>"
+			result += "<label for='editTopDownObjectHeight'>Height:</label><input id='editTopDownObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>"
+			result += "<label for='editTopDownObjectWidth'>Width:</label><input id='editTopDownObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>"
 			
-			result += "<label for='editTopDownObjectMaxSpeed'>Speed:</label><input id='editTopDownObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed'></input>"
+			result += "<label for='editTopDownObjectMaxSpeed'>Speed:</label><input id='editTopDownObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + object.maxSpeed + "'></input>"
 			
 			return result + "<button id='saveSceneObjectButton' onClick='GameCreator.saveSceneObjectChanges()'>Save</button></div>";
 		},

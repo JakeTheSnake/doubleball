@@ -75,7 +75,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 		space: {pressed: false, onCooldown: false, actions: undefined}
 	};
 	
-	platformObject.calculateSpeed = function(modifier)
+	platformObject.calculateSpeed = function()
 	{	
 		//Should only be able to affect movement if there is something beneath object.
 		if(this.parent.keyUpPressed && this.objectBeneath)
