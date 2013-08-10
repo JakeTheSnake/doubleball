@@ -23,80 +23,11 @@
 </head>
 <body>
 <div id="addGlobalObjectContainer" style="float:top; width:75px">
-  <button id="addGlobalObjectButton" onClick="$('#mainMenuTabs').dialog('open')">+</button>
+  <button id="addGlobalObjectButton" onClick="$('#addGlobalObjectWindow').dialog('open')">+</button>
 </div>
 <div id="globalObjectList" style="float:left; width: 75px">&nbsp;</div>
 <div id="mainCanvas" style="position: absolute; left:75px"></div>
 <div id="mainMenu" style="position: absolute; left:900px">
-	<div id="mainMenuTabs" title="Add a New Object">
-	  <ul>
-		  <li><a href="#addActiveObjectPanel" onclick="GameCreator.addObject = addActiveObject">New Active Object</a></li>
-		  <li><a href="#addPlayerObjectPanel" onclick="GameCreator.addObject = addPlayerMouseObject">New Player Object</a></li>
-	  </ul>
-	
-	  <div id="addActiveObjectPanel">
-		  <div>
-			  <label for="addActiveObjectName">Name:</label>
-			  <input id="addActiveObjectName" type="text"></input>
-		  </div>
-		  <div>
-			  <label for="addActiveObjectWidth">Width:</label>
-			  <input id="addActiveObjectWidth" type="text"></input>
-			  <label for="addActiveObjectHeight">Height:</label>
-			  <input id="addActiveObjectHeight" type="text"></input>
-		  </div>
-		  <div>
-			  <label for="addActiveObjectSrc" type="text">Image Src:</label>
-			  <input id="addActiveObjectSrc" type="text"></label>
-		  </div>
-		  <div>
-			  <label for="addActiveObjectMovementType">Movement type:</label>
-			  <select id="addActiveObjectMovementType">
-				  <option value="free">Free</option>
-				  <option value="route">Route</option>
-			  </select>
-		  </div>
-	  </div>	
-	  <div id="addPlayerObjectPanel">
-		  <div>
-			  <label for="addPlayerObjectName">Name:</label>
-			  <input id="addPlayerObjectName" type="text"></input>
-		  </div>
-		  <div>
-			  <label for="addPlayerObjectWidth">Width:</label>
-			  <input id="addPlayerObjectWidth" type="text"></input>
-			  <label for="addPlayerObjectHeight">Height:</label>
-			  <input id="addPlayerObjectHeight" type="text"></input>
-		  </div>
-		  <div>
-			  <label for="addPlayerObjectSrc" type="text">Image Src:</label>
-			  <input id="addPlayerObjectSrc" type="text"></label>
-		  </div>
-		  <div>
-		    <label for="addPlayerObjectType" type="select">Control:</label>
-			  <select id="addPlayerObjectType">
-				  <option value="addPlayerMouseObject">Mouse</option>
-				  <option value="addPlayerPlatformObject">Platform</option>
-				  <option value="addPlayerTopDownObject">Top Down</option>
-			  </select>
-			  <div id="addPlayerMouseObjectPanel">
-				  <div>
-					  <label for="addPlayerMouseObjectMaxX">Max X:</label>
-					  <input id="addPlayerMouseObjectMaxX" type="text"></input><br/>
-					  <label for="addPlayerMouseObjectMaxY">Max Y:</label>
-					  <input id="addPlayerMouseObjectMaxY" type="text"></input><br/>
-				  </div>
-				  <div>
-					  <label for="addPlayerMouseObjectMinX">Min X:</label>
-					  <input id="addPlayerMouseObjectMinX" type="text"></input><br/>
-					  <label for="addPlayerMouseObjectMinY">Min Y:</label>
-					  <input id="addPlayerMouseObjectMinY" type="text"></input>
-				  </div>
-			  </div>
-		  </div>
-		</div>
-	</div>	
-	
 	<form style="margin-top: 1em;">
 	  <div id="mode">
 		  <input type="radio" id="mode_edit" name="radio" onClick="GameCreator.editActiveScene()" checked="checked"><label for="mode_edit">Edit Scene</label>
@@ -128,6 +59,75 @@
 	<div id="selectActionResult"></div>
 	<div style="clear:both;"></div>
 </div>
+
+<div id="addGlobalObjectWindow" title="Add a New Object">
+  <ul>
+	  <li><a href="#addActiveObjectPanel" onclick="GameCreator.addObject = addActiveObject">New Active Object</a></li>
+	  <li><a href="#addPlayerObjectPanel" onclick="GameCreator.addObject = addPlayerMouseObject">New Player Object</a></li>
+  </ul>
+
+  <div id="addActiveObjectPanel">
+	  <div>
+		  <label for="addActiveObjectName">Name:</label>
+		  <input id="addActiveObjectName" type="text"></input>
+	  </div>
+	  <div>
+		  <label for="addActiveObjectWidth">Width:</label>
+		  <input id="addActiveObjectWidth" type="text"></input>
+		  <label for="addActiveObjectHeight">Height:</label>
+		  <input id="addActiveObjectHeight" type="text"></input>
+	  </div>
+	  <div>
+		  <label for="addActiveObjectSrc" type="text">Image Src:</label>
+		  <input id="addActiveObjectSrc" type="text"></label>
+	  </div>
+	  <div>
+		  <label for="addActiveObjectMovementType">Movement type:</label>
+		  <select id="addActiveObjectMovementType">
+			  <option value="free">Free</option>
+			  <option value="route">Route</option>
+		  </select>
+	  </div>
+  </div>	
+  <div id="addPlayerObjectPanel">
+	  <div>
+		  <label for="addPlayerObjectName">Name:</label>
+		  <input id="addPlayerObjectName" type="text"></input>
+	  </div>
+	  <div>
+		  <label for="addPlayerObjectWidth">Width:</label>
+		  <input id="addPlayerObjectWidth" type="text"></input>
+		  <label for="addPlayerObjectHeight">Height:</label>
+		  <input id="addPlayerObjectHeight" type="text"></input>
+	  </div>
+	  <div>
+		  <label for="addPlayerObjectSrc" type="text">Image Src:</label>
+		  <input id="addPlayerObjectSrc" type="text"></label>
+	  </div>
+	  <div>
+	    <label for="addPlayerObjectType" type="select">Control:</label>
+		  <select id="addPlayerObjectType">
+			  <option value="addPlayerMouseObject">Mouse</option>
+			  <option value="addPlayerPlatformObject">Platform</option>
+			  <option value="addPlayerTopDownObject">Top Down</option>
+		  </select>
+		  <div id="addPlayerMouseObjectPanel">
+			  <div>
+				  <label for="addPlayerMouseObjectMaxX">Max X:</label>
+				  <input id="addPlayerMouseObjectMaxX" type="text"></input><br/>
+				  <label for="addPlayerMouseObjectMaxY">Max Y:</label>
+				  <input id="addPlayerMouseObjectMaxY" type="text"></input><br/>
+			  </div>
+			  <div>
+				  <label for="addPlayerMouseObjectMinX">Min X:</label>
+				  <input id="addPlayerMouseObjectMinX" type="text"></input><br/>
+				  <label for="addPlayerMouseObjectMinY">Min Y:</label>
+				  <input id="addPlayerMouseObjectMinY" type="text"></input>
+			  </div>
+		  </div>
+	  </div>
+	</div>
+</div>	
 
 <div id="editGlobalObjectWindow">
 	

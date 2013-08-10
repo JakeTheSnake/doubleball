@@ -87,7 +87,7 @@ window.onload = function () {
 		
 		$( ".ui-btn" ).button();
 		$("#mode").buttonset();
-		$("#mainMenuTabs").tabs();
+		$("#addGlobalObjectWindow").tabs();
 		$("#addGlobalObjectButton").button();
 		$( "#selectActionAddAction" ).click(function( event ) {				
 			var action = GameCreator.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
@@ -99,7 +99,7 @@ window.onload = function () {
 			GameCreator.openSelectActionsWindow.selectedActions.push(selectedAction);
 			$("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
 		});
-		$("#mainMenuTabs").dialog({
+		$("#addGlobalObjectWindow").dialog({
 			autoOpen: false,
 			width: 550,
 			buttons: [
