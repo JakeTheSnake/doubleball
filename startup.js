@@ -69,14 +69,14 @@ window.onload = function () {
 		//}
 		
 		$("#addPlayerObjectType").on("change", function(){
-		    var fagwhore = ($(this).val());
-		    if (fagwhore === "addPlayerMouseObject") {
+		    var objectType = ($(this).val());
+		    if (objectType === "addPlayerMouseObject") {
 		      GameCreator.addObject = addPlayerMouseObject;
 		      $("#addPlayerMouseObjectPanel").show();
-		    } else if (fagwhore === "addPlayerPlatformObject") {
+		    } else if (objectType === "addPlayerPlatformObject") {
 		      GameCreator.addObject = addPlayerPlatformObject;
 		      $("#addPlayerMouseObjectPanel").hide();
-		    } else if (fagwhore === "addPlayerTopDownObject") {
+		    } else if (objectType === "addPlayerTopDownObject") {
 		      GameCreator.addObject = addPlayerTopDownObject;
 		      $("#addPlayerMouseObjectPanel").hide();
 		    }
