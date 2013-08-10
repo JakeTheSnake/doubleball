@@ -116,7 +116,10 @@ window.onload = function () {
 						$( this ).dialog( "close" );
 					}
 				}
-			]
+			],
+			open: function(){
+				GameCreator.addObject = addActiveObject;
+			}
 		});
 		
 		$( "#selectActionWindow" ).dialog({
