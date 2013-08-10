@@ -8,6 +8,7 @@ var GameCreator = {
 	//State can be 'editing', 'directing' or 'playing'. 
 	state: 'editing',
 	then: undefined,
+	timer: undefined,
 	draggedGlobalElement: undefined,
 	context: undefined,
 	canvasOffsetX: 75,
@@ -173,6 +174,7 @@ var GameCreator = {
 	collideBorderBObject: {name: "borderB", x: -500, y: GCHeight, height: 500, width: GCWidth + 1000},
 	
 	reset: function() {
+		clearInterval(GameCreator.timer);
 		this.collidableObjects = [];
 		this.movableObjects = [];
 		this.renderableObjects = [];
@@ -331,7 +333,7 @@ var GameCreator = {
 		then = Date.now();
 		GameCreator.resumeGame();
 		GameCreator.state = 'playing';
-		setInterval(this.gameLoop, 1);
+		GameCreator.timer = setInterval(this.gameLoop, 1);
 	},
 
 	directActiveScene: function(){
@@ -350,7 +352,7 @@ var GameCreator = {
 		then = Date.now();
 		GameCreator.resumeGame();
 		GameCreator.state = 'directing';
-		setInterval(this.gameLoop, 1);
+		GameCreator.timer = setInterval(this.gameLoop, 1);
 	},
 	
 	editActiveScene: function(){
@@ -366,6 +368,7 @@ var GameCreator = {
 			var obj = scene[i];
 			if(obj.parent.isRenderable) {
 				GameCreator.renderableObjects.push(obj);
+				GameCreator.render();
 			}
 		}
 		
