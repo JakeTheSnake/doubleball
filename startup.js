@@ -70,14 +70,12 @@ window.onload = function () {
 		
 		$("#addPlayerObjectType").on("change", function(){
 		    var objectType = ($(this).val());
+			GameCreator.addObject = GameCreator.UI[objectType];
 		    if (objectType === "addPlayerMouseObject") {
-		      GameCreator.addObject = addPlayerMouseObject;
 		      $("#addPlayerMouseObjectPanel").show();
 		    } else if (objectType === "addPlayerPlatformObject") {
-		      GameCreator.addObject = addPlayerPlatformObject;
 		      $("#addPlayerMouseObjectPanel").hide();
 		    } else if (objectType === "addPlayerTopDownObject") {
-		      GameCreator.addObject = addPlayerTopDownObject;
 		      $("#addPlayerMouseObjectPanel").hide();
 		    }
 		   
@@ -163,42 +161,5 @@ window.onload = function () {
 				}
 			]
 		});	
-	}
-	
-	function addActiveObject(){
-		var obj = GameCreator.addActiveObject({
-			name: $("#addActiveObjectName").val(),
-			width: parseInt($("#addActiveObjectWidth").val()),
-			height: parseInt($("#addActiveObjectHeight").val()),
-			src: $("#addActiveObjectSrc").val(),
-			movementType: $("#addActiveObjectMovementType").val()
-		});
-	}
-	
-	function addPlayerMouseObject(){
-		var obj = GameCreator.addPlayerMouseObject({
-			name: $("#addPlayerObjectName").val(),
-			width: parseInt($("#addPlayerObjectWidth").val()),
-			height: parseInt($("#addPlayerObjectHeight").val()),
-			src: $("#addPlayerObjectSrc").val(),
-		});
-	}
-	
-	function addPlayerPlatformObject(){
-		var obj = GameCreator.addPlayerPlatformObject({
-			name: $("#addPlayerObjectName").val(),
-			width: parseInt($("#addPlayerObjectWidth").val()),
-			height: parseInt($("#addPlayerObjectHeight").val()),
-			src: $("#addPlayerObjectSrc").val(),
-		});
-	}
-	
-	function addPlayerTopDownObject(){
-		var obj = GameCreator.addPlayerTopDownObject({
-			name: $("#addPlayerObjectName").val(),
-			width: parseInt($("#addPlayerObjectWidth").val()),
-			height: parseInt($("#addPlayerObjectHeight").val()),
-			src: $("#addPlayerObjectSrc").val(),
-		});
 	}
 	

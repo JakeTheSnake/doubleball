@@ -1,0 +1,12 @@
+Version 0.1:
+
+Objects:
+	-Timers
+	-Counters
+	-Text
+
+-Play Mode
+
+-Global object rework:
+	Should have all attributes that a scene object now has
+	and should inherit these by default when instantiated.

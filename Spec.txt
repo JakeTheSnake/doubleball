@@ -1,0 +1,107 @@
+Global Objects
+================
+
+Ett Global Object är ett objekt som finns tillgängligt för att kunna skapas - antingen av användaren i Edit-läge, eller i runtime.
+
+Scene Objects
+================
+
+Om ett objekt har placerats i en scen kommer det att få en unik position, och möjligheten att få en unik identifier som användaren kan använda för att targeta detta objektet från actions. 
+
+Runtime Object
+================
+
+Håller ett state för ett specifikt objekt på spelplanen. Identiska Global Objects kommer vara olika runtimeobjekt om de existerar som olika instanser på spelplanen.
+
+Counters & Timers
+================
+Counters och Timers är alltid globala. De kan dras in i en scen för att få en visuell representation i den scenen. Counter har antingen en textuell eller en grafisk representation.
+
+
+Databas
+================
+
+Tabell 1: Innehåller alla global objects som kan skapas, både i editing och runtime. Ingen skillnad görs på dessa.
+Tabell 2: Innehåller alla scener. Varje scen har Scene Object som refererar till Global Object i tabell 1 med hjälp av Global Objectets unika namn. Dessa Scene Object innehåller vissa attribut som är specifika för den aktuella scenen medan andra är direkt kopplade till motsvarande attribut för Global Objectet (t.ex. rules). Dessa Scene Object kan ges en unik identifier, och blir isåfall valbara som targets för actions.
+
+Runtime-state
+================
+
+Innehåller en tabell med alla runtimeobjekt som för tillfället befinner sig på spelplanen. De referarar antingen till Scene Object eller Global Object.
+
+Events
+================
+
+Varje Global Object kan ha triggers som triggar vid olika händelser
+Objekt:
+OnCreate
+OnDestroy
+OnCollide*
+
+Counter:**
+Equals:
+LessThan:
+GreaterThan:
+
+
+Timer:**
+Equals:
+LessThan:
+GreaterThan:
+
+
+* Kan ha en trigger per objekt.
+** LessThan eller GreaterThan exekveras inte om Equals exekverar.
+
+Varje trigger kan i sin tur innehålla en eller flera actions.
+
+Actions
+================
+
+En Action är en viss händelse som påverkar ett eller flera runtimeobjekt.
+
+Prio 1:
+
+Destroy Object (params: "it" eller ett named objekt)
+Create Object (params: ett globalt objekt)
+
+Add from counter (params: counter, värde)
+Subtract from counter (params: counter, värde)
+Set counter value (params: counter, värde)
+
+Show text (params: textobjekt)
+Hide text (params: textobjekt)
+Set text (params: textobjekt, sträng)
+
+Start timer (params: timer)
+Pause timer (params: timer)
+Reset timer (params: timer)
+Add to timer (params: timer, värde)
+Subtract from timer (params: timer, värde)
+Set timer (params: timer, värde)
+
+Switch scene (params: scene)
+
+Prio 2:
+Move object (params: named objekt, x, y)
+Next scene
+Previous scene
+Resize object (params: named objekt, percentage)
+Exile object (params: named objekt)
+Return object (params: named objekt)
+
+
+Prio 3:
+Change speed/direction
+Change direction of timer
+
+Conditions
+================
+
+Varje action kan ha en Condition som måste vara uppfylld innan Action:en utförs.
+
+object exists
+counter count
+timer count
+
+
