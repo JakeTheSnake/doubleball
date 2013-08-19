@@ -30,10 +30,10 @@ GameCreator.sceneObject = {
 	instantiate: function(globalObj, args){
 		this.x = args.x != undefined ? args.x : 0
 		this.y = args.y != undefined ? args.y : 0
-		this.accX = args.accX != undefined ? args.accX : 0;
-		this.accY = args.accY != undefined ? args.accY : 0;
-		this.speedX = args.speedX != undefined ? args.speedX : 0;
-		this.speedY = args.speedY != undefined ? args.speedY : 0;
+		this.accX = args.accX != undefined ? args.accX : globalObj.accX;
+		this.accY = args.accY != undefined ? args.accY : globalObj.accY;
+		this.speedX = args.speedX != undefined ? args.speedX : globalObj.speedX;
+		this.speedY = args.speedY != undefined ? args.speedY : globalObj.speedY;
 		this.width = args.width != undefined ? args.width : globalObj.width;
 		this.height = args.height != undefined ? args.height : globalObj.height;
 		this.parent = globalObj;

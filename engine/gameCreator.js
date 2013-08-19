@@ -167,6 +167,12 @@ var GameCreator = {
 		},
 		editGlobalObjectCounterActionsContent: function(object) {
 			return "Counter Actions";
+		},
+		freeMovementForm: function() {
+			return '<label for="addObjectSpeedX">SpeedX:</label><input id="addObjectSpeedX" type="text"></input> \
+					<label for="addObjectSpeedY">SpeedY:</label><input id="addObjectSpeedY" type="text"></input> \
+					<label for="addObjectAccX">AccX:</label><input id="addObjectAccX" type="text"></input> \
+					<label for="addObjectAccY">AccY:</label><input id="addObjectAccY" type="text"></input>';
 		}
 	},
 	

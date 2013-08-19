@@ -116,7 +116,16 @@ window.onload = function () {
 				}
 			],
 			open: function(){
-				GameCreator.addObject = addActiveObject;
+				GameCreator.addObject = GameCreator.UI.addActiveObject;
+				$("#addActiveObjectMovementParameters").append(GameCreator.htmlStrings.freeMovementForm());
+				$("#addActiveObjectMovementType").on("change", function(){
+					if($(this).val() == "free") {
+						$("#addActiveObjectMovementParameters").append(GameCreator.htmlStrings.freeMovementForm());
+					}
+					else {
+						$("#addActiveObjectMovementParameters").html("");
+					}
+				});
 			}
 		});
 		

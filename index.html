@@ -63,8 +63,8 @@
 
 <div id="addGlobalObjectWindow" title="Add a New Object">
   <ul>
-	  <li><a href="#addActiveObjectPanel" onclick="GameCreator.addObject = addActiveObject">New Active Object</a></li>
-	  <li><a href="#addPlayerObjectPanel" onclick="GameCreator.addObject = addPlayerMouseObject">New Player Object</a></li>
+	  <li><a href="#addActiveObjectPanel" onclick="GameCreator.addObject = GameCreator.UI.addActiveObject">New Active Object</a></li>
+	  <li><a href="#addPlayerObjectPanel" onclick="GameCreator.addObject = GameCreator.UI.addPlayerMouseObject">New Player Object</a></li>
   </ul>
 
   <div id="addActiveObjectPanel">
@@ -88,6 +88,8 @@
 			  <option value="free">Free</option>
 			  <option value="route">Route</option>
 		  </select>
+	  </div>
+	  <div id="addActiveObjectMovementParameters">
 	  </div>
   </div>	
   <div id="addPlayerObjectPanel">

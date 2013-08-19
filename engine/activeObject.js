@@ -11,6 +11,11 @@ GameCreator.activeObject = {
 		obj.width = args.width;
 		obj.height = args.height;
 		
+		obj.accX = args.accX != undefined ? args.accX : 0;
+		obj.accY = args.accY != undefined ? args.accY : 0;
+		obj.speedX = args.speedX != undefined ? args.speedX : 0;
+		obj.speedY = args.speedY != undefined ? args.speedY : 0;
+		
 		obj.isCollidable = true;
 		obj.isMovable = true;
 		obj.isRenderable = true;

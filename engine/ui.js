@@ -5,7 +5,11 @@ GameCreator.UI = {
 			width: parseInt($("#addActiveObjectWidth").val()),
 			height: parseInt($("#addActiveObjectHeight").val()),
 			src: $("#addActiveObjectSrc").val(),
-			movementType: $("#addActiveObjectMovementType").val()
+			movementType: $("#addActiveObjectMovementType").val(),
+			speedX: parseFloat($("#addObjectSpeedX").val()),
+			speedY: parseFloat($("#addObjectSpeedY").val()),
+			accX: parseFloat($("#addObjectAccX").val()),
+			accY: parseFloat($("#addObjectAccY").val())
 		});
 	},
 	
