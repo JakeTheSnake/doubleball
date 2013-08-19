@@ -1,7 +1,5 @@
 TODO:
 
-You can remove last node of a route - FIX
-
 Why do we assign accY etc to global objects when created? These attributes have no meaning here right? Unless they are inherited? Check it out!
 Fix adding and removing actions from the new editGlobalObject window. Fix "selectedObject". It now refers to a scene object. (rename to "selectedSceneObject" perhaps, and add "selectedGlobalObject") Or a new popup for editing actions in edit mode or something else.
 Add editing of other global attributes to this window. (Changing these should only affect new instances created, though changing actions obviously changes them for all instances)

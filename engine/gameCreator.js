@@ -130,8 +130,10 @@ var GameCreator = {
 		routeNode: function(node, index) {
 			var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + GameCreator.canvasOffsetY) + "px;left:" + (node.x + GameCreator.canvasOffsetX) + "px;'><div class='routeNode' data-index='" + index + "'> \
 				<span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
-				<div class='nodeActions'><a href='' onclick='GameCreator.selectedObject.insertNode(" + index + "); return false;'>+</a> \
-				<a href='' onclick='GameCreator.selectedObject.removeNode(" + index + "); return false;'>X</a></div></div>";
+				<div class='nodeActions'><a href='' onclick='GameCreator.selectedObject.insertNode(" + index + "); return false;'>+</a>"
+			if(index != 0) {	
+				result += "<a href='' onclick='GameCreator.selectedObject.removeNode(" + index + "); return false;'>X</a></div></div>";
+			}
 			return result;
 		},
 		editGlobalObjectWindow: function(object) {
