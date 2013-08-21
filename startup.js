@@ -117,10 +117,10 @@ window.onload = function () {
 			],
 			open: function(){
 				GameCreator.addObject = GameCreator.UI.addActiveObject;
-				$("#addActiveObjectMovementParameters").append(GameCreator.htmlStrings.freeMovementForm());
+				$("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementForm());
 				$("#addActiveObjectMovementType").on("change", function(){
 					if($(this).val() == "free") {
-						$("#addActiveObjectMovementParameters").append(GameCreator.htmlStrings.freeMovementForm());
+						$("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementForm());
 					}
 					else {
 						$("#addActiveObjectMovementParameters").html("");
@@ -157,8 +157,9 @@ window.onload = function () {
 			width: 700,
 			open: function() {
 				var dialogWindow = this;
+				$(dialogWindow).find("#editGlobalObjectWindowContent").html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(GameCreator.selectedGlobalObject));
 				$(dialogWindow).find(".editGlobalObjectTab").on("click", function() {
-					$(dialogWindow).find("#editGlobalObjectWindowContent").html(GameCreator.htmlStrings[$(this).data("htmlstring")]);
+					$(dialogWindow).find("#editGlobalObjectWindowContent").html(GameCreator.htmlStrings[$(this).data("htmlstring")](GameCreator.selectedGlobalObject));
 				})
 			},
 			buttons: [

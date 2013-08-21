@@ -1,6 +1,10 @@
 TODO:
 
-Why do we assign accY etc to global objects when created? These attributes have no meaning here right? Unless they are inherited? Check it out!
+Add remaining attributes that should be editable when creating topdown and platform objects.
+Open on dialogues does not fire when another global object is selected for editing. Maybe we can drop jQui entirely instead of using the current dialogues?...
+Possible to get rid of "selectedGlobalObject" and send it in as a parameter to the dialog instead.
+Seriously check out JS templating engines!
+
 Fix adding and removing actions from the new editGlobalObject window. Fix "selectedObject". It now refers to a scene object. (rename to "selectedSceneObject" perhaps, and add "selectedGlobalObject") Or a new popup for editing actions in edit mode or something else.
 Add editing of other global attributes to this window. (Changing these should only affect new instances created, though changing actions obviously changes them for all instances)
 
