@@ -1,3 +1,16 @@
+﻿Game Modes
+================
+Editing: I detta läge ska man kunna skapa nya objekt, placera ut dem på scener och ändra dess attribut och Events.
+
+Directing: I detta läge spelar man spelet med de inställningar som finns, och man kan koppla Actions till Events allt eftersom de inträffar, för Events som inte definerats tidigare.
+
+Playing: Man spelar spelet.
+
+Save och Load
+================
+
+Man ska kunna spara ett spel som en JSON-sträng och ladda samma spel från en JSON-sträng.
+
 Global Objects
 ================
 
@@ -6,17 +19,40 @@ Ett Global Object är ett objekt som finns tillgängligt för att kunna skapas -
 Scene Objects
 ================
 
-Om ett objekt har placerats i en scen kommer det att få en unik position, och möjligheten att få en unik identifier som användaren kan använda för att targeta detta objektet från actions. 
+Om ett objekt har placerats i en scen kommer det att få en unik position, och möjligheten att få en unik identifier som användaren kan använda för att targeta detta objektet från actions.
 
 Runtime Object
 ================
 
-Håller ett state för ett specifikt objekt på spelplanen. Identiska Global Objects kommer vara olika runtimeobjekt om de existerar som olika instanser på spelplanen.
+Ett Runtime Object är ett Scene Object som ligger i tabellen med runtime. Ett Runetime Object håller ett state för ett specifikt objekt på spelplanen. Identiska Global Objects kommer vara olika Runtime Objects om de existerar som olika instanser på spelplanen.
+
+Tabellen med Runetime Objects klonas från de Scene Objects som finns på den aktiva scenen när spelet startar.
 
 Counters & Timers
 ================
 Counters och Timers är alltid globala. De kan dras in i en scen för att få en visuell representation i den scenen. Counter har antingen en textuell eller en grafisk representation.
 
+Text (prio 2)
+================
+Ett textobjekt är en textarea som kan visa olika texter under spelets gång.
+Attribut:
+Size
+Style (color, size, font)
+Text
+
+Actions:
+Hide
+Show
+SetText
+
+Objekt-hierarki
+================
+
+Det finns fyra typer av objekt:
+ActiveObject - Icke spelarstyrt objekt
+TopDownObject - Spelarobjekt som styrs med tangentbord, kan röra sig i åtta riktningar
+MouseObject - Spelarobjekt som ersätter muspekaren
+PlatformObject - Spelarobjekt som styrs med tangentbord, super mario style
 
 Databas
 ================
@@ -27,7 +63,7 @@ Tabell 2: Innehåller alla scener. Varje scen har Scene Object som refererar til
 Runtime-state
 ================
 
-Innehåller en tabell med alla runtimeobjekt som för tillfället befinner sig på spelplanen. De referarar antingen till Scene Object eller Global Object.
+Innehåller en tabell med alla runtimeobjekt som för tillfället befinner sig på spelplanen. De refererar antingen till Scene Object eller Global Object.
 
 Events
 ================
@@ -37,6 +73,7 @@ Objekt:
 OnCreate
 OnDestroy
 OnCollide*
+OnClick***
 
 Counter:**
 Equals:
@@ -52,6 +89,7 @@ GreaterThan:
 
 * Kan ha en trigger per objekt.
 ** LessThan eller GreaterThan exekveras inte om Equals exekverar.
+*** MouseObject ska inte ha OnClick
 
 Varje trigger kan i sin tur innehålla en eller flera actions.
 

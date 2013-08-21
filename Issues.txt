@@ -1,5 +1,6 @@
 TODO:
 
+Remove JQUery UI and replace with homemade stuff (dialogs/tabs)
 Add remaining attributes that should be editable when creating topdown and platform objects.
 Open on dialogues does not fire when another global object is selected for editing. Maybe we can drop jQui entirely instead of using the current dialogues?...
 Possible to get rid of "selectedGlobalObject" and send it in as a parameter to the dialog instead.
