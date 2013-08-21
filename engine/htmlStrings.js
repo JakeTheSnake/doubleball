@@ -50,7 +50,7 @@ GameCreator.htmlStrings = {
             result += "<label for='editActiveObjectAccY'>AccY:</label><input id='editActiveObjectAccY' type='text' data-type='number' data-attrName='accY' value='" + object.accY + "'></input>";
         }
         else if(object.parent.movementType == "route") {
-            result += "<label for='editActiveObjectRouteSpeed'>Speed:</label><input id='editActiveObjectRouteSpeed' type='text' data-type='number' data-attrName='routeSpeed' value='" + object.routeSpeed + "'></input>"
+            result += "<label for='editActiveObjectSpeed'>Speed:</label><input id='editActiveObjectSpeed' type='text' data-type='number' data-attrName='speed' value='" + object.speed + "'></input>"
             result += "<label for='editActiveObjectStartNode'>Starting Node</label><select id='editActiveObjectStartNode' data-type='number' data-attrName='targetNode'>";
             for (var i = 0; i < object.route.length; i++) {
                 result += "<option value='" + i + "'" + (object.targetNode == i ? 'selected' : '') + ">" + (i + 1) + "</option>";
@@ -119,7 +119,7 @@ GameCreator.htmlStrings = {
     editGlobalObjectPropertiesContent: function(object) {
         var result = "";
         if(object.objectType == "activeObject") {
-            result += "Active object"
+            result += GameCreator.htmlStrings.globalActiveObjectForm();
         }
         else if(object.objectType == "mouseObject") {
             result += "mouseObject"
@@ -155,5 +155,15 @@ GameCreator.htmlStrings = {
                 <label for="addObjectSpeedY">SpeedY:</label><input id="addObjectSpeedY" type="text"></input> \
                 <label for="addObjectAccX">AccX:</label><input id="addObjectAccX" type="text"></input> \
                 <label for="addObjectAccY">AccY:</label><input id="addObjectAccY" type="text"></input>';
+    },
+    routeMovementForm: function() {
+        return '<label for="addObjectSpeed">Speed:</label><input id="addObjectSpeed" type="text"></input>'
+    },
+    globalActiveObjectForm: function() {
+        return '<div id="addActiveObjectPanel"> \
+            <div><label for="addActiveObjectName">Name:</label><input id="addActiveObjectName" type="text"></input></div> \
+            <div><label for="addActiveObjectWidth">Width:</label><input id="addActiveObjectWidth" type="text"></input> \
+            <label for="addActiveObjectHeight">Height:</label><input id="addActiveObjectHeight" type="text"></input></div> \
+            <div><label for="addActiveObjectSrc" type="text">Image Src:</label><input id="addActiveObjectSrc" type="text"></label></div></div>';
     }
 };
