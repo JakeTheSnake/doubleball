@@ -70,7 +70,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
     topDownObject.keyRightPressed = false;
     topDownObject.keyUpPressed = false;
     topDownObject.keyDownPressed = false;
-    topDownObject.maxSpeed = 300;
+    topDownObject.maxSpeed = topDownObject.maxSpeed != undefined ? topDownObject.maxSpeed : 300;
     //Facing can be 1-8 where 1 is facing up and the others follow clockwise.
     topDownObject.facing = 1;
     //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.

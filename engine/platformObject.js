@@ -62,8 +62,8 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
 {
     platformObject.accX = 0;
     platformObject.accY = 0;
-    platformObject.acceleration = 8;
-    platformObject.maxSpeed = 250;
+    platformObject.acceleration = platformObject.acceleration != undefined ? platformObject.acceleration : 8;
+    platformObject.maxSpeed = platformObject.maxSpeed != undefined ? platformObject.maxSpeed : 250;
     platformObject.keyLeftPressed = false;
     platformObject.keyRightPressed = false;
     platformObject.keyUpPressed = false;

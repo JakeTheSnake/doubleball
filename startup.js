@@ -37,8 +37,8 @@ window.onload = function () {
         
         //Create TopDownObject
         
-        //var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zealot.gif", name: "topDownZealot", width: 80, height: 80})
-        //GameCreator.createInstance(globalTopDownPlayer, GameCreator.scenes[0], {x:150, y:400});
+        var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zergling.png", name: "topDownLing", width: 80, height: 80})
+        
         
         //GameCreator.loadScene(GameCreator.scenes[0]);
         
@@ -117,13 +117,13 @@ window.onload = function () {
             ],
             open: function(){
                 GameCreator.addObject = GameCreator.UI.addActiveObject;
-                $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementForm());
+                $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementInputs());
                 $("#addActiveObjectMovementType").on("change", function(){
                     if($(this).val() == "free") {
-                        $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementForm());
+                        $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementInputs());
                     }
                     else {
-                        $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.routeMovementForm());
+                        $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.routeMovementInputs());
                     }
                 });
             }

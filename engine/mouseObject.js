@@ -2,7 +2,7 @@ GameCreator.mouseObject = {
         
     New: function(image, args){
         var obj = Object.create(GameCreator.baseObject);
-        GameCreator.addObjFunctions.mouseObjectFunctions(obj);
+        GameCreator.addObjFunctions.mouseObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         obj.image = image;
         obj.name = args.name;
@@ -52,10 +52,14 @@ GameCreator.mouseObject = {
     }
 }
 
-GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject)
+GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
 {
     mouseObject.latestMouseX = 0;
     mouseObject.latestMouseY = 0;
+    mouseObject.maxX = args.maxX != undefined ? args.maxX : GCWidth;
+    mouseObject.maxY = args.maxY != undefined ? args.maxY : GCHeight;
+    mouseObject.minX = args.minX != undefined ? args.minX : 0;
+    mouseObject.minY = args.minY != undefined ? args.minY : 0;
     
     mouseObject.calculateSpeed = function(){};
     

@@ -122,7 +122,7 @@ GameCreator.htmlStrings = {
         }
         else if(object.objectType == "mouseObject") {
             result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
-            results += GameCreator.htmlStrings.mouseMovementInputs(object);
+            result += GameCreator.htmlStrings.mouseMovementInputs(object);
         }
         else if(object.objectType == "topDownObject") {
             result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
@@ -155,13 +155,13 @@ GameCreator.htmlStrings = {
         return "Counter Actions";
     },
     freeMovementInputs: function(object) {
-        return '<label for="addObjectSpeedX">SpeedX:</label><input id="addObjectSpeedX" type="text" data-type="number" data-attrName="speedX" value="' + object.speedX + '"></input> \
-                <label for="addObjectSpeedY">SpeedY:</label><input id="addObjectSpeedY" type="text" data-type="number" data-attrName="speedY" value="' + object.speedY + '"></input> \
-                <label for="addObjectAccX">AccX:</label><input id="addObjectAccX" type="text" data-type="number" data-attrName="accX" value="' + object.accX + '"></input> \
-                <label for="addObjectAccY">AccY:</label><input id="addObjectAccY" type="text" data-type="number" data-attrName="accY" value="' + object.accY + '"></input>';
+        return '<label for="addObjectSpeedX">SpeedX:</label><input id="addObjectSpeedX" type="text" data-type="number" data-attrName="speedX" value="' + (object ? object.speedX : "") + '"></input> \
+                <label for="addObjectSpeedY">SpeedY:</label><input id="addObjectSpeedY" type="text" data-type="number" data-attrName="speedY" value="' + (object ? object.speedY : "") + '"></input> \
+                <label for="addObjectAccX">AccX:</label><input id="addObjectAccX" type="text" data-type="number" data-attrName="accX" value="' + (object ? object.accX : "") + '"></input> \
+                <label for="addObjectAccY">AccY:</label><input id="addObjectAccY" type="text" data-type="number" data-attrName="accY" value="' + (object ? object.accY : "") + '"></input>';
     },
     routeMovementInputs: function(object) {
-        return '<label for="addObjectSpeed">Speed:</label><input id="addObjectSpeed" type="text" data-type="number" data-attrName="speed" value="' + object.speed + '"></input>'
+        return '<label for="addObjectSpeed">Speed:</label><input id="addObjectSpeed" type="text" data-type="number" data-attrName="speed" value="' + (object ? object.speed : "") + '"></input>'
     },
     globalActiveObjectForm: function(object) {
         var result = '<div><label for="addActiveObjectWidth">Width:</label><input id="addActiveObjectWidth" type="text" data-type="number" data-attrName="width" value="' + object.width + '"></input> \

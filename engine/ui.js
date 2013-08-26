@@ -20,6 +20,10 @@ GameCreator.UI = {
             width: parseInt($("#addPlayerObjectWidth").val()),
             height: parseInt($("#addPlayerObjectHeight").val()),
             src: $("#addPlayerObjectSrc").val(),
+            maxX: parseInt($("#addPlayerMouseObjectMaxX").val()),
+            maxY: parseInt($("#addPlayerMouseObjectMaxY").val()),
+            minX: parseInt($("#addPlayerMouseObjectMinX").val()),
+            minY: parseInt($("#addPlayerMouseObjectMinY").val())
         });
     },
     

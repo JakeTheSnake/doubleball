@@ -42,28 +42,19 @@ GameCreator.sceneObject = {
         
         //PlayerMouse properties
         
-        this.maxX = GameCreator.width - this.width;
-        this.maxY = GameCreator.height - this.height;
-        this.minX = 0;
-        this.minY = 0;
-        
-        if(args.maxX)
-            this.maxX = args.maxX - this.width;
-        if(args.maxY)
-            this.maxY = args.maxY - this.height;;
-        if(args.minX)
-            this.minX = args.minX;
-        if(args.minY)
-            this.minY = args.minY;
+        this.maxX = args.maxX != undefined ? args.maxX : globalObj.maxX;
+        this.maxY = args.maxY != undefined ? args.maxY : globalObj.maxY;
+        this.minX = args.minX != undefined ? args.minX : globalObj.minX;
+        this.minY = args.minY != undefined ? args.minY : globalObj.minY;
             
         //PlayerPlatform properties
         
         this.objectBeneath = false;
-        this.acceleration = args.acceleration != undefined ? args.acceleration : 8;
+        this.acceleration = args.acceleration != undefined ? args.acceleration : globalObj.acceleration;
         
         //If it is a platformObject add gravity by default.
         if(globalObj.objectType == "platformObject") {
-            this.accY = args.accY != undefined ? args.accY : 5;
+            this.accY = args.accY != undefined ? args.accY : globalObj.accY;
         }
             
         //PlayerTopDown properties
@@ -72,7 +63,7 @@ GameCreator.sceneObject = {
         
         //TopDown and Platform
         
-        this.maxSpeed = args.maxSpeed != undefined ? args.maxSpeed : 250;
+        this.maxSpeed = args.maxSpeed != undefined ? args.maxSpeed : globalObj.maxSpeed;
         
         //ActiveObject properties
         
