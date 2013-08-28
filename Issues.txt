@@ -1,5 +1,8 @@
 TODO:
 
+Om man ej fyller i något värde när man skapar globalt object blir det kaos. Fixa så att defaults fungerar (sätt defaults om input == false && input != 0)
+
+Routenodernas position verkar inte riktigt stämma med den position objektet faktiskt rör sig till.
 Implement all properties that should exist in create global/edit global/edit scene object forms. Test these. Look for refactoring possibilities (reusing htmlstrings more than now etc)
 Check that no default values are set when instantiating global objects, all should be set on the global object itself.
 

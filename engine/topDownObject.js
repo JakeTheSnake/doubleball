@@ -2,7 +2,7 @@ GameCreator.topDownObject = {
         
     New: function(image, args){
         var obj = Object.create(GameCreator.baseObject);
-        GameCreator.addObjFunctions.topDownObjectFunctions(obj);
+        GameCreator.addObjFunctions.topDownObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
@@ -60,7 +60,7 @@ GameCreator.topDownObject = {
     }
 }
 
-GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
+GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, args)
 {
     topDownObject.speedX = 0;
     topDownObject.speedY = 0;
@@ -70,7 +70,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject)
     topDownObject.keyRightPressed = false;
     topDownObject.keyUpPressed = false;
     topDownObject.keyDownPressed = false;
-    topDownObject.maxSpeed = topDownObject.maxSpeed != undefined ? topDownObject.maxSpeed : 300;
+    topDownObject.maxSpeed = args.maxSpeed != undefined ? args.maxSpeed : 300;
     //Facing can be 1-8 where 1 is facing up and the others follow clockwise.
     topDownObject.facing = 1;
     //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.

@@ -155,40 +155,59 @@ GameCreator.htmlStrings = {
         return "Counter Actions";
     },
     freeMovementInputs: function(object) {
-        return '<label for="addObjectSpeedX">SpeedX:</label><input id="addObjectSpeedX" type="text" data-type="number" data-attrName="speedX" value="' + (object ? object.speedX : "") + '"></input> \
-                <label for="addObjectSpeedY">SpeedY:</label><input id="addObjectSpeedY" type="text" data-type="number" data-attrName="speedY" value="' + (object ? object.speedY : "") + '"></input> \
-                <label for="addObjectAccX">AccX:</label><input id="addObjectAccX" type="text" data-type="number" data-attrName="accX" value="' + (object ? object.accX : "") + '"></input> \
-                <label for="addObjectAccY">AccY:</label><input id="addObjectAccY" type="text" data-type="number" data-attrName="accY" value="' + (object ? object.accY : "") + '"></input>';
+        return '<label for="freeObjectSpeedX">SpeedX:</label><input id="freeObjectSpeedX" type="text" data-type="number" data-attrName="speedX" value="' + (object ? object.speedX : "") + '"></input> \
+                <label for="freeObjectSpeedY">SpeedY:</label><input id="freeObjectSpeedY" type="text" data-type="number" data-attrName="speedY" value="' + (object ? object.speedY : "") + '"></input> \
+                <label for="freeObjectAccX">AccX:</label><input id="freeObjectAccX" type="text" data-type="number" data-attrName="accX" value="' + (object ? object.accX : "") + '"></input> \
+                <label for="freeObjectAccY">AccY:</label><input id="freeObjectAccY" type="text" data-type="number" data-attrName="accY" value="' + (object ? object.accY : "") + '"></input>';
     },
     routeMovementInputs: function(object) {
-        return '<label for="addObjectSpeed">Speed:</label><input id="addObjectSpeed" type="text" data-type="number" data-attrName="speed" value="' + (object ? object.speed : "") + '"></input>'
+        return '<label for="routeObjectSpeed">Speed:</label><input id="routeObjectSpeed" type="text" data-type="number" data-attrName="speed" value="' + (object ? object.speed : "") + '"></input>'
     },
     globalActiveObjectForm: function(object) {
-        var result = '<div><label for="addActiveObjectWidth">Width:</label><input id="addActiveObjectWidth" type="text" data-type="number" data-attrName="width" value="' + object.width + '"></input> \
-                      <label for="addActiveObjectHeight">Height:</label><input id="addActiveObjectHeight" type="text" data-type="number" data-attrName="height" value="' + object.height + '"></input></div>';
+        var result = '<div><label for="activeObjectWidth">Width:</label><input id="addActiveObjectWidth" type="text" data-type="number" data-attrName="width" value="' + object.width + '"></input> \
+                      <label for="activeObjectHeight">Height:</label><input id="addActiveObjectHeight" type="text" data-type="number" data-attrName="height" value="' + object.height + '"></input></div>';
         return result;
     },
     globalPlayerObjectForm: function(object) {
-        console.log(object)
-        var result = '<div><label for="addPlayerObjectWidth">Width:</label><input id="addPlayerObjectWidth" type="text" data-type="number" data-attrName="width" value="' + object.width + '"></input> \
-                      <label for="addPlayerObjectHeight">Height:</label><input id="addPlayerObjectHeight" type="text" data-type="number" data-attrName="height" value="' + object.height + '"></input></div>';
+        var result = '<div><label for="playerObjectWidth">Width:</label><input id="addPlayerObjectWidth" type="text" data-type="number" data-attrName="width" value="' + object.width + '"></input> \
+                      <label for="playerObjectHeight">Height:</label><input id="addPlayerObjectHeight" type="text" data-type="number" data-attrName="height" value="' + object.height + '"></input></div>';
         return result;
     },
     mouseMovementInputs: function(object) {
-        result = "<label for='editMouseObjectMinX'>Min X:</label><input id='editMouseObjectMinX' type='text' data-type='number' data-attrName='minX' value='" + object.minX + "'></input>";
-        result += "<label for='editMouseObjectMinY'>Min Y:</label><input id='editMouseObjectMinY' type='text' data-type='number' data-attrName='minY' value='" + object.minY + "'></input>";
+        result = "<label for='mouseObjectMinX'>Min X:</label><input id='mouseObjectMinX' type='text' data-type='number' data-attrName='minX' value='" + (object ? object.minX : "") + "'></input>";
+        result += "<label for='mouseObjectMinY'>Min Y:</label><input id='mouseObjectMinY' type='text' data-type='number' data-attrName='minY' value='" + (object ? object.minY : "") + "'></input>";
         
-        result += "<label for='editMouseObjectMaxX'>Max X:</label><input id='editMouseObjectMaxX' type='text' data-type='number' data-attrName='maxX' value='" + object.maxX + "'></input>";
-        result += "<label for='editMouseObjectMaxY'>Max Y:</label><input id='editMouseObjectMaxY' type='text' data-type='number' data-attrName='maxY' value='" + object.maxY + "'></input>";
+        result += "<label for='mouseObjectMaxX'>Max X:</label><input id='mouseObjectMaxX' type='text' data-type='number' data-attrName='maxX' value='" + (object ? object.maxX : "") + "'></input>";
+        result += "<label for='mouseObjectMaxY'>Max Y:</label><input id='mouseObjectMaxY' type='text' data-type='number' data-attrName='maxY' value='" + (object ? object.maxY : "") + "'></input>";
         return result;
     },
     platformMovementInputs: function(object) {
-        result = "<label for='editPlatformObjectAccY'>Gravity:</label><input id='editPlatformObjectAccY' type='text' data-type='number' data-attrName='accY' value='" + object.accY + "'></input>";
-        result += "<label for='editPlatformObjectMaxSpeed'>Speed:</label><input id='editPlatformObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + object.maxSpeed + "'></input>";
-        result += "<label for='editPlatformObjectAcceleration'>Acceleration:</label><input id='editPlatformObjectAcceleration' type='text' data-type='number' data-attrName='acceleration' value='" + object.acceleration + "'></input>";
+        result = "<label for='platformObjectAccY'>Gravity:</label><input id='platformObjectAccY' type='text' data-type='number' data-attrName='accY' value='" + (object ? object.accY : "") + "'></input>";
+        result += "<label for='platformObjectMaxSpeed'>Speed:</label><input id='platformObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + (object ? object.maxSpeed : "") + "'></input>";
+        result += "<label for='platformObjectAcceleration'>Acceleration:</label><input id='platformObjectAcceleration' type='text' data-type='number' data-attrName='acceleration' value='" + (object ? object.acceleration : "") + "'></input>";
         return result;
     },
     topDownMovementInputs: function(object) {
-        return "<label for='editTopDownObjectMaxSpeed'>Speed:</label><input id='editTopDownObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + object.maxSpeed + "'></input>";
+        return "<label for='topDownObjectMaxSpeed'>Speed:</label><input id='topDownObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + (object ? object.maxSpeed : "") + "'></input>";
+    },
+    addActiveObjectForm: function() {
+        return '<div><label for="activeObjectName">Name:</label><input id="activeObjectName" type="text"></input></div> \
+                <div><label for="activeObjectWidth">Width:</label><input id="activeObjectWidth" type="text"></input> \
+                <label for="activeObjectHeight">Height:</label><input id="activeObjectHeight" type="text"></input></div> \
+                <div><label for="activeObjectSrc" type="text">Image Src:</label><input id="activeObjectSrc" type="text"></label></div> \
+                <div><label for="activeObjectMovementType">Movement type:</label> \
+                <select id="activeObjectMovementType"><option value="free">Free</option><option value="route">Route</option></select></div> \
+                <div id="addActiveObjectMovementParameters"></div> \
+                <button onclick="GameCreator.UI.addActiveObject()">Save</button>'
+    },
+    addPlayerObjectForm: function() {
+        return '<div><label for="playerObjectName">Name:</label><input id="playerObjectName" type="text"></input></div> \
+              <div><label for="playerObjectWidth">Width:</label><input id="playerObjectWidth" type="text"></input> \
+              <label for="playerObjectHeight">Height:</label><input id="playerObjectHeight" type="text"></input></div> \
+              <div><label for="playerObjectSrc" type="text">Image Src:</label><input id="playerObjectSrc" type="text"></label></div> \
+              <div><label for="playerObjectType" type="select">Control:</label><select id="playerObjectType"> \
+              <option value="addPlayerMouseObject">Mouse</option><option value="addPlayerPlatformObject">Platform</option><option value="addPlayerTopDownObject">Top Down</option> \
+              </select></div><div id="addPlayerObjectMovementParameters"></div> \
+              <button onclick="GameCreator.UI.addPlayerObject()">Save</button>'
     }
 };

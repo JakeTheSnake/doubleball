@@ -2,7 +2,7 @@ GameCreator.platformObject = {
         
     New: function(image, args){
         var obj = Object.create(GameCreator.baseObject);
-        GameCreator.addObjFunctions.platformObjectFunctions(obj);
+        GameCreator.addObjFunctions.platformObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
@@ -58,12 +58,12 @@ GameCreator.platformObject = {
     }
 }
 
-GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject)
+GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, args)
 {
     platformObject.accX = 0;
-    platformObject.accY = 0;
-    platformObject.acceleration = platformObject.acceleration != undefined ? platformObject.acceleration : 8;
-    platformObject.maxSpeed = platformObject.maxSpeed != undefined ? platformObject.maxSpeed : 250;
+    platformObject.accY = args.accY != undefined ? args.accY : 5;
+    platformObject.acceleration = args.acceleration != undefined ? args.acceleration : 8;
+    platformObject.maxSpeed = args.maxSpeed != undefined ? args.maxSpeed : 250;
     platformObject.keyLeftPressed = false;
     platformObject.keyRightPressed = false;
     platformObject.keyUpPressed = false;

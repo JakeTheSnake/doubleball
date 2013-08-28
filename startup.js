@@ -15,15 +15,15 @@ window.onload = function () {
         var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:20, height:20, speed: 300, movementType: "route"})
         var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:20, height:20})
         
-        var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, speed: 200});
+        //var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, speed: 200});
         //GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
         //GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
         
         //Set route movement to sceneBall
-        sceneBall.route.push({x: 100, y: 100});
-        sceneBall.route.push({x: 100, y: 300});
-        sceneBall.route.push({x: 300, y: 300});
-        sceneBall.route.push({x: 300, y: 100, bounceNode: true});
+        //sceneBall.route.push({x: 100, y: 100});
+        //sceneBall.route.push({x: 100, y: 300});
+        //sceneBall.route.push({x: 300, y: 300});
+        //sceneBall.route.push({x: 300, y: 100, bounceNode: true});
         
         //Create Mouseobject
         
@@ -33,7 +33,7 @@ window.onload = function () {
         //Create Platformobject
         
         var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", name: "platformZealot", width: 80, height: 80})
-        GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
+        //GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
         
         //Create TopDownObject
         
@@ -68,24 +68,10 @@ window.onload = function () {
         //    });
         //}
         
-        $("#addPlayerObjectType").on("change", function(){
-            var objectType = ($(this).val());
-            GameCreator.addObject = GameCreator.UI[objectType];
-            if (objectType === "addPlayerMouseObject") {
-              $("#addPlayerMouseObjectPanel").show();
-            } else if (objectType === "addPlayerPlatformObject") {
-              $("#addPlayerMouseObjectPanel").hide();
-            } else if (objectType === "addPlayerTopDownObject") {
-              $("#addPlayerMouseObjectPanel").hide();
-            }
-           
-          });
-        
         // UI
         
         $( ".ui-btn" ).button();
         $("#mode").buttonset();
-        $("#addGlobalObjectWindow").tabs();
         $("#addGlobalObjectButton").button();
         $( "#selectActionAddAction" ).click(function( event ) {                
             var action = GameCreator.UI.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
@@ -100,32 +86,8 @@ window.onload = function () {
         $("#addGlobalObjectWindow").dialog({
             autoOpen: false,
             width: 550,
-            buttons: [
-                {
-                    text: "Ok",
-                    click: function() {
-                        $( this ).dialog( "close" );
-                        GameCreator.addObject();
-                    }
-                },
-                {
-                    text: "Cancel",
-                    click: function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            ],
             open: function(){
-                GameCreator.addObject = GameCreator.UI.addActiveObject;
-                $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementInputs());
-                $("#addActiveObjectMovementType").on("change", function(){
-                    if($(this).val() == "free") {
-                        $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementInputs());
-                    }
-                    else {
-                        $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.routeMovementInputs());
-                    }
-                });
+                GameCreator.UI.setupAddActiveObjectForm();
             }
         });
         

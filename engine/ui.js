@@ -1,48 +1,51 @@
 GameCreator.UI = {
     addActiveObject: function(){
         var obj = GameCreator.addActiveObject({
-            name: $("#addActiveObjectName").val(),
-            width: parseInt($("#addActiveObjectWidth").val()),
-            height: parseInt($("#addActiveObjectHeight").val()),
-            src: $("#addActiveObjectSrc").val(),
-            movementType: $("#addActiveObjectMovementType").val(),
-            speed: parseFloat($("#addObjectSpeed").val()) || 0,
-            speedX: parseFloat($("#addObjectSpeedX").val()) || 0,
-            speedY: parseFloat($("#addObjectSpeedY").val()) || 0,
-            accX: parseFloat($("#addObjectAccX").val()) || 0,
-            accY: parseFloat($("#addObjectAccY").val()) || 0
+            name: $("#activeObjectName").val(),
+            width: parseInt($("#activeObjectWidth").val()),
+            height: parseInt($("#activeObjectHeight").val()),
+            src: $("#activeObjectSrc").val(),
+            movementType: $("#activeObjectMovementType").val(),
+            speed: parseFloat($("#routeObjectSpeed").val()) || 0,
+            speedX: parseFloat($("#freeObjectSpeedX").val()) || 0,
+            speedY: parseFloat($("#freeObjectSpeedY").val()) || 0,
+            accX: parseFloat($("#freeObjectAccX").val()) || 0,
+            accY: parseFloat($("#freeObjectAccY").val()) || 0
         });
     },
     
-    addPlayerMouseObject: function(){
-        var obj = GameCreator.addPlayerMouseObject({
-            name: $("#addPlayerObjectName").val(),
-            width: parseInt($("#addPlayerObjectWidth").val()),
-            height: parseInt($("#addPlayerObjectHeight").val()),
-            src: $("#addPlayerObjectSrc").val(),
-            maxX: parseInt($("#addPlayerMouseObjectMaxX").val()),
-            maxY: parseInt($("#addPlayerMouseObjectMaxY").val()),
-            minX: parseInt($("#addPlayerMouseObjectMinX").val()),
-            minY: parseInt($("#addPlayerMouseObjectMinY").val())
-        });
-    },
-    
-    addPlayerPlatformObject: function(){
-        var obj = GameCreator.addPlayerPlatformObject({
-            name: $("#addPlayerObjectName").val(),
-            width: parseInt($("#addPlayerObjectWidth").val()),
-            height: parseInt($("#addPlayerObjectHeight").val()),
-            src: $("#addPlayerObjectSrc").val(),
-        });
-    },
-    
-    addPlayerTopDownObject: function(){
-        var obj = GameCreator.addPlayerTopDownObject({
-            name: $("#addPlayerObjectName").val(),
-            width: parseInt($("#addPlayerObjectWidth").val()),
-            height: parseInt($("#addPlayerObjectHeight").val()),
-            src: $("#addPlayerObjectSrc").val(),
-        });
+    addPlayerObject: function(){
+        var obj;
+        if($("#playerObjectType").val() == "addPlayerMouseObject") {
+            obj = GameCreator.addPlayerMouseObject({
+                name: $("#playerObjectName").val(),
+                width: parseInt($("#playerObjectWidth").val()),
+                height: parseInt($("#playerObjectHeight").val()),
+                src: $("#playerObjectSrc").val(),
+                maxX: parseInt($("#mouseObjectMaxX").val()),
+                maxY: parseInt($("#mouseObjectMaxY").val()),
+                minX: parseInt($("#mouseObjectMinX").val()),
+                minY: parseInt($("#mouseObjectMinY").val())
+            });
+        } else if($("#playerObjectType").val() == "addPlayerPlatformObject") {
+            obj = GameCreator.addPlayerPlatformObject({
+                name: $("#playerObjectName").val(),
+                width: parseInt($("#playerObjectWidth").val()),
+                height: parseInt($("#playerObjectHeight").val()),
+                src: $("#playerObjectSrc").val(),
+                accY: parseInt($("#platformObjectAccY").val()),
+                maxSpeed: parseInt($("#platformObjectMaxSpeed").val()),
+                acceleration: parseInt($("#platformObjectAcceleration").val())
+            });
+        } else if($("#playerObjectType").val() == "addPlayerTopDownObject") {
+            obj = GameCreator.addPlayerTopDownObject({
+                name: $("#playerObjectName").val(),
+                width: parseInt($("#playerObjectWidth").val()),
+                height: parseInt($("#playerObjectHeight").val()),
+                src: $("#playerObjectSrc").val(),
+                maxSpeed: parseInt($("#topDownObjectMaxSpeed").val())
+            });
+        }
     },
     
     createGlobalListElement: function(object) {
@@ -112,4 +115,33 @@ GameCreator.UI = {
             
         }
     },
+    
+    setupAddActiveObjectForm: function() {
+        $("#addGlobalObjectWindowContent").html(GameCreator.htmlStrings.addActiveObjectForm());
+        $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementInputs());
+        $("#activeObjectMovementType").on("change", function(){
+            if($(this).val() == "free") {
+                $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementInputs());
+            }
+            else {
+                $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.routeMovementInputs());
+            }
+        });
+    },
+    
+    setupAddPlayerObjectForm: function() {
+        $("#addGlobalObjectWindowContent").html(GameCreator.htmlStrings.addPlayerObjectForm());
+        $("#addPlayerObjectMovementParameters").html(GameCreator.htmlStrings.mouseMovementInputs());
+        $("#playerObjectType").on("change", function(){
+            var objectType = ($(this).val());
+            GameCreator.addObject = GameCreator.UI[objectType];
+            if (objectType === "addPlayerMouseObject") {
+              $("#addPlayerObjectMovementParameters").html(GameCreator.htmlStrings.mouseMovementInputs());
+            } else if (objectType === "addPlayerPlatformObject") {
+              $("#addPlayerObjectMovementParameters").html(GameCreator.htmlStrings.platformMovementInputs());
+            } else if (objectType === "addPlayerTopDownObject") {
+              $("#addPlayerObjectMovementParameters").html(GameCreator.htmlStrings.topDownMovementInputs());
+            }
+          });
+    }
 }
