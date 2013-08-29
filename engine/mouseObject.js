@@ -56,10 +56,10 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
 {
     mouseObject.latestMouseX = 0;
     mouseObject.latestMouseY = 0;
-    mouseObject.maxX = args.maxX != undefined ? args.maxX : GCWidth;
-    mouseObject.maxY = args.maxY != undefined ? args.maxY : GCHeight;
-    mouseObject.minX = args.minX != undefined ? args.minX : 0;
-    mouseObject.minY = args.minY != undefined ? args.minY : 0;
+    mouseObject.maxX = (!args.maxX && args.maxX != 0) ? GCWidth : args.maxX;
+    mouseObject.maxY = (!args.maxY && args.maxY != 0) ? GCHeight : args.maxY;
+    mouseObject.minX = args.minX || 0;
+    mouseObject.minY = args.minY || 0;
     
     mouseObject.calculateSpeed = function(){};
     
