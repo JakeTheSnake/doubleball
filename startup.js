@@ -70,6 +70,8 @@ window.onload = function () {
         
         // UI
         
+        $("#dialogueOverlay").on("click", GameCreator.UI.closeDialogue);
+        
         $( ".ui-btn" ).button();
         $("#mode").buttonset();
         $("#addGlobalObjectButton").button();

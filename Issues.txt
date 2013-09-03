@@ -1,17 +1,12 @@
 TODO:
 
-Om man ej fyller i något värde när man skapar globalt object blir det kaos. Fixa så att defaults fungerar (sätt defaults om input == false && input != 0)
-
 Routenodernas position verkar inte riktigt stämma med den position objektet faktiskt rör sig till.
-Implement all properties that should exist in create global/edit global/edit scene object forms. Test these. Look for refactoring possibilities (reusing htmlstrings more than now etc)
-Check that no default values are set when instantiating global objects, all should be set on the global object itself.
 
 Implement support for setting and unsetting bouncenodes.
 
 Remove JQUery UI and replace with homemade stuff (dialogs/tabs)
 Se om man kan ta bort selectedObject och/eller selectedGlobalObject i samband med punkten ovan.
 
-Add remaining attributes that should be editable when creating topdown and platform objects.
 Open on dialogues does not fire when another global object is selected for editing. Maybe we can drop jQui entirely instead of using the current dialogues?...
 Possible to get rid of "selectedGlobalObject" and send it in as a parameter to the dialog instead.
 Seriously check out JS templating engines!

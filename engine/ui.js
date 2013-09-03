@@ -143,5 +143,17 @@ GameCreator.UI = {
               $("#addPlayerObjectMovementParameters").html(GameCreator.htmlStrings.topDownMovementInputs());
             }
           });
+    },
+    
+    openDialogue: function(width, height, content) {
+        width = width || 600;
+        height = height || 300;
+        $("#dialogueWindow").css("width", width).css("height", height).css("left", (GameCreator.width - width / 2)).show();
+        $("#dialogueOverlay").show();
+    },
+    
+    closeDialogue: function() {
+        $("#dialogueWindow").hide();
+        $("#dialogueOverlay").hide();
     }
 }
