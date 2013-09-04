@@ -1,5 +1,7 @@
 TODO:
 
+Fix active/inactive style on tabs!
+
 Routenodernas position verkar inte riktigt stämma med den position objektet faktiskt rör sig till.
 
 Implement support for setting and unsetting bouncenodes.

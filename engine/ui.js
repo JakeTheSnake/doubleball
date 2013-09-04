@@ -54,10 +54,7 @@ GameCreator.UI = {
         var listElementButton = GameCreator.htmlStrings.globalObjectEditButton(object);
         $("#globalObjectList").append(listElementButton);
         $(listElementButton).on("click", function(e){
-            $("#editGlobalObjectWindow").html(GameCreator.htmlStrings.editGlobalObjectWindow(object));
-            $("#editGlobalObjectWindow").dialog( "option", "title", object.name );
-            GameCreator.selectedGlobalObject = object;
-            $("#editGlobalObjectWindow").dialog("open");
+            GameCreator.UI.openEditGlobalObjectDialogue(object);
         });
         $(listElement).on("mousedown", function(e){
             var image = new Image();
@@ -145,10 +142,40 @@ GameCreator.UI = {
           });
     },
     
+    openEditGlobalObjectDialogue: function(object) {
+        GameCreator.UI.openDialogue(700, 500, GameCreator.htmlStrings.editGlobalObjectWindow(object));
+        $("#dialogueWindow").find(".tab").on("click", function() {
+            GameCreator.UI[$(this).data("uifunction")]($("#dialogueWindow").find("#editGlobalObjectWindowContent"), object);
+        });
+        GameCreator.UI.setupEditGlobalObjectPropertiesForm($("#dialogueWindow").find("#editGlobalObjectWindowContent"), object);
+    },
+    
+    setupEditGlobalObjectPropertiesForm: function(target, object) {
+        target.html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(object));
+        target.find("#saveGlobalActiveObjectButton").on("click", function() {GameCreator.saveObjectChanges("editGlobalObjectPropertiesContent", object)});
+    },
+    
+    setupEditGlobalObjectCollisionsForm: function(target, object) {
+        target.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(object));
+    },
+    
+    setupEditGlobalObjectKeyActionsForm: function(target, object) {
+       target.html(GameCreator.htmlStrings.editGlobalObjectKeyActionsContent(object));
+    },
+    
+    setupEditGlobalObjectTimerActionsForm: function(target, object) {
+       target.html(GameCreator.htmlStrings.editGlobalObjectTimerActionsContent(object));
+    },
+    
+    setupEditGlobalObjectCounterActionsForm: function(target, object) {
+       target.html(GameCreator.htmlStrings.editGlobalObjectCounterActionsContent(object));
+    },
+    
     openDialogue: function(width, height, content) {
         width = width || 600;
         height = height || 300;
         $("#dialogueWindow").css("width", width).css("height", height).css("left", (GameCreator.width - width / 2)).show();
+        $("#dialogueWindow").html(content);
         $("#dialogueOverlay").show();
     },
     

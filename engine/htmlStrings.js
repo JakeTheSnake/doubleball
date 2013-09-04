@@ -101,16 +101,16 @@ GameCreator.htmlStrings = {
     editGlobalObjectWindow: function(object) {
         result = "";
         //The tabs here should depend on the kind of object. For now we just show them all.
-        result += "<div id='editGlobalObjectTabContainer'><div class='editGlobalObjectTab' data-htmlString='editGlobalObjectPropertiesContent'><span>Properties</span></div> \
-        <div class='editGlobalObjectTab' data-htmlString='editGlobalObjectCollisionsContent'><span>Collisions<span></div> \
-        <div class='editGlobalObjectTab' data-htmlString='editGlobalObjectKeyActionsContent'><span>Key Actions</span></div> \
-        <div class='editGlobalObjectTab' data-htmlString='editGlobalObjectTimerActionsContent'><span>Timer Actions</span></div> \
-        <div class='editGlobalObjectTab' data-htmlString='editGlobalObjectCounterActionsContent'><span>Counter Actions</span></div></div> \
+        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'><div class='tab' data-uifunction='setupEditGlobalObjectPropertiesForm'><span>Properties</span></div> \
+        <div class='tab' data-uifunction='setupEditGlobalObjectCollisionsForm'><span>Collisions<span></div> \
+        <div class='tab' data-uifunction='setupEditGlobalObjectKeyActionsForm'><span>Key Actions</span></div> \
+        <div class='tab' data-uifunction='setupEditGlobalObjectTimerActionsForm'><span>Timer Actions</span></div> \
+        <div class='tab' data-uifunction='setupEditGlobalObjectCounterActionsForm'><span>Counter Actions</span></div></div> \
         <div id='editGlobalObjectWindowContent'></div>";
         return result;
     },
     editGlobalObjectPropertiesContent: function(object) {
-        var result = '<div id="editGlobalObjectContent">';
+        var result = '<div id="editGlobalObjectPropertiesContent">';
         if(object.objectType == "activeObject") {
             result += GameCreator.htmlStrings.globalActiveObjectForm(object);
             if(object.movementType == "free") {
@@ -133,7 +133,7 @@ GameCreator.htmlStrings = {
             result += GameCreator.htmlStrings.platformMovementInputs(object);
         }
         result += "</div>";
-        result += '<button id="saveGlobalActiveObjectButton" onClick="GameCreator.saveObjectChanges(\'editGlobalObjectContent\', GameCreator.selectedGlobalObject)">Save</button>';
+        result += '<button id="saveGlobalActiveObjectButton">Save</button>';
         return result;
     },
     editGlobalObjectCollisionsContent: function(object) {

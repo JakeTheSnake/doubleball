@@ -114,26 +114,6 @@ window.onload = function () {
                     }
                 }
             ]
-        });    
-        
-        $( "#editGlobalObjectWindow" ).dialog({
-            autoOpen: false,
-            width: 700,
-            open: function() {
-                var dialogWindow = this;
-                $(dialogWindow).find("#editGlobalObjectWindowContent").html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(GameCreator.selectedGlobalObject));
-                $(dialogWindow).find(".editGlobalObjectTab").on("click", function() {
-                    $(dialogWindow).find("#editGlobalObjectWindowContent").html(GameCreator.htmlStrings[$(this).data("htmlstring")](GameCreator.selectedGlobalObject));
-                })
-            },
-            buttons: [
-                {
-                    text: "Ok",
-                    click: function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            ]
-        });    
+        });        
     }
     
