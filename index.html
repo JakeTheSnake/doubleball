@@ -29,7 +29,7 @@
 <body>
 <div id="dialogueOverlay"></div>
 <div id="addGlobalObjectContainer" style="float:top; width:75px">
-  <button id="addGlobalObjectButton" onClick="$('#addGlobalObjectWindow').dialog('open')">+</button>
+  <button id="addGlobalObjectButton">+</button>
 </div>
 <div id="globalObjectList" style="float:left; width: 75px">&nbsp;</div>
 <div id="mainCanvas" style="position: absolute; left:75px"></div>
@@ -65,16 +65,6 @@
     <div id="selectActionResult"></div>
     <div style="clear:both;"></div>
 </div>
-
-<div id="addGlobalObjectWindow" title="Add a New Object">
-  <ul>
-      <li><a href="" onclick="GameCreator.UI.setupAddActiveObjectForm();return false;">New Active Object</a></li>
-      <li><a href="" onclick="GameCreator.UI.setupAddPlayerObjectForm();return false;">New Player Object</a></li>
-  </ul>
-  
-  <div id="addGlobalObjectWindowContent">
-  </div>
-</div>    
 
 <div id="editGlobalObjectWindow"></div>
 

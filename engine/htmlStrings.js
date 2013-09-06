@@ -98,6 +98,13 @@ GameCreator.htmlStrings = {
         }
         return result;
     },
+    addGlobalObjectWindow: function() {
+        result = "";
+        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'><div class='tab' data-uifunction='setupAddActiveObjectForm'><span>Active Object</span></div> \
+                   <div class='tab' data-uifunction='setupAddPlayerObjectForm'><span>Player Object<span></div></div> \
+                   <div id='addGlobalObjectWindowContent'></div>";
+        return result;
+    },
     editGlobalObjectWindow: function(object) {
         result = "";
         //The tabs here should depend on the kind of object. For now we just show them all.
@@ -190,6 +197,7 @@ GameCreator.htmlStrings = {
     topDownMovementInputs: function(object) {
         return "<label for='topDownObjectMaxSpeed'>Speed:</label><input id='topDownObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + (object ? object.maxSpeed : "") + "'></input>";
     },
+    
     addActiveObjectForm: function() {
         return '<div><label for="activeObjectName">Name:</label><input id="activeObjectName" type="text"></input></div> \
                 <div><label for="activeObjectWidth">Width:</label><input id="activeObjectWidth" type="text"></input> \
@@ -198,8 +206,9 @@ GameCreator.htmlStrings = {
                 <div><label for="activeObjectMovementType">Movement type:</label> \
                 <select id="activeObjectMovementType"><option value="free">Free</option><option value="route">Route</option></select></div> \
                 <div id="addActiveObjectMovementParameters"></div> \
-                <button onclick="GameCreator.UI.addActiveObject()">Save</button>'
+                <button class="saveButton">Save</button>'
     },
+    
     addPlayerObjectForm: function() {
         return '<div><label for="playerObjectName">Name:</label><input id="playerObjectName" type="text"></input></div> \
               <div><label for="playerObjectWidth">Width:</label><input id="playerObjectWidth" type="text"></input> \
@@ -208,6 +217,6 @@ GameCreator.htmlStrings = {
               <div><label for="playerObjectType" type="select">Control:</label><select id="playerObjectType"> \
               <option value="addPlayerMouseObject">Mouse</option><option value="addPlayerPlatformObject">Platform</option><option value="addPlayerTopDownObject">Top Down</option> \
               </select></div><div id="addPlayerObjectMovementParameters"></div> \
-              <button onclick="GameCreator.UI.addPlayerObject()">Save</button>'
+              <button class="saveButton">Save</button>'
     }
 };

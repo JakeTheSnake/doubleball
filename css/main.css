@@ -53,4 +53,9 @@
         cursor: pointer;
         font-size: 20px;
         font-weight: bold;
+        height: 100%;
+    }
+    
+    .tabContainer .tab.active {
+        background-color: #888;
     }

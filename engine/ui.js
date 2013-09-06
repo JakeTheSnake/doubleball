@@ -113,6 +113,19 @@ GameCreator.UI = {
         }
     },
     
+    //Add global object functions
+    
+    openAddGlobalObjectDialogue: function() {
+        GameCreator.UI.openDialogue(600, 400, GameCreator.htmlStrings.addGlobalObjectWindow());
+        $("#dialogueWindow").find(".tab").first().addClass("active");
+        $("#dialogueWindow").find(".tab").on("click", function() {
+            GameCreator.UI[$(this).data("uifunction")]();
+            $(this).parent().find(".tab").removeClass("active");
+            $(this).addClass("active");
+        });
+        GameCreator.UI.setupAddActiveObjectForm();
+    },
+    
     setupAddActiveObjectForm: function() {
         $("#addGlobalObjectWindowContent").html(GameCreator.htmlStrings.addActiveObjectForm());
         $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.freeMovementInputs());
@@ -124,6 +137,7 @@ GameCreator.UI = {
                 $("#addActiveObjectMovementParameters").html(GameCreator.htmlStrings.routeMovementInputs());
             }
         });
+        $("#addGlobalObjectWindowContent .saveButton").on("click", function(){GameCreator.UI.addActiveObject();GameCreator.UI.closeDialogue()});
     },
     
     setupAddPlayerObjectForm: function() {
@@ -139,20 +153,29 @@ GameCreator.UI = {
             } else if (objectType === "addPlayerTopDownObject") {
               $("#addPlayerObjectMovementParameters").html(GameCreator.htmlStrings.topDownMovementInputs());
             }
-          });
+        });
+        $("#addGlobalObjectWindowContent .saveButton").on("click", function(){GameCreator.UI.addPlayerObject();GameCreator.UI.closeDialogue()});
     },
+    
+    //Edit global object functions
     
     openEditGlobalObjectDialogue: function(object) {
         GameCreator.UI.openDialogue(700, 500, GameCreator.htmlStrings.editGlobalObjectWindow(object));
+        $("#dialogueWindow").find(".tab").first().addClass("active");  
         $("#dialogueWindow").find(".tab").on("click", function() {
             GameCreator.UI[$(this).data("uifunction")]($("#dialogueWindow").find("#editGlobalObjectWindowContent"), object);
+            $(this).parent().find(".tab").removeClass("active");
+            $(this).addClass("active");
         });
         GameCreator.UI.setupEditGlobalObjectPropertiesForm($("#dialogueWindow").find("#editGlobalObjectWindowContent"), object);
     },
     
     setupEditGlobalObjectPropertiesForm: function(target, object) {
         target.html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(object));
-        target.find("#saveGlobalActiveObjectButton").on("click", function() {GameCreator.saveObjectChanges("editGlobalObjectPropertiesContent", object)});
+        target.find("#saveGlobalActiveObjectButton").on("click", function() {
+            GameCreator.saveObjectChanges("editGlobalObjectPropertiesContent", object);
+            GameCreator.UI.closeDialogue();
+        });
     },
     
     setupEditGlobalObjectCollisionsForm: function(target, object) {
@@ -171,11 +194,14 @@ GameCreator.UI = {
        target.html(GameCreator.htmlStrings.editGlobalObjectCounterActionsContent(object));
     },
     
+    //General dialogue functions
+    
     openDialogue: function(width, height, content) {
         width = width || 600;
         height = height || 300;
         $("#dialogueWindow").css("width", width).css("height", height).css("left", (GameCreator.width - width / 2)).show();
         $("#dialogueWindow").html(content);
+        $("#dialogueOverlay").css("height", $(document).height());
         $("#dialogueOverlay").show();
     },
     

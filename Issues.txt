@@ -1,12 +1,14 @@
 TODO:
 
+Borde kunna göra tabsystemet generellt.
+
 Fix active/inactive style on tabs!
 
 Routenodernas position verkar inte riktigt stämma med den position objektet faktiskt rör sig till.
 
 Implement support for setting and unsetting bouncenodes.
 
-Remove JQUery UI and replace with homemade stuff (dialogs/tabs)
+Remove JQUery UI and replace with homemade stuff (dialogs/tabs) (WIP)
 Se om man kan ta bort selectedObject och/eller selectedGlobalObject i samband med punkten ovan.
 
 Open on dialogues does not fire when another global object is selected for editing. Maybe we can drop jQui entirely instead of using the current dialogues?...
