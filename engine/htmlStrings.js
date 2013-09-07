@@ -1,7 +1,5 @@
 GameCreator.htmlStrings = {
     singleSelector: function(collection, elementId) {
-        if(elementId == undefined)
-            elementId = "actionSelector"
         var result = "<div><select id='" + elementId + "'>";
         for (key in collection) {
             if (collection.hasOwnProperty(key)) {
@@ -98,9 +96,33 @@ GameCreator.htmlStrings = {
         }
         return result;
     },
+    editActionsWindow: function(description, actions, existingActions) { 
+        result = "";
+        result += ' \
+    <div id="selectActionWindow"> \
+        <span id="selectActionsHeader">' + description + '</span> \
+        <br/> \
+        <div> \
+            <div id="selectActionDropdownContainer" style="float:left;">' + GameCreator.htmlStrings.singleSelector(actions, "actionSelector") + '</div> \
+            <div id="selectActionParametersContainer" style="float:left;"></div> \
+            <button id="selectActionAddAction">+</button> \
+        </div> \
+        <div id="selectActionResult">';
+        for (var i = 0; i < existingActions.length; i++) {
+            var action = existingActions[i];
+            var selectedAction = {action: action.action, parameters: {}};
+
+            result += GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction);
+        }
+        result += '</div> \
+        <div><button id="editActionsWindowSave">Save</button><button id="editActionsWindowCancel">Cancel</button></div>\
+        </div>';
+        return result;
+    },
     addGlobalObjectWindow: function() {
         result = "";
-        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'><div class='tab' data-uifunction='setupAddActiveObjectForm'><span>Active Object</span></div> \
+        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'>\
+                    <div class='tab' data-uifunction='setupAddActiveObjectForm'><span>Active Object</span></div> \
                    <div class='tab' data-uifunction='setupAddPlayerObjectForm'><span>Player Object<span></div></div> \
                    <div id='addGlobalObjectWindowContent'></div>";
         return result;

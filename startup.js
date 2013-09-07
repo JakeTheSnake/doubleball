@@ -75,46 +75,6 @@ window.onload = function () {
         
         $( ".ui-btn" ).button();
         $("#mode").buttonset();
-        $("#addGlobalObjectButton").button();
-        $( "#selectActionAddAction" ).click(function( event ) {                
-            var action = GameCreator.UI.openSelectActionsWindow.selectableActions[$("#actionSelector").val()];
-            var selectedAction = {action: action.action, parameters: {}, name: action.name};
-
-            for (var i = 0; i < action.params.length; i++) {
-                selectedAction.parameters[action.params[i].inputId] = $("#" + action.params[i].inputId).val();
-            }
-            GameCreator.UI.openSelectActionsWindow.selectedActions.push(selectedAction);
-            $("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
-        });
-        $("#addGlobalObjectWindow").dialog({
-            autoOpen: false,
-            width: 550,
-            open: function(){
-                GameCreator.UI.setupAddActiveObjectForm();
-            }
-        });
         
-        $( "#selectActionWindow" ).dialog({
-            autoOpen: false,
-            open: function(event, ui) {
-                $( "#selectActionAddAction" ).button();
-            },
-            width: 400,
-            buttons: [
-                {
-                    text: "Ok",
-                    click: function() {
-                        $( this ).dialog( "close" );
-                        GameCreator.assignSelectedActions(GameCreator.UI.openSelectActionsWindow.selectedActions);
-                    }
-                },
-                {
-                    text: "Cancel",
-                    click: function() {
-                        $( this ).dialog( "close" );
-                    }
-                }
-            ]
-        });        
     }
     

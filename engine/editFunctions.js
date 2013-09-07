@@ -241,11 +241,6 @@ $.extend(GameCreator, {
         return false;
     },
     
-    assignSelectedActions: function(actions) {
-        GameCreator.UI.openSelectActionsWindow.setAction(actions);
-        GameCreator.resumeGame();
-    },
-    
     saveState: function() {
         var results = {globalObjects: {}, scenes: [], idCounter: 0};
         //TODO: Put this array somewhere more "configy"

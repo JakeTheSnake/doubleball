@@ -81,27 +81,27 @@ GameCreator.UI = {
         //Only select actions if GameCreator isn't already paused for action selection.
         if(!GameCreator.paused){
             GameCreator.pauseGame();
-            GameCreator.UI.openSelectActionsWindow.setAction = callback;
-            $("#selectActionResult").html("");
             
             // Populate the selected actions with the actions from the existingActions argument.
             if (!existingActions) {
-                GameCreator.UI.openSelectActionsWindow.selectedActions = [];
-            } else {
-                GameCreator.UI.openSelectActionsWindow.selectedActions = existingActions
-                for (var i = 0; i < existingActions.length; i++) {
-                    var action = existingActions[i];
-                    var selectedAction = {action: action.action, parameters: {}};
-
-                    $("#selectActionResult").append(GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction));
-                }
+                existingActions = [];
             }
-            GameCreator.UI.openSelectActionsWindow.selectableActions = actions;
-            $("#selectActionsHeader").html(text);
-            $("#selectActionParametersContainer").html("");
             
-            $("#selectActionDropdownContainer").html(GameCreator.htmlStrings.singleSelector(actions));
-            $("#selectActionWindow").dialog("open");
+            var selectedActions = existingActions;
+            
+            GameCreator.UI.openDialogue(500, 300, GameCreator.htmlStrings.editActionsWindow(text, actions, selectedActions));
+
+            $("#editActionsWindowSave").on("click", function() {
+                callback(selectedActions);
+                GameCreator.UI.closeDialogue();
+                GameCreator.resumeGame();
+            });
+            $("#editActionsWindowCancel").on("click", function() {
+                callback(existingActions);
+                GameCreator.UI.closeDialogue();
+                GameCreator.resumeGame();
+                
+            });
             $("#actionSelector").on("change", function(){
                 $("#selectActionParametersContainer").html("");
                 for(var i = 0;i < actions[$(this).val()].params.length;++i) {
@@ -109,7 +109,20 @@ GameCreator.UI = {
                     $("#selectActionParametersContainer").append(actions[$(this).val()].params[i].input());
                 }
             });
-            
+            $( "#selectActionAddAction" ).click(function( event ) {                
+                var action = actions[$("#actionSelector").val()];
+                var selectedAction = {action: action.action, parameters: {}, name: action.name};
+
+                for (var i = 0; i < action.params.length; i++) {
+                    selectedAction.parameters[action.params[i].inputId] = $("#" + action.params[i].inputId).val();
+                }
+                selectedActions.push(selectedAction);
+                $("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+            });
+            $("#dialogueOverlay").one("click", function(){
+                callback(existingActions);
+                GameCreator.resumeGame();
+            });
         }
     },
     
