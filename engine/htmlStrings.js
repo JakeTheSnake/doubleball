@@ -22,6 +22,9 @@ GameCreator.htmlStrings = {
         result += "</div>";
         return result;
     },
+    collisionMenuElement: function(object) {
+        return '<div class="collisionMenuElement" data-name="' + object.name + '" ><span>' + object.name + '</span>' + object.image.outerHTML + '</div>';
+    },
     globalObjectElement: function(object) {
         var image = object.image;
         $(image).css("width","65");
@@ -166,12 +169,14 @@ GameCreator.htmlStrings = {
         return result;
     },
     editGlobalObjectCollisionsContent: function(object) {
-        result = "Collisions!";
-        for (colName in object.collisionActions) {
-            if (object.collisionActions.hasOwnProperty(colName)) {
-                result += "<div><span data-objectName='" + object.name + "'>" + object.name + "</span></div>"
+        result = '<div id="editCollisionActionsObjectMenu">';
+        for (targetName in object.collisionActions) {
+            if (object.collisionActions.hasOwnProperty(targetName)) {
+                result += GameCreator.htmlStrings.collisionMenuElement(GameCreator.helperFunctions.findObject(targetName));
             }
-        };
+        }
+        result += '</div> \
+                   <div id="editCollisionActionsObjectContent"></div>';
         return result;
     },
     editGlobalObjectKeyActionsContent: function(object) {

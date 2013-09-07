@@ -70,60 +70,82 @@ GameCreator.UI = {
         });
     },
     
-    /**
-     * Opens a window where the user can select Actions for the current Event.
-     * text: The text that should be show as description of the popup.
-     * callback: Function that is called when the user clicks the OK button. Has one array of the selected Actions as parameter.
-     * actions: The actions the user should be able to select from
-     * existingActions: An array of Actions that are already chosen.
-     **/
-    openSelectActionsWindow: function(text, callback, actions, existingActions){
+    openEditActionsArea: function(text, callback, actions, existingActions) {  
+        if (!existingActions) {
+            existingActions = [];
+        }
+        
+        var selectedActions = existingActions;
+        $("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.editActionsWindow(text, actions, selectedActions));
+        GameCreator.UI.setupEditActionsContent(text, callback, actions, existingActions);
+        
+        $("#editActionsWindowSave").on("click", function() {
+            callback(selectedActions);
+        });
+    
+        $("#editActionsWindowCancel").on("click", function() {
+            callback(existingActions);
+        });
+    },
+    
+    openEditActionsWindow: function(text, callback, actions, existingActions) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         if(!GameCreator.paused){
-            GameCreator.pauseGame();
-            
-            // Populate the selected actions with the actions from the existingActions argument.
+            GameCreator.pauseGame();    
             if (!existingActions) {
                 existingActions = [];
             }
             
             var selectedActions = existingActions;
-            
             GameCreator.UI.openDialogue(500, 300, GameCreator.htmlStrings.editActionsWindow(text, actions, selectedActions));
-
+            GameCreator.UI.setupEditActionsContent(text, callback, actions, selectedActions);
             $("#editActionsWindowSave").on("click", function() {
                 callback(selectedActions);
                 GameCreator.UI.closeDialogue();
                 GameCreator.resumeGame();
             });
+        
             $("#editActionsWindowCancel").on("click", function() {
                 callback(existingActions);
                 GameCreator.UI.closeDialogue();
                 GameCreator.resumeGame();
                 
             });
-            $("#actionSelector").on("change", function(){
-                $("#selectActionParametersContainer").html("");
-                for(var i = 0;i < actions[$(this).val()].params.length;++i) {
-                    $("#selectActionParametersContainer").append(actions[$(this).val()].params[i].label())
-                    $("#selectActionParametersContainer").append(actions[$(this).val()].params[i].input());
-                }
-            });
-            $( "#selectActionAddAction" ).click(function( event ) {                
-                var action = actions[$("#actionSelector").val()];
-                var selectedAction = {action: action.action, parameters: {}, name: action.name};
-
-                for (var i = 0; i < action.params.length; i++) {
-                    selectedAction.parameters[action.params[i].inputId] = $("#" + action.params[i].inputId).val();
-                }
-                selectedActions.push(selectedAction);
-                $("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
-            });
+            
             $("#dialogueOverlay").one("click", function(){
                 callback(existingActions);
                 GameCreator.resumeGame();
             });
         }
+    },
+    
+    /**
+     * Opens a window where the user can select Actions for the current Event.
+     * text: The text that should be show as description of the popup.
+     * callback: Function that is called when the user clicks the OK button. Has one array of the selected Actions as parameter.
+     * actions: The actions the user should be able to select from
+     * selectedActions: An array of Actions that are already chosen.
+     **/
+    setupEditActionsContent: function(text, callback, actions, selectedActions){
+        
+        $("#actionSelector").on("change", function(){
+            $("#selectActionParametersContainer").html("");
+            for(var i = 0;i < actions[$(this).val()].params.length;++i) {
+                $("#selectActionParametersContainer").append(actions[$(this).val()].params[i].label())
+                $("#selectActionParametersContainer").append(actions[$(this).val()].params[i].input());
+            }
+        });
+        
+        $( "#selectActionAddAction" ).click(function( event ) {                
+            var action = actions[$("#actionSelector").val()];
+            var selectedAction = {action: action.action, parameters: {}, name: action.name};
+
+            for (var i = 0; i < action.params.length; i++) {
+                selectedAction.parameters[action.params[i].inputId] = $("#" + action.params[i].inputId).val();
+            }
+            selectedActions.push(selectedAction);
+            $("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+        });
     },
     
     //Add global object functions
@@ -193,6 +215,14 @@ GameCreator.UI = {
     
     setupEditGlobalObjectCollisionsForm: function(target, object) {
         target.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(object));
+        target.find(".collisionMenuElement").on("click", function(){
+            var targetName = $(this).data("name");
+            GameCreator.UI.openEditActionsArea("Collisions for " + targetName, 
+                function(actions){object.collisionActions[targetName] = actions;}, 
+                $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
+                object.collisionActions[targetName]
+            );
+        });
     },
     
     setupEditGlobalObjectKeyActionsForm: function(target, object) {

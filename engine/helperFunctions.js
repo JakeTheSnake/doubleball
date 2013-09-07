@@ -77,7 +77,7 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     else
     {
         (function(targetObject){
-            GameCreator.UI.openSelectActionsWindow(
+            GameCreator.UI.openEditActionsWindow(
                 "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
                 function(actions) {object.parent.collisionActions[targetObject.name] = actions;},
                 $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions)
@@ -99,19 +99,19 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
     var collisionObject;
     
     if(x < 1){
-        collisionObject = GameCreator.collideBorderLObject;
+        collisionObject = GameCreator.borderObjects.borderL;
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     if(x + width > GameCreator.width - 1){
-        collisionObject = GameCreator.collideBorderRObject;
+        collisionObject = GameCreator.borderObjects.borderR;
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     if(y < 1){
-        collisionObject = GameCreator.collideBorderTObject;
+        collisionObject = GameCreator.borderObjects.borderT;
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     if(y + height > GameCreator.height - 1){
-        collisionObject = GameCreator.collideBorderBObject;
+        collisionObject = GameCreator.borderObjects.borderB;
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     
@@ -185,7 +185,15 @@ GameCreator.helperFunctions.exists = function(name, operation) {
     }
     return false;
     // TODO, iterate through rest of runtime objects
-}
+};
+
+GameCreator.helperFunctions.findObject = function(name) {
+    var object;
+    if(!(object = GameCreator.globalObjects[name])) {
+        object = GameCreator.borderObjects[name];
+    }
+    return object;
+};
 
 GameCreator.helperFunctions.logOnce = function(obj) {
     if(!GameCreator.loggedOnce) {
