@@ -133,12 +133,21 @@ GameCreator.htmlStrings = {
     editGlobalObjectWindow: function(object) {
         result = "";
         //The tabs here should depend on the kind of object. For now we just show them all.
-        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'><div class='tab' data-uifunction='setupEditGlobalObjectPropertiesForm'><span>Properties</span></div> \
-        <div class='tab' data-uifunction='setupEditGlobalObjectCollisionsForm'><span>Collisions<span></div> \
-        <div class='tab' data-uifunction='setupEditGlobalObjectKeyActionsForm'><span>Key Actions</span></div> \
-        <div class='tab' data-uifunction='setupEditGlobalObjectTimerActionsForm'><span>Timer Actions</span></div> \
-        <div class='tab' data-uifunction='setupEditGlobalObjectCounterActionsForm'><span>Counter Actions</span></div></div> \
-        <div id='editGlobalObjectWindowContent'></div>";
+        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'>";
+        result += "<div class='tab' data-uifunction='setupEditGlobalObjectPropertiesForm'><span>Properties</span></div>";
+        if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
+            result += "<div class='tab' data-uifunction='setupEditGlobalObjectCollisionsForm'><span>Collisions<span></div>";
+        }
+        if (["topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
+            result += "<div class='tab' data-uifunction='setupEditGlobalObjectKeyActionsForm'><span>Key Actions</span></div>";
+        }
+        if (object.objectType == "timerObject") {
+            result += "<div class='tab' data-uifunction='setupEditGlobalObjectTimerActionsForm'><span>Timer Actions</span></div>";
+        }
+        if(object.objectType == "counterObject") {
+            result += "<div class='tab' data-uifunction='setupEditGlobalObjectCounterActionsForm'><span>Counter Actions</span></div>";
+        }
+        result += "</div><div id='editGlobalObjectWindowContent'></div>";
         return result;
     },
     editGlobalObjectPropertiesContent: function(object) {
