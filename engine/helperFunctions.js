@@ -76,13 +76,12 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     }
     else
     {
-        (function(targetObject){
-            GameCreator.UI.openEditActionsWindow(
-                "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
-                function(actions) {object.parent.collisionActions[targetObject.name] = actions;},
-                $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions)
-            )
-        })(targetObject)
+        GameCreator.UI.openEditActionsWindow(
+            "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
+            $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
+            object.parent.collisionActions,
+            targetObject.name
+        )
     }
 }
 

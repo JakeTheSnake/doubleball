@@ -1,5 +1,10 @@
 TODO:
 
+FINISH FIXING adding of actions on + click in directing mode... (Test and cleanup) (test both editing and directing)
+Remove "Save" button.
+Add way to remove selected actions.
+
+Add setting of collision with objects where no previous collisions exist.
 Add setting of keyactions to platform/mouse and topdown objects in edit mode.
 
 Borde kunna göra tabsystemet generellt.?

@@ -70,50 +70,35 @@ GameCreator.UI = {
         });
     },
     
-    openEditActionsArea: function(text, callback, actions, existingActions) {  
-        if (!existingActions) {
-            existingActions = [];
+    openEditActionsArea: function(text, actions, existingActions, targetName) {  
+        if (!existingActions[targetName]) {
+            existingActions[targetName] = [];
         }
         
-        var selectedActions = existingActions;
-        $("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.editActionsWindow(text, actions, selectedActions));
-        GameCreator.UI.setupEditActionsContent(text, callback, actions, existingActions);
-        
-        $("#editActionsWindowSave").on("click", function() {
-            callback(selectedActions);
-        });
-    
-        $("#editActionsWindowCancel").on("click", function() {
-            callback(existingActions);
-        });
+        $("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions[targetName]));
+        GameCreator.UI.setupEditActionsContent(text, actions, existingActions[targetName]);
     },
     
-    openEditActionsWindow: function(text, callback, actions, existingActions) {  
+    openEditActionsWindow: function(text, actions, existingActions, targetName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         if(!GameCreator.paused){
-            GameCreator.pauseGame();    
-            if (!existingActions) {
-                existingActions = [];
+            GameCreator.pauseGame();
+            
+            //Check if there exist any actions for collisions with the current targetObject.
+            if (!existingActions[targetName]) {
+                existingActions[targetName] = [];
             }
             
-            var selectedActions = existingActions;
-            GameCreator.UI.openDialogue(500, 300, GameCreator.htmlStrings.editActionsWindow(text, actions, selectedActions));
-            GameCreator.UI.setupEditActionsContent(text, callback, actions, selectedActions);
-            $("#editActionsWindowSave").on("click", function() {
-                callback(selectedActions);
-                GameCreator.UI.closeDialogue();
-                GameCreator.resumeGame();
-            });
+            GameCreator.UI.openDialogue(500, 300, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions[targetName]));
+            GameCreator.UI.setupEditActionsContent(text, actions, existingActions[targetName]);
         
             $("#editActionsWindowCancel").on("click", function() {
-                callback(existingActions);
                 GameCreator.UI.closeDialogue();
                 GameCreator.resumeGame();
                 
             });
             
             $("#dialogueOverlay").one("click", function(){
-                callback(existingActions);
                 GameCreator.resumeGame();
             });
         }
@@ -126,7 +111,7 @@ GameCreator.UI = {
      * actions: The actions the user should be able to select from
      * selectedActions: An array of Actions that are already chosen.
      **/
-    setupEditActionsContent: function(text, callback, actions, selectedActions){
+    setupEditActionsContent: function(text, actions, selectedActions){
         
         $("#actionSelector").on("change", function(){
             $("#selectActionParametersContainer").html("");
@@ -217,10 +202,11 @@ GameCreator.UI = {
         target.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(object));
         target.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
-            GameCreator.UI.openEditActionsArea("Collisions for " + targetName, 
-                function(actions){object.collisionActions[targetName] = actions;}, 
+            GameCreator.UI.openEditActionsArea(
+                "Collisions for " + targetName, 
                 $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
-                object.collisionActions[targetName]
+                object.collisionActions,
+                targetName
             );
         });
     },

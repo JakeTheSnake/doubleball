@@ -118,7 +118,7 @@ GameCreator.htmlStrings = {
             result += GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction);
         }
         result += '</div> \
-        <div><button id="editActionsWindowSave">Save</button><button id="editActionsWindowCancel">Cancel</button></div>\
+        <button id="editActionsWindowCancel">Cancel</button></div>\
         </div>';
         return result;
     },
