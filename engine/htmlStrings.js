@@ -13,13 +13,13 @@ GameCreator.htmlStrings = {
         return "<label for=" + inputId + ">" + labelText + "</label>";
     },
     actionRow: function(name, action) {
-        var result = "<div>" + name + " ";
+        var result = '<div><span>' + name + ' ';
         for (key in action.parameters) {
             if (action.parameters.hasOwnProperty(key)) {
                 result += key + ": " + action.parameters[key];
             }
         }
-        result += "</div>";
+        result += '</span><a class="removeActionButton" href="">X</a></div>';
         return result;
     },
     collisionMenuElement: function(object) {
