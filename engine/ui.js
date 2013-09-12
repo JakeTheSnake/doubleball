@@ -215,6 +215,13 @@ GameCreator.UI = {
                 targetName
             );
         });
+        $("#addNewCollisionButton").on("click", function(){
+        	$("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.collisionObjectSelector(object))
+        	$(".addCollisionObjectElement").one("click", function(){
+        		object.collisionActions[$(this).data("objectname")] = [];
+        		GameCreator.UI.setupEditGlobalObjectCollisionsForm(target, object);
+        	});
+        });
     },
     
     setupEditGlobalObjectKeyActionsForm: function(target, object) {

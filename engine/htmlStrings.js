@@ -184,6 +184,7 @@ GameCreator.htmlStrings = {
                 result += GameCreator.htmlStrings.collisionMenuElement(GameCreator.helperFunctions.findObject(targetName));
             }
         }
+        result += '<div id="addNewCollisionButton" style="width:65px;height:65px;background-color:#777;cursor: pointer;">+</div>'
         result += '</div> \
                    <div id="editCollisionActionsObjectContent"></div>';
         return result;
@@ -254,5 +255,15 @@ GameCreator.htmlStrings = {
               <option value="addPlayerMouseObject">Mouse</option><option value="addPlayerPlatformObject">Platform</option><option value="addPlayerTopDownObject">Top Down</option> \
               </select></div><div id="addPlayerObjectMovementParameters"></div> \
               <button class="saveButton">Save</button>'
-    }
+	},
+    
+    collisionObjectSelector: function(object) {
+    	result = '';
+    	for (globalObject in GameCreator.globalObjects) {
+            if (GameCreator.globalObjects.hasOwnProperty(globalObject) && !object.collisionActions.hasOwnProperty(globalObject) && GameCreator.globalObjects[globalObject].isCollidable && globalObject != object.name) {
+        		result += '<div class="addCollisionObjectElement" data-objectname="' + globalObject + '" style="float:left;cursor:pointer">' + GameCreator.globalObjects[globalObject].image.outerHTML + '</br><span>' + globalObject + '</span></div>'
+        	}
+    	}
+    	return result;
+	}
 };
