@@ -1,8 +1,6 @@
 TODO:
 
-FINISH FIXING adding of actions on + click in directing mode... (Test and cleanup) (test both editing and directing)
-Remove "Save" button.
-Add way to remove selected actions.
+Be able to select borders as objects when adding collision events in edit mode!
 
 When destroying an object with listeners attached, the listeners are destroyed. They are not "restarted" when switching back to edit and the direct again.
 
