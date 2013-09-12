@@ -131,6 +131,12 @@ GameCreator.UI = {
             selectedActions.push(selectedAction);
             $("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
         });
+        
+        $("#selectActionWindow").on("click", ".removeActionButton", function(){
+        	selectedActions.splice($("#selectActionWindow").find(".removeActionButton").index(this), 1);
+        	$(this).parent().remove();
+        	return false;
+    	});
     },
     
     //Add global object functions
