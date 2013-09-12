@@ -1,0 +1,27 @@
+.routeNode {
+	position:relative;
+	width:20px;
+	height:20px;
+	border-radius: 10px;
+	background-color:red;
+	text-align: center;	
+}
+
+.routeNodeActions {
+	position: relative;
+}
+
+.routeNodeLabel {
+	color: white;
+	line-height: 20px;
+}
+
+#dialogueWindow {
+    position: absolute;
+    display: none;
+    top: 100px;
+    background-color: #222;
+    border: 1px solid black;
+    border-radius: 5px;
+    z-index: 2;
+}

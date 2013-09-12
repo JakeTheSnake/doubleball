@@ -1,0 +1,14 @@
+#editSceneObjectForm {
+	width: 200px;
+}
+
+#editCollisionActionsObjectMenu {
+    width: 70px;
+    background-color: #777;
+    color: #fff;
+    float: left;
+}
+
+#editCollisionActionsObjectContent {
+    float: left;
+}
