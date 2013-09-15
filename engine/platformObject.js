@@ -176,11 +176,12 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
                 {
                     if(keyAction.actions == undefined)
                     {
-                        GameCreator.UI.openSelectActionsWindow(
+                          GameCreator.UI.openEditActionsWindow(
                             "Pressed " + key + " actions for " + this.parent.name,
-                            function(actions) {keyAction.actions = actions},
-                            $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions)
-                        );
+                             $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
+                             this.parent.keyActions,
+                             key
+                            );
                     }
                     else
                     {

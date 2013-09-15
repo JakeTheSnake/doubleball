@@ -11,7 +11,7 @@ var GameCreator = {
     timer: undefined,
     draggedGlobalElement: undefined,
     context: undefined,
-    canvasOffsetX: 75,
+    canvasOffsetX: 100,
     canvasOffsetY: 0,
     //Contains key value pairs where key is the (unique)name of the object.
     globalObjects: {},

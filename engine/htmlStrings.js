@@ -10,10 +10,10 @@ GameCreator.htmlStrings = {
         return result;
     },
     inputLabel: function(inputId, labelText) {
-        return "<label for=" + inputId + ">" + labelText + "</label>";
+        return "<span style='float:left;'><label for=" + inputId + " class='headingNormal'>" + labelText + "</label></span>";
     },
     actionRow: function(name, action) {
-        var result = '<div><span>' + name + ' ';
+        var result = '<div class="actionRow headingNormalBlack"><span>' + name + ' ';
         for (key in action.parameters) {
             if (action.parameters.hasOwnProperty(key)) {
                 result += key + ": " + action.parameters[key];
@@ -105,7 +105,8 @@ GameCreator.htmlStrings = {
         result = "";
         result += ' \
     <div id="selectActionWindow"> \
-        <span id="selectActionsHeader">' + description + '</span> \
+        <div id="selectActionsHeader" class="dialogueHeader">' + description + '</div> \
+        <div id="selectActionsContent" class="dialogueContent">\
         <br/> \
         <div> \
             <div id="selectActionDropdownContainer" style="float:left;">' + GameCreator.htmlStrings.singleSelector(actions, "actionSelector") + '</div> \
@@ -121,7 +122,7 @@ GameCreator.htmlStrings = {
         }
         result += '</div> \
         <button class="cancelButton" id="editActionsWindowCancel">Cancel</button></div>\
-        </div>';
+        </div></div>';
         return result;
     },
     addGlobalObjectWindow: function() {
