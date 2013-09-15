@@ -28,17 +28,18 @@ GameCreator.htmlStrings = {
     globalObjectElement: function(object) {
         var image = object.image;
         $(image).css("width","65");
-        var span = $(document.createElement("span")).append(object.name);
-        var div = $(document.createElement("div")).append(span).append(image);
+        var imgDiv = $(document.createElement("div"));
+        imgDiv.append(image);
+        imgDiv.addClass("globalObjectElementImage");
+        var div = $(document.createElement("div")).append(imgDiv);
         $(div).attr("id", "globalObjectElement_" + object.name);
         return div;
     },
     globalObjectEditButton: function(object) {
         var button = document.createElement("button");
-        $(button).append("Edit");
+        $(button).append(object.name);
         $(button).addClass("regularButton");
         var div = $(document.createElement("div")).append(button);
-        $(div).css("border-bottom","solid 1px");
         return div;
     },
     editActiveObjectForm: function(object) {
@@ -109,7 +110,7 @@ GameCreator.htmlStrings = {
         <div> \
             <div id="selectActionDropdownContainer" style="float:left;">' + GameCreator.htmlStrings.singleSelector(actions, "actionSelector") + '</div> \
             <div id="selectActionParametersContainer" style="float:left;"></div> \
-            <button id="selectActionAddAction">+</button> \
+            <button id="selectActionAddAction" class="regularButton">+</button> \
         </div> \
         <div id="selectActionResult">';
         for (var i = 0; i < existingActions.length; i++) {
@@ -119,7 +120,7 @@ GameCreator.htmlStrings = {
             result += GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction);
         }
         result += '</div> \
-        <button class="regularButton" id="editActionsWindowCancel">Cancel</button></div>\
+        <button class="cancelButton" id="editActionsWindowCancel">Cancel</button></div>\
         </div>';
         return result;
     },
