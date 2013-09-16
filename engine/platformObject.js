@@ -6,6 +6,8 @@ GameCreator.platformObject = {
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
+        GameCreator.addObjFunctions.keyObjectFunctions(obj);
+        
         obj.image = image;
         obj.name = args.name;
         obj.width = args.width;
@@ -33,6 +35,7 @@ GameCreator.platformObject = {
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
+        GameCreator.addObjFunctions.keyObjectFunctions(obj);
         
         obj.isCollidable = true;
         obj.isMovable = true;
@@ -71,9 +74,6 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
     platformObject.speedY = 0;
     //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
     platformObject.facingLeft = true;
-    platformObject.keyActions = {
-        space: {pressed: false, onCooldown: false, actions: undefined}
-    };
     
     platformObject.calculateSpeed = function()
     {    
@@ -111,7 +111,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
         $(document).on("keydown." + this.name, function(e){
             switch(e.which){
                 case 32:
-                that.keyActions.space.pressed = true;
+                that.keyActionInfo.space.pressed = true;
                 break;
                 
                 case 37:
@@ -134,7 +134,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
         $(document).on("keyup." + this.name, function(e){
             switch(e.which){
                 case 32:
-                that.keyActions.space.pressed = false;
+                that.keyActionInfo.space.pressed = false;
                 break;
             
                 case 37:
@@ -153,50 +153,14 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
             }
             e.preventDefault();
         });
-    }
+    };
     
     platformObject.shoot = function(staticParameters){
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x + (this.facingLeft ? 0 : this.width), y: this.y, speedX: this.facingLeft ? -500 : 500});
-    }
+    };
     
     platformObject.onDestroy = function(){
         $(document).off("keydown." + this.name);
         $(document).off("keyup." + this.name);
-    }
-    
-    platformObject.checkEvents = function(){
-        //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
-        var keyActions = this.parent.keyActions;
-        for(var key in keyActions)
-        {
-            if(keyActions.hasOwnProperty(key))
-            {
-                var keyAction = keyActions[key];
-                if(keyAction.pressed && !keyAction.onCooldown)
-                {
-                    if(keyAction.actions == undefined)
-                    {
-                          GameCreator.UI.openEditActionsWindow(
-                            "Pressed " + key + " actions for " + this.parent.name,
-                             $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
-                             this.parent.keyActions,
-                             key
-                            );
-                    }
-                    else
-                    {
-                        for(var i = 0;i < keyAction.actions.length;++i)
-                        {
-                            keyAction.actions[i].action.call(this, keyAction.actions[i].parameters);
-                            keyAction.onCooldown = true;
-                            //This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
-                            (function(keyAction){
-                                setTimeout(function(){keyAction.onCooldown = false}, 300);
-                            })(keyAction);
-                        }
-                    }
-                }
-            }
-        }
-    }
+    };
 }

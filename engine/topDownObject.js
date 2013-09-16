@@ -6,6 +6,7 @@ GameCreator.topDownObject = {
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
+        GameCreator.addObjFunctions.keyObjectFunctions(obj);
         
         obj.image = image;
         obj.name = args.name;
@@ -35,6 +36,7 @@ GameCreator.topDownObject = {
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
+        GameCreator.addObjFunctions.keyObjectFunctions(obj);
         
         obj.isCollidable = true;
         obj.isMovable = true;
@@ -74,9 +76,6 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     //Facing can be 1-8 where 1 is facing up and the others follow clockwise.
     topDownObject.facing = 1;
     //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
-    topDownObject.keyActions = {
-        space: {pressed: false, onCooldown: false, actions: undefined}
-    };
     
     topDownObject.calculateSpeed = function()
     {    
@@ -144,7 +143,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
             console.log(e.which)
             switch(e.which){
                 case 32:
-                that.keyActions.space.pressed = true;
+                that.keyActionInfo.space.pressed = true;
                 break;
                 
                 case 37:
@@ -171,7 +170,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
         $(document).on("keyup." + this.name, function(e){
             switch(e.which){
                 case 32:
-                that.keyActions.space.pressed = false;
+                that.keyActionInfo.space.pressed = false;
                 break;
             
                 case 37:
@@ -260,41 +259,5 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     topDownObject.onDestroy = function(){
         $(document).off("keydown." + this.name);
         $(document).off("keyup." + this.name);
-    }
-    
-    topDownObject.checkEvents = function(){
-        //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
-        var keyActions = this.parent.keyActions;
-        for(var key in keyActions)
-        {
-            if(keyActions.hasOwnProperty(key))
-            {
-                var keyAction = keyActions[key];
-                if(keyAction.pressed && !keyAction.onCooldown)
-                {
-                    if(keyAction.actions == undefined)
-                    {
-                        GameCreator.UI.openEditActionsWindow(
-                            "Pressed " + key + " actions for " + this.parent.name,
-                             $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
-                             this.parent.keyActions,
-                             key
-                            );
-                    }
-                    else
-                    {
-                        for(var i = 0;i < keyAction.actions.length;++i)
-                        {
-                            keyAction.actions[i].action.call(this, keyAction.actions[i].parameters);
-                            keyAction.onCooldown = true;
-                            //This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
-                            (function(keyAction){
-                                setTimeout(function(){keyAction.onCooldown = false}, 300);
-                            })(keyAction);
-                        }
-                    }
-                }
-            }
-        }
     }
 }

@@ -30,6 +30,52 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
     object.collisionActions = {};
 },
 
+GameCreator.addObjFunctions.keyObjectFunctions = function(object) 
+{
+    object.keyActionInfo = {
+        space: {pressed: false, onCooldown: false}
+    };
+    object.keyActions = {};
+    
+    object.checkEvents = function(){
+        //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
+        for(var key in this.parent.keyActionInfo)
+        {
+            if(this.parent.keyActionInfo.hasOwnProperty(key))
+            {
+                var keyActionInfo = this.parent.keyActionInfo[key];
+                var keyAction = this.parent.keyActions[key];
+                if(keyActionInfo.pressed && !keyActionInfo.onCooldown)
+                {
+                    if(keyAction == undefined)
+                    {
+                        GameCreator.UI.openEditActionsWindow(
+                            "Pressed " + key + " actions for " + this.parent.name,
+                             $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
+                             this.parent.keyActions,
+                             key
+                            );
+                    }
+                    else
+                    {
+                        for(var i = 0;i < keyAction.length;++i)
+                        {
+                            console.log("keyACtion");
+                            console.log(keyAction);
+                            keyAction[i].action.call(this, keyAction[i].parameters);
+                            keyActionInfo.onCooldown = true;
+                            //This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
+                            (function(keyActionInfo){
+                                setTimeout(function(){keyActionInfo.onCooldown = false}, 300);
+                            })(keyActionInfo);
+                        }
+                    }
+                }
+            }
+        }
+    };
+},
+
 GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
 {    
     object.stop = function(params)
