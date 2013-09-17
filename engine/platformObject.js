@@ -111,7 +111,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
         $(document).on("keydown." + this.name, function(e){
             switch(e.which){
                 case 32:
-                that.keyActionInfo.space.pressed = true;
+                that.keyPressed.space = true;
                 break;
                 
                 case 37:
@@ -134,7 +134,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
         $(document).on("keyup." + this.name, function(e){
             switch(e.which){
                 case 32:
-                that.keyActionInfo.space.pressed = false;
+                that.keyPressed.space = false;
                 break;
             
                 case 37:

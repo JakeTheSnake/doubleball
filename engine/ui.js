@@ -126,10 +126,10 @@ GameCreator.UI = {
             var selectedAction = {action: action.action, parameters: {}, name: action.name};
 
             for (var i = 0; i < action.params.length; i++) {
-                selectedAction.parameters[action.params[i].inputId] = $("#" + action.params[i].inputId).val();
+                selectedAction.parameters[action.params[i].inputId] = GameCreator.helperFunctions.getValue($("#" + action.params[i].inputId));
             }
             selectedActions.push(selectedAction);
-            $("#selectActionResult").append(GameCreator.htmlStrings.actionRow($("#actionSelector").val(), selectedAction));
+            $("#selectActionResult").append(GameCreator.htmlStrings.actionRow(GameCreator.helperFunctions.getValue($("#actionSelector")), selectedAction));
         });
         
         $("#selectActionWindow").on("click", ".removeActionButton", function(){

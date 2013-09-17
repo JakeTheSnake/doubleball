@@ -341,15 +341,7 @@ $.extend(GameCreator, {
         var input;
         for(var i = 0; i < inputs.length; i++) {
             input = $(inputs[i]);
-            if(input.attr("data-type") == "string" && input.val().length != 0) {
-                obj[input.attr("data-attrName")] = input.val();
-            }
-            else if(input.attr("data-type") == "number" && input.val().length != 0) {
-                obj[input.attr("data-attrName")] = parseFloat(input.val());
-            }
-            else if(input.attr("data-type") == "bool" && input.val().length != 0) {
-                obj[input.attr("data-attrName")] = GameCreator.helperFunctions.parseBool(input.val());
-            }
+            obj[input.attr("data-attrName")] = GameCreator.helperFunctions.getValue(input);
         }
         //Should only render if saving a sceneobject?
         GameCreator.render();

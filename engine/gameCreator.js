@@ -45,6 +45,7 @@ var GameCreator = {
         this.movableObjects = [];
         this.renderableObjects = [];
         this.objectsToDestroy = [];
+        this.eventableObjects = [];
     },
     
     createInstance: function(globalObj, scene, args){

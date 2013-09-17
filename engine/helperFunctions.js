@@ -194,6 +194,21 @@ GameCreator.helperFunctions.findObject = function(name) {
     return object;
 };
 
+GameCreator.helperFunctions.getValue = function(input) {
+    if(input.attr("data-type") == "string" && input.val().length != 0) {
+        return input.val();
+    }
+    else if(input.attr("data-type") == "number" && input.val().length != 0) {
+        return parseFloat(input.val());
+    }
+    else if(input.attr("data-type") == "bool" && input.val().length != 0) {
+        return GameCreator.helperFunctions.parseBool(input.val());
+    }
+    else {
+        return input.val();
+    }
+}
+
 GameCreator.helperFunctions.logOnce = function(obj) {
     if(!GameCreator.loggedOnce) {
         console.log(obj);

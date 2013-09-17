@@ -140,10 +140,9 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     topDownObject.instantiated = function(){
         var that = this;
         $(document).on("keydown." + this.name, function(e){
-            console.log(e.which)
             switch(e.which){
                 case 32:
-                that.keyActionInfo.space.pressed = true;
+                that.keyPressed.space = true;
                 break;
                 
                 case 37:
@@ -170,7 +169,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
         $(document).on("keyup." + this.name, function(e){
             switch(e.which){
                 case 32:
-                that.keyActionInfo.space.pressed = false;
+                that.keyPressed.space = false;
                 break;
             
                 case 37:
@@ -197,8 +196,8 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     
     topDownObject.shoot = function(staticParameters){
         var facing = this.facing;
-        var x, y, speedX = 0, speedY = 0;
-        var projectileSpeed = 600;
+        var x = 0, y = 0, speedX = 0, speedY = 0;
+        var projectileSpeed = staticParameters.projectileSpeed;
         var angularSpeed = GameCreator.helperFunctions.calcAngularSpeed(projectileSpeed);
         switch(facing){
             case 1:

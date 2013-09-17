@@ -32,20 +32,20 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 
 GameCreator.addObjFunctions.keyObjectFunctions = function(object) 
 {
-    object.keyActionInfo = {
-        space: {pressed: false, onCooldown: false}
+    object.keyPressed = {
+        space: false
     };
     object.keyActions = {};
     
     object.checkEvents = function(){
         //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
-        for(var key in this.parent.keyActionInfo)
+        for(var key in this.parent.keyPressed)
         {
-            if(this.parent.keyActionInfo.hasOwnProperty(key))
+            if(this.parent.keyPressed.hasOwnProperty(key))
             {
-                var keyActionInfo = this.parent.keyActionInfo[key];
+                var isKeyPressed = this.parent.keyPressed[key];
                 var keyAction = this.parent.keyActions[key];
-                if(keyActionInfo.pressed && !keyActionInfo.onCooldown)
+                if(isKeyPressed && !this.keyCooldown[key])
                 {
                     if(keyAction == undefined)
                     {
@@ -60,14 +60,12 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                     {
                         for(var i = 0;i < keyAction.length;++i)
                         {
-                            console.log("keyACtion");
-                            console.log(keyAction);
                             keyAction[i].action.call(this, keyAction[i].parameters);
-                            keyActionInfo.onCooldown = true;
+                            this.keyCooldown[key] = true;
                             //This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
-                            (function(keyActionInfo){
-                                setTimeout(function(){keyActionInfo.onCooldown = false}, 300);
-                            })(keyActionInfo);
+                            (function(keyCooldown, key){
+                                setTimeout(function(){keyCooldown[key] = false}, 300);
+                            })(this.keyCooldown, key);
                         }
                     }
                 }

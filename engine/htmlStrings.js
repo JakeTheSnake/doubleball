@@ -1,6 +1,6 @@
 GameCreator.htmlStrings = {
-    singleSelector: function(collection, elementId) {
-        var result = "<div><select id='" + elementId + "'>";
+    singleSelector: function(elementId, collection) {
+        var result = '<div><select id="' + elementId + '" data-type="text">';
         for (key in collection) {
             if (collection.hasOwnProperty(key)) {
                 result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'>" + key + "</option>";
@@ -8,6 +8,9 @@ GameCreator.htmlStrings = {
         };
         result += "</select></div>";
         return result;
+    },
+    numberInput: function(inputId, attrName, value) {
+        return '<div><input id="'+ inputId +'" type="text" data-type="number" data-attrName="' + attrName + '" value="' + value + '"/></div>'
     },
     inputLabel: function(inputId, labelText) {
         return "<span style='float:left;'><label for=" + inputId + " class='headingNormal'>" + labelText + "</label></span>";
@@ -109,7 +112,7 @@ GameCreator.htmlStrings = {
         <div id="selectActionsContent" class="dialogueContent">\
         <br/> \
         <div> \
-            <div id="selectActionDropdownContainer" style="float:left;">' + GameCreator.htmlStrings.singleSelector(actions, "actionSelector") + '</div> \
+            <div id="selectActionDropdownContainer" style="float:left;">' + GameCreator.htmlStrings.singleSelector("actionSelector", actions) + '</div> \
             <div id="selectActionParametersContainer" style="float:left;"></div> \
             <button id="selectActionAddAction" class="regularButton">+</button> \
         </div> \

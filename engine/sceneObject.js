@@ -64,6 +64,7 @@ GameCreator.sceneObject = {
         //TopDown and Platform
         
         this.maxSpeed = args.maxSpeed != undefined ? args.maxSpeed : globalObj.maxSpeed;
+        this.keyCooldown = {space: false};
         
         //ActiveObject properties
         
