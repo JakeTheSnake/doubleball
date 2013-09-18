@@ -1,11 +1,6 @@
 TODO:
 
-When setting up the shoot action the current instance of an object is used as parameter. When you do an edit/direct repeat this object is removed from the game and a new one is made.
-This means the "this" for the function will be the old, now removed object. This can probably be solved by sending the shooting objects "instanceId" as staticparameter to the actions.
-
-Fix keyActions for platformObject in the same way as for topdownObjects. Maybe refactor, the functions should be extremely similar?
-
-location or nesting actions from a collision event under a subproperty "actions".
+Destroy på keyAction funkar inte. Objectet förstårs direkt nästa gång man kör direct efter att ha växlat till edit. Ngn bug...
 
 Studsande platform objects studsar högre och högre.
 

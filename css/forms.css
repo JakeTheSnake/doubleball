@@ -2,13 +2,13 @@
 	width: 200px;
 }
 
-#editCollisionActionsObjectMenu {
+#editCollisionActionsObjectMenu, #editKeyActionsKeyMenu {
     width: 70px;
     background-color: #777;
     color: #fff;
     float: left;
 }
 
-#editCollisionActionsObjectContent {
+#editCollisionActionsObjectContent, #editKeyActionsKeyContent {
     float: left;
 }

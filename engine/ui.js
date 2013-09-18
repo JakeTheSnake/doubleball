@@ -70,12 +70,12 @@ GameCreator.UI = {
         });
     },
     
-    openEditActionsArea: function(text, actions, existingActions, targetName) {  
+    openEditActionsArea: function(text, actions, existingActions, targetName, container) {  
         if (!existingActions[targetName]) {
             existingActions[targetName] = [];
         }
         
-        $("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions[targetName]));
+        container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions[targetName]));
         GameCreator.UI.setupEditActionsContent(text, actions, existingActions[targetName]);
     },
     
@@ -196,44 +196,62 @@ GameCreator.UI = {
         GameCreator.UI.setupEditGlobalObjectPropertiesForm($("#dialogueWindow").find("#editGlobalObjectWindowContent"), object);
     },
     
-    setupEditGlobalObjectPropertiesForm: function(target, object) {
-        target.html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(object));
-        target.find("#saveGlobalActiveObjectButton").on("click", function() {
+    setupEditGlobalObjectPropertiesForm: function(container, object) {
+        container.html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(object));
+        container.find("#saveGlobalActiveObjectButton").on("click", function() {
             GameCreator.saveObjectChanges("editGlobalObjectPropertiesContent", object);
             GameCreator.UI.closeDialogue();
         });
     },
     
-    setupEditGlobalObjectCollisionsForm: function(target, object) {
-        target.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(object));
-        target.find(".collisionMenuElement").on("click", function(){
+    setupEditGlobalObjectCollisionsForm: function(container, object) {
+        container.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(object));
+        container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
             GameCreator.UI.openEditActionsArea(
-                "Collisions for " + targetName, 
+                "Actions for collision with " + targetName, 
                 $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
                 object.collisionActions,
-                targetName
+                targetName,
+                $("#editCollisionActionsObjectContent")
             );
         });
         $("#addNewCollisionButton").on("click", function(){
-        	$("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.collisionObjectSelector(object))
+        	$("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.collisionObjectSelector(object));
         	$(".addCollisionObjectElement").one("click", function(){
         		object.collisionActions[$(this).data("objectname")] = [];
-        		GameCreator.UI.setupEditGlobalObjectCollisionsForm(target, object);
+        		GameCreator.UI.setupEditGlobalObjectCollisionsForm(container, object);
         	});
         });
     },
     
-    setupEditGlobalObjectKeyActionsForm: function(target, object) {
-       target.html(GameCreator.htmlStrings.editGlobalObjectKeyActionsContent(object));
+    setupEditGlobalObjectKeyActionsForm: function(container, object) {
+        container.html(GameCreator.htmlStrings.editGlobalObjectKeyActionsContent(object));
+        container.find(".keyMenuElement").on("click", function(){
+            var keyName = $(this).data("name");
+            GameCreator.UI.openEditActionsArea(
+                "Actions on " + keyName,
+                GameCreator.actions.commonSelectableActions,
+                object.keyActions,
+                keyName,
+                $("#editKeyActionsKeyContent")
+            );
+        });
+        $("#addNewKeyButton").on("click", function(){
+            $("#editKeyActionsKeyContent").html(GameCreator.htmlStrings.keySelector(object));
+            $(".addKeyObjectElement").one("click", function(){
+                object.keyActions[$(this).data("keyname")] = [];
+                GameCreator.UI.setupEditGlobalObjectKeyActionsForm(container, object);
+            });
+        });
     },
     
-    setupEditGlobalObjectTimerActionsForm: function(target, object) {
-       target.html(GameCreator.htmlStrings.editGlobalObjectTimerActionsContent(object));
+    setupEditGlobalObjectTimerActionsForm: function(container, object) {
+       container.html(GameCreator.htmlStrings.editGlobalObjectTimerActionsContent(object));
     },
     
-    setupEditGlobalObjectCounterActionsForm: function(target, object) {
-       target.html(GameCreator.htmlStrings.editGlobalObjectCounterActionsContent(object));
+    setupEditGlobalObjectCounterActionsForm: function(container, object) {
+       container.html(GameCreator.htmlStrings.editGlobalObjectCounterActionsContent(object));
     },
     
     //General dialogue functions

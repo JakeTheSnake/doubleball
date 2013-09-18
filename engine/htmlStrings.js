@@ -28,6 +28,9 @@ GameCreator.htmlStrings = {
     collisionMenuElement: function(object) {
         return '<div class="collisionMenuElement" data-name="' + object.name + '" ><span>' + object.name + '</span>' + object.image.outerHTML + '</div>';
     },
+    keyMenuElement: function(keyName) {
+        return '<div class="keyMenuElement" data-name="' + keyName + '"><span>' + keyName + '</span></div>';
+    },
     globalObjectElement: function(object) {
         var image = object.image;
         $(image).css("width","65");
@@ -190,13 +193,21 @@ GameCreator.htmlStrings = {
                 result += GameCreator.htmlStrings.collisionMenuElement(GameCreator.helperFunctions.findObject(targetName));
             }
         }
-        result += '<div id="addNewCollisionButton" style="width:65px;height:65px;background-color:#777;cursor: pointer;">+</div>'
+        result += '<div id="addNewCollisionButton" style="width:65px;height:65px;background-color:#777;cursor: pointer;">+</div>';
         result += '</div> \
                    <div id="editCollisionActionsObjectContent"></div>';
         return result;
     },
     editGlobalObjectKeyActionsContent: function(object) {
-        return "KeyActions!";
+        result = '<div id="editKeyActionsKeyMenu">';
+        for (keyName in object.keyActions) {
+            if(object.keyActions.hasOwnProperty(keyName)) {
+                result += GameCreator.htmlStrings.keyMenuElement(keyName);
+            }
+        }
+        result += '<div id="addNewKeyButton" style="width:65px;height:65px;background-color:#777;cursor: pointer;">+</div>';
+        result += '</div><div id="editKeyActionsKeyContent"></div>';
+        return result;
     },
     editGlobalObjectTimerActionsContent: function(object) {
         return "Timer Actions";
@@ -269,9 +280,19 @@ GameCreator.htmlStrings = {
     	$.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
     	for (objName in selectableObjects) {
             if (selectableObjects.hasOwnProperty(objName) && !object.collisionActions.hasOwnProperty(objName) && selectableObjects[objName].isCollidable && objName != object.name) {
-        		result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].image.outerHTML + '</br><span>' + objName + '</span></div>'
+        		result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].image.outerHTML + '</br><span>' + objName + '</span></div>';
         	}
     	}
     	return result;
-	}
+	},
+    keySelector: function(object) {
+        result = "";
+        var selectableKeys = object.keyPressed;
+        for (keyName in selectableKeys) {
+            if(selectableKeys.hasOwnProperty(keyName) && !object.keyActions.hasOwnProperty(keyName)) {
+                result += '<div class="addKeyObjectElement" data-keyName="' + keyName + '" style="float:left;cursor:pointer;"><span>' + keyName + '</span></div>';
+            }
+        }
+        return result;
+    }
 };
