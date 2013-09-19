@@ -29,10 +29,10 @@ GameCreator.baseObject = {
 		this.parent.onDestroy.call(this);
 	},
 	
-	instantiated: function(){},
-	
 	onDestroy: function(){},
 	
+    onGameStarted: function(){},
+    
 	checkEvents: function(){},
 	
 	move: function(modifier){

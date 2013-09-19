@@ -46,6 +46,8 @@ var GameCreator = {
         this.renderableObjects = [];
         this.objectsToDestroy = [];
         this.eventableObjects = [];
+        $(document).off("keydown.gameKeyListener");
+        $(document).off("keyup.gameKeyListener");
     },
     
     createInstance: function(globalObj, scene, args){

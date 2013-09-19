@@ -137,9 +137,9 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
         }
     }
     
-    topDownObject.instantiated = function(){
+    topDownObject.onGameStarted = function(){
         var that = this;
-        $(document).on("keydown." + this.name, function(e){
+        $(document).on("keydown.gameKeyListener", function(e){
             switch(e.which){
                 case 32:
                 that.keyPressed.space = true;
@@ -166,7 +166,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
             e.preventDefault();
         });
         
-        $(document).on("keyup." + this.name, function(e){
+        $(document).on("keyup.gameKeyListener", function(e){
             switch(e.which){
                 case 32:
                 that.keyPressed.space = false;
@@ -256,7 +256,6 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     }
     
     topDownObject.onDestroy = function(){
-        $(document).off("keydown." + this.name);
-        $(document).off("keyup." + this.name);
+        
     }
 }

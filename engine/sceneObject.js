@@ -75,7 +75,5 @@ GameCreator.sceneObject = {
         //If heading backwards or forwards through the grid. (Should switch when reaching a bounce node.)
         this.routeForward = args.routeForward != undefined ? args.routeForward : true;
         this.speed = args.speed != undefined ? args.speed : globalObj.speed;
-        
-        globalObj.instantiated();
     }
 }

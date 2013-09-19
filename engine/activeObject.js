@@ -59,8 +59,6 @@ GameCreator.activeObject = {
         
         GameCreator.globalObjects[obj.name] = obj;
         
-        obj.instantiated();
-        
         return obj;
     }
 }

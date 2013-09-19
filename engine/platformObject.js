@@ -106,9 +106,9 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
         this.speedY += this.accY;
     }
     
-    platformObject.instantiated = function(){
+    platformObject.onGameStarted = function(){
         var that = this;
-        $(document).on("keydown." + this.name, function(e){
+        $(document).on("keydown.gameKeyListener", function(e){
             switch(e.which){
                 case 32:
                 that.keyPressed.space = true;
@@ -131,7 +131,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
             e.preventDefault();
         });
         
-        $(document).on("keyup." + this.name, function(e){
+        $(document).on("keyup.gameKeyListener", function(e){
             switch(e.which){
                 case 32:
                 that.keyPressed.space = false;
@@ -160,7 +160,6 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
     };
     
     platformObject.onDestroy = function(){
-        $(document).off("keydown." + this.name);
-        $(document).off("keyup." + this.name);
+
     };
 }

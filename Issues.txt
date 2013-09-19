@@ -1,15 +1,8 @@
 TODO:
 
-Destroy på keyAction funkar inte. Objectet förstårs direkt nästa gång man kör direct efter att ha växlat till edit. Ngn bug...
+Add keyactions for mouse
 
 Studsande platform objects studsar högre och högre.
-
-Be able to select borders as objects when adding collision events in edit mode!
-
-When destroying an object with listeners attached, the listeners are destroyed. They are not "restarted" when switching back to edit and the direct again.
-
-Add setting of collision with objects where no previous collisions exist.
-Add setting of keyactions to platform/mouse and topdown objects in edit mode.
 
 Borde kunna göra tabsystemet generellt.?
 
