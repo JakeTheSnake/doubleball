@@ -45,36 +45,20 @@
 }
 
 .dialogueContent {
+    margin-top: 10px;
     padding: 10px;
+    height: 65%
 }
 
-.actionRow {
-    border-top-left-radius:3px;
-	border-top-right-radius:3px;
-    border-bottom-left-radius:6px;
-	border-bottom-right-radius:6px;
-    text-align:center;
-    border-top:solid 1px;
-    border-left:solid 1px;
-    border-right:solid 1px;
-    border-bottom:solid 1px;
-    background: #E0F3F9;
-    line-height:20px;
-    height: 20px;
-    width: 200px;
-    color: #336680;
-    
+.dialogueButtons {
+    float: left;
+    width: 100%;
+    padding-right: 20px;
+    text-align: right;
+    height: 40px;
 }
 
-.parameterLabel {
-    line-height:20px;
-    height: 20px;
-    text-shadow:1px 1px 0px #4DB8FF;
-    font-family:Arial;
-	font-size:15px;
-	font-weight:bold;
-	font-style:normal;
-}
+
 
 #selectActionResult {
     padding: 10px;

@@ -88,12 +88,16 @@
 	top:1px;
 }
 
-.headingNormalBlack {
+.headingNormalBlack, .groupHeading {
     line-height:20px;
-    height: 20px;
     text-shadow:1px 1px 1px #4DB8FF;
     font-family:Arial;
 	font-size:15px;
 	font-weight:bold;
 	font-style:normal;
+}
+
+.addActionButton {
+    height: 60px;
+    width: 80px;
 }

@@ -12,3 +12,100 @@
 #editCollisionActionsObjectContent, #editKeyActionsKeyContent {
     float: left;
 }
+
+.group {
+    display:block;
+    float: left;
+    border: 1px solid #E0F3F9;
+    border-radius: 4px;
+    top: -10px;
+    line-height:20px;
+    color: #336680;
+    padding: 7px;
+    margin-right: 5px;
+    height: 60px;
+    vertical-align:middle;
+    background-color: #444;
+    
+}
+
+#selectActionAddButton {
+    float: left;
+}
+
+.groupHeading {
+    position: relative;
+    top: -20px;
+    border-radius: 4px;
+    border: 1px solid #63b8ee;
+    background-color: #E0F3F9;
+    padding: 5px;
+    text-align: center;
+}
+.actionParameter {
+    display: block;
+    position: relative;
+    float: left;
+    font-family:Arial;
+    top: -20px;
+	font-size:12px;
+	font-style:oblique;
+    text-align:left;
+    padding: 4px;
+    color: #63b8ee;
+    text-shadow:1px 1px 1px #336680;
+    margin-right: 4px;
+    height: 50px;
+    vertical-align:middle;
+}
+.removeActionBox {
+    float: left;
+    position: relative;
+    z-index: 3;
+    color: white;
+    line-height: 20px;
+    top: -9px;
+    left: -9px;
+    width: 30px;
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: #225560;
+}
+
+.removeActionButton {
+    text-decoration: none;
+    color: white;
+}
+.actionRow {
+    float: left;
+    border-top-left-radius:3px;
+	border-top-right-radius:3px;
+    border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+    text-align:center;
+    border-top:solid 1px;
+    border-left:solid 1px;
+    border-right:solid 1px;
+    border-bottom:solid 1px;
+    background: #E0F3F9;
+    line-height:100%;
+    width: 200px;
+    color: #336680;
+    
+}
+
+.actionText {
+    margin-left: 15px;
+    float: left;
+    position: relative;
+}
+
+.parameterLabel {
+    line-height:20px;
+    height: 20px;
+    text-shadow:1px 1px 0px #4DB8FF;
+    font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	font-style:normal;
+}

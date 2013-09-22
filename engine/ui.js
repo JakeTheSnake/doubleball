@@ -114,10 +114,10 @@ GameCreator.UI = {
     setupEditActionsContent: function(text, actions, selectedActions){
         
         $("#actionSelector").on("change", function(){
-            $("#selectActionParametersContainer").html("");
+            $("#selectActionParametersContent").html("");
+            $("#selectActionParametersContainer").css("display", "block");
             for(var i = 0;i < actions[$(this).val()].params.length;++i) {
-                $("#selectActionParametersContainer").append(actions[$(this).val()].params[i].label())
-                $("#selectActionParametersContainer").append(actions[$(this).val()].params[i].input());
+                $("#selectActionParametersContent").append(GameCreator.htmlStrings.parameterGroup(actions[$(this).val()].params[i].label() + actions[$(this).val()].params[i].input()));
             }
         });
         
@@ -134,7 +134,7 @@ GameCreator.UI = {
         
         $("#selectActionWindow").on("click", ".removeActionButton", function(){
         	selectedActions.splice($("#selectActionWindow").find(".removeActionButton").index(this), 1);
-        	$(this).parent().remove();
+        	$(this).parent().parent().remove();
         	return false;
     	});
     },

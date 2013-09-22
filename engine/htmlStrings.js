@@ -10,19 +10,23 @@ GameCreator.htmlStrings = {
         return result;
     },
     numberInput: function(inputId, attrName, value) {
-        return '<div><input id="'+ inputId +'" type="text" data-type="number" data-attrName="' + attrName + '" value="' + value + '"/></div>'
+        return '<input id="'+ inputId +'" type="text" data-type="number" data-attrName="' + attrName + '" value="' + value + '"/>'
     },
     inputLabel: function(inputId, labelText) {
-        return "<span style='float:left;'><label for=" + inputId + " class='headingNormal'>" + labelText + "</label></span>";
+        return '<label for=' + inputId + ' class="headingNormal">' + labelText + '</label><br/>';
+    },
+    parameterGroup: function(parameterInput) {
+        return '<div class="actionParameter">' + parameterInput + '</div>'
     },
     actionRow: function(name, action) {
-        var result = '<div class="actionRow headingNormalBlack"><span>' + name + ' ';
+        var result = '<div class="actionRow headingNormalBlack"><div class="headingNormalBlack removeActionBox"><a class="removeActionButton" href="">X</a></div>\
+        <span class="actionText">' + name;
         for (key in action.parameters) {
             if (action.parameters.hasOwnProperty(key)) {
-                result += key + ": " + action.parameters[key];
+                result += '<br/><span style="font-size: 12px">' + key + ': ' + action.parameters[key] + ' ';
             }
         }
-        result += '</span><a class="removeActionButton" href="">X</a></div>';
+        result += '</span></span></div><div style="clear:both;"></div>';
         return result;
     },
     collisionMenuElement: function(object) {
@@ -109,16 +113,14 @@ GameCreator.htmlStrings = {
     },
     editActionsWindow: function(description, actions, existingActions) { 
         result = "";
-        result += ' \
-    <div id="selectActionWindow"> \
+        result += '<div id="selectActionWindow" style="height: 100%"> \
         <div id="selectActionsHeader" class="dialogueHeader">' + description + '</div> \
         <div id="selectActionsContent" class="dialogueContent">\
-        <br/> \
-        <div> \
-            <div id="selectActionDropdownContainer" style="float:left;">' + GameCreator.htmlStrings.singleSelector("actionSelector", actions) + '</div> \
-            <div id="selectActionParametersContainer" style="float:left;"></div> \
-            <button id="selectActionAddAction" class="regularButton">+</button> \
-        </div> \
+            <span style="display: inline-block;"><div id="selectActionDropdownContainer" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("actionSelector", actions) + '</div>\
+            <div id="selectActionParametersContainer" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
+            <div id="selectActionParametersContent"></div></div> \
+            <div id="selectActionAddButton"><button id="selectActionAddAction" class="regularButton addActionButton">Add</button></div>\
+            </span>\
         <div id="selectActionResult">';
         for (var i = 0; i < existingActions.length; i++) {
             var action = existingActions[i];
@@ -126,9 +128,9 @@ GameCreator.htmlStrings = {
 
             result += GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction);
         }
-        result += '</div> \
-        <button class="cancelButton" id="editActionsWindowCancel">Cancel</button></div>\
-        </div></div>';
+        result += ' \
+                </div></div> \
+        <div class="dialogueButtons"><button class="cancelButton" id="editActionsWindowCancel">Cancel</button></div></div>';
         return result;
     },
     addGlobalObjectWindow: function() {
