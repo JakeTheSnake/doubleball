@@ -348,6 +348,17 @@ $.extend(GameCreator, {
         GameCreator.render();
     },
     
+    deleteSelectedObject: function() {
+        var object = GameCreator.selectedObject;
+        var activeScene = GameCreator.scenes[GameCreator.activeScene];
+        activeScene.splice(activeScene.indexOf(object), 1);
+        GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(object), 1);
+        GameCreator.render();
+        GameCreator.selectedObject = null;
+        $("#editSceneObjectContent").html("");
+        $("#editSceneObjectTitle").html("");
+    },
+    
     drawRoute: function(route) {
         $(".routeNodeContainer").remove();
         var node;
