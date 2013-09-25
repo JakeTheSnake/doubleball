@@ -198,7 +198,7 @@ GameCreator.UI = {
     
     setupEditGlobalObjectPropertiesForm: function(container, object) {
         container.html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(object));
-        container.find("#saveGlobalActiveObjectButton").on("click", function() {
+        container.find("#saveGlobalObjectPropertiesButton").on("click", function() {
             GameCreator.saveObjectChanges("editGlobalObjectPropertiesContent", object);
             GameCreator.UI.closeDialogue();
         });

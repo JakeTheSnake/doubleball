@@ -349,11 +349,7 @@ $.extend(GameCreator, {
     },
     
     deleteSelectedObject: function() {
-        var object = GameCreator.selectedObject;
-        var activeScene = GameCreator.scenes[GameCreator.activeScene];
-        activeScene.splice(activeScene.indexOf(object), 1);
-        GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(object), 1);
-        GameCreator.render();
+        GameCreator.selectedObject.delete();
         GameCreator.selectedObject = null;
         $("#editSceneObjectContent").html("");
         $("#editSceneObjectTitle").html("");

@@ -1,5 +1,7 @@
 TODO:
 
+When an action has been selected, remove mutually exclusive actions from list. (For each action, make a list of the actions that exclude it)
+
 Add keyactions for mouse
 
 Studsande platform objects studsar högre och högre.
@@ -16,7 +18,6 @@ Se om man kan få bort selectedObject på något sätt. Snyggt att slippa den global
 
 Seriously check out JS templating engines!
 
-When an action has been selected, remove mutually exclusive actions from list.
 As the save/load functionality works now, people can embed any script they want into the game. We probably need to save actions by name instead of saving entire functions. And interpret this to recreate a usable object when the game is loaded.
 How do we handle selection of actions on collision events on the mouse object? Bounce and stop make no sense on this.
 Need to handle initialization of objects that have different runtime  values. (topDown and platform objects have facing for example, though maybe all objects should have this...)

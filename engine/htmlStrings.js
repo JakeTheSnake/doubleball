@@ -190,7 +190,7 @@ GameCreator.htmlStrings = {
             result += GameCreator.htmlStrings.platformMovementInputs(object);
         }
         result += "</div>";
-        result += '<button class="regularButton" id="saveGlobalActiveObjectButton">Save</button>';
+        result += '<button class="regularButton" id="saveGlobalObjectPropertiesButton">Save</button>';
         return result;
     },
     editGlobalObjectCollisionsContent: function(object) {
