@@ -128,8 +128,20 @@ GameCreator.UI = {
             for (var i = 0; i < action.params.length; i++) {
                 selectedAction.parameters[action.params[i].inputId] = GameCreator.helperFunctions.getValue($("#" + action.params[i].inputId));
             }
+            
+            //Remove actions from selectedActions that are excluded by the selected action.
+            var i = 0;
+            while(i < selectedActions.length) {
+                var existingAction = selectedActions[i].name;
+                if(action.excludes.indexOf(existingAction) != -1) {
+                    selectedActions.splice(i, 1);
+                } else {
+                    i++;
+                }
+            }
             selectedActions.push(selectedAction);
-            $("#selectActionResult").append(GameCreator.htmlStrings.actionRow(GameCreator.helperFunctions.getValue($("#actionSelector")), selectedAction));
+            
+            $("#selectActionResult").html(GameCreator.htmlStrings.selectedActionsList(selectedActions));
         });
         
         $("#selectActionWindow").on("click", ".removeActionButton", function(){

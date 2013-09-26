@@ -126,16 +126,20 @@ GameCreator.htmlStrings = {
             <div id="selectActionParametersContent"></div></div> \
             <div id="selectActionAddButton"><button id="selectActionAddAction" class="regularButton addActionButton">Add</button></div>\
             </span>\
-        <div id="selectActionResult">';
+        </div>'
+        result += '<div id="selectActionResult">';
+        result += GameCreator.htmlStrings.selectedActionsList(existingActions);
+        result += '</div><div class="dialogueButtons"><button class="cancelButton" id="editActionsWindowCancel">Cancel</button></div></div>';
+        return result;
+    },
+    selectedActionsList: function(existingActions) {
+        result = "";
         for (var i = 0; i < existingActions.length; i++) {
             var action = existingActions[i];
             var selectedAction = {action: action.action, parameters: {}};
 
             result += GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction);
         }
-        result += ' \
-                </div></div> \
-        <div class="dialogueButtons"><button class="cancelButton" id="editActionsWindowCancel">Cancel</button></div></div>';
         return result;
     },
     addGlobalObjectWindow: function() {
