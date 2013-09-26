@@ -27,7 +27,7 @@ window.onload = function () {
         
         //Create Mouseobject
         
-        //var globalMousePlayer = GameCreator.addPlayerMouseObject({src: "images/zealot.gif", name: "mouseZealot", width: 80, height: 80})
+        var globalMousePlayer = GameCreator.addPlayerMouseObject({src: "images/zealot.gif", name: "mouseZealot", width: 80, height: 80})
         //GameCreator.createInstance(globalMousePlayer, GameCreator.scenes[0], {x:100, y:200})
         
         //Create Platformobject

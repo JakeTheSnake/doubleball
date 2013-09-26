@@ -48,6 +48,7 @@ var GameCreator = {
         this.eventableObjects = [];
         $(document).off("keydown.gameKeyListener");
         $(document).off("keyup.gameKeyListener");
+        $(GameCreator.canvas).off("mousemove.gameKeyListener");
     },
     
     createInstance: function(globalObj, scene, args){
@@ -137,6 +138,12 @@ var GameCreator = {
     pauseGame: function()
     {
         GameCreator.paused = true;
+        $(document).off("keydown.gameKeyListener");
+        $(document).off("keyup.gameKeyListener");
+        $(GameCreator.canvas).off("mousemove.gameKeyListener");
+        $(document).off("mousedown.gameKeyListener");
+        $(document).off("mouseup.gameKeyListener");
+        
         $(GameCreator.canvas).css("cursor", "default");
     },
 
@@ -144,6 +151,10 @@ var GameCreator = {
     {
         GameCreator.paused = false;
         $(GameCreator.canvas).css("cursor", "none");
+        var activeScene = GameCreator.scenes[GameCreator.activeScene];
+        for (var i=0;i < activeScene.length;++i) {
+            activeScene[i].parent.onGameStarted();
+        }
     },
 
     render: function () {

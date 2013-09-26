@@ -1,7 +1,5 @@
 TODO:
 
-When an action has been selected, remove mutually exclusive actions from list. (For each action, make a list of the actions that exclude it)
-
 Add keyactions for mouse
 
 Studsande platform objects studsar högre och högre.
@@ -22,10 +20,8 @@ As the save/load functionality works now, people can embed any script they want 
 How do we handle selection of actions on collision events on the mouse object? Bounce and stop make no sense on this.
 Need to handle initialization of objects that have different runtime  values. (topDown and platform objects have facing for example, though maybe all objects should have this...)
 Can we use an anynomous function for runtime parameters for actions instead of the current parameters handling?
-A platform object bouncing bounces higher and higher the longer the game goes.....
 
 onDestroy should probably be a collection of functions to run when an object is destroyed. So that new actions can be bound to the event.
-Clear collisionActions of empty actions when not directing, they need to be there when directing to know when a "Nothing" action is chosen for a collision.
 
 POSSIBLES:
 

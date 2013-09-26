@@ -33,7 +33,9 @@ GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 GameCreator.addObjFunctions.keyObjectFunctions = function(object) 
 {
     object.keyPressed = {
-        space: false
+        space: false,
+        leftMouse: false,
+        rightMouse: false
     };
     object.keyActions = {};
     

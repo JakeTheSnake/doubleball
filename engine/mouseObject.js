@@ -4,6 +4,7 @@ GameCreator.mouseObject = {
         var obj = Object.create(GameCreator.baseObject);
         GameCreator.addObjFunctions.mouseObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
+        GameCreator.addObjFunctions.keyObjectFunctions(obj);
         obj.image = image;
         obj.name = args.name;
         obj.width = args.width;
@@ -12,6 +13,7 @@ GameCreator.mouseObject = {
         obj.isCollidable = true;
         obj.isMovable = true;
         obj.isRenderable = true;
+        obj.isEventable = true;
         
         obj.objectType = "mouseObject";
         
@@ -28,10 +30,12 @@ GameCreator.mouseObject = {
         
         GameCreator.addObjFunctions.mouseObjectFunctions(obj);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
+        GameCreator.addObjFunctions.keyObjectFunctions(obj);
         
         obj.isCollidable = true;
         obj.isMovable = true;
         obj.isRenderable = true;
+        obj.isEventable = true;
         
         image.onload = function() {
             obj.imageReady = true;
@@ -64,7 +68,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     mouseObject.calculateSpeed = function(){};
     
     mouseObject.move = function()
-    {    
+    {   
         var offset = $(GameCreator.canvas).offset();
         this.x = this.parent.latestMouseX - offset.left;
         this.y = this.parent.latestMouseY - offset.top;
@@ -78,15 +82,48 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
             this.y = this.minY;
     };
     
-    mouseObject.instantiated = function()
+    mouseObject.onGameStarted = function()
     {
         var that = this;
-        $(GameCreator.canvas).on("mousemove." + this.name, function(evt)
+        $(GameCreator.canvas).on("mousemove.gameKeyListener", function(evt)
         {
             that.latestMouseX = evt.pageX;
             that.latestMouseY = evt.pageY;
         });
+        $(document).on("mousedown.gameKeyListener", function(e){
+            console.log(e.which);
+            switch(e.which){
+                case 1:
+                that.keyPressed.leftMouse = true;
+                break;
+                
+                case 3:
+                that.keyPressed.rightMouse = true;
+                break;
+                
+                default: return;
+            }
+            e.preventDefault();
+        });
+        $(document).on("mouseup.gameKeyListener", function(e){
+            switch(e.which){
+                case 1:
+                that.keyPressed.leftMouse = false;
+                break;
+                
+                case 3:
+                that.keyPressed.rightMouse = false;
+                break;
+                
+                default: return;
+            }
+            e.preventDefault();
+        });
     };
+    
+    mouseObject.shoot = function() {
+        console.log("Mouse shoot!");
+    }
     
     mouseObject.onDestroy = function()
     {
