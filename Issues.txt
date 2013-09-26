@@ -1,7 +1,5 @@
 TODO:
 
-Add keyactions for mouse
-
 Studsande platform objects studsar högre och högre.
 
 Borde kunna göra tabsystemet generellt.?

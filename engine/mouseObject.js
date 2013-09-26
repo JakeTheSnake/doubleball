@@ -91,7 +91,6 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
             that.latestMouseY = evt.pageY;
         });
         $(document).on("mousedown.gameKeyListener", function(e){
-            console.log(e.which);
             switch(e.which){
                 case 1:
                 that.keyPressed.leftMouse = true;
