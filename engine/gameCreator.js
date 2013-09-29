@@ -11,8 +11,8 @@ var GameCreator = {
     timer: undefined,
     draggedGlobalElement: undefined,
     context: undefined,
-    canvasOffsetX: 100,
-    canvasOffsetY: 0,
+    canvasOffsetX: 110,
+    canvasOffsetY: 10,
     //Contains key value pairs where key is the (unique)name of the object.
     globalObjects: {},
     //Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.

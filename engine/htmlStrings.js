@@ -10,10 +10,10 @@ GameCreator.htmlStrings = {
         return result;
     },
     numberInput: function(inputId, attrName, value) {
-        return '<input id="'+ inputId +'" type="text" data-type="number" data-attrName="' + attrName + '" value="' + value + '"/>'
+        return '<input id="'+ inputId +'" type="text" class="textField" data-type="number" data-attrName="' + attrName + '" value="' + value + '"/>'
     },
     inputLabel: function(inputId, labelText) {
-        return '<label for=' + inputId + ' class="headingNormal">' + labelText + '</label><br/>';
+        return '<label for=' + inputId + ' class="textFieldLabel">' + labelText + '</label>';
     },
     parameterGroup: function(parameterInput) {
         return '<div class="actionParameter">' + parameterInput + '</div>'
@@ -26,7 +26,7 @@ GameCreator.htmlStrings = {
                 result += '<br/><span style="font-size: 12px">' + key + ': ' + action.parameters[key] + ' ';
             }
         }
-        result += '</span></span></div><div style="clear:both;"></div>';
+        result += '</span></span></div><br style="clear:both;"/>';
         return result;
     },
     collisionMenuElement: function(object) {
@@ -54,19 +54,22 @@ GameCreator.htmlStrings = {
     },
     editActiveObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result += GameCreator.htmlStrings.inputLabel("editActiveObjectHeight", "Height:") +
-            GameCreator.htmlStrings.numberInput("editActiveObjectHeight", "height", object.height);
+        result += GameCreator.htmlStrings.inputLabel("editActiveObjectHeight", "Height:") + 
+        GameCreator.htmlStrings.numberInput("editActiveObjectHeight", "height", object.height) + '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.inputLabel("editActiveObjectWidth", "Width:") +
-            GameCreator.htmlStrings.numberInput("editActiveObjectWidth", "width", object.height);
-        result += "<label for='editActiveObjectWidth'>Width:</label><input id='editActiveObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>";
+            GameCreator.htmlStrings.numberInput("editActiveObjectWidth", "width", object.width) + '<br style="clear:both;"/>';
         if (object.parent.movementType == "free") {
-            result += "<label for='editActiveObjectSpeedX'>SpeedX:</label><input id='editActiveObjectSpeedX' type='text' data-type='number' data-attrName='speedX' value='" + object.speedX + "'></input>";
-            result += "<label for='editActiveObjectSpeedY'>SpeedY:</label><input id='editActiveObjectSpeedY' type='text' data-type='number' data-attrName='speedY' value='" + object.speedY + "'></input>";
-            result += "<label for='editActiveObjectAccX'>AccX:</label><input id='editActiveObjectAccX' type='text' data-type='number' data-attrName='accX' value='" + object.accX + "'></input>";
-            result += "<label for='editActiveObjectAccY'>AccY:</label><input id='editActiveObjectAccY' type='text' data-type='number' data-attrName='accY' value='" + object.accY + "'></input>";
+            result += GameCreator.htmlStrings.inputLabel("editActiveObjectSpeedX", "SpeedX:") + 
+            GameCreator.htmlStrings.numberInput("editActiveObjectSpeedX", "speedX", object.speedX) + '<br style="clear:both;"/>';
+            result += GameCreator.htmlStrings.inputLabel("editActiveObjectSpeedY", "SpeedY:") + 
+            GameCreator.htmlStrings.numberInput("editActiveObjectSpeedY", "speedY", object.speedY) + '<br style="clear:both;"/>';
+            result += GameCreator.htmlStrings.inputLabel("editActiveObjectAccX", "AccX:") + 
+            GameCreator.htmlStrings.numberInput("editActiveObjectAccX", "accX", object.accX) + '<br style="clear:both;"/>';
+            result += GameCreator.htmlStrings.inputLabel("editActiveObjectAccY", "AccY:") + 
+            GameCreator.htmlStrings.numberInput("editActiveObjectAccY", "accY", object.accY) + '<br style="clear:both;"/>';
         }
         else if(object.parent.movementType == "route") {
-            result += "<label for='editActiveObjectSpeed'>Speed:</label><input id='editActiveObjectSpeed' type='text' data-type='number' data-attrName='speed' value='" + object.speed + "'></input>"
+            result += GameCreator.htmlStrings.inputLabel("editActiveObjectSpeed", "Speed:") + GameCreator.htmlStrings.numberInput("editActiveObjectSpeed", "speed", object.speed);
             result += "<label for='editActiveObjectStartNode'>Starting Node</label><select id='editActiveObjectStartNode' data-type='number' data-attrName='targetNode'>";
             for (var i = 0; i < object.route.length; i++) {
                 result += "<option value='" + i + "'" + (object.targetNode == i ? 'selected' : '') + ">" + (i + 1) + "</option>";
@@ -82,8 +85,8 @@ GameCreator.htmlStrings = {
     },
     editMouseObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result += "<label for='editMouseObjectHeight'>Height:</label><input id='editMouseObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>";
-        result += "<label for='editMouseObjectWidth'>Width:</label><input id='editMouseObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>";
+        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("editMouseObjectHeight", "height", object.height);;
+        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("editMouseObjectWidth", "width", object.width);;
         
         result += GameCreator.htmlStrings.mouseMovementInputs(object);
         
@@ -92,8 +95,8 @@ GameCreator.htmlStrings = {
     },
     editPlatformObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result += "<label for='editPlatformObjectHeight'>Height:</label><input id='editPlatformObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>";
-        result += "<label for='editPlatformObjectWidth'>Width:</label><input id='editPlatformObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>";
+        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("editPlatformObjectHeight", "height", object.height);;
+        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("editPlatformObjectWidth", "width", object.width);;
         
         result += GameCreator.htmlStrings.platformMovementInputs(object);
         
@@ -102,8 +105,8 @@ GameCreator.htmlStrings = {
     },
     editTopDownObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result += "<label for='editTopDownObjectHeight'>Height:</label><input id='editTopDownObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>";
-        result += "<label for='editTopDownObjectWidth'>Width:</label><input id='editTopDownObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>";
+        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("editTopDownObjectHeight", "height", object.height);;
+        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("editTopDownObjectWidth", "width", object.width);;
         
         result += GameCreator.htmlStrings.topDownMovementInputs(object);
         

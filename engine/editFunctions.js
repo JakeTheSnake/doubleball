@@ -237,7 +237,7 @@ $.extend(GameCreator, {
     },
     
     editSceneObject: function() {
-        $("#editSceneObjectTitle").html(GameCreator.selectedObject.name)
+        $("#editSceneObjectTitle").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.name + '</div>');
         if(GameCreator.selectedObject.parent.objectType == "activeObject") {
             $("#editSceneObjectContent").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
         }
