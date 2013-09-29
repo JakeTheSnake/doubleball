@@ -109,3 +109,18 @@
 	font-weight:bold;
 	font-style:normal;
 }
+
+.textField {
+    border: 2px solid #4DB8FF;
+    border-radius:10 px;
+    height: 22px;
+    float: left;
+}
+
+.textFieldLabel {
+    height: 22px;
+    line-height: 22px;
+    color: white;
+    float: left;
+
+}

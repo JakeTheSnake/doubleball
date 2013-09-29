@@ -54,7 +54,10 @@ GameCreator.htmlStrings = {
     },
     editActiveObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result += "<label for='editActiveObjectHeight'>Height:</label><input id='editActiveObjectHeight' type='text' data-type='number' data-attrName='height' value='" + object.height + "'></input>";
+        result += GameCreator.htmlStrings.inputLabel("editActiveObjectHeight", "Height:") +
+            GameCreator.htmlStrings.numberInput("editActiveObjectHeight", "height", object.height);
+        result += GameCreator.htmlStrings.inputLabel("editActiveObjectWidth", "Width:") +
+            GameCreator.htmlStrings.numberInput("editActiveObjectWidth", "width", object.height);
         result += "<label for='editActiveObjectWidth'>Width:</label><input id='editActiveObjectWidth' type='text' data-type='number' data-attrName='width' value='" + object.width + "'></input>";
         if (object.parent.movementType == "free") {
             result += "<label for='editActiveObjectSpeedX'>SpeedX:</label><input id='editActiveObjectSpeedX' type='text' data-type='number' data-attrName='speedX' value='" + object.speedX + "'></input>";
