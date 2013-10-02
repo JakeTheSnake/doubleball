@@ -73,7 +73,6 @@ $.extend(GameCreator, {
 
     editScene: function(scene){
         GameCreator.reset();
-        $(GameCreator.canvas).css("cursor", "default");
         //Here we populate the renderableObjects only since the other find are unused for editing. Also we use the actual sceneObjects in the
         //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
         for (var i=0;i < scene.length;++i) {

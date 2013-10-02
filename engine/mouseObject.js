@@ -84,6 +84,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     
     mouseObject.onGameStarted = function()
     {
+        $(GameCreator.canvas).css("cursor", "none");
         var that = this;
         $(document).on("mousemove.gameKeyListener", function(evt)
         {

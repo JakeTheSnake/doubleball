@@ -51,6 +51,7 @@ var GameCreator = {
         $(document).off("mousemove.gameKeyListener");
         $(document).off("mousedown.gameKeyListener");
         $(document).off("mouseup.gameKeyListener");
+        $(GameCreator.canvas).css("cursor", "default");
     },
     
     createInstance: function(globalObj, scene, args){
@@ -145,6 +146,7 @@ var GameCreator = {
         $(document).off("mousemove.gameKeyListener");
         $(document).off("mousedown.gameKeyListener");
         $(document).off("mouseup.gameKeyListener");
+        $(GameCreator.canvas).css("cursor", "default");
         
         //Set all keypresses to false here since we turn off keyUp.
         for(objectName in GameCreator.globalObjects) {
@@ -167,14 +169,11 @@ var GameCreator = {
                 }
             }
         }
-        
-        $(GameCreator.canvas).css("cursor", "default");
     },
 
     resumeGame: function()
     {
         GameCreator.paused = false;
-        $(GameCreator.canvas).css("cursor", "none");
         var activeScene = GameCreator.scenes[GameCreator.activeScene];
         for (var i=0;i < activeScene.length;++i) {
             activeScene[i].parent.onGameStarted();
