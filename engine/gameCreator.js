@@ -144,6 +144,28 @@ var GameCreator = {
         $(document).off("mousedown.gameKeyListener");
         $(document).off("mouseup.gameKeyListener");
         
+        //Set all keypresses to false here since we turn off keyUp.
+        for(objectName in GameCreator.globalObjects) {
+            if(GameCreator.globalObjects.hasOwnProperty(objectName)) {
+                var obj = GameCreator.globalObjects[objectName];
+                if(obj.keyPressed) {
+                    for(keyName in obj.keyPressed) {
+                        if(obj.keyPressed.hasOwnProperty(keyName)) {
+                            obj.keyPressed[keyName] = false;
+                            if(obj.keyUpPressed)
+                                obj.keyUpPressed = false;
+                            if(obj.keyDownPressed)
+                                obj.keyDownPressed = false;
+                            if(obj.keyLeftPressed)
+                                obj.keyLeftPressed = false;
+                            if(obj.keyRightPressed)
+                                obj.keyRightPressed = false;
+                        }
+                    }
+                }
+            }
+        }
+        
         $(GameCreator.canvas).css("cursor", "default");
     },
 
