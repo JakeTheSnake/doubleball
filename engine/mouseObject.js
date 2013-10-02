@@ -85,7 +85,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     mouseObject.onGameStarted = function()
     {
         var that = this;
-        $(GameCreator.canvas).on("mousemove.gameKeyListener", function(evt)
+        $(document).on("mousemove.gameKeyListener", function(evt)
         {
             that.latestMouseX = evt.pageX;
             that.latestMouseY = evt.pageY;

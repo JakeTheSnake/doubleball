@@ -48,7 +48,9 @@ var GameCreator = {
         this.eventableObjects = [];
         $(document).off("keydown.gameKeyListener");
         $(document).off("keyup.gameKeyListener");
-        $(GameCreator.canvas).off("mousemove.gameKeyListener");
+        $(document).off("mousemove.gameKeyListener");
+        $(document).off("mousedown.gameKeyListener");
+        $(document).off("mouseup.gameKeyListener");
     },
     
     createInstance: function(globalObj, scene, args){
@@ -140,7 +142,7 @@ var GameCreator = {
         GameCreator.paused = true;
         $(document).off("keydown.gameKeyListener");
         $(document).off("keyup.gameKeyListener");
-        $(GameCreator.canvas).off("mousemove.gameKeyListener");
+        $(document).off("mousemove.gameKeyListener");
         $(document).off("mousedown.gameKeyListener");
         $(document).off("mouseup.gameKeyListener");
         
