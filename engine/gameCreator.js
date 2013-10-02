@@ -188,6 +188,17 @@ var GameCreator = {
                 this.context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
             }
         }
+        if(this.selectedObject) {
+            var selobj = this.selectedObject;
+            this.context.beginPath();
+            this.context.moveTo(selobj.x, selobj.y);
+            this.context.lineTo(selobj.x + selobj.width, selobj.y);
+            this.context.lineTo(selobj.x + selobj.width, selobj.y + selobj.height);
+            this.context.lineTo(selobj.x, selobj.y + selobj.height);
+            this.context.closePath();
+            this.context.stroke();
+        }
+
     },
     
     addToRuntime: function(obj){

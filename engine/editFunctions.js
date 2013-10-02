@@ -106,7 +106,11 @@ $.extend(GameCreator, {
             if(GameCreator.draggedObject) {
                 GameCreator.selectedObject = GameCreator.draggedObject;
                 GameCreator.editSceneObject();
+            } else {
+                GameCreator.selectedObject = undefined;
+                GameCreator.unselectSceneObject();
             }
+            GameCreator.render();
         });
         
         $(GameCreator.canvas).on("mouseup", function(){
@@ -268,6 +272,11 @@ $.extend(GameCreator, {
         GameCreator.selectedObject = null;
         $("#editSceneObjectContent").html("");
         $("#editSceneObjectTitle").html("");
+    },
+
+    unselectSceneObject: function() {
+        $("#editSceneObjectTitle").html("");
+        $("#editSceneObjectContent").html("");
     },
     
     drawRoute: function(route) {
