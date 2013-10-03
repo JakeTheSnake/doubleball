@@ -105,8 +105,8 @@ GameCreator.htmlStrings = {
     },
     editTopDownObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("editTopDownObjectHeight", "height", object.height);;
-        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("editTopDownObjectWidth", "width", object.width);;
+        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("editTopDownObjectHeight", "height", object.height);
+        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("editTopDownObjectWidth", "width", object.width);
         
         result += GameCreator.htmlStrings.topDownMovementInputs(object);
         
@@ -233,40 +233,40 @@ GameCreator.htmlStrings = {
         return "Counter Actions";
     },
     freeMovementInputs: function(object) {
-        return '<label for="freeObjectSpeedX">SpeedX:</label><input id="freeObjectSpeedX" type="text" data-type="number" data-attrName="speedX" value="' + (object ? object.speedX : "") + '"></input> \
-                <label for="freeObjectSpeedY">SpeedY:</label><input id="freeObjectSpeedY" type="text" data-type="number" data-attrName="speedY" value="' + (object ? object.speedY : "") + '"></input> \
-                <label for="freeObjectAccX">AccX:</label><input id="freeObjectAccX" type="text" data-type="number" data-attrName="accX" value="' + (object ? object.accX : "") + '"></input> \
-                <label for="freeObjectAccY">AccY:</label><input id="freeObjectAccY" type="text" data-type="number" data-attrName="accY" value="' + (object ? object.accY : "") + '"></input>';
+        return GameCreator.htmlStrings.inputLabel("freeObjectSpeedX", "SpeedX:") + GameCreator.htmlStrings.numberInput("freeObjectSpeedX", "speedX",(object ? object.speedX : "") ) +
+                GameCreator.htmlStrings.inputLabel("freeObjectSpeedY", "SpeedY:") + GameCreator.htmlStrings.numberInput("freeObjectSpeedY", "speedY", (object ? object.speedY : "") ) +
+                GameCreator.htmlStrings.inputLabel("freeObjectAccX", "AccX:") + GameCreator.htmlStrings.numberInput("freeObjectAccX", "accX", (object ? object.accX : "") ) +
+                GameCreator.htmlStrings.inputLabel("freeObjectAccY", "AccY:") + GameCreator.htmlStrings.numberInput("freeObjectAccY", "accY", (object ? object.accY : "") );
     },
     routeMovementInputs: function(object) {
-        return '<label for="routeObjectSpeed">Speed:</label><input id="routeObjectSpeed" type="text" data-type="number" data-attrName="speed" value="' + (object ? object.speed : "") + '"></input>'
+        return GameCreator.htmlStrings.inputLabel("routeObjectSpeed", "Speed:") + GameCreator.htmlStrings.numberInput("routeObjectSpeed", "speed", (object ? object.speed : "") )
     },
     globalActiveObjectForm: function(object) {
-        var result = '<div><label for="activeObjectWidth">Width:</label><input id="addActiveObjectWidth" type="text" data-type="number" data-attrName="width" value="' + object.width + '"></input> \
-                      <label for="activeObjectHeight">Height:</label><input id="addActiveObjectHeight" type="text" data-type="number" data-attrName="height" value="' + object.height + '"></input></div>';
+        var result = '<div>' + GameCreator.htmlStrings.inputLabel("activeObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("activeObjectWidth", "width", object.width) +
+                      GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("activeObjectHeight", "height", object.height) + '</div>';
         return result;
     },
     globalPlayerObjectForm: function(object) {
-        var result = '<div><label for="playerObjectWidth">Width:</label><input id="addPlayerObjectWidth" type="text" data-type="number" data-attrName="width" value="' + object.width + '"></input> \
-                      <label for="playerObjectHeight">Height:</label><input id="addPlayerObjectHeight" type="text" data-type="number" data-attrName="height" value="' + object.height + '"></input></div>';
+        var result = '<div>' + GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("playerObjectWidth", "width", object.width) +
+                      GameCreator.htmlStrings.inputLabel("playerObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("playerObjectHeight", "height", object.height) + '</div>';
         return result;
     },
     mouseMovementInputs: function(object) {
-        result = "<label for='mouseObjectMinX'>Min X:</label><input id='mouseObjectMinX' type='text' data-type='number' data-attrName='minX' value='" + (object ? object.minX : "") + "'></input>";
-        result += "<label for='mouseObjectMinY'>Min Y:</label><input id='mouseObjectMinY' type='text' data-type='number' data-attrName='minY' value='" + (object ? object.minY : "") + "'></input>";
+        result = GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min X:") + GameCreator.htmlStrings.numberInput("mouseObjectMinX", "minX", (object ? object.minX : ""));
+        result += GameCreator.htmlStrings.inputIdLabel("mouseObjectMinX", "Min Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMinY", "minY", (object ? object.minY : ""));
         
-        result += "<label for='mouseObjectMaxX'>Max X:</label><input id='mouseObjectMaxX' type='text' data-type='number' data-attrName='maxX' value='" + (object ? object.maxX : "") + "'></input>";
-        result += "<label for='mouseObjectMaxY'>Max Y:</label><input id='mouseObjectMaxY' type='text' data-type='number' data-attrName='maxY' value='" + (object ? object.maxY : "") + "'></input>";
+        result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max X:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxX", "maxX", (object ? object.maxX : ""));
+        result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxY", "maxY", (object ? object.maxY : ""));
         return result;
     },
     platformMovementInputs: function(object) {
-        result = "<label for='platformObjectAccY'>Gravity:</label><input id='platformObjectAccY' type='text' data-type='number' data-attrName='accY' value='" + (object ? object.accY : "") + "'></input>";
-        result += "<label for='platformObjectMaxSpeed'>Speed:</label><input id='platformObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + (object ? object.maxSpeed : "") + "'></input>";
-        result += "<label for='platformObjectAcceleration'>Acceleration:</label><input id='platformObjectAcceleration' type='text' data-type='number' data-attrName='acceleration' value='" + (object ? object.acceleration : "") + "'></input>";
+        result = GameCreator.htmlStrings.inputLabel("platformObjectAccY", "Gravity:") + GameCreator.htmlStrings.numberInput("platformObjectAccY", "accY", (object ? object.accY : ""));
+        result += GameCreator.htmlStrings.inputLabel("platformObjectMaxSpeed", "Speed:") + GameCreator.htmlStrings.numberInput("platformObjectMaxSpeed", "maxSpeed", (object ? object.maxSpeed : ""));
+        result += GameCreator.htmlStrings.inputLabel("platformObjectAcceleration", "Acceleration:") + GameCreator.htmlStrings.numberInput("platformObjectAcceleration", "acceleration", (object ? object.acceleration : ""));
         return result;
     },
     topDownMovementInputs: function(object) {
-        return "<label for='topDownObjectMaxSpeed'>Speed:</label><input id='topDownObjectMaxSpeed' type='text' data-type='number' data-attrName='maxSpeed' value='" + (object ? object.maxSpeed : "") + "'></input>";
+        return GameCreator.htmlStrings.inputLabel("topDownObjectMaxSpeed", "Speed:") + GameCreator.htmlStrings.numberInput("topDownObjectMaxSpeed", "maxSpeed", (object ? object.maxSpeed : ""));
     },
     
     addActiveObjectForm: function() {

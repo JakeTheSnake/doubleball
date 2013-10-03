@@ -107,7 +107,6 @@ $.extend(GameCreator, {
                 GameCreator.selectedObject = GameCreator.draggedObject;
                 GameCreator.editSceneObject();
             } else {
-                GameCreator.selectedObject = undefined;
                 GameCreator.unselectSceneObject();
             }
             GameCreator.render();
@@ -269,12 +268,13 @@ $.extend(GameCreator, {
     
     deleteSelectedObject: function() {
         GameCreator.selectedObject.delete();
-        GameCreator.selectedObject = null;
+        GameCreator.unselectSceneObject();
         $("#editSceneObjectContent").html("");
         $("#editSceneObjectTitle").html("");
     },
 
     unselectSceneObject: function() {
+        GameCreator.selectedObject = null;
         $("#editSceneObjectTitle").html("");
         $("#editSceneObjectContent").html("");
     },
