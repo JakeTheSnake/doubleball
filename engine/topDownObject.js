@@ -7,6 +7,7 @@ GameCreator.topDownObject = {
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
         GameCreator.addObjFunctions.keyObjectFunctions(obj);
+        GameCreator.addObjFunctions.clickableObjectFunctions(obj);
         
         obj.image = image;
         obj.name = args.name;

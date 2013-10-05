@@ -68,13 +68,11 @@ $.extend(GameCreator, {
         if(GameCreator.state = 'editing') {
         	GameCreator.stopEditing();
         }
+
+		GameCreator.sceneStarted();
         
         GameCreator.state = 'directing';
         GameCreator.timer = setInterval(this.gameLoop, 1);
-    },
-    
-    editActiveScene: function(){
-        this.editScene(GameCreator.scenes[GameCreator.activeScene]);
     },
     
     stopEditing: function(){
@@ -82,6 +80,10 @@ $.extend(GameCreator, {
     	GameCreator.selectedObject = null;
     	$("#editSceneObjectTitle").html("");
     	$("#editSceneObjectContent").html("");
+    },
+    
+    editActiveScene: function(){
+        this.editScene(GameCreator.scenes[GameCreator.activeScene]);
     },
 
     editScene: function(scene){

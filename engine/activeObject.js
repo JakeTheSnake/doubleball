@@ -6,6 +6,8 @@ GameCreator.activeObject = {
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
+        GameCreator.addObjFunctions.clickableObjectFunctions(obj);
+        
         obj.image = image;
         obj.name = args.name;
         obj.width = args.width;

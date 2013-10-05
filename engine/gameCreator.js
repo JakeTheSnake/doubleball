@@ -51,6 +51,7 @@ var GameCreator = {
         $(document).off("mousemove.gameKeyListener");
         $(document).off("mousedown.gameKeyListener");
         $(document).off("mouseup.gameKeyListener");
+        $(GameCreator.canvas).off("mousedown.runningScene");
         $(GameCreator.canvas).css("cursor", "default");
     },
     
@@ -128,6 +129,8 @@ var GameCreator = {
         if(GameCreator.state = 'editing') {
         	GameCreator.stopEditing();
         }
+        
+        GameCreator.sceneStarted();
         
         GameCreator.state = 'playing';
         GameCreator.timer = setInterval(this.gameLoop, 1);
@@ -222,5 +225,28 @@ var GameCreator = {
         return this.idCounter;
     },
     
+    sceneStarted: function(){
+    	$(GameCreator.canvas).on("mousedown.runningScene", function(e){
+        	var obj = GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
+        	if(obj && obj.parent.isClickable) {
+	        	if(obj.parent.onClickActions.length <= 0)
+	            {
+	                GameCreator.UI.openEditActionsWindow(
+	                    "Clicked on " + obj.parent.name,
+	                     $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
+	                     {actions: obj.parent.onClickActions}, //Wrap in object here as that is the form it is sent in from all other places.
+	                     "actions"
+	                    );
+	            }
+	            else
+	            {
+	                for(var i = 0;i < obj.parent.onClickActions.length;++i)
+	                {
+	                    obj.parent.onClickActions[i].action.call(obj, obj.parent.onClickActions[i].parameters);
+	                }
+	            }
+	        }
+        });
+    },
     
 }
