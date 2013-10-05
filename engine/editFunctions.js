@@ -58,17 +58,30 @@ $.extend(GameCreator, {
             GameCreator.addToRuntime(obj);
             obj.parent.onGameStarted();
         }
+        
         $(".routeNodeContainer").remove();
         $("#directSceneButton").hide();
         $("#editSceneButton").show();
         then = Date.now();
         GameCreator.resumeGame();
+        
+        if(GameCreator.state = 'editing') {
+        	GameCreator.stopEditing();
+        }
+        
         GameCreator.state = 'directing';
         GameCreator.timer = setInterval(this.gameLoop, 1);
     },
     
     editActiveScene: function(){
         this.editScene(GameCreator.scenes[GameCreator.activeScene]);
+    },
+    
+    stopEditing: function(){
+    	$(GameCreator.canvas).off("mousedown.editScene");
+    	GameCreator.selectedObject = null;
+    	$("#editSceneObjectTitle").html("");
+    	$("#editSceneObjectContent").html("");
     },
 
     editScene: function(scene){
@@ -101,7 +114,7 @@ $.extend(GameCreator, {
             }
         });
         
-        $(GameCreator.canvas).on("mousedown", function(e){
+        $(GameCreator.canvas).on("mousedown.editScene", function(e){
             GameCreator.draggedObject = GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(GameCreator.draggedObject) {
                 GameCreator.selectedObject = GameCreator.draggedObject;

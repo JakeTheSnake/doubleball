@@ -124,6 +124,11 @@ var GameCreator = {
 
         then = Date.now();
         GameCreator.resumeGame();
+        
+        if(GameCreator.state = 'editing') {
+        	GameCreator.stopEditing();
+        }
+        
         GameCreator.state = 'playing';
         GameCreator.timer = setInterval(this.gameLoop, 1);
     },

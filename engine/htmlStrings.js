@@ -253,7 +253,7 @@ GameCreator.htmlStrings = {
     },
     mouseMovementInputs: function(object) {
         result = GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min X:") + GameCreator.htmlStrings.numberInput("mouseObjectMinX", "minX", (object ? object.minX : ""));
-        result += GameCreator.htmlStrings.inputIdLabel("mouseObjectMinX", "Min Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMinY", "minY", (object ? object.minY : ""));
+        result += GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMinY", "minY", (object ? object.minY : ""));
         
         result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max X:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxX", "maxX", (object ? object.maxX : ""));
         result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxY", "maxY", (object ? object.maxY : ""));

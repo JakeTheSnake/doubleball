@@ -1,6 +1,7 @@
 TODO:
 
-Redo Mouse movement to rapidly follow the pointer instead of instantly setting position to the pointer position like now.
+Redo Mouse movement to rapidly follow the pointer instead of instantly setting position to the pointer position like now. (Possibly, prio2?)
+
 Add events for clicking on objects. (also only hide the cursor when there is a mouseObject in play)
 
 Studsande platform objects studsar högre och högre.
