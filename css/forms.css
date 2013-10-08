@@ -3,9 +3,7 @@
 }
 
 #editCollisionActionsObjectMenu, #editKeyActionsKeyMenu {
-    width: 70px;
-    background-color: #777;
-    color: #fff;
+    width: 100px;
     float: left;
 }
 
