@@ -75,7 +75,7 @@ var GameCreator = {
                 if(!GameCreator.paused)
                 {
                     obj = GameCreator.movableObjects[i];
-                    obj.parent.calculateSpeed.call(obj, modifier);
+                    obj.parent.calculateSpeed.call(obj, modifier/1000);
                 }
             }
             for (var i=0;i < GameCreator.collidableObjects.length;++i) {
@@ -91,13 +91,14 @@ var GameCreator = {
                 if(!GameCreator.paused)
                 {
                     obj = GameCreator.movableObjects[i];
-                    obj.parent.move.call(obj, modifier);
+                    obj.parent.move.call(obj, modifier/1000);
                 }
             }
             for (var i=0;i < GameCreator.eventableObjects.length;++i) {
                 obj = GameCreator.eventableObjects[i];
                 obj.parent.checkEvents.call(obj);
             }
+            GameCreator.timerHandler.update(modifier);
         }
     },
 
@@ -140,7 +141,7 @@ var GameCreator = {
         var now = Date.now();
         var delta = now - then;
     
-        GameCreator.runFrame(delta / 1000);
+        GameCreator.runFrame(delta);
         GameCreator.render();
     
         then = now;
