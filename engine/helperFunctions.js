@@ -157,6 +157,10 @@ GameCreator.helperFunctions.parseBool = function(string) {
     return string === 'true' ? true : false;
 }
 
+GameCreator.helperFunctions.parseRange = function(string) {
+    return string.split("-", 2);
+}
+
 GameCreator.helperFunctions.calcUnitVector = function(x, y){
     var magnitude = Math.sqrt((x * x) + (y * y));
     if(magnitude === 0) {
@@ -204,10 +208,32 @@ GameCreator.helperFunctions.getValue = function(input) {
     else if(input.attr("data-type") == "bool" && input.val().length != 0) {
         return GameCreator.helperFunctions.parseBool(input.val());
     }
+    else if(input.attr("data-type") == "range" && input.val().length != 0) {
+        return GameCreator.helperFunctions.parseRange(input.val());
+    }
     else {
         return input.val();
     }
-}
+};
+
+GameCreator.helperFunctions.getRandomFromRange = function(range) {
+    var value;
+    if (Array.isArray(range)) {
+        if (range.length === 2) {
+            var max = parseInt(range[1]);
+            var min = parseInt(range[0]);
+            value = Math.floor((Math.random()*(max-min)) + min);
+        }
+        else {
+            value = parseInt(range[0]);
+        }
+    }
+    else {
+        console.log("Warning: Tried to interpret non-range as range: " + range);
+        value = parseInt(range);
+    }
+    return value;
+};
 
 GameCreator.helperFunctions.logOnce = function(obj) {
     if(!GameCreator.loggedOnce) {

@@ -4,7 +4,9 @@ GameCreator.sceneObject = {
     accX: 0,
     accY: 0,
     speedX: 0,
-    speedY: 0,    
+    speedY: 0,
+    displayWidth: 0,
+    displayHeight: 0,    
     image: undefined,
     
     clickOffsetX: 0,
@@ -26,6 +28,10 @@ GameCreator.sceneObject = {
     removeNode: function(index) {
         this.route.splice(index, 1);
         GameCreator.drawRoute(this.route);
+    },
+    update: function() {
+        this.displayWidth = parseInt(this.width[this.width.length - 1]);
+        this.displayHeight = parseInt(this.height[this.height.length - 1]);
     },
     instantiate: function(globalObj, args){
         this.x = args.x != undefined ? args.x : 0
@@ -75,6 +81,7 @@ GameCreator.sceneObject = {
         //If heading backwards or forwards through the grid. (Should switch when reaching a bounce node.)
         this.routeForward = args.routeForward != undefined ? args.routeForward : true;
         this.speed = args.speed != undefined ? args.speed : globalObj.speed;
+        this.update();
     },
     delete: function() {
         var activeScene = GameCreator.scenes[GameCreator.activeScene];

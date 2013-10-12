@@ -66,6 +66,8 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     mouseObject.minY = args.minY || 0;
     
     mouseObject.calculateSpeed = function(){};
+
+    mouseObject.initialize = function(){};
     
     mouseObject.move = function()
     {   
@@ -123,7 +125,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     
     mouseObject.shoot = function() {
         console.log("Mouse shoot!");
-    }
+    };
     
     mouseObject.onDestroy = function()
     {

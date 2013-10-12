@@ -105,6 +105,7 @@ var GameCreator = {
     findClickedObject: function(x, y) {
         for (var i=0;i < GameCreator.renderableObjects.length;++i) {
             var obj = GameCreator.renderableObjects[i];
+            // If in edit mode, this should look for displayWidth instead.
             if(x >= obj.x && x <= obj.x + obj.width && y >= obj.y && y <= obj.y + obj.height)
             {
                 obj.clickOffsetX = x - obj.x;
@@ -194,16 +195,48 @@ var GameCreator = {
         for (var i=0;i < GameCreator.renderableObjects.length;++i) {
             var obj = GameCreator.renderableObjects[i];
             if (obj.parent.imageReady) {
-                this.context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
+                if (Array.isArray(obj.width) || Array.isArray(obj.height)) {
+                    var maxHeight;
+                    var minHeight;
+                    var maxWidth;
+                    var minWidth;
+                    if (obj.width.length === 2) {
+                        maxWidth = obj.width[1];
+                        minWidth = obj.width[0];
+                    } else if (obj.width.length === 1) {
+                        maxWidth = obj.width[0];
+                        minWidth = obj.width[0];
+                    } else {
+                        maxWidth = obj.width;
+                        minWidth = obj.width;
+                    }
+                    if (obj.height.length === 2) {
+                        maxHeight = obj.height[1];
+                        minHeight = obj.height[0];
+                    } else if (obj.height.length === 1) {
+                        maxHeight = obj.height[0];
+                        minHeight = obj.height[0];
+                    } else {
+                        maxHeight = obj.height;
+                        minHeight = obj.height;
+                    }
+                    this.context.globalAlpha = 0.5;
+                    this.context.drawImage(obj.parent.image, obj.x, obj.y, parseInt(maxWidth), parseInt(maxHeight));
+                    this.context.globalAlpha = 1.0;
+                    this.context.drawImage(obj.parent.image, obj.x, obj.y, parseInt(minWidth), parseInt(minHeight));
+                }
+                else {
+                    this.context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
+                }
             }
         }
         if(this.selectedObject) {
             var selobj = this.selectedObject;
             this.context.beginPath();
             this.context.moveTo(selobj.x, selobj.y);
-            this.context.lineTo(selobj.x + selobj.width, selobj.y);
-            this.context.lineTo(selobj.x + selobj.width, selobj.y + selobj.height);
-            this.context.lineTo(selobj.x, selobj.y + selobj.height);
+            this.context.lineTo(selobj.x + selobj.displayWidth, selobj.y);
+            this.context.lineTo(selobj.x + selobj.displayWidth, selobj.y + selobj.displayHeight);
+            this.context.lineTo(selobj.x, selobj.y + selobj.displayHeight);
             this.context.closePath();
             this.context.stroke();
         }
@@ -219,6 +252,7 @@ var GameCreator = {
             GameCreator.renderableObjects.push(obj);
         if(obj.parent.isEventable)
             GameCreator.eventableObjects.push(obj);
+        obj.parent.initialize.call(obj);
     },
     
     getUniqueId: function() {

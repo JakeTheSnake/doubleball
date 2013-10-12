@@ -277,6 +277,7 @@ $.extend(GameCreator, {
             input = $(inputs[i]);
             obj[input.attr("data-attrName")] = GameCreator.helperFunctions.getValue(input);
         }
+        obj.update();
         //Should only render if saving a sceneobject?
         GameCreator.render();
     },
@@ -284,6 +285,7 @@ $.extend(GameCreator, {
     deleteSelectedObject: function() {
         GameCreator.selectedObject.delete();
         GameCreator.unselectSceneObject();
+        GameCreator.render();
         $("#editSceneObjectContent").html("");
         $("#editSceneObjectTitle").html("");
     },

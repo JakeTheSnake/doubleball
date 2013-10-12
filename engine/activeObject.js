@@ -67,13 +67,22 @@ GameCreator.activeObject = {
 
 GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 {    
+    activeObject.initialize = function() {
+        this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
+        this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
+        this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
+        this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
+        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
+        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+    }
     activeObject.calculateSpeed = function(modifier){
+        
         this.speedY += this.accY;
         this.speedX += this.accX;
     }
     
     activeObject.shoot = function(staticParameters){
-        var projectileSpeed = 600;
+        var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
         var unitVector = GameCreator.helperFunctions.calcUnitVector(this.speedX, this.speedY);
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x, y: this.y, speedX: unitVector.x * projectileSpeed, speedY: unitVector.y * projectileSpeed});
     }

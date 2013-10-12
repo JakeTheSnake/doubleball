@@ -64,15 +64,15 @@ GameCreator.platformObject = {
 
 GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, args)
 {
-    platformObject.accX = 0;
-    platformObject.accY = (!args.accY && args.accY != 0) ? 5 : args.accY;
-    platformObject.acceleration = (!args.acceleration && args.acceleration != 0) ? 8 : args.acceleration;
-    platformObject.maxSpeed = (!args.maxSpeed && args.maxSpeed != 0) ? 300 : args.maxSpeed;
+    platformObject.accX = [0];
+    platformObject.accY = (!args.accY && args.accY != 0) ? [5] : args.accY;
+    platformObject.acceleration = (!args.acceleration && args.acceleration != 0) ? [8] : args.acceleration;
+    platformObject.maxSpeed = (!args.maxSpeed && args.maxSpeed != 0) ? [300] : args.maxSpeed;
     platformObject.keyLeftPressed = false;
     platformObject.keyRightPressed = false;
     platformObject.keyUpPressed = false;
-    platformObject.speedX = 0;
-    platformObject.speedY = 0;
+    platformObject.speedX = [0];
+    platformObject.speedY = [0];
     //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
     platformObject.facingLeft = true;
     
@@ -155,9 +155,21 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
             e.preventDefault();
         });
     };
+
+    platformObject.initialize = function() {
+        this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
+        this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
+        this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
+        this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
+        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
+        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+        this.acceleration = GameCreator.helperFunctions.getRandomFromRange(this.acceleration);
+        this.maxSpeed = GameCreator.helperFunctions.getRandomFromRange(this.maxSpeed);
+    }
     
     platformObject.shoot = function(staticParameters){
-        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x + (this.facingLeft ? 0 : this.width), y: this.y, speedX: this.facingLeft ? -500 : 500});
+        var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
+        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x + (this.facingLeft ? 0 : this.width), y: this.y, speedX: this.facingLeft ? -projectileSpeed : projectileSpeed});
     };
     
     platformObject.onDestroy = function(){
