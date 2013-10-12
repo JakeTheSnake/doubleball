@@ -1,5 +1,7 @@
 TODO:
 
+CollisionActions are not run on mouse objects when colliding from the right.
+
 Add clickable action editing functions to UI for editing global objects.
 
 Redo Mouse movement to rapidly follow the pointer instead of instantly setting position to the pointer position like now. (Possibly, prio2?)

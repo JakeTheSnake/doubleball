@@ -78,6 +78,19 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     topDownObject.facing = 1;
     //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
     
+    topDownObject.update = function() {
+
+    };
+
+    topDownObject.initialize = function() {
+        this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
+        this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
+        this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
+        this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
+        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
+        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+    };
+
     topDownObject.calculateSpeed = function()
     {    
         var maxSpeed = this.maxSpeed;

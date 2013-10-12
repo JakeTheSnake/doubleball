@@ -12,6 +12,9 @@ GameCreator.htmlStrings = {
     numberInput: function(inputId, attrName, value) {
         return '<input id="'+ inputId +'" type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + value + '"/>'
     },
+    stringInput: function(inputId, attrName, value) {
+        return '<input id="'+ inputId +'" type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + value + '"/>'
+    },
     rangeInput: function(inputId, attrName, value) {
         var valueString;
         if (Array.isArray(value)) {
@@ -287,7 +290,7 @@ GameCreator.htmlStrings = {
         return result;
     },
     mouseMovementInputs: function(object) {
-        result = GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min X:") + GameCreator.htmlStrings.numberInput("mouseObjectMinX", "minX", (object ? object.minX : ""));
+        var result = GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min X:") + GameCreator.htmlStrings.numberInput("mouseObjectMinX", "minX", (object ? object.minX : ""));
         result += GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMinY", "minY", (object ? object.minY : ""));
         result += '<br style="clear:both;"/>';
         
@@ -297,7 +300,7 @@ GameCreator.htmlStrings = {
         return result;
     },
     platformMovementInputs: function(object) {
-        result = GameCreator.htmlStrings.inputLabel("platformObjectAccY", "Gravity:") +
+        var result = GameCreator.htmlStrings.inputLabel("platformObjectAccY", "Gravity:") +
             GameCreator.htmlStrings.rangeInput("platformObjectAccY", "accY", (object ? object.accY : "")) +
             '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.inputLabel("platformObjectMaxSpeed", "Speed:") +
@@ -315,14 +318,20 @@ GameCreator.htmlStrings = {
     },
     
     addActiveObjectForm: function() {
-        return '<div><label for="activeObjectName">Name:</label><input id="activeObjectName" type="text"></input></div> \
-                <div><label for="activeObjectWidth">Width:</label><input id="activeObjectWidth" type="text"></input> \
-                <label for="activeObjectHeight">Height:</label><input id="activeObjectHeight" type="text"></input></div> \
-                <div><label for="activeObjectSrc" type="text">Image Src:</label><input id="activeObjectSrc" type="text"></label></div> \
-                <div><label for="activeObjectMovementType">Movement type:</label> \
-                <select id="activeObjectMovementType"><option value="free">Free</option><option value="route">Route</option></select></div> \
-                <div id="addActiveObjectMovementParameters"></div> \
-                <button class="saveButton regularButton">Save</button>'
+        var result = GameCreator.htmlStrings.inputLabel("activeObjectName", "Name:") + 
+            GameCreator.htmlStrings.stringInput("activeObjectName", "name", "") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("activeObjectWidth", "Width:") +
+            GameCreator.htmlStrings.rangeInput("activeObjectWidth", "width", "") +
+            '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") +
+            GameCreator.htmlStrings.rangeInput("activeObjectHeight", "height", "") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("activeObjectSrc", "Image Src:") + 
+            GameCreator.htmlStrings.stringInput("activeObjectSrc", "image", "http://") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("activeObjectMovementType", "Movement:") +
+            GameCreator.htmlStrings.singleSelector("activeObjectMovementType", {"Free": "free", "Route": "route"}) +
+            '<br style="clear:both;"/><div id="addActiveObjectMovementParameters"></div> \
+            <button class="saveButton regularButton">Save</button>';
+        return result;
     },
     
     addPlayerObjectForm: function() {
@@ -337,7 +346,7 @@ GameCreator.htmlStrings = {
 	},
     
     collisionObjectSelector: function(object) {
-    	result = '';
+    	var result = '';
     	var selectableObjects = {};
     	$.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
     	for (objName in selectableObjects) {
