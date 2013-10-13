@@ -187,6 +187,9 @@ GameCreator.htmlStrings = {
         if (["topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
             result += "<div class='tab' data-uifunction='setupEditGlobalObjectKeyActionsForm'><span>Key Actions</span></div>";
         }
+        if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
+            result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnClickActionsForm'><span>OnClick<span></div>";
+        }
         if (object.objectType == "timerObject") {
             result += "<div class='tab' data-uifunction='setupEditGlobalObjectTimerActionsForm'><span>Timer Actions</span></div>";
         }
@@ -247,6 +250,7 @@ GameCreator.htmlStrings = {
         result += '</div><div id="editKeyActionsKeyContent"></div>';
         return result;
     },
+    
     editGlobalObjectTimerActionsContent: function(object) {
         return "Timer Actions";
     },
