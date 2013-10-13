@@ -73,13 +73,22 @@ GameCreator.UI = {
         });
     },
     
-    openEditActionsArea: function(text, actions, existingActions, targetName, container) {  
-        if (!existingActions[targetName]) {
-            existingActions[targetName] = [];
-        }
+    openEditActionsArea: function(text, actions, existingActions, container, targetName) {
+    	
+    	var existingActionsTmp;
+    	
+    	if(targetName) {
+	        if (!existingActions[targetName]) {
+	            existingActions[targetName] = [];
+	        }
+	        existingActionsTmp = existingActions[targetName];
+	    }
+	    else {
+	    	existingActionsTmp = existingActions;
+	    }
         
-        container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions[targetName]));
-        GameCreator.UI.setupEditActionsContent(text, actions, existingActions[targetName]);
+        container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
+        GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp);
     },
     
     openEditActionsWindow: function(text, actions, existingActions, targetName) {  
@@ -87,13 +96,21 @@ GameCreator.UI = {
         if(!GameCreator.paused){
             GameCreator.pauseGame();
             
-            //Check if there exist any actions for collisions with the current targetObject.
-            if (!existingActions[targetName]) {
-                existingActions[targetName] = [];
-            }
+            var existingActionsTmp;
             
-            GameCreator.UI.openDialogue(500, 300, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions[targetName]));
-            GameCreator.UI.setupEditActionsContent(text, actions, existingActions[targetName]);
+            if(targetName) {
+            	//Check if there exist any actions for collisions with the current targetObject.
+	            if (!existingActions[targetName]) {
+	                existingActions[targetName] = [];
+	            }
+	            existingActionsTmp = existingActions[targetName];
+        	}
+        	else {
+        		existingActionsTmp = existingActions;
+        	}
+            
+            GameCreator.UI.openDialogue(500, 300, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
+            GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp);
         
             $("#editActionsWindowCancel").on("click", function() {
                 GameCreator.UI.closeDialogue();
@@ -227,8 +244,8 @@ GameCreator.UI = {
                 "Actions for collision with " + targetName, 
                 $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
                 object.collisionActions,
-                targetName,
-                $("#editCollisionActionsObjectContent")
+                $("#editCollisionActionsObjectContent"),
+                targetName
             );
         });
         $("#addNewCollisionButton").on("click", function(){
@@ -248,8 +265,8 @@ GameCreator.UI = {
                 "Actions on " + keyName,
                 GameCreator.actions.commonSelectableActions,
                 object.keyActions,
-                keyName,
-                $("#editKeyActionsKeyContent")
+                $("#editKeyActionsKeyContent"),
+                keyName
             );
         });
         $("#addNewKeyButton").on("click", function(){
@@ -259,6 +276,13 @@ GameCreator.UI = {
                 GameCreator.UI.setupEditGlobalObjectKeyActionsForm(container, object);
             });
         });
+    },
+    
+    setupEditGlobalObjectOnClickActionsForm: function(container, object) {
+    	var text = "Actions on click";
+    	var actions = $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions);
+    	var existingActions = object.onClickActions;
+    	GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
     },
     
     setupEditGlobalObjectTimerActionsForm: function(container, object) {

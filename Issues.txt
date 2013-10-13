@@ -1,5 +1,7 @@
 TODO:
 
+Add a way to tell if onClickActions have been set for an object (in directing) or not.
+
 CollisionActions are not run on mouse objects when colliding from the right.
 
 Add clickable action editing functions to UI for editing global objects.

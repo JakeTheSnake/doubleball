@@ -269,8 +269,7 @@ var GameCreator = {
 	                GameCreator.UI.openEditActionsWindow(
 	                    "Clicked on " + obj.parent.name,
 	                     $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
-	                     {actions: obj.parent.onClickActions}, //Wrap in object here as that is the form it is sent in from all other places.
-	                     "actions"
+	                     obj.parent.onClickActions
 	                    );
 	            }
 	            else
