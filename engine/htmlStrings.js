@@ -99,7 +99,7 @@ GameCreator.htmlStrings = {
             result += "<a href='' onclick='GameCreator.drawRoute(GameCreator.selectedObject.route);return false;'>Edit route</a>" + '<br style="clear:both;"/>';
         }
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveObjectChanges(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button>';
+        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
 
@@ -110,7 +110,7 @@ GameCreator.htmlStrings = {
         
         result += GameCreator.htmlStrings.mouseMovementInputs(object);
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveObjectChanges(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editPlatformObjectForm: function(object) {
@@ -120,7 +120,7 @@ GameCreator.htmlStrings = {
         
         result += GameCreator.htmlStrings.platformMovementInputs(object);
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveObjectChanges(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editTopDownObjectForm: function(object) {
@@ -130,7 +130,7 @@ GameCreator.htmlStrings = {
         
         result += GameCreator.htmlStrings.topDownMovementInputs(object);
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveObjectChanges(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     routeNode: function(node, index) {
@@ -326,10 +326,10 @@ GameCreator.htmlStrings = {
             GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") +
             GameCreator.htmlStrings.rangeInput("activeObjectHeight", "height", "") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("activeObjectSrc", "Image Src:") + 
-            GameCreator.htmlStrings.stringInput("activeObjectSrc", "image", "http://") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.stringInput("activeObjectSrc", "src", "http://") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("activeObjectMovementType", "Movement:") +
             GameCreator.htmlStrings.singleSelector("activeObjectMovementType", {"Free": "free", "Route": "route"}) +
-            '<br style="clear:both;"/><div id="addActiveObjectMovementParameters"></div> \
+            '<br style="clear:both;"/> \
             <button class="saveButton regularButton">Save</button>';
         return result;
     },

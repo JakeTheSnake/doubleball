@@ -270,16 +270,13 @@ $.extend(GameCreator, {
     },
     
     //Since all inputs are tagged with "data-attrName" and "data-type" we have this general function for saving all object types.
-    saveObjectChanges: function(formId, obj) {
+    saveFormInputToObject: function(formId, obj) {
         var inputs = $("#" + formId + " input, #" + formId + " select");
         var input;
         for(var i = 0; i < inputs.length; i++) {
             input = $(inputs[i]);
             obj[input.attr("data-attrName")] = GameCreator.helperFunctions.getValue(input);
         }
-        obj.update();
-        //Should only render if saving a sceneobject?
-        GameCreator.render();
     },
     
     deleteSelectedObject: function() {
@@ -288,6 +285,12 @@ $.extend(GameCreator, {
         GameCreator.render();
         $("#editSceneObjectContent").html("");
         $("#editSceneObjectTitle").html("");
+    },
+
+    saveSceneObject: function(formId, obj) {
+        GameCreator.saveFormInputToObject(formId, obj);
+        obj.update();
+        GameCreator.render();
     },
 
     unselectSceneObject: function() {

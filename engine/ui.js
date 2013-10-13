@@ -1,6 +1,9 @@
 GameCreator.UI = {
     addActiveObject: function(){
-        var obj = GameCreator.addActiveObject({
+        var args = {};
+        GameCreator.saveFormInputToObject("addGlobalObjectWindowContent", args);
+        var obj = GameCreator.addActiveObject(args);
+        args = {
             name: $("#activeObjectName").val(),
             width: parseInt($("#activeObjectWidth").val()),
             height: parseInt($("#activeObjectHeight").val()),
@@ -11,7 +14,7 @@ GameCreator.UI = {
             speedY: parseFloat($("#freeObjectSpeedY").val()),
             accX: parseFloat($("#freeObjectAccX").val()),
             accY: parseFloat($("#freeObjectAccY").val())
-        });
+        };
     },
     
     addPlayerObject: function(){
@@ -211,7 +214,7 @@ GameCreator.UI = {
     setupEditGlobalObjectPropertiesForm: function(container, object) {
         container.html(GameCreator.htmlStrings.editGlobalObjectPropertiesContent(object));
         container.find("#saveGlobalObjectPropertiesButton").on("click", function() {
-            GameCreator.saveObjectChanges("editGlobalObjectPropertiesContent", object);
+            GameCreator.saveFormInputToObject("editGlobalObjectPropertiesContent", object);
             GameCreator.UI.closeDialogue();
         });
     },
