@@ -28,7 +28,6 @@ var GameCreator = {
     helperFunctions: {},
     //The currently selected scene object.
     selectedObject: undefined,
-    selectedGlobalObject: undefined,
     draggedObject: undefined,
     draggedNode: undefined,
     idCounter: 0,

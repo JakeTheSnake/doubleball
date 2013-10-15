@@ -117,7 +117,7 @@ $.extend(GameCreator, {
         });
         
         $(GameCreator.canvas).on("mousedown.editScene", function(e){
-            GameCreator.draggedObject = GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
+            GameCreator.draggedObject = GameCreator.findClickedObjectEditing(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(GameCreator.draggedObject) {
                 GameCreator.selectedObject = GameCreator.draggedObject;
                 GameCreator.editSceneObject();
@@ -310,5 +310,18 @@ $.extend(GameCreator, {
             GameCreator.draggedNode = this;
             return false;
         });
-    }
+    },
+    
+    findClickedObjectEditing: function(x, y) {
+        for (var i=0;i < GameCreator.renderableObjects.length;++i) {
+            var obj = GameCreator.renderableObjects[i];
+            if(x >= obj.x && x <= obj.x + obj.displayWidth && y >= obj.y && y <= obj.y + obj.displayHeight)
+            {
+                obj.clickOffsetX = x - obj.x;
+                obj.clickOffsetY = y - obj.y;
+                return obj;
+            }
+        }
+        return null;
+    },
 });
