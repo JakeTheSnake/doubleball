@@ -111,6 +111,6 @@ GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
 
 GameCreator.addObjFunctions.clickableObjectFunctions = function(object)
 {
-	object.onClickActions = [];
+	object.onClickActions = undefined;
 	object.isClickable = true;
 }

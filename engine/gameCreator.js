@@ -264,8 +264,9 @@ var GameCreator = {
     	$(GameCreator.canvas).on("mousedown.runningScene", function(e){
         	var obj = GameCreator.findClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
         	if(obj && obj.parent.isClickable) {
-	        	if(obj.parent.onClickActions.length <= 0)
+	        	if(obj.parent.onClickActions == undefined)
 	            {
+                    obj.parent.onClickActions = [];
 	                GameCreator.UI.openEditActionsWindow(
 	                    "Clicked on " + obj.parent.name,
 	                     $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),

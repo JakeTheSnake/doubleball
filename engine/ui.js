@@ -281,6 +281,12 @@ GameCreator.UI = {
     setupEditGlobalObjectOnClickActionsForm: function(container, object) {
     	var text = "Actions on click";
     	var actions = $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions);
+        
+        //If onClickActions has not yet been edited from anywhere, instantiate to empty array.
+        if(object.onClickActions == undefined) {
+            object.onClickActions = [];
+        }
+        
     	var existingActions = object.onClickActions;
     	GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
     },
