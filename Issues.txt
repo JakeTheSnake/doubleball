@@ -1,5 +1,9 @@
 TODO:
 
+Fix shoot for mouseobject. Needs a direction parameter with 4 options.
+
+There needs to be a "preserve dimensions" option when setting ranges on the size of an item. (prio2?)
+
 Redo Mouse movement to rapidly follow the pointer instead of instantly setting position to the pointer position like now. (Possibly, prio2?)
 
 Studsande platform objects studsar högre och högre.
