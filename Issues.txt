@@ -1,7 +1,5 @@
 TODO:
 
-CollisionActions are not run on mouse objects when colliding from the right.
-
 Redo Mouse movement to rapidly follow the pointer instead of instantly setting position to the pointer position like now. (Possibly, prio2?)
 
 Studsande platform objects studsar högre och högre.

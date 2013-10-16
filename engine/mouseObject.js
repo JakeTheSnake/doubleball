@@ -67,7 +67,10 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     
     mouseObject.calculateSpeed = function(){};
 
-    mouseObject.initialize = function(){};
+    mouseObject.initialize = function(){
+        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
+        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+    };
     
     mouseObject.move = function()
     {   
