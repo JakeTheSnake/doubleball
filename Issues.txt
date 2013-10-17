@@ -1,6 +1,6 @@
 TODO:
 
-Fix shoot for mouseobject. Needs a direction parameter with 4 options.
+Finish shoot. Refactor to remove duplicates of the direction switch case.
 
 There needs to be a "preserve dimensions" option when setting ranges on the size of an item. (prio2?)
 

@@ -75,8 +75,8 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
         this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
         this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
     }
-    activeObject.calculateSpeed = function(modifier){
-        
+    
+    activeObject.calculateSpeed = function(modifier){    
         this.speedY += this.accY;
         this.speedX += this.accX;
     }
@@ -84,7 +84,38 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
     activeObject.shoot = function(staticParameters){
         var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
         var unitVector = GameCreator.helperFunctions.calcUnitVector(this.speedX, this.speedY);
-        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: this.x, y: this.y, speedX: unitVector.x * projectileSpeed, speedY: unitVector.y * projectileSpeed});
+        var x = 0, y = 0, speedX = 0, speedY = 0;
+        switch(staticParameters.projectileDirection){
+            case "Default":
+                speedX = unitVector.x * projectileSpeed;
+                speedY = unitVector.y * projectileSpeed;
+                x = this.x;
+                y = this.y;
+                break;
+            case "Up":
+                x = this.x + this.width / 2;
+                y = this.y;
+                speedY = -projectileSpeed;
+                break;
+            case "Down":
+                x = this.x + this.width / 2;
+                y = this.y + this.height;
+                speedY = projectileSpeed;
+                break;
+            case "Left":
+                x = this.x;
+                y = this.y + this.height / 2;
+                speedX = -projectileSpeed;
+                break;
+            case "Right":
+                x = this.x + this.width;
+                y = this.y + this.height / 2;
+                speedX = projectileSpeed;
+                break;            
+            default:
+                break;
+        }
+        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x, y, speedX, speedY});
     }
     
     activeObject.move = function(modifier){

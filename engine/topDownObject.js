@@ -209,61 +209,90 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     }
     
     topDownObject.shoot = function(staticParameters){
-        var facing = this.facing;
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
         var angularSpeed = GameCreator.helperFunctions.calcAngularSpeed(projectileSpeed);
-        switch(facing){
-            case 1:
+        switch(staticParameters.projectileDirection){
+            case "Default":
+            var facing = this.facing;
+            switch(facing){
+                case 1:
+                x = this.x + this.width / 2;
+                y = this.y;
+                speedY = -projectileSpeed;
+                break;
+                
+                case 2:
+                x = this.x + this.width;
+                y = this.y;
+                speedX = angularSpeed;
+                speedY = -angularSpeed;
+                break;
+                
+                case 3:
+                x = this.x + this.width;
+                y = this.y + this.height / 2;
+                speedX = projectileSpeed;
+                break;
+                
+                case 4:
+                x = this.x + this.width;
+                y = this.y + this.height;
+                speedX = angularSpeed;
+                speedY = angularSpeed;
+                break;
+                
+                case 5:
+                x = this.x + this.width / 2;
+                y = this.y + this.height;
+                speedY = projectileSpeed;
+                break;
+                
+                case 6:
+                x = this.x;
+                y = this.y + this.height;
+                speedX = -angularSpeed;
+                speedY = angularSpeed;
+                break;
+                
+                case 7:
+                x = this.x;
+                y = this.y + this.height / 2;
+                speedX = -projectileSpeed;
+                break;
+                
+                case 8:
+                x = this.x;
+                y = this.y;
+                speedX = -angularSpeed;
+                speedY = -angularSpeed;
+                break;
+            }
+            break;
+            
+            case "Up":
             x = this.x + this.width / 2;
             y = this.y;
             speedY = -projectileSpeed;
             break;
             
-            case 2:
-            x = this.x + this.width;
-            y = this.y;
-            speedX = angularSpeed;
-            speedY = -angularSpeed;
-            break;
-            
-            case 3:
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
-            speedX = projectileSpeed;
-            break;
-            
-            case 4:
-            x = this.x + this.width;
-            y = this.y + this.height;
-            speedX = angularSpeed;
-            speedY = angularSpeed;
-            break;
-            
-            case 5:
+            case "Down":
             x = this.x + this.width / 2;
             y = this.y + this.height;
             speedY = projectileSpeed;
             break;
             
-            case 6:
-            x = this.x;
-            y = this.y + this.height;
-            speedX = -angularSpeed;
-            speedY = angularSpeed;
-            break;
-            
-            case 7:
+            case "Left":
             x = this.x;
             y = this.y + this.height / 2;
             speedX = -projectileSpeed;
+
             break;
             
-            case 8:
-            x = this.x;
-            y = this.y;
-            speedX = -angularSpeed;
-            speedY = -angularSpeed;
+            case "Right":
+            x = this.x + this.width;
+            y = this.y + this.height / 2;
+            speedX = projectileSpeed;
             break;
         }
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});

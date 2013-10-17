@@ -1,4 +1,13 @@
 $.extend(GameCreator, {
+
+    directions: {
+        Default: "Default",
+        Up: "Up",
+        Down: "Down",
+        Left: "Left",
+        Right: "Right"
+    },
+    
     addActiveObject: function(args){
         var image = new Image();
         image.src = args.src;

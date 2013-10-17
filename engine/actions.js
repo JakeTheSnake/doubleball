@@ -31,6 +31,11 @@ GameCreator.actions = {
                                                          {   inputId: "projectileSpeed",
                                                              input: function() {return GameCreator.htmlStrings.rangeInput("projectileSpeed", "", "500")},
                                                              label: function() {return GameCreator.htmlStrings.inputLabel("projectileSpeed", "Projectile Speed")}
+                                                         },
+                                                         {
+                                                            inputId: "projectileDirection",
+                                                            input: function() {return GameCreator.htmlStrings.singleSelector("projectileDirection", GameCreator.directions)},
+                                                            label: function() {return GameCreator.htmlStrings.inputLabel("projectileDirection", "Direction")}
                                                          }],
                                                name: "Shoot",
                                                excludes: []
