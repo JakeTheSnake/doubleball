@@ -115,7 +115,7 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
             default:
                 break;
         }
-        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x, y, speedX, speedY});
+        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: x, speedX: speedX, speedY: speedY});
     }
     
     activeObject.move = function(modifier){

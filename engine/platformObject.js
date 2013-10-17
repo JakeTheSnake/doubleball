@@ -172,40 +172,39 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
         var x = 0, y = 0, speedX = 0, speedY = 0;
         switch(staticParameters.projectileDirection){
             case "Default":
-            x = this.x + (this.facingLeft ? 0 : this.width);
-            y = this.y;
-            speedX = this.facingLeft ? -projectileSpeed : projectileSpeed;
-            break;
+	            x = this.x + (this.facingLeft ? 0 : this.width);
+	            y = this.y;
+	            speedX = this.facingLeft ? -projectileSpeed : projectileSpeed;
+	            break;
             
             case "Up":
-            x = this.x + this.width / 2;
-            y = this.y;
-            speedY = -projectileSpeed;
-            break;
+	            x = this.x + this.width / 2;
+	            y = this.y;
+	            speedY = -projectileSpeed;
+	            break;
             
             case "Down":
-            x = this.x + this.width / 2;
-            y = this.y + this.height;
-            speedY = projectileSpeed;
-            break;
+	            x = this.x + this.width / 2;
+	            y = this.y + this.height;
+	            speedY = projectileSpeed;
+	            break;
             
             case "Left":
-            x = this.x;
-            y = this.y + this.height / 2;
-            speedX = -projectileSpeed;
-
-            break;
+	            x = this.x;
+	            y = this.y + this.height / 2;
+	            speedX = -projectileSpeed;
+	            break;
             
             case "Right":
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
-            speedX = projectileSpeed;
-            break;
+	            x = this.x + this.width;
+	            y = this.y + this.height / 2;
+	            speedX = projectileSpeed;
+	            break;
             
             default:
-            break;
+           		break;
         }
-        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x, y, speedX, speedY});
+        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
     };
     
     platformObject.onDestroy = function(){
