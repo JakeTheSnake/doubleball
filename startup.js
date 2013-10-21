@@ -12,9 +12,9 @@ window.onload = function () {
         
         //Create ActiveObjects
         
-        var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:[20], height:[20], speed: 300, movementType: "route"})
-        var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:[20], height:[20]})
-        
+        var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:[20], height:[20], speed: 300, movementType: "route"});
+        var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:[20], height:[20]});
+        GameCreator.addActiveObject({src: "images/bar1.png", name:"bar", width:[388], height:[55]});
         //var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, speed: 200});
         //GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
         //GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});

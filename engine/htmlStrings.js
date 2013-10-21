@@ -35,8 +35,19 @@ GameCreator.htmlStrings = {
     parameterGroup: function(parameterInput) {
         return '<div class="actionParameter">' + parameterInput + '</div>'
     },
-    timingGroup: function() {
-        var result = GameCreator.htmlStrings.singleSelector("timing", {"Now":"now", "Every":"every","After":"after","At":"at"});
+    timingGroup: function(timings) {
+        var applicableTimings = {"Now":"now"};
+        if (timings.after) {
+            applicableTimings["After"] = "after";
+        }
+        if (timings.every) {
+            applicableTimings["Every"] = "every";
+        }
+        if (timings.at) {
+            applicableTimings["At"] = "at";
+        }
+
+        var result = GameCreator.htmlStrings.singleSelector("timing", applicableTimings);
         result += '<div id="timingParameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timingTime", "time","3000") + 'ms</div>';
         return result;
     },

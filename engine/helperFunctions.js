@@ -70,8 +70,28 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     if(currentActions != undefined)
     {
         for (var j = 0; j < currentActions.length; j++) {
+            if (currentActions[j].timing.type === "after") {
+                (function(obj, curAction){
+                    GameCreator.timerHandler.registerOffset(
+                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                        function(){curAction.action.call(obj, curAction.parameters)});
+                })(object, currentActions[j]);
+            } else if (currentActions[j].timing.type === "at") {
+                (function(obj, curAction){
+                    GameCreator.timerHandler.registerFixed(
+                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                        function(){curAction.action.call(obj, curAction.parameters)});
+                })(object, currentActions[j]);
+            } else if (currentActions[j].timing.type === "every") {
+                (function(obj, curAction){
+                    GameCreator.timerHandler.registerInterval(
+                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                        function(){curAction.action.call(obj, curAction.parameters)});
+                })(object, currentActions[j]);
+            } else {
+                currentActions[j].action.call(object, $.extend({collisionObject:targetObject}, currentActions[j].parameters));
+            }
             
-            currentActions[j].action.call(object, $.extend({collisionObject:targetObject}, currentActions[j].parameters));
         }
     }
     else

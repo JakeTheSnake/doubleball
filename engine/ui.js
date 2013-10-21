@@ -141,7 +141,8 @@ GameCreator.UI = {
             for(var i = 0;i < actions[$(this).val()].params.length;++i) {
                 $("#selectActionParametersContent").append(GameCreator.htmlStrings.parameterGroup(actions[$(this).val()].params[i].label() + actions[$(this).val()].params[i].input()));
             }
-            $("#selectActionTimingContent").append(GameCreator.htmlStrings.timingGroup());
+            var timing = actions[$("#actionSelector").val()].timing;
+            $("#selectActionTimingContent").append(GameCreator.htmlStrings.timingGroup(timing));
             $("#timing").on("change", function(){
                 if ($("#timing").val() === "now") {
                     $("#timingParameter").css("display", "none");
@@ -160,7 +161,7 @@ GameCreator.UI = {
             }
             
             //Remove actions from selectedActions that are excluded by the selected action.
-            var i = 0;
+            /*var i = 0;
             while(i < selectedActions.length) {
                 var existingAction = selectedActions[i].name;
                 if(action.excludes.indexOf(existingAction) != -1) {
@@ -168,7 +169,7 @@ GameCreator.UI = {
                 } else {
                     i++;
                 }
-            }
+            }*/
             var timingType = GameCreator.helperFunctions.getValue($("#timing"));
             var timingTime = GameCreator.helperFunctions.getValue($("#timingTime"));
             selectedAction.timing = {type: timingType, time: timingTime};
