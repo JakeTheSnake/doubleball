@@ -1,6 +1,6 @@
 GameCreator.htmlStrings = {
     singleSelector: function(elementId, collection) {
-        var result = '<div><select id="' + elementId + '" data-type="text">';
+        var result = '<div><select class="selectorField" id="' + elementId + '" data-type="text">';
         for (key in collection) {
             if (collection.hasOwnProperty(key)) {
                 result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'>" + key + "</option>";
@@ -34,6 +34,11 @@ GameCreator.htmlStrings = {
     },
     parameterGroup: function(parameterInput) {
         return '<div class="actionParameter">' + parameterInput + '</div>'
+    },
+    timingGroup: function() {
+        var result = GameCreator.htmlStrings.singleSelector("timing", {"Now":"now", "Every":"every","After":"after","At":"at"});
+        result += '<div id="timingParameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timingTime", "time","3000") + 'ms</div>';
+        return result;
     },
     actionRow: function(name, action) {
         var result = '<div class="actionRow headingNormalBlack"><div class="headingNormalBlack removeActionBox"><a class="removeActionButton" href="">X</a></div>\
@@ -149,7 +154,9 @@ GameCreator.htmlStrings = {
         <div id="selectActionsContent" class="dialogueContent">\
             <span style="display: inline-block;"><div id="selectActionDropdownContainer" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("actionSelector", actions) + '</div>\
             <div id="selectActionParametersContainer" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
-            <div id="selectActionParametersContent"></div></div> \
+            <div id="selectActionParametersContent"></div></div>\
+            <div id="selectActionTimingContainer" class="group" style="display:none;"><div class="groupHeading">Timing</div>\
+            <div id="selectActionTimingContent"></div></div> \
             <div id="selectActionAddButton"><button id="selectActionAddAction" class="regularButton addActionButton">Add</button></div>\
             </span>'
         

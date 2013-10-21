@@ -229,7 +229,6 @@ GameCreator.helperFunctions.getRandomFromRange = function(range) {
         }
     }
     else {
-        console.log("Warning: Tried to interpret non-range as range: " + range);
         value = parseInt(range);
     }
     return value;

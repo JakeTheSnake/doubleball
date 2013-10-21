@@ -109,7 +109,7 @@ GameCreator.UI = {
         		existingActionsTmp = existingActions;
         	}
             
-            GameCreator.UI.openDialogue(500, 300, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
+            GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
             GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp);
         
             $("#editActionsWindowCancel").on("click", function() {
@@ -135,15 +135,25 @@ GameCreator.UI = {
         
         $("#actionSelector").on("change", function(){
             $("#selectActionParametersContent").html("");
+            $("#selectActionTimingContent").html("");
             $("#selectActionParametersContainer").css("display", "block");
+            $("#selectActionTimingContainer").css("display", "block");
             for(var i = 0;i < actions[$(this).val()].params.length;++i) {
                 $("#selectActionParametersContent").append(GameCreator.htmlStrings.parameterGroup(actions[$(this).val()].params[i].label() + actions[$(this).val()].params[i].input()));
             }
+            $("#selectActionTimingContent").append(GameCreator.htmlStrings.timingGroup());
+            $("#timing").on("change", function(){
+                if ($("#timing").val() === "now") {
+                    $("#timingParameter").css("display", "none");
+                } else {
+                    $("#timingParameter").css("display", "block");
+                }
+            });
         });
         
         $( "#selectActionAddAction" ).click(function( event ) {                
             var action = actions[$("#actionSelector").val()];
-            var selectedAction = {action: action.action, parameters: {}, name: action.name};
+            var selectedAction = {action: action.action, parameters: {}, name: action.name, timing:{}};
 
             for (var i = 0; i < action.params.length; i++) {
                 selectedAction.parameters[action.params[i].inputId] = GameCreator.helperFunctions.getValue($("#" + action.params[i].inputId));
@@ -159,6 +169,9 @@ GameCreator.UI = {
                     i++;
                 }
             }
+            var timingType = GameCreator.helperFunctions.getValue($("#timing"));
+            var timingTime = GameCreator.helperFunctions.getValue($("#timingTime"));
+            selectedAction.timing = {type: timingType, time: timingTime};
             selectedActions.push(selectedAction);
             
             $("#selectActionResult").html(GameCreator.htmlStrings.selectedActionsList(selectedActions));

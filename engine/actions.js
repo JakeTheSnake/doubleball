@@ -26,11 +26,11 @@ GameCreator.actions = {
                                "Shoot":   {    action: function(params) {this.parent.shoot.call(this, params)},
                                                params: [{    inputId: "objectToShoot",
                                                              input: function() {return GameCreator.htmlStrings.singleSelector("objectToShoot", GameCreator.globalObjects)},
-                                                             label: function() {return GameCreator.htmlStrings.inputLabel("objectToShoot", "Object to Shoot")}
+                                                             label: function() {return GameCreator.htmlStrings.inputLabel("objectToShoot", "Object")}
                                                          },
                                                          {   inputId: "projectileSpeed",
                                                              input: function() {return GameCreator.htmlStrings.rangeInput("projectileSpeed", "", "500")},
-                                                             label: function() {return GameCreator.htmlStrings.inputLabel("projectileSpeed", "Projectile Speed")}
+                                                             label: function() {return GameCreator.htmlStrings.inputLabel("projectileSpeed", "Speed") + '<br style="clear: both"/>'}
                                                          },
                                                          {
                                                             inputId: "projectileDirection",

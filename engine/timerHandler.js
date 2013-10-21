@@ -9,7 +9,7 @@ GameCreator.timerHandler = {
 		var fixed = GameCreator.timerHandler.fixed;
 		var interval = GameCreator.timerHandler.interval;
 		GameCreator.timerHandler.timeSinceLastUpdate += deltaTime;
-		if (GameCreator.timerHandler.timeSinceLastUpdate >= 100) {
+		if (GameCreator.timerHandler.timeSinceLastUpdate > 100) {
 			GameCreator.timerHandler.timeSinceLastUpdate -= 100;
 			// Check for timeouts
 			var time;

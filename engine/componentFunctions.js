@@ -62,9 +62,30 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                     {
                         for(var i = 0;i < keyAction.length;++i)
                         {
-                            keyAction[i].action.call(this, keyAction[i].parameters);
+                            if (keyAction[i].timing.type === "after") {
+                                (function(obj, curAction){
+                                    GameCreator.timerHandler.registerOffset(
+                                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                                        function(){curAction.action.call(obj, curAction.parameters)});
+                                })(this, keyAction[i]);
+                            } else if (keyAction[i].timing.type === "at") {
+                                (function(obj, curAction){
+                                    GameCreator.timerHandler.registerFixed(
+                                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                                        function(){curAction.action.call(obj, curAction.parameters)});
+                                })(this, keyAction[i]);
+                            } else if (keyAction[i].timing.type === "every") {
+                                (function(obj, curAction){
+                                    GameCreator.timerHandler.registerInterval(
+                                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                                        function(){curAction.action.call(obj, curAction.parameters)});
+                                })(this, keyAction[i]);
+                            } else {
+                                keyAction[i].action.call(this, keyAction[i].parameters);
+                            }
                             this.keyCooldown[key] = true;
-                            //This anonymous function should ensure that keyAction in the timeout callback has the state that it has when the timeout is declared.
+                            // This anonymous function should ensure that keyAction in the timeout callback
+                            // has the state that it has when the timeout is declared.
                             (function(keyCooldown, key){
                                 setTimeout(function(){keyCooldown[key] = false}, 300);
                             })(this.keyCooldown, key);
