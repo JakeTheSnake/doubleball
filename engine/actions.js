@@ -38,7 +38,8 @@ GameCreator.actions = {
                                                          },
                                                          {
                                                             inputId: "projectileDirection",
-                                                            input: function() {return GameCreator.htmlStrings.singleSelector("projectileDirection", GameCreator.directions)},
+                                                            input: function() {return GameCreator.htmlStrings.singleSelector("projectileDirection", $.extend(GameCreator.directions,
+                                                                                                                                                    GameCreator.getUniqueIDsInScene()))},
                                                             label: function() {return GameCreator.htmlStrings.inputLabel("projectileDirection", "Direction")}
                                                          }],
                                                name: "Shoot",

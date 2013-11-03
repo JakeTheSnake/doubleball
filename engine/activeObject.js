@@ -113,7 +113,16 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
                 speedX = projectileSpeed;
                 break;            
             default:
-                break;
+                var target = GameCreator.getRuntimeObject(staticParameters.projectileDirection);
+                if (!target) {
+                    // We did not find the target, return without shooting anything.
+                    return;
+                }
+                x = this.x + (this.facingLeft ? 0 : this.width)
+                y = this.y;
+                var unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
+                speedX = unitVector.x * projectileSpeed;
+                speedY = unitVector.y * projectileSpeed;
         }
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
     }

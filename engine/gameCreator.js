@@ -66,6 +66,15 @@ var GameCreator = {
         obj.instantiate(globalObj, args);
         GameCreator.addToRuntime(obj);
     },
+
+    getUniqueIDsInScene: function() {
+        var result = {};
+        for(var i = 0; i < GameCreator.scenes[GameCreator.activeScene].length; ++i) {
+            var obj = GameCreator.scenes[GameCreator.activeScene][i];
+            result[obj.instanceId] = obj.instanceId;
+        }
+        return result;
+    },
     
     runFrame: function(modifier){
         var obj;
@@ -110,6 +119,30 @@ var GameCreator = {
                 obj.clickOffsetX = x - obj.x;
                 obj.clickOffsetY = y - obj.y;
                 return obj;
+            }
+        }
+        return null;
+    },
+
+    getRuntimeObject: function(instanceId) {
+        for (var i = 0; i < GameCreator.collidableObjects.length; i++) {
+            if (GameCreator.collidableObjects[i].instanceId === instanceId) {
+                return GameCreator.collidableObjects[i];
+            }
+        }
+        for (i = 0; i < GameCreator.movableObjects.length; i++) {
+            if (GameCreator.movableObjects[i].instanceId === instanceId) {
+                return GameCreator.movableObjects[i];
+            }
+        }
+        for (i = 0; i < GameCreator.renderableObjects.length; i++) {
+            if (GameCreator.renderableObjects[i].instanceId === instanceId) {
+                return GameCreator.renderableObjects[i];
+            }
+        }
+        for (i = 0; i < GameCreator.eventableObjects.length; i++) {
+            if (GameCreator.eventableObjects[i].instanceId === instanceId) {
+                return GameCreator.eventableObjects[i];
             }
         }
         return null;

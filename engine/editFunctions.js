@@ -298,6 +298,7 @@ $.extend(GameCreator, {
 
     saveSceneObject: function(formId, obj) {
         GameCreator.saveFormInputToObject(formId, obj);
+        GameCreator.hideRoute();
         obj.update();
         GameCreator.render();
     },
@@ -307,9 +308,13 @@ $.extend(GameCreator, {
         $("#editSceneObjectTitle").html("");
         $("#editSceneObjectContent").html("");
     },
+
+    hideRoute: function() {
+        $(".routeNodeContainer").remove();
+    },
     
     drawRoute: function(route) {
-        $(".routeNodeContainer").remove();
+        GameCreator.hideRoute();
         var node;
         for(var i = 0; i < route.length; i++) {
             node = route[i];

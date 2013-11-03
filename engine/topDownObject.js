@@ -271,29 +271,40 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
             break;
             
             case "Up":
-            x = this.x + this.width / 2;
-            y = this.y;
-            speedY = -projectileSpeed;
-            break;
+                x = this.x + this.width / 2;
+                y = this.y;
+                speedY = -projectileSpeed;
+                break;
             
             case "Down":
-            x = this.x + this.width / 2;
-            y = this.y + this.height;
-            speedY = projectileSpeed;
-            break;
+                x = this.x + this.width / 2;
+                y = this.y + this.height;
+                speedY = projectileSpeed;
+                break;
             
             case "Left":
-            x = this.x;
-            y = this.y + this.height / 2;
-            speedX = -projectileSpeed;
-
-            break;
+                x = this.x;
+                y = this.y + this.height / 2;
+                speedX = -projectileSpeed;
+                break;
             
             case "Right":
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
-            speedX = projectileSpeed;
-            break;
+                x = this.x + this.width;
+                y = this.y + this.height / 2;
+                speedX = projectileSpeed;
+                break;
+
+            default:
+                var target = GameCreator.getRuntimeObject(staticParameters.projectileDirection);
+                if (!target) {
+                    // We did not find the target, return without shooting anything.
+                    return;
+                }
+                x = this.x + (this.facingLeft ? 0 : this.width)
+                y = this.y;
+                var unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
+                speedX = unitVector.x * projectileSpeed;
+                speedY = unitVector.y * projectileSpeed;
         }
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
     }

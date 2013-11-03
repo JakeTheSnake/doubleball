@@ -92,6 +92,8 @@ GameCreator.htmlStrings = {
         GameCreator.htmlStrings.rangeInput("editActiveObjectHeight", "height", object.height) + '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.inputLabel("editActiveObjectWidth", "Width:") +
             GameCreator.htmlStrings.rangeInput("editActiveObjectWidth", "width", object.width) + '<br style="clear:both;"/>';
+        result += GameCreator.htmlStrings.inputLabel("editActiveObjectName", "Unique ID:") +
+            GameCreator.htmlStrings.stringInput("editActiveObjectName", "instanceId", object.instanceId) + '<br style="clear:both;"/>';
         if (object.parent.movementType == "free") {
             result += GameCreator.htmlStrings.inputLabel("editActiveObjectSpeedX", "SpeedX:") + 
             GameCreator.htmlStrings.rangeInput("editActiveObjectSpeedX", "speedX", object.speedX) + '<br style="clear:both;"/>';
