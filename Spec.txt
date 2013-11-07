@@ -30,7 +30,18 @@ Tabellen med Runetime Objects klonas från de Scene Objects som finns på den ak
 
 Counters & Timers
 ================
-Counters och Timers är alltid globala. De kan dras in i en scen för att få en visuell representation i den scenen. Counter har antingen en textuell eller en grafisk representation.
+Det behövs globala och privata counters. Privata counters existerar per scenobjekt. Globala counters är ej kopplade till något specifikt objekt.
+Counter events:
+- On Increase
+- On Decrease
+- At Value
+- Above Value
+- Below Value
+
+Counter Actions:
+- Increase by
+- Decrease by
+- Set to
 
 Text (prio 2)
 ================

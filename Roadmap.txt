@@ -1,12 +1,15 @@
 Version 0.1:
 
 Objects:
-	-Timers
-	-Counters
-	-Text
+	-Timers (Global)
+	-Counters Global
+	-Counters Private (Prio 2?)
 
 -Play Mode
 
--Global object rework:
-	Should have all attributes that a scene object now has
-	and should inherit these by default when instantiated.
+-Code obfuscation
+
+Version 0.2:
+ 
+Objects:
+ 	- Text
