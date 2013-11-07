@@ -153,6 +153,16 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
                 speedX = projectileSpeed;
                 break;
             default:
+            	var target = GameCreator.getRuntimeObject(staticParameters.projectileDirection);
+                if (!target) {
+                    // We did not find the target, return without shooting anything.
+                    return;
+                }
+                x = this.x + this.width / 2;
+                y = this.y + this.height / 2;
+                var unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - (this.x + this.width / 2), target.y - (this.y + this.height / 2));
+                speedX = unitVector.x * projectileSpeed;
+                speedY = unitVector.y * projectileSpeed;
                 break;
         }
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
