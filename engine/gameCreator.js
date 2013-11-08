@@ -40,6 +40,7 @@ var GameCreator = {
     
     reset: function() {
         clearInterval(GameCreator.timer);
+        GameCreator.timerHandler.clear();
         this.collidableObjects = [];
         this.movableObjects = [];
         this.renderableObjects = [];
@@ -176,7 +177,6 @@ var GameCreator = {
         }
         
         GameCreator.sceneStarted();
-        
         GameCreator.state = 'playing';
         GameCreator.timer = setInterval(this.gameLoop, 1);
     },

@@ -298,20 +298,25 @@ GameCreator.htmlStrings = {
     },
     globalActiveObjectForm: function(object) {
         var result = '<div>' +  
-                    GameCreator.htmlStrings.inputLabel("activeObjectX", "X:") +
-                    GameCreator.htmlStrings.rangeInput("activeObjectX", "x", object.x) +
-                    '<br style="clear:both;"/>' +
-                    GameCreator.htmlStrings.inputLabel("activeObjectY", "Y:") +
-                    GameCreator.htmlStrings.rangeInput("activeObjectY", "y", object.y) + '<br style="clear:both;"/></div>' +
-                    GameCreator.htmlStrings.inputLabel("activeObjectWidth", "Width:") +
-                    GameCreator.htmlStrings.rangeInput("activeObjectWidth", "width", object.width) +
-                    '<br style="clear:both;"/>' +
-                    GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") +
-                    GameCreator.htmlStrings.rangeInput("activeObjectHeight", "height", object.height);
+                GameCreator.htmlStrings.inputLabel("activeObjectX", "X:") +
+                GameCreator.htmlStrings.rangeInput("activeObjectX", "x", object.x) +
+                '<br style="clear:both;"/>' +
+                GameCreator.htmlStrings.inputLabel("activeObjectY", "Y:") +
+                GameCreator.htmlStrings.rangeInput("activeObjectY", "y", object.y) + '<br style="clear:both;"/></div>' +
+                GameCreator.htmlStrings.inputLabel("activeObjectWidth", "Width:") +
+                GameCreator.htmlStrings.rangeInput("activeObjectWidth", "width", object.width) +
+                '<br style="clear:both;"/>' +
+                GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") +
+                GameCreator.htmlStrings.rangeInput("activeObjectHeight", "height", object.height);
         return result;
     },
     globalPlayerObjectForm: function(object) {
-        var result = '<div>' + GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") +
+        var result = '<div>' + 
+                GameCreator.htmlStrings.inputLabel("activeObjectX", "X:") +
+                GameCreator.htmlStrings.rangeInput("activeObjectX", "x", object.x) +
+                '<br style="clear:both;"/>' +
+                GameCreator.htmlStrings.inputLabel("activeObjectY", "Y:") +
+                GameCreator.htmlStrings.rangeInput("activeObjectY", "y", object.y) + '<br style="clear:both;"/></div>' +GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") +
                 GameCreator.htmlStrings.rangeInput("playerObjectWidth", "width", object.width) +
                 '<br style="clear:both;"/>' +
                 GameCreator.htmlStrings.inputLabel("playerObjectHeight", "Height:") +
@@ -350,6 +355,11 @@ GameCreator.htmlStrings = {
     addActiveObjectForm: function() {
         var result = GameCreator.htmlStrings.inputLabel("activeObjectName", "Name:") + 
             GameCreator.htmlStrings.stringInput("activeObjectName", "name", "") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("activeObjectX", "X:") +
+            GameCreator.htmlStrings.rangeInput("activeObjectX", "x", object.x) +
+            '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("activeObjectY", "Y:") +
+            GameCreator.htmlStrings.rangeInput("activeObjectY", "y", object.y) + '<br style="clear:both;"/></div>' +
             GameCreator.htmlStrings.inputLabel("activeObjectWidth", "Width:") +
             GameCreator.htmlStrings.rangeInput("activeObjectWidth", "width", "") +
             '<br style="clear:both;"/>' +
