@@ -9,6 +9,8 @@ GameCreator.mouseObject = {
         obj.name = args.name;
         obj.width = args.width;
         obj.height = args.height;
+        obj.x = args.x
+        obj.y = args.y
         
         obj.isCollidable = true;
         obj.isMovable = true;

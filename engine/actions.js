@@ -45,6 +45,16 @@ GameCreator.actions = {
                                                name: "Shoot",
                                                excludes: [],
                                                timing: {at: true, every: true, after: true}
+                                          },
+                              "Create":   {    action: function(params){GameCreator.createRuntimeObject(params, {})},
+                                               params: [{
+                                                            inputId: "objectToCreate",
+                                                            input: function() {return GameCreator.htmlStrings.singleSelector("objectToCreate", GameCreator.getGlobalObjects())},
+                                                            label: function() {return GameCreator.htmlStrings.inputLabel("objectToCreate", "Object")}
+                                                         }],
+                                               name: "Create",
+                                               excludes: [],
+                                               timing: {at: true, every: true, after: true}
                                           }
     },
 };

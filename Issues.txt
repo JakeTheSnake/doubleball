@@ -5,6 +5,7 @@ Remove excluded actions?
 Parallellstuds! Counters!
 
 Sceneobjects are not cleared from the list when deleted from the scene.
+Ongoing interval timers are not removed between cycles of Edit/Direct scene.
 
 Finish shoot. Refactor to remove duplicates of the direction switch case.
 

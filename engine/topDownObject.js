@@ -10,6 +10,8 @@ GameCreator.topDownObject = {
         GameCreator.addObjFunctions.clickableObjectFunctions(obj);
         
         obj.image = image;
+        obj.x = args.x
+        obj.y = args.y
         obj.name = args.name;
         obj.width = args.width;
         obj.height = args.height;
@@ -89,6 +91,8 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
         this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
         this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
         this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+        this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
+        this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
     };
 
     topDownObject.calculateSpeed = function()

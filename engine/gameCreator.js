@@ -60,9 +60,20 @@ var GameCreator = {
         scene.push(obj);
         return obj;
     },
-    
+    getGlobalObjects: function() {
+        var allGlobalObjects = {};
+        for(obj in GameCreator.globalObjects) {
+            if(GameCreator.globalObjects.hasOwnProperty(obj)) {
+                allGlobalObjects[obj] = obj;
+            }
+        }
+        return allGlobalObjects;
+    },
     createRuntimeObject: function(globalObj, args){
         var obj = Object.create(GameCreator.sceneObject);
+        if (globalObj.hasOwnProperty("objectToCreate")) {
+            globalObj = GameCreator.globalObjects[globalObj.objectToCreate];
+        }
         obj.instantiate(globalObj, args);
         GameCreator.addToRuntime(obj);
     },

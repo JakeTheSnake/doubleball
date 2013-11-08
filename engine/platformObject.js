@@ -10,6 +10,8 @@ GameCreator.platformObject = {
         GameCreator.addObjFunctions.clickableObjectFunctions(obj);
         
         obj.image = image;
+        obj.x = args.x
+        obj.y = args.y
         obj.name = args.name;
         obj.width = args.width;
         obj.height = args.height;
@@ -165,6 +167,8 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
         this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
         this.acceleration = GameCreator.helperFunctions.getRandomFromRange(this.acceleration);
         this.maxSpeed = GameCreator.helperFunctions.getRandomFromRange(this.maxSpeed);
+        this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
+        this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
     }
     
     platformObject.shoot = function(staticParameters){
