@@ -55,6 +55,12 @@ var GameCreator = {
         $(GameCreator.canvas).css("cursor", "default");
     },
     
+    resetScene: function(scene){
+    	for (var i=0;i < scene.length;++i) {
+    		scene[i].reset();
+		}
+    },
+    
     createInstance: function(globalObj, scene, args){
         var obj = Object.create(GameCreator.sceneObject);
         obj.instantiate(globalObj, args);
@@ -162,6 +168,8 @@ var GameCreator = {
 
     playScene: function(scene) {
         GameCreator.reset();
+        GameCreator.resetScene(scene);
+        
         //Populate the runtime arrays with clones of objects from this scene array. How do we make sure the right object ends up in the right arrays?
         //Do we need a new type of object? runtimeObject?
         for (var i=0;i < scene.length;++i) {

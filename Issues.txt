@@ -1,5 +1,7 @@
 TODO:
 
+Check that no one uses "openEditActionsArea" instead of "openEditActionsAreaSimple" unnecessary. Maybe redo this small mess somehow?
+
 Remove x/y from globals, add X/Y as params to create action.
 
 Remove excluded actions?

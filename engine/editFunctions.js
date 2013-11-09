@@ -62,6 +62,7 @@ $.extend(GameCreator, {
     
     directScene: function(scene){
         GameCreator.reset();
+        GameCreator.resetScene(scene);
         for (var i=0;i < scene.length;++i) {
             var obj = jQuery.extend({}, scene[i]);
             GameCreator.addToRuntime(obj);

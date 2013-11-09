@@ -1,3 +1,15 @@
+GameCreator.resetCounters = function(object, counters) {
+	for(counter in counters){
+		if(counters.hasOwnProperty(counter)){
+			if(object.counters[counter]){
+				object.counters[counter].reset();
+			} else {
+				object.counters[counter] = GameCreator.sceneObjectCounter.New(object, counters[counter]);	
+			}
+		}
+	}
+}
+
 GameCreator.sceneObjectCounter = {
 	parentCounter: null,
 	parentObject: null,
@@ -7,17 +19,49 @@ GameCreator.sceneObjectCounter = {
 	aboveValueStates: {},
 	belowValueStates: {},
 	
+	New: function(parentObject, parentCounter){
+		var obj = Object.create(GameCreator.sceneObjectCounter);
+		
+		obj.parentObject = parentObject;
+		obj.parentCounter = parentCounter;
+		obj.value = parentCounter.initialValue;
+		
+		obj.atValueStates = {};
+		obj.aboveValueStates = {};
+		obj.belowValueStates = {};
+		
+		for(value in parentCounter.atValue){
+			if(parentCounter.atValue.hasOwnProperty(value)) {
+				obj.atValueStates[value] = false;
+			}
+		}
+		
+		for(value in parentCounter.aboveValue){
+			if(parentCounter.aboveValue.hasOwnProperty(value)) {
+				obj.aboveValueStates[value] = false;
+			}
+		}
+		
+		for(value in parentCounter.belowValue){
+			if(parentCounter.belowValue.hasOwnProperty(value)) {
+				obj.belowValueStates[value] = false;
+			}
+		}
+		
+		return obj;
+	},
+	
 	changeValue: function(change) {
 		this.value += change;
 		
 		//Check if change triggers any actions
 		if(change > 0) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
-				this.parentCounter.onIncrease[i].action.call(object, this.parentCounter.onIncrease[i].parameters);
+				this.parentCounter.onIncrease[i].action.call(this.parentObject, this.parentCounter.onIncrease[i].parameters);
 			}
 		} else if(change < 0) {
 			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
-				this.parentCounter.onDecrease[i].action.call(object, this.parentCounter.onDecrease[i].parameters);
+				this.parentCounter.onDecrease[i].action.call(this.parentObject, this.parentCounter.onDecrease[i].parameters);
 			}
 		};
 		
@@ -27,11 +71,11 @@ GameCreator.sceneObjectCounter = {
 	setValue: function(value) {	
 		if(value > this.value) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
-				this.parentCounter.onIncrease[i].action.call(object, this.parentCounter.onIncrease[i].parameters);
+				this.parentCounter.onIncrease[i].action.call(this.parentObject, this.parentCounter.onIncrease[i].parameters);
 			}
 		} else if (value < this.value) {
 			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
-				this.parentCounter.onDecrease[i].action.call(object, this.parentCounter.onDecrease[i].parameters);
+				this.parentCounter.onDecrease[i].action.call(this.parentObject, this.parentCounter.onDecrease[i].parameters);
 			}
 		}
 		
@@ -49,7 +93,7 @@ GameCreator.sceneObjectCounter = {
 				if (parseInt(value) === this.value && !this.atValueStates[value]) {
 					callbacks = this.parentCounter.atValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						callbacks[i].action.call(parentObject, callbacks[i].parameters);
+						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
 					}
 					this.atValueStates[value] = true;
 				} else if (parseInt(value) !== this.value) {
@@ -63,7 +107,7 @@ GameCreator.sceneObjectCounter = {
 				if (parseInt(value) > this.value && !this.aboveValueStates[value]) {
 					callbacks = this.parentCounter.aboveValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						callbacks[i].action.call(parentObject, callbacks[i].parameters);
+						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
 					}
 					this.aboveValueStates[value] = true;
 				} else if (parseInt(value) <= this.value) {
@@ -77,7 +121,7 @@ GameCreator.sceneObjectCounter = {
 				if (parseInt(value) < this.value && !this.belowValueStates[value]) {
 					callbacks = this.parentCounter.belowValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						callbacks[i].action.call(parentObject, callbacks[i].parameters);
+						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
 					}
 					this.belowValueStates[value] = true;
 				} else if (parseInt(value) >= this.value) {
@@ -107,10 +151,6 @@ GameCreator.sceneObjectCounter = {
 			} 
 		};
 	},
-	
-	instantiate: function() {
-		//Set parentObject and parentCounter, Populate state trackers from parentCounter. 
-	}
 }
 
 GameCreator.counter = {

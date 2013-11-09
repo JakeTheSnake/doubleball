@@ -8,6 +8,7 @@ GameCreator.sceneObject = {
     displayWidth: 0,
     displayHeight: 0,    
     image: undefined,
+    counters: {},
     
     clickOffsetX: 0,
     clickOffsetY: 0,
@@ -82,11 +83,16 @@ GameCreator.sceneObject = {
         this.routeForward = args.routeForward != undefined ? args.routeForward : true;
         this.speed = args.speed != undefined ? args.speed : globalObj.speed;
         this.update();
+        
+        this.counters = {};
     },
     delete: function() {
         var activeScene = GameCreator.scenes[GameCreator.activeScene];
         activeScene.splice(activeScene.indexOf(this), 1);
         GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(this), 1);
         GameCreator.render();
+    },
+    reset: function(){
+    	GameCreator.resetCounters(this, this.parent.counters);
     }
 }

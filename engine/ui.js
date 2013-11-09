@@ -91,6 +91,12 @@ GameCreator.UI = {
         GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp);
     },
     
+    //Use when existingActions is a simple array of actions for an event.
+    openEditActionsAreaSimple: function(text, actions, existingActions, container) {
+    	container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions));
+        GameCreator.UI.setupEditActionsContent(text, actions, existingActions);
+    },
+    
     openEditActionsWindow: function(text, actions, existingActions, targetName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         if(!GameCreator.paused){
@@ -330,10 +336,30 @@ GameCreator.UI = {
             $("#editCounterEventActionsContent .saveButton").one("click", function(){
             	var eventType = $("#editCounterEventActionsContent #editCounterEventType").val();
             	var eventValue = $("#editCounterEventActionsContent #editCounterEventValue").val();
-            	object.counters[counterName][eventType][eventValue] = null;
+            	object.counters[counterName][eventType][eventValue] = [];
             	GameCreator.UI.setupEditCounterEvents(object, counterName, container);
             });
-        });  
+        });
+        
+        container.find(".counterEventMenuElement").on("click", function(){
+            var eventType = $(this).data("type");
+            var eventValue = $(this).data("value");
+            var existingActions;
+
+			//If there is no eventValue it's an onIncrease or onDecrease event.
+			if(eventValue) {
+				existingActions = object.counters[counterName][eventType][eventValue];
+			} else {
+				existingActions = object.counters[counterName][eventType];
+			}
+            
+            GameCreator.UI.openEditActionsAreaSimple(
+                "Actions on " + eventType + " " + eventValue,
+                GameCreator.actions.commonSelectableActions,
+                existingActions,
+                $("#editCounterEventActionsContent")
+            );
+        }); 
     },
     
     //General dialogue functions
