@@ -2,8 +2,7 @@ Version 0.1:
 
 Objects:
 	-Timers (Global)
-	-Counters Global
-	-Counters Private (Prio 2?)
+	-Counters
 
 -Play Mode
 

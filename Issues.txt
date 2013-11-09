@@ -1,5 +1,7 @@
 TODO:
 
+Remove x/y from globals, add X/Y as params to create action.
+
 Remove excluded actions?
 
 Parallellstuds! Counters!

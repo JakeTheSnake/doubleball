@@ -305,12 +305,18 @@ GameCreator.UI = {
     	GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
     },
     
-    setupEditGlobalObjectTimerActionsForm: function(container, object) {
-       container.html(GameCreator.htmlStrings.editGlobalObjectTimerActionsContent(object));
-    },
-    
-    setupEditGlobalObjectCounterActionsForm: function(container, object) {
-       container.html(GameCreator.htmlStrings.editGlobalObjectCounterActionsContent(object));
+    setupEditGlobalObjectCountersForm: function(container, object) {
+       container.html(GameCreator.htmlStrings.editGlobalObjectCountersContent(object));
+       $("#addNewCounterButton").on("click", function(){
+       		console.log("clicked addbtn")
+            $("#editCountersCounterContent").html(GameCreator.htmlStrings.createCounterForm());
+            $("#editCountersCounterContent .saveButton").one("click", function(){
+            	console.log("clicked save")
+            	var counterName = $("#editCountersCounterContent #counterName").val();
+                object.counters[counterName] = Object.create(GameCreator.counter);
+                GameCreator.UI.setupEditGlobalObjectCountersForm(container, object);
+            });
+        });
     },
     
     //General dialogue functions

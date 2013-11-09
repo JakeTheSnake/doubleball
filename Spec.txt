@@ -30,7 +30,9 @@ Tabellen med Runetime Objects klonas från de Scene Objects som finns på den ak
 
 Counters & Timers
 ================
-Det behövs globala och privata counters. Privata counters existerar per scenobjekt. Globala counters är ej kopplade till något specifikt objekt.
+
+Alla counters är privata, men de kan kommas åt (för att ändras) via det objekt de är kopplade tills instanceId. Counter events kör de actions som är kopplade till eventet på det objekt som countern är kopplat till.
+
 Counter events:
 - On Increase
 - On Decrease

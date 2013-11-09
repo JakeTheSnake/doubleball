@@ -1,73 +1,129 @@
-//Contains "name: counter" pairs.
-GameCreator.globalCounters = {};
-
-GameCreator.counter = {
-	
+GameCreator.sceneObjectCounter = {
+	parentCounter: null,
+	parentObject: null,
 	value: 0,
 	
-	onIncrease: [],
-	onDecrease: [],
-	atValue: {},
-	aboveValue: {},
-	belowValue: {},
-
+	atValueStates: {},
+	aboveValueStates: {},
+	belowValueStates: {},
+	
 	changeValue: function(change) {
 		this.value += change;
 		
 		//Check if change triggers any actions
 		if(change > 0) {
-			for(var i = 0 ; i < onIncrease.length ; i++) {
-				onIncrease[i]();
+			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
+				this.parentCounter.onIncrease[i].action.call(object, this.parentCounter.onIncrease[i].parameters);
 			}
 		} else if(change < 0) {
-			for(var i = 0 ; i < onDecrease.length ; i++) {
-				onDecrease[i]();
+			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
+				this.parentCounter.onDecrease[i].action.call(object, this.parentCounter.onDecrease[i].parameters);
 			}
 		};
 		
 		this.checkEvents();
 	},
 	
-	setValue: function(value) {
+	setValue: function(value) {	
+		if(value > this.value) {
+			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
+				this.parentCounter.onIncrease[i].action.call(object, this.parentCounter.onIncrease[i].parameters);
+			}
+		} else if (value < this.value) {
+			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
+				this.parentCounter.onDecrease[i].action.call(object, this.parentCounter.onDecrease[i].parameters);
+			}
+		}
+		
 		this.value = value;
 		
 		this.checkEvents();
 	},
 	
 	checkEvents: function(){
-		for (value in this.atValue) {
-			if (this.atValue.hasOwnProperty(value)) {
-				if (parseInt(value) === this.value) {
-					for (var i = 0; i < this.atValue[value].length; i++) {
-						this.atValue[value][i]();
+		
+		var callbacks;
+		
+		for (value in this.parentCounter.atValue) {
+			if (this.parentCounter.atValue.hasOwnProperty(value)) {
+				if (parseInt(value) === this.value && !this.atValueStates[value]) {
+					callbacks = this.parentCounter.atValue[value];
+					for (var i = 0; i < callbacks.length; i++) {
+						callbacks[i].action.call(parentObject, callbacks[i].parameters);
 					}
-					delete this.atValue[value];
+					this.atValueStates[value] = true;
+				} else if (parseInt(value) !== this.value) {
+					this.atValueStates[value] = false;
 				}
-			}
+			} 
 		};
 		
-		for (value in this.aboveValue) {
-			if (this.aboveValue.hasOwnProperty(value)) {
-				if (parseInt(value) >= this.value) {
-					for (var i = 0; i < this.aboveValue[value].length; i++) {
-						this.aboveValue[value][i]();
+		for (value in this.parentCounter.aboveValue) {
+			if (this.parentCounter.aboveValue.hasOwnProperty(value)) {
+				if (parseInt(value) > this.value && !this.aboveValueStates[value]) {
+					callbacks = this.parentCounter.aboveValue[value];
+					for (var i = 0; i < callbacks.length; i++) {
+						callbacks[i].action.call(parentObject, callbacks[i].parameters);
 					}
-					delete this.aboveValue[value];
+					this.aboveValueStates[value] = true;
+				} else if (parseInt(value) <= this.value) {
+					this.aboveValueStates[value] = false;
 				}
-			}
+			} 
 		};
 		
-		for (value in this.belowValue) {
-			if (this.belowValue.hasOwnProperty(value)) {
-				if (parseInt(value) <= this.value) {
-					for (var i = 0; i < this.belowValue[value].length; i++) {
-						this.belowValue[value][i]();
+		for (value in this.parentCounter.belowValue) {
+			if (this.parentCounter.belowValue.hasOwnProperty(value)) {
+				if (parseInt(value) < this.value && !this.belowValueStates[value]) {
+					callbacks = this.parentCounter.belowValue[value];
+					for (var i = 0; i < callbacks.length; i++) {
+						callbacks[i].action.call(parentObject, callbacks[i].parameters);
 					}
-					delete this.belowValue[value];
+					this.belowValueStates[value] = true;
+				} else if (parseInt(value) >= this.value) {
+					this.belowValueStates[value] = false;
 				}
-			}
+			} 
 		};
 	},
+	
+	reset: function() {
+		this.value = this.parentCounter.initialValue;
+		for (value in this.atValueStates) {
+			if (this.atValueStates.hasOwnProperty(value)) {
+				this.atValueStates[value] = false;
+			} 
+		};
+		
+		for (value in this.aboveValueStates) {
+			if (this.aboveValueStates.hasOwnProperty(value)) {
+				this.aboveValueStates[value] = false;
+			} 
+		};
+		
+		for (value in this.belowValueStates) {
+			if (this.belowValueStates.hasOwnProperty(value)) {
+				this.belowValueStates[value] = false;
+			} 
+		};
+	},
+	
+	instantiate: function() {
+		//Set parentObject and parentCounter, Populate state trackers from parentCounter. 
+	}
+}
+
+GameCreator.counter = {
+	
+	name: null,
+	initialValue: 0,
+	
+	onIncrease: [],
+	onDecrease: [],
+	
+	atValue: {},
+	aboveValue: {},
+	belowValue: {},
 	
 	registerOnIncrease: function(callback) {
 		this.onIncrease.push(callback);
@@ -99,5 +155,5 @@ GameCreator.counter = {
 		} else {
 			this.belowValue[value].push(callback);
 		}
-	}
+	},
 }

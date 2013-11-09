@@ -2,7 +2,7 @@
 	width: 350px;
 }
 
-#editCollisionActionsObjectMenu, #editKeyActionsKeyMenu {
+#editCollisionActionsObjectMenu, #editKeyActionsKeyMenu, #editCountersMenu {
     width: 100px;
     float: left;
 }
