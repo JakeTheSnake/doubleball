@@ -118,12 +118,15 @@ GameCreator.counter = {
 	name: null,
 	initialValue: 0,
 	
-	onIncrease: [],
-	onDecrease: [],
-	
-	atValue: {},
-	aboveValue: {},
-	belowValue: {},
+	New: function(){
+		var obj = Object.create(GameCreator.counter);
+		obj.onIncrease = [];
+		obj.onDecrease = [];
+		obj.atValue = {};
+		obj.aboveValue = {};
+		obj.belowValue = {};
+		return obj;
+	},
 	
 	registerOnIncrease: function(callback) {
 		this.onIncrease.push(callback);

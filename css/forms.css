@@ -2,12 +2,12 @@
 	width: 350px;
 }
 
-#editCollisionActionsObjectMenu, #editKeyActionsKeyMenu, #editCountersMenu {
+#editCollisionActionsObjectMenu, #editKeyActionsKeyMenu, #editCountersMenu, #editCounterEventContent {
     width: 100px;
     float: left;
 }
 
-#editCollisionActionsObjectContent, #editKeyActionsKeyContent {
+#editCollisionActionsObjectContent, #editKeyActionsKeyContent, #editCounterEventActionsContent {
     float: left;
 }
 

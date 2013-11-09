@@ -308,15 +308,32 @@ GameCreator.UI = {
     setupEditGlobalObjectCountersForm: function(container, object) {
        container.html(GameCreator.htmlStrings.editGlobalObjectCountersContent(object));
        $("#addNewCounterButton").on("click", function(){
-       		console.log("clicked addbtn")
             $("#editCountersCounterContent").html(GameCreator.htmlStrings.createCounterForm());
             $("#editCountersCounterContent .saveButton").one("click", function(){
-            	console.log("clicked save")
             	var counterName = $("#editCountersCounterContent #counterName").val();
-                object.counters[counterName] = Object.create(GameCreator.counter);
+                object.counters[counterName] = GameCreator.counter.New();
                 GameCreator.UI.setupEditGlobalObjectCountersForm(container, object);
             });
         });
+        container.find(".counterMenuElement").on("click", function(){
+        	var counterName = $(this).data("name");
+        	GameCreator.UI.setupEditCounterEvents(object, counterName, $("#editCounterEventContent"));
+    	});
+    },
+    
+    setupEditCounterEvents: function(object, counterName, container) {
+    	container.html(GameCreator.htmlStrings.editCounterEventsContent(object.counters[counterName]));
+    	$("#editCounterEventActionsContent").html("");
+    	$("#addNewCounterEventButton").on("click", function(){
+            $("#editCounterEventActionsContent").html(GameCreator.htmlStrings.createCounterEventForm());
+            $("#editCounterEventValueField").hide();
+            $("#editCounterEventActionsContent .saveButton").one("click", function(){
+            	var eventType = $("#editCounterEventActionsContent #editCounterEventType").val();
+            	var eventValue = $("#editCounterEventActionsContent #editCounterEventValue").val();
+            	object.counters[counterName][eventType][eventValue] = null;
+            	GameCreator.UI.setupEditCounterEvents(object, counterName, container);
+            });
+        });  
     },
     
     //General dialogue functions

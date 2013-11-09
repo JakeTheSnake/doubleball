@@ -72,6 +72,9 @@ GameCreator.htmlStrings = {
     counterMenuElement: function(keyName) {
         return '<div class="counterMenuElement" data-name="' + counterName + '"><span>' + counterName + '</span></div>';
     },
+    counterEventMenuElement: function(value, type) {
+    	return '<div class="counterEventMenuElement" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></div>';
+    },
     globalObjectElement: function(object) {
         var image = object.image;
         $(image).css("width","65");
@@ -415,6 +418,35 @@ GameCreator.htmlStrings = {
     	var result = '<div>'
     	result += GameCreator.htmlStrings.inputLabel("counterName", "Name:");
     	result += GameCreator.htmlStrings.stringInput("counterName", "name", "");
+    	result += '<button class="saveButton regularButton">Save</button>';
+    	return result;
+	},
+	editCounterEventsContent: function(counter){
+		var result = '<button id="addNewCounterEventButton" class="regularButton">Add</button>';
+		result += GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
+		result += GameCreator.htmlStrings.counterEventMenuElement("", "onDecrease");
+		for (value in counter.atValue) {
+            if (counter.atValue.hasOwnProperty(value)){
+            	result += GameCreator.htmlStrings.counterEventMenuElement(value, "atValue");
+        	}
+    	};
+    	for (value in counter.aboveValue) {
+            if (counter.aboveValue.hasOwnProperty(value)){
+            	result += GameCreator.htmlStrings.counterEventMenuElement(value, "aboveValue");
+        	}
+    	};
+    	for (value in counter.belowValue) {
+            if (counter.belowValue.hasOwnProperty(value)){
+            	result += GameCreator.htmlStrings.counterEventMenuElement(value, "belowValue");
+        	}
+    	};
+    	return result;
+	},
+	createCounterEventForm: function(){
+		var result = GameCreator.htmlStrings.inputLabel("editCounterEventType", "Type:");
+		result += GameCreator.htmlStrings.singleSelector("editCounterEventType", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
+		result += GameCreator.htmlStrings.inputLabel("editCounterEventValue", "Value:");
+    	result += GameCreator.htmlStrings.numberInput("editCounterEventValue", "value", "");
     	result += '<button class="saveButton regularButton">Save</button>';
     	return result;
 	}
