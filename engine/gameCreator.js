@@ -79,6 +79,8 @@ var GameCreator = {
     createRuntimeObject: function(globalObj, args){
         var obj = Object.create(GameCreator.sceneObject);
         if (globalObj.hasOwnProperty("objectToCreate")) {
+            args.x = globalObj.x
+            args.y = globalObj.y
             globalObj = GameCreator.globalObjects[globalObj.objectToCreate];
         }
         obj.instantiate(globalObj, args);

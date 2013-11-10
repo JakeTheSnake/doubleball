@@ -10,8 +10,6 @@ GameCreator.platformObject = {
         GameCreator.addObjFunctions.clickableObjectFunctions(obj);
         
         obj.image = image;
-        obj.x = args.x
-        obj.y = args.y
         obj.name = args.name;
         obj.width = args.width;
         obj.height = args.height;

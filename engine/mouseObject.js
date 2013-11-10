@@ -9,8 +9,6 @@ GameCreator.mouseObject = {
         obj.name = args.name;
         obj.width = args.width;
         obj.height = args.height;
-        obj.x = args.x
-        obj.y = args.y
         
         obj.isCollidable = true;
         obj.isMovable = true;
@@ -72,6 +70,8 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     mouseObject.initialize = function(){
         this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
         this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+        this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
+        this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
     };
     
     mouseObject.move = function()
