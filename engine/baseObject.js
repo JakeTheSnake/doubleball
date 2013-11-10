@@ -7,8 +7,16 @@ GameCreator.baseObject = {
 	objectType: "baseObject",
 	counters: {},
 	
-	//Remove object from game arrays
-	destroy: function(){	
+	/**
+	 * Called when an object is being destroyed through an action. Marks
+	 * this object for imminent destruction and carries out onDestroy-actions.
+	 */
+	destroy: function(staticParameters){
+		GameCreator.objectsToDestroy.push(this);
+		this.parent.onDestroy.call(this);
+	},
+	
+	removeFromGame: function() {
 		//Collidables
 		var ids = GameCreator.collidableObjects.map(function(x){return x.instanceId});
 		var index = $.inArray(this.instanceId, ids);
@@ -32,10 +40,7 @@ GameCreator.baseObject = {
 		index = $.inArray(this.instanceId, ids);
 		if(index != -1)
 			GameCreator.eventableObjects.splice(index, 1);
-		
-		this.parent.onDestroy.call(this);
 	},
-	
 	onDestroy: function(){},
 	
     onGameStarted: function(){},

@@ -109,12 +109,6 @@ var GameCreator = {
             for (var i=0;i < GameCreator.collidableObjects.length;++i) {
                 GameCreator.helperFunctions.checkCollisions(GameCreator.collidableObjects[i]);
             }
-            for (var i=0;i < GameCreator.objectsToDestroy.length;++i)
-            {
-                obj = GameCreator.objectsToDestroy[i];
-                obj.parent.destroy.call(obj);
-            }
-            GameCreator.objectsToDestroy.length = 0;
             for (var i=0;i < GameCreator.movableObjects.length;++i) {
                 if(!GameCreator.paused)
                 {
@@ -127,6 +121,12 @@ var GameCreator = {
                 obj.parent.checkEvents.call(obj);
             }
             GameCreator.timerHandler.update(modifier);
+            for (var i=0;i < GameCreator.objectsToDestroy.length;++i)
+            {
+                obj = GameCreator.objectsToDestroy[i];
+                obj.parent.removeFromGame.call(obj);
+            }
+            GameCreator.objectsToDestroy = [];
         }
     },
 
