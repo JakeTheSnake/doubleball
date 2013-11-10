@@ -1,5 +1,7 @@
 TODO:
 
+Fix an action for changing counters!
+
 If a collision occurs and one object is set to be destroyed, collision actions for the other object are never run.
 
 Check that no one uses "openEditActionsArea" instead of "openEditActionsAreaSimple" unnecessary. Maybe redo this small mess somehow?
