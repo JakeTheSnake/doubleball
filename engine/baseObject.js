@@ -15,33 +15,65 @@ GameCreator.baseObject = {
 		GameCreator.objectsToDestroy.push(this);
 		this.parent.onDestroy.call(this);
 	},
+
+	onDestroy: function(){
+		if (!this.parent.onDestroyActions) {
+			this.parent.onDestroyActions = [];
+			GameCreator.UI.openEditActionsWindow(
+	            "'" + this.parent.name + "' is has been destroyed!",
+	            GameCreator.actions.commonSelectableActions,
+	            this.parent.onDestroyActions
+        	);
+        	return;
+		}
+		for (var i = 0; i < this.parent.onDestroyActions.length; i++) {
+			GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i],this.parent.onDestroyActions[i].parameters);
+		}
+	},
+
+	onCreate: function(staticParameters){
+		if (!this.parent.onCreateActions) {
+			this.parent.onCreateActions = [];
+			GameCreator.UI.openEditActionsWindow(
+	            "'" + this.parent.name + "' has been created!",
+	            GameCreator.actions.commonSelectableActions,
+	            this.parent.onCreateActions
+        	);
+		}
+		for (var i = 0; i < this.parent.onCreateActions.length; i++) {
+			GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i], this.parent.onCreateActions[i].parameters);
+		}
+	},
 	
 	removeFromGame: function() {
 		//Collidables
 		var ids = GameCreator.collidableObjects.map(function(x){return x.instanceId});
 		var index = $.inArray(this.instanceId, ids);
-		if(index != -1)
+		if(index != -1) {
 			GameCreator.collidableObjects.splice(index, 1);
+		}
 			
 		//Movables
 		ids = GameCreator.movableObjects.map(function(x){return x.instanceId});
 		index = $.inArray(this.instanceId, ids);
-		if(index != -1)
+		if(index != -1) {
 			GameCreator.movableObjects.splice(index, 1);
-		
+		}
+
 		//Renderables
 		ids = GameCreator.renderableObjects.map(function(x){return x.instanceId});
 		index = $.inArray(this.instanceId, ids);
-		if(index != -1)
+		if(index != -1) {
 			GameCreator.renderableObjects.splice(index, 1);
+		}
 
 		//Eventables
 		ids = GameCreator.eventableObjects.map(function(x){return x.instanceId});
 		index = $.inArray(this.instanceId, ids);
-		if(index != -1)
+		if(index != -1) {
 			GameCreator.eventableObjects.splice(index, 1);
+		}
 	},
-	onDestroy: function(){},
 	
     onGameStarted: function(){},
     

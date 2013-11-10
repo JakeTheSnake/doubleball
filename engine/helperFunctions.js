@@ -70,28 +70,7 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     if(currentActions != undefined)
     {
         for (var j = 0; j < currentActions.length; j++) {
-            if (currentActions[j].timing.type === "after") {
-                (function(obj, curAction){
-                    GameCreator.timerHandler.registerOffset(
-                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-                        function(){curAction.action.call(obj, curAction.parameters)});
-                })(object, currentActions[j]);
-            } else if (currentActions[j].timing.type === "at") {
-                (function(obj, curAction){
-                    GameCreator.timerHandler.registerFixed(
-                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-                        function(){curAction.action.call(obj, curAction.parameters)});
-                })(object, currentActions[j]);
-            } else if (currentActions[j].timing.type === "every") {
-                (function(obj, curAction){
-                    GameCreator.timerHandler.registerInterval(
-                        GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-                        function(){curAction.action.call(obj, curAction.parameters)});
-                })(object, currentActions[j]);
-            } else {
-                currentActions[j].action.call(object, $.extend({collisionObject:targetObject}, currentActions[j].parameters));
-            }
-            
+            GameCreator.helperFunctions.runAction(object, currentActions[j],$.extend({collisionObject:targetObject}, currentActions[j].parameters));
         }
     }
     else
@@ -259,4 +238,27 @@ GameCreator.helperFunctions.logOnce = function(obj) {
         console.log(obj);
     }
     GameCreator.loggedOnce = true;
+};
+GameCreator.helperFunctions.runAction = function(object, actionToRun, parameters) {
+    if (actionToRun.timing.type === "after") {
+        (function(obj, curAction, curParams){
+            GameCreator.timerHandler.registerOffset(
+                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                function(){curAction.action.call(obj, curParams)});
+        })(object, actionToRun, parameters);
+    } else if (actionToRun.timing.type === "at") {
+        (function(obj, curAction, curParams){
+            GameCreator.timerHandler.registerFixed(
+                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                function(){curAction.action.call(obj, curParams)});
+        })(object, actionToRun, parameters);
+    } else if (actionToRun.timing.type === "every") {
+        (function(obj, curAction, curParams){
+            GameCreator.timerHandler.registerInterval(
+                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                function(){curAction.action.call(obj, curParams)});
+        })(object, actionToRun, parameters);
+    } else {
+        actionToRun.action.call(object, parameters);
+    }
 }

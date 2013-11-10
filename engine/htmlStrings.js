@@ -218,6 +218,8 @@ GameCreator.htmlStrings = {
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
             result += "<div class='tab' data-uifunction='setupEditGlobalObjectCountersForm'><span>Counters</span></div>";
         }
+        result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnDestroyActionsForm'><span>OnDestroy</span></div>"
+        result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnCreateActionsForm'><span>OnCreate</span></div>"
         result += "</div><div id='editGlobalObjectWindowContent'></div>";
         return result;
     },

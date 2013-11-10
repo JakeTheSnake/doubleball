@@ -310,6 +310,32 @@ GameCreator.UI = {
     	var existingActions = object.onClickActions;
     	GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
     },
+
+    setupEditGlobalObjectOnDestroyActionsForm: function(container, object) {
+        var text = "Actions on Destruction";
+        var actions = GameCreator.actions.commonSelectableActions;
+        
+        //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
+        if(object.onDestroyActions == undefined) {
+            object.onDestroyActions = [];
+        }
+        
+        var existingActions = object.onDestroyActions;
+        GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
+    },
+
+    setupEditGlobalObjectOnCreateActionsForm: function(container, object) {
+        var text = "Actions on Creation";
+        var actions = GameCreator.actions.commonSelectableActions;
+        
+        //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
+        if(object.onCreateActions == undefined) {
+            object.onCreateActions = [];
+        }
+        
+        var existingActions = object.onCreateActions;
+        GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
+    },
     
     setupEditGlobalObjectCountersForm: function(container, object) {
        container.html(GameCreator.htmlStrings.editGlobalObjectCountersContent(object));

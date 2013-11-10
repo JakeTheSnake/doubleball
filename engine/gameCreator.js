@@ -106,22 +106,25 @@ var GameCreator = {
                     obj.parent.calculateSpeed.call(obj, modifier/1000);
                 }
             }
-            for (var i=0;i < GameCreator.collidableObjects.length;++i) {
+            for (i=0;i < GameCreator.collidableObjects.length;++i) {
                 GameCreator.helperFunctions.checkCollisions(GameCreator.collidableObjects[i]);
             }
-            for (var i=0;i < GameCreator.movableObjects.length;++i) {
+            for (i=0;i < GameCreator.movableObjects.length;++i) {
                 if(!GameCreator.paused)
                 {
                     obj = GameCreator.movableObjects[i];
                     obj.parent.move.call(obj, modifier/1000);
                 }
             }
-            for (var i=0;i < GameCreator.eventableObjects.length;++i) {
-                obj = GameCreator.eventableObjects[i];
-                obj.parent.checkEvents.call(obj);
+            for (i=0;i < GameCreator.eventableObjects.length;++i) {
+                if(!GameCreator.paused)
+                {
+                    obj = GameCreator.eventableObjects[i];
+                    obj.parent.checkEvents.call(obj);
+                }
             }
             GameCreator.timerHandler.update(modifier);
-            for (var i=0;i < GameCreator.objectsToDestroy.length;++i)
+            for (i=0;i < GameCreator.objectsToDestroy.length;++i)
             {
                 obj = GameCreator.objectsToDestroy[i];
                 obj.parent.removeFromGame.call(obj);
@@ -308,6 +311,7 @@ var GameCreator = {
         if(obj.parent.isEventable)
             GameCreator.eventableObjects.push(obj);
         obj.parent.initialize.call(obj);
+        obj.parent.onCreate.call(obj);
     },
     
     getUniqueId: function() {
