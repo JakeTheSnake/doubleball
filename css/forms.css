@@ -125,10 +125,9 @@
     height: 22px;
     float: left;
     padding-left: 3px;
-    color: #4DB8FF;
 }
 
-.rangeField {
+.rangeField, .textField {
     border: 2px solid #FFB84D;
     border-radius:10px;
     text-shadow:1px 1px 0px #000000;

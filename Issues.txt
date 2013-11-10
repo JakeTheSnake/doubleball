@@ -1,8 +1,8 @@
 TODO:
 
-Check that no one uses "openEditActionsArea" instead of "openEditActionsAreaSimple" unnecessary. Maybe redo this small mess somehow?
+If a collision occurs and one object is set to be destroyed, collision actions for the other object are never run.
 
-Remove x/y from globals, add X/Y as params to create action.
+Check that no one uses "openEditActionsArea" instead of "openEditActionsAreaSimple" unnecessary. Maybe redo this small mess somehow?
 
 Remove excluded actions?
 

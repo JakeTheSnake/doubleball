@@ -219,56 +219,56 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
             var facing = this.facing;
             switch(facing){
                 case 1:
-	                x = this.x + this.width / 2;
-	                y = this.y;
-	                speedY = -projectileSpeed;
-	                break;
+                    x = this.x + this.width / 2;
+                    y = this.y;
+                    speedY = -projectileSpeed;
+                    break;
                 
                 case 2:
-	                x = this.x + this.width;
-	                y = this.y;
-	                speedX = angularSpeed;
-	                speedY = -angularSpeed;
-	                break;
+                    x = this.x + this.width;
+                    y = this.y;
+                    speedX = angularSpeed;
+                    speedY = -angularSpeed;
+                    break;
                 
                 case 3:
-	                x = this.x + this.width;
-	                y = this.y + this.height / 2;
-	                speedX = projectileSpeed;
-	                break;
+                    x = this.x + this.width;
+                    y = this.y + this.height / 2;
+                    speedX = projectileSpeed;
+                    break;
                 
                 case 4:
-	                x = this.x + this.width;
-	                y = this.y + this.height;
-	                speedX = angularSpeed;
-	                speedY = angularSpeed;
-	                break;
+                    x = this.x + this.width;
+                    y = this.y + this.height;
+                    speedX = angularSpeed;
+                    speedY = angularSpeed;
+                    break;
                 
                 case 5:
-	                x = this.x + this.width / 2;
-	                y = this.y + this.height;
-	                speedY = projectileSpeed;
-	                break;
+                    x = this.x + this.width / 2;
+                    y = this.y + this.height;
+                    speedY = projectileSpeed;
+                    break;
                 
                 case 6:
-	                x = this.x;
-	                y = this.y + this.height;
-	                speedX = -angularSpeed;
-	                speedY = angularSpeed;
-	                break;
+                    x = this.x;
+                    y = this.y + this.height;
+                    speedX = -angularSpeed;
+                    speedY = angularSpeed;
+                    break;
                 
                 case 7:
-	                x = this.x;
-	                y = this.y + this.height / 2;
-	                speedX = -projectileSpeed;
-	                break;
+                    x = this.x;
+                    y = this.y + this.height / 2;
+                    speedX = -projectileSpeed;
+                    break;
                 
                 case 8:
-	                x = this.x;
-	                y = this.y;
-	                speedX = -angularSpeed;
-	                speedY = -angularSpeed;
-	                break;
+                    x = this.x;
+                    y = this.y;
+                    speedX = -angularSpeed;
+                    speedY = -angularSpeed;
+                    break;
             }
             break;
             
@@ -312,6 +312,5 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     }
     
     topDownObject.onDestroy = function(){
-        
     }
 }

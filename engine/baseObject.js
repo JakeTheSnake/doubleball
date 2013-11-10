@@ -26,6 +26,12 @@ GameCreator.baseObject = {
 		index = $.inArray(this.instanceId, ids);
 		if(index != -1)
 			GameCreator.renderableObjects.splice(index, 1);
+
+		//Eventables
+		ids = GameCreator.eventableObjects.map(function(x){return x.instanceId});
+		index = $.inArray(this.instanceId, ids);
+		if(index != -1)
+			GameCreator.eventableObjects.splice(index, 1);
 		
 		this.parent.onDestroy.call(this);
 	},
