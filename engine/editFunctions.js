@@ -67,6 +67,7 @@ $.extend(GameCreator, {
             var obj = jQuery.extend({}, scene[i]);
             GameCreator.addToRuntime(obj);
             obj.parent.onGameStarted();
+            obj.setCounterParent();
         }
         
         $(".routeNodeContainer").remove();

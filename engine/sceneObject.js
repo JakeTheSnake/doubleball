@@ -94,5 +94,12 @@ GameCreator.sceneObject = {
     },
     reset: function(){
     	GameCreator.resetCounters(this, this.parent.counters);
+    },
+    setCounterParent: function(){
+    	for(counter in this.counters){
+    		if(this.counters.hasOwnProperty(counter)){
+    			this.counters[counter].parentObject = this;
+    		}
+    	}
     }
 }

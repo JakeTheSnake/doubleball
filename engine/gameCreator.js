@@ -177,6 +177,8 @@ var GameCreator = {
         for (var i=0;i < scene.length;++i) {
             var obj = jQuery.extend({}, scene[i]);
             GameCreator.addToRuntime(obj);
+            obj.parent.onGameStarted();
+            obj.setCounterParent();
         }
 
         then = Date.now();
