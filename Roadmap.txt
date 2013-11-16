@@ -1,14 +1,25 @@
 Version 0.1:
 
-Objects:
-	-Timers (Global)
-	-Counters
+- Game lifecycle (Game over/restart game)
 
--Play Mode
+- Code obfuscation
 
--Code obfuscation
+- CSS
+
+- Backend
+
+- Save/load
 
 Version 0.2:
  
+-Play Mode
+
 Objects:
  	- Text
+ 	
+ 	
+	- Find a name!
+		- Piece o' Cake
+		- Arcade Forge
+		- Arcade Studio
+		- Gameweaver
