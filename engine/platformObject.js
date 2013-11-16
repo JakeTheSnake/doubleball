@@ -19,6 +19,8 @@ GameCreator.platformObject = {
         obj.isRenderable = true;
         obj.isEventable = true;
         
+        obj.counters = {};
+        
         obj.objectType = "platformObject";
         
         GameCreator.globalObjects[obj.name] = obj;

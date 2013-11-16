@@ -73,7 +73,18 @@ GameCreator.UI = {
         });
     },
     
-    openEditActionsArea: function(text, actions, existingActions, container, targetName) {
+    
+    /**
+     * Renders an edit action form inside a specified container.
+     * text: The text that should be show as description of the dialogue.
+     * actions: The actions the user should be able to select from
+     * existingActions: An object or an array, containing actions already chosen.
+     * container: The container
+     * targetName: If existingActions is an object, targetName is the key to the current array of actions in existingActions.
+     *             If null, existingActions has to be an array of actions.
+     * thisName: The name of the object whose actiosn will be edited with this form.
+     **/
+    openEditActionsArea: function(text, actions, existingActions, container, targetName, thisName) {
     	
     	var existingActionsTmp;
     	
@@ -88,16 +99,11 @@ GameCreator.UI = {
 	    }
         
         container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
-        GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp);
+        GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp, thisName);
     },
+ 
     
-    //Use when existingActions is a simple array of actions for an event.
-    openEditActionsAreaSimple: function(text, actions, existingActions, container) {
-    	container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions));
-        GameCreator.UI.setupEditActionsContent(text, actions, existingActions);
-    },
-    
-    openEditActionsWindow: function(text, actions, existingActions, targetName) {  
+    openEditActionsWindow: function(text, actions, existingActions, targetName, thisName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         if(!GameCreator.paused){
             GameCreator.pauseGame();
@@ -116,7 +122,7 @@ GameCreator.UI = {
         	}
             
             GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
-            GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp);
+            GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp, thisName);
         
             $("#editActionsWindowCancel").on("click", function() {
                 GameCreator.UI.closeDialogue();
@@ -137,7 +143,7 @@ GameCreator.UI = {
      * actions: The actions the user should be able to select from
      * selectedActions: An array of Actions that are already chosen.
      **/
-    setupEditActionsContent: function(text, actions, selectedActions){
+    setupEditActionsContent: function(text, actions, selectedActions, thisName){
         
         $("#actionSelector").on("change", function(){
             $("#selectActionParametersContent").html("");
@@ -145,7 +151,7 @@ GameCreator.UI = {
             $("#selectActionParametersContainer").css("display", "block");
             $("#selectActionTimingContainer").css("display", "block");
             for(var i = 0;i < actions[$(this).val()].params.length;++i) {
-                $("#selectActionParametersContent").append(GameCreator.htmlStrings.parameterGroup(actions[$(this).val()].params[i].label() + actions[$(this).val()].params[i].input()));
+                $("#selectActionParametersContent").append(GameCreator.htmlStrings.parameterGroup(actions[$(this).val()].params[i].label() + actions[$(this).val()].params[i].input(thisName)));
             }
             var timing = actions[$("#actionSelector").val()].timing;
             $("#selectActionTimingContent").append(GameCreator.htmlStrings.timingGroup(timing));
@@ -265,7 +271,8 @@ GameCreator.UI = {
                 $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
                 object.collisionActions,
                 $("#editCollisionActionsObjectContent"),
-                targetName
+                targetName,
+                object.name
             );
         });
         $("#addNewCollisionButton").on("click", function(){
@@ -286,7 +293,8 @@ GameCreator.UI = {
                 GameCreator.actions.commonSelectableActions,
                 object.keyActions,
                 $("#editKeyActionsKeyContent"),
-                keyName
+                keyName,
+                object.name
             );
         });
         $("#addNewKeyButton").on("click", function(){
@@ -308,7 +316,7 @@ GameCreator.UI = {
         }
         
     	var existingActions = object.onClickActions;
-    	GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
+    	GameCreator.UI.openEditActionsArea(text, actions, existingActions, container, null, object.name);
     },
 
     setupEditGlobalObjectOnDestroyActionsForm: function(container, object) {
@@ -321,7 +329,7 @@ GameCreator.UI = {
         }
         
         var existingActions = object.onDestroyActions;
-        GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
+        GameCreator.UI.openEditActionsArea(text, actions, existingActions, container, null, object.name);
     },
 
     setupEditGlobalObjectOnCreateActionsForm: function(container, object) {
@@ -334,7 +342,7 @@ GameCreator.UI = {
         }
         
         var existingActions = object.onCreateActions;
-        GameCreator.UI.openEditActionsArea(text, actions, existingActions, container);
+        GameCreator.UI.openEditActionsArea(text, actions, existingActions, container, null, object.name);
     },
     
     setupEditGlobalObjectCountersForm: function(container, object) {
@@ -379,11 +387,13 @@ GameCreator.UI = {
 				existingActions = object.counters[counterName][eventType];
 			}
             
-            GameCreator.UI.openEditActionsAreaSimple(
+            GameCreator.UI.openEditActionsArea(
                 "Actions on " + eventType + " " + eventValue,
                 GameCreator.actions.commonSelectableActions,
                 existingActions,
-                $("#editCounterEventActionsContent")
+                $("#editCounterEventActionsContent"),
+                null,
+                object.name
             );
         }); 
     },
@@ -402,5 +412,10 @@ GameCreator.UI = {
     closeDialogue: function() {
         $("#dialogueWindow").hide();
         $("#dialogueOverlay").hide();
+    },
+    
+    setupSingleSelectorWithListener: function(elementId, collection, event, callback) {
+    	$(document.body).on(event, "#" + elementId, callback);
+    	return GameCreator.htmlStrings.singleSelector(elementId, collection);
     }
 }

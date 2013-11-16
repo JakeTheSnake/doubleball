@@ -23,6 +23,8 @@ GameCreator.activeObject = {
         obj.isMovable = true;
         obj.isRenderable = true;
         
+        obj.counters = {};
+        
         obj.objectType = "activeObject";
         
         obj.movementType = args.movementType ? args.movementType : "free";

@@ -65,6 +65,37 @@ GameCreator.actions = {
                                                name: "Create",
                                                excludes: [],
                                                timing: {at: true, every: true, after: true}
-                                          }
+                                          },
+                                "Counter":{		action: function(params){GameCreator.changeCounter(this, params)},
+                                				params: [{
+                                						inputId: "counterObject",
+                                						input: function(thisName) {return GameCreator.UI.setupSingleSelectorWithListener(
+                                							"counterObject", 
+                                							$.extend({"this": thisName}, GameCreator.getUniqueIDsInScene()), 
+                                							"change", 
+                                							function(){$("#counterName").replaceWith(GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForObject($(this).val())))}
+                                							)},
+                                						label: function() {return GameCreator.htmlStrings.inputLabel("counterObject", "Object")}
+                                					},
+                                					{
+                                						inputId: "counterName",
+                                						input: function(thisName){return GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForObject(thisName))},
+                                						label: function(){return GameCreator.htmlStrings.inputLabel("counterName", "Counter")}
+                                					},
+                                					{
+                                						inputId: "counterType",
+                                						input: function(){return GameCreator.htmlStrings.singleSelector("counterType", {"Set":"set", "Change":"change" })},
+                                						label: function(){return GameCreator.htmlStrings.inputLabel("counterType", "Type")}
+                                					},
+                                					{
+                                						inputId: "counterValue",
+                                						input: function(){return GameCreator.htmlStrings.rangeInput("counterValue", "value", "1")},
+                                						label: function(){return GameCreator.htmlStrings.inputLabel("counterValue", "Value") + '<br style="clear: both"/>'}
+                                					}
+                                					],
+                                				name: "Counter",
+                                				excludes: [],
+                                				timing: {at: true, every: true, after: true}
+                                		}
     },
 };

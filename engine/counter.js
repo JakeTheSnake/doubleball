@@ -52,7 +52,7 @@ GameCreator.sceneObjectCounter = {
 	},
 	
 	changeValue: function(change) {
-		this.value += change;
+		this.value += GameCreator.helperFunctions.getRandomFromRange(change);
 		
 		//Check if change triggers any actions
 		if(change > 0) {
@@ -68,7 +68,9 @@ GameCreator.sceneObjectCounter = {
 		this.checkEvents();
 	},
 	
-	setValue: function(value) {	
+	setValue: function(inValue) {
+		var value = GameCreator.helperFunctions.getRandomFromRange(inValue);
+		
 		if(value > this.value) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
 				this.parentCounter.onIncrease[i].action.call(this.parentObject, this.parentCounter.onIncrease[i].parameters);

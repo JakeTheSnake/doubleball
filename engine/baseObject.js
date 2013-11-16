@@ -5,7 +5,6 @@ GameCreator.baseObject = {
 	height: 0,
 	imageReady: false,
 	objectType: "baseObject",
-	counters: {},
 	
 	/**
 	 * Called when an object is being destroyed through an action. Marks
@@ -22,7 +21,8 @@ GameCreator.baseObject = {
 			GameCreator.UI.openEditActionsWindow(
 	            "'" + this.parent.name + "' is has been destroyed!",
 	            GameCreator.actions.commonSelectableActions,
-	            this.parent.onDestroyActions
+	            this.parent.onDestroyActions,
+	            this.parent.name
         	);
         	return;
 		}
@@ -37,7 +37,8 @@ GameCreator.baseObject = {
 			GameCreator.UI.openEditActionsWindow(
 	            "'" + this.parent.name + "' has been created!",
 	            GameCreator.actions.commonSelectableActions,
-	            this.parent.onCreateActions
+	            this.parent.onCreateActions,
+	            this.parent.name
         	);
 		}
 		for (var i = 0; i < this.parent.onCreateActions.length; i++) {

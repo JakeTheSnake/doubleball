@@ -15,6 +15,8 @@ GameCreator.mouseObject = {
         obj.isRenderable = true;
         obj.isEventable = true;
         
+        obj.counters = {};
+        
         obj.objectType = "mouseObject";
         
         GameCreator.globalObjects[obj.name] = obj;

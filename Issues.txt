@@ -2,8 +2,6 @@ TODO:
 
 Fix an action for changing counters!
 
-Check that no one uses "openEditActionsArea" instead of "openEditActionsAreaSimple" unnecessary. Maybe redo this small mess somehow?
-
 Remove excluded actions?
 
 Parallellstuds! Counters!

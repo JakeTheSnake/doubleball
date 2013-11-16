@@ -18,7 +18,9 @@ GameCreator.topDownObject = {
         obj.isMovable = true;
         obj.isRenderable = true;
         obj.isEventable = true;
+        
         obj.collisions = [];
+        obj.counters = {};
         
         obj.objectType = "topDownObject";
         

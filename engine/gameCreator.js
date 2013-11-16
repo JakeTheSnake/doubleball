@@ -76,6 +76,17 @@ var GameCreator = {
         }
         return allGlobalObjects;
     },
+    
+    getSceneObjectById: function(id) {
+    	for(var i = 0; i < GameCreator.scenes[GameCreator.activeScene].length; ++i) {
+            var obj = GameCreator.scenes[GameCreator.activeScene][i];
+            if (obj.instanceId === id) {
+            	return obj;
+            }
+        }
+        return null;
+    },
+    
     createRuntimeObject: function(globalObj, args){
         var obj = Object.create(GameCreator.sceneObject);
         if (globalObj.hasOwnProperty("objectToCreate")) {
@@ -94,6 +105,36 @@ var GameCreator = {
             result[obj.instanceId] = obj.instanceId;
         }
         return result;
+    },
+    
+    getCountersForObject: function(objName) {
+    	var obj;
+    	GameCreator.globalObjects[objName];
+    	if (GameCreator.globalObjects.hasOwnProperty(objName)) {
+			obj = GameCreator.globalObjects[objName];
+    	} else {
+    		obj = GameCreator.getSceneObjectById(objName).parent;
+    	}
+    	var result = {};
+    	for (var counter in obj.counters) {
+    		if (obj.counters.hasOwnProperty(counter)) {
+    			result[counter] = counter;
+    		}
+    	}
+    	return result;
+    },
+    
+    changeCounter: function(obj, params) {
+    	var selectedObjectId = params.counterObject;
+    	if (obj.name != selectedObjectId) {
+    		obj = GameCreator.getSceneObjectById(selectedObjectId);
+    	}
+    	if (params.counterType === "set") {
+    		obj.counters[params.counterName].setValue(params.counterValue);
+    	} else {
+    		obj.counters[params.counterName].changeValue(params.counterValue);	
+    	}
+    	
     },
     
     runFrame: function(modifier){
@@ -329,7 +370,8 @@ var GameCreator = {
 	                GameCreator.UI.openEditActionsWindow(
 	                    "Clicked on " + obj.parent.name,
 	                     $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
-	                     obj.parent.onClickActions
+	                     obj.parent.onClickActions,
+	                     this.parent.name
 	                    );
 	            }
 	            else

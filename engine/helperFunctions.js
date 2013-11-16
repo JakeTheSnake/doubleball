@@ -79,7 +79,8 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
             "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
             $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
             object.parent.collisionActions,
-            targetObject.name
+            targetObject.name,
+            object.parent.name
         )
     }
 }

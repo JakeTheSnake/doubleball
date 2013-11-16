@@ -55,7 +55,8 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                             "Pressed " + key + " actions for " + this.parent.name,
                              $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
                              this.parent.keyActions,
-                             key
+                             key,
+                             this.parent.name
                             );
                     }
                     else
