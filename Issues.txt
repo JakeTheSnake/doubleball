@@ -1,10 +1,10 @@
 TODO:
 
-Fix an action for changing counters!
+OnCreate och OnDestroy funkar inte alls? 
 
 Remove excluded actions?
 
-Parallellstuds! Counters!
+Parallellstuds!
 
 Sceneobjects are not cleared from the list when deleted from the scene.
 

@@ -30,7 +30,7 @@ GameCreator.mouseObject = {
         image.src = savedObject.imageSrc;
         obj.image = image;
         
-        GameCreator.addObjFunctions.mouseObjectFunctions(obj);
+        GameCreator.addObjFunctions.mouseObjectFunctions(obj, savedObject);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.keyObjectFunctions(obj);
         
@@ -51,8 +51,6 @@ GameCreator.mouseObject = {
         }
         
         GameCreator.globalObjects[obj.name] = obj;
-        
-        obj.instantiated();
         
         return obj;
     }

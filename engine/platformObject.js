@@ -34,11 +34,12 @@ GameCreator.platformObject = {
         image.src = savedObject.imageSrc;
         obj.image = image;
         
-        GameCreator.addObjFunctions.platformObjectFunctions(obj);
+        GameCreator.addObjFunctions.platformObjectFunctions(obj, savedObject);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
         GameCreator.addObjFunctions.keyObjectFunctions(obj);
+        GameCreator.addObjFunctions.clickableObjectFunctions(obj);
         
         obj.isCollidable = true;
         obj.isMovable = true;
@@ -57,8 +58,6 @@ GameCreator.platformObject = {
         }
         
         GameCreator.globalObjects[obj.name] = obj;
-        
-        obj.instantiated();
         
         return obj;
     }

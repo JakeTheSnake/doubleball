@@ -371,14 +371,15 @@ var GameCreator = {
 	                    "Clicked on " + obj.parent.name,
 	                     $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
 	                     obj.parent.onClickActions,
-	                     this.parent.name
+	                     null,
+	                     obj.parent.name
 	                    );
 	            }
 	            else
 	            {
 	                for(var i = 0;i < obj.parent.onClickActions.length;++i)
 	                {
-	                    obj.parent.onClickActions[i].action.call(obj, obj.parent.onClickActions[i].parameters);
+	                    GameCreator.helperFunctions.runAction(obj, obj.parent.onClickActions[i],obj.parent.onClickActions[i].parameters);
 	                }
 	            }
 	        }

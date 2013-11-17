@@ -157,7 +157,6 @@ GameCreator.sceneObjectCounter = {
 
 GameCreator.counter = {
 	
-	name: null,
 	initialValue: 0,
 	
 	New: function(){
@@ -167,38 +166,7 @@ GameCreator.counter = {
 		obj.atValue = {};
 		obj.aboveValue = {};
 		obj.belowValue = {};
+		obj.initialValue = 0;
 		return obj;
-	},
-	
-	registerOnIncrease: function(callback) {
-		this.onIncrease.push(callback);
-	},
-	
-	registerOnDecrease: function(callback) {
-		this.onDecrease.push(callback);
-	},
-	
-	registerAtValue: function(value, callback) {
-		if (!this.atValue[value]) {
-			this.atValue[value] = [callback];
-		} else {
-			this.atValue[value].push(callback);
-		}
-	},
-	
-	registerAboveValue: function(value, callback) {
-		if (!this.aboveValue[value]) {
-			this.aboveValue[value] = [callback];
-		} else {
-			this.aboveValue[value].push(callback);
-		}
-	},
-	
-	registerBelowValue: function(value, callback) {
-		if (!this.belowValue[value]) {
-			this.belowValue[value] = [callback];
-		} else {
-			this.belowValue[value].push(callback);
-		}
-	},
+	}
 }
