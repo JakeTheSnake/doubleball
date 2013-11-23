@@ -2,12 +2,9 @@ Version 0.1:
 
 - Code obfuscation
 
-- CSS
 - Images for borders!
 
-- Backend
-
-- Save/load
+- Fix timer handler cleanup
 
 Version 0.2:
  

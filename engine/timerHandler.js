@@ -6,6 +6,8 @@ GameCreator.timerHandler = {
 	clear: function() {
 		GameCreator.timerHandler.fixed = {};
 		GameCreator.timerHandler.interval = {};
+		GameCreator.timerHandler.timeSinceLastUpdate = 0;
+		GameCreator.timerHandler.gameTime = 0;
 	},
 	update: function(deltaTime) {
 		var gameTime = GameCreator.timerHandler.gameTime += deltaTime;
