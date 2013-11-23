@@ -171,14 +171,14 @@ GameCreator.htmlStrings = {
         result += '<div id="selectActionWindow" style="height: 100%"> \
         <div id="selectActionsHeader" class="dialogueHeader">' + description + '</div> \
         <div id="selectActionsContent" class="dialogueContent">\
-            <span style="display: inline-block;"><div id="selectActionDropdownContainer" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("actionSelector", actions) + '</div>\
+            <div id="selectActionDropdownContainer" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("actionSelector", actions) + '</div>\
             <div id="selectActionParametersContainer" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
             <div id="selectActionParametersContent"></div></div>\
             <div id="selectActionTimingContainer" class="group" style="display:none;"><div class="groupHeading">Timing</div>\
             <div id="selectActionTimingContent"></div></div> \
-            <div id="selectActionAddButton"><button id="selectActionAddAction" class="regularButton addActionButton">Add</button></div>\
-            </span>'
+            <div id="selectActionAddButton"><button id="selectActionAddAction" class="regularButton addActionButton">Add</button></div>'
         
+    	result += '<br/ style="clear:both">'
         result += '<div id="selectActionResult">';
         result += GameCreator.htmlStrings.selectedActionsList(existingActions);
         result += '</div></div></div>';
