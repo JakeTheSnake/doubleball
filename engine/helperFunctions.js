@@ -77,7 +77,7 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     {
         GameCreator.UI.openEditActionsWindow(
             "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
-            $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
+            GameCreator.actionGroups.collisionActions,
             object.parent.collisionActions,
             targetObject.name,
             object.parent.name

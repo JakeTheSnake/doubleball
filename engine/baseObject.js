@@ -20,7 +20,7 @@ GameCreator.baseObject = {
 			this.parent.onDestroyActions = [];
 			GameCreator.UI.openEditActionsWindow(
 	            "'" + this.parent.name + "' is has been destroyed!",
-	            GameCreator.actions.commonSelectableActions,
+	            GameCreator.actionGroups.nonCollisionActions,
 	            this.parent.onDestroyActions,
 	            null,
 	            this.parent.name
@@ -37,7 +37,7 @@ GameCreator.baseObject = {
 			this.parent.onCreateActions = [];
 			GameCreator.UI.openEditActionsWindow(
 	            "'" + this.parent.name + "' has been created!",
-	            GameCreator.actions.commonSelectableActions,
+	            GameCreator.actionGroups.nonCollisionActions,
 	            this.parent.onCreateActions,
 	            null,
 	            this.parent.name

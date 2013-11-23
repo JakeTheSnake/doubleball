@@ -268,7 +268,7 @@ GameCreator.UI = {
             var targetName = $(this).data("name");
             GameCreator.UI.openEditActionsArea(
                 "Actions for collision with " + targetName, 
-                $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.collisionSelectableActions),
+                GameCreator.actionGroups.collisionActions,
                 object.collisionActions,
                 $("#editCollisionActionsObjectContent"),
                 targetName,
@@ -290,7 +290,7 @@ GameCreator.UI = {
             var keyName = $(this).data("name");
             GameCreator.UI.openEditActionsArea(
                 "Actions on " + keyName,
-                GameCreator.actions.commonSelectableActions,
+                GameCreator.actionGroups.nonCollisionActions,
                 object.keyActions,
                 $("#editKeyActionsKeyContent"),
                 keyName,
@@ -308,7 +308,7 @@ GameCreator.UI = {
     
     setupEditGlobalObjectOnClickActionsForm: function(container, object) {
     	var text = "Actions on click";
-    	var actions = $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions);
+    	var actions = GameCreator.actionGroups.nonCollisionActions;
         
         //If onClickActions has not yet been edited from anywhere, instantiate to empty array.
         if(object.onClickActions == undefined) {
@@ -321,7 +321,7 @@ GameCreator.UI = {
 
     setupEditGlobalObjectOnDestroyActionsForm: function(container, object) {
         var text = "Actions on Destruction";
-        var actions = GameCreator.actions.commonSelectableActions;
+        var actions = GameCreator.actionGroups.nonCollisionActions;
         
         //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
         if(object.onDestroyActions == undefined) {
@@ -334,7 +334,7 @@ GameCreator.UI = {
 
     setupEditGlobalObjectOnCreateActionsForm: function(container, object) {
         var text = "Actions on Creation";
-        var actions = GameCreator.actions.commonSelectableActions;
+        var actions = GameCreator.actionGroups.nonCollisionActions;
         
         //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
         if(object.onCreateActions == undefined) {
@@ -389,7 +389,7 @@ GameCreator.UI = {
             
             GameCreator.UI.openEditActionsArea(
                 "Actions on " + eventType + " " + eventValue,
-                GameCreator.actions.commonSelectableActions,
+                GameCreator.actionGroups.nonCollisionActions,
                 existingActions,
                 $("#editCounterEventActionsContent"),
                 null,

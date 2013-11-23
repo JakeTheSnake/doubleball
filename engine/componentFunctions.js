@@ -53,7 +53,7 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                     {
                         GameCreator.UI.openEditActionsWindow(
                             "Pressed " + key + " actions for " + this.parent.name,
-                             $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
+                             GameCreator.actionGroups.nonCollisionActions,
                              this.parent.keyActions,
                              key,
                              this.parent.name

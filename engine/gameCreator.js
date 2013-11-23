@@ -24,6 +24,8 @@ var GameCreator = {
     renderableObjects: [],
     eventableObjects: [],
     objectsToDestroy: [],
+    newlyCreatedObjects: [],
+
     addObjFunctions: {},
     helperFunctions: {},
     //The currently selected scene object.
@@ -170,7 +172,12 @@ var GameCreator = {
                 obj = GameCreator.objectsToDestroy[i];
                 obj.parent.removeFromGame.call(obj);
             }
-            GameCreator.objectsToDestroy = [];
+            for (i=0;i < GameCreator.newlyCreatedObjects.length;++i)
+            {
+                obj = GameCreator.newlyCreatedObjects[i];
+                obj.parent.onCreate.call(obj);
+            }
+            GameCreator.newlyCreatedObjects = [];
         }
     },
 
@@ -247,8 +254,7 @@ var GameCreator = {
         then = now;
     },
 
-    pauseGame: function()
-    {
+    pauseGame: function() {
         GameCreator.paused = true;
         $(document).off("keydown.gameKeyListener");
         $(document).off("keyup.gameKeyListener");
@@ -279,9 +285,16 @@ var GameCreator = {
             }
         }
     },
-
-    resumeGame: function()
-    {
+    
+    restartGame: function() {
+    	if (GameCreator.state = 'directing') {
+    		GameCreator.directScene(GameCreator.scenes[0]);
+    	} else if (GameCreator.state = 'playing') {
+    		GameCreator.playScene(GameCreator.scenes[0]);		
+    	}
+    },
+    
+    resumeGame: function() {
         GameCreator.paused = false;
         var activeScene = GameCreator.scenes[GameCreator.activeScene];
         for (var i=0;i < activeScene.length;++i) {
@@ -352,7 +365,7 @@ var GameCreator = {
         if(obj.parent.isEventable)
             GameCreator.eventableObjects.push(obj);
         obj.parent.initialize.call(obj);
-        obj.parent.onCreate.call(obj);
+        GameCreator.newlyCreatedObjects.push(obj);
     },
     
     getUniqueId: function() {
@@ -369,7 +382,7 @@ var GameCreator = {
                     obj.parent.onClickActions = [];
 	                GameCreator.UI.openEditActionsWindow(
 	                    "Clicked on " + obj.parent.name,
-	                     $.extend(GameCreator.actions.commonSelectableActions, GameCreator.actions.generalSelectableActions),
+	                     GameCreator.actionGroups.nonCollisionActions,
 	                     obj.parent.onClickActions,
 	                     null,
 	                     obj.parent.name
