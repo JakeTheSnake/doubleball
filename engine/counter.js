@@ -106,13 +106,13 @@ GameCreator.sceneObjectCounter = {
 		
 		for (value in this.parentCounter.aboveValue) {
 			if (this.parentCounter.aboveValue.hasOwnProperty(value)) {
-				if (parseInt(value) > this.value && !this.aboveValueStates[value]) {
+				if (this.value > parseInt(value) && !this.aboveValueStates[value]) {
 					callbacks = this.parentCounter.aboveValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
 						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
 					}
 					this.aboveValueStates[value] = true;
-				} else if (parseInt(value) <= this.value) {
+				} else if (this.value <= parseInt(value)) {
 					this.aboveValueStates[value] = false;
 				}
 			} 
@@ -120,13 +120,13 @@ GameCreator.sceneObjectCounter = {
 		
 		for (value in this.parentCounter.belowValue) {
 			if (this.parentCounter.belowValue.hasOwnProperty(value)) {
-				if (parseInt(value) < this.value && !this.belowValueStates[value]) {
+				if (this.value < parseInt(value) && !this.belowValueStates[value]) {
 					callbacks = this.parentCounter.belowValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
 						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
 					}
 					this.belowValueStates[value] = true;
-				} else if (parseInt(value) >= this.value) {
+				} else if (this.value >= parseInt(value)) {
 					this.belowValueStates[value] = false;
 				}
 			} 

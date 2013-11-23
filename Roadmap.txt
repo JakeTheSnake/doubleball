@@ -13,6 +13,8 @@ Version 0.2:
  
 -Play Mode
 
+- Global event when game started.
+
 Objects:
  	- Text
  	

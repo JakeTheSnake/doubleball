@@ -182,7 +182,7 @@ var GameCreator = {
     },
 
     findClickedObject: function(x, y) {
-        for (var i=0;i < GameCreator.renderableObjects.length;++i) {
+        for (var i = GameCreator.renderableObjects.length - 1;i >= 0;--i) {
             var obj = GameCreator.renderableObjects[i];
             // If in edit mode, this should look for displayWidth instead.
             if(x >= obj.x && x <= obj.x + obj.width && y >= obj.y && y <= obj.y + obj.height)

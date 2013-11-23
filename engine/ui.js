@@ -22,8 +22,8 @@ GameCreator.UI = {
         if($("#playerObjectType").val() == "addPlayerMouseObject") {
             obj = GameCreator.addPlayerMouseObject({
                 name: $("#playerObjectName").val(),
-                width: parseInt($("#playerObjectWidth").val()),
-                height: parseInt($("#playerObjectHeight").val()),
+                width: GameCreator.helperFunctions.getValue($("#playerObjectWidth")),
+                height: GameCreator.helperFunctions.getValue($("#playerObjectHeight")),
                 src: $("#playerObjectSrc").val(),
                 maxX: parseInt($("#mouseObjectMaxX").val()),
                 maxY: parseInt($("#mouseObjectMaxY").val()),

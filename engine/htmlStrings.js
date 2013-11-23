@@ -377,11 +377,15 @@ GameCreator.htmlStrings = {
     },
     
     addPlayerObjectForm: function() {
-        return 	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectName", "Name:") + GameCreator.htmlStrings.stringInput("playerObjectName", "name", "") + '</div>' +
-              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("playerObjectWidth", "width", "") + '</div>' +
-              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("playerObjectHeight", "height", "") + '</div>' +
-              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectSrc", "Image Src:") + GameCreator.htmlStrings.stringInput("playerObjectSrc", "src", "") + '</div>' +
-              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectType", "Control:") + GameCreator.htmlStrings.singleSelector("playerObjectType", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '</div>' + '<br style="clear:both;"/>' +
+        return 	GameCreator.htmlStrings.inputLabel("playerObjectName", "Name:") + GameCreator.htmlStrings.stringInput("playerObjectName", "name", "") +
+        		'<br style="clear:both;"/>' +
+              	GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("playerObjectWidth", "width", "") +
+              	'<br style="clear:both;"/>' +
+              	GameCreator.htmlStrings.inputLabel("playerObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("playerObjectHeight", "height", "") +
+              	'<br style="clear:both;"/>' +
+              	GameCreator.htmlStrings.inputLabel("playerObjectSrc", "Image Src:") + GameCreator.htmlStrings.stringInput("playerObjectSrc", "src", "") +
+              	'<br style="clear:both;"/>' +
+              	GameCreator.htmlStrings.inputLabel("playerObjectType", "Control:") + GameCreator.htmlStrings.singleSelector("playerObjectType", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '<br style="clear:both;"/>' +
 				'<div id="addPlayerObjectMovementParameters"></div><button class="saveButton regularButton">Save</button>'
 	},
     

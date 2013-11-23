@@ -349,7 +349,7 @@ $.extend(GameCreator, {
     },
     
     findClickedObjectEditing: function(x, y) {
-        for (var i=0;i < GameCreator.renderableObjects.length;++i) {
+        for (var i=GameCreator.renderableObjects.length - 1;i >= 0;--i) {
             var obj = GameCreator.renderableObjects[i];
             if(x >= obj.x && x <= obj.x + obj.displayWidth && y >= obj.y && y <= obj.y + obj.displayHeight)
             {
