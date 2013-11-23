@@ -90,7 +90,7 @@
 	
 }
 
-#editCollisionActionsObjectContent {
+#editCollisionActionsObjectContent, #editKeyActionsKeyContent{
 	width: 580px;
 }
 

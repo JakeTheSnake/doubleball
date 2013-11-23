@@ -287,9 +287,9 @@ var GameCreator = {
     },
     
     restartGame: function() {
-    	if (GameCreator.state = 'directing') {
+    	if (GameCreator.state === 'directing') {
     		GameCreator.directScene(GameCreator.scenes[0]);
-    	} else if (GameCreator.state = 'playing') {
+    	} else if (GameCreator.state === 'playing') {
     		GameCreator.playScene(GameCreator.scenes[0]);		
     	}
     },

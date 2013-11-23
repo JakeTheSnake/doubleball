@@ -1,5 +1,5 @@
 GameCreator.resetCounters = function(object, counters) {
-	for(counter in counters){
+	for(var counter in counters){
 		if(counters.hasOwnProperty(counter)){
 			if(object.counters[counter]){
 				object.counters[counter].reset();
@@ -57,11 +57,11 @@ GameCreator.sceneObjectCounter = {
 		//Check if change triggers any actions
 		if(change > 0) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
-				this.parentCounter.onIncrease[i].action.call(this.parentObject, this.parentCounter.onIncrease[i].parameters);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i], this.parentCounter.onIncrease[i].parameters);
 			}
 		} else if(change < 0) {
 			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
-				this.parentCounter.onDecrease[i].action.call(this.parentObject, this.parentCounter.onDecrease[i].parameters);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onDecrease[i], this.parentCounter.onDecrease[i].parameters);
 			}
 		};
 		
@@ -73,11 +73,11 @@ GameCreator.sceneObjectCounter = {
 		
 		if(value > this.value) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
-				this.parentCounter.onIncrease[i].action.call(this.parentObject, this.parentCounter.onIncrease[i].parameters);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i], this.parentCounter.onIncrease[i].parameters);
 			}
 		} else if (value < this.value) {
 			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
-				this.parentCounter.onDecrease[i].action.call(this.parentObject, this.parentCounter.onDecrease[i].parameters);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onDecrease[i], this.parentCounter.onDecrease[i].parameters);
 			}
 		}
 		
@@ -95,7 +95,7 @@ GameCreator.sceneObjectCounter = {
 				if (parseInt(value) === this.value && !this.atValueStates[value]) {
 					callbacks = this.parentCounter.atValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
+						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i], callbacks[i].parameters);
 					}
 					this.atValueStates[value] = true;
 				} else if (parseInt(value) !== this.value) {
@@ -109,7 +109,7 @@ GameCreator.sceneObjectCounter = {
 				if (this.value > parseInt(value) && !this.aboveValueStates[value]) {
 					callbacks = this.parentCounter.aboveValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
+						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i], callbacks[i].parameters);
 					}
 					this.aboveValueStates[value] = true;
 				} else if (this.value <= parseInt(value)) {
@@ -123,7 +123,7 @@ GameCreator.sceneObjectCounter = {
 				if (this.value < parseInt(value) && !this.belowValueStates[value]) {
 					callbacks = this.parentCounter.belowValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						callbacks[i].action.call(this.parentObject, callbacks[i].parameters);
+						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i], callbacks[i].parameters);
 					}
 					this.belowValueStates[value] = true;
 				} else if (this.value >= parseInt(value)) {
