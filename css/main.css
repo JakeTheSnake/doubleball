@@ -22,32 +22,54 @@
 }
 
 .tabContainer {
-    background-color: #666;
     height: 30px;
-    padding: 5px;
+    padding: 5px 5px 0 5px;
+    position: absolute;
+    top: -37px;
 }
 
 .tabContainer .tab {
     float:left;
-    margin-right:15px;
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
     height: 100%;
+    padding: 0 5px 0 5px;
+    background-color: #777;
+    border-radius: 5px 5px 0 0;
+    margin-right: 2px;
+    border: 1px solid black;
+}
+
+.tabContainer .tab:hover {
+	background-color: #888;
 }
 
 .tabContainer .tab.active {
-    background-color: #888;
+    background-color: #999;
 }
 
 #mainCanvas {
     border: 2px solid;
     border-radius: 10px;
     margin: 10px;
+    position: absolute;
+    left: 120px;
 }
 
 #mainMenu {
     position: absolute;
     left: 950px;
+}
+
+#addPlayerObjectMovementParameters {
+	margin-top: 10px;
+}
+
+#globalObjectListContainer {
+	height: 620px;
+	width: 120px;
+	float:left;
+	overflow: auto;
 }
     

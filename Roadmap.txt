@@ -1,7 +1,5 @@
 Version 0.1:
 
-- Game lifecycle (Game over/restart game)
-
 - Code obfuscation
 
 - CSS

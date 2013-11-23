@@ -371,14 +371,12 @@ GameCreator.htmlStrings = {
     },
     
     addPlayerObjectForm: function() {
-        return '<div><label for="playerObjectName">Name:</label><input id="playerObjectName" type="text"></input></div> \
-              <div><label for="playerObjectWidth">Width:</label><input id="playerObjectWidth" type="text"></input> \
-              <label for="playerObjectHeight">Height:</label><input id="playerObjectHeight" type="text"></input></div> \
-              <div><label for="playerObjectSrc" type="text">Image Src:</label><input id="playerObjectSrc" type="text"></label></div> \
-              <div><label for="playerObjectType" type="select">Control:</label><select id="playerObjectType"> \
-              <option value="addPlayerMouseObject">Mouse</option><option value="addPlayerPlatformObject">Platform</option><option value="addPlayerTopDownObject">Top Down</option> \
-              </select></div><div id="addPlayerObjectMovementParameters"></div> \
-              <button class="saveButton regularButton">Save</button>'
+        return 	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectName", "Name:") + GameCreator.htmlStrings.stringInput("playerObjectName", "name", "") + '</div>' +
+              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") + GameCreator.htmlStrings.numberInput("playerObjectWidth", "width", "") + '</div>' +
+              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectHeight", "Height:") + GameCreator.htmlStrings.numberInput("playerObjectHeight", "height", "") + '</div>' +
+              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectSrc", "Image Src:") + GameCreator.htmlStrings.stringInput("playerObjectSrc", "src", "") + '</div>' +
+              	'<div>' + GameCreator.htmlStrings.inputLabel("playerObjectType", "Control:") + GameCreator.htmlStrings.singleSelector("playerObjectType", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '</div>' + '<br style="clear:both;"/>' +
+				'<div id="addPlayerObjectMovementParameters"></div><button class="saveButton regularButton">Save</button>'
 	},
     
     collisionObjectSelector: function(object) {
