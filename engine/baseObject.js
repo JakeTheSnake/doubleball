@@ -22,6 +22,7 @@ GameCreator.baseObject = {
 	            "'" + this.parent.name + "' is has been destroyed!",
 	            GameCreator.actions.commonSelectableActions,
 	            this.parent.onDestroyActions,
+	            null,
 	            this.parent.name
         	);
         	return;
@@ -38,6 +39,7 @@ GameCreator.baseObject = {
 	            "'" + this.parent.name + "' has been created!",
 	            GameCreator.actions.commonSelectableActions,
 	            this.parent.onCreateActions,
+	            null,
 	            this.parent.name
         	);
 		}

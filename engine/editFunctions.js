@@ -191,7 +191,7 @@ $.extend(GameCreator, {
         //TODO: Put this array somewhere more "configy"
         
         //Save global objects
-        var attrsToCopy = ["accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "counters"];
+        var attrsToCopy = ["accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "counters"];
         var objects = GameCreator.globalObjects;
         for (name in objects) {
             if (objects.hasOwnProperty(name)) {

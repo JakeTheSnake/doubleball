@@ -1,7 +1,5 @@
 TODO:
 
-OnCreate och OnDestroy funkar inte alls? 
-
 Remove excluded actions?
 
 Parallellstuds!
