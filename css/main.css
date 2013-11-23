@@ -21,11 +21,16 @@
     display: none;
 }
 
+#dialogueWindow {
+	padding: 5px;
+}
+
 .tabContainer {
     height: 30px;
     padding: 5px 5px 0 5px;
     position: absolute;
     top: -37px;
+    left: -1px;
 }
 
 .tabContainer .tab {
@@ -59,7 +64,7 @@
 
 #mainMenu {
     position: absolute;
-    left: 950px;
+    left: 1174px;
 }
 
 #addPlayerObjectMovementParameters {
@@ -67,9 +72,53 @@
 }
 
 #globalObjectListContainer {
-	height: 620px;
+	height: 780px;
 	width: 120px;
 	float:left;
 	overflow: auto;
 }
-    
+
+.addCollisionObjectElement, .addKeyObjectElement {
+	margin: 5px;
+	background-color: #888;
+	padding: 5px;
+	border-radius: 5px;
+	height: 85px;
+}
+
+.counterMenuElement, .keyMenuElement {
+	
+}
+
+#editCollisionActionsObjectContent {
+	width: 580px;
+}
+
+#editGlobalObjectWindowContent #selectActionsHeader{
+	line-height: 20px;
+	text-shadow: 1px 1px 1px #4DB8FF;
+	font-family: Arial;
+	font-size: 15px;
+	font-weight: bold;
+	font-style: normal;
+	border: 1px solid #63b8ee;
+	background: #E0F3F9;
+	border-radius: 5px;
+}
+
+#editCollisionActionsObjectMenuContainer, #editKeyActionsObjectMenuContainer {
+	float: left;
+	height: 500px;
+	width: 120px;
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+#selectActionsContent .group {
+	margin-bottom: 15px;
+}
+
+#editCounterEventContent, #editCountersCounterContent, #editCounterEventActionContent, #editCounterEventActionsContent {
+	margin-left: 5px;
+	float: left;
+}

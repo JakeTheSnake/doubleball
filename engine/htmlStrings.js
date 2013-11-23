@@ -63,17 +63,17 @@ GameCreator.htmlStrings = {
         return result;
     },
     collisionMenuElement: function(object) {
-        return '<div class="collisionMenuElement headingNormalBlack" data-name="' + object.name + '" ><span>' + object.name + '</span>' + 
+        return '<div class="collisionMenuElement headingNormalBlack" data-name="' + object.name + '" ><span>' + object.name + '</span>' + '<br/>' +
         object.image.outerHTML + '</div>';
     },
     keyMenuElement: function(keyName) {
-        return '<div class="keyMenuElement" data-name="' + keyName + '"><span>' + keyName + '</span></div>';
+        return '<div class="keyMenuElement headingNormalBlack" data-name="' + keyName + '"><span>' + keyName + '</span></div>';
     },
     counterMenuElement: function(keyName) {
-        return '<div class="counterMenuElement" data-name="' + counterName + '"><span>' + counterName + '</span></div>';
+        return '<div class="counterMenuElement headingNormalBlack" data-name="' + counterName + '"><span>' + counterName + '</span></div>';
     },
     counterEventMenuElement: function(value, type) {
-    	return '<div class="counterEventMenuElement" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></div>';
+    	return '<div class="counterEventMenuElement headingNormalBlack" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></div>';
     },
     globalObjectElement: function(object) {
         var image = object.image;
@@ -181,7 +181,7 @@ GameCreator.htmlStrings = {
         
         result += '<div id="selectActionResult">';
         result += GameCreator.htmlStrings.selectedActionsList(existingActions);
-        result += '</div></div><div class="dialogueButtons"><button class="cancelButton" id="editActionsWindowCancel">Cancel</button></div></div>';
+        result += '</div></div></div>';
         return result;
     },
     selectedActionsList: function(existingActions) {
@@ -210,7 +210,7 @@ GameCreator.htmlStrings = {
             result += "<div class='tab' data-uifunction='setupEditGlobalObjectCollisionsForm'><span>Collisions<span></div>";
         }
         if (["topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += "<div class='tab' data-uifunction='setupEditGlobalObjectKeyActionsForm'><span>Key Actions</span></div>";
+            result += "<div class='tab' data-uifunction='setupEditGlobalObjectKeyActionsForm'><span>Keys</span></div>";
         }
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
             result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnClickActionsForm'><span>OnClick<span></div>";
@@ -227,6 +227,7 @@ GameCreator.htmlStrings = {
         var result = '<div id="editGlobalObjectPropertiesContent">';
         if(object.objectType == "activeObject") {
             result += GameCreator.htmlStrings.globalActiveObjectForm(object);
+            result += '<div style="height: 10px"></div>';
             if(object.movementType == "free") {
                 result += GameCreator.htmlStrings.freeMovementInputs(object);
             }
@@ -236,14 +237,17 @@ GameCreator.htmlStrings = {
         }
         else if(object.objectType == "mouseObject") {
             result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
+            result += '<div style="height: 10px"></div>';
             result += GameCreator.htmlStrings.mouseMovementInputs(object);
         }
         else if(object.objectType == "topDownObject") {
             result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
+            result += '<div style="height: 10px"></div>';
             result += GameCreator.htmlStrings.topDownMovementInputs(object);
         }
         else if(object.objectType == "platformObject") {
             result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
+            result += '<div style="height: 10px"></div>';
             result += GameCreator.htmlStrings.platformMovementInputs(object);
         }
         result += "</div>";
@@ -251,7 +255,7 @@ GameCreator.htmlStrings = {
         return result;
     },
     editGlobalObjectCollisionsContent: function(object) {
-        var result = '<div id="editCollisionActionsObjectMenu">';
+        var result = '<div id="editCollisionActionsObjectMenuContainer"><div id="editCollisionActionsObjectMenu">';
         result += '<button id="addNewCollisionButton" class="regularButton">Add</button>';
         for (targetName in object.collisionActions) {
             if (object.collisionActions.hasOwnProperty(targetName)) {
@@ -260,18 +264,18 @@ GameCreator.htmlStrings = {
         }
         
         result += '</div> \
-                   <div id="editCollisionActionsObjectContent"></div>';
+                   </div><div id="editCollisionActionsObjectContent"></div>';
         return result;
     },
     editGlobalObjectKeyActionsContent: function(object) {
-        var result = '<div id="editKeyActionsKeyMenu">';
+        var result = '<div id="editKeyActionsObjectMenuContainer"><div id="editKeyActionsKeyMenu">';
+        result += '<div id="addNewKeyButton" class="regularButton">Add</div>';
         for (keyName in object.keyActions) {
             if(object.keyActions.hasOwnProperty(keyName)) {
                 result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
         }
-        result += '<div id="addNewKeyButton" style="width:65px;height:65px;background-color:#777;cursor: pointer;">+</div>';
-        result += '</div><div id="editKeyActionsKeyContent"></div>';
+        result += '</div></div><div id="editKeyActionsKeyContent"></div>';
         return result;
     },
     editGlobalObjectCountersContent: function(object) {
@@ -327,10 +331,12 @@ GameCreator.htmlStrings = {
     },
     mouseMovementInputs: function(object) {
         var result = GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min X:") + GameCreator.htmlStrings.numberInput("mouseObjectMinX", "minX", (object ? object.minX : ""));
+        result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMinY", "minY", (object ? object.minY : ""));
         result += '<br style="clear:both;"/>';
         
         result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max X:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxX", "maxX", (object ? object.maxX : ""));
+        result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxY", "maxY", (object ? object.maxY : ""));
         result += '<br style="clear:both;"/>';
         return result;

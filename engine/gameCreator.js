@@ -1,5 +1,5 @@
-var GCHeight = 600;
-var GCWidth = 800;
+var GCHeight = 768;
+var GCWidth = 1024;
 
 var GameCreator = {
     height: GCHeight,
