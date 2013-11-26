@@ -128,7 +128,7 @@ $.extend(GameCreator, {
         });
         
         $(GameCreator.canvas).on("mousedown.editScene", function(e){
-            GameCreator.draggedObject = GameCreator.findClickedObjectEditing(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
+            GameCreator.draggedObject = GameCreator.getClickedObjectEditing(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(GameCreator.draggedObject) {
                 GameCreator.selectedObject = GameCreator.draggedObject;
                 GameCreator.editSceneObject();
@@ -172,7 +172,7 @@ $.extend(GameCreator, {
             var offsetY = $("#mainCanvas").offset().top;
             if (x > offsetX    && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
             	var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
-                var newInstance = GameCreator.createInstance(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[0], {x:x-offsetX-globalObj.width/2, y:y-offsetY-globalObj.height/2});
+                var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[0], {x:x-offsetX-globalObj.width/2, y:y-offsetY-globalObj.height/2});
                 if(newInstance.parent.isRenderable) {
                     GameCreator.renderableObjects.push(newInstance);
                     GameCreator.render();
@@ -348,7 +348,7 @@ $.extend(GameCreator, {
         });
     },
     
-    findClickedObjectEditing: function(x, y) {
+    getClickedObjectEditing: function(x, y) {
         for (var i=GameCreator.renderableObjects.length - 1;i >= 0;--i) {
             var obj = GameCreator.renderableObjects[i];
             if(x >= obj.x && x <= obj.x + obj.displayWidth && y >= obj.y && y <= obj.y + obj.displayHeight)

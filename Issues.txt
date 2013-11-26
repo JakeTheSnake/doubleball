@@ -1,5 +1,7 @@
 TODO:
 
+Action "stop" can be used on mouse objects although it is not implemented for mouse objects.
+
 Remove excluded actions?
 
 Parallellstuds!
