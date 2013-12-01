@@ -3,20 +3,23 @@ GameCreator.actions = {
                   params: [],
                   name: "Bounce",
                   excludes: ["Stop", "Destroy", "Bounce"],
-                  timing: {at: false, every: false, after: false}
+                  timing: {at: false, every: false, after: false},
+                  runnable: function(){return !this.isDestroyed;}
               },
      	Stop:  {   action: function(params) {this.parent.stop.call(this, params)},
                   params: [],
                   name: "Stop",
                   excludes: ["Bounce", "Destroy", "Stop"],
-                  timing: {at: false, every: false, after: false}
+                  timing: {at: false, every: false, after: false},
+                  runnable: function(){return !this.isDestroyed;}
               },
 
     	Destroy: {    action: function(params) {this.parent.destroy.call(this, params)},
                    params: [],
                    name: "Destroy",
                    excludes: ["Bounce", "Stop", "Destroy"],
-                   timing: {at: true, every: false, after: true}
+                   timing: {at: true, every: false, after: true},
+                   runnable: function(){return !this.isDestroyed;}
               },
    		Shoot:   {    action: function(params) {this.parent.shoot.call(this, params)},
                    params: [{    inputId: "objectToShoot",
@@ -35,7 +38,8 @@ GameCreator.actions = {
                              }],
                    name: "Shoot",
                    excludes: [],
-                   timing: {at: true, every: true, after: true}
+                   timing: {at: true, every: true, after: true},
+                   runnable: function(){return !this.isDestroyed;}
               },
   		Create:   {    action: function(params){GameCreator.createRuntimeObject(params, {})},
                    params: [{
@@ -55,7 +59,8 @@ GameCreator.actions = {
                              }],
                    name: "Create",
                    excludes: [],
-                   timing: {at: true, every: true, after: true}
+                   timing: {at: true, every: true, after: true},
+                   runnable: function(){return true;}
               },
     	Counter:{		action: function(params){GameCreator.changeCounter(this, params)},
                     params: [{
@@ -70,7 +75,7 @@ GameCreator.actions = {
                         },
                         {
                             inputId: "counterName",
-                            input: function(thisName){return GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForObject(thisName))},
+                            input: function(thisName){return GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj(thisName))},
                             label: function(){return GameCreator.htmlStrings.inputLabel("counterName", "Counter")}
                         },
                         {
@@ -86,14 +91,16 @@ GameCreator.actions = {
                         ],
                     name: "Counter",
                     excludes: [],
-                    timing: {at: true, every: true, after: true}
+                    timing: {at: true, every: true, after: true},
+                    runnable: function(){return !this.isDestroyed;}
 		        },
 		Restart: {
 			action: GameCreator.restartGame,
 			params: [],
 			name: "Restart",
 			excludes: ["Bounce", "Destroy", "Stop"],
-			timing: {at: true, every: false, after: true}
+			timing: {at: true, every: false, after: true},
+			runnable: function(){return true;}
 		}
 };
 

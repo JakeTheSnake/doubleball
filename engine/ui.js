@@ -159,7 +159,7 @@ GameCreator.UI = {
         
         $( "#selectActionAddAction" ).click(function( event ) {                
             var action = actions[$("#actionSelector").val()];
-            var selectedAction = {action: action.action, parameters: {}, name: action.name, timing:{}};
+            var selectedAction = {action: action.action, parameters: {}, name: action.name, timing:{}, runnable: action.runnable};
 
             for (var i = 0; i < action.params.length; i++) {
                 selectedAction.parameters[action.params[i].inputId] = GameCreator.helperFunctions.getValue($("#" + action.params[i].inputId));

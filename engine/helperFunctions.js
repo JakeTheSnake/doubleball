@@ -240,26 +240,49 @@ GameCreator.helperFunctions.logOnce = function(obj) {
     }
     GameCreator.loggedOnce = true;
 };
-GameCreator.helperFunctions.runAction = function(object, actionToRun, parameters) {
-    if (actionToRun.timing.type === "after") {
-        (function(obj, curAction, curParams){
-            GameCreator.timerHandler.registerOffset(
-                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-                function(){curAction.action.call(obj, curParams)});
-        })(object, actionToRun, parameters);
-    } else if (actionToRun.timing.type === "at") {
-        (function(obj, curAction, curParams){
-            GameCreator.timerHandler.registerFixed(
-                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-                function(){curAction.action.call(obj, curParams)});
-        })(object, actionToRun, parameters);
-    } else if (actionToRun.timing.type === "every") {
-        (function(obj, curAction, curParams){
-            GameCreator.timerHandler.registerInterval(
-                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-                function(){curAction.action.call(obj, curParams)});
-        })(object, actionToRun, parameters);
-    } else {
-        actionToRun.action.call(object, parameters);
-    }
+GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parameters) {
+	if(actionToRun.runnable.call(runtimeObj)) {
+	    if (actionToRun.timing.type === "after") {
+	        (function(obj, curAction, curParams){
+	            GameCreator.timerHandler.registerOffset(
+	                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+	                function(){
+	                	if (curAction.runnable.call(obj)) {
+	                		curAction.action.call(obj, curParams);
+	                		return true;
+                		} else {
+                			return false;
+            			}
+        			});
+	        })(runtimeObj, actionToRun, parameters);
+	    } else if (actionToRun.timing.type === "at") {
+	        (function(obj, curAction, curParams){
+	            GameCreator.timerHandler.registerFixed(
+	                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+	                function(){
+	                	if (curAction.runnable.call(obj)) {
+	                		curAction.action.call(obj, curParams);
+	                		return true;
+                		} else {
+                			return false;
+            			}
+        			});
+	        })(runtimeObj, actionToRun, parameters);
+	    } else if (actionToRun.timing.type === "every") {
+	        (function(obj, curAction, curParams){
+	            GameCreator.timerHandler.registerInterval(
+	                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+	                function(){
+	                	if (curAction.runnable.call(obj)) {
+	                		curAction.action.call(obj, curParams);
+	                		return true;
+                		} else {
+                			return false;
+            			}
+        			});
+	        })(runtimeObj, actionToRun, parameters);
+	    } else {
+	        actionToRun.action.call(runtimeObj, parameters);
+	    }
+	}
 }

@@ -5,6 +5,7 @@ GameCreator.baseObject = {
 	height: 0,
 	imageReady: false,
 	objectType: "baseObject",
+	isDestroyed: false,
 	
 	/**
 	 * Called when an object is being destroyed through an action. Marks
@@ -76,6 +77,8 @@ GameCreator.baseObject = {
 		if(index != -1) {
 			GameCreator.eventableObjects.splice(index, 1);
 		}
+		
+		this.isDestroyed = true;
 	},
 	
     onGameStarted: function(){},
