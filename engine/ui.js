@@ -259,9 +259,15 @@ GameCreator.UI = {
         container.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(globalObj));
         container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
+            var actions;
+	    	if(globalObj.objectType === "mouseObject") {
+	    		actions = GameCreator.actionGroups.mouseCollisionActions;
+	    	} else {
+	    		actions = GameCreator.actionGroups.collisionActions;
+	    	}
             GameCreator.UI.createEditActionsArea(
                 "Actions for collision with " + targetName, 
-                GameCreator.actionGroups.collisionActions,
+                actions,
                 globalObj.collisionActions,
                 $("#editCollisionActionsObjectContent"),
                 targetName,
@@ -281,9 +287,15 @@ GameCreator.UI = {
         container.html(GameCreator.htmlStrings.editGlobalObjectKeyActionsContent(globalObj));
         container.find(".keyMenuElement").on("click", function(){
             var keyName = $(this).data("name");
+            var actions;
+	    	if(globalObj.objectType === "mouseObject") {
+	    		actions = GameCreator.actionGroups.mouseNonCollisionActions;
+	    	} else {
+	    		actions = GameCreator.actionGroups.nonCollisionActions;
+	    	}
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + keyName,
-                GameCreator.actionGroups.nonCollisionActions,
+                actions,
                 globalObj.keyActions,
                 $("#editKeyActionsKeyContent"),
                 keyName,
@@ -301,7 +313,12 @@ GameCreator.UI = {
     
     setupEditGlobalObjectOnClickActionsForm: function(container, globalObj) {
     	var text = "Actions on click";
-    	var actions = GameCreator.actionGroups.nonCollisionActions;
+    	var actions;
+    	if(globalObj.objectType === "mouseObject") {
+    		actions = GameCreator.actionGroups.mouseNonCollisionActions;
+    	} else {
+    		actions = GameCreator.actionGroups.nonCollisionActions;
+    	}
         
         //If onClickActions has not yet been edited from anywhere, instantiate to empty array.
         if(globalObj.onClickActions == undefined) {
@@ -314,7 +331,12 @@ GameCreator.UI = {
 
     setupEditGlobalObjectOnDestroyActionsForm: function(container, globalObj) {
         var text = "Actions on Destruction";
-        var actions = GameCreator.actionGroups.nonCollisionActions;
+        var actions;
+    	if(globalObj.objectType === "mouseObject") {
+    		actions = GameCreator.actionGroups.mouseNonCollisionActions;
+    	} else {
+    		actions = GameCreator.actionGroups.nonCollisionActions;
+    	}
         
         //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
         if(globalObj.onDestroyActions == undefined) {
@@ -327,7 +349,12 @@ GameCreator.UI = {
 
     setupEditGlobalObjectOnCreateActionsForm: function(container, globalObj) {
         var text = "Actions on Creation";
-        var actions = GameCreator.actionGroups.nonCollisionActions;
+        var actions;
+    	if(globalObj.objectType === "mouseObject") {
+    		actions = GameCreator.actionGroups.mouseNonCollisionActions;
+    	} else {
+    		actions = GameCreator.actionGroups.nonCollisionActions;
+    	}
         
         //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
         if(globalObj.onCreateActions == undefined) {
@@ -379,10 +406,15 @@ GameCreator.UI = {
 			} else {
 				existingActions = globalObj.counters[counterName][eventType];
 			}
-            
+            var actions;
+	    	if(globalObj.objectType === "mouseObject") {
+	    		actions = GameCreator.actionGroups.mouseNonCollisionActions;
+	    	} else {
+	    		actions = GameCreator.actionGroups.nonCollisionActions;
+	    	}
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + eventType + " " + eventValue,
-                GameCreator.actionGroups.nonCollisionActions,
+                actions,
                 existingActions,
                 $("#editCounterEventActionsContent"),
                 null,

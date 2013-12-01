@@ -114,6 +114,13 @@ GameCreator.actionGroups = {
 			Counter: GameCreator.actions.Counter,
 			Restart: GameCreator.actions.Restart
 	},
+	mouseCollisionActions: {
+			Destroy: GameCreator.actions.Destroy,
+			Shoot: GameCreator.actions.Shoot,
+			Create: GameCreator.actions.Create,
+			Counter: GameCreator.actions.Counter,
+			Restart: GameCreator.actions.Restart
+	},
 	nonCollisionActions: {
 			Stop: GameCreator.actions.Stop,
 			Destroy: GameCreator.actions.Destroy,
@@ -122,5 +129,12 @@ GameCreator.actionGroups = {
 			Counter: GameCreator.actions.Counter,
 			Restart: GameCreator.actions.Restart
 	},
+	mouseNonCollisionActions: {
+			Destroy: GameCreator.actions.Destroy,
+			Shoot: GameCreator.actions.Shoot,
+			Create: GameCreator.actions.Create,
+			Counter: GameCreator.actions.Counter,
+			Restart: GameCreator.actions.Restart
+	}
 	
 }

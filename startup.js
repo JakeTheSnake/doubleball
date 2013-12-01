@@ -12,9 +12,9 @@ window.onload = function () {
         
         //Create ActiveObjects
         
-        var globalBall = GameCreator.addActiveObject({src: "images/ball.png", name: "ball", width:[20], height:[20],x:[1,100], y:[1,100], speed: 300, movementType: "route"});
-        var globalBall2 = GameCreator.addActiveObject({src: "images/red_ball.gif", name: "red_ball", width:[20],x:[1,100], y:[1,100], height:[20]});
-        GameCreator.addActiveObject({src: "images/bar1.png", name:"bar", width:[388], height:[55], x:[1,100], y:[1,100]});
+        var globalBall = GameCreator.addActiveObject({src: "assets/ball.png", name: "ball", width:[20], height:[20],x:[1,100], y:[1,100], speed: 300, movementType: "route"});
+        var globalBall2 = GameCreator.addActiveObject({src: "assets/red_ball.gif", name: "red_ball", width:[20],x:[1,100], y:[1,100], height:[20]});
+        GameCreator.addActiveObject({src: "assets/bar1.png", name:"bar", width:[388], height:[55], x:[1,100], y:[1,100]});
         //var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, speed: 200});
         //GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
         //GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
@@ -27,17 +27,17 @@ window.onload = function () {
         
         //Create Mouseobject
         
-        var globalMousePlayer = GameCreator.addPlayerMouseObject({src: "images/zealot.gif", name: "mouseZealot",x:[1,100], y:[1,100], width: [80], height: [80]})
+        var globalMousePlayer = GameCreator.addPlayerMouseObject({src: "assets/zealot.gif", name: "mouseZealot",x:[1,100], y:[1,100], width: [80], height: [80]})
         //GameCreator.createInstance(globalMousePlayer, GameCreator.scenes[0], {x:100, y:200})
         
         //Create Platformobject
         
-        var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "images/zealot.gif", x:[1,100], y:[1,100],name: "platformZealot", width: [80], height: [80]})
+        var globalPlatformPlayer = GameCreator.addPlayerPlatformObject({src: "assets/zealot.gif", x:[1,100], y:[1,100],name: "platformZealot", width: [80], height: [80]})
         //GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
         
         //Create TopDownObject
         
-        var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "images/zergling.png", x:[1,100], y:[1,100], name: "topDownLing", width: [80], height: [80]})
+        var globalTopDownPlayer = GameCreator.addPlayerTopDownObject({src: "assets/zergling.png", x:[1,100], y:[1,100], name: "topDownLing", width: [80], height: [80]})
         
         
         //GameCreator.loadScene(GameCreator.scenes[0]);

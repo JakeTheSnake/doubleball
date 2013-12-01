@@ -75,9 +75,15 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     }
     else
     {
+    	var actions;
+    	if(object.parent.objectType === "mouseObject") {
+    		actions = GameCreator.actionGroups.mouseCollisionActions;
+    	} else {
+    		actions = GameCreator.actionGroups.collisionActions;
+    	}
         GameCreator.UI.openEditActionsWindow(
             "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
-            GameCreator.actionGroups.collisionActions,
+            actions,
             object.parent.collisionActions,
             targetObject.name,
             object.parent.name

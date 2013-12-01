@@ -51,9 +51,15 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                 {
                     if(keyAction == undefined)
                     {
+                    	var actions;
+				    	if(this.parent.objectType === "mouseObject") {
+				    		actions = GameCreator.actionGroups.mouseNonCollisionActions;
+				    	} else {
+				    		actions = GameCreator.actionGroups.nonCollisionActions;
+				    	}
                         GameCreator.UI.openEditActionsWindow(
                             "Pressed " + key + " actions for " + this.parent.name,
-                             GameCreator.actionGroups.nonCollisionActions,
+                             actions,
                              this.parent.keyActions,
                              key,
                              this.parent.name

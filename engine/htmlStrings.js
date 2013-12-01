@@ -1,6 +1,11 @@
 GameCreator.htmlStrings = {
-    singleSelector: function(elementId, collection) {
-        var result = '<div><select class="selectorField" id="' + elementId + '" data-type="text">';
+    singleSelector: function(elementId, collection, attrName) {
+        var result = '<div><select class="selectorField" id="' + elementId + '" data-type="text"';
+        if(attrName) {
+        	result += ' data-attrName="' + attrName + '">'
+        } else {
+        	result += '>'
+        }
         for (key in collection) {
             if (collection.hasOwnProperty(key)) {
                 result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'>" + key + "</option>";
@@ -370,7 +375,7 @@ GameCreator.htmlStrings = {
             GameCreator.htmlStrings.inputLabel("activeObjectSrc", "Image Src:") + 
             GameCreator.htmlStrings.stringInput("activeObjectSrc", "src", "http://") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("activeObjectMovementType", "Movement:") +
-            GameCreator.htmlStrings.singleSelector("activeObjectMovementType", {"Free": "free", "Route": "route"}) +
+            GameCreator.htmlStrings.singleSelector("activeObjectMovementType", {"Free": "free", "Route": "route"}, "movementType") +
             '<br style="clear:both;"/> \
             <button class="saveButton regularButton">Save</button>';
         return result;
