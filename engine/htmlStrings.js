@@ -134,8 +134,10 @@ GameCreator.htmlStrings = {
 
     editMouseObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editMouseObjectHeight", "height", object.height);;
-        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editMouseObjectWidth", "width", object.width);;
+        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editMouseObjectHeight", "height", object.height);
+        result += '<br style="clear:both;"/>';
+        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editMouseObjectWidth", "width", object.width);
+        result += '<br style="clear:both;"/>';
         
         result += GameCreator.htmlStrings.mouseMovementInputs(object);
         
@@ -144,19 +146,21 @@ GameCreator.htmlStrings = {
     },
     editPlatformObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
-        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectHeight", "height", object.height);;
-        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectWidth", "width", object.width);;
-        
+        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectHeight", "height", object.height);
+        result += '<br style="clear:both;"/>';
+        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectWidth", "width", object.width);
+        result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.platformMovementInputs(object);
-        
+        result += '<br style="clear:both;"/>';
         result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editTopDownObjectForm: function(object) {
         var result = "<div id='editSceneObjectForm'>";
         result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editTopDownObjectHeight", "height", object.height);
+        result += '<br style="clear:both;"/>';
         result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editTopDownObjectWidth", "width", object.width);
-        
+        result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.topDownMovementInputs(object);
         
         result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';

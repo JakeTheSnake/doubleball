@@ -25,28 +25,28 @@ GameCreator.UI = {
                 width: GameCreator.helperFunctions.getValue($("#playerObjectWidth")),
                 height: GameCreator.helperFunctions.getValue($("#playerObjectHeight")),
                 src: $("#playerObjectSrc").val(),
-                maxX: parseInt($("#mouseObjectMaxX").val()),
-                maxY: parseInt($("#mouseObjectMaxY").val()),
-                minX: parseInt($("#mouseObjectMinX").val()),
-                minY: parseInt($("#mouseObjectMinY").val())
+                maxX: GameCreator.helperFunctions.getValue($("#mouseObjectMaxX")),
+                maxY: GameCreator.helperFunctions.getValue($("#mouseObjectMaxY")),
+                minX: GameCreator.helperFunctions.getValue($("#mouseObjectMinX")),
+                minY: GameCreator.helperFunctions.getValue($("#mouseObjectMinY"))
             });
         } else if($("#playerObjectType").val() == "addPlayerPlatformObject") {
             obj = GameCreator.addPlayerPlatformObject({
                 name: $("#playerObjectName").val(),
-                width: parseInt($("#playerObjectWidth").val()),
-                height: parseInt($("#playerObjectHeight").val()),
+                width: GameCreator.helperFunctions.getValue($("#playerObjectWidth")),
+                height: GameCreator.helperFunctions.getValue($("#playerObjectHeight")),
                 src: $("#playerObjectSrc").val(),
-                accY: parseInt($("#platformObjectAccY").val()),
-                maxSpeed: parseInt($("#platformObjectMaxSpeed").val()),
-                acceleration: parseInt($("#platformObjectAcceleration").val())
+                accY: GameCreator.helperFunctions.getValue($("#platformObjectAccY")),
+                maxSpeed: GameCreator.helperFunctions.getValue($("#platformObjectMaxSpeed")),
+                acceleration: GameCreator.helperFunctions.getValue($("#platformObjectAcceleration"))
             });
         } else if($("#playerObjectType").val() == "addPlayerTopDownObject") {
             obj = GameCreator.addPlayerTopDownObject({
                 name: $("#playerObjectName").val(),
-                width: parseInt($("#playerObjectWidth").val()),
-                height: parseInt($("#playerObjectHeight").val()),
+                width: GameCreator.helperFunctions.getValue($("#playerObjectWidth")),
+                height: GameCreator.helperFunctions.getValue($("#playerObjectHeight")),
                 src: $("#playerObjectSrc").val(),
-                maxSpeed: parseInt($("#topDownObjectMaxSpeed").val())
+                maxSpeed: GameCreator.helperFunctions.getValue($("#topDownObjectMaxSpeed"))
             });
         }
     },
