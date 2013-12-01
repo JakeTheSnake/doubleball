@@ -221,6 +221,7 @@ var GameCreator = {
             globalObj = GameCreator.globalObjects[globalObj.objectToCreate];
         }
         runtimeObj.instantiate(globalObj, args);
+        runtimeObj.reset();
         GameCreator.addToRuntime(runtimeObj);
     },
 

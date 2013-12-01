@@ -1,5 +1,7 @@
 TODO:
 
+Set negative numbers in fields!
+
 Function in actions that returns the correct array of selectable actions. Takes "collision" true/false and the object as parameters.
 
 Action "stop" can be used on mouse objects although it is not implemented for mouse objects.
