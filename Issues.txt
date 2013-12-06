@@ -1,5 +1,7 @@
 TODO:
 
+Fix so shoot also takes the object to be shots width into consideration when deciding where to spawn it!
+
 Set negative numbers in fields!
 
 Function in actions that returns the correct array of selectable actions. Takes "collision" true/false and the object as parameters.

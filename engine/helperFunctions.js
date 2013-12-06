@@ -164,7 +164,7 @@ GameCreator.helperFunctions.parseBool = function(string) {
 }
 
 GameCreator.helperFunctions.parseRange = function(string) {
-    return string.split("-", 2);
+    return string.split(":", 2);
 }
 
 GameCreator.helperFunctions.calcUnitVector = function(x, y){
