@@ -1,23 +1,26 @@
-Version 0.1:
-
-- Code obfuscation
-
-- Images for borders!
-
-- Fix timer handler cleanup
-
 Version 0.2:
  
 -Play Mode
+-Global event when game started.
 
-- Global event when game started.
+Objects:
+    - Counters
+    
+-Render Optimization
+-Layers
+
+-Object states
+-Conditions
+-Debugging mode
+
+-Scene managing
+
+Actions:
+    -Switch Scene
+    -Change Object State
+    
+
+Version 0.3
 
 Objects:
  	- Text
- 	
- 	
-	- Find a name!
-		- Piece o' Cake
-		- Arcade Forge
-		- Arcade Studio
-		- Gameweaver

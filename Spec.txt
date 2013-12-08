@@ -28,10 +28,12 @@ Ett Runtime Object är ett Scene Object som ligger i tabellen med runtime. Ett R
 
 Tabellen med Runetime Objects klonas från de Scene Objects som finns på den aktiva scenen när spelet startar.
 
-Counters & Timers
+Counters
 ================
 
 Alla counters är privata, men de kan kommas åt (för att ändras) via det objekt de är kopplade tills instanceId. Counter events kör de actions som är kopplade till eventet på det objekt som countern är kopplat till.
+
+Counter-objekt visualiserar counters. De kan även ha max 1 counter kopplad till sig. Kan visualiseras som text, en stapel, eller ikoner (typ zelda-hjärtan). 
 
 Counter events:
 - On Increase
@@ -61,11 +63,22 @@ SetText
 Objekt-hierarki
 ================
 
-Det finns fyra typer av objekt:
+Det finns olika typer av objekt:
+
 ActiveObject - Icke spelarstyrt objekt
 TopDownObject - Spelarobjekt som styrs med tangentbord, kan röra sig i åtta riktningar
 MouseObject - Spelarobjekt som ersätter muspekaren
 PlatformObject - Spelarobjekt som styrs med tangentbord, super mario style
+Counter-objekt
+Text-objekt
+
+Objekt-state
+================
+Objekt ska kunna ha olika states. Dessa finns i två kategorier:
+
+Movement-state: Förskapade. Triggas automatiskt beroende på hur objektet rör sig, åt vilket håll osv.
+Custom-state: Skapas av användaren. Triggas genom actions.
+
 
 Databas
 ================
@@ -137,7 +150,7 @@ Prio 2:
 Move object (params: named objekt, x, y)
 Next scene
 Previous scene
-Resize object (params: named objekt, percentage)
+Resize object (params: named objekt, percentage) * behövs eventuellt inte med states
 Exile object (params: named objekt)
 Return object (params: named objekt)
 

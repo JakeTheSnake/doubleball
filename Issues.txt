@@ -1,5 +1,7 @@
 TODO:
 
+Run Actions when you create them in direct mode.
+
 Fix so shoot also takes the object to be shots width into consideration when deciding where to spawn it!
 
 Set negative numbers in fields!
