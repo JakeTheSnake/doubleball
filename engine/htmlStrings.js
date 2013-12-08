@@ -27,7 +27,7 @@ GameCreator.htmlStrings = {
                 valueString = value[0];
             }
             else {
-                valueString = value[0] + "-" + value[1];
+                valueString = value[0] + ":" + value[1];
             }
         } else {
             valueString = value;

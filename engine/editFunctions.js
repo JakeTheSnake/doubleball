@@ -170,7 +170,7 @@ $.extend(GameCreator, {
             var y = e.pageY;
             var offsetX = $("#mainCanvas").offset().left;
             var offsetY = $("#mainCanvas").offset().top;
-            if (x > offsetX    && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
+            if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
             	var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
                 var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[0], {x:x-offsetX-globalObj.width/2, y:y-offsetY-globalObj.height/2});
                 if(newInstance.parent.isRenderable) {
