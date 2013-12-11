@@ -1,5 +1,5 @@
 GameCreator.htmlStrings = {
-    singleSelector: function(elementId, collection, attrName) {
+    singleSelector: function(elementId, collection, attrName, selectedKey) {
         var result = '<div><select class="selectorField" id="' + elementId + '" data-type="text"';
         if(attrName) {
         	result += ' data-attrName="' + attrName + '">'
@@ -8,7 +8,7 @@ GameCreator.htmlStrings = {
         }
         for (key in collection) {
             if (collection.hasOwnProperty(key)) {
-                result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'>" + key + "</option>";
+                result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'" + (selectedKey === key ? " selected" : "") + ">" + key + "</option>";
             }
         };
         result += "</select></div>";
@@ -234,7 +234,7 @@ GameCreator.htmlStrings = {
         return result;
     },
     editGlobalObjectPropertiesContent: function(object) {
-        var result = '<div id="editGlobalObjectPropertiesContent">';
+    	var result = '';
         if(object.objectType == "activeObject") {
             result += GameCreator.htmlStrings.globalActiveObjectForm(object);
             result += '<div style="height: 10px"></div>';
@@ -260,7 +260,10 @@ GameCreator.htmlStrings = {
             result += '<div style="height: 10px"></div>';
             result += GameCreator.htmlStrings.platformMovementInputs(object);
         }
-        result += "</div>";
+        else if(object.objectType == "counterObject") {
+        	//If the object does not have its own counter, show dropdowns for selecting counter to display.
+        	result += GameCreator.htmlStrings.globalCounterObjectForm(object);
+        }
         result += '<button class="regularButton" id="saveGlobalObjectPropertiesButton">Save</button>';
         return result;
     },
@@ -339,6 +342,16 @@ GameCreator.htmlStrings = {
                 '<br style="clear:both;"/>';
         return result;
     },
+    
+    globalCounterObjectForm: function(obj) {
+    	if(obj.textCounter) {
+    		return GameCreator.htmlStrings.counterObjectTextForm(obj);
+    	} else if (obj.imageCounter) {
+    		return GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "size", obj.size ? obj.size : '') +
+				'<br style="clear:both;"/>';
+    	}
+    },
+    
     mouseMovementInputs: function(object) {
         var result = GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min X:") + GameCreator.htmlStrings.numberInput("mouseObjectMinX", "minX", (object ? object.minX : ""));
         result += '<br style="clear:both;"/>';
@@ -404,29 +417,30 @@ GameCreator.htmlStrings = {
 		return 	GameCreator.htmlStrings.inputLabel("counterObjectName", "Name:") + GameCreator.htmlStrings.stringInput("counterObjectName", "name", "") +
         		'<br style="clear:both;"/>' +
         		GameCreator.htmlStrings.inputLabel("counterConnection", "Connection:") + 
-        		GameCreator.htmlStrings.singleSelector("counterConnection", {"Connect to existing counter": "existing", "Create new counter": "new"}) +
+        		GameCreator.htmlStrings.singleSelector("counterConnection", {"Connect to existing counter": "existing", "Create new counter": "new"}, "connection") +
             	'<br style="clear:both;"/>' +
             	'<div id="addCounterObjectCounterConnectionContent"></div>' + 
             	'<br style="clear:both;"/>' +
             	GameCreator.htmlStrings.inputLabel("counterRepresentation", "Show as:") + 
-            	GameCreator.htmlStrings.singleSelector("counterRepresentation", {"Text": "text", "Repeating Image": "image"}) +
+            	GameCreator.htmlStrings.singleSelector("counterRepresentation", {"Text": "text", "Repeating Image": "image"}, "representation") +
             	'<br style="clear:both;"/>' +
-            	'<div id="addCounterObjectCounterRepresentationContent"></div>' 
+            	'<div id="addCounterObjectCounterRepresentationContent"></div>' +
+            	'<button class="saveButton regularButton">Save</button>';
 	},
 	
-	addCounterObjectText: function() {
-		return GameCreator.htmlStrings.inputLabel("counterObjectCounterTextFont", "Font:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextFont", "", "") +
+	counterObjectTextForm: function(obj) {
+		return GameCreator.htmlStrings.inputLabel("counterObjectCounterTextFont", "Font:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextFont", "font", obj && obj.font ? obj.font : '') +
 				'<br style="clear:both;"/>' +
-				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextColor", "Color:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "", "") +
+				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextColor", "Color:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "color", obj && obj.color ? obj.color : '') +
 				'<br style="clear:both;"/>' +
-				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextSize", "", "") +
+				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextSize", "size", obj && obj.size ? obj.size : '') +
 				'<br style="clear:both;"/>';
 	},
 	
 	addCounterObjectImage: function() {
-		return GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSrc", "Src:") + GameCreator.htmlStrings.stringInput("counterObjectCounterImageSrc", "", "") +
+		return GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSrc", "Src:") + GameCreator.htmlStrings.stringInput("counterObjectCounterImageSrc", "src", "") +
 				'<br style="clear:both;"/>' +
-				GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "", "") +
+				GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "size", "") +
 				'<br style="clear:both;"/>';
 	},
 	

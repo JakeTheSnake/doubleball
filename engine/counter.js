@@ -170,3 +170,39 @@ GameCreator.counter = {
 		return obj;
 	}
 }
+
+GameCreator.counterObject = {
+	New: function(image, args) {
+		var obj = Object.create(GameCreator.counterObject);
+		
+		obj.image = image;
+		obj.name = args.name;
+		
+		if(args.connection === "existing"){
+			obj.counterObject = args.counterObject;
+			obj.counterName = args.counterName;
+		} else {
+			//TODO: Create new counter connected to this object.
+			obj.counter = "TEMP";
+		}
+		if(args.representation === "text") {
+			obj.textCounter = true;
+			obj.font = args.font;
+			obj.color = args.color;
+			obj.size = args.size;
+			obj.src = 'assets/textcounter.png';
+		} else if (args.representation == "image") {
+			obj.imageCounter = true;
+			obj.src = args.src;
+			obj.size = args.size;
+		}
+		
+		obj.isRenderable = true;
+		
+		obj.objectType = "counterObject";
+	
+		GameCreator.globalObjects[obj.name] = obj;
+		
+		return obj;
+	}
+}
