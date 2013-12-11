@@ -234,6 +234,49 @@ GameCreator.UI = {
         $("#addGlobalObjectWindowContent .saveButton").on("click", function(){GameCreator.UI.addPlayerObject();GameCreator.UI.closeDialogue()});
     },
     
+    //Add counter object functions.
+    setupAddCounterObjectForm: function() {
+    	$("#addGlobalObjectWindowContent").html(GameCreator.htmlStrings.addCounterObjectForm());
+    	$("#counterConnection").on("change", function(){
+    		if($(this).val() === 'existing') {
+    			$("#addCounterObjectCounterConnectionContent").html(GameCreator.UI.setupAddCounterConnectionContentExisting());
+    		} else {
+    			$("#addCounterObjectCounterConnectionContent").html('');
+    		}
+		});
+		$("#counterRepresentation").on("change", function(){
+    		if($(this).val() === "text") {
+    			$("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.addCounterObjectText());
+    		} else if ($(this).val() === "image"){
+    			$("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.addCounterObjectImage());
+    		}
+		});
+		$("#addCounterObjectCounterConnectionContent").html(GameCreator.UI.setupAddCounterConnectionContentExisting());
+		$("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.addCounterObjectText());
+    },
+    
+    setupAddCounterConnectionContentExisting: function() {
+		var uniqueIds = GameCreator.getUniqueIDsInScene();
+		var firstId;
+		for(id in uniqueIds) {
+			if(uniqueIds.hasOwnProperty(id)){
+				firstId = uniqueIds[id];
+				break;
+			} 
+		};
+		return GameCreator.htmlStrings.inputLabel("addCounterCounterObject", "Object") +
+				GameCreator.UI.setupSingleSelectorWithListener(
+		            "addCounterCounterObject", 
+		            GameCreator.getUniqueIDsInScene(), 
+		            "change", 
+		            function(){
+		            	$("#addCounterCounterName").replaceWith(GameCreator.htmlStrings.singleSelector("addCounterCounterName", GameCreator.getCountersForGlobalObj($(this).val())))
+		        	}
+		        ) +
+		        GameCreator.htmlStrings.inputLabel("addCounterCounterName", "Counter") +
+		        GameCreator.htmlStrings.singleSelector("addCounterCounterName", firstId ? GameCreator.getCountersForGlobalObj(firstId) : {});
+    },
+    
     //Edit global object functions
     
     openEditGlobalObjectDialogue: function(globalObj) {

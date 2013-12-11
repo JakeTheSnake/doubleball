@@ -205,10 +205,11 @@ GameCreator.htmlStrings = {
     },
     addGlobalObjectWindow: function() {
         var result = "";
-        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'>\
-                    <div class='tab' data-uifunction='setupAddActiveObjectForm'><span>Active Object</span></div> \
-                   <div class='tab' data-uifunction='setupAddPlayerObjectForm'><span>Player Object<span></div></div> \
-                   <div id='addGlobalObjectWindowContent'></div>";
+        result += '<div id="addGlobalObjectTabContainer" class="tabContainer">\
+                	<div class="tab" data-uifunction="setupAddActiveObjectForm"><span>Active Object</span></div> \
+                   	<div class="tab" data-uifunction="setupAddPlayerObjectForm"><span>Player Object</span></div> \
+                   	<div class="tab" data-uifunction="setupAddCounterObjectForm"<span>Counter Object</span></div></div> \
+                   	<div id="addGlobalObjectWindowContent"></div>';
         return result;
     },
     editGlobalObjectWindow: function(object) {
@@ -377,7 +378,7 @@ GameCreator.htmlStrings = {
             GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") +
             GameCreator.htmlStrings.rangeInput("activeObjectHeight", "height", "") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("activeObjectSrc", "Image Src:") + 
-            GameCreator.htmlStrings.stringInput("activeObjectSrc", "src", "http://") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.stringInput("activeObjectSrc", "src", "") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("activeObjectMovementType", "Movement:") +
             GameCreator.htmlStrings.singleSelector("activeObjectMovementType", {"Free": "free", "Route": "route"}, "movementType") +
             '<br style="clear:both;"/> \
@@ -397,7 +398,38 @@ GameCreator.htmlStrings = {
               	GameCreator.htmlStrings.inputLabel("playerObjectType", "Control:") + GameCreator.htmlStrings.singleSelector("playerObjectType", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '<br style="clear:both;"/>' +
 				'<div id="addPlayerObjectMovementParameters"></div><button class="saveButton regularButton">Save</button>'
 	},
-    
+	
+	//Add counter object strings
+	addCounterObjectForm: function() {
+		return 	GameCreator.htmlStrings.inputLabel("counterObjectName", "Name:") + GameCreator.htmlStrings.stringInput("counterObjectName", "name", "") +
+        		'<br style="clear:both;"/>' +
+        		GameCreator.htmlStrings.inputLabel("counterConnection", "Connection:") + 
+        		GameCreator.htmlStrings.singleSelector("counterConnection", {"Connect to existing counter": "existing", "Create new counter": "new"}) +
+            	'<br style="clear:both;"/>' +
+            	'<div id="addCounterObjectCounterConnectionContent"></div>' + 
+            	'<br style="clear:both;"/>' +
+            	GameCreator.htmlStrings.inputLabel("counterRepresentation", "Show as:") + 
+            	GameCreator.htmlStrings.singleSelector("counterRepresentation", {"Text": "text", "Repeating Image": "image"}) +
+            	'<br style="clear:both;"/>' +
+            	'<div id="addCounterObjectCounterRepresentationContent"></div>' 
+	},
+	
+	addCounterObjectText: function() {
+		return GameCreator.htmlStrings.inputLabel("counterObjectCounterTextFont", "Font:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextFont", "", "") +
+				'<br style="clear:both;"/>' +
+				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextColor", "Color:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "", "") +
+				'<br style="clear:both;"/>' +
+				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextSize", "", "") +
+				'<br style="clear:both;"/>';
+	},
+	
+	addCounterObjectImage: function() {
+		return GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSrc", "Src:") + GameCreator.htmlStrings.stringInput("counterObjectCounterImageSrc", "", "") +
+				'<br style="clear:both;"/>' +
+				GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "", "") +
+				'<br style="clear:both;"/>';
+	},
+	
     collisionObjectSelector: function(object) {
     	var result = '';
     	var selectableObjects = {};
