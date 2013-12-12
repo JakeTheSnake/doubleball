@@ -215,7 +215,11 @@ GameCreator.helperFunctions.getValue = function(input) {
         return GameCreator.helperFunctions.parseBool(input.val());
     }
     else if(input.attr("data-type") == "range" && input.val().length != 0) {
-        return GameCreator.helperFunctions.parseRange(input.val());
+        var range = GameCreator.helperFunctions.parseRange(input.val());
+        for(var i = 0; i < range.length; i++) {
+        	range[i] = parseFloat(range[i]);
+        }
+        return range;
     }
     else {
         return input.val();

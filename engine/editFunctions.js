@@ -188,7 +188,7 @@ $.extend(GameCreator, {
             var offsetY = $("#mainCanvas").offset().top;
             if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
             	var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
-                var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[0], {x:x-offsetX-globalObj.width/2, y:y-offsetY-globalObj.height/2});
+                var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[0], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
                 if(newInstance.parent.isRenderable) {
                     GameCreator.renderableObjects.push(newInstance);
                     GameCreator.render();
@@ -313,6 +313,9 @@ $.extend(GameCreator, {
         }
         else if(GameCreator.selectedObject.parent.objectType == "topDownObject") {
             $("#editSceneObjectContent").html(GameCreator.htmlStrings.editTopDownObjectForm(GameCreator.selectedObject));
+        }
+        else if (GameCreator.selectedObject.parent.objectType == "counterObject") {
+        	$("#editSceneObjectContent").html(GameCreator.htmlStrings.editCounterObjectForm(GameCreator.selectedObject));
         }
     },
     

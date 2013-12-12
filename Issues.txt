@@ -1,5 +1,7 @@
 TODO:
 
+Maybe handle inheritance in a nicer way. Possible to avoid the whole "obj.parent.function.call" mess?
+
 Run Actions when you create them in direct mode.
 
 Fix so shoot also takes the object to be shots width into consideration when deciding where to spawn it!

@@ -162,41 +162,7 @@ var GameCreator = {
         this.context.clearRect(0, 0, GameCreator.width, GameCreator.height);
         for (var i=0;i < GameCreator.renderableObjects.length;++i) {
             var obj = GameCreator.renderableObjects[i];
-            if (obj.parent.imageReady) {
-                if (Array.isArray(obj.width) || Array.isArray(obj.height)) {
-                    var maxHeight;
-                    var minHeight;
-                    var maxWidth;
-                    var minWidth;
-                    if (obj.width.length === 2) {
-                        maxWidth = obj.width[1];
-                        minWidth = obj.width[0];
-                    } else if (obj.width.length === 1) {
-                        maxWidth = obj.width[0];
-                        minWidth = obj.width[0];
-                    } else {
-                        maxWidth = obj.width;
-                        minWidth = obj.width;
-                    }
-                    if (obj.height.length === 2) {
-                        maxHeight = obj.height[1];
-                        minHeight = obj.height[0];
-                    } else if (obj.height.length === 1) {
-                        maxHeight = obj.height[0];
-                        minHeight = obj.height[0];
-                    } else {
-                        maxHeight = obj.height;
-                        minHeight = obj.height;
-                    }
-                    this.context.globalAlpha = 0.5;
-                    this.context.drawImage(obj.parent.image, obj.x, obj.y, parseInt(maxWidth), parseInt(maxHeight));
-                    this.context.globalAlpha = 1.0;
-                    this.context.drawImage(obj.parent.image, obj.x, obj.y, parseInt(minWidth), parseInt(minHeight));
-                }
-                else {
-                    this.context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
-                }
-            }
+            obj.parent.draw(this.context, obj);
         }
         if(this.selectedObject) {
             var selobj = this.selectedObject;

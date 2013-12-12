@@ -191,6 +191,8 @@ GameCreator.counterObject = {
 			obj.color = args.color;
 			obj.size = args.size;
 			obj.src = 'assets/textcounter.png';
+			obj.width = [100]; //TODO: How to handle width and height of counters?
+			obj.height = [100];
 		} else if (args.representation == "image") {
 			obj.imageCounter = true;
 			obj.src = args.src;
@@ -204,5 +206,25 @@ GameCreator.counterObject = {
 		GameCreator.globalObjects[obj.name] = obj;
 		
 		return obj;
-	}
+	},
+	
+	draw: function(context, obj) {
+		var value = "---";
+		if(GameCreator.getSceneObjectById(obj.parent.counterObject).counters[obj.parent.counterName]) {
+			value = GameCreator.getSceneObjectById(obj.parent.counterObject).counters[obj.parent.counterName].value;
+		}
+    	if(obj.parent.textCounter) {
+    		context.font = obj.size + "px " + obj.font;
+    		context.fillStyle = obj.color;
+    		context.fillText(value, obj.x, obj.y + obj.size);
+    	} else if (obj.parent.imageCounter){
+    		
+    	}
+	},
+	
+	initialize: function() {},
+	
+	onGameStarted: function() {},
+	
+	onCreate: function() {}
 }

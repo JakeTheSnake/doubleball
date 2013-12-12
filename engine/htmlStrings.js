@@ -141,29 +141,39 @@ GameCreator.htmlStrings = {
         
         result += GameCreator.htmlStrings.mouseMovementInputs(object);
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editPlatformObjectForm: function(object) {
-        var result = "<div id='editSceneObjectForm'>";
-        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectHeight", "height", object.height);
+        var result = '<div id="editSceneObjectForm">';
+        result += GameCreator.htmlStrings.inputLabel("editPlatformObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectHeight", "height", object.height);
         result += '<br style="clear:both;"/>';
-        result +=GameCreator.htmlStrings.inputLabel("editPlatformObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectWidth", "width", object.width);
+        result += GameCreator.htmlStrings.inputLabel("editPlatformObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectWidth", "width", object.width);
         result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.platformMovementInputs(object);
         result += '<br style="clear:both;"/>';
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editTopDownObjectForm: function(object) {
-        var result = "<div id='editSceneObjectForm'>";
+        var result = '<div id="editSceneObjectForm">';
         result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editTopDownObjectHeight", "height", object.height);
         result += '<br style="clear:both;"/>';
         result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editTopDownObjectWidth", "width", object.width);
         result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.topDownMovementInputs(object);
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveFormInputToObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+    },
+    editCounterObjectForm: function(obj) {
+    	var result = '<div id="editSceneObjectForm">';
+    	if(obj.parent.textCounter) {
+    		result += GameCreator.htmlStrings.counterObjectTextForm(obj);
+    	} else if(object.parent.imageCounter) {
+    		result += GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextColor", "size", "");
+    	}
+    	result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     routeNode: function(node, index) {
@@ -440,7 +450,7 @@ GameCreator.htmlStrings = {
 	addCounterObjectImage: function() {
 		return GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSrc", "Src:") + GameCreator.htmlStrings.stringInput("counterObjectCounterImageSrc", "src", "") +
 				'<br style="clear:both;"/>' +
-				GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "size", "") +
+				GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextColor", "size", "") +
 				'<br style="clear:both;"/>';
 	},
 	
