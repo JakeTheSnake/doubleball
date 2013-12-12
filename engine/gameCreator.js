@@ -218,18 +218,20 @@ var GameCreator = {
     
     getCountersForGlobalObj: function(globalObjName) {
     	var obj;
-    	GameCreator.globalObjects[globalObjName];
     	if (GameCreator.globalObjects.hasOwnProperty(globalObjName)) {
 			obj = GameCreator.globalObjects[globalObjName];
     	} else {
-    		obj = GameCreator.getSceneObjectById(globalObjName).parent;
+    		var tmpObj = GameCreator.getSceneObjectById(globalObjName);
+    		obj = tmpObj ? tmpObj.parent : null;
     	}
     	var result = {};
-    	for (var counter in obj.counters) {
-    		if (obj.counters.hasOwnProperty(counter)) {
-    			result[counter] = counter;
-    		}
-    	}
+    	if(obj){
+	    	for (var counter in obj.counters) {
+	    		if (obj.counters.hasOwnProperty(counter)) {
+	    			result[counter] = counter;
+	    		}
+	    	}
+		}
     	return result;
     },
     
@@ -255,7 +257,7 @@ var GameCreator = {
             if(x >= runtimeObj.x &&
                 x <= runtimeObj.x + runtimeObj.width &&
                 y >= runtimeObj.y &&
-                y <= runtimeObj.y + runtimeObj.height)
+                y <= runtimeObj.y + runtimeObj.height && runtimeObj.parent.isClickable)
             {
                 runtimeObj.clickOffsetX = x - runtimeObj.x;
                 runtimeObj.clickOffsetY = y - runtimeObj.y;

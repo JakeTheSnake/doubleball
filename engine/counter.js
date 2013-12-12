@@ -172,6 +172,9 @@ GameCreator.counter = {
 }
 
 GameCreator.counterObject = {
+	
+	isClickable: false,
+	
 	New: function(image, args) {
 		var obj = Object.create(GameCreator.counterObject);
 		
@@ -185,19 +188,21 @@ GameCreator.counterObject = {
 			//TODO: Create new counter connected to this object.
 			obj.counter = "TEMP";
 		}
+		
 		if(args.representation === "text") {
 			obj.textCounter = true;
 			obj.font = args.font;
 			obj.color = args.color;
 			obj.size = args.size;
 			obj.src = 'assets/textcounter.png';
-			obj.width = [100]; //TODO: How to handle width and height of counters?
-			obj.height = [100];
 		} else if (args.representation == "image") {
 			obj.imageCounter = true;
 			obj.src = args.src;
 			obj.size = args.size;
 		}
+		
+		obj.width = [100]; //TODO: How to handle width and height of counters?
+		obj.height = [100];
 		
 		obj.isRenderable = true;
 		
@@ -209,8 +214,8 @@ GameCreator.counterObject = {
 	},
 	
 	draw: function(context, obj) {
-		var value = "---";
-		if(GameCreator.getSceneObjectById(obj.parent.counterObject).counters[obj.parent.counterName]) {
+		var value = obj.parent.textCounter ? "---" : 0;
+		if(GameCreator.getSceneObjectById(obj.parent.counterObject) && GameCreator.getSceneObjectById(obj.parent.counterObject).counters[obj.parent.counterName]) {
 			value = GameCreator.getSceneObjectById(obj.parent.counterObject).counters[obj.parent.counterName].value;
 		}
     	if(obj.parent.textCounter) {
@@ -218,11 +223,25 @@ GameCreator.counterObject = {
     		context.fillStyle = obj.color;
     		context.fillText(value, obj.x, obj.y + obj.size);
     	} else if (obj.parent.imageCounter){
-    		
+    		if (obj.parent.imageReady) {
+    			//Draw 3 semitransparent hearts if in edit mode. 
+			    if(GameCreator.state === 'editing') {
+					value = 3;
+					context.globalAlpha = 0.5;
+				} else {
+					context.globalAlpha = 1;
+				}
+    			for(var i = 0;i < value; i++) {
+    				context.drawImage(obj.parent.image, obj.x + i * obj.size + i * 3, obj.y, obj.size, obj.size);
+				}
+			}
     	}
 	},
 	
-	initialize: function() {},
+	initialize: function() {
+		this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
+        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+	},
 	
 	onGameStarted: function() {},
 	

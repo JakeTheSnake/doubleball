@@ -244,12 +244,6 @@ GameCreator.helperFunctions.getRandomFromRange = function(range) {
     return value;
 };
 
-GameCreator.helperFunctions.logOnce = function(obj) {
-    if(!GameCreator.loggedOnce) {
-        console.log(obj);
-    }
-    GameCreator.loggedOnce = true;
-};
 GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parameters) {
 	if(actionToRun.runnable.call(runtimeObj)) {
 	    if (actionToRun.timing.type === "after") {

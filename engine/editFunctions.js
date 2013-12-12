@@ -115,7 +115,9 @@ $.extend(GameCreator, {
 
     editScene: function(scene){
         GameCreator.reset();
-        //Here we populate the renderableObjects only since the other find are unused for editing. Also we use the actual sceneObjects in the
+        GameCreator.resetScene(scene);
+        GameCreator.state = 'editing';
+        //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
         //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
         for (var i=0;i < scene.length;++i) {
             var obj = scene[i];

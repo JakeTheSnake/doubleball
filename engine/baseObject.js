@@ -6,6 +6,7 @@ GameCreator.baseObject = {
 	imageReady: false,
 	objectType: "baseObject",
 	isDestroyed: false,
+	isClickable: true,
 	
 	/**
 	 * Called when an object is being destroyed through an action. Marks

@@ -170,8 +170,9 @@ GameCreator.htmlStrings = {
     	var result = '<div id="editSceneObjectForm">';
     	if(obj.parent.textCounter) {
     		result += GameCreator.htmlStrings.counterObjectTextForm(obj);
-    	} else if(object.parent.imageCounter) {
-    		result += GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextColor", "size", "");
+    	} else if(obj.parent.imageCounter) {
+    		result += GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextColor", "size", obj.size);
+    		result += '<br style="clear:both;"/>';
     	}
     	result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.deleteSelectedObject()" class="regularButton">Delete</button></div>'
