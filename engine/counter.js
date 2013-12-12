@@ -191,14 +191,14 @@ GameCreator.counterObject = {
 		
 		if(args.representation === "text") {
 			obj.textCounter = true;
-			obj.font = args.font;
-			obj.color = args.color;
-			obj.size = args.size;
+			obj.font = args.font || 'Arial';
+			obj.color = args.color || '#000';
+			obj.size = args.size || 20;
 			obj.src = 'assets/textcounter.png';
 		} else if (args.representation == "image") {
 			obj.imageCounter = true;
 			obj.src = args.src;
-			obj.size = args.size;
+			obj.size = args.size || 20;
 		}
 		
 		obj.width = [100]; //TODO: How to handle width and height of counters?
