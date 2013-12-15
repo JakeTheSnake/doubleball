@@ -87,8 +87,7 @@ $.extend(GameCreator, {
         }
         
         $(".routeNodeContainer").remove();
-        $("#directSceneButton").hide();
-        $("#editSceneButton").show();
+		$('#sceneTabs').hide();
         then = Date.now();
         GameCreator.resumeGame();
         
@@ -190,7 +189,7 @@ $.extend(GameCreator, {
             var offsetY = $("#mainCanvas").offset().top;
             if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
             	var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
-                var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[0], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
+                var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[GameCreator.activeScene], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
                 if(newInstance.parent.isRenderable) {
                     GameCreator.renderableObjects.push(newInstance);
                     GameCreator.render();
@@ -200,14 +199,14 @@ $.extend(GameCreator, {
             GameCreator.draggedGlobalElement = undefined;
         });
         
-        $("#directSceneButton").show();
-        $("#editSceneButton").hide();
+        GameCreator.UI.setupSceneTabs(GameCreator.scenes);
+        GameCreator.render();
     },
     
     saveState: function() {
         var results = {globalObjects: {}, scenes: [], idCounter: 0};
-        //TODO: Put this array somewhere more "configy"
         
+        //TODO: Put this array somewhere more "configy"
         //Save global objects
         var attrsToCopy = ["accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "counters"];
         var objects = GameCreator.globalObjects;
@@ -381,4 +380,8 @@ $.extend(GameCreator, {
         }
         return null;
     },
+    addScene: function() {
+    	GameCreator.scenes.push([]);
+    	GameCreator.UI.setupSceneTabs(GameCreator.scenes);
+    }
 });

@@ -496,8 +496,24 @@ GameCreator.UI = {
     	$(document.body).on(event, "#" + elementId, callback);
     	return GameCreator.htmlStrings.singleSelector(elementId, collection, attrName, selectedKey);
     },
-
     showDebugInformation: function(info){
         $("#debugInfoPane").html(GameCreator.htmlStrings.debugInformation(info));
+    },
+    setupSceneTabs: function(scenes){
+    	var result = '';
+    	$('#sceneTabs').show();
+    	for(var i = 0; i < scenes.length;i++){
+			result += GameCreator.htmlStrings.sceneTab(i);
+    	};
+    	result += GameCreator.htmlStrings.addSceneTab()
+    	$('#sceneTabs').html(result);
+    	$('#sceneTabs').off('click');
+    	$('#sceneTabs').on('click', '.tab:not(#addSceneTab)', function(){
+    		GameCreator.activeScene = parseInt($(this).data('scenenr'));
+    		GameCreator.editActiveScene();
+		});
+		$('#sceneTabs').one('click', '#addSceneTab', function(){
+    		GameCreator.addScene();
+		});
     }
 }

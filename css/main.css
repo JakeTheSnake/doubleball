@@ -126,3 +126,14 @@
 #editCounterEventActionsContent #selectActionWindow {
 	width: 485px;
 }
+
+#sceneTabs {
+	position: absolute;
+	top: -38px;
+	left: 10px;
+}
+
+#sceneTabs .tab {
+	width: 25px;
+	text-align: center;
+}

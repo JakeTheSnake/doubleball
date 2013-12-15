@@ -517,5 +517,11 @@ GameCreator.htmlStrings = {
             }
         }
         return result;
-    }
+    },
+	sceneTab: function(sceneNr){
+		return '<div class="tab" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
+	},
+	addSceneTab: function(){
+		return '<div id="addSceneTab" class="tab">+</div>';
+	}
 };
