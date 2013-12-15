@@ -427,10 +427,7 @@ GameCreator.htmlStrings = {
 	addCounterObjectForm: function() {
 		return 	GameCreator.htmlStrings.inputLabel("counterObjectName", "Name:") + GameCreator.htmlStrings.stringInput("counterObjectName", "name", "") +
         		'<br style="clear:both;"/>' +
-        		GameCreator.htmlStrings.inputLabel("counterConnection", "Connection:") + 
-        		GameCreator.htmlStrings.singleSelector("counterConnection", {"Connect to existing counter": "existing", "Create new counter": "new"}, "connection") +
-            	'<br style="clear:both;"/>' +
-            	'<div id="addCounterObjectCounterConnectionContent"></div>' + 
+            	'<div id="addCounterObjectCounterSelector"></div>' + 
             	'<br style="clear:both;"/>' +
             	GameCreator.htmlStrings.inputLabel("counterRepresentation", "Show as:") + 
             	GameCreator.htmlStrings.singleSelector("counterRepresentation", {"Text": "text", "Repeating Image": "image"}, "representation") +

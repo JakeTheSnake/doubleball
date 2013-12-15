@@ -225,13 +225,6 @@ GameCreator.UI = {
     //Add counter object functions.
     setupAddCounterObjectForm: function() {
     	$("#addGlobalObjectWindowContent").html(GameCreator.htmlStrings.addCounterObjectForm());
-    	$("#counterConnection").on("change", function(){
-    		if($(this).val() === 'existing') {
-    			$("#addCounterObjectCounterConnectionContent").html(GameCreator.UI.setupAddCounterConnectionContentExisting());
-    		} else {
-    			$("#addCounterObjectCounterConnectionContent").html('');
-    		}
-		});
 		$("#counterRepresentation").on("change", function(){
     		if($(this).val() === "text") {
     			$("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.counterObjectTextForm());
@@ -240,11 +233,11 @@ GameCreator.UI = {
     		}
 		});
 		$("#addGlobalObjectWindowContent .saveButton").on("click", function(){GameCreator.UI.saveCounterObject();GameCreator.UI.closeDialogue()});
-		$("#addCounterObjectCounterConnectionContent").html(GameCreator.UI.setupAddCounterConnectionContentExisting());
+		$("#addCounterObjectCounterSelector").html(GameCreator.UI.setupAddCounterObjectCounterSelector());
 		$("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.counterObjectTextForm());
     },
     
-    setupAddCounterConnectionContentExisting: function(obj) {
+    setupAddCounterObjectCounterSelector: function(obj) {
 		var uniqueIds = GameCreator.getUniqueIDsInScene();
 		var selectedId;
     	if(!obj || (obj && !obj.counterObject)) {
@@ -306,7 +299,7 @@ GameCreator.UI = {
     setupEditGlobalObjectPropertiesContent: function(container, globalObj){
     	var result = '';
     	if(globalObj.objectType === 'counterObject' && !globalObj.counter) {
-    		result += GameCreator.UI.setupAddCounterConnectionContentExisting(globalObj) +
+    		result += GameCreator.UI.setupAddCounterObjectCounterSelector(globalObj) +
 			    		'<br style="clear:both;"/>' +
 			    		GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj);
     	} else {

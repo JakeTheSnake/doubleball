@@ -181,13 +181,8 @@ GameCreator.counterObject = {
 		obj.image = image;
 		obj.name = args.name;
 		
-		if(args.connection === "existing"){
-			obj.counterObject = args.counterObject;
-			obj.counterName = args.counterName;
-		} else {
-			//TODO: Create new counter connected to this object.
-			obj.counter = "TEMP";
-		}
+		obj.counterObject = args.counterObject;
+		obj.counterName = args.counterName;
 		
 		if(args.representation === "text") {
 			obj.textCounter = true;
