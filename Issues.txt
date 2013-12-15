@@ -1,6 +1,10 @@
 TODO:
 
-Maybe handle inheritance in a nicer way. Possible to avoid the whole "obj.parent.function.call" mess?
+
+Maybe handle inheritance in a nicer way. Possible to avoid the whole obj.parent.function.call" mess?
+
+
+Direct mode should disable everything in edit mode.
 
 Run Actions when you create them in direct mode.
 

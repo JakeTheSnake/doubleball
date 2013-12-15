@@ -495,5 +495,9 @@ GameCreator.UI = {
     setupSingleSelectorWithListener: function(elementId, collection, event, callback, attrName, selectedKey) {
     	$(document.body).on(event, "#" + elementId, callback);
     	return GameCreator.htmlStrings.singleSelector(elementId, collection, attrName, selectedKey);
+    },
+
+    showDebugInformation: function(info){
+        $("#debugInfoPane").html(GameCreator.htmlStrings.debugInformation(info));
     }
 }

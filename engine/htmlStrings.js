@@ -508,5 +508,14 @@ GameCreator.htmlStrings = {
     	result += GameCreator.htmlStrings.numberInput("editCounterEventValue", "value", "");
     	result += '<button class="saveButton regularButton">Save</button>';
     	return result;
-	}
+	},
+    debugInformation: function(info){
+        var result = '';
+        for(var key in info){
+            if(info.hasOwnProperty(key)){
+                result += '<span>' + key + ': ' + info[key] + '</span><br/>';
+            }
+        }
+        return result;
+    }
 };

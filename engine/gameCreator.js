@@ -88,6 +88,7 @@ var GameCreator = {
                 runtimeObj.parent.onCreate.call(runtimeObj);
             }
             GameCreator.newlyCreatedObjects = [];
+            GameCreator.debug.calculateDebugInfo(modifier);
         }
     },
 
