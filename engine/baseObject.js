@@ -51,6 +51,7 @@ GameCreator.baseObject = {
 	},
 	
 	removeFromGame: function() {
+		GameCreator.invalidate(this);
 		//Collidables
 		var ids = GameCreator.collidableObjects.map(function(x){return x.instanceId});
 		var index = $.inArray(this.instanceId, ids);
@@ -87,8 +88,11 @@ GameCreator.baseObject = {
 	checkEvents: function(){},
 	
 	move: function(modifier){
-		this.x += this.speedX * modifier;
-		this.y += this.speedY * modifier;
+		if (this.speedX != 0 || this.speedY != 0) {
+			GameCreator.invalidate(this);
+			this.x += this.speedX * modifier;
+			this.y += this.speedY * modifier;
+		}
 	},
 	
 	draw: function(context, obj) {
@@ -126,6 +130,7 @@ GameCreator.baseObject = {
             else {
                 context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
             }
+            obj.invalidated = false;
         }
 	}
 }

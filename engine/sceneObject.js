@@ -35,8 +35,9 @@ GameCreator.sceneObject = {
         this.displayHeight = parseInt(this.height[this.height.length - 1]);
     },
     instantiate: function(globalObj, args){
-        this.x = args.x != undefined ? args.x : globalObj.x
-        this.y = args.y != undefined ? args.y : globalObj.y
+        this.invalidated = true;
+        this.x = args.x != undefined ? args.x : globalObj.x;
+        this.y = args.y != undefined ? args.y : globalObj.y;
         this.accX = args.accX != undefined ? args.accX : globalObj.accX;
         this.accY = args.accY != undefined ? args.accY : globalObj.accY;
         this.speedX = args.speedX != undefined ? args.speedX : globalObj.speedX;

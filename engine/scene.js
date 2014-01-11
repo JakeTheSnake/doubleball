@@ -59,7 +59,7 @@ $.extend(GameCreator, {
     },
 
     sceneStarted: function(){
-        $(GameCreator.canvas).on("mousedown.runningScene", function(e){
+        $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e){
             var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(runtimeObj && runtimeObj.parent.isClickable) {
                 if(runtimeObj.parent.onClickActions == undefined)

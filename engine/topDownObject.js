@@ -84,6 +84,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
     };
 
     topDownObject.initialize = function() {
+        this.invalidated = true;
         this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
         this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
         this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);

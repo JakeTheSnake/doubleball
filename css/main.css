@@ -21,16 +21,15 @@
     display: none;
 }
 
+
+
 #dialogueWindow {
 	padding: 5px;
 }
 
 .tabContainer {
     height: 30px;
-    padding: 5px 5px 0 5px;
-    position: absolute;
-    top: -37px;
-    left: -1px;
+    padding: 5px 5px 0px 5px;
 }
 
 .tabContainer .tab {
@@ -54,12 +53,28 @@
     background-color: #999;
 }
 
-#mainCanvas {
-    border: 2px solid;
-    border-radius: 10px;
+#canvasContainer {
     margin: 10px;
-    position: absolute;
     left: 120px;
+}
+
+canvas {
+	position: absolute;
+	border: 2px solid;
+    border-radius: 10px;
+}
+
+#uiCanvas {
+	pointer-events:none;
+}
+
+#sceneTabs {
+
+}
+
+#sceneTabs .tab {
+	width: 25px;
+	text-align: center;
 }
 
 #mainMenu {
@@ -127,13 +142,3 @@
 	width: 485px;
 }
 
-#sceneTabs {
-	position: absolute;
-	top: -38px;
-	left: 10px;
-}
-
-#sceneTabs .tab {
-	width: 25px;
-	text-align: center;
-}

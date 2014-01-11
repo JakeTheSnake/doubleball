@@ -1,11 +1,26 @@
 debugCounter = 0;
 
 window.onload = function () {
-        GameCreator.canvas = document.createElement("canvas");
-        GameCreator.context = GameCreator.canvas.getContext("2d");
-        GameCreator.canvas.width = GameCreator.width;
-        GameCreator.canvas.height = GameCreator.height;
-        $("#mainCanvas").append(GameCreator.canvas);
+        GameCreator.bgCanvas = document.createElement("canvas");
+        GameCreator.bgCanvas.id = "bgCanvas"
+        GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
+        GameCreator.bgCanvas.width = GameCreator.width;
+        GameCreator.bgCanvas.height = GameCreator.height;
+        $("#canvasContainer").append(GameCreator.bgCanvas);
+
+        GameCreator.mainCanvas = document.createElement("canvas");
+        GameCreator.mainCanvas.id = "mainCanvas"
+        GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
+        GameCreator.mainCanvas.width = GameCreator.width;
+        GameCreator.mainCanvas.height = GameCreator.height;
+        $("#canvasContainer").append(GameCreator.mainCanvas);
+
+        GameCreator.uiCanvas = document.createElement("canvas");
+        GameCreator.uiCanvas.id = "uiCanvas"
+        GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
+        GameCreator.uiCanvas.width = GameCreator.width;
+        GameCreator.uiCanvas.height = GameCreator.height;
+        $("#canvasContainer").append(GameCreator.uiCanvas);
         
         GameCreator.scenes.push([]);
         GameCreator.activeScene = 0;

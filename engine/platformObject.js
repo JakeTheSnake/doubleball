@@ -158,6 +158,7 @@ GameCreator.addObjFunctions.platformObjectFunctions = function(platformObject, a
     };
 
     platformObject.initialize = function() {
+        this.invalidated = true;
         this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
         this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
         this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);

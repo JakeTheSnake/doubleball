@@ -71,6 +71,7 @@ GameCreator.activeObject = {
 GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
 {    
     activeObject.initialize = function() {
+        this.invalidated = true;
         this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
         this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
         this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
@@ -136,6 +137,9 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
         switch(this.parent.movementType){
             
             case "free":
+                if (this.speedX != 0 || this.speedY != 0) {
+                    GameCreator.invalidate(this);
+                }
                 this.x += this.speedX * modifier;
                 this.y += this.speedY * modifier;
                 break;
@@ -143,6 +147,9 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
             case "route":
                 if(this.route.length == 0)
                     return;
+                if (this.speed != 0) {
+                    GameCreator.invalidate(this);
+                }
                 var targetX = this.route[this.targetNode].x;
                 var targetY = this.route[this.targetNode].y;
                 var preDiffX = this.x - targetX;

@@ -67,6 +67,7 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 
 GameCreator.helperFunctions.doCollision = function(object, targetObject){
     var currentActions = object.parent.collisionActions[targetObject.name];
+    targetObject.invalidated = true;
     if(currentActions != undefined)
     {
         for (var j = 0; j < currentActions.length; j++) {

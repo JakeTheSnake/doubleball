@@ -44,19 +44,21 @@ var GameCreator = {
         var delta = now - then;
     
         GameCreator.runFrame(delta);
-        GameCreator.render();
-    
+        GameCreator.render(false);
+        if (GameCreator.state === 'directing') {
+            requestAnimationFrame(GameCreator.gameLoop);
+        }
         then = now;
     },
 
-    runFrame: function(modifier){
+    runFrame: function(deltaTime){
         var runtimeObj;
         if(!GameCreator.paused){
             for (var i=0;i < GameCreator.movableObjects.length;++i) {
                 if(!GameCreator.paused)
                 {
                     runtimeObj = GameCreator.movableObjects[i];
-                    runtimeObj.parent.calculateSpeed.call(runtimeObj, modifier/1000);
+                    runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime/1000);
                 }
             }
             for (i=0;i < GameCreator.collidableObjects.length;++i) {
@@ -66,7 +68,7 @@ var GameCreator = {
                 if(!GameCreator.paused)
                 {
                     runtimeObj = GameCreator.movableObjects[i];
-                    runtimeObj.parent.move.call(runtimeObj, modifier/1000);
+                    runtimeObj.parent.move.call(runtimeObj, deltaTime/1000);
                 }
             }
             for (i=0;i < GameCreator.eventableObjects.length;++i) {
@@ -76,7 +78,7 @@ var GameCreator = {
                     runtimeObj.parent.checkEvents.call(runtimeObj);
                 }
             }
-            GameCreator.timerHandler.update(modifier);
+            GameCreator.timerHandler.update(deltaTime);
             for (i=0;i < GameCreator.objectsToDestroy.length;++i)
             {
                 runtimeObj = GameCreator.objectsToDestroy[i];
@@ -88,12 +90,37 @@ var GameCreator = {
                 runtimeObj.parent.onCreate.call(runtimeObj);
             }
             GameCreator.newlyCreatedObjects = [];
-            GameCreator.debug.calculateDebugInfo(modifier);
+            GameCreator.debug.calculateDebugInfo(deltaTime);
         }
+    },
+
+    invalidate: function(obj) {
+        var x = parseInt(obj.x);
+        var y = parseInt(obj.y);
+        var xCorr = 0;
+        var yCorr = 0;
+        var width = GameCreator.helperFunctions.getRandomFromRange(obj.width);
+        var height = GameCreator.helperFunctions.getRandomFromRange(obj.height);
+        if (obj.x < 0) {
+            xCorr = x;
+            x = 0;
+        }
+        if (obj.y < 0) {
+            yCorr = y;
+            y = 0;
+        }
+        //console.log("clearRect: x1=" + x + ", y1=" + y + ", x2=" + (width + xCorr) + ", y2=" + (height + yCorr));
+        this.mainContext.clearRect(x, y,
+            width + xCorr + 1,
+            height + yCorr + 1);
+        obj.invalidated = true;
     },
 
     reset: function() {
         clearInterval(GameCreator.timer);
+        GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+        GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+        GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
         GameCreator.timerHandler.clear();
         this.collidableObjects = [];
         this.movableObjects = [];
@@ -105,8 +132,8 @@ var GameCreator = {
         $(document).off("mousemove.gameKeyListener");
         $(document).off("mousedown.gameKeyListener");
         $(document).off("mouseup.gameKeyListener");
-        $(GameCreator.canvas).off("mousedown.runningScene");
-        $(GameCreator.canvas).css("cursor", "default");
+        $(GameCreator.mainCanvas).off("mousedown.runningScene");
+        $(GameCreator.mainCanvas).css("cursor", "default");
     },
     
     
@@ -118,7 +145,7 @@ var GameCreator = {
         $(document).off("mousemove.gameKeyListener");
         $(document).off("mousedown.gameKeyListener");
         $(document).off("mouseup.gameKeyListener");
-        $(GameCreator.canvas).css("cursor", "default");
+        $(GameCreator.mainCanvas).css("cursor", "default");
         
         //Set all keypresses to false here since we turn off keyUp.
         for(objectName in GameCreator.globalObjects) {
@@ -159,23 +186,14 @@ var GameCreator = {
         }
     },
 
-    render: function () {
-        this.context.clearRect(0, 0, GameCreator.width, GameCreator.height);
+    render: function (forceRender) {
         for (var i=0;i < GameCreator.renderableObjects.length;++i) {
             var obj = GameCreator.renderableObjects[i];
-            obj.parent.draw(this.context, obj);
+            if (obj.invalidated || forceRender) {
+                obj.parent.draw(this.mainContext, obj);
+            }
         }
-        if(this.selectedObject) {
-            var selobj = this.selectedObject;
-            this.context.beginPath();
-            this.context.moveTo(selobj.x, selobj.y);
-            this.context.lineTo(selobj.x + selobj.displayWidth, selobj.y);
-            this.context.lineTo(selobj.x + selobj.displayWidth, selobj.y + selobj.displayHeight);
-            this.context.lineTo(selobj.x, selobj.y + selobj.displayHeight);
-            this.context.closePath();
-            this.context.stroke();
-        }
-
+        GameCreator.drawSelectionLine();
     },
 
     

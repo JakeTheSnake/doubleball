@@ -76,7 +76,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     
     mouseObject.move = function()
     {   
-        var offset = $(GameCreator.canvas).offset();
+        var offset = $(GameCreator.mainCanvas).offset();
         this.x = this.parent.latestMouseX - offset.left;
         this.y = this.parent.latestMouseY - offset.top;
         if(this.x > this.maxX)
@@ -91,7 +91,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     
     mouseObject.onGameStarted = function()
     {
-        $(GameCreator.canvas).css("cursor", "none");
+        $(GameCreator.mainCanvas).css("cursor", "none");
         var that = this;
         $(document).on("mousemove.gameKeyListener", function(evt)
         {
@@ -172,6 +172,6 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     
     mouseObject.onDestroy = function()
     {
-        $(GameCreator.canvas).off("mousemove." + this.name);
+        $(GameCreator.mainCanvas).off("mousemove." + this.name);
     };
 }

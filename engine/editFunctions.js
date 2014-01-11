@@ -98,11 +98,25 @@ $.extend(GameCreator, {
 		GameCreator.sceneStarted();
         
         GameCreator.state = 'directing';
-        GameCreator.timer = setInterval(this.gameLoop, 1);
+        GameCreator.gameLoop();
+    },
+
+    drawSelectionLine: function() {
+        GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+        if(GameCreator.selectedObject) {
+            var selobj = GameCreator.selectedObject;
+            GameCreator.uiContext.beginPath();
+            GameCreator.uiContext.moveTo(selobj.x, selobj.y);
+            GameCreator.uiContext.lineTo(selobj.x + selobj.displayWidth, selobj.y);
+            GameCreator.uiContext.lineTo(selobj.x + selobj.displayWidth, selobj.y + selobj.displayHeight);
+            GameCreator.uiContext.lineTo(selobj.x, selobj.y + selobj.displayHeight);
+            GameCreator.uiContext.closePath();
+            GameCreator.uiContext.stroke();
+        }
     },
     
     stopEditing: function(){
-    	$(GameCreator.canvas).off("mousedown.editScene");
+    	$(GameCreator.mainCanvas).off("mousedown.editScene");
     	GameCreator.selectedObject = null;
     	$("#editSceneObjectTitle").html("");
     	$("#editSceneObjectContent").html("");
@@ -122,7 +136,7 @@ $.extend(GameCreator, {
             var obj = scene[i];
             if(obj.parent.isRenderable) {
                 GameCreator.renderableObjects.push(obj);
-                GameCreator.render();
+                GameCreator.render(true);
             }
         }
         
@@ -136,35 +150,37 @@ $.extend(GameCreator, {
         
         $(window).on("mouseup", function(e) {
             if (GameCreator.draggedNode) {
-                GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].x = e.pageX - GameCreator.canvasOffsetX - 10;
-                GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].y = e.pageY - GameCreator.canvasOffsetY - 10;
+                GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].x = e.pageX - GameCreator.mainCanvasOffsetX - 10;
+                GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].y = e.pageY - GameCreator.mainCanvasOffsetY - 10;
                 GameCreator.draggedNode = undefined;
                 GameCreator.drawRoute(GameCreator.selectedObject.route);
                 return false;
             }
         });
         
-        $(GameCreator.canvas).on("mousedown.editScene", function(e){
+        $(GameCreator.mainCanvas).on("mousedown.editScene", function(e){
             GameCreator.draggedObject = GameCreator.getClickedObjectEditing(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(GameCreator.draggedObject) {
                 GameCreator.selectedObject = GameCreator.draggedObject;
                 GameCreator.editSceneObject();
             } else {
                 GameCreator.unselectSceneObject();
+                GameCreator.drawSelectionLine();
             }
-            GameCreator.render();
+            GameCreator.render(false);
         });
         
-        $(GameCreator.canvas).on("mouseup", function(){
+        $(GameCreator.mainCanvas).on("mouseup", function(){
             GameCreator.draggedObject = undefined;
         });
         
-        $(GameCreator.canvas).on("mousemove", function(e){
+        $(GameCreator.mainCanvas).on("mousemove", function(e){
             if(GameCreator.draggedObject)
             {
+                GameCreator.invalidate(GameCreator.draggedObject);
                 GameCreator.draggedObject.x = e.pageX - $("#mainCanvas").offset().left - GameCreator.draggedObject.clickOffsetX;
                 GameCreator.draggedObject.y = e.pageY - $("#mainCanvas").offset().top - GameCreator.draggedObject.clickOffsetY;
-                GameCreator.render();
+                GameCreator.render(true);
             }
         });
         
@@ -192,7 +208,7 @@ $.extend(GameCreator, {
                 var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[GameCreator.activeScene], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
                 if(newInstance.parent.isRenderable) {
                     GameCreator.renderableObjects.push(newInstance);
-                    GameCreator.render();
+                    GameCreator.render(false);
                 }
             }
                 
@@ -200,7 +216,7 @@ $.extend(GameCreator, {
         });
         
         GameCreator.UI.setupSceneTabs(GameCreator.scenes);
-        GameCreator.render();
+        GameCreator.render(false);
     },
     
     saveState: function() {
@@ -331,6 +347,7 @@ $.extend(GameCreator, {
     },
     
     deleteSelectedObject: function() {
+        GameCreator.invalidate(GameCreator.selectedObject);
         GameCreator.selectedObject.delete();
         GameCreator.unselectSceneObject();
         GameCreator.render();
