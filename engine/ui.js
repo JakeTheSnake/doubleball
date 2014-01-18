@@ -2,13 +2,13 @@ GameCreator.UI = {
     addActiveObject: function(){
         var args = {};
         GameCreator.saveFormInputToObject("addGlobalObjectWindowContent", args);
-        GameCreator.addActiveObject(args);
+        GameCreator.addGlobalObject(args, "activeObject");
     },
     
     addPlayerObject: function(){
         var obj;
         if($("#playerObjectType").val() == "addPlayerMouseObject") {
-            obj = GameCreator.addPlayerMouseObject({
+            obj = GameCreator.addGlobalObject({
                 name: $("#playerObjectName").val(),
                 width: GameCreator.helperFunctions.getValue($("#playerObjectWidth")),
                 height: GameCreator.helperFunctions.getValue($("#playerObjectHeight")),
@@ -17,9 +17,9 @@ GameCreator.UI = {
                 maxY: GameCreator.helperFunctions.getValue($("#mouseObjectMaxY")),
                 minX: GameCreator.helperFunctions.getValue($("#mouseObjectMinX")),
                 minY: GameCreator.helperFunctions.getValue($("#mouseObjectMinY"))
-            });
+            }, "mouseObject");
         } else if($("#playerObjectType").val() == "addPlayerPlatformObject") {
-            obj = GameCreator.addPlayerPlatformObject({
+            obj = GameCreator.addGlobalObject({
                 name: $("#playerObjectName").val(),
                 width: GameCreator.helperFunctions.getValue($("#playerObjectWidth")),
                 height: GameCreator.helperFunctions.getValue($("#playerObjectHeight")),
@@ -27,15 +27,15 @@ GameCreator.UI = {
                 accY: GameCreator.helperFunctions.getValue($("#platformObjectAccY")),
                 maxSpeed: GameCreator.helperFunctions.getValue($("#platformObjectMaxSpeed")),
                 acceleration: GameCreator.helperFunctions.getValue($("#platformObjectAcceleration"))
-            });
+            }, "platformObject");
         } else if($("#playerObjectType").val() == "addPlayerTopDownObject") {
-            obj = GameCreator.addPlayerTopDownObject({
+            obj = GameCreator.addGlobalObject({
                 name: $("#playerObjectName").val(),
                 width: GameCreator.helperFunctions.getValue($("#playerObjectWidth")),
                 height: GameCreator.helperFunctions.getValue($("#playerObjectHeight")),
                 src: $("#playerObjectSrc").val(),
                 maxSpeed: GameCreator.helperFunctions.getValue($("#topDownObjectMaxSpeed"))
-            });
+            }, "topDownObject");
         }
     },
     

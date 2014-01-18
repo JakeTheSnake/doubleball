@@ -7,53 +7,17 @@ $.extend(GameCreator, {
         Left: "Left",
         Right: "Right"
     },
-    
-    addActiveObject: function(args){
-        var image = new Image();
-        image.src = args.src;
-        var activeObj = GameCreator.activeObject.New(image, args);
-        GameCreator.UI.createGlobalListElement(activeObj);
-        image.onload = function() {
-            activeObj.imageReady = true;
-            GameCreator.render();
-        };
-        return activeObj;
-    },
-    
-    addPlayerMouseObject: function(args){
-        var image = new Image();
-        image.src = args.src;
-        var mouseObj = this.mouseObject.New(image, args);
-        GameCreator.UI.createGlobalListElement(mouseObj);
-        image.onload = function() {
-            mouseObj.imageReady = true;
-            GameCreator.render();
-        };
-        return mouseObj;
-    },
-    
-    addPlayerPlatformObject: function(args){
-        var image = new Image();
-        image.src = args.src;
-        var platformObj = this.platformObject.New(image, args);
-        GameCreator.UI.createGlobalListElement(platformObj);
-        image.onload = function() {
-            platformObj.imageReady = true;
-            GameCreator.render();
-        };
-        return platformObj;
-    },
-    
-    addPlayerTopDownObject: function(args){
-        var image = new Image();
-        image.src = args.src;
-        var topDownObj = this.topDownObject.New(image, args);
-        GameCreator.UI.createGlobalListElement(topDownObj);
-        image.onload = function() {
-            topDownObj.imageReady = true;
-            GameCreator.render();
-        };
-        return topDownObj;
+       
+    addGlobalObject: function(args, objectType) {
+    		var image = new Image();
+	      image.src = args.src;
+	      var topDownObj = this[objectType].New(image, args);
+	      GameCreator.UI.createGlobalListElement(topDownObj);
+	      image.onload = function() {
+	          topDownObj.imageReady = true;
+	          GameCreator.render();
+	      };
+	      return topDownObj;
     },
     
     addCounterObject: function(args){

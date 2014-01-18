@@ -219,7 +219,7 @@ GameCreator.counterObject = {
     		context.fillText(value, obj.x, obj.y + obj.size);
     	} else if (obj.parent.imageCounter){
     		if (obj.parent.imageReady) {
-    			//Draw 3 semitransparent hearts if in edit mode. 
+    			//Draw 3 semitransparent icons if in edit mode. 
 			    if(GameCreator.state === 'editing') {
 					value = 3;
 					context.globalAlpha = 0.5;
