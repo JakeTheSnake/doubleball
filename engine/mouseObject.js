@@ -76,6 +76,7 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     
     mouseObject.move = function()
     {   
+    	GameCreator.invalidate(this);
         var offset = $(GameCreator.mainCanvas).offset();
         this.x = this.parent.latestMouseX - offset.left;
         this.y = this.parent.latestMouseY - offset.top;
