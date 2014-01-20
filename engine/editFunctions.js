@@ -230,7 +230,7 @@ $.extend(GameCreator, {
         
         results.idCounter = GameCreator.idCounter;
         
-        return JSONfn.stringify(results);
+        return JSON.stringify(results);
     },
     
     restoreState: function(savedJson) {
@@ -244,7 +244,7 @@ $.extend(GameCreator, {
         GameCreator.globalObjects = {};
         $("#globalObjectList").html("");
         //Load globalObjects
-        var parsedSave = JSONfn.parse(savedJson);
+        var parsedSave = JSON.parse(savedJson);
         for (name in parsedSave.globalObjects) {
             if (parsedSave.globalObjects.hasOwnProperty(name)) {
                 var object = parsedSave.globalObjects[name];
@@ -259,7 +259,7 @@ $.extend(GameCreator, {
             var savedScene = parsedSave.scenes[i];
             for(var n = 0; n < savedScene.length; n++) {
                 var object = savedScene[n];
-                object.parent = GameCreator.globalObjects[object.name];
+                GameCreator.createSceneObject(GameCreator.globalObjects[object.name], newScene, object);
                 for(var counterName in object.counters){
                 	if(object.counters.hasOwnProperty(counterName)){
                 		var oldCounter = object.counters[counterName]
@@ -271,7 +271,6 @@ $.extend(GameCreator, {
                 		object.counters[counterName].value = oldCounter.value;
                 	}
                 }
-                newScene.push(object);
             }
             GameCreator.scenes.push(newScene);
         }
@@ -280,7 +279,6 @@ $.extend(GameCreator, {
         
         GameCreator.editScene(GameCreator.scenes[0]);
     },
-    
     editSceneObject: function() {
         $("#editSceneObjectTitle").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.name + '</div>');
         if(GameCreator.selectedObject.parent.objectType == "activeObject") {
