@@ -20,7 +20,7 @@ GameCreator.timerHandler = {
 			var time;
 			for (time in fixed) {
 				if (fixed.hasOwnProperty(time)) {
-					if (parseInt(time) <= gameTime) {
+					if (parseInt(time) + 100 > gameTime && gameTime >= parseInt(time)) {
 						for (var i = 0; i < fixed[time].length; i++) {
 							fixed[time][i]();
 						}

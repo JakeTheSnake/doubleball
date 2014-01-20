@@ -247,47 +247,30 @@ GameCreator.helperFunctions.getRandomFromRange = function(range) {
 
 GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parameters) {
 	if(actionToRun.runnable.call(runtimeObj)) {
-	    if (actionToRun.timing.type === "after") {
-	        (function(obj, curAction, curParams){
-	            GameCreator.timerHandler.registerOffset(
-	                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-	                function(){
-	                	if (curAction.runnable.call(obj)) {
-	                		curAction.action.call(obj, curParams);
-	                		return true;
-                		} else {
-                			return false;
-            			}
-        			});
-	        })(runtimeObj, actionToRun, parameters);
+        var timerFunction;
+
+        if (actionToRun.timing.type === "after") {
+            timerFunction = GameCreator.timerHandler.registerOffset;
 	    } else if (actionToRun.timing.type === "at") {
-	        (function(obj, curAction, curParams){
-	            GameCreator.timerHandler.registerFixed(
-	                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-	                function(){
-	                	if (curAction.runnable.call(obj)) {
-	                		curAction.action.call(obj, curParams);
-	                		return true;
-                		} else {
-                			return false;
-            			}
-        			});
-	        })(runtimeObj, actionToRun, parameters);
+            timerFunction = GameCreator.timerHandler.registerFixed;
 	    } else if (actionToRun.timing.type === "every") {
-	        (function(obj, curAction, curParams){
-	            GameCreator.timerHandler.registerInterval(
-	                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-	                function(){
-	                	if (curAction.runnable.call(obj)) {
-	                		curAction.action.call(obj, curParams);
-	                		return true;
-                		} else {
-                			return false;
-            			}
-        			});
-	        })(runtimeObj, actionToRun, parameters);
+            timerFunction = GameCreator.timerHandler.registerInterval;
 	    } else {
 	        actionToRun.action.call(runtimeObj, parameters);
+            return;
 	    }
+
+        (function(obj, curAction, curParams, curTimerFunction){
+                curTimerFunction(
+                    GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                    function(){
+                        if (curAction.runnable.call(obj)) {
+                            curAction.action.call(obj, curParams);
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+            })(runtimeObj, actionToRun, parameters, timerFunction);
 	}
 }

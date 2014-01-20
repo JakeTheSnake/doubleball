@@ -1,5 +1,5 @@
-QUnit.begin = function () {
-        GameCreator.bgCanvas = document.createElement("canvas");
+QUnit.begin = function() {
+    GameCreator.bgCanvas = document.createElement("canvas");
     GameCreator.bgCanvas.id = "bgCanvas"
     GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
     GameCreator.bgCanvas.width = GameCreator.width;
@@ -16,42 +16,22 @@ QUnit.begin = function () {
     GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
     GameCreator.uiCanvas.width = GameCreator.width;
     GameCreator.uiCanvas.height = GameCreator.height;
-    };
+};
     
 QUnit.beginTest = function() {
     GameCreator.reset();
     GameCreator.globalObjects = [];
-}
+};
 
 test("Save Form Data to Object", function() {
-    var f = document.createElement("form");
-    f.setAttribute('id', 'testForm');
-
-    var i = document.createElement("input");
-    i.setAttribute('type','text');
-    i.setAttribute('data-attrName','string')
-    i.setAttribute('data-type',"string");
-    i.setAttribute('value','kastrull');
-
-    var r = document.createElement("input");
-    r.setAttribute('data-attrName','range')
-    r.setAttribute('type',"text");
-    r.setAttribute('data-type',"range");
-    r.setAttribute('value','1:300');
-
-    var n = document.createElement("input");
-    n.setAttribute('data-attrName','number')
-    n.setAttribute('type',"text");
-    n.setAttribute('data-type',"number");
-    n.setAttribute('value','200');
-
-    f.appendChild(i);
-    f.appendChild(r);
-    f.appendChild(n);
-    $("#qunit-fixture").append(f);
+    var rangeField = GameCreator.htmlStrings.rangeInput('rangeField', 'range', '1:300');
+    var numberField = GameCreator.htmlStrings.numberInput('numberField', 'number', '200');
+    var stringField = GameCreator.htmlStrings.stringInput('textField', 'string', 'kastrull');
+    $("#qunit-fixture").html('<form id="testForm">' + rangeField + numberField + stringField + '</form>');
+    
     var obj = {};
 
-    GameCreator.saveFormInputToObject('testForm',obj);
+    GameCreator.saveFormInputToObject('testForm', obj);
     
     deepEqual(obj.string, 'kastrull', 'String parsing.');
     deepEqual(obj.range, [1,300], 'Range parsing.');
