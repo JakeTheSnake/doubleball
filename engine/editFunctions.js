@@ -9,15 +9,15 @@ $.extend(GameCreator, {
     },
        
     addGlobalObject: function(args, objectType) {
-    		var image = new Image();
-	      image.src = args.src;
-	      var topDownObj = this[objectType].New(image, args);
-	      GameCreator.UI.createGlobalListElement(topDownObj);
-	      image.onload = function() {
-	          topDownObj.imageReady = true;
-	          GameCreator.render();
-	      };
-	      return topDownObj;
+    	var image = new Image();
+	    image.src = args.src;
+	    var globalObj = this[objectType].New(image, args);
+	    GameCreator.UI.createGlobalListElement(globalObj);
+	    image.onload = function() {
+	        globalObj.imageReady = true;
+	        GameCreator.render();
+	    };
+	    return globalObj;
     },
     
     addCounterObject: function(args){
@@ -50,8 +50,7 @@ $.extend(GameCreator, {
             obj.setCounterParent();
         }
         
-        $(".routeNodeContainer").remove();
-		$('#sceneTabs').hide();
+        GameCreator.UI.directSceneMode();
         then = Date.now();
         GameCreator.resumeGame();
         
@@ -82,8 +81,7 @@ $.extend(GameCreator, {
     stopEditing: function(){
     	$(GameCreator.mainCanvas).off("mousedown.editScene");
     	GameCreator.selectedObject = null;
-    	$("#editSceneObjectTitle").html("");
-    	$("#editSceneObjectContent").html("");
+    	GameCreator.UI.unselectSceneObject();
     },
     
     editActiveScene: function(){
@@ -126,7 +124,7 @@ $.extend(GameCreator, {
             GameCreator.draggedObject = GameCreator.getClickedObjectEditing(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(GameCreator.draggedObject) {
                 GameCreator.selectedObject = GameCreator.draggedObject;
-                GameCreator.editSceneObject();
+                GameCreator.UI.editSceneObject();
             } else {
                 GameCreator.unselectSceneObject();
                 GameCreator.drawSelectionLine();
@@ -170,10 +168,6 @@ $.extend(GameCreator, {
             if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
             	var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
                 var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[GameCreator.activeScene], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
-                if(newInstance.parent.isRenderable) {
-                    GameCreator.renderableObjects.push(newInstance);
-                    GameCreator.render(false);
-                }
             }
                 
             GameCreator.draggedGlobalElement = undefined;
@@ -279,24 +273,6 @@ $.extend(GameCreator, {
         
         GameCreator.editScene(GameCreator.scenes[0]);
     },
-    editSceneObject: function() {
-        $("#editSceneObjectTitle").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.name + '</div>');
-        if(GameCreator.selectedObject.parent.objectType == "activeObject") {
-            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
-        }
-        else if(GameCreator.selectedObject.parent.objectType == "mouseObject") {
-            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editMouseObjectForm(GameCreator.selectedObject));
-        }
-        else if(GameCreator.selectedObject.parent.objectType == "platformObject") {
-            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editPlatformObjectForm(GameCreator.selectedObject));
-        }
-        else if(GameCreator.selectedObject.parent.objectType == "topDownObject") {
-            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editTopDownObjectForm(GameCreator.selectedObject));
-        }
-        else if (GameCreator.selectedObject.parent.objectType == "counterObject") {
-        	$("#editSceneObjectContent").html(GameCreator.htmlStrings.editCounterObjectForm(GameCreator.selectedObject));
-        }
-    },
     
     //Since all inputs are tagged with "data-attrName" and "data-type" we have this general function for saving all object types.
     saveFormInputToObject: function(formId, obj) {
@@ -313,8 +289,6 @@ $.extend(GameCreator, {
         GameCreator.selectedObject.delete();
         GameCreator.unselectSceneObject();
         GameCreator.render();
-        $("#editSceneObjectContent").html("");
-        $("#editSceneObjectTitle").html("");
     },
 
     saveSceneObject: function(formId, obj) {
@@ -326,8 +300,7 @@ $.extend(GameCreator, {
 
     unselectSceneObject: function() {
         GameCreator.selectedObject = null;
-        $("#editSceneObjectTitle").html("");
-        $("#editSceneObjectContent").html("");
+        GameCreator.UI.unselectSceneObject();
     },
 
     hideRoute: function() {

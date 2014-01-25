@@ -3,6 +3,10 @@ $.extend(GameCreator, {
         var sceneObj = Object.create(GameCreator.sceneObject);
         sceneObj.instantiate(globalObj, args);
         scene.push(sceneObj);
+        if(sceneObj.parent.isRenderable) {
+            GameCreator.renderableObjects.push(sceneObj);
+            GameCreator.render(false);
+        }
         return sceneObj;
     },
 
@@ -84,4 +88,4 @@ $.extend(GameCreator, {
             }
         });
     }
-})
+});

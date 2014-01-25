@@ -515,5 +515,36 @@ GameCreator.UI = {
 		$('#sceneTabs').one('click', '#addSceneTab', function(){
     		GameCreator.addScene();
 		});
+    },
+    deleteSelectedObject: function() {
+        GameCreator.deleteSelectedObject();
+        $("#editSceneObjectContent").html("");
+        $("#editSceneObjectTitle").html("");
+    },
+    editSceneObject: function() {
+        $("#editSceneObjectTitle").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.name + '</div>');
+        if(GameCreator.selectedObject.parent.objectType == "activeObject") {
+            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
+        }
+        else if(GameCreator.selectedObject.parent.objectType == "mouseObject") {
+            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editMouseObjectForm(GameCreator.selectedObject));
+        }
+        else if(GameCreator.selectedObject.parent.objectType == "platformObject") {
+            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editPlatformObjectForm(GameCreator.selectedObject));
+        }
+        else if(GameCreator.selectedObject.parent.objectType == "topDownObject") {
+            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editTopDownObjectForm(GameCreator.selectedObject));
+        }
+        else if (GameCreator.selectedObject.parent.objectType == "counterObject") {
+            $("#editSceneObjectContent").html(GameCreator.htmlStrings.editCounterObjectForm(GameCreator.selectedObject));
+        }
+    },
+    unselectSceneObject: function() {
+        $("#editSceneObjectTitle").html("");
+        $("#editSceneObjectContent").html("");
+    },
+    directSceneMode: function() {
+        $(".routeNodeContainer").remove();
+        $('#sceneTabs').hide();
     }
 }
