@@ -518,8 +518,8 @@ GameCreator.htmlStrings = {
         }
         return result;
     },
-	sceneTab: function(sceneNr){
-		return '<div class="tab" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
+	sceneTab: function(sceneNr, sceneActive){
+		return '<div class="tab ' + (sceneActive ? 'active' : '') + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
 	},
 	addSceneTab: function(){
 		return '<div id="addSceneTab" class="tab">+</div>';

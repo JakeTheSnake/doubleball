@@ -503,7 +503,7 @@ GameCreator.UI = {
     	var result = '';
     	$('#sceneTabs').show();
     	for(var i = 0; i < scenes.length;i++){
-			result += GameCreator.htmlStrings.sceneTab(i);
+				result += GameCreator.htmlStrings.sceneTab(i, GameCreator.activeScene === i);
     	};
     	result += GameCreator.htmlStrings.addSceneTab()
     	$('#sceneTabs').html(result);

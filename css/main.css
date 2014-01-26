@@ -54,7 +54,7 @@
 }
 
 #canvasContainer {
-    margin: 10px;
+    margin: 2px;
     left: 120px;
 }
 
@@ -68,8 +68,12 @@ canvas {
 	pointer-events:none;
 }
 
-#sceneTabs {
+#mainContainer {
+	float:left;
+}
 
+#sceneTabs {
+	margin-left:5px;
 }
 
 #sceneTabs .tab {
