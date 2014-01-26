@@ -1,12 +1,12 @@
 GameCreator.actions = {
-    	Bounce:{   action: function(params) {this.parent.bounce.call(this, params)},
+      Bounce:{   action: function(params) {this.parent.bounce.call(this, params)},
                   params: [],
                   name: "Bounce",
                   excludes: ["Stop", "Destroy", "Bounce"],
                   timing: {at: false, every: false, after: false},
                   runnable: function(){return !this.isDestroyed;}
               },
-     	Stop:  {   action: function(params) {this.parent.stop.call(this, params)},
+      Stop:  {   action: function(params) {this.parent.stop.call(this, params)},
                   params: [],
                   name: "Stop",
                   excludes: ["Bounce", "Destroy", "Stop"],
@@ -14,14 +14,14 @@ GameCreator.actions = {
                   runnable: function(){return !this.isDestroyed;}
               },
 
-    	Destroy: {    action: function(params) {this.parent.destroy.call(this, params)},
+      Destroy: {    action: function(params) {this.parent.destroy.call(this, params)},
                    params: [],
                    name: "Destroy",
                    excludes: ["Bounce", "Stop", "Destroy"],
                    timing: {at: true, every: false, after: true},
                    runnable: function(){return !this.isDestroyed;}
               },
-   		Shoot:   {    action: function(params) {this.parent.shoot.call(this, params)},
+      Shoot:   {    action: function(params) {this.parent.shoot.call(this, params)},
                    params: [{    inputId: "objectToShoot",
                                  input: function() {return GameCreator.htmlStrings.singleSelector("objectToShoot", GameCreator.globalObjects)},
                                  label: function() {return GameCreator.htmlStrings.inputLabel("objectToShoot", "Object")}
@@ -41,7 +41,7 @@ GameCreator.actions = {
                    timing: {at: true, every: true, after: true},
                    runnable: function(){return !this.isDestroyed;}
               },
-  		Create:   {    action: function(params){GameCreator.createRuntimeObject(params, {})},
+      Create:   {    action: function(params){GameCreator.createRuntimeObject(params, {})},
                    params: [{
                                 inputId: "objectToCreate",
                                 input: function() {return GameCreator.htmlStrings.singleSelector("objectToCreate", GameCreator.getGlobalObjects())},
@@ -52,7 +52,7 @@ GameCreator.actions = {
                                 input: function() {return GameCreator.htmlStrings.rangeInput("x", "x", "")},
                                 label: function() {return GameCreator.htmlStrings.inputLabel("x", "X") + '<br style="clear: both"/>'}
                              },
-                         	{
+                          {
                                 inputId: "y",
                                 input: function() {return GameCreator.htmlStrings.rangeInput("y", "y", "")},
                                 label: function() {return GameCreator.htmlStrings.inputLabel("y", "Y") + '<br style="clear: both"/>'}
@@ -62,7 +62,7 @@ GameCreator.actions = {
                    timing: {at: true, every: true, after: true},
                    runnable: function(){return true;}
               },
-    	Counter:{		action: function(params){GameCreator.changeCounter(this, params)},
+      Counter:{		action: function(params){GameCreator.changeCounter(this, params)},
                     params: [{
                             inputId: "counterObject",
                             input: function(thisName) {return GameCreator.UI.setupSingleSelectorWithListener(
@@ -93,48 +93,75 @@ GameCreator.actions = {
                     excludes: [],
                     timing: {at: true, every: true, after: true},
                     runnable: function(){return !this.isDestroyed;}
-		        },
-		Restart: {
-			action: GameCreator.restartGame,
-			params: [],
-			name: "Restart",
-			excludes: ["Bounce", "Destroy", "Stop"],
-			timing: {at: true, every: false, after: true},
-			runnable: function(){return true;}
-		}
+            },
+        Restart: {
+          action: GameCreator.restartGame,
+          params: [],
+          name: "Restart",
+          excludes: ["Bounce", "Destroy", "Stop", "SwitchScene"],
+          timing: {at: true, every: false, after: true},
+          runnable: function(){return true;}
+        },
+        SwitchScene: {
+        	action: function(params){GameCreator.selectScene(params)},
+        	params: [{
+	        					inputId: "changeType",
+	        					input: function(){return GameCreator.htmlStrings.singleSelector("changeType", {increment: "increment", decrement: "decrement", setScene: "setScene"})},
+	        					label: function(){return GameCreator.htmlStrings.inputLabel("changeType", "Type")}
+        					},
+        					{
+        						inputId: "changeValue",
+        						input: function(){return GameCreator.htmlStrings.numberInput("changeValue", "changeValue", "1")},
+        						label: function(){return GameCreator.htmlStrings.inputLabel("changeValue", "Value")}
+      						}
+        		],
+        	name: "SwitchScene",
+        	excludes: ["Bounce", "Destroy", "Stop", "Restart"],
+        	timing: {ad: true, every: true, after: true},
+        	runnable: function(){return true;}
+        } 
 };
 
 GameCreator.actionGroups = {
-	collisionActions: {
-			Bounce: GameCreator.actions.Bounce,
-			Stop: GameCreator.actions.Stop,
-			Destroy: GameCreator.actions.Destroy,
-			Shoot: GameCreator.actions.Shoot,
-			Create: GameCreator.actions.Create,
-			Counter: GameCreator.actions.Counter,
-			Restart: GameCreator.actions.Restart
+  collisionActions: {
+      Bounce: GameCreator.actions.Bounce,
+      Stop: GameCreator.actions.Stop,
+      Destroy: GameCreator.actions.Destroy,
+      Shoot: GameCreator.actions.Shoot,
+      Create: GameCreator.actions.Create,
+      Counter: GameCreator.actions.Counter,
+      Restart: GameCreator.actions.Restart,
+      SwitchScene: GameCreator.actions.SwitchScene,
+  },
+  mouseCollisionActions: {
+      Destroy: GameCreator.actions.Destroy,
+      Shoot: GameCreator.actions.Shoot,
+      Create: GameCreator.actions.Create,
+      Counter: GameCreator.actions.Counter,
+      Restart: GameCreator.actions.Restart,
+      SwitchScene: GameCreator.actions.SwitchScene,
+  },
+  nonCollisionActions: {
+      Stop: GameCreator.actions.Stop,
+      Destroy: GameCreator.actions.Destroy,
+      Shoot: GameCreator.actions.Shoot,
+      Create: GameCreator.actions.Create,
+      Counter: GameCreator.actions.Counter,
+      Restart: GameCreator.actions.Restart,
+      SwitchScene: GameCreator.actions.SwitchScene,
+  },
+  mouseNonCollisionActions: {
+      Destroy: GameCreator.actions.Destroy,
+      Shoot: GameCreator.actions.Shoot,
+      Create: GameCreator.actions.Create,
+      Counter: GameCreator.actions.Counter,
+      Restart: GameCreator.actions.Restart,
+      SwitchScene: GameCreator.actions.SwitchScene,
 	},
-	mouseCollisionActions: {
-			Destroy: GameCreator.actions.Destroy,
-			Shoot: GameCreator.actions.Shoot,
-			Create: GameCreator.actions.Create,
-			Counter: GameCreator.actions.Counter,
-			Restart: GameCreator.actions.Restart
-	},
-	nonCollisionActions: {
-			Stop: GameCreator.actions.Stop,
-			Destroy: GameCreator.actions.Destroy,
-			Shoot: GameCreator.actions.Shoot,
-			Create: GameCreator.actions.Create,
-			Counter: GameCreator.actions.Counter,
-			Restart: GameCreator.actions.Restart
-	},
-	mouseNonCollisionActions: {
-			Destroy: GameCreator.actions.Destroy,
-			Shoot: GameCreator.actions.Shoot,
-			Create: GameCreator.actions.Create,
-			Counter: GameCreator.actions.Counter,
-			Restart: GameCreator.actions.Restart
+	onCreateActions: {
+      Destroy: GameCreator.actions.Destroy,
+      Shoot: GameCreator.actions.Shoot,
+      Create: GameCreator.actions.Create,
+      Counter: GameCreator.actions.Counter,
 	}
-	
 }

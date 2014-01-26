@@ -29,6 +29,16 @@ $.extend(GameCreator, {
         return result;
     },
 
+    selectScene: function(params) {
+      var scene = GameCreator.helperFunctions.calculateScene(GameCreator.activeScene, params);
+      GameCreator.activeScene = scene;
+      if (GameCreator.state === 'directing') {
+          GameCreator.directScene(GameCreator.scenes[scene]);
+      } else if (GameCreator.state === 'playing') {
+          GameCreator.playScene(GameCreator.scenes[scene]);       
+      }
+    },
+
     playScene: function(scene) {
         GameCreator.reset();
         GameCreator.resetScene(scene);

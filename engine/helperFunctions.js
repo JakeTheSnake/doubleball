@@ -275,3 +275,14 @@ GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parame
         })(runtimeObj, actionToRun, parameters, timerFunction);
 
 }
+
+GameCreator.helperFunctions.calculateScene = function(activeScene, params){
+	switch(params.changeType){
+		case 'increment':
+			return activeScene + params.changeValue;
+		case 'decrement':
+			return activeScene - params.changeValue;
+		case 'setScene':
+		 	return params.changeValue;
+	}
+}
