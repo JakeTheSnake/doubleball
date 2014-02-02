@@ -18,7 +18,7 @@ GameCreator.baseObject = {
 	},
 
 	onDestroy: function(){
-		if (!this.parent.onDestroyActions) {
+		if (!this.parent.onDestroyActions && GameCreator.state !== 'playing') {
 			this.parent.onDestroyActions = [];
 			GameCreator.UI.openEditActionsWindow(
 	            "'" + this.parent.name + "' is has been destroyed!",
@@ -29,13 +29,15 @@ GameCreator.baseObject = {
         	);
         	return;
 		}
-		for (var i = 0; i < this.parent.onDestroyActions.length; i++) {
-			GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i],this.parent.onDestroyActions[i].parameters);
+		if (this.parent.onDestroyActions) {
+			for (var i = 0; i < this.parent.onDestroyActions.length; i++) {
+				GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i],this.parent.onDestroyActions[i].parameters);
+			}
 		}
 	},
 
 	onCreate: function(staticParameters){
-		if (!this.parent.onCreateActions) {
+		if (!this.parent.onCreateActions && GameCreator.state !== 'playing') {
 			this.parent.onCreateActions = [];
 			GameCreator.UI.openEditActionsWindow(
 	            "'" + this.parent.name + "' has been created!",
@@ -45,8 +47,10 @@ GameCreator.baseObject = {
 	            this.parent.name
         	);
 		}
-		for (var i = 0; i < this.parent.onCreateActions.length; i++) {
-			GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i], this.parent.onCreateActions[i].parameters);
+		if (this.parent.onCreateActions) {
+			for (var i = 0; i < this.parent.onCreateActions.length; i++) {
+				GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i], this.parent.onCreateActions[i].parameters);
+			}
 		}
 	},
 	

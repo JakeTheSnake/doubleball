@@ -61,7 +61,7 @@ $.extend(GameCreator, {
         
         GameCreator.sceneStarted();
         GameCreator.state = 'playing';
-        GameCreator.timer = setInterval(this.gameLoop, 1);
+        GameCreator.gameLoop();
     },
 
     
@@ -76,7 +76,7 @@ $.extend(GameCreator, {
         $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e){
             var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(runtimeObj && runtimeObj.parent.isClickable) {
-                if(runtimeObj.parent.onClickActions == undefined)
+                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== "playing")
                 {
                     runtimeObj.parent.onClickActions = [];
                     GameCreator.UI.openEditActionsWindow(
@@ -87,7 +87,7 @@ $.extend(GameCreator, {
                          runtimeObj.parent.name
                         );
                 }
-                else
+                else if (runtimeObj.parent.onClickActions)
                 {
                     for(var i = 0;i < runtimeObj.parent.onClickActions.length;++i)
                     {

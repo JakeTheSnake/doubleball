@@ -45,7 +45,7 @@ var GameCreator = {
     
         GameCreator.runFrame(delta);
         GameCreator.render(false);
-        if (GameCreator.state === 'directing') {
+        if (GameCreator.state !== 'editing') {
             requestAnimationFrame(GameCreator.gameLoop);
         }
         then = now;
@@ -196,8 +196,6 @@ var GameCreator = {
         GameCreator.drawSelectionLine();
     },
 
-    
-
     createRuntimeObject: function(globalObj, args){
         var runtimeObj = Object.create(GameCreator.sceneObject);
         if (globalObj.hasOwnProperty("objectToCreate")) {
@@ -318,6 +316,10 @@ var GameCreator = {
     getUniqueId: function() {
         this.idCounter++;
         return this.idCounter;
+    },
+
+    playGame: function() {
+        GameCreator.playScene(GameCreator.scenes[0]);
     }
     
 }
