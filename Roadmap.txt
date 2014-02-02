@@ -4,6 +4,7 @@ Version 0.2:
 -Global event when game started.
 
 -Render Optimization
+-Collision optimization (Don't access object properties by string.. Give all objects numerical ids?)
 -Layers
 
 -Object states
