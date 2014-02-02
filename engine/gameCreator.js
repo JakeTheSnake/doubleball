@@ -19,7 +19,7 @@ var GameCreator = {
     scenes: [],
     activeScene: 0,
     //The runtime arrays contain the current state of the game.
-    collidableObjects: [],
+    collidableObjects: {},
     movableObjects: [],
     renderableObjects: [],
     eventableObjects: [],
@@ -61,8 +61,13 @@ var GameCreator = {
                     runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime/1000);
                 }
             }
-            for (i=0;i < GameCreator.collidableObjects.length;++i) {
-                GameCreator.helperFunctions.checkCollisions(GameCreator.collidableObjects[i]);
+            for (var objectName in GameCreator.collidableObjects) {
+                if (GameCreator.collidableObjects.hasOwnProperty(objectName)) {
+                    for (var i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
+                        runtimeObj = GameCreator.collidableObjects[objectName][i];
+                        GameCreator.helperFunctions.checkCollisions(runtimeObj);
+                    }
+                }
             }
             for (i=0;i < GameCreator.movableObjects.length;++i) {
                 if(!GameCreator.paused)
@@ -122,7 +127,7 @@ var GameCreator = {
         GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
         GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
         GameCreator.timerHandler.clear();
-        this.collidableObjects = [];
+        this.collidableObjects = {};
         this.movableObjects = [];
         this.renderableObjects = [];
         this.objectsToDestroy = [];
@@ -189,7 +194,7 @@ var GameCreator = {
     render: function (forceRender) {
         for (var i=0;i < GameCreator.renderableObjects.length;++i) {
             var obj = GameCreator.renderableObjects[i];
-            if (obj.invalidated || forceRender) {
+            if (true || obj.invalidated || forceRender) { // TODO: Deactivated invalidation
                 obj.parent.draw(this.mainContext, obj);
             }
         }
@@ -209,14 +214,21 @@ var GameCreator = {
     },
 
     addToRuntime: function(runtimeObj){
-        if(runtimeObj.parent.isCollidable)
-            GameCreator.collidableObjects.push(runtimeObj);
-        if(runtimeObj.parent.isMovable)
+        if(runtimeObj.parent.isCollidable) {
+            if (!GameCreator.collidableObjects[runtimeObj.parent.name]) {
+                GameCreator.collidableObjects[runtimeObj.parent.name] = [];
+            }
+            GameCreator.collidableObjects[runtimeObj.parent.name].push(runtimeObj);
+        }
+        if(runtimeObj.parent.isMovable) {
             GameCreator.movableObjects.push(runtimeObj);
-        if(runtimeObj.parent.isRenderable)
+        }
+        if(runtimeObj.parent.isRenderable) {
             GameCreator.renderableObjects.push(runtimeObj);
-        if(runtimeObj.parent.isEventable)
+        }
+        if(runtimeObj.parent.isEventable) {
             GameCreator.eventableObjects.push(runtimeObj);
+        }
         runtimeObj.parent.initialize.call(runtimeObj);
         GameCreator.newlyCreatedObjects.push(runtimeObj);
     },

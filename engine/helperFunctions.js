@@ -121,32 +121,51 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     
-    //If directing, check for collisions with all other game objs.
-    if(GameCreator.state !== 'editing') {
-        for (var i=0;i < GameCreator.collidableObjects.length;++i) {
-            var targetObject = GameCreator.collidableObjects[i];
-            if(!(object == targetObject)) {
-                var objWidth = targetObject.width;
-                var objHeight = targetObject.height;
-                var thisMidX = x + width / 2;
-                var thisMidY = y + height / 2;
-                var objMidX = targetObject.x + targetObject.width / 2;
-                var objMidY = targetObject.y + targetObject.height / 2;
-                if((Math.abs(thisMidX - objMidX) < width / 2 + objWidth / 2) && (Math.abs(thisMidY - objMidY) < height / 2 + objHeight / 2)) {
-                    //console.log("targetObject: " + object.name + " collided with " + targetObject.name);
-                    
-                    //Look through collisionActions to see if we already have an action defined for a collision with a targetObject with this name, if so, run that function instead
-                    
-                    GameCreator.helperFunctions.doCollision(object, targetObject);
+    if(GameCreator.state === 'directing') {
+        for (var objectName in GameCreator.collidableObjects) {
+            if (GameCreator.collidableObjects.hasOwnProperty(objectName)) {
+                for (var i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
+                    var targetObject = GameCreator.collidableObjects[objectName][i];
+                    if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject)) {
+                        GameCreator.helperFunctions.doCollision(object, targetObject);
+                    }
+                }   
+            }   
+        }
+    }
+    else //Playing
+    {
+        for (var objectName in object.parent.collisionActions) {
+            if (object.parent.collisionActions.hasOwnProperty(objectName) &&
+                    GameCreator.collidableObjects[objectName]) {
+                for (var i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
+                    var targetObject = GameCreator.collidableObjects[objectName][i];
+                    if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject)) {
+                        GameCreator.helperFunctions.doCollision(object, targetObject);
+                    }
                 }
             }
         }
     }
-    //Else we should just check for collisions with objects in our collisionAction collection.
-    else
-    {
-    
+}
+
+GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject) {
+    if (!(object == targetObject)) {
+        var targetWidth = targetObject.width;
+        var targetHeight = targetObject.height;
+        var width = object.width;
+        var height = object.height;
+        var thisMidX = object.x + width / 2;
+        var thisMidY = object.y + height / 2;
+        var targetMidX = targetObject.x + targetObject.width / 2;
+        var targetMidY = targetObject.y + targetObject.height / 2;
+        if ((Math.abs(thisMidX - targetMidX) < width / 2 + targetWidth / 2) && (Math.abs(thisMidY - targetMidY) < height / 2 + targetHeight / 2)) {
+            //console.log("targetObject: " + object.name + " collided with " + targetObject.name);
+            //Look through collisionActions to see if we already have an action defined for a collision with a targetObject with this name, if so, run that function instead
+            return true;
+        }
     }
+    return false;
 }
 
 GameCreator.helperFunctions.calcAngularSpeed = function(maxSpeed){

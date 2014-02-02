@@ -57,10 +57,10 @@ GameCreator.baseObject = {
 	removeFromGame: function() {
 		GameCreator.invalidate(this);
 		//Collidables
-		var ids = GameCreator.collidableObjects.map(function(x){return x.instanceId});
+		var ids = GameCreator.collidableObjects[this.parent.name].map(function(x) {return x.instanceId;});
 		var index = $.inArray(this.instanceId, ids);
 		if(index != -1) {
-			GameCreator.collidableObjects.splice(index, 1);
+			GameCreator.collidableObjects[this.parent.name].splice(index, 1);
 		}
 			
 		//Movables

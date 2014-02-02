@@ -25,8 +25,6 @@ GameCreator.addObjFunctions.bounceableObjectFunctions = function(object)
 
 GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 {    
-    //Contains Key/Value pairs of other objs and the function to run when colliding with them.
-    //TODO: Switch to dictionary where key is the name of the object.
     object.collisionActions = {};
 },
 
