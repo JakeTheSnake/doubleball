@@ -103,6 +103,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
     var height = object.height;
     var collidedBorder;
     var collisionObject;
+    var i, j;
     
     if(x < 1){
         collisionObject = GameCreator.borderObjects.borderL;
@@ -122,9 +123,11 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
     }
     
     if(GameCreator.state === 'directing') {
-        for (var objectName in GameCreator.collidableObjects) {
+        var objectNames = Object.keys(GameCreator.collidableObjects)
+        for (j = 0; j < objectNames.length; j++) {
+            var objectName = objectNames[j];
             if (GameCreator.collidableObjects.hasOwnProperty(objectName)) {
-                for (var i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
+                for (i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
                     var targetObject = GameCreator.collidableObjects[objectName][i];
                     if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject)) {
                         GameCreator.helperFunctions.doCollision(object, targetObject);
@@ -135,10 +138,11 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
     }
     else //Playing
     {
-        for (var objectName in object.parent.collisionActions) {
-            if (object.parent.collisionActions.hasOwnProperty(objectName) &&
-                    GameCreator.collidableObjects[objectName]) {
-                for (var i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
+        var objectNames = Object.keys(object.parent.collisionActions)
+        for (j = 0 ; j < objectNames.length; j++) {
+            var objectName = objectNames[j];
+            if (object.parent.collisionActions[objectName].length > 0 && GameCreator.collidableObjects[objectName]) {
+                for (i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
                     var targetObject = GameCreator.collidableObjects[objectName][i];
                     if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject)) {
                         GameCreator.helperFunctions.doCollision(object, targetObject);

@@ -52,21 +52,21 @@ var GameCreator = {
     },
 
     runFrame: function(deltaTime){
-        var runtimeObj;
+        var runtimeObj, i, j;
         if(!GameCreator.paused){
-            for (var i=0;i < GameCreator.movableObjects.length;++i) {
+            for (i=0;i < GameCreator.movableObjects.length;++i) {
                 if(!GameCreator.paused)
                 {
                     runtimeObj = GameCreator.movableObjects[i];
                     runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime/1000);
                 }
             }
-            for (var objectName in GameCreator.collidableObjects) {
-                if (GameCreator.collidableObjects.hasOwnProperty(objectName)) {
-                    for (var i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
-                        runtimeObj = GameCreator.collidableObjects[objectName][i];
-                        GameCreator.helperFunctions.checkCollisions(runtimeObj);
-                    }
+            var objectNames = Object.keys(GameCreator.collidableObjects)
+            for (j = 0; j < objectNames.length; j++) {
+                var objectName = objectNames[j];
+                for (i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
+                    runtimeObj = GameCreator.collidableObjects[objectName][i];
+                    GameCreator.helperFunctions.checkCollisions(runtimeObj);
                 }
             }
             for (i=0;i < GameCreator.movableObjects.length;++i) {
