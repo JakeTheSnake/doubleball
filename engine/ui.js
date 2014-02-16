@@ -72,55 +72,27 @@ GameCreator.UI = {
      *             If null, existingActions has to be an array of actions.
      * thisName: The name of the object whose actiosn will be edited with this form.
      **/
-    createEditActionsArea: function(text, actions, existingActions, container, targetName, thisName) {
-      
-      var existingActionsTmp;
-      
-      if(targetName) {
-          if (!existingActions[targetName]) {
-              existingActions[targetName] = [];
-          }
-          existingActionsTmp = existingActions[targetName];
-      }
-      else {
-        existingActionsTmp = existingActions;
-      }
-        
-        container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
-        GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp, thisName);
+    createEditActionsArea: function(text, actions, existingActions, container, thisName) {
+        container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions));
+        GameCreator.UI.setupEditActionsContent(text, actions, existingActions, thisName);
     },
  
-    openEditActionsWindow: function(text, actions, existingActions, targetName, thisName) {  
+    openEditActionsWindow: function(text, actions, existingActions, thisName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
-        if(!GameCreator.paused){
-            GameCreator.pauseGame();
-            
-            var existingActionsTmp;
-            
-            if(targetName) {
-              //Check if there exist any actions for collisions with the current targetObject.
-              if (!existingActions[targetName]) {
-                  existingActions[targetName] = [];
-              }
-              existingActionsTmp = existingActions[targetName];
-          }
-          else {
-            existingActionsTmp = existingActions;
-          }
-            
-            GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActionsTmp));
-            GameCreator.UI.setupEditActionsContent(text, actions, existingActionsTmp, thisName);
+        GameCreator.pauseGame();
         
-            $("#editActionsWindowCancel").on("click", function() {
-                GameCreator.UI.closeDialogue();
-                GameCreator.resumeGame();
-                
-            });
+        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions));
+        GameCreator.UI.setupEditActionsContent(text, actions, existingActions, thisName);
+    
+        $("#editActionsWindowCancel").on("click", function() {
+            GameCreator.UI.closeDialogue();
+            GameCreator.resumeGame();
             
-            $("#dialogueOverlay").one("click", function(){
-                GameCreator.resumeGame();
-            });
-        }
+        });
+        
+        $("#dialogueOverlay").one("click", function(){
+            GameCreator.resumeGame();
+        });
     },
     
     

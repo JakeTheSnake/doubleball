@@ -76,14 +76,13 @@ $.extend(GameCreator, {
         $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e){
             var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(runtimeObj && runtimeObj.parent.isClickable) {
-                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== "playing")
+                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== "playing" && !GameCreator.paused)
                 {
                     runtimeObj.parent.onClickActions = [];
                     GameCreator.UI.openEditActionsWindow(
                         "Clicked on " + runtimeObj.parent.name,
                          GameCreator.actionGroups.nonCollisionActions,
                          runtimeObj.parent.onClickActions,
-                         null,
                          runtimeObj.parent.name
                         );
                 }

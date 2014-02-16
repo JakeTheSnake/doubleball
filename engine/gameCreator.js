@@ -15,11 +15,11 @@ var GameCreator = {
     canvasOffsetY: 10,
     //Contains key value pairs where key is the (unique)name of the object.
     globalObjects: {},
-    //Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
+    //Scemne contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
     scenes: [],
     activeScene: 0,
     //The runtime arrays contain the current state of the game.
-    collidableObjects: {},
+    collidableObjects: [],
     movableObjects: [],
     renderableObjects: [],
     eventableObjects: [],
@@ -33,11 +33,12 @@ var GameCreator = {
     draggedObject: undefined,
     draggedNode: undefined,
     idCounter: 0,
+    globalIdCounter: 0,
     borderObjects: {
-        borderL: {name: "borderL", x: -500, y: -500, height: GCHeight + 1000, width: 500, image: function(){var img = (new Image()); $(img).css("width","65"); img.src = "assets/borderLeft.png"; return img}(), isCollidable: true},
-        borderR: {name: "borderR", x: GCWidth, y: -500, height: GCHeight + 1000, width: 500, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderRight.png"; return img}(), isCollidable: true},
-        borderT: {name: "borderT", x: -500, y: -500, height: 500, width: GCWidth + 1000, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderTop.png"; return img}(), isCollidable: true},
-        borderB: {name: "borderB", x: -500, y: GCHeight, height: 500, width: GCWidth + 1000, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderBottom.png"; return img}(), isCollidable: true}
+        borderL: {name: "borderL", parent: {id: -1}, x: -500, y: -500, height: GCHeight + 1000, width: 500, image: function(){var img = (new Image()); $(img).css("width","65"); img.src = "assets/borderLeft.png"; return img}(), isCollidable: true},
+        borderR: {name: "borderR", parent: {id: -2}, x: GCWidth, y: -500, height: GCHeight + 1000, width: 500, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderRight.png"; return img}(), isCollidable: true},
+        borderT: {name: "borderT", parent: {id: -3}, x: -500, y: -500, height: 500, width: GCWidth + 1000, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderTop.png"; return img}(), isCollidable: true},
+        borderB: {name: "borderB", parent: {id: -4}, x: -500, y: GCHeight, height: 500, width: GCWidth + 1000, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderBottom.png"; return img}(), isCollidable: true}
     },
     gameLoop: function () {
         var now = Date.now();
@@ -61,12 +62,11 @@ var GameCreator = {
                     runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime/1000);
                 }
             }
-            var objectNames = Object.keys(GameCreator.collidableObjects)
-            for (j = 0; j < objectNames.length; j++) {
-                var objectName = objectNames[j];
-                for (i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
-                    runtimeObj = GameCreator.collidableObjects[objectName][i];
-                    GameCreator.helperFunctions.checkCollisions(runtimeObj);
+            
+            for (j = 0; j < GameCreator.collidableObjects.length; j++) {
+                var runtimeObjects = GameCreator.collidableObjects[j].runtimeObjects;
+                for (i = 0; i < runtimeObjects.length; i++) {
+                    GameCreator.helperFunctions.checkCollisions(runtimeObjects[i]);
                 }
             }
             for (i=0;i < GameCreator.movableObjects.length;++i) {
@@ -94,7 +94,6 @@ var GameCreator = {
                 runtimeObj = GameCreator.newlyCreatedObjects[i];
                 runtimeObj.parent.onCreate.call(runtimeObj);
             }
-            GameCreator.newlyCreatedObjects = [];
             GameCreator.debug.calculateDebugInfo(deltaTime);
         }
     },
@@ -127,7 +126,7 @@ var GameCreator = {
         GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
         GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
         GameCreator.timerHandler.clear();
-        this.collidableObjects = {};
+        this.collidableObjects = [];
         this.movableObjects = [];
         this.renderableObjects = [];
         this.objectsToDestroy = [];
@@ -215,10 +214,10 @@ var GameCreator = {
 
     addToRuntime: function(runtimeObj){
         if(runtimeObj.parent.isCollidable) {
-            if (!GameCreator.collidableObjects[runtimeObj.parent.name]) {
-                GameCreator.collidableObjects[runtimeObj.parent.name] = [];
+            if (!GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, runtimeObj.parent.id)) {
+                GameCreator.collidableObjects.push({id: runtimeObj.parent.id, runtimeObjects: []});
             }
-            GameCreator.collidableObjects[runtimeObj.parent.name].push(runtimeObj);
+            GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, runtimeObj.parent.id).runtimeObjects.push(runtimeObj);
         }
         if(runtimeObj.parent.isMovable) {
             GameCreator.movableObjects.push(runtimeObj);
@@ -243,8 +242,6 @@ var GameCreator = {
         return allGlobalObjects;
     },
     
-    
-    
     getCountersForGlobalObj: function(globalObjName) {
     	var obj;
     	if (GameCreator.globalObjects.hasOwnProperty(globalObjName)) {
@@ -266,7 +263,7 @@ var GameCreator = {
     
     changeCounter: function(runtimeObj, params) {
     	var selectedObjectId = params.counterObject;
-    	if (runtimeObj.name != selectedObjectId) {
+    	if (runtimeObj.name !== selectedObjectId) {
     		runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
     	}
     	if (params.counterType === "set") {
@@ -297,10 +294,13 @@ var GameCreator = {
     },
 
     getRuntimeObject: function(instanceId) {
-        var collidableObj = GameCreator.getRuntimeObjectFromCollection(GameCreator.collidableObjects, instanceId);
-        if (collidableObj) {
-            return collidableObj;
+        for (var i = 0; i < GameCreator.collidableObjects.length; i++) {
+            var collidableObj = GameCreator.getRuntimeObjectFromCollection(GameCreator.collidableObjects[i].runtimeObjects, instanceId);
+            if (collidableObj) {
+                return collidableObj;
+            }    
         }
+        
         var movableObj = GameCreator.getRuntimeObjectFromCollection(GameCreator.movableObjects, instanceId);
         if (movableObj) {
             return movableObj;

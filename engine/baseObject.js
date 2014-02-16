@@ -1,105 +1,93 @@
 GameCreator.baseObject = {
-	image: undefined,
-	name: undefined,
-	width: 0,
-	height: 0,
-	imageReady: false,
-	objectType: "baseObject",
-	isDestroyed: false,
-	isClickable: true,
-	
-	/**
-	 * Called when an object is being destroyed through an action. Marks
-	 * this object for imminent destruction and carries out onDestroy-actions.
-	 */
-	destroy: function(staticParameters){
-		GameCreator.objectsToDestroy.push(this);
-		this.parent.onDestroy.call(this);
-	},
+    image: undefined,
+    name: undefined,
+    width: 0,
+    height: 0,
+    imageReady: false,
+    objectType: "baseObject",
+    isDestroyed: false,
+    isClickable: true,
+    
+    /**
+     * Called when an object is being destroyed through an action. Marks
+     * this object for imminent destruction and carries out onDestroy-actions.
+     */
+    destroy: function(staticParameters){
+        GameCreator.objectsToDestroy.push(this);
+        this.parent.onDestroy.call(this);
+    },
 
-	onDestroy: function(){
-		if (!this.parent.onDestroyActions && GameCreator.state !== 'playing') {
-			this.parent.onDestroyActions = [];
-			GameCreator.UI.openEditActionsWindow(
-	            "'" + this.parent.name + "' is has been destroyed!",
-	            GameCreator.actionGroups.nonCollisionActions,
-	            this.parent.onDestroyActions,
-	            null,
-	            this.parent.name
-        	);
-        	return;
-		}
-		if (this.parent.onDestroyActions) {
-			for (var i = 0; i < this.parent.onDestroyActions.length; i++) {
-				GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i],this.parent.onDestroyActions[i].parameters);
-			}
-		}
-	},
+    onDestroy: function(){
+        if (!GameCreator.paused) {
+            if (!this.parent.onDestroyActions && GameCreator.state !== 'playing') {
+                this.parent.onDestroyActions = [];
+                GameCreator.UI.openEditActionsWindow(
+                    "'" + this.parent.name + "' is has been destroyed!",
+                    GameCreator.actionGroups.nonCollisionActions,
+                    this.parent.onDestroyActions,
+                    this.name
+                );
+                return;
+            }
+            if (this.parent.onDestroyActions) {
+                for (var i = 0; i < this.parent.onDestroyActions.length; i++) {
+                    GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i],this.parent.onDestroyActions[i].parameters);
+                }
+            }
+            var index = GameCreator.objectsToDestroy.indexOf(this);
+            if (index !== -1) {
+                GameCreator.objectsToDestroy.splice(index,1);
+            }
+        }
+    },
 
-	onCreate: function(staticParameters){
-		if (!this.parent.onCreateActions && GameCreator.state !== 'playing') {
-			this.parent.onCreateActions = [];
-			GameCreator.UI.openEditActionsWindow(
-	            "'" + this.parent.name + "' has been created!",
-	            GameCreator.actionGroups.nonCollisionActions,
-	            this.parent.onCreateActions,
-	            null,
-	            this.parent.name
-        	);
-		}
-		if (this.parent.onCreateActions) {
-			for (var i = 0; i < this.parent.onCreateActions.length; i++) {
-				GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i], this.parent.onCreateActions[i].parameters);
-			}
-		}
-	},
-	
-	removeFromGame: function() {
-		GameCreator.invalidate(this);
-		//Collidables
-		var ids = GameCreator.collidableObjects[this.parent.name].map(function(x) {return x.instanceId;});
-		var index = $.inArray(this.instanceId, ids);
-		if(index != -1) {
-			GameCreator.collidableObjects[this.parent.name].splice(index, 1);
-		}
-			
-		//Movables
-		ids = GameCreator.movableObjects.map(function(x){return x.instanceId});
-		index = $.inArray(this.instanceId, ids);
-		if(index != -1) {
-			GameCreator.movableObjects.splice(index, 1);
-		}
+    onCreate: function(staticParameters){
+        if (!GameCreator.paused) {
+            if (!this.parent.onCreateActions && GameCreator.state !== 'playing') {
+                this.parent.onCreateActions = [];
+                GameCreator.UI.openEditActionsWindow(
+                    "'" + this.parent.name + "' has been created!",
+                    GameCreator.actionGroups.nonCollisionActions,
+                    this.parent.onCreateActions,
+                    this.name
+                );
+            }
+            if (this.parent.onCreateActions) {
+                for (var i = 0; i < this.parent.onCreateActions.length; i++) {
+                    GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i], this.parent.onCreateActions[i].parameters);
+                }
+            }
+            var index = GameCreator.newlyCreatedObjects.indexOf(this);
+            if (index !== -1) {
+                GameCreator.newlyCreatedObjects.splice(index,1);
+            }
+        }
+    },
+    
+    removeFromGame: function() {
+        GameCreator.invalidate(this);
 
-		//Renderables
-		ids = GameCreator.renderableObjects.map(function(x){return x.instanceId});
-		index = $.inArray(this.instanceId, ids);
-		if(index != -1) {
-			GameCreator.renderableObjects.splice(index, 1);
-		}
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.collidableObjects, this.parent.id);
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.movableObjects, this.parent.id);
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.renderableObjects, this.parent.id);
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.eventableObjects, this.parent.id);
 
-		//Eventables
-		ids = GameCreator.eventableObjects.map(function(x){return x.instanceId});
-		index = $.inArray(this.instanceId, ids);
-		if(index != -1) {
-			GameCreator.eventableObjects.splice(index, 1);
-		}
-		
-		this.isDestroyed = true;
-	},
-	
+        this.isDestroyed = true;
+    },
+    
     onGameStarted: function(){},
     
-	checkEvents: function(){},
-	
-	move: function(modifier){
-		if (this.speedX != 0 || this.speedY != 0) {
-			GameCreator.invalidate(this);
-			this.x += this.speedX * modifier;
-			this.y += this.speedY * modifier;
-		}
-	},
-	
-	draw: function(context, obj) {
+    checkEvents: function(){},
+    
+    move: function(modifier){
+        if (this.speedX != 0 || this.speedY != 0) {
+            GameCreator.invalidate(this);
+            this.x += this.speedX * modifier;
+            this.y += this.speedY * modifier;
+        }
+    },
+    
+    draw: function(context, obj) {
         if (obj.parent.imageReady) {
             if (Array.isArray(obj.width) || Array.isArray(obj.height)) {
                 var maxHeight;
@@ -136,5 +124,5 @@ GameCreator.baseObject = {
             }
             obj.invalidated = false;
         }
-	}
+    }
 }
