@@ -67,10 +67,10 @@ GameCreator.baseObject = {
     removeFromGame: function() {
         GameCreator.invalidate(this);
 
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.collidableObjects, this.parent.id);
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.movableObjects, this.parent.id);
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.renderableObjects, this.parent.id);
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.eventableObjects, this.parent.id);
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.collidableObjects, this.instanceId);
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.movableObjects, this.instanceId);
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.renderableObjects, this.instanceId);
+        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.eventableObjects, this.instanceId);
 
         this.isDestroyed = true;
     },

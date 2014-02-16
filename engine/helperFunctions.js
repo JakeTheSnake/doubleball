@@ -322,7 +322,7 @@ GameCreator.helperFunctions.getObjectById = function(array, id) {
 GameCreator.helperFunctions.removeObjectFromArrayById = function(array, id) {
     var found = false;
     for (var i = 0; i < array.length; i++) {
-        if (array[i].id === id) {
+        if (array[i].instanceId === id) {
             found = true;
             break;
         }
