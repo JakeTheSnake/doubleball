@@ -24,29 +24,12 @@ GameCreator.sceneObjectCounter = {
 		
 		obj.parentObject = parentObject;
 		obj.parentCounter = parentCounter;
-		obj.value = parentCounter.initialValue;
 		
 		obj.atValueStates = {};
 		obj.aboveValueStates = {};
 		obj.belowValueStates = {};
 		
-		for(value in parentCounter.atValue){
-			if(parentCounter.atValue.hasOwnProperty(value)) {
-				obj.atValueStates[value] = false;
-			}
-		}
-		
-		for(value in parentCounter.aboveValue){
-			if(parentCounter.aboveValue.hasOwnProperty(value)) {
-				obj.aboveValueStates[value] = false;
-			}
-		}
-		
-		for(value in parentCounter.belowValue){
-			if(parentCounter.belowValue.hasOwnProperty(value)) {
-				obj.belowValueStates[value] = false;
-			}
-		}
+		obj.reset();
 		
 		return obj;
 	},
@@ -134,7 +117,7 @@ GameCreator.sceneObjectCounter = {
 	},
 	
 	reset: function() {
-		this.value = this.parentCounter.initialValue;
+		this.value = this.parentCounter.initialValue || 0;
 		for (value in this.atValueStates) {
 			if (this.atValueStates.hasOwnProperty(value)) {
 				this.atValueStates[value] = false;

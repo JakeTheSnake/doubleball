@@ -11,7 +11,7 @@ $.extend(GameCreator, {
     addGlobalObject: function(args, objectType) {
     	var image = new Image();
 	    image.src = args.src;
-	    var globalObj = this[objectType].New(image, args);
+	    var globalObj = GameCreator[objectType].New(image, args);
 	    GameCreator.UI.createGlobalListElement(globalObj);
 	    image.onload = function() {
 	        globalObj.imageReady = true;
@@ -20,24 +20,8 @@ $.extend(GameCreator, {
 	    return globalObj;
     },
     
-    addCounterObject: function(args){
-    	var image = new Image();
-    	if(args.representation === "text") {
-    		image.src = "assets/textCounter.png";
-    	} else if (args.representation === "image") {
-    		image.src = args.src;
-		}
-        var counterObj = GameCreator.counterObject.New(image, args);
-        GameCreator.UI.createGlobalListElement(counterObj);
-        image.onload = function() {
-            counterObj.imageReady = true;
-            GameCreator.render();
-        };
-        return counterObj;
-    },
-    
     directActiveScene: function(){
-        this.directScene(GameCreator.scenes[GameCreator.activeScene]);
+        GameCreator.directScene(GameCreator.scenes[GameCreator.activeScene]);
     },
     
     directScene: function(scene){
