@@ -1,8 +1,7 @@
 Version 0.2:
- 
--Play Mode
--Global event when game started.
 
+-Global event when game started.
+-Solve the global counter problem...
 -Render Optimization
 -Collision optimization (Don't access object properties by string.. Give all objects numerical ids?)
 -Layers
@@ -11,17 +10,25 @@ Version 0.2:
 -Conditions
 -Debugging mode
 
-Done:
+Actions:
+    -Change Object State
+
+
+
+DONE:
 -Scene managing
 -Counter objects
-
+-Play mode
 
 Actions:
     -Switch Scene
-    -Change Object State
     
+
 
 Version 0.3
 
+- Variable size of playing field.
+
 Objects:
  	- Text
+

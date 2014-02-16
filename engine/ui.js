@@ -225,50 +225,49 @@ GameCreator.UI = {
     //Add counter object functions.
     setupAddCounterObjectForm: function() {
       $("#addGlobalObjectWindowContent").html(GameCreator.htmlStrings.addCounterObjectForm());
-    $("#counterRepresentation").on("change", function(){
+      $("#counterRepresentation").on("change", function(){
         if($(this).val() === "text") {
           $("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.counterObjectTextForm());
         } else if ($(this).val() === "image"){
           $("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.addCounterObjectImage());
         }
-    });
-    $("#addGlobalObjectWindowContent .saveButton").on("click", function(){GameCreator.UI.saveCounterObject();GameCreator.UI.closeDialogue()});
-    $("#addCounterObjectCounterSelector").html(GameCreator.UI.setupAddCounterObjectCounterSelector());
-    $("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.counterObjectTextForm());
+      });
+      $("#addGlobalObjectWindowContent .saveButton").on("click", function(){GameCreator.UI.saveCounterObject();GameCreator.UI.closeDialogue()});
+      $("#addCounterObjectCounterRepresentationContent").html(GameCreator.htmlStrings.counterObjectTextForm());
     },
     
     setupAddCounterObjectCounterSelector: function(obj) {
-    var uniqueIds = GameCreator.getUniqueIDsInScene();
-    var selectedId;
+      var uniqueIds = GameCreator.getUniqueIDsInScene();
+      var selectedId;
       if(!obj || (obj && !obj.counterObject)) {
-      for(id in uniqueIds) {
-        if(uniqueIds.hasOwnProperty(id)){
-          selectedId = uniqueIds[id];
-          break;
-        } 
-      };
-    } else {
-      selectedId = obj.counterObject;
-    }
-    return GameCreator.htmlStrings.inputLabel('addCounterCounterObject', 'Object') +
-        GameCreator.UI.setupSingleSelectorWithListener(
-                'addCounterCounterObject', 
-                GameCreator.getUniqueIDsInScene(), 
-                'change', 
-                function(){
-                  $("#addCounterCounterName").replaceWith(GameCreator.htmlStrings.singleSelector("addCounterCounterName", GameCreator.getCountersForGlobalObj($(this).val()), "counterName"))
-              },
-              'counterObject',
-              selectedId
-            ) +
-            GameCreator.htmlStrings.inputLabel("addCounterCounterName", "Counter") +
-            GameCreator.htmlStrings.singleSelector("addCounterCounterName", selectedId ? GameCreator.getCountersForGlobalObj(selectedId) : {}, "counterName");
+        for(id in uniqueIds) {
+          if(uniqueIds.hasOwnProperty(id)){
+            selectedId = uniqueIds[id];
+            break;
+          } 
+        };
+      } else {
+        selectedId = obj.counterObject;
+      }
+      return GameCreator.htmlStrings.inputLabel('addCounterCounterObject', 'Object') +
+          GameCreator.UI.setupSingleSelectorWithListener(
+            'addCounterCounterObject', 
+            GameCreator.getUniqueIDsInScene(), 
+            'change', 
+            function(){
+              $("#addCounterCounterName").replaceWith(GameCreator.htmlStrings.singleSelector("addCounterCounterName", GameCreator.getCountersForGlobalObj($(this).val()), "counterName"))
+            },
+            'counterObject',
+            selectedId
+          ) +
+          GameCreator.htmlStrings.inputLabel("addCounterCounterName", "Counter") +
+          GameCreator.htmlStrings.singleSelector("addCounterCounterName", selectedId ? GameCreator.getCountersForGlobalObj(selectedId) : {}, "counterName");
     },
     
     saveCounterObject: function() {
       var args = {};
       GameCreator.saveFormInputToObject("addGlobalObjectWindowContent", args);
-      GameCreator.addCounterObject(args);
+      GameCreator.addGlobalObject(args, 'counterObject');
     },
     
     //Edit global object functions
@@ -299,11 +298,9 @@ GameCreator.UI = {
     setupEditGlobalObjectPropertiesContent: function(container, globalObj){
       var result = '';
       if(globalObj.objectType === 'counterObject' && !globalObj.counter) {
-        result += GameCreator.UI.setupAddCounterObjectCounterSelector(globalObj) +
-              '<br style="clear:both;"/>' +
-              GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj);
+        result += GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj); //TODO: Allow for changing counter representation here!
       } else {
-          result += GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj);
+        result += GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj);
       }
       return result;
     },
@@ -532,6 +529,7 @@ GameCreator.UI = {
         }
         else if (GameCreator.selectedObject.parent.objectType == "counterObject") {
             $("#editSceneObjectContent").html(GameCreator.htmlStrings.editCounterObjectForm(GameCreator.selectedObject));
+            $("#addCounterObjectCounterSelector").html(GameCreator.UI.setupAddCounterObjectCounterSelector(GameCreator.selecte));
         }
     },
     unselectSceneObject: function() {

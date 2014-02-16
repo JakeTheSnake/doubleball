@@ -33,6 +33,7 @@ GameCreator.sceneObject = {
     update: function() {
         this.displayWidth = parseInt(this.width[this.width.length - 1]);
         this.displayHeight = parseInt(this.height[this.height.length - 1]);
+        GameCreator.invalidate(this);
     },
     instantiate: function(globalObj, args){
         this.invalidated = true;

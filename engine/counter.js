@@ -70,7 +70,7 @@ GameCreator.sceneObjectCounter = {
 	
 	setValue: function(inValue) {
 		var value = GameCreator.helperFunctions.getRandomFromRange(inValue);
-		
+
 		if(value > this.value) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
 				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i], this.parentCounter.onIncrease[i].parameters);
@@ -181,9 +181,6 @@ GameCreator.counterObject = {
 		obj.image = image;
 		obj.name = args.name;
 		
-		obj.counterObject = args.counterObject;
-		obj.counterName = args.counterName;
-		
 		if(args.representation === "text") {
 			obj.textCounter = true;
 			obj.font = args.font || 'Arial';
@@ -209,9 +206,10 @@ GameCreator.counterObject = {
 	},
 	
 	draw: function(context, obj) {
+		GameCreator.invalidate(obj); //TODO: Handle this in a better way.
 		var value = obj.parent.textCounter ? "---" : 0;
-		if(GameCreator.getSceneObjectById(obj.parent.counterObject) && GameCreator.getSceneObjectById(obj.parent.counterObject).counters[obj.parent.counterName]) {
-			value = GameCreator.getSceneObjectById(obj.parent.counterObject).counters[obj.parent.counterName].value;
+		if(GameCreator.getSceneObjectById(obj.counterObject) && GameCreator.getSceneObjectById(obj.counterObject).counters[obj.counterName]) {
+			value = GameCreator.getSceneObjectById(obj.counterObject).counters[obj.counterName].value;
 		}
     	if(obj.parent.textCounter) {
     		context.font = obj.size + "px " + obj.font;

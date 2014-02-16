@@ -1,6 +1,10 @@
 TODO:
 
 
+BLOCK ONCLICK on mouse objects.
+
+Allow changing of counter representation.
+
 Maybe handle inheritance in a nicer way. Possible to avoid the whole obj.parent.function.call" mess?
 
 
@@ -10,15 +14,9 @@ Run Actions when you create them in direct mode.
 
 Fix so shoot also takes the object to be shots width into consideration when deciding where to spawn it!
 
-Set negative numbers in fields!
-
 Function in actions that returns the correct array of selectable actions. Takes "collision" true/false and the object as parameters.
 
-Action "stop" can be used on mouse objects although it is not implemented for mouse objects.
-
 Remove excluded actions?
-
-Parallellstuds!
 
 Finish shoot. Refactor to remove duplicates of the direction switch case.
 
@@ -38,12 +36,9 @@ Se om man kan få bort selectedObject på något sätt. Snyggt att slippa den global
 
 Seriously check out JS templating engines!
 
-As the save/load functionality works now, people can embed any script they want into the game. We probably need to save actions by name instead of saving entire functions. And interpret this to recreate a usable object when the game is loaded.
-How do we handle selection of actions on collision events on the mouse object? Bounce and stop make no sense on this.
-Need to handle initialization of objects that have different runtime  values. (topDown and platform objects have facing for example, though maybe all objects should have this...)
-Can we use an anynomous function for runtime parameters for actions instead of the current parameters handling?
-
 onDestroy should probably be a collection of functions to run when an object is destroyed. So that new actions can be bound to the event.
+
+
 
 POSSIBLES:
 

@@ -168,6 +168,8 @@ GameCreator.htmlStrings = {
     },
     editCounterObjectForm: function(obj) {
     	var result = '<div id="editSceneObjectForm">';
+        result += '<div id="addCounterObjectCounterSelector"></div>' + 
+                '<br style="clear:both;"/>';
     	if(obj.parent.textCounter) {
     		result += GameCreator.htmlStrings.counterObjectTextForm(obj);
     	} else if(obj.parent.imageCounter) {
@@ -427,8 +429,6 @@ GameCreator.htmlStrings = {
 	addCounterObjectForm: function() {
 		return 	GameCreator.htmlStrings.inputLabel("counterObjectName", "Name:") + GameCreator.htmlStrings.stringInput("counterObjectName", "name", "") +
         		'<br style="clear:both;"/>' +
-            	'<div id="addCounterObjectCounterSelector"></div>' + 
-            	'<br style="clear:both;"/>' +
             	GameCreator.htmlStrings.inputLabel("counterRepresentation", "Show as:") + 
             	GameCreator.htmlStrings.singleSelector("counterRepresentation", {"Text": "text", "Repeating Image": "image"}, "representation") +
             	'<br style="clear:both;"/>' +
