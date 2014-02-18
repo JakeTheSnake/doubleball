@@ -71,10 +71,10 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     if(currentActionsItem !== undefined)
     {
         for (var j = 0; j < currentActionsItem.actions.length; j++) {
-            GameCreator.helperFunctions.runAction(object, currentActionsItem.actions[j],$.extend({collisionObject:targetObject}, currentActionsItem.actions[j].parameters));
+            GameCreator.helperFunctions.runAction(object, GameCreator.actions[currentActionsItem.actions[j].name],$.extend({collisionObject:targetObject}, currentActionsItem.actions[j].parameters));
         }
     }
-    else if (GameCreator.state !== 'playing')
+    else if (GameCreator.state !== 2)
     {
     	var actions;
     	if(object.parent.objectType === "mouseObject") {
@@ -123,7 +123,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     
-    if(GameCreator.state === 'directing') {     
+    if(GameCreator.state === 1) {     
         for (j = 0; j < GameCreator.collidableObjects.length; j++) {
             runtimeObjectsItem = GameCreator.collidableObjects[j];
             for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i++) {
@@ -155,18 +155,9 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 }
 
 GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject) {
-    if (!(object == targetObject)) {
-        var targetWidth = targetObject.width;
-        var targetHeight = targetObject.height;
-        var width = object.width;
-        var height = object.height;
-        var thisMidX = object.x + width / 2;
-        var thisMidY = object.y + height / 2;
-        var targetMidX = targetObject.x + targetObject.width / 2;
-        var targetMidY = targetObject.y + targetObject.height / 2;
-        if ((Math.abs(thisMidX - targetMidX) < width / 2 + targetWidth / 2) && (Math.abs(thisMidY - targetMidY) < height / 2 + targetHeight / 2)) {
-            //console.log("targetObject: " + object.name + " collided with " + targetObject.name);
-            //Look through collisionActions to see if we already have an action defined for a collision with a targetObject with this name, if so, run that function instead
+    if (!(object === targetObject)) {
+        if ((Math.abs((object.x + object.width / 2) - (targetObject.x + targetObject.width / 2)) < object.width / 2 + targetObject.width / 2) &&
+         (Math.abs((object.y + object.height / 2) - (targetObject.y + targetObject.height / 2)) < object.height / 2 + targetObject.height / 2)) {
             return true;
         }
     }
@@ -281,8 +272,8 @@ GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parame
     } else {
         if(GameCreator.actions[actionToRun.name].runnable.call(runtimeObj)) {
 	        GameCreator.actions[actionToRun.name].action.call(runtimeObj, parameters);
-            return;
         }
+        return;
     }
 
     (function(obj, curAction, curParams, curTimerFunction){

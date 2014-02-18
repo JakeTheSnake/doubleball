@@ -39,13 +39,13 @@ $.extend(GameCreator, {
         then = Date.now();
         GameCreator.resumeGame();
         
-        if(GameCreator.state = 'editing') {
+        if(GameCreator.state = 0) {
             GameCreator.stopEditing();
         }
 
         GameCreator.sceneStarted();
         
-        GameCreator.state = 'directing';
+        GameCreator.state = 1;
         GameCreator.gameLoop();
     },
 
@@ -76,7 +76,7 @@ $.extend(GameCreator, {
     editScene: function(scene){
         GameCreator.reset();
         GameCreator.resetScene(scene);
-        GameCreator.state = 'editing';
+        GameCreator.state = 0;
         //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
         //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
         for (var i=0;i < scene.length;++i) {
@@ -167,7 +167,7 @@ $.extend(GameCreator, {
         
         //TODO: Put this array somewhere more "configy"
         //Save global objects
-        var attrsToCopy = ["accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "counters"];
+        var attrsToCopy = ["id", "accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "counters"];
         var objects = GameCreator.globalObjects;
         for (name in objects) {
             if (objects.hasOwnProperty(name)) {
@@ -208,6 +208,7 @@ $.extend(GameCreator, {
         }
         
         results.idCounter = GameCreator.idCounter;
+        results.globalIdCounter = GameCreator.globalIdCounter;
         
         return JSON.stringify(results);
     },
@@ -255,6 +256,7 @@ $.extend(GameCreator, {
         }
         
         GameCreator.idCounter = parsedSave.idCounter;
+        GameCreator.globalIdCounter = parsedSave.globalIdCounter;
         
         GameCreator.editScene(GameCreator.scenes[0]);
     },

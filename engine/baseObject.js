@@ -19,7 +19,7 @@ GameCreator.baseObject = {
 
     onDestroy: function(){
         if (!GameCreator.paused) {
-            if (!this.parent.onDestroyActions && GameCreator.state !== 'playing') {
+            if (!this.parent.onDestroyActions && GameCreator.state !== 2) {
                 this.parent.onDestroyActions = [];
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.name + "' is has been destroyed!",
@@ -34,16 +34,12 @@ GameCreator.baseObject = {
                     GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i],this.parent.onDestroyActions[i].parameters);
                 }
             }
-            var index = GameCreator.objectsToDestroy.indexOf(this);
-            if (index !== -1) {
-                GameCreator.objectsToDestroy.splice(index,1);
-            }
         }
     },
 
     onCreate: function(staticParameters){
         if (!GameCreator.paused) {
-            if (!this.parent.onCreateActions && GameCreator.state !== 'playing') {
+            if (!this.parent.onCreateActions && GameCreator.state !== 2) {
                 this.parent.onCreateActions = [];
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.name + "' has been created!",
@@ -67,17 +63,23 @@ GameCreator.baseObject = {
     removeFromGame: function() {
         GameCreator.invalidate(this);
 
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.collidableObjects, this.instanceId);
+
+        GameCreator.helperFunctions.removeObjectFromArrayById(
+            GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, this.parent.id),
+            this.instanceId);
         GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.movableObjects, this.instanceId);
         GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.renderableObjects, this.instanceId);
         GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.eventableObjects, this.instanceId);
-
+        var index = GameCreator.objectsToDestroy.indexOf(this);
+        if (index !== -1) {
+            GameCreator.objectsToDestroy.splice(index,1);
+        }
         this.isDestroyed = true;
     },
     
-    onGameStarted: function(){},
+    onGameStarted: function() {},
     
-    checkEvents: function(){},
+    checkEvents: function() {},
     
     move: function(modifier){
         if (this.speedX != 0 || this.speedY != 0) {

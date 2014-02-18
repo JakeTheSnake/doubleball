@@ -5,8 +5,8 @@ var GameCreator = {
     height: GCHeight,
     width: GCWidth,
     paused: false,
-    //State can be 'editing', 'directing' or 'playing'. 
-    state: 'editing',
+    //State can be 0 (editing), 1 (directing) or 2 (playing). 
+    state: 0,
     then: undefined,
     timer: undefined,
     draggedGlobalElement: undefined,
@@ -46,7 +46,7 @@ var GameCreator = {
     
         GameCreator.runFrame(delta);
         GameCreator.render(false);
-        if (GameCreator.state !== 'editing') {
+        if (GameCreator.state !== 0) {
             requestAnimationFrame(GameCreator.gameLoop);
         }
         then = now;
@@ -175,9 +175,9 @@ var GameCreator = {
     },
     
     restartGame: function() {
-        if (GameCreator.state === 'directing') {
+        if (GameCreator.state === 1) {
             GameCreator.directScene(GameCreator.scenes[0]);
-        } else if (GameCreator.state === 'playing') {
+        } else if (GameCreator.state === 2) {
             GameCreator.playScene(GameCreator.scenes[0]);       
         }
     },
