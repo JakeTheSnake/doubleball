@@ -63,7 +63,7 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                              this.name
                             );
                     }
-                    else
+                    else if (keyAction !== undefined)
                     {
                         for(var i = 0;i < keyAction.length;++i)
                         {
