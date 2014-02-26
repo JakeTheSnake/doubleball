@@ -68,8 +68,6 @@ GameCreator.UI = {
      * actions: The actions the user should be able to select from
      * existingActions: An object or an array, containing actions already chosen.
      * container: The container
-     * targetName: If existingActions is an object, targetName is the key to the current array of actions in existingActions.
-     *             If null, existingActions has to be an array of actions.
      * thisName: The name of the object whose actiosn will be edited with this form.
      **/
     createEditActionsArea: function(text, actions, existingActions, container, thisName) {
@@ -267,6 +265,7 @@ GameCreator.UI = {
         });
     },
     
+
     setupEditGlobalObjectPropertiesContent: function(container, globalObj){
       var result = '';
       if(globalObj.objectType === 'counterObject' && !globalObj.counter) {
@@ -278,28 +277,35 @@ GameCreator.UI = {
     },
     
     setupEditGlobalObjectCollisionsForm: function(container, globalObj) {
-        container.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(globalObj));
+        var collisionObjects = [];
+        for(var i = 0; i < globalObj.collisionActions.length; i++) {
+            collisionObjects.push(GameCreator.helperFunctions.findGlobalObjectById(globalObj.collisionActions[i].id));
+        }
+        container.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(collisionObjects));
         container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
             var actions;
-        if(globalObj.objectType === "mouseObject") {
-          actions = GameCreator.actionGroups.mouseCollisionActions;
-        } else {
-          actions = GameCreator.actionGroups.collisionActions;
-        }
+            if(globalObj.objectType === "mouseObject") {
+              actions = GameCreator.actionGroups.mouseCollisionActions;
+            } else {
+              actions = GameCreator.actionGroups.collisionActions;
+            }
+            var targetId = GameCreator.helperFunctions.findGlobalObjectByName(targetName).id;
+            var existingActions = GameCreator.helperFunctions.getObjectById(globalObj.collisionActions, targetId).actions;
             GameCreator.UI.createEditActionsArea(
                 "Actions for collision with " + targetName, 
                 actions,
-                globalObj.collisionActions,
+                existingActions,
                 $("#editCollisionActionsObjectContent"),
-                targetName,
                 globalObj.name
             );
         });
         $("#addNewCollisionButton").on("click", function(){
           $("#editCollisionActionsObjectContent").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
           $(".addCollisionObjectElement").one("click", function(){
-            globalObj.collisionActions[$(this).data("objectname")] = [];
+            var targetId = GameCreator.helperFunctions.findGlobalObjectByName($(this).data("objectname")).id;
+            var newActionItem = {id: targetId, actions: []};
+            globalObj.collisionActions.push(newActionItem);
             GameCreator.UI.setupEditGlobalObjectCollisionsForm(container, globalObj);
           });
         });

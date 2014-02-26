@@ -212,13 +212,29 @@ GameCreator.helperFunctions.exists = function(name, operation) {
     // TODO, iterate through rest of runtime objects
 };
 
-GameCreator.helperFunctions.findObject = function(name) {
+GameCreator.helperFunctions.findGlobalObjectByName = function(name) {
     var object;
     if(!(object = GameCreator.globalObjects[name])) {
         object = GameCreator.borderObjects[name];
     }
     return object;
 };
+
+GameCreator.helperFunctions.findGlobalObjectById = function(id) {
+    var objects = Object.keys(GameCreator.globalObjects);
+    var i;
+    for(i = 0; i < objects.length; i++) {
+        if(GameCreator.globalObjects[objects[i]].id === id) {
+            return GameCreator.globalObjects[objects[i]];
+        }
+    }
+    objects = Object.keys(GameCreator.borderObjects);
+    for(i = 0; i < objects.length; i++) {
+        if(GameCreator.borderObjects[objects[i]].id === id) {
+            return GameCreator.borderObjects[objects[i]];
+        }
+    }
+}
 
 GameCreator.helperFunctions.getValue = function(input) {
     if(input.attr("data-type") == "string" && input.val().length != 0) {
