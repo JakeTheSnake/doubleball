@@ -32,9 +32,9 @@ $.extend(GameCreator, {
     selectScene: function(params) {
       var scene = GameCreator.helperFunctions.calculateScene(GameCreator.activeScene, params);
       GameCreator.activeScene = scene;
-      if (GameCreator.state === 'directing') {
+      if (GameCreator.state === 1) {
           GameCreator.directScene(GameCreator.scenes[scene]);
-      } else if (GameCreator.state === 'playing') {
+      } else if (GameCreator.state === 2) {
           GameCreator.playScene(GameCreator.scenes[scene]);       
       }
     },
@@ -55,12 +55,12 @@ $.extend(GameCreator, {
         then = Date.now();
         GameCreator.resumeGame();
         
-        if(GameCreator.state = 'editing') {
+        if(GameCreator.state = 0) {
             GameCreator.stopEditing();
         }
         
         GameCreator.sceneStarted();
-        GameCreator.state = 'playing';
+        GameCreator.state = 2;
         GameCreator.gameLoop();
     },
 
@@ -76,14 +76,13 @@ $.extend(GameCreator, {
         $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e){
             var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
             if(runtimeObj && runtimeObj.parent.isClickable) {
-                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== "playing")
+                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== 2 && !GameCreator.paused)
                 {
                     runtimeObj.parent.onClickActions = [];
                     GameCreator.UI.openEditActionsWindow(
                         "Clicked on " + runtimeObj.parent.name,
                          GameCreator.actionGroups.nonCollisionActions,
                          runtimeObj.parent.onClickActions,
-                         null,
                          runtimeObj.parent.name
                         );
                 }

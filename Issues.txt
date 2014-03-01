@@ -1,5 +1,9 @@
 TODO:
 
+Se till så att action-referenser läggs till på actions i load game och när man lägger till nya actions så vi slipper göra lookups i runtime.
+
+Objekt förstörs inte ordentligt efter en action, verkar ligga kvar i collideables. Kan vara något med timer.
+
 
 BLOCK ONCLICK on mouse objects.
 

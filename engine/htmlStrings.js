@@ -280,13 +280,12 @@ GameCreator.htmlStrings = {
         result += '<button class="regularButton" id="saveGlobalObjectPropertiesButton">Save</button>';
         return result;
     },
-    editGlobalObjectCollisionsContent: function(object) {
+    editGlobalObjectCollisionsContent: function(collisionObjects) {
         var result = '<div id="editCollisionActionsObjectMenuContainer"><div id="editCollisionActionsObjectMenu">';
         result += '<button id="addNewCollisionButton" class="regularButton">Add</button>';
-        for (targetName in object.collisionActions) {
-            if (object.collisionActions.hasOwnProperty(targetName)) {
-                result += GameCreator.htmlStrings.collisionMenuElement(GameCreator.helperFunctions.findObject(targetName));
-            }
+
+        for(var i = 0; i < collisionObjects.length; i++) {
+            result += GameCreator.htmlStrings.collisionMenuElement(collisionObjects[i]);
         }
         
         result += '</div> \

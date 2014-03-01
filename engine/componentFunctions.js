@@ -25,7 +25,7 @@ GameCreator.addObjFunctions.bounceableObjectFunctions = function(object)
 
 GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
 {    
-    object.collisionActions = {};
+    object.collisionActions = [];
 },
 
 GameCreator.addObjFunctions.keyObjectFunctions = function(object) 
@@ -47,7 +47,7 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                 var keyAction = this.parent.keyActions[key];
                 if(isKeyPressed && !this.keyCooldown[key])
                 {
-                    if(keyAction == undefined && GameCreator.state !== 'playing')
+                    if(keyAction === undefined && GameCreator.state !== 2)
                     {
                     	var actions;
 				    	if(this.parent.objectType === "mouseObject") {
@@ -55,15 +55,15 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
 				    	} else {
 				    		actions = GameCreator.actionGroups.nonCollisionActions;
 				    	}
+                        this.parent.keyActions[key] = [];
                         GameCreator.UI.openEditActionsWindow(
                             "Pressed " + key + " actions for " + this.parent.name,
                              actions,
-                             this.parent.keyActions,
-                             key,
-                             this.parent.name
+                             this.parent.keyActions[key],
+                             this.name
                             );
                     }
-                    else
+                    else if (keyAction !== undefined)
                     {
                         for(var i = 0;i < keyAction.length;++i)
                         {

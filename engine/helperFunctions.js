@@ -66,15 +66,15 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
 }
 
 GameCreator.helperFunctions.doCollision = function(object, targetObject){
-    var currentActions = object.parent.collisionActions[targetObject.name];
+    var currentActionsItem = GameCreator.helperFunctions.getObjectById(object.parent.collisionActions, targetObject.parent.id);
     targetObject.invalidated = true;
-    if(currentActions != undefined)
+    if(currentActionsItem !== undefined)
     {
-        for (var j = 0; j < currentActions.length; j++) {
-            GameCreator.helperFunctions.runAction(object, currentActions[j],$.extend({collisionObject:targetObject}, currentActions[j].parameters));
+        for (var j = 0; j < currentActionsItem.actions.length; j++) {
+            GameCreator.helperFunctions.runAction(object, GameCreator.actions[currentActionsItem.actions[j].name],$.extend({collisionObject:targetObject}, currentActionsItem.actions[j].parameters));
         }
     }
-    else if (GameCreator.state !== 'playing')
+    else if (GameCreator.state !== 2)
     {
     	var actions;
     	if(object.parent.objectType === "mouseObject") {
@@ -82,12 +82,13 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     	} else {
     		actions = GameCreator.actionGroups.collisionActions;
     	}
+        var newActionItem = {id: targetObject.parent.id, actions: []};
+        object.parent.collisionActions.push(newActionItem);
         GameCreator.UI.openEditActionsWindow(
             "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
             actions,
-            object.parent.collisionActions,
-            targetObject.name,
-            object.parent.name
+            newActionItem.actions,
+            object.name
         )
     }
 }
@@ -103,7 +104,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
     var height = object.height;
     var collidedBorder;
     var collisionObject;
-    var i, j;
+    var i, j, runtimeObjectsItem;
     
     if(x < 1){
         collisionObject = GameCreator.borderObjects.borderL;
@@ -122,29 +123,29 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     
-    if(GameCreator.state === 'directing') {
-        var objectNames = Object.keys(GameCreator.collidableObjects)
-        for (j = 0; j < objectNames.length; j++) {
-            var objectName = objectNames[j];
-            if (GameCreator.collidableObjects.hasOwnProperty(objectName)) {
-                for (i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
-                    var targetObject = GameCreator.collidableObjects[objectName][i];
-                    if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject)) {
-                        GameCreator.helperFunctions.doCollision(object, targetObject);
-                    }
-                }   
+    if(GameCreator.state === 1) {     
+        for (j = 0; j < GameCreator.collidableObjects.length; j++) {
+            runtimeObjectsItem = GameCreator.collidableObjects[j];
+            for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i++) {
+                var targetObject = runtimeObjectsItem.runtimeObjects[i];
+                if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject) &&
+                    !GameCreator.paused) {
+                    GameCreator.helperFunctions.doCollision(object, targetObject);
+                }
             }   
+   
         }
     }
     else //Playing
-    {
-        var objectNames = Object.keys(object.parent.collisionActions)
-        for (j = 0 ; j < objectNames.length; j++) {
-            var objectName = objectNames[j];
-            if (object.parent.collisionActions[objectName].length > 0 && GameCreator.collidableObjects[objectName]) {
-                for (i = 0; i < GameCreator.collidableObjects[objectName].length; i++) {
-                    var targetObject = GameCreator.collidableObjects[objectName][i];
-                    if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject)) {
+    {    
+        for (j = 0 ; j < object.parent.collisionActions.length; j++) {
+            var collisionItem = object.parent.collisionActions[j];
+            runtimeObjectsItem = GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, collisionItem.id);
+            if (collisionItem.actions.length > 0 && runtimeObjectsItem) {
+                for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i++) {
+                    var targetObject = runtimeObjectsItem.runtimeObjects[i];
+                    if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject) && 
+                        !GameCreator.paused) {
                         GameCreator.helperFunctions.doCollision(object, targetObject);
                     }
                 }
@@ -154,18 +155,9 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
 }
 
 GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject) {
-    if (!(object == targetObject)) {
-        var targetWidth = targetObject.width;
-        var targetHeight = targetObject.height;
-        var width = object.width;
-        var height = object.height;
-        var thisMidX = object.x + width / 2;
-        var thisMidY = object.y + height / 2;
-        var targetMidX = targetObject.x + targetObject.width / 2;
-        var targetMidY = targetObject.y + targetObject.height / 2;
-        if ((Math.abs(thisMidX - targetMidX) < width / 2 + targetWidth / 2) && (Math.abs(thisMidY - targetMidY) < height / 2 + targetHeight / 2)) {
-            //console.log("targetObject: " + object.name + " collided with " + targetObject.name);
-            //Look through collisionActions to see if we already have an action defined for a collision with a targetObject with this name, if so, run that function instead
+    if (!(object === targetObject)) {
+        if ((Math.abs((object.x + object.width / 2) - (targetObject.x + targetObject.width / 2)) < object.width / 2 + targetObject.width / 2) &&
+         (Math.abs((object.y + object.height / 2) - (targetObject.y + targetObject.height / 2)) < object.height / 2 + targetObject.height / 2)) {
             return true;
         }
     }
@@ -200,7 +192,7 @@ GameCreator.helperFunctions.calcUnitVector = function(x, y){
     }
 }
 
-/**
+/** TODO: Not used atm, for conditions.
  * name: Name of the object
  * operation: function(count), that decides if the condition
               is fulfilled or not for this many found objects.
@@ -220,13 +212,29 @@ GameCreator.helperFunctions.exists = function(name, operation) {
     // TODO, iterate through rest of runtime objects
 };
 
-GameCreator.helperFunctions.findObject = function(name) {
+GameCreator.helperFunctions.findGlobalObjectByName = function(name) {
     var object;
     if(!(object = GameCreator.globalObjects[name])) {
         object = GameCreator.borderObjects[name];
     }
     return object;
 };
+
+GameCreator.helperFunctions.findGlobalObjectById = function(id) {
+    var objects = Object.keys(GameCreator.globalObjects);
+    var i;
+    for(i = 0; i < objects.length; i++) {
+        if(GameCreator.globalObjects[objects[i]].id === id) {
+            return GameCreator.globalObjects[objects[i]];
+        }
+    }
+    objects = Object.keys(GameCreator.borderObjects);
+    for(i = 0; i < objects.length; i++) {
+        if(GameCreator.borderObjects[objects[i]].id === id) {
+            return GameCreator.borderObjects[objects[i]];
+        }
+    }
+}
 
 GameCreator.helperFunctions.getValue = function(input) {
     if(input.attr("data-type") == "string" && input.val().length != 0) {
@@ -280,8 +288,8 @@ GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parame
     } else {
         if(GameCreator.actions[actionToRun.name].runnable.call(runtimeObj)) {
 	        GameCreator.actions[actionToRun.name].action.call(runtimeObj, parameters);
-            return;
         }
+        return;
     }
 
     (function(obj, curAction, curParams, curTimerFunction){
@@ -308,4 +316,25 @@ GameCreator.helperFunctions.calculateScene = function(activeScene, params){
 		case 'setScene':
 		 	return params.changeValue;
 	}
+}
+
+GameCreator.helperFunctions.getObjectById = function(array, id) {
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].id === id) {
+            return array[i];
+        }
+    }
+}
+
+GameCreator.helperFunctions.removeObjectFromArrayById = function(array, id) {
+    var found = false;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].instanceId === id) {
+            found = true;
+            break;
+        }
+    }
+    if (found) {
+        array.splice(i, 1);
+    }
 }

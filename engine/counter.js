@@ -201,7 +201,7 @@ GameCreator.counterObject = {
     	} else if (obj.parent.imageCounter){
     		if (obj.parent.imageReady) {
     			//Draw 3 semitransparent icons if in edit mode. 
-			    if(GameCreator.state === 'editing') {
+			    if(GameCreator.state === 0) {
 					value = 3;
 					context.globalAlpha = 0.5;
 				} else {

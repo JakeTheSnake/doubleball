@@ -9,15 +9,16 @@ $.extend(GameCreator, {
     },
        
     addGlobalObject: function(args, objectType) {
-    	var image = new Image();
-	    image.src = args.src;
-	    var globalObj = GameCreator[objectType].New(image, args);
-	    GameCreator.UI.createGlobalListElement(globalObj);
-	    image.onload = function() {
-	        globalObj.imageReady = true;
-	        GameCreator.render();
-	    };
-	    return globalObj;
+        var image = new Image();
+        image.src = args.src;
+        var globalObj = GameCreator[objectType].New(image, args);
+        globalObj.id = GameCreator.globalIdCounter++;
+        GameCreator.UI.createGlobalListElement(globalObj);
+        image.onload = function() {
+            globalObj.imageReady = true;
+            GameCreator.render();
+        };
+        return globalObj;
     },
     
     directActiveScene: function(){
@@ -38,13 +39,13 @@ $.extend(GameCreator, {
         then = Date.now();
         GameCreator.resumeGame();
         
-        if(GameCreator.state = 'editing') {
-        	GameCreator.stopEditing();
+        if(GameCreator.state = 0) {
+            GameCreator.stopEditing();
         }
 
-		GameCreator.sceneStarted();
+        GameCreator.sceneStarted();
         
-        GameCreator.state = 'directing';
+        GameCreator.state = 1;
         GameCreator.gameLoop();
     },
 
@@ -63,9 +64,9 @@ $.extend(GameCreator, {
     },
     
     stopEditing: function(){
-    	$(GameCreator.mainCanvas).off("mousedown.editScene");
-    	GameCreator.selectedObject = null;
-    	GameCreator.UI.unselectSceneObject();
+        $(GameCreator.mainCanvas).off("mousedown.editScene");
+        GameCreator.selectedObject = null;
+        GameCreator.UI.unselectSceneObject();
     },
     
     editActiveScene: function(){
@@ -75,7 +76,7 @@ $.extend(GameCreator, {
     editScene: function(scene){
         GameCreator.reset();
         GameCreator.resetScene(scene);
-        GameCreator.state = 'editing';
+        GameCreator.state = 0;
         //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
         //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
         for (var i=0;i < scene.length;++i) {
@@ -150,7 +151,7 @@ $.extend(GameCreator, {
             var offsetX = $("#mainCanvas").offset().left;
             var offsetY = $("#mainCanvas").offset().top;
             if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
-            	var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
+                var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
                 var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[GameCreator.activeScene], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
             }
                 
@@ -166,7 +167,7 @@ $.extend(GameCreator, {
         
         //TODO: Put this array somewhere more "configy"
         //Save global objects
-        var attrsToCopy = ["accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "counters"];
+        var attrsToCopy = ["id", "accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "counters"];
         var objects = GameCreator.globalObjects;
         for (name in objects) {
             if (objects.hasOwnProperty(name)) {
@@ -195,10 +196,10 @@ $.extend(GameCreator, {
                 newObject.parent = oldObject.parent.name;
                 //Same for counters
                 for(var counterName in newObject.counters){
-                	if(newObject.counters.hasOwnProperty(counterName)){
-                		newObject.counters[counterName].parentCounter = counterName;
-                		newObject.counters[counterName].parentObject = newObject.counters[counterName].parentObject.name;
-                	}
+                    if(newObject.counters.hasOwnProperty(counterName)){
+                        newObject.counters[counterName].parentCounter = counterName;
+                        newObject.counters[counterName].parentObject = newObject.counters[counterName].parentObject.name;
+                    }
                 }
                 newObject.instantiate = undefined;
                 newScene.push(newObject);
@@ -207,6 +208,7 @@ $.extend(GameCreator, {
         }
         
         results.idCounter = GameCreator.idCounter;
+        results.globalIdCounter = GameCreator.globalIdCounter;
         
         return JSON.stringify(results);
     },
@@ -239,21 +241,22 @@ $.extend(GameCreator, {
                 var object = savedScene[n];
                 GameCreator.createSceneObject(GameCreator.globalObjects[object.name], newScene, object);
                 for(var counterName in object.counters){
-                	if(object.counters.hasOwnProperty(counterName)){
-                		var oldCounter = object.counters[counterName]
-                		//Set the reference to the parent object from the name currently saved in its place.
-                		object.counters[counterName] = GameCreator.sceneObjectCounter.New(GameCreator.globalObjects[oldCounter.parentObject], GameCreator.globalObjects[oldCounter.parentObject].counters[counterName]);
-                		object.counters[counterName].aboveValueStates = oldCounter.aboveValueStates;
-                		object.counters[counterName].belowValueStates = oldCounter.belowValueStates;
-                		object.counters[counterName].atValueStates = oldCounter.atValueStates;
-                		object.counters[counterName].value = oldCounter.value;
-                	}
+                    if(object.counters.hasOwnProperty(counterName)){
+                        var oldCounter = object.counters[counterName]
+                        //Set the reference to the parent object from the name currently saved in its place.
+                        object.counters[counterName] = GameCreator.sceneObjectCounter.New(GameCreator.globalObjects[oldCounter.parentObject], GameCreator.globalObjects[oldCounter.parentObject].counters[counterName]);
+                        object.counters[counterName].aboveValueStates = oldCounter.aboveValueStates;
+                        object.counters[counterName].belowValueStates = oldCounter.belowValueStates;
+                        object.counters[counterName].atValueStates = oldCounter.atValueStates;
+                        object.counters[counterName].value = oldCounter.value;
+                    }
                 }
             }
             GameCreator.scenes.push(newScene);
         }
         
         GameCreator.idCounter = parsedSave.idCounter;
+        GameCreator.globalIdCounter = parsedSave.globalIdCounter;
         
         GameCreator.editScene(GameCreator.scenes[0]);
     },
@@ -317,7 +320,7 @@ $.extend(GameCreator, {
         return null;
     },
     addScene: function() {
-    	GameCreator.scenes.push([]);
-    	GameCreator.UI.setupSceneTabs(GameCreator.scenes);
+        GameCreator.scenes.push([]);
+        GameCreator.UI.setupSceneTabs(GameCreator.scenes);
     }
 });
