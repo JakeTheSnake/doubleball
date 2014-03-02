@@ -87,7 +87,7 @@ GameCreator.htmlStrings = {
         imgDiv.append(image);
         imgDiv.addClass("globalObjectElementImage");
         var div = $(document.createElement("div")).append(imgDiv);
-        $(div).attr("id", "globalObjectElement_" + object.name);
+        $(div).attr("id", "object-library-element-" + object.name);
         return div;
     },
     globalObjectEditButton: function(object) {

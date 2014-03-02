@@ -164,15 +164,14 @@ GameCreator.counterObject = {
 		obj.image = image;
 		obj.name = args.name;
 		
-		if(args.representation === "text") {
+		if(args.representation === 'text') {
 			obj.textCounter = true;
 			obj.font = args.font || 'Arial';
 			obj.color = args.color || '#000';
 			obj.size = args.size || 20;
-			obj.src = 'assets/textcounter.png';
-		} else if (args.representation == "image") {
+			obj.image.src = 'assets/textcounter.png';
+		} else if (args.representation === 'image') {
 			obj.imageCounter = true;
-			obj.src = args.src;
 			obj.size = args.size || 20;
 		}
 		
