@@ -70,17 +70,17 @@ GameCreator.UI = {
      * container: The container
      * thisName: The name of the object whose actiosn will be edited with this form.
      **/
-    createEditActionsArea: function(text, actions, existingActions, container, thisName) {
-        container.html(GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions));
-        GameCreator.UI.setupEditActionsContent(text, actions, existingActions, thisName);
+    createEditActionsArea: function(text, choosableActions, existingActions, container, thisName) {
+        container.html(GameCreator.htmlStrings.editActionsWindow(text, choosableActions, existingActions));
+        GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
     },
  
-    openEditActionsWindow: function(text, actions, existingActions, thisName) {  
+    openEditActionsWindow: function(text, choosableActions, existingActions, thisName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         GameCreator.pauseGame();
         
-        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(text, actions, existingActions));
-        GameCreator.UI.setupEditActionsContent(text, actions, existingActions, thisName);
+        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(text, choosableActions, existingActions));
+        GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
     
         $("#editActionsWindowCancel").on("click", function() {
             GameCreator.UI.closeDialogue();
@@ -94,20 +94,20 @@ GameCreator.UI = {
     },
     
     
-    setupEditActionsContent: function(text, actions, selectedActions, thisName){
+    setupEditActionsContent: function(text, choosableActions, selectedActions, thisName){
         
         $("#actionSelector").on("change", function(){
             $("#selectActionParametersContent").html("");
             $("#selectActionTimingContent").html("");
             $("#selectActionParametersContainer").css("display", "block");
             $("#selectActionTimingContainer").css("display", "block");
-            for(var i = 0;i < actions[$(this).val()].params.length;++i) {
-                $("#selectActionParametersContent").append(GameCreator.htmlStrings.parameterGroup(actions[$(this).val()].params[i].label() + actions[$(this).val()].params[i].input(thisName)));
+            for(var i = 0;i < choosableActions[$(this).val()].params.length;++i) {
+                $("#selectActionParametersContent").append(GameCreator.htmlStrings.parameterGroup(choosableActions[$(this).val()].params[i].label() + choosableActions[$(this).val()].params[i].input(thisName)));
             }
-            var timing = actions[$("#actionSelector").val()].timing;
+            var timing = choosableActions[$("#actionSelector").val()].timing;
             $("#selectActionTimingContent").append(GameCreator.htmlStrings.timingGroup(timing));
-            $("#timing").on("change", function(){
-                if ($("#timing").val() === "now") {
+            $("#timingSelector").on("change", function(){
+                if ($("#timingSelector").val() === "now") {
                     $("#timingParameter").css("display", "none");
                 } else {
                     $("#timingParameter").css("display", "block");
@@ -116,7 +116,7 @@ GameCreator.UI = {
         });
         
         $( "#selectActionAddAction" ).click(function( event ) {                
-            var action = actions[$("#actionSelector").val()];
+            var action = choosableActions[$("#actionSelector").val()];
             var selectedAction = {parameters: {}, name: action.name, timing:{}};
 
             for (var i = 0; i < action.params.length; i++) {

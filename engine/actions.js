@@ -117,7 +117,7 @@ GameCreator.actions = {
         		],
         	name: "SwitchScene",
         	excludes: ["Bounce", "Destroy", "Stop", "Restart"],
-        	timing: {ad: true, every: true, after: true},
+        	timing: {at: true, every: true, after: true},
         	runnable: function(){return true;}
         } 
 };

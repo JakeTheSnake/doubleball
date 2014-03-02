@@ -52,7 +52,7 @@ GameCreator.htmlStrings = {
             applicableTimings["At"] = "at";
         }
 
-        var result = GameCreator.htmlStrings.singleSelector("timing", applicableTimings);
+        var result = GameCreator.htmlStrings.singleSelector("timingSelector", applicableTimings);
         result += '<div id="timingParameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timingTime", "time","3000") + 'ms</div>';
         return result;
     },
