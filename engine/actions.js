@@ -69,7 +69,7 @@ GameCreator.actions = {
                                 "counterObject", 
                                 $.extend({"this": thisName}, GameCreator.getUniqueIDsInScene()), 
                                 "change", 
-                                function(){$("#counterName").replaceWith(GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj($(this).val())))}
+                                function(){$("#counter-name").replaceWith(GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj($(this).val())))}
                                 )},
                             label: function() {return GameCreator.htmlStrings.inputLabel("counterObject", "Object")}
                         },

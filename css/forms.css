@@ -1,13 +1,13 @@
-#editSceneObjectForm {
+#edit-scene-object-form {
 	width: 350px;
 }
 
-#editCollisionActionsObjectMenu, #editKeyActionsKeyMenu, #editCountersMenu, #editCounterEventContent {
+#edit-collision-actions-object-menu, #edit-key-actions-key-menu, #edit-counters-menu, #edit-counter-event-content {
     width: 100px;
     float: left;
 }
 
-#editCollisionActionsObjectContent, #editKeyActionsKeyContent, #editCounterEventActionsContent {
+#edit-collision-actions-object-content, #edit-key-actions-key-content, #edit-counter-event-actions-content {
     float: left;
 }
 
@@ -27,7 +27,7 @@
     
 }
 
-#selectActionAddButton {
+#select-action-add-button {
     float: left;
 }
 

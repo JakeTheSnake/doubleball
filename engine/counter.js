@@ -201,13 +201,13 @@ GameCreator.counterObject = {
     	} else if (obj.parent.imageCounter){
     		if (obj.parent.imageReady) {
     			//Draw 3 semitransparent icons if in edit mode. 
-			    if(GameCreator.state === 0) {
+			    if(GameCreator.state === 'editing') {
 					value = 3;
 					context.globalAlpha = 0.5;
 				} else {
 					context.globalAlpha = 1;
 				}
-    			for(var i = 0;i < value; i++) {
+    			for(var i = 0; i < value; i++) {
     				context.drawImage(obj.parent.image, obj.x + i * obj.size + i * 3, obj.y, obj.size, obj.size);
 				}
 			}

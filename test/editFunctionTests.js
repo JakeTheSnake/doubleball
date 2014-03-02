@@ -2,11 +2,11 @@ test("Save Form Data to Object", function() {
     var rangeField = GameCreator.htmlStrings.rangeInput('rangeField', 'range', '1:300');
     var numberField = GameCreator.htmlStrings.numberInput('numberField', 'number', '200');
     var stringField = GameCreator.htmlStrings.stringInput('textField', 'string', 'kastrull');
-    $("#qunit-fixture").html('<form id="testForm">' + rangeField + numberField + stringField + '</form>');
+    $("#qunit-fixture").html('<form id="test-form">' + rangeField + numberField + stringField + '</form>');
     
     var obj = {};
 
-    GameCreator.saveFormInputToObject('testForm', obj);
+    GameCreator.saveFormInputToObject('test-form', obj);
     
     deepEqual(obj.string, 'kastrull', 'String parsing.');
     deepEqual(obj.range, [1,300], 'Range parsing.');

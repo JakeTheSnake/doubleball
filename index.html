@@ -30,19 +30,19 @@
 <script src="engine/debug.js"></script>
 </head>
 <body>
-<div id="dialogueOverlay"></div>
-<div id="globalObjectListContainer">
-	<button id="addGlobalObjectButton" class="regularButton">+</button>
-	<div id="globalObjectList" style="float:left; width: 100px"></div>
+<div id="dialogue-overlay"></div>
+<div id="global-object-list-container">
+	<button id="add-global-object-button" class="regularButton">+</button>
+	<div id="global-object-list" style="float:left; width: 100px"></div>
 </div>
-<div id="mainContainer">
-  <div id="sceneTabs" class="tabContainer"></div>
+<div id="main-container">
+  <div id="scene-tabs" class="tabContainer"></div>
 
-  <div id="canvasContainer" oncontextmenu="return false;">
+  <div id="canvas-container" oncontextmenu="return false;">
   	
   </div>
 </div>
-<div id="mainMenu">
+<div id="main-menu">
     <form style="margin-top: 1em;">
       <div id="mode">
           <input type="radio" id="mode_edit" name="radio" onClick="GameCreator.editActiveScene()" checked="checked"><label for="mode_edit">Edit Scene</label>
@@ -50,26 +50,26 @@
           <input type="radio" id="mode_play" name="radio"  onClick="GameCreator.playGame()"><label for="mode_play">Play Game</label>
       </div>
   </form>
-    <div id="editSceneObjectPane" style="margin-top:20px;">
-        <div><span id="editSceneObjectTitle" style="font-size:20px; font-weight:bold;"></span></div>
-        <div id="editSceneObjectContent" style="margin-top:10px;">
+    <div id="edit-scene-object-pane" style="margin-top:20px;">
+        <div><span id="edit-scene-object-title" style="font-size:20px; font-weight:bold;"></span></div>
+        <div id="edit-scene-object-content" style="margin-top:10px;">
         
         </div>
-        <div id="debugInfoPane">
+        <div id="debug-info-pane">
 
         </div>
     </div>
 </div>
 <div style="position:absolute;top:830px;left:120px;">
     <div>
-        <textarea id="saveGameTextArea" style="width:500px;height:300px;"></textarea>
+        <textarea id="save-game-text-area" style="width:500px;height:300px;"></textarea>
     </div>
-    <button id="saveGameButton" onClick="$('#saveGameTextArea').val(GameCreator.saveState())">Save Game</button>
-    <button id="loadGameButton" onClick="GameCreator.restoreState($('#saveGameTextArea').val())">Load Game</button>
+    <button id="save-game-button" onClick="$('#save-game-text-area').val(GameCreator.saveState())">Save Game</button>
+    <button id="load-game-button" onClick="GameCreator.restoreState($('#save-game-text-area').val())">Load Game</button>
 </div>
 
-<div id="editGlobalObjectWindow"></div>
+<div id="edit-global-object-window"></div>
 
-<div id="dialogueWindow"></div>
+<div id="dialogue-window"></div>
 </body>
 </html>

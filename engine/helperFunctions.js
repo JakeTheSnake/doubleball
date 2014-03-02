@@ -74,7 +74,7 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
             GameCreator.helperFunctions.runAction(object, GameCreator.actions[currentActionsItem.actions[j].name],$.extend({collisionObject:targetObject}, currentActionsItem.actions[j].parameters));
         }
     }
-    else if (GameCreator.state !== 2)
+    else if (GameCreator.state !== 'playing')
     {
     	var actions;
     	if(object.parent.objectType === "mouseObject") {
@@ -123,7 +123,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
         GameCreator.helperFunctions.doCollision(object, collisionObject);
     }
     
-    if(GameCreator.state === 1) {     
+    if(GameCreator.state === 'directing') {     
         for (j = 0; j < GameCreator.collidableObjects.length; j++) {
             runtimeObjectsItem = GameCreator.collidableObjects[j];
             for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i++) {

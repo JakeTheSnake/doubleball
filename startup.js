@@ -2,25 +2,25 @@ debugCounter = 0;
 
 window.onload = function () {
         GameCreator.bgCanvas = document.createElement("canvas");
-        GameCreator.bgCanvas.id = "bgCanvas"
+        GameCreator.bgCanvas.id = "bg-canvas"
         GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
         GameCreator.bgCanvas.width = GameCreator.width;
         GameCreator.bgCanvas.height = GameCreator.height;
-        $("#canvasContainer").append(GameCreator.bgCanvas);
+        $("#canvas-container").append(GameCreator.bgCanvas);
 
         GameCreator.mainCanvas = document.createElement("canvas");
-        GameCreator.mainCanvas.id = "mainCanvas"
+        GameCreator.mainCanvas.id = "main-canvas"
         GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
         GameCreator.mainCanvas.width = GameCreator.width;
         GameCreator.mainCanvas.height = GameCreator.height;
-        $("#canvasContainer").append(GameCreator.mainCanvas);
+        $("#canvas-container").append(GameCreator.mainCanvas);
 
         GameCreator.uiCanvas = document.createElement("canvas");
-        GameCreator.uiCanvas.id = "uiCanvas"
+        GameCreator.uiCanvas.id = "ui-canvas"
         GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
         GameCreator.uiCanvas.width = GameCreator.width;
         GameCreator.uiCanvas.height = GameCreator.height;
-        $("#canvasContainer").append(GameCreator.uiCanvas);
+        $("#canvas-container").append(GameCreator.uiCanvas);
         
         GameCreator.scenes.push([]);
         GameCreator.activeScene = 0;
@@ -85,8 +85,8 @@ window.onload = function () {
         
         // UI
         
-        $("#dialogueOverlay").on("click", GameCreator.UI.closeDialogue);
-        $("#addGlobalObjectButton").on("click", GameCreator.UI.openAddGlobalObjectDialogue)
+        $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
+        $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue)
         
         $( ".ui-btn" ).button();
         $("#mode").buttonset();

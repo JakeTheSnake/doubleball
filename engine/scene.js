@@ -32,9 +32,9 @@ $.extend(GameCreator, {
     selectScene: function(params) {
       var scene = GameCreator.helperFunctions.calculateScene(GameCreator.activeScene, params);
       GameCreator.activeScene = scene;
-      if (GameCreator.state === 1) {
+      if (GameCreator.state === 'directing') {
           GameCreator.directScene(GameCreator.scenes[scene]);
-      } else if (GameCreator.state === 2) {
+      } else if (GameCreator.state === 'playing') {
           GameCreator.playScene(GameCreator.scenes[scene]);       
       }
     },
@@ -74,9 +74,9 @@ $.extend(GameCreator, {
 
     sceneStarted: function(){
         $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e){
-            var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
+            var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left , e.pageY - $("#main-canvas").offset().top);
             if(runtimeObj && runtimeObj.parent.isClickable) {
-                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== 2 && !GameCreator.paused)
+                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== 'playing' && !GameCreator.paused)
                 {
                     runtimeObj.parent.onClickActions = [];
                     GameCreator.UI.openEditActionsWindow(

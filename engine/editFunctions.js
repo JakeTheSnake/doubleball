@@ -28,7 +28,7 @@ $.extend(GameCreator, {
     directScene: function(scene){
         GameCreator.reset();
         GameCreator.resetScene(scene);
-        for (var i=0;i < scene.length;++i) {
+        for (var i=0; i < scene.length; ++i) {
             var obj = jQuery.extend({}, scene[i]);
             GameCreator.addToRuntime(obj);
             obj.parent.onGameStarted();
@@ -39,13 +39,13 @@ $.extend(GameCreator, {
         then = Date.now();
         GameCreator.resumeGame();
         
-        if(GameCreator.state = 0) {
+        if(GameCreator.state === 'editing') {
             GameCreator.stopEditing();
         }
 
         GameCreator.sceneStarted();
         
-        GameCreator.state = 1;
+        GameCreator.state = 'directing';
         GameCreator.gameLoop();
     },
 
@@ -64,7 +64,7 @@ $.extend(GameCreator, {
     },
     
     stopEditing: function(){
-        $(GameCreator.mainCanvas).off("mousedown.editScene");
+        $(GameCreator.mainCanvas).off(".editScene");
         GameCreator.selectedObject = null;
         GameCreator.UI.unselectSceneObject();
     },
@@ -76,7 +76,7 @@ $.extend(GameCreator, {
     editScene: function(scene){
         GameCreator.reset();
         GameCreator.resetScene(scene);
-        GameCreator.state = 0;
+        GameCreator.state = 'editing';
         //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
         //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
         for (var i=0;i < scene.length;++i) {
@@ -106,7 +106,7 @@ $.extend(GameCreator, {
         });
         
         $(GameCreator.mainCanvas).on("mousedown.editScene", function(e){
-            GameCreator.draggedObject = GameCreator.getClickedObjectEditing(e.pageX - $("#mainCanvas").offset().left , e.pageY - $("#mainCanvas").offset().top);
+            GameCreator.draggedObject = GameCreator.getClickedObjectEditing(e.pageX - $("#main-canvas").offset().left , e.pageY - $("#main-canvas").offset().top);
             if(GameCreator.draggedObject) {
                 GameCreator.selectedObject = GameCreator.draggedObject;
                 GameCreator.UI.editSceneObject();
@@ -125,8 +125,8 @@ $.extend(GameCreator, {
             if(GameCreator.draggedObject)
             {
                 GameCreator.invalidate(GameCreator.draggedObject);
-                GameCreator.draggedObject.x = e.pageX - $("#mainCanvas").offset().left - GameCreator.draggedObject.clickOffsetX;
-                GameCreator.draggedObject.y = e.pageY - $("#mainCanvas").offset().top - GameCreator.draggedObject.clickOffsetY;
+                GameCreator.draggedObject.x = e.pageX - $("#main-canvas").offset().left - GameCreator.draggedObject.clickOffsetX;
+                GameCreator.draggedObject.y = e.pageY - $("#main-canvas").offset().top - GameCreator.draggedObject.clickOffsetY;
                 GameCreator.render(true);
             }
         });
@@ -148,8 +148,8 @@ $.extend(GameCreator, {
             $(pic).remove();
             var x = e.pageX;
             var y = e.pageY;
-            var offsetX = $("#mainCanvas").offset().left;
-            var offsetY = $("#mainCanvas").offset().top;
+            var offsetX = $("#main-canvas").offset().left;
+            var offsetY = $("#main-canvas").offset().top;
             if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
                 var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
                 var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[GameCreator.activeScene], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
@@ -222,7 +222,7 @@ $.extend(GameCreator, {
         }
         GameCreator.scenes = [];
         GameCreator.globalObjects = {};
-        $("#globalObjectList").html("");
+        $("#global-object-list").html("");
         //Load globalObjects
         var parsedSave = JSON.parse(savedJson);
         for (name in parsedSave.globalObjects) {

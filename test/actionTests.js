@@ -13,8 +13,8 @@ module("ActionTests", {
 });
 
 function selectAction(actionName) {
-	$("#actionSelector").val(actionName);
-	$("#actionSelector").trigger("change");
+	$("#action-selector").val(actionName);
+	$("#action-selector").trigger("change");
 }
 
 function countTimingOptionsForAction(actionName) {
@@ -30,16 +30,15 @@ function countTimingOptionsForAction(actionName) {
 }
 
 test("Action window components", function() {
-	deepEqual($("#selectActionWindow #selectActionsHeader").html(), caption, "Header text was set");
-	deepEqual($("#actionSelector").children().length, Object.keys(GameCreator.actions).length, "Action Selector populated");
+	deepEqual($("#select-action-window #select-actions-header").html(), caption, "Header text was set");
+	deepEqual($("#action-selector").children().length, Object.keys(GameCreator.actions).length, "Action Selector populated");
 	var allActions = Object.keys(GameCreator.actions);
 	for (var i = 0; i < allActions.length; i++) {
 		var actionName = allActions[i];	
 		selectAction(actionName);
 		var timingOptions = countTimingOptionsForAction(actionName);
-		console.log(timingOptions);
-		deepEqual($("#selectActionTimingContent #timingSelector option").length, timingOptions, "Action: " + actionName + " - Timing content");
-		deepEqual($("#selectActionParametersContent div.actionParameter").length, GameCreator.actions[actionName].params.length, "Action: " + actionName + " - Parameter content");		
+		deepEqual($("#select-action-timing-content #timing-selector option").length, timingOptions, "Action: " + actionName + " - Timing content");
+		deepEqual($("#select-action-parameters-content div.actionParameter").length, GameCreator.actions[actionName].params.length, "Action: " + actionName + " - Parameter content");		
 	}
 });
 

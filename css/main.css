@@ -10,7 +10,7 @@
 /* Common small objects (buttons etc) */
 @import url(common.css);
 
-#dialogueOverlay {
+#dialogue-overlay {
     position:absolute;
     height: 100%;
     width: 100%;
@@ -23,7 +23,7 @@
 
 
 
-#dialogueWindow {
+#dialogue-window {
 	padding: 5px;
 }
 
@@ -53,7 +53,7 @@
     background-color: #999;
 }
 
-#canvasContainer {
+#canvas-container {
     margin: 2px;
     left: 120px;
 }
@@ -64,33 +64,33 @@ canvas {
     border-radius: 10px;
 }
 
-#uiCanvas {
+#ui-canvas {
 	pointer-events:none;
 }
 
-#mainContainer {
+#main-container {
 	float:left;
 }
 
-#sceneTabs {
+#scene-tabs {
 	margin-left:5px;
 }
 
-#sceneTabs .tab {
+#scene-tabs .tab {
 	width: 25px;
 	text-align: center;
 }
 
-#mainMenu {
+#main-menu {
     position: absolute;
     left: 1174px;
 }
 
-#addPlayerObjectMovementParameters {
+#add-player-object-movement-parameters {
 	margin-top: 10px;
 }
 
-#globalObjectListContainer {
+#global-object-list-container {
 	height: 780px;
 	width: 120px;
 	float:left;
@@ -109,11 +109,11 @@ canvas {
 	
 }
 
-#editCollisionActionsObjectContent, #editKeyActionsKeyContent{
+#edit-collision-actions-object-content, #edit-key-actions-key-content{
 	width: 580px;
 }
 
-#editGlobalObjectWindowContent #selectActionsHeader{
+#edit-global-object-window-content #select-actions-header{
 	line-height: 20px;
 	text-shadow: 1px 1px 1px #4DB8FF;
 	font-family: Arial;
@@ -125,7 +125,7 @@ canvas {
 	border-radius: 5px;
 }
 
-#editCollisionActionsObjectMenuContainer, #editKeyActionsObjectMenuContainer {
+#edit-collision-actions-object-menu-container, #edit-key-actions-object-menu-container {
 	float: left;
 	height: 500px;
 	width: 120px;
@@ -133,16 +133,16 @@ canvas {
 	overflow-x: hidden;
 }
 
-#selectActionsContent .group {
+#select-actions-content .group {
 	margin-bottom: 15px;
 }
 
-#editCounterEventContent, #editCountersCounterContent, #editCounterEventActionContent, #editCounterEventActionsContent {
+#edit-counter-event-content, #edit-counters-counter-content, #edit-counter-event-action-content, #edit-counter-event-actions-content {
 	margin-left: 5px;
 	float: left;
 }
 
-#editCounterEventActionsContent #selectActionWindow {
+#edit-counter-event-actions-content #select-action-window {
 	width: 485px;
 }
 

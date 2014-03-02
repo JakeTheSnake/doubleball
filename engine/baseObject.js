@@ -19,7 +19,7 @@ GameCreator.baseObject = {
 
     onDestroy: function(){
         if (!GameCreator.paused) {
-            if (!this.parent.onDestroyActions && GameCreator.state !== 2) {
+            if (!this.parent.onDestroyActions && GameCreator.state !== 'playing') {
                 this.parent.onDestroyActions = [];
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.name + "' is has been destroyed!",
@@ -39,7 +39,7 @@ GameCreator.baseObject = {
 
     onCreate: function(staticParameters){
         if (!GameCreator.paused) {
-            if (!this.parent.onCreateActions && GameCreator.state !== 2) {
+            if (!this.parent.onCreateActions && GameCreator.state !== 'playing') {
                 this.parent.onCreateActions = [];
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.name + "' has been created!",

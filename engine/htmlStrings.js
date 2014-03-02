@@ -52,8 +52,8 @@ GameCreator.htmlStrings = {
             applicableTimings["At"] = "at";
         }
 
-        var result = GameCreator.htmlStrings.singleSelector("timingSelector", applicableTimings);
-        result += '<div id="timingParameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timingTime", "time","3000") + 'ms</div>';
+        var result = GameCreator.htmlStrings.singleSelector("timing-selector", applicableTimings);
+        result += '<div id="timing-parameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timing-time", "time","3000") + 'ms</div>';
         return result;
     },
     actionRow: function(name, action) {
@@ -98,86 +98,86 @@ GameCreator.htmlStrings = {
         return div;
     },
     editActiveObjectForm: function(object) {
-        var result = "<div id='editSceneObjectForm'>";
-        result += GameCreator.htmlStrings.inputLabel("editActiveObjectHeight", "Height:") + 
-        GameCreator.htmlStrings.rangeInput("editActiveObjectHeight", "height", object.height) + '<br style="clear:both;"/>';
-        result += GameCreator.htmlStrings.inputLabel("editActiveObjectWidth", "Width:") +
-            GameCreator.htmlStrings.rangeInput("editActiveObjectWidth", "width", object.width) + '<br style="clear:both;"/>';
-        result += GameCreator.htmlStrings.inputLabel("editActiveObjectName", "Unique ID:") +
-            GameCreator.htmlStrings.stringInput("editActiveObjectName", "instanceId", object.instanceId) + '<br style="clear:both;"/>';
+        var result = "<div id='edit-scene-object-form'>";
+        result += GameCreator.htmlStrings.inputLabel("edit-active-object-height", "Height:") + 
+        GameCreator.htmlStrings.rangeInput("edit-active-object-height", "height", object.height) + '<br style="clear:both;"/>';
+        result += GameCreator.htmlStrings.inputLabel("edit-active-object-width", "Width:") +
+            GameCreator.htmlStrings.rangeInput("edit-active-object-width", "width", object.width) + '<br style="clear:both;"/>';
+        result += GameCreator.htmlStrings.inputLabel("edit-active-object-name", "Unique ID:") +
+            GameCreator.htmlStrings.stringInput("edit-active-object-name", "instanceId", object.instanceId) + '<br style="clear:both;"/>';
         if (object.parent.movementType == "free") {
-            result += GameCreator.htmlStrings.inputLabel("editActiveObjectSpeedX", "SpeedX:") + 
-            GameCreator.htmlStrings.rangeInput("editActiveObjectSpeedX", "speedX", object.speedX) + '<br style="clear:both;"/>';
-            result += GameCreator.htmlStrings.inputLabel("editActiveObjectSpeedY", "SpeedY:") + 
-            GameCreator.htmlStrings.rangeInput("editActiveObjectSpeedY", "speedY", object.speedY) + '<br style="clear:both;"/>';
-            result += GameCreator.htmlStrings.inputLabel("editActiveObjectAccX", "AccX:") + 
-            GameCreator.htmlStrings.rangeInput("editActiveObjectAccX", "accX", object.accX) + '<br style="clear:both;"/>';
-            result += GameCreator.htmlStrings.inputLabel("editActiveObjectAccY", "AccY:") + 
-            GameCreator.htmlStrings.rangeInput("editActiveObjectAccY", "accY", object.accY) + '<br style="clear:both;"/>';
+            result += GameCreator.htmlStrings.inputLabel("edit-active-object-speedX", "SpeedX:") + 
+            GameCreator.htmlStrings.rangeInput("edit-active-object-speedX", "speedX", object.speedX) + '<br style="clear:both;"/>';
+            result += GameCreator.htmlStrings.inputLabel("edit-active-object-speedY", "SpeedY:") + 
+            GameCreator.htmlStrings.rangeInput("edit-active-object-speedY", "speedY", object.speedY) + '<br style="clear:both;"/>';
+            result += GameCreator.htmlStrings.inputLabel("edit-active-object-accX", "AccX:") + 
+            GameCreator.htmlStrings.rangeInput("edit-active-object-accX", "accX", object.accX) + '<br style="clear:both;"/>';
+            result += GameCreator.htmlStrings.inputLabel("edit-active-object-accY", "AccY:") + 
+            GameCreator.htmlStrings.rangeInput("edit-active-object-accY", "accY", object.accY) + '<br style="clear:both;"/>';
         }
         else if(object.parent.movementType == "route") {
-            result += GameCreator.htmlStrings.inputLabel("editActiveObjectSpeed", "Speed:") +
-                GameCreator.htmlStrings.rangeInput("editActiveObjectSpeed", "speed", object.speed) + '<br style="clear:both;"/>';
-            result += "<label for='editActiveObjectStartNode'>Starting Node</label><select id='editActiveObjectStartNode' data-type='number' data-attrName='targetNode'>";
+            result += GameCreator.htmlStrings.inputLabel("edit-active-object-speed", "Speed:") +
+                GameCreator.htmlStrings.rangeInput("edit-active-object-speed", "speed", object.speed) + '<br style="clear:both;"/>';
+            result += "<label for='edit-active-object-start-node'>Starting Node</label><select id='edit-active-object-start-node' data-type='number' data-attrName='targetNode'>";
             for (var i = 0; i < object.route.length; i++) {
                 result += "<option value='" + i + "'" + (object.targetNode == i ? 'selected' : '') + ">" + (i + 1) + "</option>";
             }
             result += "</select><br/>";
-            result += "<label for='editActiveObjectRouteDirection'>Direction</label><select id='editActiveObjectRouteDirection' data-type='bool' data-attrName='routeForward'> \
+            result += "<label for='edit-active-object-route-direction'>Direction</label><select id='edit-active-object-route-direction' data-type='bool' data-attrName='routeForward'> \
                 <option value='true'" + (object.routeForward ? 'selected' : '') + ">Forward</option><option value='false'" + (!object.routeForward ? 'selected' : '') + ">Backward</option></select>";
             result += "<a href='' onclick='GameCreator.drawRoute(GameCreator.selectedObject.route);return false;'>Edit route</a>" + '<br style="clear:both;"/>';
         }
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button>';
-        return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button>';
+        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
 
     editMouseObjectForm: function(object) {
-        var result = "<div id='editSceneObjectForm'>";
-        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editMouseObjectHeight", "height", object.height);
+        var result = "<div id='edit-scene-object-form'>";
+        result +=GameCreator.htmlStrings.inputLabel("edit-mouse-object-height", "Height:") + GameCreator.htmlStrings.rangeInput("edit-mouse-object-height", "height", object.height);
         result += '<br style="clear:both;"/>';
-        result +=GameCreator.htmlStrings.inputLabel("editMouseObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editMouseObjectWidth", "width", object.width);
+        result +=GameCreator.htmlStrings.inputLabel("edit-mouse-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("edit-mouse-object-width", "width", object.width);
         result += '<br style="clear:both;"/>';
         
         result += GameCreator.htmlStrings.mouseMovementInputs(object);
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
-        return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editPlatformObjectForm: function(object) {
-        var result = '<div id="editSceneObjectForm">';
-        result += GameCreator.htmlStrings.inputLabel("editPlatformObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectHeight", "height", object.height);
+        var result = '<div id="edit-scene-object-form">';
+        result += GameCreator.htmlStrings.inputLabel("edit-platform-object-height", "Height:") + GameCreator.htmlStrings.rangeInput("edit-platform-object-height", "height", object.height);
         result += '<br style="clear:both;"/>';
-        result += GameCreator.htmlStrings.inputLabel("editPlatformObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editPlatformObjectWidth", "width", object.width);
+        result += GameCreator.htmlStrings.inputLabel("edit-platform-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("edit-platform-object-width", "width", object.width);
         result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.platformMovementInputs(object);
         result += '<br style="clear:both;"/>';
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
-        return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editTopDownObjectForm: function(object) {
-        var result = '<div id="editSceneObjectForm">';
-        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("editTopDownObjectHeight", "height", object.height);
+        var result = '<div id="edit-scene-object-form">';
+        result +=GameCreator.htmlStrings.inputLabel("edit-top-down-object-height", "Height:") + GameCreator.htmlStrings.rangeInput("edit-top-down-object-height", "height", object.height);
         result += '<br style="clear:both;"/>';
-        result +=GameCreator.htmlStrings.inputLabel("editTopDownObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("editTopDownObjectWidth", "width", object.width);
+        result +=GameCreator.htmlStrings.inputLabel("edit-top-down-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("edit-top-down-object-width", "width", object.width);
         result += '<br style="clear:both;"/>';
         result += GameCreator.htmlStrings.topDownMovementInputs(object);
         
-        result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
-        return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     editCounterObjectForm: function(obj) {
-    	var result = '<div id="editSceneObjectForm">';
-        result += '<div id="addCounterObjectCounterSelector"></div>' + 
+    	var result = '<div id="edit-scene-object-form">';
+        result += '<div id="add-counter-object-counter-selector"></div>' + 
                 '<br style="clear:both;"/>';
     	if(obj.parent.textCounter) {
     		result += GameCreator.htmlStrings.counterObjectTextForm(obj);
     	} else if(obj.parent.imageCounter) {
-    		result += GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextColor", "size", obj.size);
+    		result += GameCreator.htmlStrings.inputLabel("counter-object-counter-image-size", "Size:") + GameCreator.htmlStrings.numberInput("counter-object-counter-text-color", "size", obj.size);
     		result += '<br style="clear:both;"/>';
     	}
-    	result += '<button id="saveSceneObjectButton" onClick="GameCreator.saveSceneObject(\'editSceneObjectForm\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
-        return result += '<button id="deleteSceneObjectButton" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+    	result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
     routeNode: function(node, index) {
         var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + GameCreator.mainCanvasOffsetY) + "px;left:" + (node.x + GameCreator.mainCanvasOffsetX) + "px;'><div class='routeNode' data-index='" + index + "'> \
@@ -190,18 +190,18 @@ GameCreator.htmlStrings = {
     },
     editActionsWindow: function(description, actions, existingActions) { 
         var result = "";
-        result += '<div id="selectActionWindow" style="height: 100%"> \
-        <div id="selectActionsHeader" class="dialogueHeader">' + description + '</div> \
-        <div id="selectActionsContent" class="dialogueContent">\
-            <div id="selectActionDropdownContainer" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("actionSelector", actions) + '</div>\
-            <div id="selectActionParametersContainer" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
-            <div id="selectActionParametersContent"></div></div>\
-            <div id="selectActionTimingContainer" class="group" style="display:none;"><div class="groupHeading">Timing</div>\
-            <div id="selectActionTimingContent"></div></div> \
-            <div id="selectActionAddButton"><button id="selectActionAddAction" class="regularButton addActionButton">Add</button></div>'
+        result += '<div id="select-action-window" style="height: 100%"> \
+        <div id="select-actions-header" class="dialogueHeader">' + description + '</div> \
+        <div id="select-actions-content" class="dialogueContent">\
+            <div id="select-action-dropdown-container" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("action-selector", actions) + '</div>\
+            <div id="select-action-parameters-container" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
+            <div id="select-action-parameters-content"></div></div>\
+            <div id="select-action-timing-container" class="group" style="display:none;"><div class="groupHeading">Timing</div>\
+            <div id="select-action-timing-content"></div></div> \
+            <div id="select-action-add-button"><button id="select-action-add-action" class="regularButton addActionButton">Add</button></div>'
         
     	result += '<br/ style="clear:both">'
-        result += '<div id="selectActionResult">';
+        result += '<div id="select-action-result">';
         result += GameCreator.htmlStrings.selectedActionsList(existingActions);
         result += '</div></div></div>';
         return result;
@@ -218,16 +218,16 @@ GameCreator.htmlStrings = {
     },
     addGlobalObjectWindow: function() {
         var result = "";
-        result += '<div id="addGlobalObjectTabContainer" class="tabContainer">\
+        result += '<div id="add-global-object-tab-container" class="tabContainer">\
                 	<div class="tab" data-uifunction="setupAddActiveObjectForm"><span>Active Object</span></div> \
                    	<div class="tab" data-uifunction="setupAddPlayerObjectForm"><span>Player Object</span></div> \
                    	<div class="tab" data-uifunction="setupAddCounterObjectForm"<span>Counter Object</span></div></div> \
-                   	<div id="addGlobalObjectWindowContent"></div>';
+                   	<div id="add-global-object-window-content"></div>';
         return result;
     },
     editGlobalObjectWindow: function(object) {
         var result = "";
-        result += "<div id='editGlobalObjectTabContainer' class='tabContainer'>";
+        result += "<div id='edit-global-object-tab-container' class='tabContainer'>";
         result += "<div class='tab' data-uifunction='setupEditGlobalObjectPropertiesForm'><span>Properties</span></div>";
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
             result += "<div class='tab' data-uifunction='setupEditGlobalObjectCollisionsForm'><span>Collisions<span></div>";
@@ -243,7 +243,7 @@ GameCreator.htmlStrings = {
         }
         result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnDestroyActionsForm'><span>OnDestroy</span></div>"
         result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnCreateActionsForm'><span>OnCreate</span></div>"
-        result += "</div><div id='editGlobalObjectWindowContent'></div>";
+        result += "</div><div id='edit-global-object-window-content'></div>";
         return result;
     },
     editGlobalObjectPropertiesContent: function(object) {
@@ -277,80 +277,80 @@ GameCreator.htmlStrings = {
         	//If the object does not have its own counter, show dropdowns for selecting counter to display.
         	result += GameCreator.htmlStrings.globalCounterObjectForm(object);
         }
-        result += '<button class="regularButton" id="saveGlobalObjectPropertiesButton">Save</button>';
+        result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>';
         return result;
     },
     editGlobalObjectCollisionsContent: function(collisionObjects) {
-        var result = '<div id="editCollisionActionsObjectMenuContainer"><div id="editCollisionActionsObjectMenu">';
-        result += '<button id="addNewCollisionButton" class="regularButton">Add</button>';
+        var result = '<div id="edit-collision-actions-object-menu-container"><div id="edit-collision-actions-object-menu">';
+        result += '<button id="add-new-collision-button" class="regularButton">Add</button>';
 
         for(var i = 0; i < collisionObjects.length; i++) {
             result += GameCreator.htmlStrings.collisionMenuElement(collisionObjects[i]);
         }
         
         result += '</div> \
-                   </div><div id="editCollisionActionsObjectContent"></div>';
+                   </div><div id="edit-collision-actions-object-content"></div>';
         return result;
     },
     editGlobalObjectKeyActionsContent: function(object) {
-        var result = '<div id="editKeyActionsObjectMenuContainer"><div id="editKeyActionsKeyMenu">';
-        result += '<div id="addNewKeyButton" class="regularButton">Add</div>';
+        var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
+        result += '<div id="add-new-key-button" class="regularButton">Add</div>';
         for (keyName in object.keyActions) {
             if(object.keyActions.hasOwnProperty(keyName)) {
                 result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
         }
-        result += '</div></div><div id="editKeyActionsKeyContent"></div>';
+        result += '</div></div><div id="edit-key-actions-key-content"></div>';
         return result;
     },
     editGlobalObjectCountersContent: function(object) {
-        var result = '<div id="editCountersMenu">';
-        result += '<button id="addNewCounterButton" class="regularButton">Add</button>';
+        var result = '<div id="edit-counters-menu">';
+        result += '<button id="add-new-counter-button" class="regularButton">Add</button>';
         for (counterName in object.counters) {
             if(object.counters.hasOwnProperty(counterName)) {
                 result += GameCreator.htmlStrings.counterMenuElement(counterName);
             }
         }
-        result += '</div><div id="editCountersCounterContent">'
-        result += '<div id="editCounterEventContent"></div>';
-        result += '<div id="editCounterEventActionsContent"></div></div>';
+        result += '</div><div id="edit-counters-counter-content">'
+        result += '<div id="edit-counter-event-content"></div>';
+        result += '<div id="edit-counter-event-actions-content"></div></div>';
         return result;
     },
     freeMovementInputs: function(object) {
-        return GameCreator.htmlStrings.inputLabel("freeObjectSpeedX", "SpeedX:") +
-                GameCreator.htmlStrings.rangeInput("freeObjectSpeedX", "speedX",(object ? object.speedX : "") ) +
+        return GameCreator.htmlStrings.inputLabel("free-object-speedX", "SpeedX:") +
+                GameCreator.htmlStrings.rangeInput("free-object-speedX", "speedX",(object ? object.speedX : "") ) +
                 '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("freeObjectSpeedY", "SpeedY:") +
-                GameCreator.htmlStrings.rangeInput("freeObjectSpeedY", "speedY", (object ? object.speedY : "") ) +
+                GameCreator.htmlStrings.inputLabel("free-object-speedY", "SpeedY:") +
+                GameCreator.htmlStrings.rangeInput("free-object-speedY", "speedY", (object ? object.speedY : "") ) +
                 '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("freeObjectAccX", "AccX:") +
-                GameCreator.htmlStrings.rangeInput("freeObjectAccX", "accX", (object ? object.accX : "") ) +
+                GameCreator.htmlStrings.inputLabel("free-object-accX", "AccX:") +
+                GameCreator.htmlStrings.rangeInput("free-object-accX", "accX", (object ? object.accX : "") ) +
                 '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("freeObjectAccY", "AccY:") +
-                GameCreator.htmlStrings.rangeInput("freeObjectAccY", "accY", (object ? object.accY : "") ) +
+                GameCreator.htmlStrings.inputLabel("free-object-accY", "AccY:") +
+                GameCreator.htmlStrings.rangeInput("free-object-accY", "accY", (object ? object.accY : "") ) +
                 '<br style="clear:both;"/>';
     },
     routeMovementInputs: function(object) {
-        return GameCreator.htmlStrings.inputLabel("routeObjectSpeed", "Speed:") +
-            GameCreator.htmlStrings.numberInput("routeObjectSpeed", "speed", (object ? object.speed : "") ) +
+        return GameCreator.htmlStrings.inputLabel("route-object-speed", "Speed:") +
+            GameCreator.htmlStrings.numberInput("route-object-speed", "speed", (object ? object.speed : "") ) +
             '<br style="clear:both;"/>';
     },
     globalActiveObjectForm: function(object) {
-        var result = GameCreator.htmlStrings.inputLabel("activeObjectWidth", "Width:") +
-                GameCreator.htmlStrings.rangeInput("activeObjectWidth", "width", object.width) +
+        var result = GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
+                GameCreator.htmlStrings.rangeInput("active-object-width", "width", object.width) +
                 '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") +
-                GameCreator.htmlStrings.rangeInput("activeObjectHeight", "height", object.height) +
+                GameCreator.htmlStrings.inputLabel("active-object-height", "Height:") +
+                GameCreator.htmlStrings.rangeInput("active-object-height", "height", object.height) +
                 '<br style="clear:both;"/>';
         return result;
     },
     globalPlayerObjectForm: function(object) {
         var result = '<div>' +
-                GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") +
-                GameCreator.htmlStrings.rangeInput("playerObjectWidth", "width", object.width) +
+                GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") +
+                GameCreator.htmlStrings.rangeInput("player-object-width", "width", object.width) +
                 '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("playerObjectHeight", "Height:") +
-                GameCreator.htmlStrings.rangeInput("playerObjectHeight", "height", object.height) + '</div>' +
+                GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") +
+                GameCreator.htmlStrings.rangeInput("player-object-height", "height", object.height) + '</div>' +
                 '<br style="clear:both;"/>';
         return result;
     },
@@ -359,95 +359,95 @@ GameCreator.htmlStrings = {
     	if(obj.textCounter) {
     		return GameCreator.htmlStrings.counterObjectTextForm(obj);
     	} else if (obj.imageCounter) {
-    		return GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "size", obj.size ? obj.size : '') +
+    		return GameCreator.htmlStrings.inputLabel("counter-object-counter-image-size", "Size:") + GameCreator.htmlStrings.stringInput("counter-object-counter-text-color", "size", obj.size ? obj.size : '') +
 				'<br style="clear:both;"/>';
     	}
     },
     
     mouseMovementInputs: function(object) {
-        var result = GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min X:") + GameCreator.htmlStrings.numberInput("mouseObjectMinX", "minX", (object ? object.minX : ""));
+        var result = GameCreator.htmlStrings.inputLabel("mouse-object-minX", "Min X:") + GameCreator.htmlStrings.numberInput("mouse-object-minX", "minX", (object ? object.minX : ""));
         result += '<br style="clear:both;"/>';
-        result += GameCreator.htmlStrings.inputLabel("mouseObjectMinX", "Min Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMinY", "minY", (object ? object.minY : ""));
+        result += GameCreator.htmlStrings.inputLabel("mouse-object-minX", "Min Y:") + GameCreator.htmlStrings.numberInput("mouse-object-minY", "minY", (object ? object.minY : ""));
         result += '<br style="clear:both;"/>';
         
-        result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max X:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxX", "maxX", (object ? object.maxX : ""));
+        result += GameCreator.htmlStrings.inputLabel("mouse-object-maxX", "Max X:") + GameCreator.htmlStrings.numberInput("mouse-object-maxX", "maxX", (object ? object.maxX : ""));
         result += '<br style="clear:both;"/>';
-        result += GameCreator.htmlStrings.inputLabel("mouseObjectMaxX", "Max Y:") + GameCreator.htmlStrings.numberInput("mouseObjectMaxY", "maxY", (object ? object.maxY : ""));
+        result += GameCreator.htmlStrings.inputLabel("mouse-object-maxX", "Max Y:") + GameCreator.htmlStrings.numberInput("mouse-object-maxY", "maxY", (object ? object.maxY : ""));
         result += '<br style="clear:both;"/>';
         return result;
     },
     platformMovementInputs: function(object) {
-        var result = GameCreator.htmlStrings.inputLabel("platformObjectAccY", "Gravity:") +
-            GameCreator.htmlStrings.rangeInput("platformObjectAccY", "accY", (object ? object.accY : "")) +
+        var result = GameCreator.htmlStrings.inputLabel("platform-object-accY", "Gravity:") +
+            GameCreator.htmlStrings.rangeInput("platform-object-accY", "accY", (object ? object.accY : "")) +
             '<br style="clear:both;"/>';
-        result += GameCreator.htmlStrings.inputLabel("platformObjectMaxSpeed", "Speed:") +
-            GameCreator.htmlStrings.rangeInput("platformObjectMaxSpeed", "maxSpeed", (object ? object.maxSpeed : "")) +
+        result += GameCreator.htmlStrings.inputLabel("platform-object-max-speed", "Speed:") +
+            GameCreator.htmlStrings.rangeInput("platform-object-max-speed", "maxSpeed", (object ? object.maxSpeed : "")) +
             '<br style="clear:both;"/>';
-        result += GameCreator.htmlStrings.inputLabel("platformObjectAcceleration", "Acceleration:") +
-            GameCreator.htmlStrings.rangeInput("platformObjectAcceleration", "acceleration", (object ? object.acceleration : "")) +
+        result += GameCreator.htmlStrings.inputLabel("platform-object-acceleration", "Acceleration:") +
+            GameCreator.htmlStrings.rangeInput("platform-object-acceleration", "acceleration", (object ? object.acceleration : "")) +
             '<br style="clear:both;"/>';
         return result;
     },
     topDownMovementInputs: function(object) {
-        return GameCreator.htmlStrings.inputLabel("topDownObjectMaxSpeed", "Speed:") +
-            GameCreator.htmlStrings.rangeInput("topDownObjectMaxSpeed", "maxSpeed", (object ? object.maxSpeed : "")) +
+        return GameCreator.htmlStrings.inputLabel("topDown-object-max-speed", "Speed:") +
+            GameCreator.htmlStrings.rangeInput("topDown-object-max-speed", "maxSpeed", (object ? object.maxSpeed : "")) +
             '<br style="clear:both;"/>';
     },
     
     addActiveObjectForm: function() {
-        var result = GameCreator.htmlStrings.inputLabel("activeObjectName", "Name:") + 
-            GameCreator.htmlStrings.stringInput("activeObjectName", "name", "") + '<br style="clear:both;"/>' +
-            GameCreator.htmlStrings.inputLabel("activeObjectWidth", "Width:") +
-            GameCreator.htmlStrings.rangeInput("activeObjectWidth", "width", "") +
+        var result = GameCreator.htmlStrings.inputLabel("active-object-name", "Name:") + 
+            GameCreator.htmlStrings.stringInput("active-object-name", "name", "") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
+            GameCreator.htmlStrings.rangeInput("active-object-width", "width", "") +
             '<br style="clear:both;"/>' +
-            GameCreator.htmlStrings.inputLabel("activeObjectHeight", "Height:") +
-            GameCreator.htmlStrings.rangeInput("activeObjectHeight", "height", "") + '<br style="clear:both;"/>' +
-            GameCreator.htmlStrings.inputLabel("activeObjectSrc", "Image Src:") + 
-            GameCreator.htmlStrings.stringInput("activeObjectSrc", "src", "") + '<br style="clear:both;"/>' +
-            GameCreator.htmlStrings.inputLabel("activeObjectMovementType", "Movement:") +
-            GameCreator.htmlStrings.singleSelector("activeObjectMovementType", {"Free": "free", "Route": "route"}, "movementType") +
+            GameCreator.htmlStrings.inputLabel("active-object-height", "Height:") +
+            GameCreator.htmlStrings.rangeInput("active-object-height", "height", "") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("active-object-src", "Image Src:") + 
+            GameCreator.htmlStrings.stringInput("active-object-src", "src", "") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("active-object-movement-type", "Movement:") +
+            GameCreator.htmlStrings.singleSelector("active-object-movement-type", {"Free": "free", "Route": "route"}, "movementType") +
             '<br style="clear:both;"/> \
             <button class="saveButton regularButton">Save</button>';
         return result;
     },
     
     addPlayerObjectForm: function() {
-        return 	GameCreator.htmlStrings.inputLabel("playerObjectName", "Name:") + GameCreator.htmlStrings.stringInput("playerObjectName", "name", "") +
+        return 	GameCreator.htmlStrings.inputLabel("player-object-name", "Name:") + GameCreator.htmlStrings.stringInput("player-object-name", "name", "") +
         		'<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("playerObjectWidth", "Width:") + GameCreator.htmlStrings.rangeInput("playerObjectWidth", "width", "") +
+              	GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("player-object-width", "width", "") +
               	'<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("playerObjectHeight", "Height:") + GameCreator.htmlStrings.rangeInput("playerObjectHeight", "height", "") +
+              	GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") + GameCreator.htmlStrings.rangeInput("player-object-height", "height", "") +
               	'<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("playerObjectSrc", "Image Src:") + GameCreator.htmlStrings.stringInput("playerObjectSrc", "src", "") +
+              	GameCreator.htmlStrings.inputLabel("player-object-src", "Image Src:") + GameCreator.htmlStrings.stringInput("player-object-src", "src", "") +
               	'<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("playerObjectType", "Control:") + GameCreator.htmlStrings.singleSelector("playerObjectType", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '<br style="clear:both;"/>' +
-				'<div id="addPlayerObjectMovementParameters"></div><button class="saveButton regularButton">Save</button>'
+              	GameCreator.htmlStrings.inputLabel("player-object-type", "Control:") + GameCreator.htmlStrings.singleSelector("player-object-type", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '<br style="clear:both;"/>' +
+				'<div id="add-player-object-movement-parameters"></div><button class="saveButton regularButton">Save</button>'
 	},
 	
 	//Add counter object strings
 	addCounterObjectForm: function() {
-		return 	GameCreator.htmlStrings.inputLabel("counterObjectName", "Name:") + GameCreator.htmlStrings.stringInput("counterObjectName", "name", "") +
+		return 	GameCreator.htmlStrings.inputLabel("counter-object-name", "Name:") + GameCreator.htmlStrings.stringInput("counter-object-name", "name", "") +
         		'<br style="clear:both;"/>' +
-            	GameCreator.htmlStrings.inputLabel("counterRepresentation", "Show as:") + 
-            	GameCreator.htmlStrings.singleSelector("counterRepresentation", {"Text": "text", "Repeating Image": "image"}, "representation") +
+            	GameCreator.htmlStrings.inputLabel("counter-representation", "Show as:") + 
+            	GameCreator.htmlStrings.singleSelector("counter-representation", {"Text": "text", "Repeating Image": "image"}, "representation") +
             	'<br style="clear:both;"/>' +
-            	'<div id="addCounterObjectCounterRepresentationContent"></div>' +
+            	'<div id="add-counter-object-counter-representation-content"></div>' +
             	'<button class="saveButton regularButton">Save</button>';
 	},
 	
 	counterObjectTextForm: function(obj) {
-		return GameCreator.htmlStrings.inputLabel("counterObjectCounterTextFont", "Font:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextFont", "font", obj && obj.font ? obj.font : '') +
+		return GameCreator.htmlStrings.inputLabel("counter-object-counter-text-font", "Font:") + GameCreator.htmlStrings.stringInput("counter-object-counter-text-font", "font", obj && obj.font ? obj.font : '') +
 				'<br style="clear:both;"/>' +
-				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextColor", "Color:") + GameCreator.htmlStrings.stringInput("counterObjectCounterTextColor", "color", obj && obj.color ? obj.color : '') +
+				GameCreator.htmlStrings.inputLabel("counter-object-counter-text-color", "Color:") + GameCreator.htmlStrings.stringInput("counter-object-counter-text-color", "color", obj && obj.color ? obj.color : '') +
 				'<br style="clear:both;"/>' +
-				GameCreator.htmlStrings.inputLabel("counterObjectCounterTextSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextSize", "size", obj && obj.size ? obj.size : '') +
+				GameCreator.htmlStrings.inputLabel("counter-object-counter-text-size", "Size:") + GameCreator.htmlStrings.numberInput("counter-object-counter-text-size", "size", obj && obj.size ? obj.size : '') +
 				'<br style="clear:both;"/>';
 	},
 	
 	addCounterObjectImage: function() {
-		return GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSrc", "Src:") + GameCreator.htmlStrings.stringInput("counterObjectCounterImageSrc", "src", "") +
+		return GameCreator.htmlStrings.inputLabel("counter-object-counter-image-src", "Src:") + GameCreator.htmlStrings.stringInput("counter-object-counter-image-src", "src", "") +
 				'<br style="clear:both;"/>' +
-				GameCreator.htmlStrings.inputLabel("counterObjectCounterImageSize", "Size:") + GameCreator.htmlStrings.numberInput("counterObjectCounterTextColor", "size", "") +
+				GameCreator.htmlStrings.inputLabel("counter-object-counter-image-size", "Size:") + GameCreator.htmlStrings.numberInput("counter-object-counter-text-color", "size", "") +
 				'<br style="clear:both;"/>';
 	},
 	
@@ -474,13 +474,13 @@ GameCreator.htmlStrings = {
     },
     createCounterForm: function() {
     	var result = '<div>'
-    	result += GameCreator.htmlStrings.inputLabel("counterName", "Name:");
-    	result += GameCreator.htmlStrings.stringInput("counterName", "name", "");
+    	result += GameCreator.htmlStrings.inputLabel("counter-name", "Name:");
+    	result += GameCreator.htmlStrings.stringInput("counter-name", "name", "");
     	result += '<button class="saveButton regularButton">Save</button>';
     	return result;
 	},
 	editCounterEventsContent: function(counter){
-		var result = '<button id="addNewCounterEventButton" class="regularButton">Add</button>';
+		var result = '<button id="add-new-counter-event-button" class="regularButton">Add</button>';
 		result += GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
 		result += GameCreator.htmlStrings.counterEventMenuElement("", "onDecrease");
 		for (value in counter.atValue) {
@@ -501,10 +501,10 @@ GameCreator.htmlStrings = {
     	return result;
 	},
 	createCounterEventForm: function(){
-		var result = GameCreator.htmlStrings.inputLabel("editCounterEventType", "Type:");
-		result += GameCreator.htmlStrings.singleSelector("editCounterEventType", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
-		result += GameCreator.htmlStrings.inputLabel("editCounterEventValue", "Value:");
-    	result += GameCreator.htmlStrings.numberInput("editCounterEventValue", "value", "");
+		var result = GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
+		result += GameCreator.htmlStrings.singleSelector("edit-counter-event-type", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
+		result += GameCreator.htmlStrings.inputLabel("edit-counter-event-value", "Value:");
+    	result += GameCreator.htmlStrings.numberInput("edit-counter-event-value", "value", "");
     	result += '<button class="saveButton regularButton">Save</button>';
     	return result;
 	},
@@ -521,6 +521,6 @@ GameCreator.htmlStrings = {
 		return '<div class="tab ' + (sceneActive ? 'active' : '') + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
 	},
 	addSceneTab: function(){
-		return '<div id="addSceneTab" class="tab">+</div>';
+		return '<div id="add-scene-tab" class="tab">+</div>';
 	}
 };

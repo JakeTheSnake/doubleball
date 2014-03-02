@@ -9,6 +9,7 @@ module("Counter", {
   },
   teardown: function() {
     redBall.counters["testCounter"].value = 0;
+    delete GameCreator.actions["testAction"];
   }
 });
 

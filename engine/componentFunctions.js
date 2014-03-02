@@ -47,7 +47,7 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
                 var keyAction = this.parent.keyActions[key];
                 if(isKeyPressed && !this.keyCooldown[key])
                 {
-                    if(keyAction === undefined && GameCreator.state !== 2)
+                    if(keyAction === undefined && GameCreator.state !== 'playing')
                     {
                     	var actions;
 				    	if(this.parent.objectType === "mouseObject") {

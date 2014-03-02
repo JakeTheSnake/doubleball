@@ -16,7 +16,7 @@
 	line-height: 20px;
 }
 
-#dialogueWindow {
+#dialogue-window {
     position: absolute;
     display: none;
     top: 100px;
@@ -60,7 +60,7 @@
 
 
 
-#selectActionResult {
+#select-action-result {
     padding: 10px;
 }
 
