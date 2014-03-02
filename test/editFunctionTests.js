@@ -42,6 +42,8 @@ test("Delete selected scene object", function() {
     deepEqual(GameCreator.scenes[0].length, 0, "Delete scene object from scene.");
 });
 
+(function() {
+
 module("GameCreator.addGlobalObject");
 test("Add Active Object", function() {
     GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
@@ -108,4 +110,4 @@ test("Add Mouse Object", function() {
     deepEqual(GameCreator.globalObjects["mouseZealot"].maxY, [500], "MaxY is set correctly.");
     ok(GameCreator.globalObjects["mouseZealot"].image.src.indexOf("zealot.gif") != -1, "Image is set correctly.");
 });
-
+})();

@@ -6,7 +6,7 @@ GameCreator.htmlStrings = {
         } else {
         	result += '>'
         }
-        for (key in collection) {
+        for (var key in collection) {
             if (collection.hasOwnProperty(key)) {
                 result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'" + (selectedKey === key ? " selected" : "") + ">" + key + "</option>";
             }
@@ -63,7 +63,7 @@ GameCreator.htmlStrings = {
     actionRow: function(name, action) {
         var result = '<div class="actionRow headingNormalBlack"><div class="headingNormalBlack removeActionBox"><a class="removeActionButton" href="">X</a></div>\
         <span class="actionText">' + name;
-        for (key in action.parameters) {
+        for (var key in action.parameters) {
             if (action.parameters.hasOwnProperty(key)) {
                 result += '<br/><span style="font-size: 12px">' + key + ': ' + action.parameters[key] + ' ';
             }
@@ -307,7 +307,7 @@ GameCreator.htmlStrings = {
     editGlobalObjectKeyActionsContent: function(object) {
         var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
         result += '<div id="add-new-key-button" class="regularButton">Add</div>';
-        for (keyName in object.keyActions) {
+        for (var keyName in object.keyActions) {
             if(object.keyActions.hasOwnProperty(keyName)) {
                 result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
@@ -478,7 +478,7 @@ GameCreator.htmlStrings = {
     keySelector: function(object) {
         result = "";
         var selectableKeys = object.keyPressed;
-        for (keyName in selectableKeys) {
+        for (var keyName in selectableKeys) {
             if(selectableKeys.hasOwnProperty(keyName) && !object.keyActions.hasOwnProperty(keyName)) {
                 result += '<div class="addKeyObjectElement" data-keyName="' + keyName + '" style="float:left;cursor:pointer;"><span>' + keyName + '</span></div>';
             }

@@ -156,7 +156,7 @@ var GameCreator = {
             if(GameCreator.globalObjects.hasOwnProperty(objectName)) {
                 var obj = GameCreator.globalObjects[objectName];
                 if(obj.keyPressed) {
-                    for(keyName in obj.keyPressed) {
+                    for (var keyName in obj.keyPressed) {
                         if(obj.keyPressed.hasOwnProperty(keyName)) {
                             obj.keyPressed[keyName] = false;
                             if(obj.keyUpPressed)
@@ -234,7 +234,7 @@ var GameCreator = {
 
     getGlobalObjects: function() {
         var allGlobalObjects = {};
-        for(globalObj in GameCreator.globalObjects) {
+        for(var globalObj in GameCreator.globalObjects) {
             if(GameCreator.globalObjects.hasOwnProperty(globalObj)) {
                 allGlobalObjects[globalObj] = globalObj;
             }

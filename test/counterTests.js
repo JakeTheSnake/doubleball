@@ -1,3 +1,9 @@
+(function() {
+
+var redBall;
+var counter;
+var testString;
+
 module("Counter", {
   setup: function() {
     redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
@@ -54,3 +60,5 @@ test("Test OnDecrease counter event", function() {
     counter.changeValue(-1);
     deepEqual(testString, "changed", "OnDecrease action");
 });
+
+})();
