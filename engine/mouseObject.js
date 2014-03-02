@@ -5,21 +5,16 @@ GameCreator.mouseObject = {
         GameCreator.addObjFunctions.mouseObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.keyObjectFunctions(obj);
-        obj.image = image;
-        obj.name = args.name;
-        obj.width = args.width;
-        obj.height = args.height;
+
+        GameCreator.helperFunctions.setStandardProperties(obj, image, args);
         
         obj.isCollidable = true;
         obj.isMovable = true;
         obj.isRenderable = true;
         obj.isEventable = true;
-        
-        obj.counters = {};
-        
+                
         obj.objectType = "mouseObject";
-        
-        GameCreator.globalObjects[obj.name] = obj;
+    
         return obj;
     },
     

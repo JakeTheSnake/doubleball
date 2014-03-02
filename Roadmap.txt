@@ -3,15 +3,16 @@ Version 0.2:
 -Global event when game started.
 -Solve the global counter problem...
 -Render Optimization
--Collision optimization (Don't access object properties by string.. Give all objects numerical ids?)
+
 -Layers
 
 -Object states
+    Actions:
+    	-Change Object State
 -Conditions
 -Debugging mode
 
-Actions:
-    -Change Object State
+
 
 
 
@@ -19,6 +20,7 @@ DONE:
 -Scene managing
 -Counter objects
 -Play mode
+-Collision optimization (Don't access object properties by string.. Give all objects numerical ids?)
 
 Actions:
     -Switch Scene

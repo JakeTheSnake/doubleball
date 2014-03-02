@@ -16,6 +16,10 @@ Global Objects
 
 Ett Global Object är ett objekt som finns tillgängligt för att kunna skapas - antingen av användaren i Edit-läge, eller i runtime.
 
+Global Unique Objects
+======================
+A global unique object is an object that can only exist once in each scene. It will share state and counter values with all other instances or this objects in other scenes. If an instance of this object is destroyed the counter and state values will not be reset upon recreating the object. The unique property should be settable both when initially creating the object and from the edit form. If there is more than 1 instance of a Global Object in any scene this property should not be settable for that object. 
+
 Scene Objects
 ================
 

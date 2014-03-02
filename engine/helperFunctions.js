@@ -63,7 +63,7 @@ GameCreator.helperFunctions.determineQuadrant = function(base, obj)
             return 4;
         }
     }
-}
+};
 
 GameCreator.helperFunctions.doCollision = function(object, targetObject){
     var currentActionsItem = GameCreator.helperFunctions.getObjectById(object.parent.collisionActions, targetObject.parent.id);
@@ -91,7 +91,7 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
             object.name
         )
     }
-}
+};
 
 GameCreator.helperFunctions.checkCollisions = function(object) {
     if(object.objectBeneath != undefined)
@@ -152,7 +152,7 @@ GameCreator.helperFunctions.checkCollisions = function(object) {
             }
         }
     }
-}
+};
 
 GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject) {
     if (!(object === targetObject)) {
@@ -162,26 +162,26 @@ GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject
         }
     }
     return false;
-}
+};
 
 GameCreator.helperFunctions.calcAngularSpeed = function(maxSpeed){
     return Math.pow(Math.pow(maxSpeed, 2)/2, 0.5);
-}
+};
 
 GameCreator.helperFunctions.toString = function(thing){
     if(typeof(thing) == "object")
         return thing.name;
     else
         return "" + thing;
-}
+};
 
 GameCreator.helperFunctions.parseBool = function(string) {
     return string === 'true' ? true : false;
-}
+};
 
 GameCreator.helperFunctions.parseRange = function(string) {
     return string.split(":", 2);
-}
+};
 
 GameCreator.helperFunctions.calcUnitVector = function(x, y){
     var magnitude = Math.sqrt((x * x) + (y * y));
@@ -190,7 +190,7 @@ GameCreator.helperFunctions.calcUnitVector = function(x, y){
     } else {
         return {x: x/magnitude, y: y/magnitude};    
     }
-}
+};
 
 /** TODO: Not used atm, for conditions.
  * name: Name of the object
@@ -234,7 +234,7 @@ GameCreator.helperFunctions.findGlobalObjectById = function(id) {
             return GameCreator.borderObjects[objects[i]];
         }
     }
-}
+};
 
 GameCreator.helperFunctions.getValue = function(input) {
     if(input.attr("data-type") == "string" && input.val().length != 0) {
@@ -252,6 +252,9 @@ GameCreator.helperFunctions.getValue = function(input) {
         	range[i] = parseFloat(range[i]);
         }
         return range;
+    }
+    else if(input.attr("data-type") == "checkbox" && input.val().length != 0) {
+        return input.is(":checked");
     }
     else {
         return input.val();
@@ -304,8 +307,7 @@ GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parame
                     }
                 });
         })(runtimeObj, actionToRun, parameters, timerFunction);
-
-}
+};
 
 GameCreator.helperFunctions.calculateScene = function(activeScene, params){
 	switch(params.changeType){
@@ -316,7 +318,7 @@ GameCreator.helperFunctions.calculateScene = function(activeScene, params){
 		case 'setScene':
 		 	return params.changeValue;
 	}
-}
+};
 
 GameCreator.helperFunctions.getObjectById = function(array, id) {
     for (var i = 0; i < array.length; i++) {
@@ -324,7 +326,7 @@ GameCreator.helperFunctions.getObjectById = function(array, id) {
             return array[i];
         }
     }
-}
+};
 
 GameCreator.helperFunctions.removeObjectFromArrayById = function(array, id) {
     var found = false;
@@ -337,4 +339,13 @@ GameCreator.helperFunctions.removeObjectFromArrayById = function(array, id) {
     if (found) {
         array.splice(i, 1);
     }
-}
+};
+
+GameCreator.helperFunctions.setStandardProperties = function(object, image, args) {
+    object.image = image;
+    object.name = args.name;
+    object.width = args.width;
+    object.height = args.height;
+    object.unique = args.unique;
+    object.counters = {};
+};

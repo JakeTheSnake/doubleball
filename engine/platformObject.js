@@ -8,22 +8,16 @@ GameCreator.platformObject = {
         GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
         GameCreator.addObjFunctions.keyObjectFunctions(obj);
         GameCreator.addObjFunctions.clickableObjectFunctions(obj);
-        
-        obj.image = image;
-        obj.name = args.name;
-        obj.width = args.width;
-        obj.height = args.height;
+
+        GameCreator.helperFunctions.setStandardProperties(obj, image, args);
 
         obj.isCollidable = true;
         obj.isMovable = true;
         obj.isRenderable = true;
         obj.isEventable = true;
         
-        obj.counters = {};
-        
         obj.objectType = "platformObject";
         
-        GameCreator.globalObjects[obj.name] = obj;
         return obj;
     },
     

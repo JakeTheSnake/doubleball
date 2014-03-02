@@ -18,6 +18,9 @@ $.extend(GameCreator, {
             globalObj.imageReady = true;
             GameCreator.render();
         };
+
+        GameCreator.globalObjects[globalObj.name] = globalObj;
+        
         return globalObj;
     },
     

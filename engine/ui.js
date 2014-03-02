@@ -266,14 +266,8 @@ GameCreator.UI = {
     },
     
 
-    setupEditGlobalObjectPropertiesContent: function(container, globalObj){
-      var result = '';
-      if(globalObj.objectType === 'counterObject' && !globalObj.counter) {
-        result += GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj); //TODO: Allow for changing counter representation here!
-      } else {
-        result += GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj);
-      }
-      return result;
+    setupEditGlobalObjectPropertiesContent: function(container, globalObj) {
+        return GameCreator.htmlStrings.editGlobalObjectPropertiesContent(globalObj);
     },
     
     setupEditGlobalObjectCollisionsForm: function(container, globalObj) {

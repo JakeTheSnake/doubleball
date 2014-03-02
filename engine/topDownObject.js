@@ -9,22 +9,15 @@ GameCreator.topDownObject = {
         GameCreator.addObjFunctions.keyObjectFunctions(obj);
         GameCreator.addObjFunctions.clickableObjectFunctions(obj);
         
-        obj.image = image;
-        obj.name = args.name;
-        obj.width = args.width;
-        obj.height = args.height;
+        GameCreator.helperFunctions.setStandardProperties(obj, image, args);
 
         obj.isCollidable = true;
         obj.isMovable = true;
         obj.isRenderable = true;
-        obj.isEventable = true;
-        
-        obj.collisions = [];
-        obj.counters = {};
-        
+        obj.isEventable = true;        
+      
         obj.objectType = "topDownObject";
         
-        GameCreator.globalObjects[obj.name] = obj;
         return obj;
     },
     

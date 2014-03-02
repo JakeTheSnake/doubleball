@@ -34,6 +34,10 @@ GameCreator.htmlStrings = {
         }
         return '<input id="'+ inputId +'" type="text" class="rangeField" data-type="range" data-attrName="' + attrName + '" value="' + valueString + '"/>'
     },
+    checkboxInput: function(inputId, attrName, checked) {
+        return '<input id="'+ inputId +'" type="checkbox" class="checkboxField" data-type="checkbox" data-attrName="' +
+            attrName + '" ' + (checked ? 'checked' : '') + ' />'
+    },
     inputLabel: function(inputId, labelText) {
         return '<label for=' + inputId + ' class="textFieldLabel">' + labelText + '</label>';
     },
@@ -200,7 +204,7 @@ GameCreator.htmlStrings = {
             <div id="select-action-timing-content"></div></div> \
             <div id="select-action-add-button"><button id="select-action-add-action" class="regularButton addActionButton">Add</button></div>'
         
-    	result += '<br/ style="clear:both">'
+    	result += '<br style="clear:both"/>'
         result += '<div id="select-action-result">';
         result += GameCreator.htmlStrings.selectedActionsList(existingActions);
         result += '</div></div></div>';
@@ -248,34 +252,42 @@ GameCreator.htmlStrings = {
     },
     editGlobalObjectPropertiesContent: function(object) {
     	var result = '';
-        if(object.objectType == "activeObject") {
-            result += GameCreator.htmlStrings.globalActiveObjectForm(object);
-            result += '<div style="height: 10px"></div>';
-            if(object.movementType == "free") {
-                result += GameCreator.htmlStrings.freeMovementInputs(object);
-            }
-            else {
-                result += GameCreator.htmlStrings.routeMovementInputs(object);
-            }
+        switch(object.objectType) {
+            case 'activeObject':
+                result += GameCreator.htmlStrings.globalActiveObjectForm(object);
+                result += '<div style="height: 10px"></div>';
+                if(object.movementType === 'free') {
+                    result += GameCreator.htmlStrings.freeMovementInputs(object);
+                }
+                else {
+                    result += GameCreator.htmlStrings.routeMovementInputs(object);
+                }
+                break;
+            case 'mouseObject':
+                result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
+                result += '<div style="height: 10px"></div>';
+                result += GameCreator.htmlStrings.mouseMovementInputs(object);
+                break;
+            case 'topDownObject':
+                result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
+                result += '<div style="height: 10px"></div>';
+                result += GameCreator.htmlStrings.topDownMovementInputs(object);
+                break;
+            case 'platformObject':
+                result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
+                result += '<div style="height: 10px"></div>';
+                result += GameCreator.htmlStrings.platformMovementInputs(object);
+                break;
+            case 'counterObject':
+                result += GameCreator.htmlStrings.globalCounterObjectForm(object);
+                break;
+            default:
+                break;
         }
-        else if(object.objectType == "mouseObject") {
-            result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
-            result += '<div style="height: 10px"></div>';
-            result += GameCreator.htmlStrings.mouseMovementInputs(object);
-        }
-        else if(object.objectType == "topDownObject") {
-            result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
-            result += '<div style="height: 10px"></div>';
-            result += GameCreator.htmlStrings.topDownMovementInputs(object);
-        }
-        else if(object.objectType == "platformObject") {
-            result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
-            result += '<div style="height: 10px"></div>';
-            result += GameCreator.htmlStrings.platformMovementInputs(object);
-        }
-        else if(object.objectType == "counterObject") {
-        	//If the object does not have its own counter, show dropdowns for selecting counter to display.
-        	result += GameCreator.htmlStrings.globalCounterObjectForm(object);
+        if(object.objectType !== 'counterObject') {
+            result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:');
+            result += GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', object.unique);
+            result += '<br style="clear:both"/>';
         }
         result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>';
         return result;
@@ -405,9 +417,10 @@ GameCreator.htmlStrings = {
             GameCreator.htmlStrings.inputLabel("active-object-src", "Image Src:") + 
             GameCreator.htmlStrings.stringInput("active-object-src", "src", "") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("active-object-movement-type", "Movement:") +
-            GameCreator.htmlStrings.singleSelector("active-object-movement-type", {"Free": "free", "Route": "route"}, "movementType") +
-            '<br style="clear:both;"/> \
-            <button class="saveButton regularButton">Save</button>';
+            GameCreator.htmlStrings.singleSelector("active-object-movement-type", {"Free": "free", "Route": "route"}, "movementType") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.inputLabel("active-object-unique", "Unique:") +
+            GameCreator.htmlStrings.checkboxInput("active-object-unique", "unique", false) +
+            '<br style="clear:both;"/><button class="saveButton regularButton">Save</button>';
         return result;
     },
     

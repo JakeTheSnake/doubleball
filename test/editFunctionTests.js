@@ -2,7 +2,8 @@ test("Save Form Data to Object", function() {
     var rangeField = GameCreator.htmlStrings.rangeInput('rangeField', 'range', '1:300');
     var numberField = GameCreator.htmlStrings.numberInput('numberField', 'number', '200');
     var stringField = GameCreator.htmlStrings.stringInput('textField', 'string', 'kastrull');
-    $("#qunit-fixture").html('<form id="test-form">' + rangeField + numberField + stringField + '</form>');
+    var checkbox = GameCreator.htmlStrings.checkboxInput('checkboxField', 'checkbox', true);
+    $("#qunit-fixture").html('<form id="test-form">' + rangeField + numberField + stringField + checkbox + '</form>');
     
     var obj = {};
 
@@ -11,6 +12,7 @@ test("Save Form Data to Object", function() {
     deepEqual(obj.string, 'kastrull', 'String parsing.');
     deepEqual(obj.range, [1,300], 'Range parsing.');
     deepEqual(obj.number, 200, 'Number parsing.');
+    deepEqual(obj.checkbox, true);
 });
 
 test("Add Object to scene", function() {
