@@ -133,7 +133,7 @@ GameCreator.UI = {
                     i++;
                 }
             }*/
-            var timingType = GameCreator.helperFunctions.getValue($("#timing"));
+            var timingType = GameCreator.helperFunctions.getValue($("#timing-selector"));
             var timingTime = GameCreator.helperFunctions.getValue($("#timing-time"));
             selectedAction.timing = {type: timingType, time: timingTime};
             selectedActions.push(selectedAction);

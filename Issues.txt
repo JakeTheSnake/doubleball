@@ -1,29 +1,5 @@
 TODO:
 
-Allow for changing counter representation after creation of counter object.
-
-Se till så att action-referenser läggs till på actions i load game och när man lägger till nya actions så vi slipper göra lookups i runtime.
-
-Objekt förstörs inte ordentligt efter en action, verkar ligga kvar i collideables. Kan vara något med timer.
-
-
-BLOCK ONCLICK on mouse objects.
-
-Allow changing of counter representation.
-
-Maybe handle inheritance in a nicer way. Possible to avoid the whole obj.parent.function.call" mess?
-
-
-Direct mode should disable everything in edit mode.
-
-Run Actions when you create them in direct mode.
-
-Fix so shoot also takes the object to be shots width into consideration when deciding where to spawn it!
-
-Function in actions that returns the correct array of selectable actions. Takes "collision" true/false and the object as parameters.
-
-Remove excluded actions?
-
 Finish shoot. Refactor to remove duplicates of the direction switch case.
 
 There needs to be a "preserve dimensions" option when setting ranges on the size of an item. (prio2?)
