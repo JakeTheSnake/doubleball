@@ -1,5 +1,7 @@
 TODO:
 
+Refactor mouse events that are currently set up in editFunctions/editScene. Remove use of global object, set up event listeners locally instead. (See ui/createLibraryItem)
+
 Allow for changing counter representation after creation of counter object.
 
 Se till så att action-referenser läggs till på actions i load game och när man lägger till nya actions så vi slipper göra lookups i runtime.

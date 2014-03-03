@@ -99,6 +99,7 @@ GameCreator.htmlStrings = {
         var button = document.createElement("button");
         $(button).append(object.name);
         $(button).addClass("library-global-object-button");
+        $(button).attr("data-imgsrc", object.image.src);
         var div = $(document.createElement("div")).append(button);
         return div;
     },

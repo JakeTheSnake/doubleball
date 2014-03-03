@@ -13,7 +13,7 @@ $.extend(GameCreator, {
         image.src = args.src;
         var globalObj = GameCreator[objectType].New(image, args);
         globalObj.id = GameCreator.globalIdCounter++;
-        GameCreator.UI.createGlobalListElement(globalObj);
+        GameCreator.UI.createLibraryItem(globalObj);
         image.onload = function() {
             globalObj.imageReady = true;
             GameCreator.render();
@@ -134,33 +134,6 @@ $.extend(GameCreator, {
             }
         });
         
-        $(window).on("mousemove", function(e){
-            var pic = GameCreator.draggedGlobalElement;
-            if (pic) {
-                $(pic).css("top", e.pageY - 45);
-                $(pic).css("left", e.pageX - 45);
-            }
-            return false;
-        });
-        
-        $(window).on("mouseup", function(e){
-            var pic = GameCreator.draggedGlobalElement;
-            if (!pic) {
-                return;
-            }
-            $(pic).remove();
-            var x = e.pageX;
-            var y = e.pageY;
-            var offsetX = $("#main-canvas").offset().left;
-            var offsetY = $("#main-canvas").offset().top;
-            if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
-                var globalObj = GameCreator.globalObjects[$(pic).attr("data-name")];
-                var newInstance = GameCreator.createSceneObject(GameCreator.globalObjects[$(pic).attr("data-name")], GameCreator.scenes[GameCreator.activeScene], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
-            }
-                
-            GameCreator.draggedGlobalElement = undefined;
-        });
-        
         GameCreator.UI.setupSceneTabs(GameCreator.scenes);
         GameCreator.render(false);
     },
@@ -232,7 +205,7 @@ $.extend(GameCreator, {
             if (parsedSave.globalObjects.hasOwnProperty(name)) {
                 var object = parsedSave.globalObjects[name];
                 var newObject = GameCreator[object.objectType].createFromSaved(object);
-                GameCreator.UI.createGlobalListElement(newObject);
+                GameCreator.UI.createLibraryItem(newObject);
             }
         }
         
