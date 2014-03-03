@@ -89,7 +89,8 @@ GameCreator.htmlStrings = {
         $(image).css("width","65");
         var imgDiv = $(document.createElement("div"));
         imgDiv.append(image);
-        imgDiv.addClass("globalObjectElementImage");
+        imgDiv.addClass("global-object-element-image");
+
         var div = $(document.createElement("div")).append(imgDiv);
         $(div).attr("id", "object-library-element-" + object.name);
         return div;
@@ -97,7 +98,7 @@ GameCreator.htmlStrings = {
     globalObjectEditButton: function(object) {
         var button = document.createElement("button");
         $(button).append(object.name);
-        $(button).addClass("regularButton");
+        $(button).addClass("library-global-object-button");
         var div = $(document.createElement("div")).append(button);
         return div;
     },

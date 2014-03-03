@@ -1,148 +1,298 @@
-/* reset default browser values */	
-@import url(reset.css);
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
 
-/* UI Objects (route nodes, dialogues) */
-@import url(ui_objects.css);
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
 
-/* Forms (Edit Action form)*/
-@import url(forms.css);
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
 
-/* Common small objects (buttons etc) */
-@import url(common.css);
+html, body {
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+}
 
+/*
+ * Borders and padding are drawn inside the set width
+ * of your content. The margin is drawn outside.
+ */
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1px 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+
+audio,
+canvas,
+img,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+canvas {
+    position: absolute;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+#canvas {
+    overflow: hidden;
+    background-image: url('../img/canvas_grid.gif');
+    background-repeat: repeat;
+    background-position: top center;
+    height: 100%;
+}
+
+#container {
+    bottom: 0;
+    left: 0;
+    min-height: 850px;
+    position: absolute;
+    padding: 80px 0 0 0;
+    right: 0;
+    top: 0;
+}
+
+/* =================
+   Top UI
+   ================= */
+
+#top-ui {
+    background-color: #323232;
+    height: 80px;
+    margin-top: -80px;
+}
+
+/* =================
+   Left UI
+   ================= */
+
+#left-ui {
+    background-color: #323232;
+    float: left;
+    height: 100%;
+    width: 50px;
+}
+
+/* ===============
+   Right UI
+   =============== */
+
+#right-ui {
+    overflow: hidden;
+    background-color: #323232;
+    float: right;
+    height: 100%;
+    width: 330px;
+    padding: 0 2px 0 2px;
+}
+
+#right-ui .ui-title {
+    background-color: #2574a9;
+    height: 30px;
+    margin: 0 0 2px 0;
+    width: 326px;
+    font-family: 'Droid Sans', sans-serif;
+    font-size: 14px;
+    color: #ffffff;
+    padding: 7px 0 0 9px;
+}
+
+/* ---------------
+   Properties
+   --------------- */
+
+#properties-ui {
+    height: 375px;
+}
+
+/* ---------------
+   Library
+   --------------- */
+
+#library-ui {
+    height: 100%;
+}
+
+/* Library preview */
+
+#library-preview {
+    background: url('../img/library_preview_grid.gif');
+    height: 110px;
+    margin: 0 0 2px 0;
+}
+
+/* Library explorer */
+
+#library-explorer {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    background-color: #f5f5f5;
+    height: 220px;
+    margin: 0 0 2px 0;
+}
+
+.library-global-object-button {
+    width: 100%;
+    border: 0;
+    background: url('../img/library_explorer_icon_object.gif') no-repeat;
+    font-size: 12px;
+    font-family: verdana;
+    margin: 0 0 2px 5px;
+    padding: 0 0 0 22px;
+    height: 16px;
+    text-align: left;
+}
+
+/* Library menu */
+
+#library-menu {
+    height: 34px;
+}
+
+.library-menu-button {
+    border: 0;
+    background-color: #505050;
+    display: block;
+    width: 86px;
+    height: 34px;
+    float: left;
+    text-align: center;
+    margin: 0 2px 0 0;
+    padding: 8px 0;
+    font-family: 'Droid Sans', sans-serif;
+    font-size: 16px;
+    color: #808080;
+}
+
+.library-menu-button.active {
+    background-color: #27ae60;
+    color: #ffffff;
+}
+
+.library-menu-button.active:hover {
+    background-color: #2dcc6f;
+}
+
+/* ===============
+   Dialog window
+   =============== */
 #dialogue-overlay {
     position:absolute;
     height: 100%;
     width: 100%;
-    background-color: black;
+    background-color: #000000;
     z-index: 1;
     opacity: 0.7;
-    margin: -8px;
     display: none;
 }
 
-
-
 #dialogue-window {
-	padding: 5px;
-}
-
-.tabContainer {
-    height: 30px;
-    padding: 5px 5px 0px 5px;
-}
-
-.tabContainer .tab {
-    float:left;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    height: 100%;
-    padding: 0 5px 0 5px;
-    background-color: #777;
-    border-radius: 5px 5px 0 0;
-    margin-right: 2px;
-    border: 1px solid black;
-}
-
-.tabContainer .tab:hover {
-	background-color: #888;
-}
-
-.tabContainer .tab.active {
-    background-color: #999;
-}
-
-#canvas-container {
-    margin: 2px;
-    left: 120px;
-}
-
-canvas {
-	position: absolute;
-	border: 2px solid;
-    border-radius: 10px;
-}
-
-#ui-canvas {
-	pointer-events:none;
-}
-
-#main-container {
-	float:left;
-}
-
-#scene-tabs {
-	margin-left:5px;
-}
-
-#scene-tabs .tab {
-	width: 25px;
-	text-align: center;
-}
-
-#main-menu {
     position: absolute;
-    left: 1174px;
+    display: none;
+    top: 110px;
+    background-color: #dcdddd;
+    z-index: 2;
+}
+   
+#dialogue-window-title {
+    width: 100%;
+    height: 30px;
+    background-color: #1e1e1e;
 }
 
-#add-player-object-movement-parameters {
-	margin-top: 10px;
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
 }
 
-#global-object-list-container {
-	height: 780px;
-	width: 120px;
-	float:left;
-	overflow: auto;
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
 }
 
-.addCollisionObjectElement, .addKeyObjectElement {
-	margin: 5px;
-	background-color: #888;
-	padding: 5px;
-	border-radius: 5px;
-	height: 85px;
+/*
+ * Clearfix: contain floats
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
 }
 
-.counterMenuElement, .keyMenuElement {
-	
+.clearfix:after {
+    clear: both;
 }
-
-#edit-collision-actions-object-content, #edit-key-actions-key-content{
-	width: 580px;
-}
-
-#edit-global-object-window-content #select-actions-header{
-	line-height: 20px;
-	text-shadow: 1px 1px 1px #4DB8FF;
-	font-family: Arial;
-	font-size: 15px;
-	font-weight: bold;
-	font-style: normal;
-	border: 1px solid #63b8ee;
-	background: #E0F3F9;
-	border-radius: 5px;
-}
-
-#edit-collision-actions-object-menu-container, #edit-key-actions-object-menu-container {
-	float: left;
-	height: 500px;
-	width: 120px;
-	overflow-y: auto;
-	overflow-x: hidden;
-}
-
-#select-actions-content .group {
-	margin-bottom: 15px;
-}
-
-#edit-counter-event-content, #edit-counters-counter-content, #edit-counter-event-action-content, #edit-counter-event-actions-content {
-	margin-left: 5px;
-	float: left;
-}
-
-#edit-counter-event-actions-content #select-action-window {
-	width: 485px;
-}
-

@@ -1,75 +1,81 @@
-<!doctype html>
-<html lang="us">
-<head>
-    <meta charset="utf-8">
-    <title>PlayMaker Ultra</title>
-<link href="css/dot-luv/jquery-ui-1.10.3.custom.css" rel="stylesheet">
-<script src="libs/jquery-1.9.1.js"></script>
-<script src="engine/gameCreator.js"></script>
-<script src="engine/scene.js"></script>
-<script src="libs/jquery-ui-1.10.3.custom.min.js"></script>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>ArcadeForge</title>
+        <meta name="description" content="">
+        <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 
-<script src="startup.js"></script>
+        <link rel="stylesheet" href="css/dot-luv/jquery-ui-1.10.3.custom.css">
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/arcadeforge.css">
 
-<script src="engine/ui.js"></script>
-<link href="css/main.css" rel="stylesheet">
+        <script src="libs/jquery-1.9.1.js"></script>
+        <script src="engine/gameCreator.js"></script>
+        <script src="engine/scene.js"></script>
+        <script src="libs/jquery-ui-1.10.3.custom.min.js"></script>
+        <script src="startup.js"></script>
+        <script src="engine/ui.js"></script>
+        <script src="engine/editFunctions.js"></script>
+        <script src="engine/htmlStrings.js"></script>
+        <script src="engine/actions.js"></script>
+        <script src="engine/baseObject.js"></script>
+        <script src="engine/activeObject.js"></script>
+        <script src="engine/mouseObject.js"></script>
+        <script src="engine/platformObject.js"></script>
+        <script src="engine/componentFunctions.js"></script>
+        <script src="engine/helperFunctions.js"></script>
+        <script src="engine/sceneObject.js"></script>
+        <script src="engine/topDownObject.js"></script>
+        <script src="engine/timerHandler.js"></script>
+        <script src="engine/counter.js"></script>
+        <script src="engine/debug.js"></script>
+    </head>
+    <body>
+        <div id="dialogue-overlay"></div>
+        <div id="container">
 
-<script src="engine/editFunctions.js"></script>
-<script src="engine/htmlStrings.js"></script>
-<script src="engine/actions.js"></script>
-<script src="engine/baseObject.js"></script>
-<script src="engine/activeObject.js"></script>
-<script src="engine/mouseObject.js"></script>
-<script src="engine/platformObject.js"></script>
-<script src="engine/componentFunctions.js"></script>
-<script src="engine/helperFunctions.js"></script>
-<script src="engine/sceneObject.js"></script>
-<script src="engine/topDownObject.js"></script>
-<script src="engine/timerHandler.js"></script>
-<script src="engine/counter.js"></script>
-<script src="engine/debug.js"></script>
-</head>
-<body>
-<div id="dialogue-overlay"></div>
-<div id="global-object-list-container">
-	<button id="add-global-object-button" class="regularButton">+</button>
-	<div id="global-object-list" style="float:left; width: 100px"></div>
-</div>
-<div id="main-container">
-  <div id="scene-tabs" class="tabContainer"></div>
-
-  <div id="canvas-container" oncontextmenu="return false;">
-  	
-  </div>
-</div>
-<div id="main-menu">
-    <form style="margin-top: 1em;">
-      <div id="mode">
-          <input type="radio" id="mode_edit" name="radio" onClick="GameCreator.editActiveScene()" checked="checked"><label for="mode_edit">Edit Scene</label>
-          <input type="radio" id="mode_direct" name="radio"  onClick="GameCreator.directActiveScene()"><label for="mode_direct">Direct Scene</label>
-          <input type="radio" id="mode_play" name="radio"  onClick="GameCreator.playGame()"><label for="mode_play">Play Game</label>
-      </div>
-  </form>
-    <div id="edit-scene-object-pane" style="margin-top:20px;">
-        <div><span id="edit-scene-object-title" style="font-size:20px; font-weight:bold;"></span></div>
-        <div id="edit-scene-object-content" style="margin-top:10px;">
-        
+        <div id="top-ui">
+            <div id="menu-ui">
+                <!-- list of buttons -->
+            </div>
         </div>
-        <div id="debug-info-pane">
+
+        <div id="left-ui">
+            <div id="tools-ui">
+                <!-- list of tools -->
+            </div>
+        </div>
+
+        <div id="right-ui" >
+            <div id="properties-ui">
+                <div class="ui-title">Properties</div>
+            </div>
+            <div id="library-ui">
+                <div class="ui-title">Library</div>
+                <div id="library-preview"></div>
+                <div id="library-explorer">
+                    <div id="global-object-list">
+                    </div>
+                </div>
+                <div id="library-menu">
+                    <button id="add-global-object-button" class="library-menu-button active">Add</button>
+                    <button id="add-global-object-button" class="library-menu-button disabled">Edit</button>
+                    <button id="add-global-object-button" class="library-menu-button disabled">Remove</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="canvas">
+            <div id="canvas-container" oncontextmenu="return false;">
+        </div>
 
         </div>
-    </div>
-</div>
-<div style="position:absolute;top:830px;left:120px;">
-    <div>
-        <textarea id="save-game-text-area" style="width:500px;height:300px;"></textarea>
-    </div>
-    <button id="save-game-button" onClick="$('#save-game-text-area').val(GameCreator.saveState())">Save Game</button>
-    <button id="load-game-button" onClick="GameCreator.restoreState($('#save-game-text-area').val())">Load Game</button>
-</div>
 
-<div id="edit-global-object-window"></div>
-
-<div id="dialogue-window"></div>
-</body>
+        <div id="dialogue-window">
+            <div id="dialogue-window-title">Add object</p>
+        </div>
+    </body>
 </html>
