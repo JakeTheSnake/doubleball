@@ -87,8 +87,14 @@ GameCreator.addObjFunctions.activeObjectFunctions = function(activeObject)
         var x = 0, y = 0, speedX = 0, speedY = 0;
         switch(staticParameters.projectileDirection){
             case "Default":
+                if (unitVector.x === 0 && unitVector.y === 0) {
+                    speedY = projectileSpeed; // If shooting object is stationary
+                }
+                else {
+                    speedY = unitVector.y * projectileSpeed;    
+                }
+                
                 speedX = unitVector.x * projectileSpeed;
-                speedY = unitVector.y * projectileSpeed;
                 x = this.x;
                 y = this.y;
                 break;
