@@ -1,7 +1,7 @@
 Version 0.2:
 
 -Global event when game started.
--Solve the global counter problem...
+
 -Render Optimization
 
 -Layers
@@ -12,11 +12,12 @@ Version 0.2:
 -Conditions
 -Debugging mode
 
-
+-Fundera: Make unique objects MIRRORED!
 
 
 
 DONE:
+-Unique Objects
 -Scene managing
 -Counter objects
 -Play mode

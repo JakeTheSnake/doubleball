@@ -32,37 +32,35 @@ $.extend(GameCreator, {
     selectScene: function(params) {
       var scene = GameCreator.helperFunctions.calculateScene(GameCreator.activeScene, params);
       GameCreator.activeScene = scene;
-      if (GameCreator.state === 'directing') {
-          GameCreator.directScene(GameCreator.scenes[scene]);
-      } else if (GameCreator.state === 'playing') {
-          GameCreator.playScene(GameCreator.scenes[scene]);       
-      }
+      GameCreator.switchScene(scene);
     },
 
     playScene: function(scene) {
+        GameCreator.switchScene(scene);
+        GameCreator.resetGlobalCounters();
+        GameCreator.then = Date.now();
+        GameCreator.state = 'playing';
+        GameCreator.gameLoop();
+    },
+
+    switchScene: function(scene) {
         GameCreator.reset();
         GameCreator.resetScene(scene);
-        
-        //Populate the runtime arrays with clones of objects from this scene array. How do we make sure the right object ends up in the right arrays?
-        //Do we need a new type of object? runtimeObject?
-        for (var i=0;i < scene.length;++i) {
+        for (var i=0; i < scene.length; ++i) {
             var obj = jQuery.extend({}, scene[i]);
             GameCreator.addToRuntime(obj);
             obj.parent.onGameStarted();
             obj.setCounterParent();
         }
 
-        then = Date.now();
         GameCreator.resumeGame();
-        
-        if(GameCreator.state = 0) {
+
+        if(GameCreator.state === 'editing') {
             GameCreator.stopEditing();
         }
-        
+
         GameCreator.sceneStarted();
-        GameCreator.state = 2;
-        GameCreator.gameLoop();
-    },
+    }, 
 
     
 

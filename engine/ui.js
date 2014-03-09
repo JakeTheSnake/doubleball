@@ -206,38 +206,12 @@ GameCreator.UI = {
       $("#add-counter-object-counter-representation-content").html(GameCreator.htmlStrings.counterObjectTextForm());
     },
     
-    setupAddCounterObjectCounterSelector: function(obj) {
-      var uniqueIds = GameCreator.getUniqueIDsInScene();
-      var selectedId;
-      if(!obj || (obj && !obj.counterObject)) {
-        for(id in uniqueIds) {
-          if(uniqueIds.hasOwnProperty(id)){
-            selectedId = uniqueIds[id];
-            break;
-          } 
-        };
-      } else {
-        selectedId = obj.counterObject;
-      }
-      return GameCreator.htmlStrings.inputLabel('add-counter-counter-object', 'Object') +
-          GameCreator.UI.setupSingleSelectorWithListener(
-            'add-counter-counter-object', 
-            GameCreator.getUniqueIDsInScene(), 
-            'change', 
-            function(){
-              $("#add-counter-counter-name").replaceWith(GameCreator.htmlStrings.singleSelector("add-counter-counter-name", GameCreator.getCountersForGlobalObj($(this).val()), "counterName"))
-            },
-            'counterObject',
-            selectedId
-          ) +
-          GameCreator.htmlStrings.inputLabel("add-counter-counter-object", "Counter") +
-          GameCreator.htmlStrings.singleSelector("add-counter-counter-object", selectedId ? GameCreator.getCountersForGlobalObj(selectedId) : {}, "counterName");
-    },
+    
     
     saveCounterObject: function() {
-      var args = {};
-      GameCreator.saveFormInputToObject("add-global-object-window-content", args);
-      GameCreator.addGlobalObject(args, 'counterObject');
+        var args = {};
+        GameCreator.saveFormInputToObject("add-global-object-window-content", args);
+        GameCreator.addGlobalObject(args, 'counterObject');
     },
     
     //Edit global object functions
@@ -318,9 +292,8 @@ GameCreator.UI = {
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + keyName,
                 actions,
-                globalObj.keyActions,
+                globalObj.keyActions[keyName],
                 $("#edit-key-actions-key-content"),
-                keyName,
                 globalObj.name
             );
         });
@@ -335,11 +308,11 @@ GameCreator.UI = {
     
     setupEditGlobalObjectOnClickActionsForm: function(container, globalObj) {
       var text = "Actions on click";
-      var actions;
+      var choosableActions;
       if(globalObj.objectType === "mouseObject") {
-        actions = GameCreator.actionGroups.mouseNonCollisionActions;
+        choosableActions = GameCreator.actionGroups.mouseNonCollisionActions;
       } else {
-        actions = GameCreator.actionGroups.nonCollisionActions;
+        choosableActions = GameCreator.actionGroups.nonCollisionActions;
       }
         
         //If onClickActions has not yet been edited from anywhere, instantiate to empty array.
@@ -348,16 +321,16 @@ GameCreator.UI = {
         }
         
       var existingActions = globalObj.onClickActions;
-      GameCreator.UI.createEditActionsArea(text, actions, existingActions, container, null, globalObj.name);
+      GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.name);
     },
 
     setupEditGlobalObjectOnDestroyActionsForm: function(container, globalObj) {
         var text = "Actions on Destruction";
-        var actions = GameCreator.actionGroups.onCreateActions;
+        var choosableActions = GameCreator.actionGroups.onCreateActions;
         if(globalObj.objectType === "mouseObject") {
-          actions = GameCreator.actionGroups.mouseNonCollisionActions;
+          choosableActions = GameCreator.actionGroups.mouseNonCollisionActions;
         } else {
-          actions = GameCreator.actionGroups.nonCollisionActions;
+          choosableActions = GameCreator.actionGroups.nonCollisionActions;
         }
         
         //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
@@ -366,12 +339,12 @@ GameCreator.UI = {
         }
         
         var existingActions = globalObj.onDestroyActions;
-        GameCreator.UI.createEditActionsArea(text, actions, existingActions, container, null, globalObj.name);
+        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.name);
     },
 
     setupEditGlobalObjectOnCreateActionsForm: function(container, globalObj) {
         var text = "Actions on Creation";
-        var actions = GameCreator.actionGroups.onCreateActions;
+        var choosableActions = GameCreator.actionGroups.onCreateActions;
         
         //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
         if(globalObj.onCreateActions == undefined) {
@@ -379,16 +352,16 @@ GameCreator.UI = {
         }
         
         var existingActions = globalObj.onCreateActions;
-        GameCreator.UI.createEditActionsArea(text, actions, existingActions, container, null, globalObj.name);
+        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.name);
     },
     
     setupEditGlobalObjectCountersForm: function(container, globalObj) {
-       container.html(GameCreator.htmlStrings.editGlobalObjectCountersContent(globalObj));
+       container.html(GameCreator.htmlStrings.editGlobalObjectCountersContent(globalObj.parentCounters));
        $("#add-new-counter-button").on("click", function(){
             $("#edit-counters-counter-content").html(GameCreator.htmlStrings.createCounterForm());
             $("#edit-counters-counter-content .saveButton").one("click", function(){
               var counterName = $("#edit-counters-counter-content #counter-name").val();
-                globalObj.counters[counterName] = GameCreator.counter.New();
+                globalObj.parentCounters[counterName] = GameCreator.counter.New();
                 GameCreator.UI.setupEditGlobalObjectCountersForm(container, globalObj);
             });
         });
@@ -399,16 +372,16 @@ GameCreator.UI = {
     },
     
     setupEditCounterEvents: function(globalObj, counterName, container) {
-      container.html(GameCreator.htmlStrings.editCounterEventsContent(globalObj.counters[counterName]));
-      $("#edit-counter-event-actions-content").html("");
-      $("#add-new-counter-event-button").on("click", function(){
+        container.html(GameCreator.htmlStrings.editCounterEventsContent(globalObj.parentCounters[counterName]));
+        $("#edit-counter-event-actions-content").html("");
+        $("#add-new-counter-event-button").on("click", function(){
             $("#edit-counter-event-actions-content").html(GameCreator.htmlStrings.createCounterEventForm());
             $("#edit-counter-event-value-field").hide();
             $("#edit-counter-event-actions-content .saveButton").one("click", function(){
-              var eventType = $("#edit-counter-event-actions-content #edit-counter-event-type").val();
-              var eventValue = $("#edit-counter-event-actions-content #edit-counter-event-value").val();
-              globalObj.counters[counterName][eventType][eventValue] = [];
-              GameCreator.UI.setupEditCounterEvents(globalObj, counterName, container);
+                var eventType = $("#edit-counter-event-actions-content #edit-counter-event-type").val();
+                var eventValue = $("#edit-counter-event-actions-content #edit-counter-event-value").val();
+                globalObj.parentCounters[counterName][eventType][eventValue] = [];
+                GameCreator.UI.setupEditCounterEvents(globalObj, counterName, container);
             });
         });
         
@@ -417,24 +390,24 @@ GameCreator.UI = {
             var eventValue = $(this).data("value");
             var existingActions;
 
-      //If there is no eventValue it's an onIncrease or onDecrease event.
-      if(eventValue) {
-        existingActions = globalObj.counters[counterName][eventType][eventValue];
-      } else {
-        existingActions = globalObj.counters[counterName][eventType];
-      }
+            //If there is no eventValue it's an onIncrease or onDecrease event.
+            if(eventValue) {
+            existingActions = globalObj.parentCounters[counterName][eventType][eventValue];
+            } else {
+            existingActions = globalObj.parentCounters[counterName][eventType];
+            }
+
             var actions;
-        if(globalObj.objectType === "mouseObject") {
-          actions = GameCreator.actionGroups.mouseNonCollisionActions;
-        } else {
-          actions = GameCreator.actionGroups.nonCollisionActions;
-        }
+            if(globalObj.objectType === "mouseObject") {
+              actions = GameCreator.actionGroups.mouseNonCollisionActions;
+            } else {
+              actions = GameCreator.actionGroups.nonCollisionActions;
+            }
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + eventType + " " + eventValue,
                 actions,
                 existingActions,
                 $("#edit-counter-event-actions-content"),
-                null,
                 globalObj.name
             );
         }); 
@@ -500,8 +473,16 @@ GameCreator.UI = {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.editTopDownObjectForm(GameCreator.selectedObject));
         }
         else if (GameCreator.selectedObject.parent.objectType == "counterObject") {
-            $("#edit-scene-object-content").html(GameCreator.htmlStrings.editCounterObjectForm(GameCreator.selectedObject));
-            $("#add-counter-object-counter-selector").html(GameCreator.UI.setupAddCounterObjectCounterSelector(GameCreator.selecte));
+            var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInScene());
+            var obj = GameCreator.selectedObject;
+            $("#edit-scene-object-content").html(GameCreator.htmlStrings.editCounterObjectForm(obj, uniqueIds));
+            $("#add-counter-object-counter-selector").html();
+            $("#add-counter-counter-object").on("change", function() {
+                $("#counter-list-content").html(
+                    GameCreator.htmlStrings.inputLabel("add-counter-counter-name", "Counter") +
+                    GameCreator.htmlStrings.singleSelector("add-counter-counter-name", $(this).val() ? GameCreator.getCountersForGlobalObj($(this).val()) : {}, "counterName")
+                );
+            });
         }
     },
     unselectSceneObject: function() {

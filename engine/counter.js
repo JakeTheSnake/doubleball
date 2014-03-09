@@ -1,10 +1,18 @@
-GameCreator.resetCounters = function(object, counters) {
-	for(var counter in counters){
-		if(counters.hasOwnProperty(counter)){
-			if(object.counters[counter]){
-				object.counters[counter].reset();
+GameCreator.resetCounters = function(sceneObject, parentCounters) {
+	var counterCarrier;
+	if (sceneObject.parent.unique) {
+		counterCarrier = sceneObject.parent;
+	} else {
+		counterCarrier = sceneObject;
+	}
+	for (var counter in parentCounters) {
+		if (parentCounters.hasOwnProperty(counter)) {
+			if(counterCarrier.counters[counter]) {
+				if (!sceneObject.parent.unique) {
+					counterCarrier.counters[counter].reset();
+				}
 			} else {
-				object.counters[counter] = GameCreator.sceneObjectCounter.New(object, counters[counter]);	
+				counterCarrier.counters[counter] = GameCreator.sceneObjectCounter.New(sceneObject, parentCounters[counter]);	
 			}
 		}
 	}
@@ -54,7 +62,7 @@ GameCreator.sceneObjectCounter = {
 	setValue: function(inValue) {
 		var value = GameCreator.helperFunctions.getRandomFromRange(inValue);
 
-		if(value > this.value) {
+		if (value > this.value) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
 				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i], this.parentCounter.onIncrease[i].parameters);
 			}
@@ -68,12 +76,16 @@ GameCreator.sceneObjectCounter = {
 		
 		this.checkEvents();
 	},
-	
+
 	checkEvents: function(){
-		
+		this.checkAtValue();
+		this.checkAboveValue();
+		this.checkBelowValue();
+	},
+	
+	checkAtValue: function() {
 		var callbacks;
-		
-		for (value in this.parentCounter.atValue) {
+		for (var value in this.parentCounter.atValue) { 
 			if (this.parentCounter.atValue.hasOwnProperty(value)) {
 				if (parseInt(value) === this.value && !this.atValueStates[value]) {
 					callbacks = this.parentCounter.atValue[value];
@@ -86,8 +98,11 @@ GameCreator.sceneObjectCounter = {
 				}
 			} 
 		};
-		
-		for (value in this.parentCounter.aboveValue) {
+	},
+
+	checkAboveValue: function() {
+		var callbacks;
+		for (var value in this.parentCounter.aboveValue) {
 			if (this.parentCounter.aboveValue.hasOwnProperty(value)) {
 				if (this.value > parseInt(value) && !this.aboveValueStates[value]) {
 					callbacks = this.parentCounter.aboveValue[value];
@@ -100,8 +115,11 @@ GameCreator.sceneObjectCounter = {
 				}
 			} 
 		};
-		
-		for (value in this.parentCounter.belowValue) {
+	},
+
+	checkBelowValue: function() {
+		var callbacks;
+		for (var value in this.parentCounter.belowValue) {
 			if (this.parentCounter.belowValue.hasOwnProperty(value)) {
 				if (this.value < parseInt(value) && !this.belowValueStates[value]) {
 					callbacks = this.parentCounter.belowValue[value];
@@ -118,6 +136,7 @@ GameCreator.sceneObjectCounter = {
 	
 	reset: function() {
 		this.value = this.parentCounter.initialValue || 0;
+		var value;
 		for (value in this.atValueStates) {
 			if (this.atValueStates.hasOwnProperty(value)) {
 				this.atValueStates[value] = false;
@@ -190,8 +209,13 @@ GameCreator.counterObject = {
 	draw: function(context, obj) {
 		GameCreator.invalidate(obj); //TODO: Handle this in a better way.
 		var value = obj.parent.textCounter ? "---" : 0;
-		if(GameCreator.getSceneObjectById(obj.counterObject) && GameCreator.getSceneObjectById(obj.counterObject).counters[obj.counterName]) {
-			value = GameCreator.getSceneObjectById(obj.counterObject).counters[obj.counterName].value;
+		var sceneObject = GameCreator.getSceneObjectById(obj.counterObject);
+		if (sceneObject) {
+			if (sceneObject.parent.unique && sceneObject.parent.counters[obj.counterName]) {
+				value = sceneObject.parent.counters[obj.counterName].value;
+			} else if (sceneObject.counters[obj.counterName]) {
+				value = sceneObject.counters[obj.counterName].value;
+			}
 		}
     	if(obj.parent.textCounter) {
     		context.font = obj.size + "px " + obj.font;

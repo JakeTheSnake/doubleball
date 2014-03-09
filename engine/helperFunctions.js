@@ -341,11 +341,12 @@ GameCreator.helperFunctions.removeObjectFromArrayById = function(array, id) {
     }
 };
 
-GameCreator.helperFunctions.setStandardProperties = function(object, image, args) {
-    object.image = image;
-    object.name = args.name;
-    object.width = args.width;
-    object.height = args.height;
-    object.unique = args.unique;
-    object.counters = {};
+GameCreator.helperFunctions.setStandardProperties = function(globalObj, image, args) {
+    globalObj.image = image;
+    globalObj.name = args.name;
+    globalObj.width = args.width;
+    globalObj.height = args.height;
+    globalObj.unique = args.unique;
+    globalObj.parentCounters = {};
+    globalObj.counters = {};
 };

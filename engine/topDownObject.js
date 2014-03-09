@@ -209,7 +209,7 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
         var angularSpeed = GameCreator.helperFunctions.calcAngularSpeed(projectileSpeed);
-        switch(staticParameters.projectileDirection){
+        switch(staticParameters.projectileDirection) {
             case "Default":
             var facing = this.facing;
             switch(facing){

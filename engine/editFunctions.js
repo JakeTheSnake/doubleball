@@ -28,27 +28,13 @@ $.extend(GameCreator, {
         GameCreator.directScene(GameCreator.scenes[GameCreator.activeScene]);
     },
     
-    directScene: function(scene){
-        GameCreator.reset();
-        GameCreator.resetScene(scene);
-        for (var i=0; i < scene.length; ++i) {
-            var obj = jQuery.extend({}, scene[i]);
-            GameCreator.addToRuntime(obj);
-            obj.parent.onGameStarted();
-            obj.setCounterParent();
-        }
-        
+    directScene: function(scene) {
+        GameCreator.switchScene(scene);
+        GameCreator.resetGlobalCounters();
+        GameCreator.then = Date.now();
         GameCreator.UI.directSceneMode();
-        then = Date.now();
-        GameCreator.resumeGame();
-        
-        if(GameCreator.state === 'editing') {
-            GameCreator.stopEditing();
-        }
-
-        GameCreator.sceneStarted();
-        
         GameCreator.state = 'directing';
+
         GameCreator.gameLoop();
     },
 
@@ -165,22 +151,48 @@ $.extend(GameCreator, {
         GameCreator.render(false);
     },
     
+    dereferenceCounters: function(counterCarrier) {
+        for(var counterName in counterCarrier.counters){
+            if(counterCarrier.counters.hasOwnProperty(counterName)){
+                counterCarrier.counters[counterName].parentCounter = counterName;
+                counterCarrier.counters[counterName].parentObject = newObject.counters[counterName].parentObject.name;
+            }
+        }
+    },
+
+    referenceCounters: function(counterCarrier) {
+        for(var counterName in counterCarrier.counters){
+            if(counterCarrier.counters.hasOwnProperty(counterName)){
+                var oldCounter = counterCarrier.counters[counterName]
+                //Set the reference to the parent object from the name currently saved in its place.
+                counterCarrier.counters[counterName] = GameCreator.sceneObjectCounter.New(GameCreator.globalObjects[oldCounter.parentObject], GameCreator.globalObjects[oldCounter.parentObject].counters[counterName]);
+                counterCarrier.counters[counterName].aboveValueStates = oldCounter.aboveValueStates;
+                counterCarrier.counters[counterName].belowValueStates = oldCounter.belowValueStates;
+                counterCarrier.counters[counterName].atValueStates = oldCounter.atValueStates;
+                counterCarrier.counters[counterName].value = oldCounter.value;
+            }
+        }
+    },
+
     saveState: function() {
         var results = {globalObjects: {}, scenes: [], idCounter: 0};
         
         //TODO: Put this array somewhere more "configy"
         //Save global objects
-        var attrsToCopy = ["id", "accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "counters"];
+        var attrsToCopy = ["id", "accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "parentCounters", "counters"];
         var objects = GameCreator.globalObjects;
-        for (name in objects) {
+        for (var name in objects) {
             if (objects.hasOwnProperty(name)) {
                 var oldObject = objects[name];
                 var newObject = {};
-                for (i in attrsToCopy) {
+                for (var i in attrsToCopy) {
                     var attribute = attrsToCopy[i]
                     if(oldObject.hasOwnProperty(attribute))
                         newObject[attribute] = oldObject[attribute];    
                 }
+                
+                this.dereferenceCounters(newObject);
+
                 newObject.imageSrc = $(oldObject.image).attr("src");
                 results.globalObjects[newObject.name] = newObject;
             }
@@ -193,17 +205,12 @@ $.extend(GameCreator, {
             for(var n = 0; n < scene.length; n++){
                 var oldObject = scene[n];
                 //Need to reset counters before saving to make sure mappings to parentcounters are set up.
-                GameCreator.resetCounters(oldObject, oldObject.parent.counters);
+                GameCreator.resetCounters(oldObject, oldObject.parent.parentCounters);
                 var newObject = jQuery.extend({}, oldObject);
                 //Need to save the name of the global object parent rather than the reference so it can be JSONified.
                 newObject.parent = oldObject.parent.name;
                 //Same for counters
-                for(var counterName in newObject.counters){
-                    if(newObject.counters.hasOwnProperty(counterName)){
-                        newObject.counters[counterName].parentCounter = counterName;
-                        newObject.counters[counterName].parentObject = newObject.counters[counterName].parentObject.name;
-                    }
-                }
+                this.dereferenceCounters(newObject);
                 newObject.instantiate = undefined;
                 newScene.push(newObject);
             }
@@ -228,10 +235,13 @@ $.extend(GameCreator, {
         $("#global-object-list").html("");
         //Load globalObjects
         var parsedSave = JSON.parse(savedJson);
-        for (name in parsedSave.globalObjects) {
+        for (var name in parsedSave.globalObjects) {
             if (parsedSave.globalObjects.hasOwnProperty(name)) {
                 var object = parsedSave.globalObjects[name];
                 var newObject = GameCreator[object.objectType].createFromSaved(object);
+
+                GameCreator.referenceCounters(object);
+
                 GameCreator.UI.createGlobalListElement(newObject);
             }
         }
@@ -243,17 +253,7 @@ $.extend(GameCreator, {
             for(var n = 0; n < savedScene.length; n++) {
                 var object = savedScene[n];
                 GameCreator.createSceneObject(GameCreator.globalObjects[object.name], newScene, object);
-                for(var counterName in object.counters){
-                    if(object.counters.hasOwnProperty(counterName)){
-                        var oldCounter = object.counters[counterName]
-                        //Set the reference to the parent object from the name currently saved in its place.
-                        object.counters[counterName] = GameCreator.sceneObjectCounter.New(GameCreator.globalObjects[oldCounter.parentObject], GameCreator.globalObjects[oldCounter.parentObject].counters[counterName]);
-                        object.counters[counterName].aboveValueStates = oldCounter.aboveValueStates;
-                        object.counters[counterName].belowValueStates = oldCounter.belowValueStates;
-                        object.counters[counterName].atValueStates = oldCounter.atValueStates;
-                        object.counters[counterName].value = oldCounter.value;
-                    }
-                }
+                GameCreator.referenceCounters(object);
             }
             GameCreator.scenes.push(newScene);
         }

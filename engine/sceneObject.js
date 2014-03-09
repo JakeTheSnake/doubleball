@@ -93,7 +93,7 @@ GameCreator.sceneObject = {
         this.update();
         
         this.counters = {};
-        GameCreator.resetCounters(this, this.parent.counters);
+        GameCreator.resetCounters(this, this.parent.parentCounters);
     },
     delete: function() {
         var activeScene = GameCreator.scenes[GameCreator.activeScene];
@@ -101,12 +101,12 @@ GameCreator.sceneObject = {
         GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(this), 1);
         GameCreator.render();
     },
-    reset: function(){
-    	GameCreator.resetCounters(this, this.parent.counters);
+    reset: function() {
+    	GameCreator.resetCounters(this, this.parent.parentCounters);
     },
-    setCounterParent: function(){
-    	for(counter in this.counters){
-    		if(this.counters.hasOwnProperty(counter)){
+    setCounterParent: function() {
+    	for(var counter in this.counters) {
+    		if(this.counters.hasOwnProperty(counter)) {
     			this.counters[counter].parentObject = this;
     		}
     	}

@@ -42,14 +42,14 @@ var GameCreator = {
     },
     gameLoop: function () {
         var now = Date.now();
-        var delta = now - then;
+        var delta = now - this.then;
     
         GameCreator.runFrame(delta);
         GameCreator.render(false);
         if (GameCreator.state !== 'editing') {
             requestAnimationFrame(GameCreator.gameLoop);
         }
-        then = now;
+        this.then = now;
     },
 
     runFrame: function(deltaTime){
@@ -121,7 +121,6 @@ var GameCreator = {
     },
 
     reset: function() {
-        clearInterval(GameCreator.timer);
         GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
         GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
         GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
@@ -251,9 +250,9 @@ var GameCreator = {
     		obj = tmpObj ? tmpObj.parent : null;
     	}
     	var result = {};
-    	if(obj){
-	    	for (var counter in obj.counters) {
-	    		if (obj.counters.hasOwnProperty(counter)) {
+    	if(obj) {
+	    	for (var counter in obj.parentCounters) {
+	    		if (obj.parentCounters.hasOwnProperty(counter)) {
 	    			result[counter] = counter;
 	    		}
 	    	}
@@ -266,15 +265,18 @@ var GameCreator = {
     	if (runtimeObj.name !== selectedObjectId) {
     		runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
     	}
+        var counterCarrier;
+        if (runtimeObj.parent.unique) {
+            counterCarrier = runtimeObj.parent;
+        } else {
+            counterCarrier = runtimeObj;
+        }
     	if (params.counterType === "set") {
-    		runtimeObj.counters[params.counterName].setValue(params.counterValue);
+    		counterCarrier.counters[params.counterName].setValue(params.counterValue);
     	} else {
-    		runtimeObj.counters[params.counterName].changeValue(params.counterValue);	
+    		counterCarrier.counters[params.counterName].changeValue(params.counterValue);	
     	}
-    	
     },
-    
-
 
     getClickedObject: function(x, y) {
         for (var i = GameCreator.renderableObjects.length - 1;i >= 0;--i) {
@@ -332,6 +334,15 @@ var GameCreator = {
 
     playGame: function() {
         GameCreator.playScene(GameCreator.scenes[0]);
+    },
+
+    resetGlobalCounters: function() {
+        Object.keys(GameCreator.globalObjects).map(function(key, index) {
+            if(GameCreator.globalObjects[key].counters) {
+                Object.keys(GameCreator.globalObjects[key].counters).map(function(counterKey, counterIndex) {
+                    GameCreator.globalObjects[key].counters[counterKey].reset();
+                });
+            }
+        });
     }
-    
 }

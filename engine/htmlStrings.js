@@ -78,7 +78,7 @@ GameCreator.htmlStrings = {
     keyMenuElement: function(keyName) {
         return '<div class="keyMenuElement headingNormalBlack" data-name="' + keyName + '"><span>' + keyName + '</span></div>';
     },
-    counterMenuElement: function(keyName) {
+    counterMenuElement: function(counterName) {
         return '<div class="counterMenuElement headingNormalBlack" data-name="' + counterName + '"><span>' + counterName + '</span></div>';
     },
     counterEventMenuElement: function(value, type) {
@@ -170,19 +170,24 @@ GameCreator.htmlStrings = {
         result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
-    editCounterObjectForm: function(obj) {
+    editCounterObjectForm: function(obj, counterCarriers) {
     	var result = '<div id="edit-scene-object-form">';
-        result += '<div id="add-counter-object-counter-selector"></div>' + 
-                '<br style="clear:both;"/>';
+        result += '<div id="add-counter-object-counter-selector">' + 
+            GameCreator.htmlStrings.inputLabel('add-counter-counter-object', 'Object') +
+            GameCreator.htmlStrings.singleSelector('add-counter-counter-object', counterCarriers, 'counterObject', obj.counterObject) +
+            '<div id="counter-list-content"></div>' +
+            '</div>' + 
+            '<br style="clear:both;"/>';
     	if(obj.parent.textCounter) {
     		result += GameCreator.htmlStrings.counterObjectTextForm(obj);
     	} else if(obj.parent.imageCounter) {
     		result += GameCreator.htmlStrings.inputLabel("counter-object-counter-image-size", "Size:") + GameCreator.htmlStrings.numberInput("counter-object-counter-text-color", "size", obj.size);
     		result += '<br style="clear:both;"/>';
     	}
-    	result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+    	result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button>';
         return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
     },
+
     routeNode: function(node, index) {
         var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + GameCreator.mainCanvasOffsetY) + "px;left:" + (node.x + GameCreator.mainCanvasOffsetX) + "px;'><div class='routeNode' data-index='" + index + "'> \
             <span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
@@ -315,13 +320,12 @@ GameCreator.htmlStrings = {
         result += '</div></div><div id="edit-key-actions-key-content"></div>';
         return result;
     },
-    editGlobalObjectCountersContent: function(object) {
+    editGlobalObjectCountersContent: function(counters) {
         var result = '<div id="edit-counters-menu">';
         result += '<button id="add-new-counter-button" class="regularButton">Add</button>';
-        for (counterName in object.counters) {
-            if(object.counters.hasOwnProperty(counterName)) {
-                result += GameCreator.htmlStrings.counterMenuElement(counterName);
-            }
+        var keys = Object.keys(counters);
+        for (var i = 0; i < keys.length; i++) {
+            result += GameCreator.htmlStrings.counterMenuElement(keys[i]);
         }
         result += '</div><div id="edit-counters-counter-content">'
         result += '<div id="edit-counter-event-content"></div>';
