@@ -8,7 +8,7 @@ function assertCounter(value, message) {
     deepEqual(counter.value, value, message);
 };
 
-function counterTests() {
+function commonCounterTests() {
 
     test("Default Value", function() {
         assertCounter(0, "Initial default value is set");
@@ -58,7 +58,7 @@ module("UniqueCounter", {
         GameCreator.createSceneObject(redBall, GameCreator.scenes[1], {x: 5, y: 6});
         counter = GameCreator.globalObjects["red_ball"].counters["testCounter"];
         testString = "";
-        GameCreator.actions["testAction"] = {action: function(params) {testString = params.value;}, runnable: function() {return true;}, }
+        GameCreator.actions["testAction"] = {action: function(params) {testString = params.value;}, runnable: function() {return true;}, };
         GameCreator.state = 'directing';
     },
     teardown: function() {
