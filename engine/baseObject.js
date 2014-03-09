@@ -62,10 +62,8 @@ GameCreator.baseObject = {
     
     removeFromGame: function() {
         GameCreator.invalidate(this);
-
-
         GameCreator.helperFunctions.removeObjectFromArrayById(
-            GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, this.parent.id),
+            GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, this.parent.id).runtimeObjects,
             this.instanceId);
         GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.movableObjects, this.instanceId);
         GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.renderableObjects, this.instanceId);

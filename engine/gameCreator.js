@@ -42,14 +42,14 @@ var GameCreator = {
     },
     gameLoop: function () {
         var now = Date.now();
-        var delta = now - this.then;
+        var delta = now - GameCreator.then;
     
         GameCreator.runFrame(delta);
         GameCreator.render(false);
         if (GameCreator.state !== 'editing') {
             requestAnimationFrame(GameCreator.gameLoop);
         }
-        this.then = now;
+        GameCreator.then = now;
     },
 
     runFrame: function(deltaTime){
@@ -84,17 +84,20 @@ var GameCreator = {
                 }
             }
             GameCreator.timerHandler.update(deltaTime);
-            for (i=0;i < GameCreator.objectsToDestroy.length;++i)
-            {
-                runtimeObj = GameCreator.objectsToDestroy[i];
-                runtimeObj.parent.removeFromGame.call(runtimeObj);
-            }
+            GameCreator.cleanupDestroyedObjects();
             for (i=0;i < GameCreator.newlyCreatedObjects.length;++i)
             {
                 runtimeObj = GameCreator.newlyCreatedObjects[i];
                 runtimeObj.parent.onCreate.call(runtimeObj);
             }
             GameCreator.debug.calculateDebugInfo(deltaTime);
+        }
+    },
+
+    cleanupDestroyedObjects: function() {
+        for (var i = 0; i < GameCreator.objectsToDestroy.length;++i) {
+            var runtimeObj = GameCreator.objectsToDestroy[i];
+            runtimeObj.parent.removeFromGame.call(runtimeObj);
         }
     },
 
@@ -115,8 +118,8 @@ var GameCreator = {
         }
         //console.log("clearRect: x1=" + x + ", y1=" + y + ", x2=" + (width + xCorr) + ", y2=" + (height + yCorr));
         this.mainContext.clearRect(x, y,
-            width + xCorr + 1,
-            height + yCorr + 1);
+            obj.displayWidth + xCorr + 1,
+            obj.displayHeight + yCorr + 1);
         obj.invalidated = true;
     },
 
@@ -151,7 +154,7 @@ var GameCreator = {
         $(GameCreator.mainCanvas).css("cursor", "default");
         
         //Set all keypresses to false here since we turn off keyUp.
-        for(objectName in GameCreator.globalObjects) {
+        for(var objectName in GameCreator.globalObjects) {
             if(GameCreator.globalObjects.hasOwnProperty(objectName)) {
                 var obj = GameCreator.globalObjects[objectName];
                 if(obj.keyPressed) {
@@ -209,6 +212,7 @@ var GameCreator = {
         runtimeObj.instantiate(globalObj, args);
         runtimeObj.reset();
         GameCreator.addToRuntime(runtimeObj);
+        return runtimeObj;
     },
 
     addToRuntime: function(runtimeObj){

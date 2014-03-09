@@ -67,7 +67,7 @@ module("UniqueCounter", {
     }
 });
 
-counterTests();
+commonCounterTests();
 
 test("Counter value preserved between scenes", function() {
     counter.changeValue(5);
@@ -91,7 +91,7 @@ module("Counter", {
   }
 });
 
-counterTests();
+commonCounterTests();
 
 
 })();

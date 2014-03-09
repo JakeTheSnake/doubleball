@@ -12,10 +12,6 @@ Version 0.2:
 -Conditions
 -Debugging mode
 
--Fundera: Make unique objects MIRRORED!
-
-
-
 DONE:
 -Unique Objects
 -Scene managing
@@ -31,6 +27,7 @@ Actions:
 Version 0.3
 
 - Variable size of playing field.
+- Fundera: Make unique objects MIRRORED!
 
 Objects:
  	- Text
