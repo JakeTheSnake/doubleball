@@ -5,19 +5,19 @@ var GameCreator = {
     height: GCHeight,
     width: GCWidth,
     paused: false,
-    //State can be editing, directing or playing. 
-    state: 'editing',
-    then: undefined,
-    timer: undefined,
+    state: 'editing', //State can be editing, directing or playing. 
+    then: undefined, // The time before last frame
     draggedGlobalElement: undefined,
     context: undefined,
     canvasOffsetX: 110,
     canvasOffsetY: 10,
-    //Contains key value pairs where key is the (unique)name of the object.
-    globalObjects: {},
-    //Scemne contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
+    
+    globalObjects: {}, //Contains key value pairs where key is the (unique)name of the object.
+
+    //Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
     scenes: [],
     activeScene: 0,
+
     //The runtime arrays contain the current state of the game.
     collidableObjects: [],
     movableObjects: [],
@@ -28,23 +28,26 @@ var GameCreator = {
 
     addObjFunctions: {},
     helperFunctions: {},
-    //The currently selected scene object.
-    selectedObject: undefined,
+    
+    selectedObject: undefined, //The currently selected scene object.
     draggedObject: undefined,
     draggedNode: undefined,
-    idCounter: 0,
-    globalIdCounter: 0,
+    idCounter: 0, // Counter used for scene objects' instance IDs
+    globalIdCounter: 0, // Counter used for global objects ID
     borderObjects: {
         borderL: {name: "borderL", parent: {id: -1}, id: -1, x: -500, y: -500, height: GCHeight + 1000, width: 500, image: function(){var img = (new Image()); $(img).css("width","65"); img.src = "assets/borderLeft.png"; return img}(), isCollidable: true},
         borderR: {name: "borderR", parent: {id: -2}, id: -2, x: GCWidth, y: -500, height: GCHeight + 1000, width: 500, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderRight.png"; return img}(), isCollidable: true},
         borderT: {name: "borderT", parent: {id: -3}, id: -3, x: -500, y: -500, height: 500, width: GCWidth + 1000, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderTop.png"; return img}(), isCollidable: true},
         borderB: {name: "borderB", parent: {id: -4}, id: -4, x: -500, y: GCHeight, height: 500, width: GCWidth + 1000, image: function(){var img = (new Image()); $(img).css("width","65");img.src = "assets/borderBottom.png"; return img}(), isCollidable: true}
     },
+
     gameLoop: function () {
         var now = Date.now();
         var delta = now - GameCreator.then;
-    
-        GameCreator.runFrame(delta);
+        
+        if (!GameCreator.paused) {
+            GameCreator.runFrame(delta);
+        }
         GameCreator.render(false);
         if (GameCreator.state !== 'editing') {
             requestAnimationFrame(GameCreator.gameLoop);
@@ -52,52 +55,74 @@ var GameCreator = {
         GameCreator.then = now;
     },
 
-    runFrame: function(deltaTime){
-        var runtimeObj, i, j;
-        if(!GameCreator.paused){
-            for (i=0;i < GameCreator.movableObjects.length;++i) {
-                if(!GameCreator.paused)
-                {
-                    runtimeObj = GameCreator.movableObjects[i];
-                    runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime/1000);
-                }
+    render: function (forceRender) {
+        for (var i = 0; i < GameCreator.renderableObjects.length; ++i) {
+            var obj = GameCreator.renderableObjects[i];
+            if (true || obj.invalidated || forceRender) { // TODO: Deactivated invalidation
+                obj.parent.draw(this.mainContext, obj);
             }
-            
-            for (j = 0; j < GameCreator.collidableObjects.length; j++) {
-                var runtimeObjects = GameCreator.collidableObjects[j].runtimeObjects;
-                for (i = 0; i < runtimeObjects.length; i++) {
-                    GameCreator.helperFunctions.checkCollisions(runtimeObjects[i]);
-                }
+        }
+        GameCreator.drawSelectionLine();
+    },
+
+    runFrame: function(deltaTime) {
+        GameCreator.updateSpeedForAllObjects();
+        GameCreator.checkCollisions();
+        GameCreator.moveAllObjects();
+        GameCreator.checkKeyEvents();
+        GameCreator.timerHandler.update(deltaTime);
+        GameCreator.cleanupDestroyedObjects();
+        GameCreator.callOnCreateForNewObjects();
+        GameCreator.debug.calculateDebugInfo(deltaTime);
+    },
+
+    updateSpeedForAllObjects: function() {
+        for (var i = 0; i < GameCreator.movableObjects.length; ++i) {
+            if (!GameCreator.paused) {
+                var runtimeObj = GameCreator.movableObjects[i];
+                runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime/1000);
             }
-            for (i=0;i < GameCreator.movableObjects.length;++i) {
-                if(!GameCreator.paused)
-                {
-                    runtimeObj = GameCreator.movableObjects[i];
-                    runtimeObj.parent.move.call(runtimeObj, deltaTime/1000);
-                }
+        }
+    },
+
+    checkCollisions: function() {
+        for (var j = 0; j < GameCreator.collidableObjects.length; j++) {
+            var runtimeObjects = GameCreator.collidableObjects[j].runtimeObjects;
+            for (var i = 0; i < runtimeObjects.length; i++) {
+                GameCreator.helperFunctions.checkCollisions(runtimeObjects[i]);
             }
-            for (i=0;i < GameCreator.eventableObjects.length;++i) {
-                if(!GameCreator.paused)
-                {
-                    runtimeObj = GameCreator.eventableObjects[i];
-                    runtimeObj.parent.checkEvents.call(runtimeObj);
-                }
+        }
+    },  
+
+    moveAllObjects: function() {
+        for (var i = 0; i < GameCreator.movableObjects.length; ++i) {
+            if (!GameCreator.paused) {
+                var runtimeObj = GameCreator.movableObjects[i];
+                runtimeObj.parent.move.call(runtimeObj, deltaTime/1000);
             }
-            GameCreator.timerHandler.update(deltaTime);
-            GameCreator.cleanupDestroyedObjects();
-            for (i=0;i < GameCreator.newlyCreatedObjects.length;++i)
-            {
-                runtimeObj = GameCreator.newlyCreatedObjects[i];
-                runtimeObj.parent.onCreate.call(runtimeObj);
+        }
+    },
+
+    checkKeyEvents: function() {
+        for (var i = 0; i < GameCreator.eventableObjects.length; ++i) {
+            if (!GameCreator.paused) {
+                var runtimeObj = GameCreator.eventableObjects[i];
+                runtimeObj.parent.checkEvents.call(runtimeObj);
             }
-            GameCreator.debug.calculateDebugInfo(deltaTime);
         }
     },
 
     cleanupDestroyedObjects: function() {
-        for (var i = 0; i < GameCreator.objectsToDestroy.length;++i) {
+        for (var i = 0; i < GameCreator.objectsToDestroy.length; ++i) {
             var runtimeObj = GameCreator.objectsToDestroy[i];
             runtimeObj.parent.removeFromGame.call(runtimeObj);
+        }
+    },
+
+    callOnCreateForNewObjects: function() {
+        for (var i = 0; i < GameCreator.newlyCreatedObjects.length; ++i){
+            var runtimeObj = GameCreator.newlyCreatedObjects[i];
+            runtimeObj.parent.onCreate.call(runtimeObj);
         }
     },
 
@@ -106,8 +131,6 @@ var GameCreator = {
         var y = parseInt(obj.y);
         var xCorr = 0;
         var yCorr = 0;
-        var width = GameCreator.helperFunctions.getRandomFromRange(obj.width);
-        var height = GameCreator.helperFunctions.getRandomFromRange(obj.height);
         if (obj.x < 0) {
             xCorr = x;
             x = 0;
@@ -116,7 +139,6 @@ var GameCreator = {
             yCorr = y;
             y = 0;
         }
-        //console.log("clearRect: x1=" + x + ", y1=" + y + ", x2=" + (width + xCorr) + ", y2=" + (height + yCorr));
         this.mainContext.clearRect(x, y,
             obj.displayWidth + xCorr + 1,
             obj.displayHeight + yCorr + 1);
@@ -187,20 +209,11 @@ var GameCreator = {
     resumeGame: function() {
         GameCreator.paused = false;
         var activeScene = GameCreator.scenes[GameCreator.activeScene];
-        for (var i=0;i < activeScene.length;++i) {
+        for (var i = 0; i < activeScene.length; ++i) {
             activeScene[i].parent.onGameStarted();
         }
     },
 
-    render: function (forceRender) {
-        for (var i=0;i < GameCreator.renderableObjects.length;++i) {
-            var obj = GameCreator.renderableObjects[i];
-            if (true || obj.invalidated || forceRender) { // TODO: Deactivated invalidation
-                obj.parent.draw(this.mainContext, obj);
-            }
-        }
-        GameCreator.drawSelectionLine();
-    },
 
     createRuntimeObject: function(globalObj, args){
         var runtimeObj = Object.create(GameCreator.sceneObject);

@@ -62,8 +62,6 @@ $.extend(GameCreator, {
         GameCreator.sceneStarted();
     }, 
 
-    
-
 	resetScene: function(scene){
     	for (var i = 0; i < scene.length; ++i) {
     		scene[i].reset();
@@ -74,8 +72,7 @@ $.extend(GameCreator, {
         $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e){
             var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left , e.pageY - $("#main-canvas").offset().top);
             if(runtimeObj && runtimeObj.parent.isClickable) {
-                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== 'playing' && !GameCreator.paused)
-                {
+                if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== 'playing' && !GameCreator.paused) {
                     runtimeObj.parent.onClickActions = [];
                     GameCreator.UI.openEditActionsWindow(
                         "Clicked on " + runtimeObj.parent.name,

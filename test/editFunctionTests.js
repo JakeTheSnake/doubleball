@@ -1,10 +1,11 @@
+
+
 test("Save Form Data to Object", function() {
     var rangeField = GameCreator.htmlStrings.rangeInput('rangeField', 'range', '1:300');
     var numberField = GameCreator.htmlStrings.numberInput('numberField', 'number', '200');
     var stringField = GameCreator.htmlStrings.stringInput('textField', 'string', 'kastrull');
     var checkbox = GameCreator.htmlStrings.checkboxInput('checkboxField', 'checkbox', true);
     $("#qunit-fixture").html('<form id="test-form">' + rangeField + numberField + stringField + checkbox + '</form>');
-    
     var obj = {};
 
     GameCreator.saveFormInputToObject('test-form', obj);
@@ -15,9 +16,21 @@ test("Save Form Data to Object", function() {
     deepEqual(obj.checkbox, true);
 });
 
+(function() {
+
+var redBall;
+
+module("Scene Object Tests", {
+    setup: function() {
+        redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
+        GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
+    },
+    teardown: function() {
+
+    }
+});
+
 test("Add Object to scene", function() {
-    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
-    GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     var sceneObject = GameCreator.scenes[0][0];
     ok(sceneObject, "Scene object added to scene");
     deepEqual(sceneObject.x, 5, "Scene object correct x.");
@@ -25,26 +38,25 @@ test("Add Object to scene", function() {
 });
 
 test("Get Clicked Object in edit mode", function() {
-    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
-    GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     var sceneObject = GameCreator.getClickedObjectEditing(6, 7);
     ok(sceneObject, "Got scene object");
 });
 
 test("Delete selected scene object", function() {
-    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
-    GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     var sceneObject = GameCreator.getClickedObjectEditing(6, 7);
-
     GameCreator.selectedObject = sceneObject;
+
     deepEqual(GameCreator.scenes[0].length, 1, "Scene object was added to scene.");
     GameCreator.deleteSelectedObject();
     deepEqual(GameCreator.scenes[0].length, 0, "Delete scene object from scene.");
 });
 
+})();
+
 (function() {
 
 module("GameCreator.addGlobalObject");
+
 test("Add Active Object", function() {
     GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
     ok(GameCreator.globalObjects["red_ball"], "Added to global objects.");
