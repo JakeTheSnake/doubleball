@@ -11,9 +11,9 @@
    ========================================================================== */
 
 html, body {
-    min-height: 100%;
-    padding: 0;
     margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
 /*
@@ -22,8 +22,8 @@ html, body {
  */
 
 *, *:before, *:after {
-  -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
@@ -49,11 +49,11 @@ html, body {
 
 hr {
     display: block;
+    margin: 1px 0;
+    padding: 0;
     height: 1px;
     border: 0;
     border-top: 1px solid #ccc;
-    margin: 1px 0;
-    padding: 0;
 }
 
 /*
@@ -73,9 +73,9 @@ video {
  */
 
 fieldset {
-    border: 0;
     margin: 0;
     padding: 0;
+    border: 0;
 }
 
 /*
@@ -98,78 +98,82 @@ canvas {
 
 #canvas {
     overflow: hidden;
-    background-image: url('../img/canvas_grid.gif');
-    background-repeat: repeat;
-    background-position: top center;
     height: 100%;
+    background-image: url('../img/canvas_grid.gif');
+    background-position: top center;
+    background-repeat: repeat;
+}
+
+#ui-canvas {
+    pointer-events: none;
 }
 
 #container {
+    position: absolute;
+    top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    min-height: 850px;
-    position: absolute;
     padding: 80px 0 0 0;
-    right: 0;
-    top: 0;
+    min-height: 850px;
 }
 
-/* =================
+/* ================================
    Top UI
-   ================= */
+   =============================== */
 
 #top-ui {
-    background-color: #323232;
-    height: 80px;
     margin-top: -80px;
+    height: 80px;
+    background-color: #323232;
 }
 
-/* =================
+/* ===============================
    Left UI
-   ================= */
+   =============================== */
 
 #left-ui {
-    background-color: #323232;
     float: left;
-    height: 100%;
     width: 50px;
+    height: 100%;
+    background-color: #323232;
 }
 
-/* ===============
+/* =============================
    Right UI
-   =============== */
+   ============================= */
 
 #right-ui {
-    overflow: hidden;
-    background-color: #323232;
     float: right;
-    height: 100%;
-    width: 330px;
+    overflow: hidden;
     padding: 0 2px 0 2px;
+    width: 330px;
+    height: 100%;
+    background-color: #323232;
 }
 
 #right-ui .ui-title {
-    background-color: #2574a9;
-    height: 30px;
     margin: 0 0 2px 0;
-    width: 326px;
-    font-family: 'Droid Sans', sans-serif;
-    font-size: 14px;
-    color: #ffffff;
     padding: 7px 0 0 9px;
+    width: 326px;
+    height: 30px;
+    background-color: #2574a9;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Droid Sans', sans-serif;
 }
 
-/* ---------------
+/* ------------------------------
    Properties
-   --------------- */
+   ------------------------------ */
 
 #properties-ui {
     height: 375px;
 }
 
-/* ---------------
+/* ------------------------------
    Library
-   --------------- */
+   ------------------------------ */
 
 #library-ui {
     height: 100%;
@@ -178,9 +182,9 @@ canvas {
 /* Library preview */
 
 #library-preview {
-    background: url('../img/library_preview_grid.gif');
-    height: 110px;
     margin: 0 0 2px 0;
+    height: 110px;
+    background: url('../img/library_preview_grid.gif');
 }
 
 /* Library explorer */
@@ -188,21 +192,21 @@ canvas {
 #library-explorer {
     overflow-x: hidden;
     overflow-y: scroll;
-    background-color: #f5f5f5;
-    height: 220px;
     margin: 0 0 2px 0;
+    height: 220px;
+    background-color: #f5f5f5;
 }
 
 .library-global-object-button {
-    width: 100%;
-    border: 0;
-    background: url('../img/library_explorer_icon_object.gif') no-repeat;
-    font-size: 12px;
-    font-family: verdana;
     margin: 0 0 2px 5px;
     padding: 0 0 0 22px;
+    width: 100%;
     height: 16px;
+    border: 0;
     text-align: left;
+    font-size: 12px;
+    font-family: verdana;
+    background: url('../img/library_explorer_icon_object.gif') no-repeat;
 }
 
 /* Library menu */
@@ -212,54 +216,106 @@ canvas {
 }
 
 .library-menu-button {
-    border: 0;
-    background-color: #505050;
     display: block;
-    width: 86px;
-    height: 34px;
     float: left;
-    text-align: center;
     margin: 0 2px 0 0;
     padding: 8px 0;
-    font-family: 'Droid Sans', sans-serif;
-    font-size: 16px;
+    width: 86px;
+    height: 34px;
+    border: 0;
+    background-color: #505050;
     color: #808080;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Droid Sans', sans-serif;
+    pointer-events: none;
 }
 
 .library-menu-button.active {
     background-color: #27ae60;
     color: #ffffff;
+    cursor: pointer;
+    pointer-events: auto;
 }
 
 .library-menu-button.active:hover {
     background-color: #2dcc6f;
 }
 
-/* ===============
-   Dialog window
-   =============== */
+/* =============================
+   Dialogue window
+   ============================= */
 #dialogue-overlay {
-    position:absolute;
-    height: 100%;
-    width: 100%;
-    background-color: #000000;
+    position: absolute;
     z-index: 1;
-    opacity: 0.7;
     display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.7;
 }
 
 #dialogue-window {
     position: absolute;
-    display: none;
     top: 110px;
-    background-color: #dcdddd;
     z-index: 2;
+    display: none;
+    overflow: hidden;
+    background-color: #dcdddd;
 }
    
 #dialogue-window-title {
-    width: 100%;
+    padding: 7px 0 0 9px;
     height: 30px;
-    background-color: #1e1e1e;
+    background-color: #2574a9;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Droid Sans', sans-serif;
+}
+
+/* Dialogue window menu */
+
+#dialogue-window-menu {
+    float: left;
+    width: 170px;
+    height: 100%;
+    background-color: #adb3ba;
+}
+
+.tab {
+    display: block;
+    margin: 0 0 1px 0;
+    padding: 10px 0 2px 9px;
+    width: 170px;
+    height: 40px;
+    border: 0;
+    background-color: #70757b;
+    color: #ffffff;
+    text-align: left;
+    font-size: 14px;
+    font-family: verdana, sans-serif;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #8b9199;
+    pointer-events: none;
+}
+
+.tab:hover {
+    background-color: #797e85;
+}
+
+/* Dialogue window content */
+
+#edit-global-object-window-content {
+    float: left;
+    width: 730px;
+}
+
+#add-global-object-window-content {
+    float: left;
+    width: 730px;
 }
 
 /* ==========================================================================
@@ -289,8 +345,8 @@ canvas {
 
 .clearfix:before,
 .clearfix:after {
-    content: " "; /* 1 */
     display: table; /* 2 */
+    content: " "; /* 1 */
 }
 
 .clearfix:after {

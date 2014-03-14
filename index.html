@@ -40,6 +40,11 @@
         <div id="top-ui">
             <div id="menu-ui">
                 <!-- list of buttons -->
+                    <div id="mode">
+                        <input type="radio" id="mode_edit" name="radio" onClick="GameCreator.editActiveScene()" checked="checked"><label for="mode_edit">Edit Scene</label>
+                        <input type="radio" id="mode_direct" name="radio"  onClick="GameCreator.directActiveScene()"><label for="mode_direct">Direct Scene</label>
+                        <input type="radio" id="mode_play" name="radio"  onClick="GameCreator.playGame()"><label for="mode_play">Play Game</label>
+                    </div>
             </div>
         </div>
 
@@ -61,21 +66,19 @@
                     </div>
                 </div>
                 <div id="library-menu">
-                    <button id="add-global-object-button" class="library-menu-button active">Add</button>
-                    <button id="add-global-object-button" class="library-menu-button disabled">Edit</button>
-                    <button id="add-global-object-button" class="library-menu-button disabled">Remove</button>
+                    <a id="add-global-object-button" class="library-menu-button active">Add</a>
+                    <a id="add-global-object-button" class="library-menu-button">Edit</a>
+                    <a id="add-global-object-button" class="library-menu-button">Remove</a>
                 </div>
             </div>
         </div>
 
         <div id="canvas">
             <div id="canvas-container" oncontextmenu="return false;">
-        </div>
-
+            </div>
         </div>
 
         <div id="dialogue-window">
-            <div id="dialogue-window-title">Add object</p>
         </div>
     </body>
 </html>

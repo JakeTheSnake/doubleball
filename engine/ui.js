@@ -466,7 +466,7 @@ GameCreator.UI = {
         width = width || 900;
         height = height || 570;
         $("#dialogue-window").css("width", width).css("height", height).css("left", ($(window).width() / 2 - width / 2)).show();
-        //$("#dialogue-window").html(content);
+        $("#dialogue-window").html(content);
         $("#dialogue-overlay").css("height", $(document).height());
         $("#dialogue-overlay").show();
     },

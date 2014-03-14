@@ -224,32 +224,42 @@ GameCreator.htmlStrings = {
     },
     addGlobalObjectWindow: function() {
         var result = "";
-        result += '<div id="add-global-object-tab-container" class="tabContainer">\
-                	<div class="tab" data-uifunction="setupAddActiveObjectForm"><span>Active Object</span></div> \
-                   	<div class="tab" data-uifunction="setupAddPlayerObjectForm"><span>Player Object</span></div> \
-                   	<div class="tab" data-uifunction="setupAddCounterObjectForm"<span>Counter Object</span></div></div> \
-                   	<div id="add-global-object-window-content"></div>';
+
+        result += '<div id="dialogue-window-title">Add new object</div> \
+                   <div id="dialogue-window-menu"> \
+                   <a class="tab active" data-uifunction="setupAddActiveObjectForm">Active object</a> \
+                   <a class="tab" data-uifunction="setupAddPlayerObjectForm">Player object</a> \
+                   <a class="tab" data-uifunction="setupAddCounterObjectForm">Counter object</a> \
+                   </div> \
+                   <div id="add-global-object-window-content"></div>';
+
         return result;
     },
     editGlobalObjectWindow: function(object) {
         var result = "";
-        result += "<div id='edit-global-object-tab-container' class='tabContainer'>";
-        result += "<div class='tab' data-uifunction='setupEditGlobalObjectPropertiesForm'><span>Properties</span></div>";
+
+        result += '<div id="dialogue-window-title">Edit object</div> \
+                   <div id="dialogue-window-menu"> \
+                   <a class="tab active" data-uifunction="setupEditGlobalObjectPropertiesForm">Properties</a>';
+
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += "<div class='tab' data-uifunction='setupEditGlobalObjectCollisionsForm'><span>Collisions<span></div>";
+            result += '<a class="tab" data-uifunction="setupEditGlobalObjectCollisionsForm">Collisions</a>'
         }
         if (["topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += "<div class='tab' data-uifunction='setupEditGlobalObjectKeyActionsForm'><span>Keys</span></div>";
+            result += '<a class="tab" data-uifunction="setupEditGlobalObjectKeyActionsForm">Keys</a>'
         }
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnClickActionsForm'><span>OnClick<span></div>";
+            result += '<a class="tab" data-uifunction="setupEditGlobalObjectOnClickActionsForm">On click</a>'
         }
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += "<div class='tab' data-uifunction='setupEditGlobalObjectCountersForm'><span>Counters</span></div>";
+            result += '<a class="tab" data-uifunction="setupEditGlobalObjectCountersForm">Counters</a>'
         }
-        result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnDestroyActionsForm'><span>OnDestroy</span></div>"
-        result += "<div class='tab' data-uifunction='setupEditGlobalObjectOnCreateActionsForm'><span>OnCreate</span></div>"
-        result += "</div><div id='edit-global-object-window-content'></div>";
+
+        result += '<a class="tab" data-uifunction="setupEditGlobalObjectOnDestroyActionsForm">On destroy</a> \
+                   <a class="tab" data-uifunction="setupEditGlobalObjectOnCreateActionsForm">On create</a> \
+                   </div> \
+                   <div id="edit-global-object-window-content"></div>';
+
         return result;
     },
     editGlobalObjectPropertiesContent: function(object) {
@@ -408,6 +418,13 @@ GameCreator.htmlStrings = {
             '<br style="clear:both;"/>';
     },
     
+    /*
+
+
+
+        Start
+    */
+
     addActiveObjectForm: function() {
         var result = GameCreator.htmlStrings.inputLabel("active-object-name", "Name:") + 
             GameCreator.htmlStrings.stringInput("active-object-name", "name", "") + '<br style="clear:both;"/>' +
@@ -425,6 +442,13 @@ GameCreator.htmlStrings = {
             '<br style="clear:both;"/><button class="saveButton regularButton">Save</button>';
         return result;
     },
+
+    /*
+
+
+
+        End
+    */
     
     addPlayerObjectForm: function() {
         return 	GameCreator.htmlStrings.inputLabel("player-object-name", "Name:") + GameCreator.htmlStrings.stringInput("player-object-name", "name", "") +
