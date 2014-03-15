@@ -1,148 +1,388 @@
-/* reset default browser values */	
-@import url(reset.css);
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
 
-/* UI Objects (route nodes, dialogues) */
-@import url(ui_objects.css);
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
 
-/* Forms (Edit Action form)*/
-@import url(forms.css);
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
 
-/* Common small objects (buttons etc) */
-@import url(common.css);
-
-#dialogue-overlay {
-    position:absolute;
-    height: 100%;
-    width: 100%;
-    background-color: black;
-    z-index: 1;
-    opacity: 0.7;
-    margin: -8px;
-    display: none;
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
 }
 
+/*
+ * Borders and padding are drawn inside the set width
+ * of your content. The margin is drawn outside.
+ */
 
-
-#dialogue-window {
-	padding: 5px;
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-.tabContainer {
-    height: 30px;
-    padding: 5px 5px 0px 5px;
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
 }
 
-.tabContainer .tab {
-    float:left;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    height: 100%;
-    padding: 0 5px 0 5px;
-    background-color: #777;
-    border-radius: 5px 5px 0 0;
-    margin-right: 2px;
-    border: 1px solid black;
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
 }
 
-.tabContainer .tab:hover {
-	background-color: #888;
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    margin: 1px 0;
+    padding: 0;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
 }
 
-.tabContainer .tab.active {
-    background-color: #999;
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+
+audio,
+canvas,
+img,
+video {
+    vertical-align: middle;
 }
 
-#canvas-container {
-    margin: 2px;
-    left: 120px;
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    margin: 0;
+    padding: 0;
+    border: 0;
 }
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
 
 canvas {
-	position: absolute;
-	border: 2px solid;
+    position: absolute;
+    border: 2px solid;
     border-radius: 10px;
 }
 
+#canvas {
+    overflow: hidden;
+    height: 100%;
+    background-image: url('../img/canvas_grid.gif');
+    background-position: top center;
+    background-repeat: repeat;
+}
+
 #ui-canvas {
-	pointer-events:none;
+    pointer-events: none;
 }
 
-#main-container {
-	float:left;
-}
-
-#scene-tabs {
-	margin-left:5px;
-}
-
-#scene-tabs .tab {
-	width: 25px;
-	text-align: center;
-}
-
-#main-menu {
+#container {
     position: absolute;
-    left: 1174px;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 80px 0 0 0;
+    min-height: 850px;
 }
 
-#add-player-object-movement-parameters {
-	margin-top: 10px;
+/* ================================
+   Top UI
+   =============================== */
+
+#top-ui {
+    margin-top: -80px;
+    height: 80px;
+    background-color: #323232;
 }
 
-#global-object-list-container {
-	height: 780px;
-	width: 120px;
-	float:left;
-	overflow: auto;
+/* ================================
+   Scenes UI
+   =============================== */
+
+#scene-ui {
+    height: 40px;
+    background-color: #4d4d4d;
 }
 
-.addCollisionObjectElement, .addKeyObjectElement {
-	margin: 5px;
-	background-color: #888;
-	padding: 5px;
-	border-radius: 5px;
-	height: 85px;
+.scene-tab {
+    display: block;
+    margin: 0 1px 0 0;
+    padding: 10px 0 2px 9px;
+    float: left;
+    width: 170px;
+    height: 40px;
+    border: 0;
+    background-color: #70757b;
+    color: #ffffff;
+    text-align: left;
+    font-size: 14px;
+    font-family: verdana, sans-serif;
+    cursor: pointer;
 }
 
-.counterMenuElement, .keyMenuElement {
-	
+.scene-tab.active {
+    background-color: #8b9199;
+    pointer-events: none;
 }
 
-#edit-collision-actions-object-content, #edit-key-actions-key-content{
-	width: 580px;
+.scene-tab:hover {
+    background-color: #797e85;
 }
 
-#edit-global-object-window-content #select-actions-header{
-	line-height: 20px;
-	text-shadow: 1px 1px 1px #4DB8FF;
-	font-family: Arial;
-	font-size: 15px;
-	font-weight: bold;
-	font-style: normal;
-	border: 1px solid #63b8ee;
-	background: #E0F3F9;
-	border-radius: 5px;
+/* ===============================
+   Left UI
+   =============================== */
+
+#left-ui {
+    float: left;
+    width: 50px;
+    height: 100%;
+    background-color: #323232;
 }
 
-#edit-collision-actions-object-menu-container, #edit-key-actions-object-menu-container {
-	float: left;
-	height: 500px;
-	width: 120px;
-	overflow-y: auto;
-	overflow-x: hidden;
+/* =============================
+   Right UI
+   ============================= */
+
+#right-ui {
+    float: right;
+    overflow: hidden;
+    padding: 0 2px 0 2px;
+    width: 330px;
+    height: 100%;
+    background-color: #323232;
 }
 
-#select-actions-content .group {
-	margin-bottom: 15px;
+#right-ui .ui-title {
+    margin: 0 0 2px 0;
+    padding: 7px 0 0 9px;
+    width: 326px;
+    height: 30px;
+    background-color: #2574a9;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Droid Sans', sans-serif;
 }
 
-#edit-counter-event-content, #edit-counters-counter-content, #edit-counter-event-action-content, #edit-counter-event-actions-content {
-	margin-left: 5px;
-	float: left;
+/* ------------------------------
+   Properties
+   ------------------------------ */
+
+#properties-ui {
+    height: 375px;
 }
 
-#edit-counter-event-actions-content #select-action-window {
-	width: 485px;
+/* ------------------------------
+   Library
+   ------------------------------ */
+
+#library-ui {
+    height: 100%;
 }
 
+/* Library preview */
+
+#library-preview {
+    margin: 0 0 2px 0;
+    height: 110px;
+    background: url('../img/library_preview_grid.gif');
+}
+
+/* Library explorer */
+
+#library-explorer {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin: 0 0 2px 0;
+    height: 220px;
+    background-color: #f5f5f5;
+}
+
+.library-global-object-button {
+    margin: 0 0 2px 5px;
+    padding: 0 0 0 22px;
+    width: 100%;
+    height: 16px;
+    border: 0;
+    text-align: left;
+    font-size: 12px;
+    font-family: verdana;
+    background: url('../img/library_explorer_icon_object.gif') no-repeat;
+}
+
+/* Library menu */
+
+#library-menu {
+    height: 34px;
+}
+
+.library-menu-button {
+    display: block;
+    float: left;
+    margin: 0 2px 0 0;
+    padding: 8px 0;
+    width: 86px;
+    height: 34px;
+    border: 0;
+    background-color: #505050;
+    color: #808080;
+    text-align: center;
+    font-size: 16px;
+    font-family: 'Droid Sans', sans-serif;
+    pointer-events: none;
+}
+
+.library-menu-button.active {
+    background-color: #27ae60;
+    color: #ffffff;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.library-menu-button.active:hover {
+    background-color: #2dcc6f;
+}
+
+/* =============================
+   Dialogue window
+   ============================= */
+#dialogue-overlay {
+    position: absolute;
+    z-index: 1;
+    display: none;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    opacity: 0.7;
+}
+
+#dialogue-window {
+    position: absolute;
+    top: 110px;
+    z-index: 2;
+    display: none;
+    overflow: hidden;
+    background-color: #dcdddd;
+}
+   
+#dialogue-window-title {
+    padding: 7px 0 0 9px;
+    height: 30px;
+    background-color: #2574a9;
+    color: #ffffff;
+    font-size: 14px;
+    font-family: 'Droid Sans', sans-serif;
+}
+
+/* Dialogue window menu */
+
+#dialogue-window-menu {
+    float: left;
+    width: 170px;
+    height: 100%;
+    background-color: #adb3ba;
+}
+
+.dialogue-window-tab {
+    display: block;
+    margin: 0 0 1px 0;
+    padding: 10px 0 2px 9px;
+    width: 170px;
+    height: 40px;
+    border: 0;
+    background-color: #70757b;
+    color: #ffffff;
+    text-align: left;
+    font-size: 14px;
+    font-family: verdana, sans-serif;
+    cursor: pointer;
+}
+
+.dialogue-window-tab.active {
+    background-color: #8b9199;
+    pointer-events: none;
+}
+
+.dialogue-window-tab:hover {
+    background-color: #797e85;
+}
+
+/* Dialogue window content */
+
+#edit-global-object-window-content {
+    float: left;
+    width: 730px;
+}
+
+#add-global-object-window-content {
+    float: left;
+    width: 730px;
+}
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ */
+
+.clearfix:before,
+.clearfix:after {
+    display: table; /* 2 */
+    content: " "; /* 1 */
+}
+
+.clearfix:after {
+    clear: both;
+}

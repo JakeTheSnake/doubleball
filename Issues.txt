@@ -1,5 +1,7 @@
 TODO:
 
+Refactor mouse events that are currently set up in editFunctions/editScene. Remove use of global object, set up event listeners locally instead. (See ui/createLibraryItem)
+
 Counter action parameters are broken.
 
 Finish shoot. Refactor to remove duplicates of the direction switch case.
