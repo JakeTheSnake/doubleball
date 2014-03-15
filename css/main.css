@@ -128,6 +128,40 @@ canvas {
     background-color: #323232;
 }
 
+/* ================================
+   Scenes UI
+   =============================== */
+
+#scene-ui {
+    height: 40px;
+    background-color: #4d4d4d;
+}
+
+.scene-tab {
+    display: block;
+    margin: 0 1px 0 0;
+    padding: 10px 0 2px 9px;
+    float: left;
+    width: 170px;
+    height: 40px;
+    border: 0;
+    background-color: #70757b;
+    color: #ffffff;
+    text-align: left;
+    font-size: 14px;
+    font-family: verdana, sans-serif;
+    cursor: pointer;
+}
+
+.scene-tab.active {
+    background-color: #8b9199;
+    pointer-events: none;
+}
+
+.scene-tab:hover {
+    background-color: #797e85;
+}
+
 /* ===============================
    Left UI
    =============================== */
@@ -282,7 +316,7 @@ canvas {
     background-color: #adb3ba;
 }
 
-.tab {
+.dialogue-window-tab {
     display: block;
     margin: 0 0 1px 0;
     padding: 10px 0 2px 9px;
@@ -297,12 +331,12 @@ canvas {
     cursor: pointer;
 }
 
-.tab.active {
+.dialogue-window-tab.active {
     background-color: #8b9199;
     pointer-events: none;
 }
 
-.tab:hover {
+.dialogue-window-tab:hover {
     background-color: #797e85;
 }
 

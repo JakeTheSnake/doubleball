@@ -227,9 +227,9 @@ GameCreator.htmlStrings = {
 
         result += '<div id="dialogue-window-title">Add new object</div> \
                    <div id="dialogue-window-menu"> \
-                   <a class="tab active" data-uifunction="setupAddActiveObjectForm">Active object</a> \
-                   <a class="tab" data-uifunction="setupAddPlayerObjectForm">Player object</a> \
-                   <a class="tab" data-uifunction="setupAddCounterObjectForm">Counter object</a> \
+                   <a class="tab dialogue-window-tab active" data-uifunction="setupAddActiveObjectForm">Active object</a> \
+                   <a class="tab dialogue-window-tab" data-uifunction="setupAddPlayerObjectForm">Player object</a> \
+                   <a class="tab dialogue-window-tab" data-uifunction="setupAddCounterObjectForm">Counter object</a> \
                    </div> \
                    <div id="add-global-object-window-content"></div>';
 
@@ -240,23 +240,23 @@ GameCreator.htmlStrings = {
 
         result += '<div id="dialogue-window-title">Edit object</div> \
                    <div id="dialogue-window-menu"> \
-                   <a class="tab active" data-uifunction="setupEditGlobalObjectPropertiesForm">Properties</a>';
+                   <a class="tab dialogue-window-tab active" data-uifunction="setupEditGlobalObjectPropertiesForm">Properties</a>';
 
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += '<a class="tab" data-uifunction="setupEditGlobalObjectCollisionsForm">Collisions</a>'
+            result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCollisionsForm">Collisions</a>'
         }
         if (["topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += '<a class="tab" data-uifunction="setupEditGlobalObjectKeyActionsForm">Keys</a>'
+            result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectKeyActionsForm">Keys</a>'
         }
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += '<a class="tab" data-uifunction="setupEditGlobalObjectOnClickActionsForm">On click</a>'
+            result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnClickActionsForm">On click</a>'
         }
         if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
-            result += '<a class="tab" data-uifunction="setupEditGlobalObjectCountersForm">Counters</a>'
+            result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCountersForm">Counters</a>'
         }
 
-        result += '<a class="tab" data-uifunction="setupEditGlobalObjectOnDestroyActionsForm">On destroy</a> \
-                   <a class="tab" data-uifunction="setupEditGlobalObjectOnCreateActionsForm">On create</a> \
+        result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnDestroyActionsForm">On destroy</a> \
+                   <a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnCreateActionsForm">On create</a> \
                    </div> \
                    <div id="edit-global-object-window-content"></div>';
 
@@ -557,9 +557,9 @@ GameCreator.htmlStrings = {
         return result;
     },
 	sceneTab: function(sceneNr, sceneActive){
-		return '<div class="tab ' + (sceneActive ? 'active' : '') + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
+		return '<div class="tab scene-tab ' + (sceneActive ? 'active' : '') + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
 	},
 	addSceneTab: function(){
-		return '<div id="add-scene-tab" class="tab">+</div>';
+		return '<div id="add-scene-tab" class="tab scene-tab">+</div>';
 	}
 };
