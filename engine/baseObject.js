@@ -31,7 +31,7 @@ GameCreator.baseObject = {
             }
             if (this.parent.onDestroyActions) {
                 for (var i = 0; i < this.parent.onDestroyActions.length; i++) {
-                    GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i],this.parent.onDestroyActions[i].parameters);
+                    GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i], this.parent.onDestroyActions[i].parameters, this.parent.onDestroyActions[i].timing);
                 }
             }
         }
@@ -50,7 +50,7 @@ GameCreator.baseObject = {
             }
             if (this.parent.onCreateActions) {
                 for (var i = 0; i < this.parent.onCreateActions.length; i++) {
-                    GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i], this.parent.onCreateActions[i].parameters);
+                    GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i], this.parent.onCreateActions[i].parameters, this.parent.onCreateActions[i].timing);
                 }
             }
             var index = GameCreator.newlyCreatedObjects.indexOf(this);

@@ -71,7 +71,7 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     if(currentActionsItem !== undefined)
     {
         for (var j = 0; j < currentActionsItem.actions.length; j++) {
-            GameCreator.helperFunctions.runAction(object, GameCreator.actions[currentActionsItem.actions[j].name],$.extend({collisionObject:targetObject}, currentActionsItem.actions[j].parameters));
+            GameCreator.helperFunctions.runAction(object, GameCreator.actions[currentActionsItem.actions[j].name],$.extend({collisionObject:targetObject}, currentActionsItem.actions[j].parameters), currentActionsItem.actions[j].timing);
         }
     }
     else if (GameCreator.state !== 'playing')
@@ -279,14 +279,14 @@ GameCreator.helperFunctions.getRandomFromRange = function(range) {
     return value;
 };
 
-GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parameters) {
+GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parameters, timing) {
     var timerFunction;
 
-    if (actionToRun.timing.type === "after") {
+    if (timing.type === "after") {
         timerFunction = GameCreator.timerHandler.registerOffset;
-    } else if (actionToRun.timing.type === "at") {
+    } else if (timing.type === "at") {
         timerFunction = GameCreator.timerHandler.registerFixed;
-    } else if (actionToRun.timing.type === "every") {
+    } else if (timing.type === "every") {
         timerFunction = GameCreator.timerHandler.registerInterval;
     } else {
         if(GameCreator.actions[actionToRun.name].runnable.call(runtimeObj)) {
@@ -295,9 +295,9 @@ GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parame
         return;
     }
 
-    (function(obj, curAction, curParams, curTimerFunction){
+    (function(obj, curAction, curParams, curTiming, curTimerFunction){
             curTimerFunction(
-                GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+                GameCreator.helperFunctions.getRandomFromRange(curTiming.time),
                 function() {
                     if (GameCreator.actions[curAction.name].runnable.call(obj)) {
                         GameCreator.actions[curAction.name].action.call(obj, curParams);
@@ -306,7 +306,7 @@ GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parame
                         return false;
                     }
                 });
-        })(runtimeObj, actionToRun, parameters, timerFunction);
+        })(runtimeObj, actionToRun, parameters, timing, timerFunction);
 };
 
 GameCreator.helperFunctions.calculateScene = function(activeScene, params){

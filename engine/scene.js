@@ -86,7 +86,7 @@ $.extend(GameCreator, {
                     for(var i = 0;i < runtimeObj.parent.onClickActions.length;++i)
                     {
                         GameCreator.helperFunctions.runAction(runtimeObj, runtimeObj.parent.onClickActions[i],
-                        	runtimeObj.parent.onClickActions[i].parameters);
+                        	runtimeObj.parent.onClickActions[i].parameters, runtimeObj.parent.onClickActions[i].timing);
                     }
                 }
             }
