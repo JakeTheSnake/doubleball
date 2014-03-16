@@ -1,7 +1,7 @@
 GameCreator.mouseObject = {
         
     New: function(image, args){
-        var obj = Object.create(GameCreator.baseObject);
+        var obj = new GameCreator.BaseObject();
         GameCreator.addObjFunctions.mouseObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.keyObjectFunctions(obj);
@@ -169,5 +169,6 @@ GameCreator.addObjFunctions.mouseObjectFunctions = function(mouseObject, args)
     mouseObject.onDestroy = function()
     {
         $(GameCreator.mainCanvas).off("mousemove." + this.name);
+        this.runOnDestroyActions();
     };
 }

@@ -1,7 +1,7 @@
 GameCreator.activeObject = {
         
     New: function(image, args){
-        var obj = Object.create(GameCreator.baseObject);
+        var obj = new GameCreator.BaseObject();
         GameCreator.addObjFunctions.activeObjectFunctions(obj);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);

@@ -1,7 +1,7 @@
 GameCreator.topDownObject = {
         
     New: function(image, args){
-        var obj = Object.create(GameCreator.baseObject);
+        var obj = new GameCreator.BaseObject();
         GameCreator.addObjFunctions.topDownObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
@@ -304,8 +304,5 @@ GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, arg
                 speedY = unitVector.y * projectileSpeed;
         }
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
-    }
-    
-    topDownObject.onDestroy = function(){
     }
 }

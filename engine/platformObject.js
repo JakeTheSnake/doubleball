@@ -1,7 +1,7 @@
 GameCreator.platformObject = {
         
     New: function(image, args){
-        var obj = Object.create(GameCreator.baseObject);
+        var obj = new GameCreator.BaseObject();
         GameCreator.addObjFunctions.platformObjectFunctions(obj, args);
         GameCreator.addObjFunctions.collidableObjectFunctions(obj);
         GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
