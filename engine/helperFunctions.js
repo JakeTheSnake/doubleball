@@ -71,7 +71,8 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     if(currentActionsItem !== undefined)
     {
         for (var j = 0; j < currentActionsItem.actions.length; j++) {
-            GameCreator.helperFunctions.runAction(object, GameCreator.actions[currentActionsItem.actions[j].name],$.extend({collisionObject:targetObject}, currentActionsItem.actions[j].parameters), currentActionsItem.actions[j].timing);
+            currentActionsItem.actions[j].parameters.collisionObject = targetObject;
+            GameCreator.helperFunctions.runAction(object, currentActionsItem.actions[j]);
         }
     }
     else if (GameCreator.state !== 'playing')
@@ -279,9 +280,10 @@ GameCreator.helperFunctions.getRandomFromRange = function(range) {
     return value;
 };
 
-GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parameters, timing) {
+GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun) {
     var timerFunction;
-
+    var timing = actionToRun.timing;
+    var parameters = actionToRun.parameters;
     if (timing.type === "after") {
         timerFunction = GameCreator.timerHandler.registerOffset;
     } else if (timing.type === "at") {
@@ -295,18 +297,18 @@ GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun, parame
         return;
     }
 
-    (function(obj, curAction, curParams, curTiming, curTimerFunction){
-            curTimerFunction(
-                GameCreator.helperFunctions.getRandomFromRange(curTiming.time),
-                function() {
-                    if (GameCreator.actions[curAction.name].runnable.call(obj)) {
-                        GameCreator.actions[curAction.name].action.call(obj, curParams);
-                        return true;
-                    } else {
-                        return false;
-                    }
-                });
-        })(runtimeObj, actionToRun, parameters, timing, timerFunction);
+    (function(obj, curAction, curTimerFunction){
+        curTimerFunction(
+            GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
+            function() {
+                if (GameCreator.actions[curAction.name].runnable.call(obj)) {
+                    GameCreator.actions[curAction.name].action.call(obj, curAction.parameters);
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+    })(runtimeObj, actionToRun, timerFunction);
 };
 
 GameCreator.helperFunctions.calculateScene = function(activeScene, params){

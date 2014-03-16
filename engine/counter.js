@@ -48,11 +48,11 @@ GameCreator.sceneObjectCounter = {
 		//Check if change triggers any actions
 		if(change > 0) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
-				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i], this.parentCounter.onIncrease[i].parameters, this.parentCounter.onIncrease[i].timing);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i]);
 			}
 		} else if(change < 0) {
 			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
-				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onDecrease[i], this.parentCounter.onDecrease[i].parameters, this.parentCounter.onDecrease[i].timing);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onDecrease[i]);
 			}
 		};
 		
@@ -64,11 +64,11 @@ GameCreator.sceneObjectCounter = {
 
 		if (value > this.value) {
 			for(var i = 0 ; i < this.parentCounter.onIncrease.length ; i++) {
-				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i], this.parentCounter.onIncrease[i].parameters, this.parentCounter.onIncrease[i].timing);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onIncrease[i]);
 			}
 		} else if (value < this.value) {
 			for(var i = 0 ; i < this.parentCounter.onDecrease.length ; i++) {
-				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onDecrease[i], this.parentCounter.onDecrease[i].parameters, this.parentCounter.onDecrease[i].timing);
+				GameCreator.helperFunctions.runAction(this.parentObject, this.parentCounter.onDecrease[i]);
 			}
 		}
 		
@@ -90,7 +90,7 @@ GameCreator.sceneObjectCounter = {
 				if (parseInt(value) === this.value && !this.atValueStates[value]) {
 					callbacks = this.parentCounter.atValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i], callbacks[i].parameters, callbacks[i].timing);
+						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i]);
 					}
 					this.atValueStates[value] = true;
 				} else if (parseInt(value) !== this.value) {
@@ -107,7 +107,7 @@ GameCreator.sceneObjectCounter = {
 				if (this.value > parseInt(value) && !this.aboveValueStates[value]) {
 					callbacks = this.parentCounter.aboveValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i], callbacks[i].parameters, callbacks[i].timing);
+						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i]);
 					}
 					this.aboveValueStates[value] = true;
 				} else if (this.value <= parseInt(value)) {
@@ -124,7 +124,7 @@ GameCreator.sceneObjectCounter = {
 				if (this.value < parseInt(value) && !this.belowValueStates[value]) {
 					callbacks = this.parentCounter.belowValue[value];
 					for (var i = 0; i < callbacks.length; i++) {
-						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i], callbacks[i].parameters, callbacks[i].timing);
+						GameCreator.helperFunctions.runAction(this.parentObject, callbacks[i]);
 					}
 					this.belowValueStates[value] = true;
 				} else if (this.value >= parseInt(value)) {
