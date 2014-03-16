@@ -75,10 +75,10 @@ $.extend(GameCreator, {
                 if(runtimeObj.parent.onClickActions == undefined && GameCreator.state !== 'playing' && !GameCreator.paused) {
                     runtimeObj.parent.onClickActions = [];
                     GameCreator.UI.openEditActionsWindow(
-                        "Clicked on " + runtimeObj.parent.name,
+                        "Clicked on " + runtimeObj.parent.objectName,
                          GameCreator.actionGroups.nonCollisionActions,
                          runtimeObj.parent.onClickActions,
-                         runtimeObj.parent.name
+                         runtimeObj.parent.objectName
                         );
                 }
                 else if (runtimeObj.parent.onClickActions)

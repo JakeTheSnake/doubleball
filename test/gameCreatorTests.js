@@ -10,7 +10,7 @@ module("GameCreator Tests", {
 });
 
 test("Create Runtime Active Object", function() {
-    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
+    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 1, "Added to movableObjects");
@@ -20,7 +20,7 @@ test("Create Runtime Active Object", function() {
 });
 
 test("Create Runtime Player Object", function() {
-    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "topDownObject");
+    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "TopDownObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 1, "Added to movableObjects");
@@ -30,7 +30,7 @@ test("Create Runtime Player Object", function() {
 });
 
 test("Create Runtime Counter Object", function() {
-    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "counterObject");
+    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "CounterObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 0, "Added to movableObjects");
@@ -39,7 +39,7 @@ test("Create Runtime Counter Object", function() {
 });
 
 test("Destroy Active Object", function() {
-    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
+    var redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
 
     runtimeObj.parent.destroy.call(runtimeObj);

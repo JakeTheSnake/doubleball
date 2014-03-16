@@ -86,10 +86,10 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
         var newActionItem = {id: targetObject.parent.id, actions: []};
         object.parent.collisionActions.push(newActionItem);
         GameCreator.UI.openEditActionsWindow(
-            "'" + object.parent.name + "' collided with '" + targetObject.name + "'",
+            "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'",
             actions,
             newActionItem.actions,
-            object.name
+            object.objectName
         )
     }
 };
@@ -165,15 +165,20 @@ GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject
     return false;
 };
 
-GameCreator.helperFunctions.calcAngularSpeed = function(maxSpeed){
+GameCreator.helperFunctions.calcAngularSpeed = function(maxSpeed) {
     return Math.pow(Math.pow(maxSpeed, 2)/2, 0.5);
 };
 
-GameCreator.helperFunctions.toString = function(thing){
-    if(typeof(thing) == "object")
-        return thing.name;
-    else
-        return "" + thing;
+GameCreator.helperFunctions.toString = function(thing) {
+    if (typeof(thing) === "object") {
+        if (thing.objectName) {
+            return thing.objectName;
+        }
+        else if (thing.name) {
+            return thing.name;
+        }
+    }
+    return "" + thing;
 };
 
 GameCreator.helperFunctions.parseBool = function(string) {
@@ -184,7 +189,7 @@ GameCreator.helperFunctions.parseRange = function(string) {
     return string.split(":", 2);
 };
 
-GameCreator.helperFunctions.calcUnitVector = function(x, y){
+GameCreator.helperFunctions.calcUnitVector = function(x, y) {
     var magnitude = Math.sqrt((x * x) + (y * y));
     if(magnitude === 0) {
         return {x: 0, y: 0};
@@ -194,7 +199,7 @@ GameCreator.helperFunctions.calcUnitVector = function(x, y){
 };
 
 /** TODO: Not used atm, for conditions.
- * name: Name of the object
+ * objectName: Name of the object
  * operation: function(count), that decides if the condition
               is fulfilled or not for this many found objects.
               (At least, exactly, at most)
@@ -345,7 +350,7 @@ GameCreator.helperFunctions.removeObjectFromArrayById = function(array, id) {
 
 GameCreator.helperFunctions.setStandardProperties = function(globalObj, image, args) {
     globalObj.image = image;
-    globalObj.name = args.name;
+    globalObj.objectName = args.objectName;
     globalObj.width = args.width;
     globalObj.height = args.height;
     globalObj.unique = args.unique;

@@ -22,7 +22,7 @@ var redBall;
 
 module("Scene Object Tests", {
     setup: function() {
-        redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
+        redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
         GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     },
     teardown: function() {
@@ -58,7 +58,7 @@ test("Delete selected scene object", function() {
 module("GameCreator.addGlobalObject");
 
 test("Add Active Object", function() {
-    GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
+    GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
     ok(GameCreator.globalObjects["red_ball"], "Added to global objects.");
     deepEqual(GameCreator.globalObjects["red_ball"].width, [20], "Width is set correctly.");
     deepEqual(GameCreator.globalObjects["red_ball"].height, [30], "Height is set correctly.");
@@ -66,13 +66,13 @@ test("Add Active Object", function() {
 });
 
 test("Add Active Object with ranges", function() {
-    GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20,30], height:[30,40]}, "activeObject");
+    GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20,30], height:[30,40]}, "ActiveObject");
     deepEqual(GameCreator.globalObjects["red_ball"].width, [20,30], "Width is set correctly.");
     deepEqual(GameCreator.globalObjects["red_ball"].height, [30,40], "Height is set correctly.");
 });
 
 test("Add Platform Object", function() {
-    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200], accY: [5], acceleration: [6], name: "platformZealot", width: [80], height: [80]}, "platformObject");
+    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200], accY: [5], acceleration: [6], objectName: "platformZealot", width: [80], height: [80]}, "PlatformObject");
     ok(GameCreator.globalObjects["platformZealot"], "Added to global objects.");
     deepEqual(GameCreator.globalObjects["platformZealot"].width, [80], "Width is set correctly.");
     deepEqual(GameCreator.globalObjects["platformZealot"].height, [80], "Height is set correctly.");
@@ -83,7 +83,7 @@ test("Add Platform Object", function() {
 });
 
 test("Add Platform Object with ranges", function() {
-    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200,300], accY: [5,6], acceleration: [6,7], name: "platformZealot", width: [80,90], height: [80,90]}, "platformObject");
+    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200,300], accY: [5,6], acceleration: [6,7], objectName: "platformZealot", width: [80,90], height: [80,90]}, "PlatformObject");
     deepEqual(GameCreator.globalObjects["platformZealot"].width, [80,90], "Width is set correctly.");
     deepEqual(GameCreator.globalObjects["platformZealot"].height, [80,90], "Height is set correctly.");
     ok(GameCreator.globalObjects["platformZealot"], "Added to global objects.");
@@ -94,7 +94,7 @@ test("Add Platform Object with ranges", function() {
 });
 
 test("Add Top Down Object", function() {
-    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200], name: "topDownZealot", width: [80], height: [80]}, "topDownObject");
+    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200], objectName: "topDownZealot", width: [80], height: [80]}, "TopDownObject");
     deepEqual(GameCreator.globalObjects["topDownZealot"].width, [80], "Width is set correctly.");
     deepEqual(GameCreator.globalObjects["topDownZealot"].height, [80], "Height is set correctly.");
     ok(GameCreator.globalObjects["topDownZealot"], "Added to global objects.");
@@ -103,7 +103,7 @@ test("Add Top Down Object", function() {
 });
 
 test("Add Top Down Object with ranges", function() {
-    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200,300], name: "topDownZealot", width: [80,90], height: [80,90]}, "topDownObject");
+    GameCreator.addGlobalObject({src: "../assets/zealot.gif", maxSpeed: [200,300], objectName: "topDownZealot", width: [80,90], height: [80,90]}, "TopDownObject");
     ok(GameCreator.globalObjects["topDownZealot"], "Added to global objects.");
     deepEqual(GameCreator.globalObjects["topDownZealot"].width, [80,90], "Width is set correctly.");
     deepEqual(GameCreator.globalObjects["topDownZealot"].height, [80,90], "Height is set correctly.");
@@ -112,7 +112,7 @@ test("Add Top Down Object with ranges", function() {
 });
 
 test("Add Mouse Object", function() {
-    GameCreator.addGlobalObject({src: "../assets/zealot.gif", minX: [200], minY: [300], maxX: [400], maxY: [500], name: "mouseZealot", width: [80], height: [80]}, "mouseObject");
+    GameCreator.addGlobalObject({src: "../assets/zealot.gif", minX: [200], minY: [300], maxX: [400], maxY: [500], objectName: "mouseZealot", width: [80], height: [80]}, "MouseObject");
     deepEqual(GameCreator.globalObjects["mouseZealot"].width, [80], "Width is set correctly.");
     deepEqual(GameCreator.globalObjects["mouseZealot"].height, [80], "Height is set correctly.");
     ok(GameCreator.globalObjects["mouseZealot"], "Added to global objects.");

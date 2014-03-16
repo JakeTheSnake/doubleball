@@ -1,8 +1,6 @@
-GameCreator.addObjFunctions.bounceableObjectFunctions = function(object)
-{
-    object.bounce = function(params)
-    {
-        switch(GameCreator.helperFunctions.determineQuadrant(params.collisionObject, this)){
+GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
+    object.bounce = function(params) {
+        switch(GameCreator.helperFunctions.determineQuadrant(params.collisionObject, this)) {
             case 1:
             this.speedY = -Math.abs(this.speedY);
             break;
@@ -20,24 +18,23 @@ GameCreator.addObjFunctions.bounceableObjectFunctions = function(object)
             break;
         }
     }
-    
 }
 
-GameCreator.addObjFunctions.collidableObjectFunctions = function(object)
-{    
+GameCreator.addObjFunctions.collidableObjectAttributes = function(object) {    
     object.collisionActions = [];
 },
 
-GameCreator.addObjFunctions.keyObjectFunctions = function(object) 
-{
+GameCreator.addObjFunctions.keyObjectAttributes = function(object) {
     object.keyPressed = {
         space: false,
         leftMouse: false,
         rightMouse: false
     };
     object.keyActions = {};
-    
-    object.checkEvents = function(){
+},
+
+GameCreator.addObjFunctions.keyObjectFunctions = function(object) {
+    object.checkEvents = function() {
         //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
         for(var key in this.parent.keyPressed)
         {
@@ -57,10 +54,10 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object)
 				    	}
                         this.parent.keyActions[key] = [];
                         GameCreator.UI.openEditActionsWindow(
-                            "Pressed " + key + " actions for " + this.parent.name,
+                            "Pressed " + key + " actions for " + this.parent.objectName,
                              actions,
                              this.parent.keyActions[key],
-                             this.name
+                             this.objectName
                             );
                     }
                     else if (keyAction !== undefined)
@@ -115,7 +112,7 @@ GameCreator.addObjFunctions.stoppableObjectFunctions = function(object)
     };
 },
 
-GameCreator.addObjFunctions.clickableObjectFunctions = function(object)
+GameCreator.addObjFunctions.clickableObjectAttributes = function(object)
 {
 	object.onClickActions = undefined;
 	object.isClickable = true;

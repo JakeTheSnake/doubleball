@@ -72,7 +72,7 @@ GameCreator.htmlStrings = {
         return result;
     },
     collisionMenuElement: function(object) {
-        return '<div class="collisionMenuElement headingNormalBlack" data-name="' + object.name + '" ><span>' + object.name + '</span>' + '<br/>' +
+        return '<div class="collisionMenuElement headingNormalBlack" data-name="' + object.objectName + '" ><span>' + object.objectName + '</span>' + '<br/>' +
         object.image.outerHTML + '</div>';
     },
     keyMenuElement: function(keyName) {
@@ -92,12 +92,12 @@ GameCreator.htmlStrings = {
         imgDiv.addClass("global-object-element-image");
 
         var div = $(document.createElement("div")).append(imgDiv);
-        $(div).attr("id", "object-library-element-" + object.name);
+        $(div).attr("id", "object-library-element-" + object.objectName);
         return div;
     },
     globalObjectEditButton: function(object) {
         var button = document.createElement("button");
-        $(button).append(object.name);
+        $(button).append(object.objectName);
         $(button).addClass("library-global-object-button");
         $(button).attr("data-imgsrc", object.image.src);
         var div = $(document.createElement("div")).append(button);
@@ -247,16 +247,16 @@ GameCreator.htmlStrings = {
                    <div id="dialogue-window-menu"> \
                    <a class="tab dialogue-window-tab active" data-uifunction="setupEditGlobalObjectPropertiesForm">Properties</a>';
 
-        if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
+        if (["ActiveObject", "TopDownObject", "MouseObject", "PlatformObject"].indexOf(object.objectType) != -1) {
             result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCollisionsForm">Collisions</a>'
         }
-        if (["topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
+        if (["TopDownObject", "MouseObject", "PlatformObject"].indexOf(object.objectType) != -1) {
             result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectKeyActionsForm">Keys</a>'
         }
-        if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
+        if (["ActiveObject", "TopDownObject", "MouseObject", "PlatformObject"].indexOf(object.objectType) != -1) {
             result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnClickActionsForm">On click</a>'
         }
-        if (["activeObject", "topDownObject", "mouseObject", "platformObject"].indexOf(object.objectType) != -1) {
+        if (["ActiveObject", "TopDownObject", "MouseObject", "PlatformObject"].indexOf(object.objectType) != -1) {
             result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCountersForm">Counters</a>'
         }
 
@@ -270,7 +270,7 @@ GameCreator.htmlStrings = {
     editGlobalObjectPropertiesContent: function(object) {
     	var result = '';
         switch(object.objectType) {
-            case 'activeObject':
+            case 'ActiveObject':
                 result += GameCreator.htmlStrings.globalActiveObjectForm(object);
                 result += '<div style="height: 10px"></div>';
                 if(object.movementType === 'free') {
@@ -280,22 +280,22 @@ GameCreator.htmlStrings = {
                     result += GameCreator.htmlStrings.routeMovementInputs(object);
                 }
                 break;
-            case 'mouseObject':
+            case 'MouseObject':
                 result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
                 result += '<div style="height: 10px"></div>';
                 result += GameCreator.htmlStrings.mouseMovementInputs(object);
                 break;
-            case 'topDownObject':
+            case 'TopDownObject':
                 result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
                 result += '<div style="height: 10px"></div>';
                 result += GameCreator.htmlStrings.topDownMovementInputs(object);
                 break;
-            case 'platformObject':
+            case 'PlatformObject':
                 result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
                 result += '<div style="height: 10px"></div>';
                 result += GameCreator.htmlStrings.platformMovementInputs(object);
                 break;
-            case 'counterObject':
+            case 'CounterObject':
                 result += GameCreator.htmlStrings.globalCounterObjectForm(object);
                 break;
             default:
@@ -499,7 +499,7 @@ GameCreator.htmlStrings = {
     	var selectableObjects = {};
     	$.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
     	for (objName in selectableObjects) {
-            if (selectableObjects.hasOwnProperty(objName) && !object.collisionActions.hasOwnProperty(objName) && selectableObjects[objName].isCollidable && objName != object.name) {
+            if (selectableObjects.hasOwnProperty(objName) && !object.collisionActions.hasOwnProperty(objName) && selectableObjects[objName].isCollidable && objName != object.objectName) {
         		result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].image.outerHTML + '</br><span>' + objName + '</span></div>';
         	}
     	}

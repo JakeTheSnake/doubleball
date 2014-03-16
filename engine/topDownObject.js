@@ -1,308 +1,263 @@
-GameCreator.topDownObject = {
-        
-    New: function(image, args){
-        var obj = new GameCreator.BaseObject();
-        GameCreator.addObjFunctions.topDownObjectFunctions(obj, args);
-        GameCreator.addObjFunctions.collidableObjectFunctions(obj);
-        GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
-        GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
-        GameCreator.addObjFunctions.keyObjectFunctions(obj);
-        GameCreator.addObjFunctions.clickableObjectFunctions(obj);
-        
-        GameCreator.helperFunctions.setStandardProperties(obj, image, args);
-
-        obj.isCollidable = true;
-        obj.isMovable = true;
-        obj.isRenderable = true;
-        obj.isEventable = true;        
-      
-        obj.objectType = "topDownObject";
-        
-        return obj;
-    },
+GameCreator.TopDownObject = function(image, args){
+    GameCreator.addObjFunctions.collidableObjectAttributes(this);
+    GameCreator.addObjFunctions.keyObjectAttributes(this);
+    GameCreator.addObjFunctions.clickableObjectAttributes(this);
     
-    createFromSaved: function(savedObject){    
-        var obj = Object.create(GameCreator.baseObject);
-        
-        var image = new Image();
-        image.src = savedObject.imageSrc;
-        obj.image = image;
+    GameCreator.helperFunctions.setStandardProperties(this, image, args);
 
-        GameCreator.addObjFunctions.topDownObjectFunctions(obj, savedObject);
-        GameCreator.addObjFunctions.collidableObjectFunctions(obj);
-        GameCreator.addObjFunctions.stoppableObjectFunctions(obj);
-        GameCreator.addObjFunctions.bounceableObjectFunctions(obj);
-        GameCreator.addObjFunctions.keyObjectFunctions(obj);
-        GameCreator.addObjFunctions.clickableObjectFunctions(obj);
-        
-        obj.isCollidable = true;
-        obj.isMovable = true;
-        obj.isRenderable = true;
-        obj.isEventable = true;
-        
-        image.onload = function() {
-            obj.imageReady = true;
-            GameCreator.render();
-        };
-        
-        for(name in savedObject){
-            if (savedObject.hasOwnProperty(name)) {
-                obj[name] = savedObject[name];    
-            }
-        }
-        
-        GameCreator.globalObjects[obj.name] = obj;
-        
-        return obj;
+    this.isCollidable = true;
+    this.isMovable = true;
+    this.isRenderable = true;
+    this.isEventable = true;        
+  
+    this.speedX = 0;
+    this.speedY = 0;
+    this.accX = 0;
+    this.accY = 0;
+    this.keyLeftPressed = false;
+    this.keyRightPressed = false;
+    this.keyUpPressed = false;
+    this.keyDownPressed = false;
+    this.maxSpeed = (!args.maxSpeed && args.maxSpeed != 0) ? 300 : args.maxSpeed;
+    //Facing can be 1-8 where 1 is facing up and the others follow clockwise.
+    this.facing = 1;
+    //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
+
+    this.objectType = "TopDownObject";
+}
+
+GameCreator.TopDownObject.prototype = Object.create(GameCreator.BaseObject.prototype);
+
+GameCreator.addObjFunctions.stoppableObjectFunctions(GameCreator.ActiveObject.prototype);
+GameCreator.addObjFunctions.bounceableObjectFunctions(GameCreator.ActiveObject.prototype);
+GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.ActiveObject.prototype);
+
+GameCreator.TopDownObject.prototype.initialize = function() {
+    this.invalidated = true;
+    this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
+    this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
+    this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
+    this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
+    this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
+    this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
+    this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
+    this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
+};
+
+GameCreator.TopDownObject.prototype.calculateSpeed = function()
+{    
+    var maxSpeed = this.maxSpeed;
+    var angularMaxSpeed = GameCreator.helperFunctions.calcAngularSpeed(maxSpeed);
+    //Should only be able to affect movement if there is something beneath object.
+    if(this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        this.facing = 1;
+        this.speedX = 0;
+        this.speedY = -maxSpeed;
+    }
+    
+    else if(this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        this.facing = 2;
+        this.speedX = angularMaxSpeed;
+        this.speedY = -angularMaxSpeed;
+    }
+    
+    else if(!this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        this.facing = 3;
+        this.speedX = maxSpeed;
+        this.speedY = 0;
+    }
+
+    else if(!this.parent.keyUpPressed && this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        this.facing = 4;
+        this.speedX = angularMaxSpeed;
+        this.speedY = angularMaxSpeed;
+    }
+    
+    else if(!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        this.facing = 5;
+        this.speedX = 0;
+        this.speedY = maxSpeed;
+    }
+    
+    else if(!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && this.parent.keyLeftPressed) {
+        this.facing = 6;
+        this.speedX = -angularMaxSpeed;
+        this.speedY = angularMaxSpeed;
+    }
+    
+    else if(!this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
+        this.facing = 7;
+        this.speedX = -maxSpeed;
+        this.speedY = 0;
+    }
+    
+    else if(this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
+        this.facing = 8;
+        this.speedX = -angularMaxSpeed;
+        this.speedY = -angularMaxSpeed;
+    }
+    
+    else
+    {
+        Math.abs(this.speedX) < 0.1 ? this.speedX = 0 : this.speedX *= 0.9;
+        Math.abs(this.speedY) < 0.1 ? this.speedY = 0 : this.speedY *= 0.9;
     }
 }
 
-GameCreator.addObjFunctions.topDownObjectFunctions = function(topDownObject, args)
-{
-    topDownObject.speedX = 0;
-    topDownObject.speedY = 0;
-    topDownObject.accX = 0;
-    topDownObject.accY = 0;
-    topDownObject.keyLeftPressed = false;
-    topDownObject.keyRightPressed = false;
-    topDownObject.keyUpPressed = false;
-    topDownObject.keyDownPressed = false;
-    topDownObject.maxSpeed = (!args.maxSpeed && args.maxSpeed != 0) ? 300 : args.maxSpeed;
-    //Facing can be 1-8 where 1 is facing up and the others follow clockwise.
-    topDownObject.facing = 1;
-    //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
-    
-    topDownObject.update = function() {
-
-    };
-
-    topDownObject.initialize = function() {
-        this.invalidated = true;
-        this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
-        this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
-        this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
-        this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
-        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
-        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
-        this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
-        this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
-    };
-
-    topDownObject.calculateSpeed = function()
-    {    
-        var maxSpeed = this.maxSpeed;
-        var angularMaxSpeed = GameCreator.helperFunctions.calcAngularSpeed(maxSpeed);
-        //Should only be able to affect movement if there is something beneath object.
-        if(this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
-            this.facing = 1;
-            this.speedX = 0;
-            this.speedY = -maxSpeed;
-        }
-        
-        else if(this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
-            this.facing = 2;
-            this.speedX = angularMaxSpeed;
-            this.speedY = -angularMaxSpeed;
-        }
-        
-        else if(!this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
-            this.facing = 3;
-            this.speedX = maxSpeed;
-            this.speedY = 0;
-        }
-
-        else if(!this.parent.keyUpPressed && this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
-            this.facing = 4;
-            this.speedX = angularMaxSpeed;
-            this.speedY = angularMaxSpeed;
-        }
-        
-        else if(!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
-            this.facing = 5;
-            this.speedX = 0;
-            this.speedY = maxSpeed;
-        }
-        
-        else if(!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && this.parent.keyLeftPressed) {
-            this.facing = 6;
-            this.speedX = -angularMaxSpeed;
-            this.speedY = angularMaxSpeed;
-        }
-        
-        else if(!this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
-            this.facing = 7;
-            this.speedX = -maxSpeed;
-            this.speedY = 0;
-        }
-        
-        else if(this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
-            this.facing = 8;
-            this.speedX = -angularMaxSpeed;
-            this.speedY = -angularMaxSpeed;
-        }
-        
-        else
-        {
-            Math.abs(this.speedX) < 0.1 ? this.speedX = 0 : this.speedX *= 0.9;
-            Math.abs(this.speedY) < 0.1 ? this.speedY = 0 : this.speedY *= 0.9;
-        }
-    }
-    
-    topDownObject.onGameStarted = function(){
-        var that = this;
-        $(document).on("keydown.gameKeyListener", function(e){
-            switch(e.which){
-                case 32:
-                that.keyPressed.space = true;
-                break;
-                
-                case 37:
-                that.keyLeftPressed = true;
-                break;
-                
-                case 38:
-                that.keyUpPressed = true;
-                break;
-                
-                case 39:
-                that.keyRightPressed = true;
-                break;
-                
-                case 40:
-                that.keyDownPressed = true;
-                break;
-                
-                default: return;
-            }
-            e.preventDefault();
-        });
-        
-        $(document).on("keyup.gameKeyListener", function(e){
-            switch(e.which){
-                case 32:
-                that.keyPressed.space = false;
-                break;
-            
-                case 37:
-                that.keyLeftPressed = false;
-                break;
-
-                case 38:
-                that.keyUpPressed = false;
-                break;
-                
-                case 39:
-                that.keyRightPressed = false;
-                break;
-                
-                case 40:
-                that.keyDownPressed = false;
-                break;
-                
-                default: return;    
-            }
-            e.preventDefault();
-        });
-    }
-    
-    topDownObject.shoot = function(staticParameters){
-        var x = 0, y = 0, speedX = 0, speedY = 0;
-        var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
-        var angularSpeed = GameCreator.helperFunctions.calcAngularSpeed(projectileSpeed);
-        switch(staticParameters.projectileDirection) {
-            case "Default":
-            var facing = this.facing;
-            switch(facing){
-                case 1:
-                    x = this.x + this.width / 2;
-                    y = this.y;
-                    speedY = -projectileSpeed;
-                    break;
-                
-                case 2:
-                    x = this.x + this.width;
-                    y = this.y;
-                    speedX = angularSpeed;
-                    speedY = -angularSpeed;
-                    break;
-                
-                case 3:
-                    x = this.x + this.width;
-                    y = this.y + this.height / 2;
-                    speedX = projectileSpeed;
-                    break;
-                
-                case 4:
-                    x = this.x + this.width;
-                    y = this.y + this.height;
-                    speedX = angularSpeed;
-                    speedY = angularSpeed;
-                    break;
-                
-                case 5:
-                    x = this.x + this.width / 2;
-                    y = this.y + this.height;
-                    speedY = projectileSpeed;
-                    break;
-                
-                case 6:
-                    x = this.x;
-                    y = this.y + this.height;
-                    speedX = -angularSpeed;
-                    speedY = angularSpeed;
-                    break;
-                
-                case 7:
-                    x = this.x;
-                    y = this.y + this.height / 2;
-                    speedX = -projectileSpeed;
-                    break;
-                
-                case 8:
-                    x = this.x;
-                    y = this.y;
-                    speedX = -angularSpeed;
-                    speedY = -angularSpeed;
-                    break;
-            }
+GameCreator.TopDownObject.prototype.onGameStarted = function(){
+    var that = this;
+    $(document).on("keydown.gameKeyListener", function(e){
+        switch(e.which){
+            case 32:
+            that.keyPressed.space = true;
             break;
             
-            case "Up":
+            case 37:
+            that.keyLeftPressed = true;
+            break;
+            
+            case 38:
+            that.keyUpPressed = true;
+            break;
+            
+            case 39:
+            that.keyRightPressed = true;
+            break;
+            
+            case 40:
+            that.keyDownPressed = true;
+            break;
+            
+            default: return;
+        }
+        e.preventDefault();
+    });
+    
+    $(document).on("keyup.gameKeyListener", function(e){
+        switch(e.which){
+            case 32:
+            that.keyPressed.space = false;
+            break;
+        
+            case 37:
+            that.keyLeftPressed = false;
+            break;
+
+            case 38:
+            that.keyUpPressed = false;
+            break;
+            
+            case 39:
+            that.keyRightPressed = false;
+            break;
+            
+            case 40:
+            that.keyDownPressed = false;
+            break;
+            
+            default: return;    
+        }
+        e.preventDefault();
+    });
+}
+
+GameCreator.TopDownObject.prototype.shoot = function(staticParameters){
+    var x = 0, y = 0, speedX = 0, speedY = 0;
+    var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
+    var angularSpeed = GameCreator.helperFunctions.calcAngularSpeed(projectileSpeed);
+    switch(staticParameters.projectileDirection) {
+        case "Default":
+        var facing = this.facing;
+        switch(facing){
+            case 1:
                 x = this.x + this.width / 2;
                 y = this.y;
                 speedY = -projectileSpeed;
                 break;
             
-            case "Down":
+            case 2:
+                x = this.x + this.width;
+                y = this.y;
+                speedX = angularSpeed;
+                speedY = -angularSpeed;
+                break;
+            
+            case 3:
+                x = this.x + this.width;
+                y = this.y + this.height / 2;
+                speedX = projectileSpeed;
+                break;
+            
+            case 4:
+                x = this.x + this.width;
+                y = this.y + this.height;
+                speedX = angularSpeed;
+                speedY = angularSpeed;
+                break;
+            
+            case 5:
                 x = this.x + this.width / 2;
                 y = this.y + this.height;
                 speedY = projectileSpeed;
                 break;
             
-            case "Left":
+            case 6:
+                x = this.x;
+                y = this.y + this.height;
+                speedX = -angularSpeed;
+                speedY = angularSpeed;
+                break;
+            
+            case 7:
                 x = this.x;
                 y = this.y + this.height / 2;
                 speedX = -projectileSpeed;
                 break;
             
-            case "Right":
-                x = this.x + this.width;
-                y = this.y + this.height / 2;
-                speedX = projectileSpeed;
-                break;
-
-            default:
-                var target = GameCreator.getRuntimeObject(staticParameters.projectileDirection);
-                if (!target) {
-                    // We did not find the target, return without shooting anything.
-                    return;
-                }
-                x = this.x + (this.facingLeft ? 0 : this.width)
+            case 8:
+                x = this.x;
                 y = this.y;
-                var unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
-                speedX = unitVector.x * projectileSpeed;
-                speedY = unitVector.y * projectileSpeed;
+                speedX = -angularSpeed;
+                speedY = -angularSpeed;
+                break;
         }
-        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
+        break;
+        
+        case "Up":
+            x = this.x + this.width / 2;
+            y = this.y;
+            speedY = -projectileSpeed;
+            break;
+        
+        case "Down":
+            x = this.x + this.width / 2;
+            y = this.y + this.height;
+            speedY = projectileSpeed;
+            break;
+        
+        case "Left":
+            x = this.x;
+            y = this.y + this.height / 2;
+            speedX = -projectileSpeed;
+            break;
+        
+        case "Right":
+            x = this.x + this.width;
+            y = this.y + this.height / 2;
+            speedX = projectileSpeed;
+            break;
+
+        default:
+            var target = GameCreator.getRuntimeObject(staticParameters.projectileDirection);
+            if (!target) {
+                // We did not find the target, return without shooting anything.
+                return;
+            }
+            x = this.x + (this.facingLeft ? 0 : this.width)
+            y = this.y;
+            var unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
+            speedX = unitVector.x * projectileSpeed;
+            speedY = unitVector.y * projectileSpeed;
     }
+    GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
 }

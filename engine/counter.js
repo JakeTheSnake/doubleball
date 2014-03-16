@@ -157,92 +157,77 @@ GameCreator.sceneObjectCounter = {
 	},
 }
 
-GameCreator.counter = {
+GameCreator.Counter = function() {
+	this.onIncrease = [];
+	this.onDecrease = [];
+	this.atValue = {};
+	this.aboveValue = {};
+	this.belowValue = {};
+	this.initialValue = 0;
+}
+
+GameCreator.CounterObject = function(image, args) {
+	this.image = image;
+	this.objectName = args.objectName;
+	this.isClickable =  false;
+	if(args.representation === 'text') {
+		this.textCounter = true;
+		this.font = args.font || 'Arial';
+		this.color = args.color || '#000';
+		this.size = args.size || 20;
+		this.image.src = 'assets/textcounter.png';
+	} else if (args.representation === 'image') {
+		this.imageCounter = true;
+		this.size = args.size || 20;
+	}
 	
-	initialValue: 0,
+	this.width = [100]; //TODO: How to handle width and height of counters?
+	this.height = [100];
 	
-	New: function(){
-		var obj = Object.create(GameCreator.counter);
-		obj.onIncrease = [];
-		obj.onDecrease = [];
-		obj.atValue = {};
-		obj.aboveValue = {};
-		obj.belowValue = {};
-		obj.initialValue = 0;
-		return obj;
+	this.isRenderable = true;
+	
+	this.objectType = "counterObject";
+
+	GameCreator.globalObjects[this.objectName] = this;
+}
+	
+GameCreator.CounterObject.prototype.draw = function(context, obj) {
+	GameCreator.invalidate(obj); //TODO: Handle this in a better way.
+	var value = obj.parent.textCounter ? "---" : 0;
+	var sceneObject = GameCreator.getSceneObjectById(obj.counterObject);
+	if (sceneObject) {
+		if (sceneObject.parent.unique && sceneObject.parent.counters[obj.counterName]) {
+			value = sceneObject.parent.counters[obj.counterName].value;
+		} else if (sceneObject.counters[obj.counterName]) {
+			value = sceneObject.counters[obj.counterName].value;
+		}
+	}
+	if(obj.parent.textCounter) {
+		context.font = obj.size + "px " + obj.font;
+		context.fillStyle = obj.color;
+		context.fillText(value, obj.x, obj.y + obj.size);
+	} else if (obj.parent.imageCounter){
+		if (obj.parent.imageReady) {
+			//Draw 3 semitransparent icons if in edit mode. 
+		    if(GameCreator.state === 'editing') {
+				value = 3;
+				context.globalAlpha = 0.5;
+			} else {
+				context.globalAlpha = 1;
+			}
+			for(var i = 0; i < value; i++) {
+				context.drawImage(obj.parent.image, obj.x + i * obj.size + i * 3, obj.y, obj.size, obj.size);
+			}
+		}
 	}
 }
 
-GameCreator.counterObject = {
-	
-	isClickable: false,
-	
-	New: function(image, args) {
-		var obj = Object.create(GameCreator.counterObject);
-		
-		obj.image = image;
-		obj.name = args.name;
-		
-		if(args.representation === 'text') {
-			obj.textCounter = true;
-			obj.font = args.font || 'Arial';
-			obj.color = args.color || '#000';
-			obj.size = args.size || 20;
-			obj.image.src = 'assets/textcounter.png';
-		} else if (args.representation === 'image') {
-			obj.imageCounter = true;
-			obj.size = args.size || 20;
-		}
-		
-		obj.width = [100]; //TODO: How to handle width and height of counters?
-		obj.height = [100];
-		
-		obj.isRenderable = true;
-		
-		obj.objectType = "counterObject";
-	
-		GameCreator.globalObjects[obj.name] = obj;
-		
-		return obj;
-	},
-	
-	draw: function(context, obj) {
-		GameCreator.invalidate(obj); //TODO: Handle this in a better way.
-		var value = obj.parent.textCounter ? "---" : 0;
-		var sceneObject = GameCreator.getSceneObjectById(obj.counterObject);
-		if (sceneObject) {
-			if (sceneObject.parent.unique && sceneObject.parent.counters[obj.counterName]) {
-				value = sceneObject.parent.counters[obj.counterName].value;
-			} else if (sceneObject.counters[obj.counterName]) {
-				value = sceneObject.counters[obj.counterName].value;
-			}
-		}
-    	if(obj.parent.textCounter) {
-    		context.font = obj.size + "px " + obj.font;
-    		context.fillStyle = obj.color;
-    		context.fillText(value, obj.x, obj.y + obj.size);
-    	} else if (obj.parent.imageCounter){
-    		if (obj.parent.imageReady) {
-    			//Draw 3 semitransparent icons if in edit mode. 
-			    if(GameCreator.state === 'editing') {
-					value = 3;
-					context.globalAlpha = 0.5;
-				} else {
-					context.globalAlpha = 1;
-				}
-    			for(var i = 0; i < value; i++) {
-    				context.drawImage(obj.parent.image, obj.x + i * obj.size + i * 3, obj.y, obj.size, obj.size);
-				}
-			}
-    	}
-	},
-	
-	initialize: function() {
-		this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
-        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
-	},
-	
-	onGameStarted: function() {},
-	
-	onCreate: function() {}
+GameCreator.CounterObject.prototype.initialize = function() {
+	this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
+    this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
 }
+
+GameCreator.CounterObject.prototype.onGameStarted = function() {}
+
+GameCreator.CounterObject.prototype.onCreate = function() {}
+

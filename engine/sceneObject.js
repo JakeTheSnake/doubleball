@@ -17,7 +17,7 @@ GameCreator.sceneObject = {
     parent: undefined,
     
     //Name of object, by default same as the name of global object from which it was created.
-    name: undefined,
+    objectName: undefined,
     
     //Unique ID for this specific scene object.
     instanceId: undefined,
@@ -46,8 +46,8 @@ GameCreator.sceneObject = {
         this.width = args.width != undefined ? args.width : globalObj.width;
         this.height = args.height != undefined ? args.height : globalObj.height;
         this.parent = globalObj;
-        this.name = args.name != undefined ? args.name : globalObj.name;
-        this.instanceId = this.name + GameCreator.getUniqueId();
+        this.objectName = args.objectName != undefined ? args.objectName : globalObj.objectName;
+        this.instanceId = this.objectName + GameCreator.getUniqueId();
         
         //PlayerMouse properties
         

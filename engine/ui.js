@@ -9,7 +9,7 @@ GameCreator.UI = {
         var obj;
         if($("#player-object-type").val() == "addPlayerMouseObject") {
             obj = GameCreator.addGlobalObject({
-                name: $("#player-object-name").val(),
+                objectName: $("#player-object-name").val(),
                 width: GameCreator.helperFunctions.getValue($("#player-object-width")),
                 height: GameCreator.helperFunctions.getValue($("#player-object-height")),
                 src: $("#player-object-src").val(),
@@ -17,25 +17,25 @@ GameCreator.UI = {
                 maxY: GameCreator.helperFunctions.getValue($("#mouse-object-maxY")),
                 minX: GameCreator.helperFunctions.getValue($("#mouse-object-minX")),
                 minY: GameCreator.helperFunctions.getValue($("#mouse-object-minY"))
-            }, "mouseObject");
+            }, "MouseObject");
         } else if($("#player-object-type").val() == "addPlayerPlatformObject") {
             obj = GameCreator.addGlobalObject({
-                name: $("#player-object-name").val(),
+                objectName: $("#player-object-name").val(),
                 width: GameCreator.helperFunctions.getValue($("#player-object-width")),
                 height: GameCreator.helperFunctions.getValue($("#player-object-height")),
                 src: $("#player-object-src").val(),
                 accY: GameCreator.helperFunctions.getValue($("#platform-object-accY")),
                 maxSpeed: GameCreator.helperFunctions.getValue($("#platform-object-max-speed")),
                 acceleration: GameCreator.helperFunctions.getValue($("#platform-object-acceleration"))
-            }, "platformObject");
+            }, "PlatformObject");
         } else if($("#player-object-type").val() == "addPlayerTopDownObject") {
             obj = GameCreator.addGlobalObject({
-                name: $("#player-object-name").val(),
+                objectName: $("#player-object-name").val(),
                 width: GameCreator.helperFunctions.getValue($("#player-object-width")),
                 height: GameCreator.helperFunctions.getValue($("#player-object-height")),
                 src: $("#player-object-src").val(),
                 maxSpeed: GameCreator.helperFunctions.getValue($("#top-down-object-max-speed"))
-            }, "topDownObject");
+            }, "TopDownObject");
         }
     },
     
@@ -285,7 +285,7 @@ GameCreator.UI = {
                 actions,
                 existingActions,
                 $("#edit-collision-actions-object-content"),
-                globalObj.name
+                globalObj.objectName
             );
         });
         $("#add-new-collision-button").on("click", function(){
@@ -314,7 +314,7 @@ GameCreator.UI = {
                 actions,
                 globalObj.keyActions[keyName],
                 $("#edit-key-actions-key-content"),
-                globalObj.name
+                globalObj.objectName
             );
         });
         $("#add-new-key-button").on("click", function(){
@@ -341,7 +341,7 @@ GameCreator.UI = {
         }
         
       var existingActions = globalObj.onClickActions;
-      GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.name);
+      GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.objectName);
     },
 
     setupEditGlobalObjectOnDestroyActionsForm: function(container, globalObj) {
@@ -359,7 +359,7 @@ GameCreator.UI = {
         }
         
         var existingActions = globalObj.onDestroyActions;
-        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.name);
+        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.objectName);
     },
 
     setupEditGlobalObjectOnCreateActionsForm: function(container, globalObj) {
@@ -372,7 +372,7 @@ GameCreator.UI = {
         }
         
         var existingActions = globalObj.onCreateActions;
-        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.name);
+        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, globalObj.objectName);
     },
     
     setupEditGlobalObjectCountersForm: function(container, globalObj) {
@@ -428,7 +428,7 @@ GameCreator.UI = {
                 actions,
                 existingActions,
                 $("#edit-counter-event-actions-content"),
-                globalObj.name
+                globalObj.objectName
             );
         }); 
     },
@@ -480,19 +480,19 @@ GameCreator.UI = {
     },
     editSceneObject: function() {
         $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.name + '</div>');
-        if(GameCreator.selectedObject.parent.objectType == "activeObject") {
+        if(GameCreator.selectedObject.parent.objectType == "ActiveObject") {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
         }
-        else if(GameCreator.selectedObject.parent.objectType == "mouseObject") {
+        else if(GameCreator.selectedObject.parent.objectType == "MouseObject") {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.editMouseObjectForm(GameCreator.selectedObject));
         }
-        else if(GameCreator.selectedObject.parent.objectType == "platformObject") {
+        else if(GameCreator.selectedObject.parent.objectType == "PlatformObject") {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.editPlatformObjectForm(GameCreator.selectedObject));
         }
-        else if(GameCreator.selectedObject.parent.objectType == "topDownObject") {
+        else if(GameCreator.selectedObject.parent.objectType == "TopDownObject") {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.editTopDownObjectForm(GameCreator.selectedObject));
         }
-        else if (GameCreator.selectedObject.parent.objectType == "counterObject") {
+        else if (GameCreator.selectedObject.parent.objectType == "CounterObject") {
             var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInScene());
             var obj = GameCreator.selectedObject;
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.editCounterObjectForm(obj, uniqueIds));

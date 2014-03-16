@@ -11,7 +11,7 @@ $.extend(GameCreator, {
     addGlobalObject: function(args, objectType) {
         var image = new Image();
         image.src = args.src;
-        var globalObj = GameCreator[objectType].New(image, args);
+        var globalObj = new GameCreator[objectType](image, args);
         globalObj.id = GameCreator.globalIdCounter++;
         GameCreator.UI.createLibraryItem(globalObj);
         image.onload = function() {
@@ -19,7 +19,7 @@ $.extend(GameCreator, {
             GameCreator.render();
         };
 
-        GameCreator.globalObjects[globalObj.name] = globalObj;
+        GameCreator.globalObjects[globalObj.objectName] = globalObj;
         
         return globalObj;
     },
@@ -128,7 +128,7 @@ $.extend(GameCreator, {
         for(var counterName in counterCarrier.counters){
             if(counterCarrier.counters.hasOwnProperty(counterName)){
                 counterCarrier.counters[counterName].parentCounter = counterName;
-                counterCarrier.counters[counterName].parentObject = newObject.counters[counterName].parentObject.name;
+                counterCarrier.counters[counterName].parentObject = newObject.counters[counterName].parentObject.objectName;
             }
         }
     },
@@ -167,7 +167,7 @@ $.extend(GameCreator, {
                 this.dereferenceCounters(newObject);
 
                 newObject.imageSrc = $(oldObject.image).attr("src");
-                results.globalObjects[newObject.name] = newObject;
+                results.globalObjects[newObject.objectName] = newObject;
             }
         };
         
@@ -181,7 +181,7 @@ $.extend(GameCreator, {
                 GameCreator.resetCounters(oldObject, oldObject.parent.parentCounters);
                 var newObject = jQuery.extend({}, oldObject);
                 //Need to save the name of the global object parent rather than the reference so it can be JSONified.
-                newObject.parent = oldObject.parent.name;
+                newObject.parent = oldObject.parent.objectName;
                 //Same for counters
                 this.dereferenceCounters(newObject);
                 newObject.instantiate = undefined;
@@ -225,7 +225,7 @@ $.extend(GameCreator, {
             var savedScene = parsedSave.scenes[i];
             for(var n = 0; n < savedScene.length; n++) {
                 var object = savedScene[n];
-                GameCreator.createSceneObject(GameCreator.globalObjects[object.name], newScene, object);
+                GameCreator.createSceneObject(GameCreator.globalObjects[object.objectName], newScene, object);
                 GameCreator.referenceCounters(object);
             }
             GameCreator.scenes.push(newScene);

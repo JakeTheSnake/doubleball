@@ -1,6 +1,5 @@
-GameCreator.BaseObject = function(){
+GameCreator.BaseObject = function() {
     this.image = undefined;
-    this.name = undefined;
     this.width = 0;
     this.height = 0;
     this.imageReady = false;
@@ -13,24 +12,24 @@ GameCreator.BaseObject = function(){
      * Called when an object is being destroyed through an action. Marks
      * this object for imminent destruction and carries out onDestroy-actions.
      */
-GameCreator.BaseObject.prototype.destroy = function(){
+GameCreator.BaseObject.prototype.destroy = function() {
     GameCreator.objectsToDestroy.push(this);
     this.parent.onDestroy.call(this);
 };
 
-GameCreator.BaseObject.prototype.onDestroy = function(){
+GameCreator.BaseObject.prototype.onDestroy = function() {
     this.parent.runOnDestroyActions.call(this);
 }
 
-GameCreator.BaseObject.prototype.runOnDestroyActions = function(){
+GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
     if (!GameCreator.paused) {
         if (!this.parent.onDestroyActions && GameCreator.state !== 'playing') {
             this.parent.onDestroyActions = [];
             GameCreator.UI.openEditActionsWindow(
-                "'" + this.parent.name + "' is has been destroyed!",
+                "'" + this.parent.objectName + "' is has been destroyed!",
                 GameCreator.actionGroups.nonCollisionActions,
                 this.parent.onDestroyActions,
-                this.name
+                this.objectName
             );
             return;
         }
@@ -51,10 +50,10 @@ GameCreator.BaseObject.prototype.runOnCreateActions = function(){
         if (!this.parent.onCreateActions && GameCreator.state !== 'playing') {
             this.parent.onCreateActions = [];
             GameCreator.UI.openEditActionsWindow(
-                "'" + this.parent.name + "' has been created!",
+                "'" + this.parent.objectName + "' has been created!",
                 GameCreator.actionGroups.nonCollisionActions,
                 this.parent.onCreateActions,
-                this.name
+                this.objectName
             );
         }
         if (this.parent.onCreateActions) {
@@ -134,3 +133,26 @@ GameCreator.BaseObject.prototype.draw = function(context, obj) {
         obj.invalidated = false;
     }
 };
+
+GameCreator.BaseObject.createFromSaved = function(savedObject){    
+    var obj = new GameCreator[objectType](image, args);
+    
+    var image = new Image();
+    image.src = savedObject.imageSrc;
+    obj.image = image;    
+    
+    image.onload = function() {
+        obj.imageReady = true;
+        GameCreator.render();
+    };
+    
+    for(var name in savedObject){
+        if (savedObject.hasOwnProperty(name)) {
+            obj[name] = savedObject[name];    
+        }
+    }
+    
+    GameCreator.globalObjects[obj.objectName] = obj;
+    
+    return obj;
+}

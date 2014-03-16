@@ -8,7 +8,7 @@ var caption;
 module("ActionTests", {
   setup: function() {
     container = $("#qunit-fixture");
-    redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", name: "red_ball", width:[20], height:[30]}, "activeObject");
+    redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
     existingActions = [];
     caption = "An object collided with yo mama";
     GameCreator.UI.createEditActionsArea(caption, GameCreator.actions,
