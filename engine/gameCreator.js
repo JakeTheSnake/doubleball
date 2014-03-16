@@ -66,9 +66,9 @@ var GameCreator = {
     },
 
     runFrame: function(deltaTime) {
-        GameCreator.updateSpeedForAllObjects();
+        GameCreator.updateSpeedForAllObjects(deltaTime);
         GameCreator.checkCollisions();
-        GameCreator.moveAllObjects();
+        GameCreator.moveAllObjects(deltaTime);
         GameCreator.checkKeyEvents();
         GameCreator.timerHandler.update(deltaTime);
         GameCreator.cleanupDestroyedObjects();
@@ -76,7 +76,7 @@ var GameCreator = {
         GameCreator.debug.calculateDebugInfo(deltaTime);
     },
 
-    updateSpeedForAllObjects: function() {
+    updateSpeedForAllObjects: function(deltaTime) {
         for (var i = 0; i < GameCreator.movableObjects.length; ++i) {
             if (!GameCreator.paused) {
                 var runtimeObj = GameCreator.movableObjects[i];
@@ -94,7 +94,7 @@ var GameCreator = {
         }
     },  
 
-    moveAllObjects: function() {
+    moveAllObjects: function(deltaTime) {
         for (var i = 0; i < GameCreator.movableObjects.length; ++i) {
             if (!GameCreator.paused) {
                 var runtimeObj = GameCreator.movableObjects[i];
