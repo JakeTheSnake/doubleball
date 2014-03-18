@@ -72,7 +72,7 @@ GameCreator.helperFunctions.doCollision = function(object, targetObject){
     {
         for (var j = 0; j < currentActionsItem.actions.length; j++) {
             currentActionsItem.actions[j].parameters.collisionObject = targetObject;
-            GameCreator.helperFunctions.runAction(object, currentActionsItem.actions[j]);
+            currentActionsItem.actions[j].runAction(object);
         }
     }
     else if (GameCreator.state !== 'playing')
@@ -283,37 +283,6 @@ GameCreator.helperFunctions.getRandomFromRange = function(range) {
         value = parseInt(range);
     }
     return value;
-};
-
-GameCreator.helperFunctions.runAction = function(runtimeObj, actionToRun) {
-    var timerFunction;
-    var timing = actionToRun.timing;
-    var parameters = actionToRun.parameters;
-    if (timing.type === "after") {
-        timerFunction = GameCreator.timerHandler.registerOffset;
-    } else if (timing.type === "at") {
-        timerFunction = GameCreator.timerHandler.registerFixed;
-    } else if (timing.type === "every") {
-        timerFunction = GameCreator.timerHandler.registerInterval;
-    } else {
-        if(GameCreator.actions[actionToRun.name].runnable.call(runtimeObj)) {
-	        GameCreator.actions[actionToRun.name].action.call(runtimeObj, parameters);
-        }
-        return;
-    }
-
-    (function(obj, curAction, curTimerFunction){
-        curTimerFunction(
-            GameCreator.helperFunctions.getRandomFromRange(curAction.timing.time),
-            function() {
-                if (GameCreator.actions[curAction.name].runnable.call(obj)) {
-                    GameCreator.actions[curAction.name].action.call(obj, curAction.parameters);
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-    })(runtimeObj, actionToRun, timerFunction);
 };
 
 GameCreator.helperFunctions.calculateScene = function(activeScene, params){

@@ -4,20 +4,50 @@ GameCreator.Action = function(args) {
     this.timing = args.timing;
     this.name = args.name;
     this.excludes = args.excludes || [];
+    if (args.runnableFunction) {
+        this.runnable = args.runnableFunction;
+    }
 }
 
 GameCreator.Action.prototype.runnable = function() {return !this.isDestroyed;}
 
-GameCreator.createAction = function(args, runnableFunction) {
-    var action = new GameCreator.Action(args);
-    if (runnableFunction) {
-        action.runnable = runnableFunction;
+GameCreator.RuntimeAction = function(name, parameters, timing) {
+    this.actionName = name;
+    this.parameters = parameters || {};
+    this.timing = timing || {};
+}
+
+GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj) {
+    var timerFunction;
+    if (this.timing.type === "after") {
+        timerFunction = GameCreator.timerHandler.registerOffset;
+    } else if (this.timing.type === "at") {
+        timerFunction = GameCreator.timerHandler.registerFixed;
+    } else if (this.timing.type === "every") {
+        timerFunction = GameCreator.timerHandler.registerInterval;
+    } else {
+        if(GameCreator.actions[this.actionName].runnable.call(runtimeObj)) {
+          GameCreator.actions[this.actionName].action.call(runtimeObj, this.parameters);
+        }
+        return;
     }
-    return action;
+
+    (function(thisRuntimeObj) {
+    timerFunction(
+        GameCreator.helperFunctions.getRandomFromRange(thisRuntimeObj.timing.time),
+        function() {
+            if (GameCreator.actions[thisRuntimeObj.actionName].runnable.call(thisRuntimeObj)) {
+                GameCreator.actions[thisRuntimeObj.actionName].action.call(thisRuntimeObj, thisRuntimeObj.parameters);
+                return true;
+            } else {
+                return false;
+            }
+        });
+  })(this);
 }
 
 GameCreator.actions = {
-      Bounce: GameCreator.createAction(
+      Bounce: new GameCreator.Action(
                     {
                       action: function(params) {this.parent.bounce.call(this, params)},
                       name: "Bounce",
@@ -26,7 +56,7 @@ GameCreator.actions = {
                     }
                   )
                 ,
-      Stop:  GameCreator.createAction(
+      Stop:  new GameCreator.Action(
                     {   
                       action: function(params) {this.parent.stop.call(this, params)},
                       name: "Stop",
@@ -36,7 +66,7 @@ GameCreator.actions = {
                   )
                 ,
 
-      Destroy: GameCreator.createAction(
+      Destroy: new GameCreator.Action(
                     {  
                       action: function(params) {this.parent.destroy.call(this, params)},
                       name: "Destroy",
@@ -45,7 +75,7 @@ GameCreator.actions = {
                     }
                   )
                 ,
-      Shoot:   GameCreator.createAction(
+      Shoot:   new GameCreator.Action(
                     {    
                       action: function(params) {this.parent.shoot.call(this, params)},
                       params: [{    inputId: "objectToShoot",
@@ -63,12 +93,11 @@ GameCreator.actions = {
                                 label: function() {return GameCreator.htmlStrings.inputLabel("projectileDirection", "Direction")}
                              }],
                       name: "Shoot",
-                      excludes: [],
                       timing: {at: true, every: true, after: true},
                     }
                   )
                 ,
-      Create:   GameCreator.createAction(
+      Create:   new GameCreator.Action(
                     {    
                       action: function(params){GameCreator.createRuntimeObject(params, {})},
                       params: [{
@@ -88,11 +117,11 @@ GameCreator.actions = {
                              }],
                       name: "Create",
                       timing: {at: true, every: true, after: true},
-                    },
-                    function() {return true;}
+                      runnableFunction: function() {return true;}
+                    }
                   )
                 ,
-      Counter:	GameCreator.createAction(
+      Counter:	new GameCreator.Action(
                     {
                       action: function(params){GameCreator.changeCounter(this, params)},
                       params: [{
@@ -126,18 +155,17 @@ GameCreator.actions = {
                   }
                 )
               ,
-      Restart: GameCreator.createAction(
+      Restart: new GameCreator.Action(
                   {
                     action: GameCreator.restartGame,
                     name: "Restart",
                     excludes: ["Bounce", "Destroy", "Stop", "SwitchScene"],
                     timing: {at: true, every: false, after: true},
-                    
-                  },
-                  function(){return true;}
+                    runnableFunction: function() {return true;}
+                  }
                 )
               ,
-      SwitchScene: GameCreator.createAction(
+      SwitchScene: new GameCreator.Action(
                         {
                         	action: function(params){GameCreator.selectScene(params)},
                         	params: [{
@@ -154,8 +182,8 @@ GameCreator.actions = {
                         	name: "SwitchScene",
                         	excludes: ["Bounce", "Destroy", "Stop", "Restart"],
                         	timing: {at: true, every: true, after: true},
-                        },
-                        function(){return true;}
+                          runnableFunction: function() {return true;}
+                        }
                       )
 };
 

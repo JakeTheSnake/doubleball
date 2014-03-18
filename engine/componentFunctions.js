@@ -64,7 +64,7 @@ GameCreator.addObjFunctions.keyObjectFunctions = function(object) {
                     {
                         for(var i = 0;i < keyAction.length;++i)
                         {
-                            GameCreator.helperFunctions.runAction(this, keyAction[i]);
+                            keyAction[i].runAction(this);
                             this.keyCooldown[key] = true;
                             // This anonymous function should ensure that keyAction in the timeout callback
                             // has the state that it has when the timeout is declared.

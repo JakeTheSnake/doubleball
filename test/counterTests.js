@@ -35,15 +35,15 @@ function commonCounterTests() {
     });
 
     test("Test OnIncrease counter event", function() {
-        var action = {action: GameCreator.testAction, parameters: {value: "changed"}, timing: {type: "now"}, name: "testAction"};
-        counter.parentCounter.onIncrease.push(action);
+        var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: "changed"}, {type: "now"});
+        counter.parentCounter.onIncrease.push(runtimeAction);
         counter.changeValue(1);
         deepEqual(testString, "changed", "OnIncrease Action");
     });
 
     test("Test OnDecrease counter event", function() {
-        var action = {action: GameCreator.testAction, parameters: {value: "changed"}, timing: {type: "now"}, name: "testAction"};
-        counter.parentCounter.onDecrease.push(action);
+        var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: "changed"}, {type: "now"});
+        counter.parentCounter.onDecrease.push(runtimeAction);
         counter.changeValue(-1);
         deepEqual(testString, "changed", "OnDecrease action");
     });
@@ -58,7 +58,10 @@ module("UniqueCounter", {
         GameCreator.createSceneObject(redBall, GameCreator.scenes[1], {x: 5, y: 6});
         counter = GameCreator.globalObjects["red_ball"].counters["testCounter"];
         testString = "";
-        GameCreator.actions["testAction"] = {action: function(params) {testString = params.value;}, runnable: function() {return true;} };
+        GameCreator.actions["testAction"] = new GameCreator.Action({
+                                                action: function(params) {testString = params.value;},
+                                                runnable: function() {return true;}
+                                            });
         GameCreator.state = 'directing';
     },
     teardown: function() {
@@ -83,7 +86,10 @@ module("Counter", {
     GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     counter = GameCreator.scenes[0][0].counters["testCounter"];
     testString = "";
-    GameCreator.actions["testAction"] = {action: function(params) {testString = params.value;}, runnable: function() {return true;} }
+    GameCreator.actions["testAction"] = new GameCreator.Action({
+                                                action: function(params) {testString = params.value;},
+                                                runnable: function() {return true;}
+                                            });
   },
   teardown: function() {
     redBall.parentCounters["testCounter"].value = 0;

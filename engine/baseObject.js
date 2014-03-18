@@ -35,7 +35,7 @@ GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
         }
         if (this.parent.onDestroyActions) {
             for (var i = 0; i < this.parent.onDestroyActions.length; i++) {
-                GameCreator.helperFunctions.runAction(this, this.parent.onDestroyActions[i]);
+                this.parent.onDestroyActions[i].runAction(this);
             }
         }
     }
@@ -58,7 +58,7 @@ GameCreator.BaseObject.prototype.runOnCreateActions = function(){
         }
         if (this.parent.onCreateActions) {
             for (var i = 0; i < this.parent.onCreateActions.length; i++) {
-                GameCreator.helperFunctions.runAction(this, this.parent.onCreateActions[i]);
+                this.parent.onCreateActions[i].runAction(this);
             }
         }
         var index = GameCreator.newlyCreatedObjects.indexOf(this);
