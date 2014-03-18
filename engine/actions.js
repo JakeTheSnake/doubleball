@@ -12,7 +12,7 @@ GameCreator.Action = function(args) {
 GameCreator.Action.prototype.runnable = function() {return !this.isDestroyed;}
 
 GameCreator.RuntimeAction = function(name, parameters, timing) {
-    this.actionName = name;
+    this.name = name;
     this.parameters = parameters || {};
     this.timing = timing || {};
 }
@@ -26,24 +26,24 @@ GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj) {
     } else if (this.timing.type === "every") {
         timerFunction = GameCreator.timerHandler.registerInterval;
     } else {
-        if(GameCreator.actions[this.actionName].runnable.call(runtimeObj)) {
-          GameCreator.actions[this.actionName].action.call(runtimeObj, this.parameters);
+        if(GameCreator.actions[this.name].runnable.call(runtimeObj)) {
+          GameCreator.actions[this.name].action.call(runtimeObj, this.parameters);
         }
         return;
     }
 
-    (function(thisRuntimeObj) {
+    (function(thisAction, thisRuntimeObj) {
     timerFunction(
-        GameCreator.helperFunctions.getRandomFromRange(thisRuntimeObj.timing.time),
+        GameCreator.helperFunctions.getRandomFromRange(thisAction.timing.time),
         function() {
-            if (GameCreator.actions[thisRuntimeObj.actionName].runnable.call(thisRuntimeObj)) {
-                GameCreator.actions[thisRuntimeObj.actionName].action.call(thisRuntimeObj, thisRuntimeObj.parameters);
+            if (GameCreator.actions[thisAction.name].runnable.call(thisRuntimeObj)) {
+                GameCreator.actions[thisAction.name].action.call(thisRuntimeObj, thisAction.parameters);
                 return true;
             } else {
                 return false;
             }
         });
-  })(this);
+  })(this, runtimeObj);
 }
 
 GameCreator.actions = {
