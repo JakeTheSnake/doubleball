@@ -28,9 +28,9 @@ GameCreator.TopDownObject = function(image, args){
 
 GameCreator.TopDownObject.prototype = Object.create(GameCreator.BaseObject.prototype);
 
-GameCreator.addObjFunctions.stoppableObjectFunctions(GameCreator.ActiveObject.prototype);
-GameCreator.addObjFunctions.bounceableObjectFunctions(GameCreator.ActiveObject.prototype);
-GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.ActiveObject.prototype);
+GameCreator.addObjFunctions.stoppableObjectFunctions(GameCreator.TopDownObject.prototype);
+GameCreator.addObjFunctions.bounceableObjectFunctions(GameCreator.TopDownObject.prototype);
+GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.TopDownObject.prototype);
 
 GameCreator.TopDownObject.prototype.initialize = function() {
     this.invalidated = true;

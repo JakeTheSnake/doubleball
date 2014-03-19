@@ -95,7 +95,7 @@ GameCreator.sceneObject = {
         this.counters = {};
         GameCreator.resetCounters(this, this.parent.parentCounters);
     },
-    delete: function() {
+    remove: function() {
         var activeScene = GameCreator.scenes[GameCreator.activeScene];
         activeScene.splice(activeScene.indexOf(this), 1);
         GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(this), 1);
