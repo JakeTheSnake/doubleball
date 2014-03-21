@@ -137,15 +137,17 @@ GameCreator.UI = {
         
         $( "#select-action-add-action" ).click(function( event ) {                
             var action = choosableActions[$("#action-selector").val()];
-            var selectedAction = new GameCreator.RuntimeAction(action.name);
+            var parameters = {};
 
             for (var i = 0; i < action.params.length; i++) {
-                selectedAction.parameters[action.params[i].inputId] = GameCreator.helperFunctions.getValue($("#" + action.params[i].inputId));
+                parameters[action.params[i].inputId] = GameCreator.helperFunctions.getValue($("#" + action.params[i].inputId));
             }
             
             var timingType = GameCreator.helperFunctions.getValue($("#timing-selector"));
             var timingTime = GameCreator.helperFunctions.getValue($("#timing-time"));
-            selectedAction.timing = {type: timingType, time: timingTime};
+            var timing = {type: timingType, time: timingTime};
+
+            var selectedAction = new GameCreator.RuntimeAction(action.name, parameters, timing);
             selectedActions.push(selectedAction);
             
             $("#select-action-result").html(GameCreator.htmlStrings.selectedActionsList(selectedActions));

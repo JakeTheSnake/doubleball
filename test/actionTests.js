@@ -128,4 +128,48 @@ test("Run timed Action every 1000 ms", function() {
     deepEqual(testValue, 2, "Action was run at 2000 ms");
 });
 
+module("Real Action Tests", {
+  setup: function() {
+    redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+  },
+  teardown: function() {
+  }
+});
+
+function setupCollisionEventForNewObject(action, parameters) {
+    var parameters = parameters || {};
+    var timing = {type: "now"};
+    var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
+    redBall.collisionActions.push({id: GameCreator.borderObjects.borderL.id, actions: [bounceAction]});
+    return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
+}
+
+test("Bounce Action Test", function() {
+    var runtimeObj = setupCollisionEventForNewObject("Bounce");
+
+    GameCreator.checkCollisions();
+
+    deepEqual(runtimeObj.speedX, 500, "Speed was negated with bounce.");
+});
+
+test("Stop Action Test", function() {
+    var runtimeObj = setupCollisionEventForNewObject("Stop");
+
+    GameCreator.checkCollisions();
+
+    deepEqual(runtimeObj.speedX, 0, "Object stopped X.");
+    deepEqual(runtimeObj.speedX, 0, "Object stopped Y.");
+});
+
+
+test("Destroy Action Test", function() {
+    var runtimeObj = setupCollisionEventForNewObject("Destroy");
+
+    GameCreator.checkCollisions();
+
+    deepEqual(GameCreator.objectsToDestroy[0], runtimeObj, "Object was destroyed.");
+});
+
+
+
 })();
