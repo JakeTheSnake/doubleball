@@ -57,8 +57,7 @@
             GameCreator.then = now;
         },
         render: function (forceRender) {
-            var i;
-            var obj;
+            var i, obj;
             for (i = 0; i < GameCreator.renderableObjects.length; i += 1) {
                 obj = GameCreator.renderableObjects[i];
                 // TODO: Deactivated invalidation
@@ -216,8 +215,7 @@
             }
         },
         resumeGame: function() {
-            var i;
-            var activeScene;
+            var i, activeScene;
             GameCreator.paused = false;
             activeScene = GameCreator.scenes[GameCreator.activeScene];
             for (i = 0; i < activeScene.length; i += 1) {
@@ -268,13 +266,13 @@
         },
         getCountersForGlobalObj: function(globalObjName) {
             var obj, counter, tmpObj;
+            var result = {};
             if (GameCreator.globalObjects.hasOwnProperty(globalObjName)) {
                 obj = GameCreator.globalObjects[globalObjName];
             } else {
                 tmpObj = GameCreator.getSceneObjectById(globalObjName);
                 obj = tmpObj ? tmpObj.parent : null;
             }
-            var result = {};
             if (obj) {
                 for (counter in obj.parentCounters) {
                     if (obj.parentCounters.hasOwnProperty(counter)) {
@@ -286,10 +284,10 @@
         },
         changeCounter: function(runtimeObj, params) {
             var selectedObjectId = params.counterObject;
+            var counterCarrier;
             if (runtimeObj.name !== selectedObjectId) {
                 runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
             }
-            var counterCarrier;
             if (runtimeObj.parent.unique) {
                 counterCarrier = runtimeObj.parent;
             } else {

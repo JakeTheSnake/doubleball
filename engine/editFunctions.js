@@ -10,6 +10,7 @@
             Left: "Left",
             Right: "Right"
         },
+
         addGlobalObject: function(args, objectType) {
             var image = new Image();
             var globalObj = new GameCreator[objectType](image, args);
@@ -25,9 +26,11 @@
             GameCreator.globalObjects[globalObj.objectName] = globalObj;
             return globalObj;
         },
+
         directActiveScene: function() {
             GameCreator.directScene(GameCreator.scenes[GameCreator.activeScene]);
         },
+
         directScene: function(scene) {
             GameCreator.switchScene(scene);
             GameCreator.resetGlobalCounters();
@@ -37,6 +40,7 @@
 
             GameCreator.gameLoop();
         },
+
         drawSelectionLine: function() {
             GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             if (GameCreator.selectedObject) {
@@ -50,17 +54,19 @@
                 GameCreator.uiContext.stroke();
             }
         },
+
         stopEditing: function() {
             $(GameCreator.mainCanvas).off(".editScene");
             GameCreator.selectedObject = null;
             GameCreator.UI.unselectSceneObject();
         },
+
         editActiveScene: function() {
             this.editScene(GameCreator.scenes[GameCreator.activeScene]);
         },
+
         editScene: function(scene) {
-            var i;
-            var obj;
+            var i, obj;
             GameCreator.reset();
             GameCreator.resetScene(scene);
             GameCreator.state = 'editing';
@@ -115,6 +121,7 @@
             GameCreator.UI.setupSceneTabs(GameCreator.scenes);
             GameCreator.render(false);
         },
+
         dereferenceCounters: function(counterCarrier) {
             var counterName;
             for (counterName in counterCarrier.counters) {
@@ -124,9 +131,9 @@
                 }
             }
         },
+
         referenceCounters: function(counterCarrier) {
-            var counterName;
-            var oldCounter;
+            var counterName, oldCounter;
             for (counterName in counterCarrier.counters) {
                 if (counterCarrier.counters.hasOwnProperty(counterName)) {
                     oldCounter = counterCarrier.counters[counterName];
@@ -146,14 +153,7 @@
             //Save global objects
             var attrsToCopy = ["id", "accX", "accY", "speedX", "speedY", "collideBorderB", "collideBorderL", "collideBorderR", "collideBorderT", "collisionActions", "facing", "height", "width", "keyActions", "maxSpeed", "name", "objectType", "maxX", "maxY", "minX", "minY", "movementType", "onClickActions", "onCreateActions", "onDestroyActions", "parentCounters", "counters"];
             var objects = GameCreator.globalObjects;
-            var name;
-            var oldObject;
-            var newObject;
-            var i;
-            var attribute;
-            var scene;
-            var newScene;
-            var n;
+            var name, oldObject, newObject, i, attribute, scene, newScene, n;
             for (name in objects) {
                 if (objects.hasOwnProperty(name)) {
                     oldObject = objects[name];
@@ -193,15 +193,9 @@
             results.globalIdCounter = GameCreator.globalIdCounter;
             return JSON.stringify(results);
         },
+
         restoreState: function(savedJson) {
-            var i;
-            var n;
-            var parsedSave;
-            var name;
-            var object;
-            var newObject;
-            var newScene;
-            var savedScene;
+            var i, n, parsedSave, name, object, newObject, newScene, savedScene;
             //Remove old state
             for (i = 0; i < GameCreator.scenes.length; i += 1) {
                 for (n = 0; n < GameCreator.scenes[i].length; n += 1) {
@@ -238,39 +232,43 @@
             GameCreator.globalIdCounter = parsedSave.globalIdCounter;
             GameCreator.editScene(GameCreator.scenes[0]);
         },
+
         //Since all inputs are tagged with "data-attrName" and "data-type" we have this general function for saving all object types.
         saveFormInputToObject: function(formId, obj) {
             var inputs = $("#" + formId + " input, #" + formId + " select");
-            var input;
-            var i;
+            var input, i;
             for (i = 0; i < inputs.length; i += 1) {
                 input = $(inputs[i]);
                 obj[input.attr("data-attrName")] = GameCreator.helperFunctions.getValue(input);
             }
         },
+
         deleteSelectedObject: function() {
             GameCreator.invalidate(GameCreator.selectedObject);
             GameCreator.selectedObject.remove();
             GameCreator.unselectSceneObject();
             GameCreator.render();
         },
+
         saveSceneObject: function(formId, obj) {
             GameCreator.saveFormInputToObject(formId, obj);
             GameCreator.hideRoute();
             obj.update();
             GameCreator.render();
         },
+
         unselectSceneObject: function() {
             GameCreator.selectedObject = null;
             GameCreator.UI.unselectSceneObject();
         },
+
         hideRoute: function() {
             $(".routeNodeContainer").remove();
         },
+
         drawRoute: function(route) {
             GameCreator.hideRoute();
-            var node;
-            var i;
+            var node, i;
             for (i = 0; i < route.length; i += 1) {
                 node = route[i];
                 $("body").append(GameCreator.htmlStrings.routeNode(node, i));
@@ -280,9 +278,9 @@
                 return false;
             });
         },
+
         getClickedObjectEditing: function(x, y) {
-            var i;
-            var obj;
+            var i, obj;
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {
                 obj = GameCreator.renderableObjects[i];
                 if (x >= obj.x && x <= obj.x + obj.displayWidth && y >= obj.y && y <= obj.y + obj.displayHeight) {
@@ -293,6 +291,7 @@
             }
             return null;
         },
+
         addScene: function() {
             GameCreator.scenes.push([]);
             GameCreator.UI.setupSceneTabs(GameCreator.scenes);
