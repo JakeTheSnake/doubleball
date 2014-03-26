@@ -431,7 +431,7 @@ GameCreator.htmlStrings = {
 
     addActiveObjectForm: function() {
         var result = GameCreator.htmlStrings.inputLabel("active-object-name", "Name:") + 
-            GameCreator.htmlStrings.stringInput("active-object-name", "name", "") + '<br style="clear:both;"/>' +
+            GameCreator.htmlStrings.stringInput("active-object-name", "objectName", "") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
             GameCreator.htmlStrings.rangeInput("active-object-width", "width", "") +
             '<br style="clear:both;"/>' +
@@ -455,7 +455,7 @@ GameCreator.htmlStrings = {
     */
     
     addPlayerObjectForm: function() {
-        return 	GameCreator.htmlStrings.inputLabel("player-object-name", "Name:") + GameCreator.htmlStrings.stringInput("player-object-name", "name", "") +
+        return 	GameCreator.htmlStrings.inputLabel("player-object-name", "Name:") + GameCreator.htmlStrings.stringInput("player-object-name", "objectName", "") +
         		'<br style="clear:both;"/>' +
               	GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("player-object-width", "width", "") +
               	'<br style="clear:both;"/>' +
@@ -469,7 +469,7 @@ GameCreator.htmlStrings = {
 	
 	//Add counter object strings
 	addCounterObjectForm: function() {
-		return 	GameCreator.htmlStrings.inputLabel("counter-object-name", "Name:") + GameCreator.htmlStrings.stringInput("counter-object-name", "name", "") +
+		return 	GameCreator.htmlStrings.inputLabel("counter-object-name", "Name:") + GameCreator.htmlStrings.stringInput("counter-object-name", "objectName", "") +
         		'<br style="clear:both;"/>' +
             	GameCreator.htmlStrings.inputLabel("counter-representation", "Show as:") + 
             	GameCreator.htmlStrings.singleSelector("counter-representation", {"Text": "text", "Repeating Image": "image"}, "representation") +

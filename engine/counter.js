@@ -183,7 +183,7 @@
         this.width = [100]; //TODO: Handle width and height of counters?
         this.height = [100];
         this.isRenderable = true;
-        this.objectType = "counterObject";
+        this.objectType = "CounterObject";
         GameCreator.globalObjects[this.objectName] = this;
     };
 

@@ -2,40 +2,18 @@ GameCreator.UI = {
     addActiveObject: function(){
         var args = {};
         GameCreator.saveFormInputToObject("add-global-object-window-content", args);
-        GameCreator.addGlobalObject(args, "activeObject");
+        GameCreator.addGlobalObject(args, "ActiveObject");
     },
     
     addPlayerObject: function(){
-        var obj;
-        if($("#player-object-type").val() == "addPlayerMouseObject") {
-            obj = GameCreator.addGlobalObject({
-                objectName: $("#player-object-name").val(),
-                width: GameCreator.helperFunctions.getValue($("#player-object-width")),
-                height: GameCreator.helperFunctions.getValue($("#player-object-height")),
-                src: $("#player-object-src").val(),
-                maxX: GameCreator.helperFunctions.getValue($("#mouse-object-maxX")),
-                maxY: GameCreator.helperFunctions.getValue($("#mouse-object-maxY")),
-                minX: GameCreator.helperFunctions.getValue($("#mouse-object-minX")),
-                minY: GameCreator.helperFunctions.getValue($("#mouse-object-minY"))
-            }, "MouseObject");
-        } else if($("#player-object-type").val() == "addPlayerPlatformObject") {
-            obj = GameCreator.addGlobalObject({
-                objectName: $("#player-object-name").val(),
-                width: GameCreator.helperFunctions.getValue($("#player-object-width")),
-                height: GameCreator.helperFunctions.getValue($("#player-object-height")),
-                src: $("#player-object-src").val(),
-                accY: GameCreator.helperFunctions.getValue($("#platform-object-accY")),
-                maxSpeed: GameCreator.helperFunctions.getValue($("#platform-object-max-speed")),
-                acceleration: GameCreator.helperFunctions.getValue($("#platform-object-acceleration"))
-            }, "PlatformObject");
-        } else if($("#player-object-type").val() == "addPlayerTopDownObject") {
-            obj = GameCreator.addGlobalObject({
-                objectName: $("#player-object-name").val(),
-                width: GameCreator.helperFunctions.getValue($("#player-object-width")),
-                height: GameCreator.helperFunctions.getValue($("#player-object-height")),
-                src: $("#player-object-src").val(),
-                maxSpeed: GameCreator.helperFunctions.getValue($("#top-down-object-max-speed"))
-            }, "TopDownObject");
+        var obj, args = {};
+        GameCreator.saveFormInputToObject("add-global-object-window-content", args);
+        if ($("#player-object-type").val() == "addPlayerMouseObject") {
+            obj = GameCreator.addGlobalObject(args, "MouseObject");
+        } else if ($("#player-object-type").val() == "addPlayerPlatformObject") {
+            obj = GameCreator.addGlobalObject(args, "PlatformObject");
+        } else if ($("#player-object-type").val() == "addPlayerTopDownObject") {
+            obj = GameCreator.addGlobalObject(args, "TopDownObject");
         }
     },
     
@@ -221,9 +199,9 @@ GameCreator.UI = {
     
     
     saveCounterObject: function() {
-        var args = {};
+        var args = {src: "assets/textcounter.png"};
         GameCreator.saveFormInputToObject("add-global-object-window-content", args);
-        GameCreator.addGlobalObject(args, 'counterObject');
+        GameCreator.addGlobalObject(args, 'CounterObject');
     },
     
     //Edit global object functions
@@ -373,7 +351,7 @@ GameCreator.UI = {
             $("#edit-counters-counter-content").html(GameCreator.htmlStrings.createCounterForm());
             $("#edit-counters-counter-content .saveButton").one("click", function(){
               var counterName = $("#edit-counters-counter-content #counter-name").val();
-                globalObj.parentCounters[counterName] = GameCreator.counter.New();
+                globalObj.parentCounters[counterName] = new GameCreator.Counter();
                 GameCreator.UI.setupEditGlobalObjectCountersForm(container, globalObj);
             });
         });
@@ -471,7 +449,7 @@ GameCreator.UI = {
         $("#edit-scene-object-title").html("");
     },
     editSceneObject: function() {
-        $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.name + '</div>');
+        $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.objectName + '</div>');
         if(GameCreator.selectedObject.parent.objectType == "ActiveObject") {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.editActiveObjectForm(GameCreator.selectedObject));
         }
