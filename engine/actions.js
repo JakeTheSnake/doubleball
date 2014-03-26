@@ -6,7 +6,6 @@
         this.params = args.params || [];
         this.timing = args.timing;
         this.name = args.name;
-        this.excludes = args.excludes || [];
         if (args.runnableFunction) {
             this.runnable = args.runnableFunction;
         }
@@ -53,19 +52,16 @@
           Bounce: new GameCreator.Action({
                           action: function(params) {this.parent.bounce.call(this, params); },
                           name: "Bounce",
-                          excludes: ["Stop", "Destroy", "Bounce"],
                           timing: {at: false, every: false, after: false}
                         }),
           Stop:  new GameCreator.Action({   
                           action: function(params) {this.parent.stop.call(this, params); },
                           name: "Stop",
-                          excludes: ["Bounce", "Destroy", "Stop"],
                           timing: {at: false, every: false, after: false},
                         }),
           Destroy: new GameCreator.Action({  
                           action: function(params) {this.parent.destroy.call(this, params); },
                           name: "Destroy",
-                          excludes: ["Bounce", "Stop", "Destroy"],
                           timing: {at: true, every: false, after: true},
                         }),
           Shoot:   new GameCreator.Action({    
@@ -142,7 +138,6 @@
           Restart: new GameCreator.Action({
                         action: GameCreator.restartGame,
                         name: "Restart",
-                        excludes: ["Bounce", "Destroy", "Stop", "SwitchScene"],
                         timing: {at: true, every: false, after: true},
                         runnableFunction: function() {return true; }
                       }),
@@ -160,7 +155,6 @@
                                                 }
                                     ],
                                 name: "SwitchScene",
-                                excludes: ["Bounce", "Destroy", "Stop", "Restart"],
                                 timing: {at: true, every: true, after: true},
                               runnableFunction: function() {return true;}
                             })
