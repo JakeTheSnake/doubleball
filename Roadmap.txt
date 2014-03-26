@@ -1,16 +1,17 @@
 Version 0.2:
 
--Global event when game started.
+- Render Optimization (Test on different platforms)
 
--Render Optimization
+- Scene properties (Background).
+	-Background in separate canvas layer.
 
--Layers
-
--Object states
+- Object states (tabs under properties for the global object, preferably nameable)
     Actions:
-    	-Change Object State
--Conditions
--Debugging mode
+    	-Change Object States
+
+- Fix Issue #7
+
+- Backend
 
 DONE:
 -Unique Objects
@@ -29,6 +30,9 @@ Version 0.3
 - Variable size of playing field.
 - Fundera: Make unique objects MIRRORED!
 - Animations
+- Scene properties (state, scenestartedactions?)
+- Conditions
+- The Advanced Debugger (some way to filterable way to print info)
 
 Objects:
  	- Text
