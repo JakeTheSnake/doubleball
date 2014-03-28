@@ -16,10 +16,26 @@ GameCreator.UI = {
             obj = GameCreator.addGlobalObject(args, "TopDownObject");
         }
     },
+
+    redrawLibrary: function() {
+        var i, keys, listElementButton, globalObj;
+        $("#global-object-list").html('');
+        keys = Object.keys(GameCreator.globalObjects);
+        for (i = 0; i < keys.length; i += 1) {
+            globalObj = GameCreator.globalObjects[keys[i]];
+            listElementButton = GameCreator.htmlStrings.globalObjectEditButton(globalObj);
+            $("#global-object-list").append(listElementButton);
+            this.setupLibraryItemListeners(listElementButton, globalObj);
+        }
+    },
     
     createLibraryItem: function(globalObj) {
         var listElementButton = GameCreator.htmlStrings.globalObjectEditButton(globalObj);
         $("#global-object-list").append(listElementButton);
+        this.setupLibraryItemListeners(listElementButton, globalObj);
+    },
+
+    setupLibraryItemListeners: function(listElementButton, globalObj) {
         $(listElementButton).on("click", function(e){
             GameCreator.UI.openEditGlobalObjectDialogue(globalObj);
         });
@@ -196,8 +212,6 @@ GameCreator.UI = {
       $("#add-counter-object-counter-representation-content").html(GameCreator.htmlStrings.counterObjectTextForm());
     },
     
-    
-    
     saveCounterObject: function() {
         var args = {src: "assets/textcounter.png"};
         GameCreator.saveFormInputToObject("add-global-object-window-content", args);
@@ -225,6 +239,7 @@ GameCreator.UI = {
       container.html(html);
         container.find("#save-global-object-properties-button").on("click", function() {
             GameCreator.saveFormInputToObject("edit-global-object-properties-content", globalObj);
+            GameCreator.UI.redrawLibrary();
             GameCreator.UI.closeDialogue();
         });
     },

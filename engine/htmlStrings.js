@@ -279,24 +279,29 @@ GameCreator.htmlStrings = {
                 else {
                     result += GameCreator.htmlStrings.routeMovementInputs(object);
                 }
+                result += GameCreator.htmlStrings.imageSrcInput(object);
                 break;
             case 'MouseObject':
                 result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
                 result += '<div style="height: 10px"></div>';
                 result += GameCreator.htmlStrings.mouseMovementInputs(object);
+                result += GameCreator.htmlStrings.imageSrcInput(object);
                 break;
             case 'TopDownObject':
                 result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
                 result += '<div style="height: 10px"></div>';
                 result += GameCreator.htmlStrings.topDownMovementInputs(object);
+                result += GameCreator.htmlStrings.imageSrcInput(object);
                 break;
             case 'PlatformObject':
                 result += GameCreator.htmlStrings.globalPlayerObjectForm(object);
                 result += '<div style="height: 10px"></div>';
                 result += GameCreator.htmlStrings.platformMovementInputs(object);
+                result += GameCreator.htmlStrings.imageSrcInput(object);
                 break;
             case 'CounterObject':
                 result += GameCreator.htmlStrings.globalCounterObjectForm(object);
+                result += GameCreator.htmlStrings.imageSrcInput(object);
                 break;
             default:
                 break;
@@ -321,6 +326,7 @@ GameCreator.htmlStrings = {
                    </div><div id="edit-collision-actions-object-content"></div>';
         return result;
     },
+
     editGlobalObjectKeyActionsContent: function(object) {
         var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
         result += '<div id="add-new-key-button" class="regularButton">Add</div>';
@@ -332,6 +338,7 @@ GameCreator.htmlStrings = {
         result += '</div></div><div id="edit-key-actions-key-content"></div>';
         return result;
     },
+
     editGlobalObjectCountersContent: function(counters) {
         var result = '<div id="edit-counters-menu">';
         result += '<button id="add-new-counter-button" class="regularButton">Add</button>';
@@ -344,6 +351,7 @@ GameCreator.htmlStrings = {
         result += '<div id="edit-counter-event-actions-content"></div></div>';
         return result;
     },
+
     freeMovementInputs: function(object) {
         return GameCreator.htmlStrings.inputLabel("free-object-speedX", "SpeedX:") +
                 GameCreator.htmlStrings.rangeInput("free-object-speedX", "speedX",(object ? object.speedX : "") ) +
@@ -358,11 +366,18 @@ GameCreator.htmlStrings = {
                 GameCreator.htmlStrings.rangeInput("free-object-accY", "accY", (object ? object.accY : "") ) +
                 '<br style="clear:both;"/>';
     },
+
     routeMovementInputs: function(object) {
         return GameCreator.htmlStrings.inputLabel("route-object-speed", "Speed:") +
             GameCreator.htmlStrings.numberInput("route-object-speed", "speed", (object ? object.speed : "") ) +
             '<br style="clear:both;"/>';
     },
+
+    imageSrcInput: function(object) {
+        return GameCreator.htmlStrings.inputLabel("global-object-image-src", "Image:") + 
+            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (object && object.image ? object.image.src : ""))
+    },
+
     globalActiveObjectForm: function(object) {
         var result = GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
                 GameCreator.htmlStrings.rangeInput("active-object-width", "width", object.width) +
@@ -372,6 +387,7 @@ GameCreator.htmlStrings = {
                 '<br style="clear:both;"/>';
         return result;
     },
+
     globalPlayerObjectForm: function(object) {
         var result = '<div>' +
                 GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") +

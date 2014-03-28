@@ -6,8 +6,11 @@ Version 0.2:
 	-Background in separate canvas layer.
 
 - Object states (tabs under properties for the global object, preferably nameable)
-    Actions:
-    	-Change Object States
+	Tricky. What attributes should be governed by state?
+	SpeedX/SpeedY can't really be set by state as that would mess stuff up...
+	Make img src changeable.
+    	Actions:
+    		-Change Object States
 
 - Fix Issue #7
 
