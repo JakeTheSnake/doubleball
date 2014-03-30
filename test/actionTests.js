@@ -146,10 +146,10 @@ function setupCollisionEventForNewObject(action, parameters) {
 
 test("Bounce Action Test", function() {
     var runtimeObj = setupCollisionEventForNewObject("Bounce");
-
+    var oldSpeed = runtimeObj.speedX;
     GameCreator.checkCollisions();
 
-    deepEqual(runtimeObj.speedX, 500, "Speed was negated with bounce.");
+    deepEqual(runtimeObj.speedX, -oldSpeed, "Speed was negated with bounce.");
 });
 
 test("Stop Action Test", function() {
@@ -158,7 +158,6 @@ test("Stop Action Test", function() {
     GameCreator.checkCollisions();
 
     deepEqual(runtimeObj.speedX, 0, "Object stopped X.");
-    deepEqual(runtimeObj.speedX, 0, "Object stopped Y.");
 });
 
 
@@ -168,6 +167,37 @@ test("Destroy Action Test", function() {
     GameCreator.checkCollisions();
 
     deepEqual(GameCreator.objectsToDestroy[0], runtimeObj, "Object was destroyed.");
+});
+
+test("Create Action Test", function() {
+    setupCollisionEventForNewObject("Create", {objectToCreate: "red_ball", x: 50, y: 60});
+
+    GameCreator.checkCollisions();
+
+    deepEqual(GameCreator.renderableObjects.length, 2, "Object was created");
+    deepEqual(GameCreator.renderableObjects[1].x, 50, "Correct X coordinate");
+    deepEqual(GameCreator.renderableObjects[1].y, 60, "Correct Y coordinate");
+});
+
+test("Shoot Action Test", function() {
+    GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "projectile", width:[20], height:[30]}, "ActiveObject");
+    setupCollisionEventForNewObject("Shoot", {objectToShoot: "projectile", projectileSpeed: 500, projectileDirection: "Left"});
+
+    GameCreator.checkCollisions();
+
+    deepEqual(GameCreator.renderableObjects.length, 2, "Object was shot");
+    deepEqual(GameCreator.renderableObjects[1].speedX, -500, "Correct X coordinate");
+});
+
+test("Counter Action Test", function() {
+    redBall.parentCounters["testCounter"] = new GameCreator.Counter();
+    
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {counterObject: "red_ball", counterName: "testCounter", counterType: "Set", counterValue: 5});
+    var counter = runtimeObj.counters["testCounter"];
+
+    GameCreator.checkCollisions();
+
+    deepEqual(counter.value, 5, "Counter value was set.");
 });
 
 
