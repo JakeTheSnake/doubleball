@@ -21,6 +21,12 @@ QUnit.begin = function() {
 QUnit.testStart = function() {
     GameCreator.reset();
     GameCreator.globalObjects = [];
+    GameCreator.collidableObjects = [];
+    GameCreator.movableObjects = [];
+    GameCreator.renderableObjects = [];
+    GameCreator.eventableObjects = [];
+    GameCreator.objectsToDestroy = [];
+    GameCreator.newlyCreatedObjects = [];
     GameCreator.scenes = [];
     GameCreator.scenes.push([]);
     GameCreator.activeScene = 0;

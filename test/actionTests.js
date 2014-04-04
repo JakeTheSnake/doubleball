@@ -5,6 +5,9 @@ var redBall;
 var existingActions;
 var caption;
 var testValue;
+var platformZealot;
+var runtimeAction;
+var runtimeObject;
 
 module("ActionTests", {
   setup: function() {
@@ -201,5 +204,60 @@ test("Counter Action Test", function() {
 });
 
 
+test("SwitchScene Action Test", function() {
+    GameCreator.scenes.push([]);
+    var runtimeObj = setupCollisionEventForNewObject("SwitchScene", {changeType: "setScene", changeValue: 1});
+
+    GameCreator.checkCollisions();
+
+    deepEqual(GameCreator.activeScene, 1, "Scene was switched.");
+});
+
+module("ActionTriggers", {
+  setup: function() {
+    GameCreator.actions["testAction"] = new GameCreator.Action({
+                                                action: function(params) {testValue += params.value;},
+                                                runnable: function() {return true;}
+                                            });
+    testValue = 0;
+    platformZealot = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
+    runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
+    runtimeObject = GameCreator.createRuntimeObject(platformZealot, {x: 50, y: 60, speedX: -500, speedY: 50});
+  },
+  teardown: function() {
+    delete GameCreator.actions["testAction"];
+  }
+});
+
+function assertActionRun() {
+    deepEqual(testValue, 1, "Action was run");
+}
+
+test("Trigger action by key", function() {
+    var key = "space";
+    platformZealot.keyActions[key] = [runtimeAction];
+    platformZealot.keyPressed[key] = true;
+
+    runtimeObject.parent.checkEvents.call(runtimeObject);
+
+    assertActionRun();
+});
+
+test("Trigger action by creation", function() {
+    platformZealot.onCreateActions = [runtimeAction];
+
+    GameCreator.callOnCreateForNewObjects();
+
+    assertActionRun();
+});
+
+
+test("Trigger action by destruction", function() {
+    platformZealot.onDestroyActions = [runtimeAction];
+
+    runtimeObject.parent.destroy.call(runtimeObject);
+
+    assertActionRun();
+});
 
 })();
