@@ -3,7 +3,7 @@
     "use strict";
     $.extend(GameCreator, {
         createSceneObject: function (globalObj, scene, args) {
-            var sceneObj = Object.create(GameCreator.sceneObject);
+            var sceneObj = new GameCreator.SceneObject();
             sceneObj.instantiate(globalObj, args);
             scene.push(sceneObj);
             if (sceneObj.parent.isRenderable) {
