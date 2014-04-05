@@ -165,11 +165,12 @@ test("Stop Action Test", function() {
 
 
 test("Destroy Action Test", function() {
-    var runtimeObj = setupCollisionEventForNewObject("Destroy");
+    var runtimeObj = setupCollisionEventForNewObject("Destroy", {effect: "FadeOut"});
 
     GameCreator.checkCollisions();
 
     deepEqual(GameCreator.objectsToDestroy[0], runtimeObj, "Object was destroyed.");
+    ok(GameCreator.currentEffects[0] instanceof GameCreator.effects.FadeOut, "Effect was added");
 });
 
 test("Create Action Test", function() {

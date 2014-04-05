@@ -28,6 +28,7 @@
         eventableObjects: [],
         objectsToDestroy: [],
         newlyCreatedObjects: [],
+        currentEffects: [],
 
         addObjFunctions: {},
         helperFunctions: {},
@@ -68,7 +69,16 @@
                 //}
                 obj.parent.draw(this.mainContext, obj);
             }
+            GameCreator.drawEffects(this.mainContext);
             GameCreator.drawSelectionLine();
+        },
+
+        drawEffects: function(context) {
+            GameCreator.currentEffects.forEach(function(effect, index) {
+                if (!effect.draw(context)) {
+                    GameCreator.currentEffects.splice(index, 1);
+                }
+            });
         },
 
         runFrame: function(deltaTime) {
@@ -77,9 +87,16 @@
             GameCreator.moveAllObjects(deltaTime);
             GameCreator.checkKeyEvents();
             GameCreator.timerHandler.update(deltaTime);
+            GameCreator.updateEffects(deltaTime);
             GameCreator.cleanupDestroyedObjects();
             GameCreator.callOnCreateForNewObjects();
             GameCreator.debug.calculateDebugInfo(deltaTime);
+        },
+
+        updateEffects: function(deltaTime) {
+            GameCreator.currentEffects.forEach(function(effect, index) {
+                effect.update(deltaTime);
+            });
         },
 
         updateSpeedForAllObjects: function(deltaTime) {
@@ -151,7 +168,7 @@
                 yCorr = y;
                 y = 0;
             }
-            this.mainContext.clearRect(x, y,
+            GameCreator.mainContext.clearRect(x, y,
                 obj.displayWidth + xCorr + 1,
                 obj.displayHeight + yCorr + 1);
             obj.invalidated = true;

@@ -61,6 +61,10 @@
                         }),
           Destroy: new GameCreator.Action({  
                           action: function(params) {this.parent.destroy.call(this, params); },
+                          params: [{    inputId: "effect",
+                                     input: function() {return GameCreator.htmlStrings.singleSelector("effect", $.extend({"None": "None"}, GameCreator.effects.destroyEffects)); },
+                                     label: function() {return GameCreator.htmlStrings.inputLabel("effect", "Effect"); }
+                                 }],
                           name: "Destroy",
                           timing: {at: true, every: false, after: true},
                         }),

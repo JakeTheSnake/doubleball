@@ -14,8 +14,11 @@
          * Called when an object is being destroyed through an action. Marks
          * this object for imminent destruction and carries out onDestroy-actions.
          */
-    GameCreator.BaseObject.prototype.destroy = function() {
+    GameCreator.BaseObject.prototype.destroy = function(params) {
         GameCreator.objectsToDestroy.push(this);
+        if (params && Object.keys(GameCreator.effects.destroyEffects).indexOf(params.effect) != -1) {
+            GameCreator.currentEffects.push(new GameCreator.effects[params.effect](this));
+        }
         this.parent.onDestroy.call(this);
     };
 
