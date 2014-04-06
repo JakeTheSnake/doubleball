@@ -232,12 +232,20 @@ GameCreator.htmlStrings = {
 
         result += '<div id="dialogue-window-title">Add new object</div> \
                    <div id="dialogue-window-menu"> \
+                   <a class="tab dialogue-window-tab active" data-uifunction="setupObjectTypeForm">Object type</a> \
+                   <a class="tab dialogue-window-tab" data-uifunction="setupSetBasicsForm">Set basics</a> \
+                   </div> \
+                   <div id="add-global-object-window-content"></div>';
+
+        /*
+        result += '<div id="dialogue-window-title">Add new object</div> \
+                   <div id="dialogue-window-menu"> \
                    <a class="tab dialogue-window-tab active" data-uifunction="setupAddActiveObjectForm">Active object</a> \
                    <a class="tab dialogue-window-tab" data-uifunction="setupAddPlayerObjectForm">Player object</a> \
                    <a class="tab dialogue-window-tab" data-uifunction="setupAddCounterObjectForm">Counter object</a> \
                    </div> \
                    <div id="add-global-object-window-content"></div>';
-
+        */
         return result;
     },
     editGlobalObjectWindow: function(object) {
@@ -442,10 +450,12 @@ GameCreator.htmlStrings = {
 
 
 
+
+
         Start
     */
 
-    addActiveObjectForm: function() {
+     objectTypeForm: function() {
         var result = GameCreator.htmlStrings.inputLabel("active-object-name", "Name:") + 
             GameCreator.htmlStrings.stringInput("active-object-name", "objectName", "") + '<br style="clear:both;"/>' +
             GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
@@ -463,11 +473,27 @@ GameCreator.htmlStrings = {
         return result;
     },
 
+
+    addActiveObjectForm: function() {
+        var result = ""; 
+            result += '<h1>Select object type</h1> \
+                       <a class="object-type"><span ="label">Player object</span><img class="player-object" /></a> \
+                       <a class="object-type"><span ="label">Active object</span><img class="active-object" /></a> \
+                       <a class="object-type"><span ="label">Passive object</span><img class="passive-object" /></a> \
+                       <h1>Select object type</h1> \
+                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus vulputate risus sem, id interdum arcu sodales non.</p> \
+                       <a class="next-button>Next</next>'
+
+        return result;
+    },
+
     /*
 
 
 
-        End
+
+
+        
     */
     
     addPlayerObjectForm: function() {

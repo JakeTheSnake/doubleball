@@ -167,6 +167,16 @@ GameCreator.UI = {
         GameCreator.UI.setupAddActiveObjectForm();
     },
     
+    setupObjectTypeForm: function() {
+        $("#add-global-object-window-content").html(GameCreator.htmlStrings.objectTypeForm());
+        $("#add-global-object-window-content .saveButton").on("click", function(){GameCreator.UI.addActiveObject();GameCreator.UI.closeDialogue()});
+    },
+
+    setupSetBasicsForm: function() {
+        $("#add-global-object-window-content").html(GameCreator.htmlStrings.objectTypeForm());
+        $("#add-global-object-window-content .saveButton").on("click", function(){GameCreator.UI.addActiveObject();GameCreator.UI.closeDialogue()});
+    },
+
     setupAddActiveObjectForm: function() {
         $("#add-global-object-window-content").html(GameCreator.htmlStrings.addActiveObjectForm());
         $("#add-active-object-movement-parameters").html(GameCreator.htmlStrings.freeMovementInputs());
