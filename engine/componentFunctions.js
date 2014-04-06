@@ -55,6 +55,7 @@
                                  this.parent.keyActions[key],
                                  this.objectName
                                 );
+                            GameCreator.bufferedActions.push({actionArray: this.parent.keyActions[key], runtimeObj: this});
                         } else if (keyAction !== undefined) {
                             for (i = 0; i < keyAction.length; i += 1) {
                                 keyAction[i].runAction(this);

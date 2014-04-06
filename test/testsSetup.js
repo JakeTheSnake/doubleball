@@ -28,6 +28,7 @@ QUnit.testStart = function() {
     GameCreator.objectsToDestroy = [];
     GameCreator.newlyCreatedObjects = [];
     GameCreator.currentEffects = [];
+    GameCreator.bufferedActions = [];
     GameCreator.scenes = [];
     GameCreator.scenes.push([]);
     GameCreator.activeScene = 0;

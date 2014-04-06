@@ -29,6 +29,7 @@
         objectsToDestroy: [],
         newlyCreatedObjects: [],
         currentEffects: [],
+        bufferedActions: [],
 
         addObjFunctions: {},
         helperFunctions: {},
@@ -82,6 +83,7 @@
         },
 
         runFrame: function(deltaTime) {
+            GameCreator.runBufferedActions();
             GameCreator.updateSpeedForAllObjects(deltaTime);
             GameCreator.checkCollisions();
             GameCreator.moveAllObjects(deltaTime);
@@ -91,6 +93,15 @@
             GameCreator.cleanupDestroyedObjects();
             GameCreator.callOnCreateForNewObjects();
             GameCreator.debug.calculateDebugInfo(deltaTime);
+        },
+
+        runBufferedActions: function() {
+            GameCreator.bufferedActions.forEach(function(item, index, bufferedActions) {
+                item.actionArray.forEach(function(action) {
+                    action.runAction(item.runtimeObj);
+                });
+                bufferedActions.splice(index, 1);
+            });
         },
 
         updateEffects: function(deltaTime) {

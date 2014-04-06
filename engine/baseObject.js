@@ -37,6 +37,7 @@
                     this.parent.onDestroyActions,
                     this.objectName
                 );
+                GameCreator.bufferedActions.push({actionArray: this.parent.onDestroyActions, runtimeObj: this});
                 return;
             }
             if (this.parent.onDestroyActions) {
@@ -62,6 +63,7 @@
                     this.parent.onCreateActions,
                     this.objectName
                 );
+                GameCreator.bufferedActions.push({actionArray: this.parent.onCreateActions, runtimeObj: this});
             }
             if (this.parent.onCreateActions) {
                 for (i = 0; i < this.parent.onCreateActions.length; i += 1) {
