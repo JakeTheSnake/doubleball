@@ -14,7 +14,7 @@
         addGlobalObject: function(args, objectType) {
             var image = new Image();
             var globalObj = new GameCreator[objectType](image, args);
-            image.src = args.src;
+            image.src = args.image.src;
             GameCreator.globalIdCounter += 1;
             globalObj.id = GameCreator.globalIdCounter;
             GameCreator.UI.createLibraryItem(globalObj);
@@ -233,17 +233,21 @@
             GameCreator.editScene(GameCreator.scenes[0]);
         },
 
-        //Since all inputs are tagged with "data-attrName" and "data-type" we have this general function for saving all object types.
+        //Since all inputs are tagged with "data-attrname" and "data-type" we have this general function for saving all object types.
         saveFormInputToObject: function(formId, obj) {
             var inputs = $("#" + formId + " input, #" + formId + " select");
             var input, i, attrName;
             for (i = 0; i < inputs.length; i += 1) {
                 input = $(inputs[i]);
-                attrName = input.attr('data-attrName').split('.');
-                if (attrName.length === 1) {
-                    obj[attrName[0]] = GameCreator.helperFunctions.getValue(input);
-                } else {
-                    obj[attrName[0]][attrName[1]] = GameCreator.helperFunctions.getValue(input);
+                attrName = input.attr('data-attrname');
+                if (attrName) {
+                    attrName = attrName.split('.');
+                    if (attrName.length === 1) {
+                        obj[attrName[0]] = GameCreator.helperFunctions.getValue(input);
+                    } else {
+                        obj[attrName[0]] = obj[attrName[0]] || {};                       
+                        obj[attrName[0]][attrName[1]] = GameCreator.helperFunctions.getValue(input);
+                    }
                 }
             }
         },

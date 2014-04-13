@@ -4,7 +4,7 @@ var redBall, actionWasRun, runtimeObj;
 
 module("System Test: Play Mode - PlatformObject", {
   setup: function() {
-    redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
+    redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
     GameCreator.gameLoop = function() {};
     GameCreator.playScene(GameCreator.scenes[0]);
     runtimeObj = GameCreator.createRuntimeObject(redBall, {x: 70, y: 70, speed: 300});
@@ -31,7 +31,7 @@ test("Moved right test", function() {
 
 module("System Test - Direct Mode", {
   setup: function() {
-    redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
+    redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
     GameCreator.actions["testAction"] = new GameCreator.Action({
                                                 action: function() {actionWasRun = true;},
                                                 name: "testAction",

@@ -12,7 +12,7 @@ var runtimeObject;
 module("ActionTests", {
   setup: function() {
     container = $("#qunit-fixture");
-    redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+    redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
     existingActions = [];
     caption = "An object collided with yo mama";
     GameCreator.UI.createEditActionsArea(caption, GameCreator.actions,
@@ -133,7 +133,7 @@ test("Run timed Action every 1000 ms", function() {
 
 module("Real Action Tests", {
   setup: function() {
-    redBall = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+    redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
   },
   teardown: function() {
   }
@@ -184,7 +184,7 @@ test("Create Action Test", function() {
 });
 
 test("Shoot Action Test", function() {
-    GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "projectile", width:[20], height:[30]}, "ActiveObject");
+    GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "projectile", width:[20], height:[30]}, "ActiveObject");
     setupCollisionEventForNewObject("Shoot", {objectToShoot: "projectile", projectileSpeed: 500, projectileDirection: "Left"});
 
     GameCreator.checkCollisions();
@@ -221,7 +221,7 @@ module("ActionTriggers", {
                                                 runnable: function() {return true;}
                                             });
     testValue = 0;
-    platformZealot = GameCreator.addGlobalObject({src: "../assets/red_ball.gif", objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
+    platformZealot = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
     runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
     runtimeObject = GameCreator.createRuntimeObject(platformZealot, {x: 50, y: 60, speedX: -500, speedY: 50});
   },

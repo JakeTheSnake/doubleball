@@ -21,7 +21,7 @@
         this.objectType = "MouseObject";
     };
 
-    GameCreator.MouseObject.prototype = Object.create(GameCreator.BaseObject);
+    GameCreator.MouseObject.prototype = Object.create(GameCreator.BaseObject.prototype);
     GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.MouseObject.prototype);
 
     GameCreator.MouseObject.prototype.initialize = function() {
