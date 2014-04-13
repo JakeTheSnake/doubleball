@@ -1,6 +1,6 @@
 GameCreator.effects = {};
 
-GameCreator.effects.destroyEffects = {"FadeOut": "FadeOut", "Shrink": "Shrink"};
+GameCreator.effects.destroyEffects = {"FadeOut": "FadeOut", "Shrink": "Shrink", "RiseAndFade": "RiseAndFade"};
 
 GameCreator.effects.FadeOut = function(runtimeObj) {
     this.x = runtimeObj.x;
@@ -58,4 +58,26 @@ GameCreator.effects.Shrink.prototype.draw = function(context) {
     return false;
 }
 
+GameCreator.effects.RiseAndFade = function(runtimeObj) {
+    this.y = runtimeObj.y;
+    this.runtimeObj = runtimeObj;
+    this.effectTime = 400;
+    this.currentAlpha = 1;
+}
 
+GameCreator.effects.RiseAndFade.prototype.update = function(deltaTime) {
+    this.lastY = this.y;
+    this.currentAlpha -= deltaTime / this.effectTime;
+    this.y -= (deltaTime / this.effectTime) * this.runtimeObj.height * 3;
+}
+
+GameCreator.effects.RiseAndFade.prototype.draw = function(context) {
+    context.clearRect(this.runtimeObj.x, this.lastY - 0.5, this.runtimeObj.width, this.runtimeObj.height + 1);
+    if (this.currentAlpha >= 0) {
+        context.globalAlpha = this.currentAlpha;
+        context.drawImage(this.runtimeObj.parent.image, this.runtimeObj.x, this.y, this.runtimeObj.width, this.runtimeObj.height);
+        context.globalAlpha = 1.0;
+        return true;
+    }
+    return false;
+}
