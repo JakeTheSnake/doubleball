@@ -11,10 +11,10 @@ GameCreator.PlatformObject.sceneObjectForm = function(sceneObject) {
 };
 
 GameCreator.PlatformObject.prototype.getTabs = function() {
-        return  '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCollisionsForm">Collisions</a>' +
-                '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectKeyActionsForm">Keys</a>' +
-                '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnClickActionsForm">On click</a>' +
-                '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCountersForm">Counters</a>';
+        return  '<a class="tab dialogue-window-tab" data-uifunction="setupCollisionsForm">Collisions</a>' +
+                '<a class="tab dialogue-window-tab" data-uifunction="setupKeyActionsForm">Keys</a>' +
+                '<a class="tab dialogue-window-tab" data-uifunction="setupOnClickActionsForm">On click</a>' +
+                '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 }
 
 GameCreator.PlatformObject.movementInputs = function(object) {

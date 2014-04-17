@@ -1,7 +1,7 @@
 GameCreator.htmlStrings = {
     singleSelector: function(elementId, collection, attrName, selectedKey) {
         var result = '<div><select class="selectorField" id="' + elementId + '" data-type="text"';
-        if(attrName) {
+        if (attrName) {
         	result += ' data-attrName="' + attrName + '">'
         } else {
         	result += '>'
@@ -108,7 +108,7 @@ GameCreator.htmlStrings = {
         var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + GameCreator.mainCanvasOffsetY) + "px;left:" + (node.x + GameCreator.mainCanvasOffsetX) + "px;'><div class='routeNode' data-index='" + index + "'> \
             <span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
             <div class='routeNodeActions'><a href='' onclick='GameCreator.selectedObject.insertNode(" + index + "); return false;'>+</a>";
-        if(index != 0) {    
+        if (index != 0) {    
             result += "<a href='' onclick='GameCreator.selectedObject.removeNode(" + index + "); return false;'>X</a></div></div>";
         }
         return result;
@@ -177,16 +177,17 @@ GameCreator.htmlStrings = {
                 '<div id="add-player-object-movement-parameters"></div><button class="saveButton regularButton">Save</button>'
     },
     
-	
+
     collisionObjectSelector: function(object) {
-    	var result = '';
-    	var selectableObjects = {};
-    	$.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
-    	for (objName in selectableObjects) {
+        var result = '';
+        var selectableObjects = {};
+        var objName;
+        $.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
+        for (objName in selectableObjects) {
             if (selectableObjects.hasOwnProperty(objName) && !object.collisionActions.hasOwnProperty(objName) && selectableObjects[objName].isCollidable && objName != object.objectName) {
-        		result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].image.outerHTML + '</br><span>' + objName + '</span></div>';
-        	}
-    	}
+                result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].image.outerHTML + '</br><span>' + objName + '</span></div>';
+            }
+        }
     	return result;
 	},
     
@@ -209,7 +210,7 @@ GameCreator.htmlStrings = {
     debugInformation: function(info){
         var result = '';
         for(var key in info){
-            if(info.hasOwnProperty(key)){
+            if (info.hasOwnProperty(key)){
                 result += '<span>' + key + ': ' + info[key] + '</span><br/>';
             }
         }

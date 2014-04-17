@@ -29,7 +29,7 @@ GameCreator.ActiveObject.sceneObjectForm = function(sceneObject) {
     if (sceneObject.parent.movementType == "free") {
         GameCreator.ActiveObject.freeMovementInputs(sceneObject);
     }
-    else if(sceneObject.parent.movementType == "route") {
+    else if (sceneObject.parent.movementType == "route") {
         result += GameCreator.ActiveObject.routeMovementInputs(sceneObject);
         result += "<label for='edit-active-object-start-node'>Starting Node</label><select id='edit-active-object-start-node' data-type='number' data-attrName='targetNode'>";
         for (var i = 0; i < sceneObject.route.length; i++) {
@@ -53,7 +53,7 @@ GameCreator.ActiveObject.prototype.getPropertiesForm = function() {
         GameCreator.htmlStrings.rangeInput("active-object-height", "height", this.height) +
         '<br style="clear:both;"/>' +
         '<div style="height: 10px"></div>';
-    if(this.movementType === 'free') {
+    if (this.movementType === 'free') {
         result += GameCreator.ActiveObject.freeMovementInputs(this);
     }
     else {
@@ -68,9 +68,9 @@ GameCreator.ActiveObject.prototype.getPropertiesForm = function() {
 };
 
 GameCreator.ActiveObject.prototype.getTabs = function(){
-        return  '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCollisionsForm">Collisions</a>' +
-                '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnClickActionsForm">On click</a>' +
-                '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCountersForm">Counters</a>';
+        return  '<a class="tab dialogue-window-tab" data-uifunction="setupCollisionsForm">Collisions</a>' +
+                '<a class="tab dialogue-window-tab" data-uifunction="setupOnClickActionsForm">On click</a>' +
+                '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 };
 
 GameCreator.ActiveObject.freeMovementInputs = function(object) {

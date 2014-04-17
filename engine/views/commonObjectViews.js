@@ -11,6 +11,7 @@ GameCreator.commonObjectViews = {
         object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
         object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
         object.getKeyActionsContent = GameCreator.commonObjectViews.getKeyActionsContent;
+        object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
     },
 
     /******************************
@@ -22,12 +23,12 @@ GameCreator.commonObjectViews = {
 
         result += '<div id="dialogue-window-title">Edit object</div> \
                    <div id="dialogue-window-menu"> \
-                   <a class="tab dialogue-window-tab active" data-uifunction="setupEditGlobalObjectPropertiesForm">Properties</a>';
+                   <a class="tab dialogue-window-tab active" data-uifunction="setupPropertiesForm">Properties</a>';
 
         result += this.getTabs();
 
-        result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnDestroyActionsForm">On destroy</a> \
-                   <a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnCreateActionsForm">On create</a> \
+        result += '<a class="tab dialogue-window-tab" data-uifunction="setupOnDestroyActionsForm">On destroy</a> \
+                   <a class="tab dialogue-window-tab" data-uifunction="setupOnCreateActionsForm">On create</a> \
                    </div> \
                    <div id="edit-global-object-window-content"></div>';
 
@@ -90,29 +91,28 @@ GameCreator.commonObjectViews = {
      * COMMON PLAYER OBJECT VIEWS *
      ******************************/
     getPropertiesForm: function() {
-        var result = '<div>' +
+        return  '<div>' +
                 GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") +
                 GameCreator.htmlStrings.rangeInput("player-object-width", "width", this.width) +
                 '<br style="clear:both;"/>' +
                 GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") +
                 GameCreator.htmlStrings.rangeInput("player-object-height", "height", this.height) + '</div>' +
                 '<br style="clear:both;"/>' +
-                result += '<div style="height: 10px"></div>' +
-                result += GameCreator[this.objectType].movementInputs(this) +
-                result += GameCreator.htmlStrings.imageSrcInput(this) +
-                result += '<br style="clear:both"/>' +
-                result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
-                result += GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique) +
-                result += '<br style="clear:both"/>' +
-                result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>';
-        return result;
+                '<div style="height: 10px"></div>' +
+                GameCreator[this.objectType].movementInputs(this) +
+                GameCreator.htmlStrings.imageSrcInput(this) +
+                '<br style="clear:both"/>' +
+                GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
+                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique) +
+                '<br style="clear:both"/>' +
+                '<button class="regularButton" id="save-global-object-properties-button">Save</button>';
     },
 
     getKeySelector: function() {
         result = "";
         var selectableKeys = this.keyPressed;
         for (var keyName in selectableKeys) {
-            if(selectableKeys.hasOwnProperty(keyName) && !this.keyActions.hasOwnProperty(keyName)) {
+            if (selectableKeys.hasOwnProperty(keyName) && !this.keyActions.hasOwnProperty(keyName)) {
                 result += '<div class="addKeyObjectElement" data-keyName="' + keyName + '" style="float:left;cursor:pointer;"><span>' + keyName + '</span></div>';
             }
         }
@@ -123,7 +123,7 @@ GameCreator.commonObjectViews = {
         var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
         result += '<div id="add-new-key-button" class="regularButton">Add</div>';
         for (var keyName in this.keyActions) {
-            if(this.keyActions.hasOwnProperty(keyName)) {
+            if (this.keyActions.hasOwnProperty(keyName)) {
                 result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
         }

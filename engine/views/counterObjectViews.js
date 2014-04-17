@@ -16,9 +16,9 @@ GameCreator.CounterObject.sceneObjectForm = function(sceneObject, counterCarrier
         '<div id="counter-list-content"></div>' +
         '</div>' + 
         '<br style="clear:both;"/>';
-    if(sceneObject.parent.textCounter) {
+    if (sceneObject.parent.textCounter) {
         result += GameCreator.CounterObject.counterObjectTextForm(sceneObject);
-    } else if(sceneObject.parent.imageCounter) {
+    } else if (sceneObject.parent.imageCounter) {
         result += GameCreator.htmlStrings.inputLabel("counter-object-counter-image-size", "Size:") + GameCreator.htmlStrings.numberInput("counter-object-counter-image-size", "size", sceneObject && sceneObject.size ? sceneObject.size : '') +
             '<br style="clear:both;"/>';
     }
@@ -28,7 +28,7 @@ GameCreator.CounterObject.sceneObjectForm = function(sceneObject, counterCarrier
 
 GameCreator.CounterObject.prototype.getPropertiesForm = function() {
     var result = '';
-    if(this.textCounter) {
+    if (this.textCounter) {
         result += GameCreator.CounterObject.counterObjectTextForm(this);
     } else if (this.imageCounter) {
         result += GameCreator.CounterObject.counterObjectImageForm(this);

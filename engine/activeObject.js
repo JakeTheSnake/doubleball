@@ -5,6 +5,7 @@
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
         GameCreator.commonObjectViews.addCommonObjectViews(this);
+        GameCreator.commonObjectControllers.addCommonObjectControllers(this);
 
         GameCreator.helperFunctions.setStandardProperties(this, image, args);
 
