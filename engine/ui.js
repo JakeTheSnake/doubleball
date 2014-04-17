@@ -201,10 +201,10 @@ GameCreator.UI = {
     //Add counter object functions.
     setupAddCounterObjectForm: function() {
         $("#add-global-object-window-content").html(GameCreator.CounterObject.addGlobalObjectForm());
-        $("#counter-representation").on("change", function(){
+        $("#counter-representation").on("change", function() {
             if ($(this).val() === "text") {
                 $("#add-counter-object-counter-representation-content").html(GameCreator.CounterObject.counterObjectTextForm());
-            } else if ($(this).val() === "image"){
+            } else if ($(this).val() === "image") {
                 $("#add-counter-object-counter-representation-content").html(GameCreator.CounterObject.counterObjectImageForm());
             }
         });
