@@ -55,6 +55,7 @@ GameCreator.commonObjectControllers = {
         
     setupCollisionsForm: function(container) {
         var collisionObjects = [];
+        var globalObj = this;
         for(var i = 0; i < this.collisionActions.length; i++) {
             collisionObjects.push(GameCreator.helperFunctions.findGlobalObjectById(this.collisionActions[i].id));
         }
@@ -62,29 +63,29 @@ GameCreator.commonObjectControllers = {
         container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
             var actions;
-            if (this.objectType === "mouseObject") {
+            if (globalObj.objectType === "mouseObject") {
                 actions = GameCreator.actionGroups.mouseCollisionActions;
             } else {
                 actions = GameCreator.actionGroups.collisionActions;
             }
             var targetId = GameCreator.helperFunctions.findGlobalObjectByName(targetName).id;
-            var existingActions = GameCreator.helperFunctions.getObjectById(this.collisionActions, targetId).actions;
+            var existingActions = GameCreator.helperFunctions.getObjectById(globalObj.collisionActions, targetId).actions;
             GameCreator.UI.createEditActionsArea(
                 "Actions for collision with " + targetName, 
                 actions,
                 existingActions,
                 $("#edit-collision-actions-object-content"),
-                this.objectName
+                globalObj.objectName
             );
         });
 
         $("#add-new-collision-button").on("click", function() {
-            $("#edit-collision-actions-object-content").html(GameCreator.htmlStrings.collisionObjectSelector(this));
+            $("#edit-collision-actions-object-content").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
             $(".addCollisionObjectElement").one("click", function() {
                 var targetId = GameCreator.helperFunctions.findGlobalObjectByName($(this).data("objectname")).id;
                 var newActionItem = {id: targetId, actions: []};
-                this.collisionActions.push(newActionItem);
-                this.setupCollisionsForm(container);
+                globalObj.collisionActions.push(newActionItem);
+                globalObj.setupCollisionsForm(container);
             });
         });
     },
@@ -131,8 +132,8 @@ GameCreator.commonObjectControllers = {
             });
         });
         container.find(".counterMenuElement").on("click", function(){
-          var counterName = $(this).data("name");
-          globalObj.setupEditCounterEvents(counterName, $("#edit-counter-event-content"));
+            var counterName = $(this).data("name");
+            globalObj.setupEditCounterEvents(counterName, $("#edit-counter-event-content"));
       });
     },
     

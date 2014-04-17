@@ -255,21 +255,21 @@ GameCreator.UI = {
         $("#debug-info-pane").html(GameCreator.htmlStrings.debugInformation(info));
     },
     setupSceneTabs: function(scenes){
-      var result = '';
-      $('#scene-tabs').show();
-      for(var i = 0; i < scenes.length;i++){
-        result += GameCreator.htmlStrings.sceneTab(i, GameCreator.activeScene === i);
-      };
-      result += GameCreator.htmlStrings.addSceneTab()
-      $('#scene-tabs').html(result);
-      $('#scene-tabs').off('click');
-      $('#scene-tabs').on('click', '.tab:not(#add-scene-tab)', function(){
-        GameCreator.activeScene = parseInt($(this).data('scenenr'));
-        GameCreator.editActiveScene();
-    });
-    $('#scene-tabs').one('click', '#add-scene-tab', function(){
-        GameCreator.addScene();
-    });
+        var result = '';
+        $('#scene-tabs').show();
+        for(var i = 0; i < scenes.length; i++){
+            result += GameCreator.htmlStrings.sceneTab(i, GameCreator.activeScene === i);
+        };
+        result += GameCreator.htmlStrings.addSceneTab();
+        $('#scene-tabs').html(result);
+        $('#scene-tabs').off('click');
+        $('#scene-tabs').on('click', '.tab:not(#add-scene-tab)', function(){
+            GameCreator.activeScene = parseInt($(this).data('scenenr'));
+            GameCreator.editActiveScene();
+        });
+        $('#scene-tabs').one('click', '#add-scene-tab', function(){
+            GameCreator.addScene();
+        });
     },
     
     deleteSelectedObject: function() {
@@ -280,7 +280,7 @@ GameCreator.UI = {
 
     editSceneObject: function() {
         $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.objectName + '</div>');
-        if (GameCreator.selectedObject.parent.objectType == "CounterObject") {
+        if (GameCreator.selectedObject.parent.objectType === "CounterObject") {
             var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInScene());
             var obj = GameCreator.selectedObject;
             $("#edit-scene-object-content").html(GameCreator.CounterObject.sceneObjectForm(obj, uniqueIds));

@@ -27,7 +27,7 @@ GameCreator.ActiveObject.sceneObjectForm = function(sceneObject) {
     result += GameCreator.htmlStrings.inputLabel("edit-active-object-name", "Unique ID:") +
         GameCreator.htmlStrings.stringInput("edit-active-object-name", "instanceId", sceneObject.instanceId) + '<br style="clear:both;"/>';
     if (sceneObject.parent.movementType == "free") {
-        GameCreator.ActiveObject.freeMovementInputs(sceneObject);
+        result += GameCreator.ActiveObject.freeMovementInputs(sceneObject);
     }
     else if (sceneObject.parent.movementType == "route") {
         result += GameCreator.ActiveObject.routeMovementInputs(sceneObject);
