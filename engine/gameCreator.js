@@ -96,18 +96,21 @@
         },
 
         runBufferedActions: function() {
-            GameCreator.bufferedActions.forEach(function(item, index, bufferedActions) {
-                item.actionArray.forEach(function(action) {
-                    action.runAction(item.runtimeObj);
-                });
-                bufferedActions.splice(index, 1);
-            });
+            var i, item, j;
+            for (i = 0; i < GameCreator.bufferedActions.length; i++) {
+                item = GameCreator.bufferedActions[i];
+                for (j = 0; j < item.actionArray.length; j++) {
+                    item.actionArray[j].runAction(item.runtimeObj);
+                }
+            }
+            GameCreator.bufferedActions.length = 0;
         },
 
         updateEffects: function(deltaTime) {
-            GameCreator.currentEffects.forEach(function(effect, index) {
-                effect.update(deltaTime);
-            });
+            var i;
+            for (i = 0; i < GameCreator.currentEffects.length; i++) {
+                GameCreator.currentEffects[i].update(deltaTime);
+            }
         },
 
         updateSpeedForAllObjects: function(deltaTime) {

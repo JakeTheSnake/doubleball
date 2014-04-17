@@ -12,19 +12,6 @@ GameCreator.MouseObject.sceneObjectForm = function(sceneObject) {
     return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
 };
 
-GameCreator.MouseObject.prototype.editGlobalObjectForm = function() {
-    var result = '';
-    result += GameCreator.htmlStrings.globalPlayerObjectForm(this);
-    result += '<div style="height: 10px"></div>';
-    result += GameCreator.MouseObject.movementInputs(this);
-    result += GameCreator.htmlStrings.imageSrcInput(this);
-    result += '<br style="clear:both"/>';
-    result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:');
-    result += GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique);
-    result += '<br style="clear:both"/>';
-    result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>';
-    return result;
-};
 
 GameCreator.MouseObject.prototype.getTabs = function(){
         return  '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectCollisionsForm">Collisions</a>' +

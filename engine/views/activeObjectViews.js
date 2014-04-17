@@ -45,7 +45,7 @@ GameCreator.ActiveObject.sceneObjectForm = function(sceneObject) {
     return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
 };
 
-GameCreator.ActiveObject.prototype.editGlobalObjectForm = function() {
+GameCreator.ActiveObject.prototype.getPropertiesForm = function() {
     var result = GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
         GameCreator.htmlStrings.rangeInput("active-object-width", "width", this.width) +
         '<br style="clear:both;"/>' +

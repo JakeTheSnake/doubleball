@@ -221,7 +221,7 @@ GameCreator.UI = {
     //Edit global object functions
     
     openEditGlobalObjectDialogue: function(globalObj) {
-        GameCreator.UI.openDialogue(900, 570, GameCreator.htmlStrings.editGlobalObjectWindow(globalObj));
+        GameCreator.UI.openDialogue(900, 570, globalObj.getEditWindow());
         $("#dialogue-window").find(".tab").first().addClass("active");  
         $("#dialogue-window").find(".tab").on("click", function() {
             GameCreator.UI[$(this).data("uifunction")]($("#dialogue-window").find("#edit-global-object-window-content"), globalObj);
@@ -233,7 +233,7 @@ GameCreator.UI = {
     
     setupEditGlobalObjectPropertiesForm: function(container, globalObj) {
       var html = '<div id="edit-global-object-properties-content">' +
-      globalObj.editGlobalObjectForm() +
+      globalObj.getPropertiesForm() +
       '</div>';
       container.html(html);
         container.find("#save-global-object-properties-button").on("click", function() {
@@ -248,7 +248,7 @@ GameCreator.UI = {
         for(var i = 0; i < globalObj.collisionActions.length; i++) {
             collisionObjects.push(GameCreator.helperFunctions.findGlobalObjectById(globalObj.collisionActions[i].id));
         }
-        container.html(GameCreator.htmlStrings.editGlobalObjectCollisionsContent(collisionObjects));
+        container.html(globalObj.getCollisionsContent(collisionObjects));
         container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
             var actions;
@@ -279,7 +279,7 @@ GameCreator.UI = {
     },
     
     setupEditGlobalObjectKeyActionsForm: function(container, globalObj) {
-        container.html(GameCreator.htmlStrings.editGlobalObjectKeyActionsContent(globalObj));
+        container.html(globalObj.getKeyActionsContent());
         container.find(".keyMenuElement").on("click", function(){
             var keyName = $(this).data("name");
             var actions;
@@ -297,7 +297,7 @@ GameCreator.UI = {
             );
         });
         $("#add-new-key-button").on("click", function(){
-            $("#edit-key-actions-key-content").html(GameCreator.htmlStrings.keySelector(globalObj));
+            $("#edit-key-actions-key-content").html(globalObj.getKeySelector());
             $(".addKeyObjectElement").one("click", function(){
                 globalObj.keyActions[$(this).data("keyname")] = [];
                 GameCreator.UI.setupEditGlobalObjectKeyActionsForm(container, globalObj);
@@ -327,9 +327,9 @@ GameCreator.UI = {
         var text = "Actions on Destruction";
         var choosableActions = GameCreator.actionGroups.onCreateActions;
         if(globalObj.objectType === "mouseObject") {
-          choosableActions = GameCreator.actionGroups.mouseNonCollisionActions;
+            choosableActions = GameCreator.actionGroups.mouseNonCollisionActions;
         } else {
-          choosableActions = GameCreator.actionGroups.nonCollisionActions;
+            choosableActions = GameCreator.actionGroups.nonCollisionActions;
         }
         
         //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
@@ -355,7 +355,7 @@ GameCreator.UI = {
     },
     
     setupEditGlobalObjectCountersForm: function(container, globalObj) {
-       container.html(GameCreator.htmlStrings.editGlobalObjectCountersContent(globalObj.parentCounters));
+       container.html(globalObj.getCountersContent());
        $("#add-new-counter-button").on("click", function(){
             $("#edit-counters-counter-content").html(GameCreator.htmlStrings.createCounterForm());
             $("#edit-counters-counter-content .saveButton").one("click", function(){
@@ -371,7 +371,7 @@ GameCreator.UI = {
     },
     
     setupEditCounterEvents: function(globalObj, counterName, container) {
-        container.html(GameCreator.htmlStrings.editCounterEventsContent(globalObj.parentCounters[counterName]));
+        container.html(globalObj.getCounterEventsContent(counterName));
         $("#edit-counter-event-actions-content").html("");
         $("#add-new-counter-event-button").on("click", function(){
             $("#edit-counter-event-actions-content").html(GameCreator.htmlStrings.createCounterEventForm());

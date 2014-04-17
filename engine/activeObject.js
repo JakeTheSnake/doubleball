@@ -4,6 +4,7 @@
     GameCreator.ActiveObject = function(image, args) {
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
+        GameCreator.commonObjectViews.addCommonObjectViews(this);
 
         GameCreator.helperFunctions.setStandardProperties(this, image, args);
 

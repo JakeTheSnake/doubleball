@@ -26,7 +26,7 @@ GameCreator.CounterObject.sceneObjectForm = function(sceneObject, counterCarrier
     return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
 };
 
-GameCreator.CounterObject.prototype.editGlobalObjectForm = function() {
+GameCreator.CounterObject.prototype.getPropertiesForm = function() {
     var result = '';
     if(this.textCounter) {
         result += GameCreator.CounterObject.counterObjectTextForm(this);

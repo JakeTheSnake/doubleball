@@ -4,6 +4,7 @@
     GameCreator.MouseObject = function(image, args) {
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
+        GameCreator.commonObjectViews.addPlayerObjectViews(this);
 
         GameCreator.helperFunctions.setStandardProperties(this, image, args);
 

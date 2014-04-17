@@ -141,6 +141,13 @@ GameCreator.htmlStrings = {
         }
         return result;
     },
+    
+    imageSrcInput: function(object) {
+        return GameCreator.htmlStrings.inputLabel("global-object-image-src", "Image:") + 
+            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (object && object.image ? object.image.src : ""))
+    },
+
+    
     addGlobalObjectWindow: function() {
         var result = "";
 
@@ -154,92 +161,22 @@ GameCreator.htmlStrings = {
 
         return result;
     },
-    editGlobalObjectWindow: function(object) {
-        var result = "";
-
-        result += '<div id="dialogue-window-title">Edit object</div> \
-                   <div id="dialogue-window-menu"> \
-                   <a class="tab dialogue-window-tab active" data-uifunction="setupEditGlobalObjectPropertiesForm">Properties</a>';
-
-        result += object.getTabs();
-
-        result += '<a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnDestroyActionsForm">On destroy</a> \
-                   <a class="tab dialogue-window-tab" data-uifunction="setupEditGlobalObjectOnCreateActionsForm">On create</a> \
-                   </div> \
-                   <div id="edit-global-object-window-content"></div>';
-
-        return result;
-    },
-
-    editGlobalObjectCollisionsContent: function(collisionObjects) {
-        var result = '<div id="edit-collision-actions-object-menu-container"><div id="edit-collision-actions-object-menu">';
-        result += '<button id="add-new-collision-button" class="regularButton">Add</button>';
-
-        for(var i = 0; i < collisionObjects.length; i++) {
-            result += GameCreator.htmlStrings.collisionMenuElement(collisionObjects[i]);
-        }
-        
-        result += '</div> \
-                   </div><div id="edit-collision-actions-object-content"></div>';
-        return result;
-    },
-
-    editGlobalObjectKeyActionsContent: function(object) {
-        var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
-        result += '<div id="add-new-key-button" class="regularButton">Add</div>';
-        for (var keyName in object.keyActions) {
-            if(object.keyActions.hasOwnProperty(keyName)) {
-                result += GameCreator.htmlStrings.keyMenuElement(keyName);
-            }
-        }
-        result += '</div></div><div id="edit-key-actions-key-content"></div>';
-        return result;
-    },
-
-    editGlobalObjectCountersContent: function(counters) {
-        var result = '<div id="edit-counters-menu">';
-        result += '<button id="add-new-counter-button" class="regularButton">Add</button>';
-        var keys = Object.keys(counters);
-        for (var i = 0; i < keys.length; i++) {
-            result += GameCreator.htmlStrings.counterMenuElement(keys[i]);
-        }
-        result += '</div><div id="edit-counters-counter-content">'
-        result += '<div id="edit-counter-event-content"></div>';
-        result += '<div id="edit-counter-event-actions-content"></div></div>';
-        return result;
-    },
-
-    imageSrcInput: function(object) {
-        return GameCreator.htmlStrings.inputLabel("global-object-image-src", "Image:") + 
-            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (object && object.image ? object.image.src : ""))
-    },
-
-    globalPlayerObjectForm: function(object) {
-        var result = '<div>' +
-                GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") +
-                GameCreator.htmlStrings.rangeInput("player-object-width", "width", object.width) +
-                '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") +
-                GameCreator.htmlStrings.rangeInput("player-object-height", "height", object.height) + '</div>' +
-                '<br style="clear:both;"/>';
-        return result;
-    },
-    
     addPlayerObjectForm: function() {
-        return 	GameCreator.htmlStrings.inputLabel("player-object-name", "Name:") + GameCreator.htmlStrings.stringInput("player-object-name", "objectName", "") +
-        		'<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("player-object-width", "width", "") +
-              	'<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") + GameCreator.htmlStrings.rangeInput("player-object-height", "height", "") +
-              	'<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("player-object-src", "Image Src:") + GameCreator.htmlStrings.stringInput("player-object-src", "image.src", "") +
-              	'<br style="clear:both;"/>' +
+        return  GameCreator.htmlStrings.inputLabel("player-object-name", "Name:") + GameCreator.htmlStrings.stringInput("player-object-name", "objectName", "") +
+                '<br style="clear:both;"/>' +
+                GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("player-object-width", "width", "") +
+                '<br style="clear:both;"/>' +
+                GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") + GameCreator.htmlStrings.rangeInput("player-object-height", "height", "") +
+                '<br style="clear:both;"/>' +
+                GameCreator.htmlStrings.inputLabel("player-object-src", "Image Src:") + GameCreator.htmlStrings.stringInput("player-object-src", "image.src", "") +
+                '<br style="clear:both;"/>' +
                 GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
                 GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique') +
                 '<br style="clear:both;"/>' +
-              	GameCreator.htmlStrings.inputLabel("player-object-type", "Control:") + GameCreator.htmlStrings.singleSelector("player-object-type", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '<br style="clear:both;"/>' +
-				'<div id="add-player-object-movement-parameters"></div><button class="saveButton regularButton">Save</button>'
-	},
+                GameCreator.htmlStrings.inputLabel("player-object-type", "Control:") + GameCreator.htmlStrings.singleSelector("player-object-type", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '<br style="clear:both;"/>' +
+                '<div id="add-player-object-movement-parameters"></div><button class="saveButton regularButton">Save</button>'
+    },
+    
 	
     collisionObjectSelector: function(object) {
     	var result = '';
@@ -252,16 +189,7 @@ GameCreator.htmlStrings = {
     	}
     	return result;
 	},
-    keySelector: function(object) {
-        result = "";
-        var selectableKeys = object.keyPressed;
-        for (var keyName in selectableKeys) {
-            if(selectableKeys.hasOwnProperty(keyName) && !object.keyActions.hasOwnProperty(keyName)) {
-                result += '<div class="addKeyObjectElement" data-keyName="' + keyName + '" style="float:left;cursor:pointer;"><span>' + keyName + '</span></div>';
-            }
-        }
-        return result;
-    },
+    
     createCounterForm: function() {
     	var result = '<div>'
     	result += GameCreator.htmlStrings.inputLabel("counter-name", "Name:");
@@ -269,27 +197,7 @@ GameCreator.htmlStrings = {
     	result += '<button class="saveButton regularButton">Save</button>';
     	return result;
 	},
-	editCounterEventsContent: function(counter){
-		var result = '<button id="add-new-counter-event-button" class="regularButton">Add</button>';
-		result += GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
-		result += GameCreator.htmlStrings.counterEventMenuElement("", "onDecrease");
-		for (value in counter.atValue) {
-            if (counter.atValue.hasOwnProperty(value)){
-            	result += GameCreator.htmlStrings.counterEventMenuElement(value, "atValue");
-        	}
-    	};
-    	for (value in counter.aboveValue) {
-            if (counter.aboveValue.hasOwnProperty(value)){
-            	result += GameCreator.htmlStrings.counterEventMenuElement(value, "aboveValue");
-        	}
-    	};
-    	for (value in counter.belowValue) {
-            if (counter.belowValue.hasOwnProperty(value)){
-            	result += GameCreator.htmlStrings.counterEventMenuElement(value, "belowValue");
-        	}
-    	};
-    	return result;
-	},
+	
 	createCounterEventForm: function(){
 		var result = GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
 		result += GameCreator.htmlStrings.singleSelector("edit-counter-event-type", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
