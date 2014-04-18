@@ -24,12 +24,13 @@ GameCreator.commonObjectControllers = {
      * COMMON OBJECT CONTROLLERS  *
      *****************************/
     setupPropertiesForm: function(container) {
-        var html = '<div id="edit-global-object-properties-content">' +
+        var that = this, 
+            html = '<div id="edit-global-object-properties-content">' +
         this.getPropertiesForm() +
         '</div>';
         container.html(html);
         container.find("#save-global-object-properties-button").on("click", function() {
-            GameCreator.saveFormInputToObject("edit-global-object-properties-content", this);
+            GameCreator.saveFormInputToObject("edit-global-object-properties-content", that);
             GameCreator.UI.redrawLibrary();
             GameCreator.UI.closeDialogue();
         });
