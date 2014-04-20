@@ -24,13 +24,13 @@ GameCreator.commonObjectControllers = {
      * COMMON OBJECT CONTROLLERS  *
      *****************************/
     setupPropertiesForm: function(container) {
-        var that = this, 
-            html = '<div id="edit-global-object-properties-content">' +
-        this.getPropertiesForm() +
-        '</div>';
+        var globalObj = this;
+        var html = '<div id="edit-global-object-properties-content">' +
+            this.getPropertiesForm() +
+            '</div>';
         container.html(html);
         container.find("#save-global-object-properties-button").on("click", function() {
-            GameCreator.saveFormInputToObject("edit-global-object-properties-content", that);
+            GameCreator.saveFormInputToObject("edit-global-object-properties-content", globalObj);
             GameCreator.UI.redrawLibrary();
             GameCreator.UI.closeDialogue();
         });
@@ -64,7 +64,7 @@ GameCreator.commonObjectControllers = {
         container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
             var actions;
-            if (globalObj.objectType === "mouseObject") {
+            if (globalObj.objectType === "MouseObject") {
                 actions = GameCreator.actionGroups.mouseCollisionActions;
             } else {
                 actions = GameCreator.actionGroups.collisionActions;
@@ -112,7 +112,6 @@ GameCreator.commonObjectControllers = {
         var text = "Actions on Creation";
         var choosableActions = GameCreator.actionGroups.onCreateActions;
         
-        //If onCreateActions has not yet been edited from anywhere, instantiate to empty array.
         if (this.onCreateActions == undefined) {
             this.onCreateActions = [];
         }

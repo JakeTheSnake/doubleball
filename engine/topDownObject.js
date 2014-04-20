@@ -5,9 +5,10 @@
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
-        GameCreator.commonObjectViews.addPlayerObjectViews(this);
-        GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
-
+        if (GameCreator.state !== 'playing') {
+            GameCreator.commonObjectViews.addPlayerObjectViews(this);
+            GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
+        }
         GameCreator.helperFunctions.setStandardProperties(this, image, args);
 
         this.isCollidable = true;
@@ -26,8 +27,7 @@
         this.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? 300 : args.maxSpeed;
         //Facing can be 1-8 where 1 is facing up and the others follow clockwise.
         this.facing = 1;
-        //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
-
+        
         this.objectType = "TopDownObject";
     };
 

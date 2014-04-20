@@ -173,7 +173,7 @@ GameCreator.htmlStrings = {
                 GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
                 GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique') +
                 '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("player-object-type", "Control:") + GameCreator.htmlStrings.singleSelector("player-object-type", {"Mouse": "addPlayerMouseObject", "Platform": "addPlayerPlatformObject", "Top Down": "addPlayerTopDownObject"}) + '<br style="clear:both;"/>' +
+                GameCreator.htmlStrings.inputLabel("player-object-type", "Control:") + GameCreator.htmlStrings.singleSelector("player-object-type", {"Mouse": "MouseObject", "Platform": "PlatformObject", "Top Down": "TopDownObject"}) + '<br style="clear:both;"/>' +
                 '<div id="add-player-object-movement-parameters"></div><button class="saveButton regularButton">Save</button>'
     },
     

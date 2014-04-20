@@ -4,9 +4,12 @@
     GameCreator.ActiveObject = function(image, args) {
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
-        GameCreator.commonObjectViews.addCommonObjectViews(this);
-        GameCreator.commonObjectControllers.addCommonObjectControllers(this);
 
+        if (GameCreator.state !== 'playing') {
+            GameCreator.commonObjectViews.addCommonObjectViews(this);
+            GameCreator.commonObjectControllers.addCommonObjectControllers(this);
+        }
+        
         GameCreator.helperFunctions.setStandardProperties(this, image, args);
 
         this.speed = (!args.speed && args.speed !== 0) ? 300 : args.speed;
