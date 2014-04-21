@@ -38,12 +38,7 @@ GameCreator.commonObjectControllers = {
  
     setupOnClickActionsForm: function(container) {
         var text = "Actions on click";
-        var choosableActions;
-        if (this.objectType === "MouseObject") {
-            choosableActions = GameCreator.actionGroups.mouseNonCollisionActions;
-        } else {
-            choosableActions = GameCreator.actionGroups.nonCollisionActions;
-        }
+        var choosableActions = GameCreator.helperFunctions.getCollisionActions(this.objectType);
 
         if (this.onClickActions == undefined) {
             this.onClickActions = [];
@@ -63,12 +58,7 @@ GameCreator.commonObjectControllers = {
         container.html(this.getCollisionsContent(collisionObjects));
         container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
-            var actions;
-            if (globalObj.objectType === "MouseObject") {
-                actions = GameCreator.actionGroups.mouseCollisionActions;
-            } else {
-                actions = GameCreator.actionGroups.collisionActions;
-            }
+            var actions = GameCreator.helperFunctions.getCollisionActions(globalObj.objectType);
             var targetId = GameCreator.helperFunctions.findGlobalObjectByName(targetName).id;
             var existingActions = GameCreator.helperFunctions.getObjectById(globalObj.collisionActions, targetId).actions;
             GameCreator.UI.createEditActionsArea(
@@ -93,12 +83,7 @@ GameCreator.commonObjectControllers = {
     
     setupOnDestroyActionsForm: function(container) {
         var text = "Actions on Destruction";
-        var choosableActions = GameCreator.actionGroups.onCreateActions;
-        if (this.objectType === "MouseObject") {
-            choosableActions = GameCreator.actionGroups.mouseNonCollisionActions;
-        } else {
-            choosableActions = GameCreator.actionGroups.nonCollisionActions;
-        }
+        var choosableActions = GameCreator.helperFunctions.getCollisionActions(this.objectType);
         
         if (this.onDestroyActions == undefined) {
             this.onDestroyActions = [];
@@ -164,12 +149,7 @@ GameCreator.commonObjectControllers = {
                 existingActions = globalObj.parentCounters[counterName][eventType];
             }
 
-            var actions;
-            if (globalObj.objectType === "MouseObject") {
-                actions = GameCreator.actionGroups.mouseNonCollisionActions;
-            } else {
-                actions = GameCreator.actionGroups.nonCollisionActions;
-            }
+            var actions = GameCreator.helperFunctions.getCollisionActions(globalObj.objectType);
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + eventType + " " + eventValue,
                 actions,
@@ -189,12 +169,7 @@ GameCreator.commonObjectControllers = {
         var globalObj = this;
         container.find(".keyMenuElement").on("click", function(){
             var keyName = $(this).data("name");
-            var actions;
-        if (globalObj.objectType === "MouseObject") {
-            actions = GameCreator.actionGroups.mouseNonCollisionActions;
-        } else {
-            actions = GameCreator.actionGroups.nonCollisionActions;
-        }
+            var actions = GameCreator.helperFunctions.getCollisionActions(globalObj.objectType);
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + keyName,
                 actions,

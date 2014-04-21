@@ -10,7 +10,7 @@ module("GameCreator Tests", {
 });
 
 test("Create Runtime Active Object", function() {
-    var redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+    var redBall = createGlobalObject("ActiveObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 1, "Added to movableObjects");
@@ -20,7 +20,7 @@ test("Create Runtime Active Object", function() {
 });
 
 test("Create Runtime Player Object", function() {
-    var redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "TopDownObject");
+    var redBall = createGlobalObject("PlatformObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 1, "Added to movableObjects");
@@ -30,7 +30,7 @@ test("Create Runtime Player Object", function() {
 });
 
 test("Create Runtime Counter Object", function() {
-    var redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "CounterObject");
+    var redBall = createGlobalObject("CounterObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 0, "Added to movableObjects");

@@ -78,21 +78,27 @@
         sceneStarted: function() {
             $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e) {
                 var i;
+
                 var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left, e.pageY - $("#main-canvas").offset().top);
-                if (runtimeObj && runtimeObj.parent.isClickable) {
-                    if (runtimeObj.parent.onClickActions === undefined && GameCreator.state !== 'playing' && !GameCreator.paused) {
-                        runtimeObj.parent.onClickActions = [];
-                        GameCreator.UI.openEditActionsWindow(
-                            "Clicked on " + runtimeObj.parent.objectName,
-                             GameCreator.actionGroups.nonCollisionActions,
-                             runtimeObj.parent.onClickActions,
-                             runtimeObj.parent.objectName
-                            );
-                    } else if (runtimeObj.parent.onClickActions) {
-                        for (i = 0; i < runtimeObj.parent.onClickActions.length; i += 1) {
-                            runtimeObj.parent.onClickActions[i].runAction(runtimeObj);
+                var globalObj = runtimeObj.parent;
+                if (runtimeObj && globalObj.isClickable) {
+                    for (i = 0; i < globalObj.onClickEvents.length; i++) {
+                        if (globalObj.onClickEvents[i].checkConditions()) {
+                            if (!GameCreator.paused) {
+                            globalObj.onClickEvents[i].actionWindowAlreadyOpened = true;
+                            GameCreator.UI.openEditActionsWindow(
+                                "Clicked on " + globalObj.objectName,
+                                 GameCreator.actionGroups.nonCollisionActions,
+                                 globalObj.onClickActions,
+                                 globalObj.objectName
+                                );
+                            } else if (globalObj.onClickActions) {
+                                globalObj.onClickEvents[i].runActions(runtimeObj);
+                            }
                         }
+                        
                     }
+                    
                 }
             });
         }

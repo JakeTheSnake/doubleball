@@ -33,3 +33,9 @@ QUnit.testStart = function() {
     GameCreator.scenes.push([]);
     GameCreator.activeScene = 0;
 };
+
+function createGlobalObject(type, args) {
+    args = args || {};
+    $.extend(args, {image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]});
+    return GameCreator.addGlobalObject(args, type || "ActiveObject");
+}

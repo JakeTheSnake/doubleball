@@ -26,6 +26,7 @@
         movableObjects: [],
         renderableObjects: [],
         eventableObjects: [],
+        
         objectsToDestroy: [],
         newlyCreatedObjects: [],
         currentEffects: [],

@@ -9,6 +9,8 @@
         this.objectType = "baseObject";
         this.isDestroyed = false;
         this.isClickable = true;
+        this.onDestroyEvents = [new GameCreator.Event()];
+        this.onCreateEvents = [new GameCreator.Event()];
     };
         /**
          * Called when an object is being destroyed through an action. Marks
@@ -29,20 +31,19 @@
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
         var i;
         if (!GameCreator.paused) {
-            if (!this.parent.onDestroyActions && GameCreator.state !== 'playing') {
-                this.parent.onDestroyActions = [];
-                GameCreator.UI.openEditActionsWindow(
-                    "'" + this.parent.objectName + "' is has been destroyed!",
-                    GameCreator.actionGroups.nonCollisionActions,
-                    this.parent.onDestroyActions,
-                    this.objectName
-                );
-                GameCreator.bufferedActions.push({actionArray: this.parent.onDestroyActions, runtimeObj: this});
-                return;
-            }
-            if (this.parent.onDestroyActions) {
-                for (i = 0; i < this.parent.onDestroyActions.length; i += 1) {
-                    this.parent.onDestroyActions[i].runAction(this);
+            for (i = 0; i < this.parent.onDestroyEvents.length; i++) {
+                var currEvent = this.parent.onDestroyEvents[i];
+                if (currEvent.shouldOpenActionWindow()) {
+                    currEvent.actionWindowAlreadyOpened = true;
+                    GameCreator.UI.openEditActionsWindow(
+                        "'" + this.parent.objectName + "' is has been destroyed!",
+                        GameCreator.actionGroups.nonCollisionActions,
+                        this.parent.onDestroyActions,
+                        this.objectName
+                    );
+                    GameCreator.bufferedActions.push({actionArray: this.parent.onDestroyActions, runtimeObj: this});
+                } else {
+                    currEvent.runActions(this);
                 }
             }
         }

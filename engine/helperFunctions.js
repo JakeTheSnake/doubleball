@@ -169,27 +169,6 @@
         return {x: x / magnitude, y: y / magnitude};
     };
 
-    /** TODO: Not used atm, for conditions.
-     * objectName: Name of the object
-     * operation: function(count), that decides if the condition
-                  is fulfilled or not for this many found objects.
-                  (At least, exactly, at most)
-     */
-    GameCreator.helperFunctions.exists = function(name, operation) {
-        var found = 0;
-        var i;
-        for (i = 0; i < GameCreator.collidableObjects.length; i += 1) {
-            if (operation(found)) {
-                return true;
-            }
-            if (GameCreator.collidableObjects[i].name === name) {
-                found += 1;
-            }
-        }
-        return false;
-        // TODO, iterate through rest of runtime objects
-    };
-
     GameCreator.helperFunctions.findGlobalObjectByName = function(name) {
         var object = GameCreator.globalObjects[name];
         if (!object) {
@@ -293,5 +272,13 @@
         globalObj.unique = args.unique;
         globalObj.parentCounters = {};
         globalObj.counters = {};
+    };
+
+    GameCreator.helperFunctions.getCollisionActions = function(objectType) {
+        if (objectType === "MouseObject") {
+            return GameCreator.actionGroups.mouseNonCollisionActions;
+        } else {
+            return GameCreator.actionGroups.nonCollisionActions;
+        }
     };
 }());
