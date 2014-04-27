@@ -1,8 +1,6 @@
 GameCreator.Event = function() {
     this.conditions = [];
     this.actions = [];
-    this.actionWindowAlreadyOpened = false;
-    this.runtimeObj = null;
 }
 
 GameCreator.Event.prototype.checkConditions = function() {
@@ -14,16 +12,13 @@ GameCreator.Event.prototype.checkConditions = function() {
     return true;
 }
 
-GameCreator.Event.prototype.runActions = function(runtimeObj) {
+GameCreator.Event.prototype.runActions = function(runtimeObj, parameters) {
     for (var i = 0; i < this.actions.length; i++) {
+        if (parameters) {
+            $.extend(this.actions[i].parameters, parameters);
+        }
         this.actions[i].runAction(runtimeObj);
     }
-}
-
-GameCreator.Event.prototype.shouldOpenActionWindow = function() {
-    return this.actions.length === 0 && 
-        GameCreator.state !== 'playing' && 
-        this.actionWindowAlreadyOpened === false;
 }
 
 GameCreator.Event.prototype.addCondition = function(condition, parameters) {

@@ -10,7 +10,7 @@ GameCreator.commonObjectViews = {
         GameCreator.commonObjectViews.addCommonObjectViews(object);
         object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
         object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
-        object.getKeyActionsContent = GameCreator.commonObjectViews.getKeyActionsContent;
+        object.getKeyEventsContent = GameCreator.commonObjectViews.getKeyEventsContent;
         object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
     },
 
@@ -112,18 +112,18 @@ GameCreator.commonObjectViews = {
         result = "";
         var selectableKeys = this.keyPressed;
         for (var keyName in selectableKeys) {
-            if (selectableKeys.hasOwnProperty(keyName) && !this.keyActions.hasOwnProperty(keyName)) {
+            if (selectableKeys.hasOwnProperty(keyName) && this.keyEvents[keyName].length === 0) {
                 result += '<div class="addKeyObjectElement" data-keyName="' + keyName + '" style="float:left;cursor:pointer;"><span>' + keyName + '</span></div>';
             }
         }
         return result;
     },
 
-    getKeyActionsContent: function() {
+    getKeyEventsContent: function() {
         var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
         result += '<div id="add-new-key-button" class="regularButton">Add</div>';
-        for (var keyName in this.keyActions) {
-            if (this.keyActions.hasOwnProperty(keyName)) {
+        for (var keyName in this.keyEvents) {
+            if (this.keyEvents[keyName].length > 0) {
                 result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
         }

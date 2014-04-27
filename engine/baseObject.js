@@ -2,15 +2,7 @@
 (function() {
     "use strict";
     GameCreator.BaseObject = function() {
-        this.image = undefined;
-        this.width = 0;
-        this.height = 0;
-        this.imageReady = false;
         this.objectType = "baseObject";
-        this.isDestroyed = false;
-        this.isClickable = true;
-        this.onDestroyEvents = [new GameCreator.Event()];
-        this.onCreateEvents = [new GameCreator.Event()];
     };
         /**
          * Called when an object is being destroyed through an action. Marks
@@ -29,51 +21,58 @@
     };
 
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
-        var i;
+        var i, currentEvent;
         if (!GameCreator.paused) {
-            for (i = 0; i < this.parent.onDestroyEvents.length; i++) {
-                var currEvent = this.parent.onDestroyEvents[i];
-                if (currEvent.shouldOpenActionWindow()) {
-                    currEvent.actionWindowAlreadyOpened = true;
-                    GameCreator.UI.openEditActionsWindow(
-                        "'" + this.parent.objectName + "' is has been destroyed!",
-                        GameCreator.actionGroups.nonCollisionActions,
-                        this.parent.onDestroyActions,
-                        this.objectName
-                    );
-                    GameCreator.bufferedActions.push({actionArray: this.parent.onDestroyActions, runtimeObj: this});
-                } else {
-                    currEvent.runActions(this);
+            if (this.parent.onDestroyEvents.length === 0) {
+                currentEvent = new GameCreator.Event();
+                this.parent.onDestroyEvents.push(currentEvent);
+                GameCreator.UI.openEditActionsWindow(
+                    "'" + this.parent.objectName + "' has been destroyed!",
+                    GameCreator.actionGroups.nonCollisionActions,
+                    currentEvent.actions,
+                    this.objectName
+                );
+                GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: this});
+            } else {
+                for (i = 0; i < this.parent.onDestroyEvents.length; i++) {
+                    currentEvent = this.parent.onDestroyEvents[i];
+                    if (currentEvent.checkConditions()) {
+                        currentEvent.runActions(this);
+                    }
                 }
             }
         }
     };
 
     GameCreator.BaseObject.prototype.onCreate = function() {
+        var index;
         this.parent.runOnCreateActions.call(this);
+        index = GameCreator.newlyCreatedObjects.indexOf(this);
+        if (index !== -1) {
+            GameCreator.newlyCreatedObjects.splice(index, 1);
+        }
     };
 
     GameCreator.BaseObject.prototype.runOnCreateActions = function() {
-        var i, index;
+        var i, currentEvent;
         if (!GameCreator.paused) {
-            if (!this.parent.onCreateActions && GameCreator.state !== 'playing') {
-                this.parent.onCreateActions = [];
+            if (this.parent.onCreateEvents.length === 0) {
+                currentEvent = new GameCreator.Event();
+                this.parent.onCreateEvents.push(currentEvent);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been created!",
                     GameCreator.actionGroups.nonCollisionActions,
-                    this.parent.onCreateActions,
+                    currentEvent.actions,
                     this.objectName
                 );
-                GameCreator.bufferedActions.push({actionArray: this.parent.onCreateActions, runtimeObj: this});
-            }
-            if (this.parent.onCreateActions) {
-                for (i = 0; i < this.parent.onCreateActions.length; i += 1) {
-                    this.parent.onCreateActions[i].runAction(this);
+                GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: this});
+            } else {
+                for (i = 0; i < this.parent.onCreateEvents.length; i++) {
+                    currentEvent = this.parent.onCreateEvents[i];
+                    if (currentEvent.checkConditions()) {
+                        currentEvent.runActions(this);
+                    }
                 }
-            }
-            index = GameCreator.newlyCreatedObjects.indexOf(this);
-            if (index !== -1) {
-                GameCreator.newlyCreatedObjects.splice(index, 1);
             }
         }
     };

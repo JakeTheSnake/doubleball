@@ -21,7 +21,7 @@
     };
 
     GameCreator.addObjFunctions.collidableObjectAttributes = function(object) {
-        object.collisionEvents = [new GameCreator.Event()];
+        object.onCollideEvents = [];
     };
 
     GameCreator.addObjFunctions.keyObjectAttributes = function(object) {
@@ -31,15 +31,15 @@
             rightMouse: false
         };
         object.keyEvents = {
-            space: [new GameCreator.Event()],
-            leftMouse: [new GameCreator.Event()],
-            rightMouse: [new GameCreator.Event()]
+            space: [],
+            leftMouse: [],
+            rightMouse: []
         };
     };
 
     GameCreator.addObjFunctions.keyObjectFunctions = function(object) {
         object.checkEvents = function() {
-            var i, j, key, isKeyPressed, keyAction, actions;
+            var j, key, isKeyPressed, keyEvents, actions;
             //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
             for (key in this.parent.keyPressed) {
                 if (this.parent.keyPressed.hasOwnProperty(key)) {
@@ -47,21 +47,20 @@
                     keyEvents = this.parent.keyEvents[key];
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
-                        for (j = 0; j < keyEvent.length; j++) {
-                            if (keyEvents[i].checkConditions()) {
-                                if (keyEvents[i].shouldOpenActionWindow()) {
-                                    actions = GameCreator.helperFunctions.getCollisionActions(this.parent.objectType);
-
-                                    keyEvents[i].actionWindowAlreadyOpened = true;
-                                    GameCreator.UI.openEditActionsWindow(
-                                        "Pressed " + key + " actions for " + this.parent.objectName,
-                                         actions,
-                                         this.parent.keyActions[key],
-                                         this.objectName
-                                        );
-                                    GameCreator.bufferedActions.push({actionArray: this.parent.keyActions[key], runtimeObj: this});    
-                                } else {
-                                    keyEvents[i].runActions(this);
+                        if (keyEvents.length === 0) {
+                            keyEvents.push(new GameCreator.Event());
+                            actions = GameCreator.helperFunctions.getNonCollisionActions(this.parent.objectType);
+                            GameCreator.UI.openEditActionsWindow(
+                                "Pressed " + key + " actions for " + this.parent.objectName,
+                                 actions,
+                                 keyEvents[0].actions,
+                                 this.objectName
+                                );
+                            GameCreator.bufferedActions.push({actionArray: keyEvents[0].actions, runtimeObj: this});    
+                        } else {
+                            for (j = 0; j < keyEvents.length; j++) {
+                                if (keyEvents[j].checkConditions()) {
+                                    keyEvents[j].runActions(this);
                                     this.keyCooldown[key] = true;
                                     // This anonymous function should ensure that keyAction in the timeout callback
                                     // has the state that it has when the timeout is declared.
@@ -104,7 +103,7 @@
     };
 
     GameCreator.addObjFunctions.clickableObjectAttributes = function(object) {
-        object.onClickEvents = [new GameCreator.Event()];
+        object.onClickEvents = [];
         object.isClickable = true;
     };
 }());

@@ -181,10 +181,14 @@ GameCreator.htmlStrings = {
     collisionObjectSelector: function(object) {
         var result = '';
         var selectableObjects = {};
-        var objName;
+        var objName, objId;
         $.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
         for (objName in selectableObjects) {
-            if (selectableObjects.hasOwnProperty(objName) && !object.collisionActions.hasOwnProperty(objName) && selectableObjects[objName].isCollidable && objName != object.objectName) {
+            objId = GameCreator.helperFunctions.findGlobalObjectByName(objName).id;
+            if (selectableObjects.hasOwnProperty(objName) && 
+                !GameCreator.helperFunctions.getObjectById(object.onCollideEvents, objId) && 
+                selectableObjects[objName].isCollidable && 
+                objName != object.objectName) {
                 result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].image.outerHTML + '</br><span>' + objName + '</span></div>';
             }
         }

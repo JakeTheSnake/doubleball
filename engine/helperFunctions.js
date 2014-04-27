@@ -47,27 +47,29 @@
     };
 
     GameCreator.helperFunctions.doCollision = function(object, targetObject) {
-        var currentActionsItem = GameCreator.helperFunctions.getObjectById(object.parent.collisionActions, targetObject.parent.id);
-        var j, actions, newActionItem;
+        var currentEventItem = GameCreator.helperFunctions.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+        var j, choosableActions, newEventItem, currentEvent;
         targetObject.invalidated = true;
-        if (currentActionsItem !== undefined) {
-            for (j = 0; j < currentActionsItem.actions.length; j += 1) {
-                currentActionsItem.actions[j].parameters.collisionObject = targetObject;
-                currentActionsItem.actions[j].runAction(object);
+        if (currentEventItem !== undefined) {
+            for (j = 0; j < currentEventItem.events.length; j += 1) {
+                currentEvent = currentEventItem.events[j];
+                if (currentEvent.checkConditions()) {
+                    currentEvent.runActions(object, {collisionObject: targetObject});
+                }
             }
         }
         else if (GameCreator.state !== 'playing') {
-            if (object.parent.objectType === "mouseObject") {
-                actions = GameCreator.actionGroups.mouseCollisionActions;
+            if (object.parent.objectType === "MouseObject") {
+                choosableActions = GameCreator.actionGroups.mouseCollisionActions;
             } else {
-                actions = GameCreator.actionGroups.collisionActions;
+                choosableActions = GameCreator.actionGroups.collisionActions;
             }
-            newActionItem = {id: targetObject.parent.id, actions: []};
-            object.parent.collisionActions.push(newActionItem);
+            newEventItem = {id: targetObject.parent.id, events: [new GameCreator.Event()]};
+            object.parent.onCollideEvents.push(newEventItem);
             GameCreator.UI.openEditActionsWindow(
                 "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'",
-                actions,
-                newActionItem.actions,
+                choosableActions,
+                newEventItem.events[0].actions,
                 object.objectName
             );
         }
@@ -113,10 +115,10 @@
                 }
             }
         } else {
-            for (j = 0; j < object.parent.collisionActions.length; j += 1) {
-                collisionItem = object.parent.collisionActions[j];
+            for (j = 0; j < object.parent.onCollideEvents.length; j += 1) {
+                collisionItem = object.parent.onCollideEvents[j];
                 runtimeObjectsItem = GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, collisionItem.id);
-                if (collisionItem.actions.length > 0 && runtimeObjectsItem) {
+                if (GameCreator.helperFunctions.eventItemHasActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                         targetObject = runtimeObjectsItem.runtimeObjects[i];
                         if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
@@ -127,6 +129,16 @@
             }
         }
     };
+
+    GameCreator.helperFunctions.eventItemHasActions = function(eventItem) {
+        var i;
+        for (i = 0; i < eventItem.events.length; i += 1) {
+            if (eventItem.events[i].actions.length > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject) {
         if (!(object === targetObject)) {
@@ -272,9 +284,11 @@
         globalObj.unique = args.unique;
         globalObj.parentCounters = {};
         globalObj.counters = {};
+        globalObj.onDestroyEvents = [];
+        globalObj.onCreateEvents = [];
     };
 
-    GameCreator.helperFunctions.getCollisionActions = function(objectType) {
+    GameCreator.helperFunctions.getNonCollisionActions = function(objectType) {
         if (objectType === "MouseObject") {
             return GameCreator.actionGroups.mouseNonCollisionActions;
         } else {

@@ -16,7 +16,7 @@ GameCreator.commonObjectControllers = {
 
     addPlayerObjectControllers: function(object) {
         GameCreator.commonObjectControllers.addCommonObjectControllers(object);
-        object.setupKeyActionsForm = GameCreator.commonObjectControllers.setupKeyActionsForm;
+        object.setupKeyEventsForm = GameCreator.commonObjectControllers.setupKeyEventsForm;
     },
 
 
@@ -38,7 +38,7 @@ GameCreator.commonObjectControllers = {
  
     setupOnClickActionsForm: function(container) {
         var text = "Actions on click";
-        var choosableActions = GameCreator.helperFunctions.getCollisionActions(this.objectType);
+        var choosableActions = GameCreator.helperFunctions.getNonCollisionActions(this.objectType);
 
         if (this.onClickActions == undefined) {
             this.onClickActions = [];
@@ -52,15 +52,15 @@ GameCreator.commonObjectControllers = {
     setupCollisionsForm: function(container) {
         var collisionObjects = [];
         var globalObj = this;
-        for(var i = 0; i < this.collisionActions.length; i++) {
-            collisionObjects.push(GameCreator.helperFunctions.findGlobalObjectById(this.collisionActions[i].id));
+        for(var i = 0; i < this.onCollideEvents.length; i++) {
+            collisionObjects.push(GameCreator.helperFunctions.findGlobalObjectById(this.onCollideEvents[i].id));
         }
         container.html(this.getCollisionsContent(collisionObjects));
         container.find(".collisionMenuElement").on("click", function(){
             var targetName = $(this).data("name");
-            var actions = GameCreator.helperFunctions.getCollisionActions(globalObj.objectType);
+            var actions = GameCreator.helperFunctions.getNonCollisionActions(globalObj.objectType);
             var targetId = GameCreator.helperFunctions.findGlobalObjectByName(targetName).id;
-            var existingActions = GameCreator.helperFunctions.getObjectById(globalObj.collisionActions, targetId).actions;
+            var existingActions = GameCreator.helperFunctions.getObjectById(globalObj.onCollideEvents, targetId).events[0].actions;
             GameCreator.UI.createEditActionsArea(
                 "Actions for collision with " + targetName, 
                 actions,
@@ -74,8 +74,8 @@ GameCreator.commonObjectControllers = {
             $("#edit-collision-actions-object-content").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
             $(".addCollisionObjectElement").one("click", function() {
                 var targetId = GameCreator.helperFunctions.findGlobalObjectByName($(this).data("objectname")).id;
-                var newActionItem = {id: targetId, actions: []};
-                globalObj.collisionActions.push(newActionItem);
+                var newEventItem = {id: targetId, events: [new GameCreator.Event()]};
+                globalObj.onCollideEvents.push(newEventItem);
                 globalObj.setupCollisionsForm(container);
             });
         });
@@ -83,13 +83,13 @@ GameCreator.commonObjectControllers = {
     
     setupOnDestroyActionsForm: function(container) {
         var text = "Actions on Destruction";
-        var choosableActions = GameCreator.helperFunctions.getCollisionActions(this.objectType);
+        var choosableActions = GameCreator.helperFunctions.getNonCollisionActions(this.objectType);
         
-        if (this.onDestroyActions == undefined) {
-            this.onDestroyActions = [];
+        if (this.onDestroyEvents.length === 0) {
+            this.onDestroyEvents.push(new GameCreator.Event());
         }
         
-        var existingActions = this.onDestroyActions;
+        var existingActions = this.onDestroyEvents[0].actions;
         GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, this.objectName);
     },
 
@@ -97,11 +97,12 @@ GameCreator.commonObjectControllers = {
         var text = "Actions on Creation";
         var choosableActions = GameCreator.actionGroups.onCreateActions;
         
-        if (this.onCreateActions == undefined) {
-            this.onCreateActions = [];
+        if (this.onCreateEvents.length === 0) {
+            this.onCreateEvents.push(new GameCreator.Event());
         }
         
-        var existingActions = this.onCreateActions;
+        var existingActions = this.onCreateEvents[0].actions;
+
         GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, this.objectName);
     },
     
@@ -149,7 +150,7 @@ GameCreator.commonObjectControllers = {
                 existingActions = globalObj.parentCounters[counterName][eventType];
             }
 
-            var actions = GameCreator.helperFunctions.getCollisionActions(globalObj.objectType);
+            var actions = GameCreator.helperFunctions.getNonCollisionActions(globalObj.objectType);
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + eventType + " " + eventValue,
                 actions,
@@ -164,16 +165,16 @@ GameCreator.commonObjectControllers = {
     /******************************
      * PLAYER OBJECT CONTROLLERS  *
      *****************************/
-    setupKeyActionsForm: function(container) {
-        container.html(this.getKeyActionsContent());
+    setupKeyEventsForm: function(container) {
+        container.html(this.getKeyEventsContent());
         var globalObj = this;
         container.find(".keyMenuElement").on("click", function(){
             var keyName = $(this).data("name");
-            var actions = GameCreator.helperFunctions.getCollisionActions(globalObj.objectType);
+            var actions = GameCreator.helperFunctions.getNonCollisionActions(globalObj.objectType);
             GameCreator.UI.createEditActionsArea(
                 "Actions on " + keyName,
                 actions,
-                globalObj.keyActions[keyName],
+                globalObj.keyEvents[keyName][0].actions,
                 $("#edit-key-actions-key-content"),
                 globalObj.objectName
             );
@@ -181,8 +182,8 @@ GameCreator.commonObjectControllers = {
         $("#add-new-key-button").on("click", function(){
             $("#edit-key-actions-key-content").html(globalObj.getKeySelector());
             $(".addKeyObjectElement").one("click", function() {
-                globalObj.keyActions[$(this).data("keyname")] = [];
-                globalObj.setupKeyActionsForm(container);
+                globalObj.keyEvents[$(this).data("keyname")].push(new GameCreator.Event());
+                globalObj.setupKeyEventsForm(container);
             });
         });
     },

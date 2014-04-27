@@ -143,7 +143,9 @@ function setupCollisionEventForNewObject(action, parameters) {
     var parameters = parameters || {};
     var timing = {type: "now"};
     var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
-    redBall.collisionActions.push({id: GameCreator.borderObjects.borderL.id, actions: [bounceAction]});
+    var collideEvent = new GameCreator.Event();
+    collideEvent.actions.push(bounceAction);
+    redBall.onCollideEvents.push({id: GameCreator.borderObjects.borderL.id, events: [collideEvent]});
     return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
 }
 
@@ -214,6 +216,8 @@ test("SwitchScene Action Test", function() {
     deepEqual(GameCreator.activeScene, 1, "Scene was switched.");
 });
 
+var newEvent;
+
 module("ActionTriggers", {
   setup: function() {
     GameCreator.actions["testAction"] = new GameCreator.Action({
@@ -224,6 +228,8 @@ module("ActionTriggers", {
     platformZealot = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
     runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
     runtimeObject = GameCreator.createRuntimeObject(platformZealot, {x: 50, y: 60, speedX: -500, speedY: 50});
+    newEvent = new GameCreator.Event();
+    newEvent.actions.push(runtimeAction);
   },
   teardown: function() {
     delete GameCreator.actions["testAction"];
@@ -236,7 +242,8 @@ function assertActionRun() {
 
 test("Trigger action by key", function() {
     var key = "space";
-    platformZealot.keyActions[key] = [runtimeAction];
+
+    platformZealot.keyEvents[key] = [newEvent];
     platformZealot.keyPressed[key] = true;
 
     runtimeObject.parent.checkEvents.call(runtimeObject);
@@ -245,7 +252,7 @@ test("Trigger action by key", function() {
 });
 
 test("Trigger action by creation", function() {
-    platformZealot.onCreateActions = [runtimeAction];
+    platformZealot.onCreateEvents = [newEvent];
 
     GameCreator.callOnCreateForNewObjects();
 
@@ -254,7 +261,7 @@ test("Trigger action by creation", function() {
 
 
 test("Trigger action by destruction", function() {
-    platformZealot.onDestroyActions = [runtimeAction];
+    platformZealot.onDestroyEvents = [newEvent];
 
     runtimeObject.parent.destroy.call(runtimeObject);
 
