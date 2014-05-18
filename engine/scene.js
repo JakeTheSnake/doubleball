@@ -78,10 +78,10 @@
         sceneStarted: function() {
             $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e) {
                 var i;
-
                 var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left, e.pageY - $("#main-canvas").offset().top);
-                var globalObj = runtimeObj.parent;
-                if (runtimeObj && globalObj.isClickable) {
+                
+                if (runtimeObj && runtimeObj.parent) {
+                    var globalObj = runtimeObj.parent;
                     for (i = 0; i < globalObj.onClickEvents.length; i++) {
                         if (globalObj.onClickEvents[i].checkConditions()) {
                             if (!GameCreator.paused) {

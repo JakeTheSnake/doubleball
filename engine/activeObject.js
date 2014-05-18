@@ -2,6 +2,7 @@
 (function() {
     "use strict";
     GameCreator.ActiveObject = function(image, args) {
+        GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
 
@@ -12,12 +13,17 @@
         
         GameCreator.helperFunctions.setStandardProperties(this, image, args);
 
-        this.speed = (!args.speed && args.speed !== 0) ? 300 : args.speed;
-        this.accX = args.accX || 0;
-        this.accY = args.accY || 0;
-        this.speedX = args.speedX || 0;
-        this.speedY = args.speedY || 0;
+        this.movementType = args.movementType || "free";
 
+        if (this.movementType === "free") {
+            this.getDefaultState().accX = args.accX || 0;
+            this.getDefaultState().accY = args.accY || 0;
+            this.getDefaultState().speedX = args.speedX || 0;
+            this.getDefaultState().speedY = args.speedY || 0;
+        } else {
+            this.getDefaultState().speed = (!args.speed && args.speed !== 0) ? 300 : args.speed;   
+        }
+        
         this.isCollidable = true;
         this.isMovable = true;
         this.isRenderable = true;
@@ -98,6 +104,25 @@
             speedY = unitVector.y * projectileSpeed;
         }
         GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
+    };
+
+    GameCreator.ActiveObject.prototype.instantiateSceneObject = function(sceneObject, args) {
+        var state = sceneObject.getCurrentState();
+
+        if (sceneObject.movementType === 'route') {
+            //Array of Points. Points are {x:, y:, bounceNode} objects.
+            sceneObject.route = [{x: this.x, y: this.y}];
+            //Index of point that is currently the target.
+            sceneObject.targetNode = args.targetNode !== undefined ? args.targetNode : 0;
+            //If heading backwards or forwards through the grid. (Should switch when reaching a bounce node.)
+            sceneObject.routeForward = args.routeForward !== undefined ? args.routeForward : true;
+            sceneObject.speed = args.speed !== undefined ? args.speed : state.speed;
+        } else {
+            sceneObject.accX = args.accX !== undefined ? args.accX : state.accX;
+            sceneObject.accY = args.accY !== undefined ? args.accY : state.accY;
+            sceneObject.speedX = args.speedX !== undefined ? args.speedX : state.speedX;
+            sceneObject.speedY = args.speedY !== undefined ? args.speedY : state.speedY;
+        }
     };
 
     GameCreator.ActiveObject.prototype.move = function(modifier) {

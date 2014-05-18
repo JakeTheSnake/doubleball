@@ -73,7 +73,7 @@ GameCreator.htmlStrings = {
     },
     collisionMenuElement: function(object) {
         return '<div class="collisionMenuElement headingNormalBlack" data-name="' + object.objectName + '" ><span>' + object.objectName + '</span>' + '<br/>' +
-        object.image.outerHTML + '</div>';
+        object.getDefaultState().image.outerHTML + '</div>';
     },
     keyMenuElement: function(keyName) {
         return '<div class="keyMenuElement headingNormalBlack" data-name="' + keyName + '"><span>' + keyName + '</span></div>';
@@ -85,7 +85,7 @@ GameCreator.htmlStrings = {
     	return '<div class="counterEventMenuElement headingNormalBlack" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></div>';
     },
     globalObjectElement: function(object) {
-        var image = object.image;
+        var image = object.getDefaultState().image;
         $(image).css("width","65");
         var imgDiv = $(document.createElement("div"));
         imgDiv.append(image);
@@ -99,7 +99,7 @@ GameCreator.htmlStrings = {
         var button = document.createElement("button");
         $(button).append(object.objectName);
         $(button).addClass("library-global-object-button");
-        $(button).attr("data-imgsrc", object.image.src);
+        $(button).attr("data-imgsrc", object.getDefaultState().image.src);
         var div = $(document.createElement("div")).append(button);
         return div;
     },
@@ -144,7 +144,7 @@ GameCreator.htmlStrings = {
     
     imageSrcInput: function(object) {
         return GameCreator.htmlStrings.inputLabel("global-object-image-src", "Image:") + 
-            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (object && object.image ? object.image.src : ""))
+            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (object && object.getDefaultState().image ? object.getDefaultState().image.src : ""))
     },
 
     
@@ -189,7 +189,7 @@ GameCreator.htmlStrings = {
                 !GameCreator.helperFunctions.getObjectById(object.onCollideEvents, objId) && 
                 selectableObjects[objName].isCollidable && 
                 objName != object.objectName) {
-                result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].image.outerHTML + '</br><span>' + objName + '</span></div>';
+                result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].getDefaultState().image.outerHTML + '</br><span>' + objName + '</span></div>';
             }
         }
     	return result;

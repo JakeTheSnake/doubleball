@@ -4,6 +4,7 @@
     GameCreator.MouseObject = function(image, args) {
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
+        GameCreator.addObjFunctions.commonObjectFunctions(this);
 
         if (GameCreator.state !== 'playing') {
             GameCreator.commonObjectViews.addPlayerObjectViews(this);
@@ -18,10 +19,11 @@
         this.isEventable = true;
         this.latestMouseX = 0;
         this.latestMouseY = 0;
-        this.maxX = (!args.maxX && args.maxX !== 0) ? GameCreator.width : args.maxX;
-        this.maxY = (!args.maxY && args.maxY !== 0) ? GameCreator.height : args.maxY;
-        this.minX = args.minX || 0;
-        this.minY = args.minY || 0;
+
+        this.getDefaultState().maxX = (!args.maxX && args.maxX !== 0) ? GameCreator.width : args.maxX;
+        this.getDefaultState().maxY = (!args.maxY && args.maxY !== 0) ? GameCreator.height : args.maxY;
+        this.getDefaultState().minX = args.minX || 0;
+        this.getDefaultState().minY = args.minY || 0;
 
         this.objectType = "MouseObject";
     };
@@ -86,6 +88,14 @@
             }
             e.preventDefault();
         });
+    };
+
+    GameCreator.MouseObject.prototype.instantiateSceneObject = function(sceneObject, args) {
+        var state = sceneObject.getCurrentState();
+        sceneObject.maxX = args.maxX !== undefined ? args.maxX : state.maxX;
+        sceneObject.maxY = args.maxY !== undefined ? args.maxY : state.maxY;
+        sceneObject.minX = args.minX !== undefined ? args.minX : state.minX;
+        sceneObject.minY = args.minY !== undefined ? args.minY : state.minY;
     };
 
     GameCreator.MouseObject.prototype.shoot = function(staticParameters) {

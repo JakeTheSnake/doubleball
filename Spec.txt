@@ -80,11 +80,13 @@ Text-objekt
 
 Objekt-state
 ================
-Objekt ska kunna ha olika states. Dessa finns i två kategorier:
+Objekt ska kunna ha olika states. 
 
-Movement-state: Förskapade. Triggas automatiskt beroende på hur objektet rör sig, åt vilket håll osv.
-Custom-state: Skapas av användaren. Triggas genom actions.
+Alla attribut för ett objekt bestäms av vilket state de är i. När state byts på ett objekt sätts alla attribut som finns specificerade på det aktuella statet till det värde som finns angivet i statet.
 
+Varje scenobjekt har ett separat state, men de värden som sätts hämtas från deras parent.
+
+States skall kunna ändras genom actions och användas som villkor när man skapar actions.
 
 Databas
 ================

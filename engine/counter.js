@@ -167,21 +167,29 @@
     };
 
     GameCreator.CounterObject = function(image, args) {
-        this.image = image;
+        GameCreator.addObjFunctions.commonObjectFunctions(this);
+
+        this.states = [{
+            name: "Default",
+            id: 0
+        }];
+        
+        this.getDefaultState().image = image;
         this.objectName = args.objectName;
         this.isClickable =  false;
+
         if (args.representation === 'text') {
             this.textCounter = true;
-            this.font = args.font || 'Arial';
-            this.color = args.color || '#000';
-            this.size = args.size || 20;
-            this.image.src = 'assets/textcounter.png';
+            this.getDefaultState().font = args.font || 'Arial';
+            this.getDefaultState().color = args.color || '#000';
+            this.getDefaultState().size = args.size || 20;
+            this.getDefaultState().image.src = 'assets/textcounter.png';
         } else if (args.representation === 'image') {
             this.imageCounter = true;
-            this.size = args.size || 20;
+            this.getDefaultState().size = args.size || 20;
         }
-        this.width = [100]; //TODO: Handle width and height of counters?
-        this.height = [100];
+        this.getDefaultState().width = [100]; //TODO: Handle width and height of counters?
+        this.getDefaultState().height = [100];
         this.isRenderable = true;
         this.objectType = "CounterObject";
         GameCreator.globalObjects[this.objectName] = this;
@@ -227,4 +235,11 @@
     GameCreator.CounterObject.prototype.onGameStarted = function() {};
 
     GameCreator.CounterObject.prototype.onCreate = function() {};
+
+    GameCreator.CounterObject.prototype.instantiateSceneObject = function(sceneObject, args) {
+        var state = sceneObject.getCurrentState();
+        sceneObject.font = state.font;
+        sceneObject.color = state.color;
+        sceneObject.size = state.size;
+    };
 }());

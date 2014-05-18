@@ -277,15 +277,19 @@
     };
 
     GameCreator.helperFunctions.setStandardProperties = function(globalObj, image, args) {
-        globalObj.image = image;
         globalObj.objectName = args.objectName;
-        globalObj.width = args.width;
-        globalObj.height = args.height;
         globalObj.unique = args.unique;
         globalObj.parentCounters = {};
         globalObj.counters = {};
         globalObj.onDestroyEvents = [];
         globalObj.onCreateEvents = [];
+        globalObj.states = [{
+            name: "Default",
+            id: 0,
+            image: image,
+            width: args.width,
+            height: args.height
+        }];
     };
 
     GameCreator.helperFunctions.getNonCollisionActions = function(objectType) {

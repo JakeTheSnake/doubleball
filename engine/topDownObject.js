@@ -3,6 +3,7 @@
     "use strict";
     GameCreator.TopDownObject = function(image, args) {
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
+        GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
         if (GameCreator.state !== 'playing') {
@@ -16,17 +17,11 @@
         this.isRenderable = true;
         this.isEventable = true;
 
-        this.speedX = 0;
-        this.speedY = 0;
-        this.accX = 0;
-        this.accY = 0;
         this.keyLeftPressed = false;
         this.keyRightPressed = false;
         this.keyUpPressed = false;
         this.keyDownPressed = false;
-        this.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? 300 : args.maxSpeed;
-        //Facing can be 1-8 where 1 is facing up and the others follow clockwise.
-        this.facing = 1;
+        this.getDefaultState().maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? 300 : args.maxSpeed;
         
         this.objectType = "TopDownObject";
     };
@@ -137,6 +132,19 @@
             }
             e.preventDefault();
         });
+    };
+
+    GameCreator.TopDownObject.prototype.instantiateSceneObject = function(sceneObject, args) {
+        var state = sceneObject.getCurrentState();
+        sceneObject.accX = args.accX || [0];
+        sceneObject.accY = args.accY || [0];
+        sceneObject.speedX = args.speedX || [0];
+        sceneObject.speedY = args.speedY || [0];
+
+        sceneObject.facing = 1;
+
+        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.maxSpeed;
+        sceneObject.keyCooldown = {space: false};
     };
 
     GameCreator.TopDownObject.prototype.shoot = function(staticParameters) {

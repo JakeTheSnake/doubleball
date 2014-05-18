@@ -44,7 +44,7 @@ GameCreator.UI = {
             $("body").append(image);
             var initialX = e.pageX;
             var initialY = e.pageY;
-            var aspectRatio = globalObj.width / globalObj.height;
+            var aspectRatio = globalObj.getDefaultState().width / globalObj.getDefaultState().height;
             $(window).on("mousemove.dragGlobalMenuItem", function(e){
                 if (Math.abs(initialX - e.pageX) > 3 || Math.abs(initialY - e.pageY) > 3){
                     $(image).css("display", "block"); 
@@ -59,7 +59,9 @@ GameCreator.UI = {
                 var offsetX = $("#main-canvas").offset().left;
                 var offsetY = $("#main-canvas").offset().top;
                 if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
-                    var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.scenes[GameCreator.activeScene], {x:x-offsetX-globalObj.width[0]/2, y:y-offsetY-globalObj.height[0]/2});
+                    var args = {x: x - offsetX - globalObj.getDefaultState().width[0] / 2, 
+                                y: y - offsetY - globalObj.getDefaultState().height[0] / 2};
+                    var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.scenes[GameCreator.activeScene], args);
                 }
                 $(image).remove();
                 $(window).off("mousemove.dragGlobalMenuItem");

@@ -129,11 +129,11 @@
                     minHeight = obj.height;
                 }
                 context.globalAlpha = 0.5;
-                context.drawImage(obj.parent.image, obj.x, obj.y, maxWidth, maxHeight);
+                context.drawImage(obj.getCurrentState().image, obj.x, obj.y, maxWidth, maxHeight);
                 context.globalAlpha = 1.0;
-                context.drawImage(obj.parent.image, obj.x, obj.y, minWidth, minHeight);
+                context.drawImage(obj.getCurrentState().image, obj.x, obj.y, minWidth, minHeight);
             } else {
-                context.drawImage(obj.parent.image, obj.x, obj.y, obj.width, obj.height);
+                context.drawImage(obj.getCurrentState().image, obj.x, obj.y, obj.width, obj.height);
             }
             obj.invalidated = false;
         }

@@ -33,6 +33,7 @@
         bufferedActions: [],
 
         addObjFunctions: {},
+        commonObjectFunctions: {},
         helperFunctions: {},
 
         selectedObject: undefined, //The currently selected scene object.

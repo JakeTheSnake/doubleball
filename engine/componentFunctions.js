@@ -1,6 +1,11 @@
 /*global GameCreator, $, setTimeout*/
 (function() {
     "use strict";
+
+    GameCreator.addObjFunctions.commonObjectFunctions = function(object) {
+        object.getDefaultState = GameCreator.commonObjectFunctions.getDefaultState;
+    }
+
     GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
         object.bounce = function(params) {
             switch (GameCreator.helperFunctions.determineQuadrant(params.collisionObject, this)) {
@@ -105,5 +110,9 @@
     GameCreator.addObjFunctions.clickableObjectAttributes = function(object) {
         object.onClickEvents = [];
         object.isClickable = true;
+    };
+
+    GameCreator.commonObjectFunctions.getDefaultState = function() {
+        return GameCreator.helperFunctions.getObjectById(this.states, 0);
     };
 }());

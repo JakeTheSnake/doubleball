@@ -10,11 +10,12 @@
         this.speedY = 0;
         this.displayWidth = 0;
         this.displayHeight = 0;
-        this.image = undefined;
         this.counters = {};
 
         this.clickOffsetX = 0;
         this.clickOffsetY = 0;
+
+        this.currentState = 0;
 
         //Global object this refers to.
         this.parent = undefined;
@@ -45,54 +46,20 @@
 
     GameCreator.SceneObject.prototype.instantiate = function(globalObj, args) {
         this.invalidated = true;
-        this.x = args.x !== undefined ? args.x : globalObj.x;
-        this.y = args.y !== undefined ? args.y : globalObj.y;
-        this.accX = args.accX !== undefined ? args.accX : globalObj.accX;
-        this.accY = args.accY !== undefined ? args.accY : globalObj.accY;
-        this.speedX = args.speedX !== undefined ? args.speedX : globalObj.speedX;
-        this.speedY = args.speedY !== undefined ? args.speedY : globalObj.speedY;
-        this.width = args.width !== undefined ? args.width : globalObj.width;
-        this.height = args.height !== undefined ? args.height : globalObj.height;
+        this.currentState = args.currentState || 0;
+
+        var state = GameCreator.helperFunctions.getObjectById(globalObj.states, this.currentState);
+
+        this.x = args.x;
+        this.y = args.y;
+
+        this.width = args.width !== undefined ? args.width : state.width;
+        this.height = args.height !== undefined ? args.height : state.height;
         this.parent = globalObj;
         this.objectName = args.objectName !== undefined ? args.objectName : globalObj.objectName;
         this.instanceId = this.objectName + GameCreator.getUniqueId();
 
-        //PlayerMouse properties
-        this.maxX = args.maxX !== undefined ? args.maxX : globalObj.maxX;
-        this.maxY = args.maxY !== undefined ? args.maxY : globalObj.maxY;
-        this.minX = args.minX !== undefined ? args.minX : globalObj.minX;
-        this.minY = args.minY !== undefined ? args.minY : globalObj.minY;
-
-        //PlayerPlatform properties
-        this.objectBeneath = false;
-        this.acceleration = args.acceleration !== undefined ? args.acceleration : globalObj.acceleration;
-
-        //If it is a platformObject add gravity by default.
-        if (globalObj.objectType === "platformObject") {
-            this.accY = args.accY !== undefined ? args.accY : globalObj.accY;
-        }
-
-        //PlayerTopDown properties
-        this.facing = 1;
-
-        //TopDown and Platform
-        this.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : globalObj.maxSpeed;
-        this.keyCooldown = {space: false};
-
-        //ActiveObject properties
-
-        //Array of Points. Points are {x:, y:, bounceNode} objects.
-        this.route = [{x: this.x, y: this.y}];
-        //Index of point that is currently the target.
-        this.targetNode = args.targetNode !== undefined ? args.targetNode : 0;
-        //If heading backwards or forwards through the grid. (Should switch when reaching a bounce node.)
-        this.routeForward = args.routeForward !== undefined ? args.routeForward : true;
-        this.speed = args.speed !== undefined ? args.speed : globalObj.speed;
-
-        //Counter properties
-        this.font = globalObj.font;
-        this.color = globalObj.color;
-        this.size = globalObj.size;
+        globalObj.instantiateSceneObject(this, args);
 
         this.update();
 
@@ -118,5 +85,9 @@
                 this.counters[counter].parentObject = this;
             }
         }
+    };
+
+    GameCreator.SceneObject.prototype.getCurrentState = function() {
+        return GameCreator.helperFunctions.getObjectById(this.parent.states, this.currentState);
     }
 }());

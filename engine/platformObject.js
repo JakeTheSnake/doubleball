@@ -2,6 +2,7 @@
 (function() {
     "use strict";
     GameCreator.PlatformObject = function(image, args) {
+        GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
@@ -13,15 +14,13 @@
 
         GameCreator.helperFunctions.setStandardProperties(this, image, args);
 
-        this.accX = [0];
-        this.accY = (!args.accY && args.accY !== 0) ? [5] : args.accY;
-        this.acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
-        this.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
         this.keyLeftPressed = false;
         this.keyRightPressed = false;
         this.keyUpPressed = false;
-        this.speedX = [0];
-        this.speedY = [0];
+
+        this.getDefaultState().accY = (!args.accY && args.accY !== 0) ? [5] : args.accY;
+        this.getDefaultState().acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
+        this.getDefaultState().maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
 
         //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
         this.facingLeft = true;
@@ -118,6 +117,21 @@
         this.maxSpeed = GameCreator.helperFunctions.getRandomFromRange(this.maxSpeed);
         this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
         this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
+    };
+
+    GameCreator.PlatformObject.prototype.instantiateSceneObject = function(sceneObject, args) {
+        var state = sceneObject.getCurrentState();
+        sceneObject.accX = args.accX || [0];
+        sceneObject.speedX = args.speedX || [0];
+        sceneObject.speedY = args.speedY || [0];
+
+        sceneObject.objectBeneath = false;
+        sceneObject.acceleration = args.acceleration !== undefined ? args.acceleration : state.acceleration;
+
+        sceneObject.accY = args.accY !== undefined ? args.accY : state.accY;
+
+        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.maxSpeed;
+        sceneObject.keyCooldown = {space: false};
     };
 
     GameCreator.PlatformObject.prototype.shoot = function(staticParameters) {
