@@ -17,6 +17,10 @@ GameCreator.PlatformObject.prototype.getTabs = function() {
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 }
 
+GameCreator.PlatformObject.prototype.getStateForm = function(stateNr) {
+    return 'CONTENT FOR STATE ' + stateNr;
+};
+
 GameCreator.PlatformObject.movementInputs = function(object) {
     var result = GameCreator.htmlStrings.inputLabel("platform-object-accY", "Gravity:") +
         GameCreator.htmlStrings.rangeInput("platform-object-accY", "accY", (object ? object.accY : "")) +

@@ -17,6 +17,10 @@ GameCreator.TopDownObject.prototype.getTabs = function() {
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 };
 
+GameCreator.TopDownObject.prototype.getStateForm = function(stateNr) {
+    return 'CONTENT FOR STATE ' + stateNr;
+};
+
 GameCreator.TopDownObject.movementInputs = function(object) {
     return  GameCreator.htmlStrings.inputLabel("topDown-object-max-speed", "Speed:") +
             GameCreator.htmlStrings.rangeInput("topDown-object-max-speed", "maxSpeed", (object ? object.maxSpeed : "")) +

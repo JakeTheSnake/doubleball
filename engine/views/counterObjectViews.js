@@ -42,6 +42,10 @@ GameCreator.CounterObject.prototype.getTabs = function() {
         return  '';
 };
 
+GameCreator.CounterObject.prototype.getStateForm = function(stateNr) {
+    return 'CONTENT FOR STATE ' + stateNr;
+};
+
 GameCreator.CounterObject.counterObjectTextForm = function(object) {
     return GameCreator.htmlStrings.inputLabel("counter-object-counter-text-font", "Font:") + GameCreator.htmlStrings.stringInput("counter-object-counter-text-font", "font", object && object.font ? object.font : '') +
             '<br style="clear:both;"/>' +

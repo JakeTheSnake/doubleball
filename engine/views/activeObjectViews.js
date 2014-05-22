@@ -67,10 +67,14 @@ GameCreator.ActiveObject.prototype.getPropertiesForm = function() {
     return result;
 };
 
-GameCreator.ActiveObject.prototype.getTabs = function(){
+GameCreator.ActiveObject.prototype.getTabs = function() {
         return  '<a class="tab dialogue-window-tab" data-uifunction="setupCollisionsForm">Collisions</a>' +
                 '<a class="tab dialogue-window-tab" data-uifunction="setupOnClickActionsForm">On click</a>' +
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
+};
+
+GameCreator.ActiveObject.prototype.getStateForm = function(stateNr) {
+    return 'CONTENT FOR STATE ' + stateNr;
 };
 
 GameCreator.ActiveObject.freeMovementInputs = function(object) {

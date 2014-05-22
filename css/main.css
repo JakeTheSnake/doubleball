@@ -340,6 +340,33 @@ canvas {
     background-color: #797e85;
 }
 
+/* State content */
+
+.state-tab {
+    display: block;
+    margin: 0 1px 0 0;
+    padding: 10px 0 2px 9px;
+    float: left;
+    width: 90px;
+    height: 40px;
+    border: 0;
+    background-color: #70757b;
+    color: #ffffff;
+    text-align: left;
+    font-size: 14px;
+    font-family: verdana, sans-serif;
+    cursor: pointer;
+}
+
+.state-tab.active {
+    background-color: #8b9199;
+    pointer-events: none;
+}
+
+.state-tab:hover {
+    background-color: #797e85;
+}
+
 /* Dialogue window content */
 
 #edit-global-object-window-content {

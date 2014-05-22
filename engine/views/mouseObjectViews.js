@@ -20,6 +20,10 @@ GameCreator.MouseObject.prototype.getTabs = function(){
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 }
 
+GameCreator.MouseObject.prototype.getStateForm = function(stateNr) {
+    return 'CONTENT FOR STATE ' + stateNr;
+};
+
 GameCreator.MouseObject.movementInputs = function(object) {
     var result = GameCreator.htmlStrings.inputLabel("mouse-object-minX", "Min X:") + GameCreator.htmlStrings.numberInput("mouse-object-minX", "minX", (object ? object.minX : ""));
     result += '<br style="clear:both;"/>';

@@ -10,6 +10,7 @@ GameCreator.commonObjectControllers = {
         object.setupOnDestroyActionsForm = GameCreator.commonObjectControllers.setupOnDestroyActionsForm;
         object.setupOnCreateActionsForm = GameCreator.commonObjectControllers.setupOnCreateActionsForm;
         object.setupEditCounterEvents = GameCreator.commonObjectControllers.setupEditCounterEvents;
+        object.setupStatesForm = GameCreator.commonObjectControllers.setupStatesForm;
         object.setupCountersForm = GameCreator.commonObjectControllers.setupCountersForm;
         object.setupCollisionsForm = GameCreator.commonObjectControllers.setupCollisionsForm;
     },
@@ -104,6 +105,11 @@ GameCreator.commonObjectControllers = {
         var existingActions = this.onCreateEvents[0].actions;
 
         GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, this.objectName);
+    },
+
+    setupStatesForm: function(container) {
+        container.html(this.getStatesContent(this.states));
+        $('#state-tabs').find(".tab:first").addClass('active');
     },
     
     setupCountersForm: function(container) {

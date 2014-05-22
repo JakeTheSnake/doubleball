@@ -4,6 +4,7 @@ GameCreator.commonObjectViews = {
         object.getCountersContent = GameCreator.commonObjectViews.getCountersContent;
         object.getCollisionsContent = GameCreator.commonObjectViews.getCollisionsContent;
         object.getCounterEventsContent = GameCreator.commonObjectViews.getCounterEventsContent;
+        object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
     },
 
     addPlayerObjectViews: function(object) {
@@ -29,6 +30,7 @@ GameCreator.commonObjectViews = {
 
         result += '<a class="tab dialogue-window-tab" data-uifunction="setupOnDestroyActionsForm">On destroy</a> \
                    <a class="tab dialogue-window-tab" data-uifunction="setupOnCreateActionsForm">On create</a> \
+                   <a class="tab dialogue-window-tab" data-uifunction="setupStatesForm">States</a> \
                    </div> \
                    <div id="edit-global-object-window-content"></div>';
 
@@ -86,6 +88,19 @@ GameCreator.commonObjectViews = {
         return result;
     },
 
+    getStatesContent: function(states) {
+        var result = '<h>Edit states</h>';
+        result += '<div id="state-tabs">';
+        for(i = 0; i < states.length; i += 1) {
+            result += '<div class="tab state-tab" data-state=' + i + '>' + states[i].name + '</div>';
+        }
+        result += '<div id="add-state-tab" class="tab state-tab">+</div>'
+        result += '</div><br style="clear:both;"/>';
+        result += '<div id="state-content">';
+        result += this.getStateForm(0);
+        result += '</div>'
+        return result;
+    },
     
     /******************************
      * COMMON PLAYER OBJECT VIEWS *
