@@ -26,25 +26,46 @@ GameCreator.CounterObject.sceneObjectForm = function(sceneObject, counterCarrier
     return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
 };
 
-GameCreator.CounterObject.prototype.getPropertiesForm = function() {
+GameCreator.CounterObject.prototype.getPropertiesForm = function(stateId) {
+    var state = this.getState(stateId);
     var result = '';
+    result += '<div id="global-object-properties-content">'
     if (this.textCounter) {
-        result += GameCreator.CounterObject.counterObjectTextForm(this);
+        result += GameCreator.CounterObject.counterObjectTextForm(state);
     } else if (this.imageCounter) {
-        result += GameCreator.CounterObject.counterObjectImageForm(this);
+        result += GameCreator.CounterObject.counterObjectImageForm(state);
     }
     result += '<br style="clear:both;"/>';
     result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>';
+    result += '</div>'
     return result;
+};
+
+GameCreator.CounterObject.prototype.getNonStatePropertiesForm = function() {
+        return  '';
 };
 
 GameCreator.CounterObject.prototype.getTabs = function() {
         return  '';
 };
 
-GameCreator.CounterObject.prototype.getStateForm = function(stateNr) {
-    return 'CONTENT FOR STATE ' + stateNr;
+GameCreator.CounterObject.prototype.getStateForm = function(stateId) {
+    return 'CONTENT FOR STATE ' + stateId;
 };
+
+GameCreator.CounterObject.prototype.getEditWindow = function() {
+        var result = "";
+
+        result += '<div id="dialogue-window-title">Edit object</div> \
+                   <div id="dialogue-window-menu"> \
+                   <a class="tab dialogue-window-tab active" data-uifunction="setupPropertiesForm">Properties</a>';
+
+        result += this.getTabs();
+        result +=  '<a class="tab dialogue-window-tab" data-uifunction="setupStatesForm">States</a>';
+        result +=  '</div><div id="edit-global-object-window-content"></div>';
+
+        return result;
+    },
 
 GameCreator.CounterObject.counterObjectTextForm = function(object) {
     return GameCreator.htmlStrings.inputLabel("counter-object-counter-text-font", "Font:") + GameCreator.htmlStrings.stringInput("counter-object-counter-text-font", "font", object && object.font ? object.font : '') +

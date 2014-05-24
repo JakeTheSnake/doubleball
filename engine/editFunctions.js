@@ -13,8 +13,8 @@
 
         addGlobalObject: function(args, objectType) {
             var image = new Image();
+            image.src = args.image ? args.image.src : '';
             var globalObj = new GameCreator[objectType](image, args);
-            image.src = args.image ? args.image.src : null;
             GameCreator.globalIdCounter += 1;
             globalObj.id = GameCreator.globalIdCounter;
             GameCreator.UI.createLibraryItem(globalObj);

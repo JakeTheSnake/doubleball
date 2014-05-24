@@ -4,6 +4,7 @@
 
     GameCreator.addObjFunctions.commonObjectFunctions = function(object) {
         object.getDefaultState = GameCreator.commonObjectFunctions.getDefaultState;
+        object.getState = GameCreator.commonObjectFunctions.getState;
     }
 
     GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
@@ -115,4 +116,8 @@
     GameCreator.commonObjectFunctions.getDefaultState = function() {
         return GameCreator.helperFunctions.getObjectById(this.states, 0);
     };
+
+    GameCreator.commonObjectFunctions.getState = function(stateId) {
+      return GameCreator.helperFunctions.getObjectById(this.states, stateId);  
+    }
 }());

@@ -17,8 +17,8 @@ GameCreator.PlatformObject.prototype.getTabs = function() {
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 }
 
-GameCreator.PlatformObject.prototype.getStateForm = function(stateNr) {
-    return 'CONTENT FOR STATE ' + stateNr;
+GameCreator.PlatformObject.prototype.getStateForm = function(stateId) {
+    return 'CONTENT FOR STATE ' + stateId;
 };
 
 GameCreator.PlatformObject.movementInputs = function(object) {

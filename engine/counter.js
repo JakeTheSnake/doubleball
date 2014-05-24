@@ -168,6 +168,8 @@
 
     GameCreator.CounterObject = function(image, args) {
         GameCreator.addObjFunctions.commonObjectFunctions(this);
+        GameCreator.commonObjectControllers.addCounterObjectControllers(this);
+        GameCreator.commonObjectViews.addCounterObjectViews(this);
 
         this.states = [{
             name: "Default",

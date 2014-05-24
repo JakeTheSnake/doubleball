@@ -1,7 +1,8 @@
 GameCreator.commonObjectControllers = {
     
     addCounterObjectControllers: function(object) {
-        object.setupPropertiesForm = GameCreator.commonObjectControllers.setupPropertiesForm;  
+        object.setupPropertiesForm = GameCreator.commonObjectControllers.setupPropertiesForm;
+        object.setupStatesForm = GameCreator.commonObjectControllers.setupStatesForm;
     },
 
     addCommonObjectControllers: function(object) {
@@ -26,12 +27,12 @@ GameCreator.commonObjectControllers = {
      *****************************/
     setupPropertiesForm: function(container) {
         var globalObj = this;
-        var html = '<div id="edit-global-object-properties-content">' +
-            this.getPropertiesForm() +
-            '</div>';
+        var html =  this.getPropertiesForm(0) +
+                    this.getNonStatePropertiesForm();
         container.html(html);
         container.find("#save-global-object-properties-button").on("click", function() {
-            GameCreator.saveFormInputToObject("edit-global-object-properties-content", globalObj);
+            GameCreator.saveFormInputToObject("global-object-properties-content", GameCreator.helperFunctions.getObjectById(globalObj.states, 0));
+            GameCreator.saveFormInputToObject("global-object-non-state-properties-content", globalObj);
             GameCreator.UI.redrawLibrary();
             GameCreator.UI.closeDialogue();
         });

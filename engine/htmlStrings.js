@@ -142,9 +142,9 @@ GameCreator.htmlStrings = {
         return result;
     },
     
-    imageSrcInput: function(object) {
+    imageSrcInput: function(state) {
         return GameCreator.htmlStrings.inputLabel("global-object-image-src", "Image:") + 
-            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (object && object.getDefaultState().image ? object.getDefaultState().image.src : ""))
+            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (state && state.image ? state.image.src : ""))
     },
 
     

@@ -45,25 +45,26 @@ GameCreator.ActiveObject.sceneObjectForm = function(sceneObject) {
     return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
 };
 
-GameCreator.ActiveObject.prototype.getPropertiesForm = function() {
-    var result = GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
-        GameCreator.htmlStrings.rangeInput("active-object-width", "width", this.width) +
+GameCreator.ActiveObject.prototype.getPropertiesForm = function(stateId) {
+    var state = this.getState(stateId);
+    var result = '<div id="global-object-properties-content">';
+    result += GameCreator.htmlStrings.inputLabel("active-object-width", "Width:") +
+        GameCreator.htmlStrings.rangeInput("active-object-width", "width", state.width) +
         '<br style="clear:both;"/>' +
         GameCreator.htmlStrings.inputLabel("active-object-height", "Height:") +
-        GameCreator.htmlStrings.rangeInput("active-object-height", "height", this.height) +
+        GameCreator.htmlStrings.rangeInput("active-object-height", "height", state.height) +
         '<br style="clear:both;"/>' +
         '<div style="height: 10px"></div>';
     if (this.movementType === 'free') {
-        result += GameCreator.ActiveObject.freeMovementInputs(this);
+        result += GameCreator.ActiveObject.freeMovementInputs(state);
     }
     else {
-        result += GameCreator.ActiveObject.routeMovementInputs(this);
+        result += GameCreator.ActiveObject.routeMovementInputs(state);
     }
-    result += GameCreator.htmlStrings.imageSrcInput(this);
-    result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:');
-    result += GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique);
+    result += GameCreator.htmlStrings.imageSrcInput(state);
     result += '<br style="clear:both"/>';
     result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>';
+    result += '</div>'
     return result;
 };
 
@@ -73,8 +74,8 @@ GameCreator.ActiveObject.prototype.getTabs = function() {
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 };
 
-GameCreator.ActiveObject.prototype.getStateForm = function(stateNr) {
-    return 'CONTENT FOR STATE ' + stateNr;
+GameCreator.ActiveObject.prototype.getStateForm = function(stateId) {
+    return 'CONTENT FOR STATE ' + stateId;
 };
 
 GameCreator.ActiveObject.freeMovementInputs = function(object) {
