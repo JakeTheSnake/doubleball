@@ -1,7 +1,7 @@
 /*global GameCreator, $, document*/
 (function() {
     "use strict";
-    GameCreator.TopDownObject = function(image, args) {
+    GameCreator.TopDownObject = function(args) {
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
@@ -21,10 +21,17 @@
         this.keyRightPressed = false;
         this.keyUpPressed = false;
         this.keyDownPressed = false;
-        this.getDefaultState().maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? 300 : args.maxSpeed;
+
+        this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? 300 : args.maxSpeed;
         
         this.objectType = "TopDownObject";
     };
+
+    GameCreator.TopDownObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
+
+    GameCreator.TopDownObject.objectAttributes = $.extend(GameCreator.TopDownObject.objectAttributes, {
+        "maxSpeed": GameCreator.htmlStrings.rangeInput
+    });
 
     GameCreator.TopDownObject.prototype = Object.create(GameCreator.BaseObject.prototype);
 
@@ -143,7 +150,7 @@
 
         sceneObject.facing = 1;
 
-        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.maxSpeed;
+        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.attributes.maxSpeed;
         sceneObject.keyCooldown = {space: false};
     };
 

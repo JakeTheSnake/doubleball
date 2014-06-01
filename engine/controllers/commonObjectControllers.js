@@ -31,8 +31,8 @@ GameCreator.commonObjectControllers = {
                     this.getNonStatePropertiesForm();
         container.html(html);
         container.find("#save-global-object-properties-button").on("click", function() {
-            GameCreator.saveFormInputToObject("global-object-properties-content", GameCreator.helperFunctions.getObjectById(globalObj.states, 0));
-            GameCreator.saveFormInputToObject("global-object-non-state-properties-content", globalObj);
+            GameCreator.saveFormInputToObject("object-properties-content", GameCreator.helpers.getObjectById(globalObj.states, 0).attributes);
+            GameCreator.saveFormInputToObject("object-non-state-properties-content", globalObj);
             GameCreator.UI.redrawLibrary();
             GameCreator.UI.closeDialogue();
         });

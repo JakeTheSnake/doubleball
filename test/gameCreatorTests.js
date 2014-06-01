@@ -10,12 +10,12 @@ module("GameCreator Tests", {
 });
 
 test("Create Runtime Active Object", function() {
-    var redBall = createGlobalObject("ActiveObject");
+    var redBall = createGlobalObject("FreeObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 1, "Added to movableObjects");
     deepEqual(GameCreator.eventableObjects.length, 0, "Added to eventableObjects");
-    var redBallCollidables = GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, redBall.id);
+    var redBallCollidables = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, redBall.id);
     deepEqual(redBallCollidables.runtimeObjects.length, 1, "Added to collidableObjects");
 });
 
@@ -25,12 +25,12 @@ test("Create Runtime Player Object", function() {
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 1, "Added to movableObjects");
     deepEqual(GameCreator.eventableObjects.length, 1, "Added to eventableObjects");
-    var redBallCollidables = GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, redBall.id);
+    var redBallCollidables = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, redBall.id);
     deepEqual(redBallCollidables.runtimeObjects.length, 1, "Added to collidableObjects");
 });
 
 test("Create Runtime Counter Object", function() {
-    var redBall = createGlobalObject("CounterObject");
+    var redBall = createGlobalObject("CounterObjectText");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 0, "Added to movableObjects");
@@ -39,7 +39,9 @@ test("Create Runtime Counter Object", function() {
 });
 
 test("Destroy Active Object", function() {
-    var redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+    var image = new Image();
+    image.src = '../assets/red_ball.gif';
+    var redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
 
     runtimeObj.parent.destroy.call(runtimeObj);
@@ -48,7 +50,7 @@ test("Destroy Active Object", function() {
     deepEqual(GameCreator.renderableObjects.length, 0, "Removed from renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 0, "Removed from movableObjects");
     deepEqual(GameCreator.eventableObjects.length, 0, "Removed from eventableObjects");
-    var redBallCollidables = GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, redBall.id);
+    var redBallCollidables = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, redBall.id);
     deepEqual(redBallCollidables.runtimeObjects.length, 0, "Removed from collidableObjects");
 });
 

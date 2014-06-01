@@ -1,11 +1,5 @@
-GameCreator.UI = {
-    addActiveObject: function(){
-        var args = {};
-        GameCreator.saveFormInputToObject("add-global-object-window-content", args);
-        GameCreator.addGlobalObject(args, "ActiveObject");
-    },
-    
-    addPlayerObject: function(objectType) {
+GameCreator.UI = {    
+    saveNewGlobalObject: function(objectType) {
         var obj, args = {};
         GameCreator.saveFormInputToObject("add-global-object-window-content", args);
         GameCreator.addGlobalObject(args, objectType);
@@ -44,7 +38,7 @@ GameCreator.UI = {
             $("body").append(image);
             var initialX = e.pageX;
             var initialY = e.pageY;
-            var aspectRatio = globalObj.getDefaultState().width / globalObj.getDefaultState().height;
+            var aspectRatio = globalObj.getDefaultState().attributes.width / globalObj.getDefaultState().attributes.height;
             $(window).on("mousemove.dragGlobalMenuItem", function(e){
                 if (Math.abs(initialX - e.pageX) > 3 || Math.abs(initialY - e.pageY) > 3){
                     $(image).css("display", "block"); 
@@ -59,8 +53,8 @@ GameCreator.UI = {
                 var offsetX = $("#main-canvas").offset().left;
                 var offsetY = $("#main-canvas").offset().top;
                 if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
-                    var args = {x: x - offsetX - globalObj.getDefaultState().width[0] / 2, 
-                                y: y - offsetY - globalObj.getDefaultState().height[0] / 2};
+                    var args = {x: x - offsetX - globalObj.getDefaultState().attributes.width[0] / 2, 
+                                y: y - offsetY - globalObj.getDefaultState().attributes.height[0] / 2};
                     var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.scenes[GameCreator.activeScene], args);
                 }
                 $(image).remove();
@@ -155,64 +149,16 @@ GameCreator.UI = {
         GameCreator.UI.openDialogue(900, 570, GameCreator.htmlStrings.addGlobalObjectWindow());
         $("#dialogue-window").find(".tab").first().addClass("active");
         $("#dialogue-window").find(".tab").on("click", function() {
-            GameCreator.UI[$(this).data("uifunction")]();
+            GameCreator.UI.setupAddObjectForm($(this).data("object-type"));
             $(this).parent().find(".tab").removeClass("active");
             $(this).addClass("active");
         });
-        GameCreator.UI.setupAddActiveObjectForm();
+        GameCreator.UI.setupAddObjectForm("FreeObject");
     },
-    
-    setupAddActiveObjectForm: function() {
-        $("#add-global-object-window-content").html(GameCreator.ActiveObject.addGlobalObjectForm());
-        $("#add-active-object-movement-parameters").html(GameCreator.ActiveObject.freeMovementInputs());
-        $("#active-object-movement-type").on("change", function(){
-            if ($(this).val() == "free") {
-                $("#add-active-object-movement-parameters").html(GameCreator.ActiveObject.freeMovementInputs());
-            }
-            else {
-                $("#add-active-object-movement-parameters").html(GameCreator.ActiveObject.routeMovementInputs());
-            }
-        });
-        $("#add-global-object-window-content .saveButton").on("click", function(){GameCreator.UI.addActiveObject();GameCreator.UI.closeDialogue()});
-    },
-    
-    setupAddPlayerObjectForm: function() {
-        $("#add-global-object-window-content").html(GameCreator.htmlStrings.addPlayerObjectForm());
-        
-        // Mouse Object is default
-        $("#add-player-object-movement-parameters").html(GameCreator.MouseObject.movementInputs());
-        var objectType = "MouseObject"; 
-        $("#player-object-type").on("change", function() {
-            objectType = ($(this).val());
-            $("#add-player-object-movement-parameters").html(GameCreator[objectType].movementInputs());
-        });
-        $("#add-global-object-window-content .saveButton").on("click", function() {
-            GameCreator.UI.addPlayerObject(objectType);
-            GameCreator.UI.closeDialogue();
-        });
-    },
-    
-    //Add counter object functions.
-    setupAddCounterObjectForm: function() {
-        $("#add-global-object-window-content").html(GameCreator.CounterObject.addGlobalObjectForm());
-        $("#counter-representation").on("change", function() {
-            if ($(this).val() === "text") {
-                $("#add-counter-object-counter-representation-content").html(GameCreator.CounterObject.counterObjectTextForm());
-            } else if ($(this).val() === "image") {
-                $("#add-counter-object-counter-representation-content").html(GameCreator.CounterObject.counterObjectImageForm());
-            }
-        });
-        $("#add-global-object-window-content .saveButton").on("click", function() {
-            GameCreator.UI.saveCounterObject();
-            GameCreator.UI.closeDialogue();
-        });
-        $("#add-counter-object-counter-representation-content").html(GameCreator.CounterObject.counterObjectTextForm());
-    },
-    
-    saveCounterObject: function() {
-        var args = {src: "assets/textcounter.png"};
-        GameCreator.saveFormInputToObject("add-global-object-window-content", args);
-        GameCreator.addGlobalObject(args, 'CounterObject');
+
+    setupAddObjectForm: function(objectType) {
+        $("#add-global-object-window-content").html(GameCreator.htmlStrings.addGlobalObjectForm(objectType));
+        $("#add-global-object-window-content .saveButton").on("click", function() {GameCreator.UI.saveNewGlobalObject(objectType);GameCreator.UI.closeDialogue()});
     },
     
     //Edit global object functions
@@ -279,10 +225,11 @@ GameCreator.UI = {
 
     editSceneObject: function() {
         $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.objectName + '</div>');
-        if (GameCreator.selectedObject.parent.objectType === "CounterObject") {
+        var objectType = GameCreator.selectedObject.parent.objectType;
+        if (objectType.startsWith("CounterObject")) {
             var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInScene());
             var obj = GameCreator.selectedObject;
-            $("#edit-scene-object-content").html(GameCreator.CounterObject.sceneObjectForm(obj, uniqueIds));
+            $("#edit-scene-object-content").html(GameCreator[objectType].sceneObjectForm(obj, uniqueIds));
             $("#add-counter-object-counter-selector").html();
             $("#add-counter-counter-object").on("change", function() {
                 $("#counter-list-content").html(
@@ -291,7 +238,7 @@ GameCreator.UI = {
                 );
             });
         } else {
-            $("#edit-scene-object-content").html(GameCreator[GameCreator.selectedObject.parent.objectType].sceneObjectForm(GameCreator.selectedObject));
+            $("#edit-scene-object-content").html(GameCreator.htmlStrings.sceneObjectForm(GameCreator.selectedObject));
         }
     },
 

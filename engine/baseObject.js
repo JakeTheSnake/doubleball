@@ -105,7 +105,8 @@
     };
 
     GameCreator.BaseObject.prototype.draw = function(context, obj) {
-        if (obj.parent.imageReady) {
+        var image = obj.getCurrentState().attributes.image;
+        if ($(image).data('loaded')) {
             if (Array.isArray(obj.width) || Array.isArray(obj.height)) {
                 var maxHeight, minHeight, maxWidth, minWidth;
                 if (obj.width.length === 2) {
@@ -129,11 +130,11 @@
                     minHeight = obj.height;
                 }
                 context.globalAlpha = 0.5;
-                context.drawImage(obj.getCurrentState().image, obj.x, obj.y, maxWidth, maxHeight);
+                context.drawImage(image, obj.x, obj.y, maxWidth, maxHeight);
                 context.globalAlpha = 1.0;
-                context.drawImage(obj.getCurrentState().image, obj.x, obj.y, minWidth, minHeight);
+                context.drawImage(image, obj.x, obj.y, minWidth, minHeight);
             } else {
-                context.drawImage(obj.getCurrentState().image, obj.x, obj.y, obj.width, obj.height);
+                context.drawImage(image, obj.x, obj.y, obj.width, obj.height);
             }
             obj.invalidated = false;
         }

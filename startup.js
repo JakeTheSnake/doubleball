@@ -25,11 +25,16 @@ window.onload = function () {
         GameCreator.scenes.push([]);
         GameCreator.activeScene = 0;
         
-        //Create ActiveObjects
+        //Create FreeObjects
         
-        var globalBall = GameCreator.addGlobalObject({image: {src: "assets/red_ball.gif"}, objectName: "red_ball", width:[50],x:[1,100], y:[1,100], height:[50]}, "ActiveObject");
-        var globalBall2 = GameCreator.addGlobalObject({image: {src: "assets/ball.png"}, objectName: "ball", width:[70],x:[1,100], y:[1,100], height:[70]}, "ActiveObject");
-        GameCreator.addGlobalObject({image: {src: "assets/bar1.png"}, objectName:"bar", width:[388], height:[55], x:[1,100], y:[1,100]}, "ActiveObject");
+        var redBallImage = GameCreator.helpers.parseImage("assets/red_ball.gif");
+        var ballImage = GameCreator.helpers.parseImage("assets/ball.png");
+        var barImage = GameCreator.helpers.parseImage("assets/bar1.png");
+        var zerglingImage = GameCreator.helpers.parseImage("assets/zergling.png");
+
+        var globalBall = GameCreator.addGlobalObject({image: redBallImage, objectName: "red_ball", width:[50],x:[1,100], y:[1,100], height:[50]}, "FreeObject");
+        var globalBall2 = GameCreator.addGlobalObject({image: ballImage, objectName: "ball", width:[70],x:[1,100], y:[1,100], height:[70]}, "FreeObject");
+        GameCreator.addGlobalObject({image: barImage, objectName:"bar", width:[388], height:[55], x:[1,100], y:[1,100]}, "FreeObject");
         //var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, speed: 200});
         //GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
         //GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
@@ -52,7 +57,7 @@ window.onload = function () {
         
         //Create TopDownObject
         
-        var globalTopDownPlayer = GameCreator.addGlobalObject({image: {src: "assets/zergling.png"}, x:[1,100], y:[1,100], objectName: "zerglingen", width: [80], height: [80]}, "TopDownObject")
+        var globalTopDownPlayer = GameCreator.addGlobalObject({image: zerglingImage, x:[1,100], y:[1,100], objectName: "zerglingen", width: [80], height: [80]}, "TopDownObject")
         
         
         //GameCreator.loadScene(GameCreator.scenes[0]);
@@ -62,7 +67,7 @@ window.onload = function () {
         //Mass create objects for test!
         //for(var i = 0; i < 5 ; ++i)
         //{
-        //    console.log("addActiveObject");
+        //    console.log("addFreeObject");
         //    var name = "obj" + i;
         //    var x = i * 5;
         //    var y = i * 5;
@@ -71,7 +76,7 @@ window.onload = function () {
         //    var height = 10 + i/5;
         //    var width = 10 + i/5;
         //    console.log(i)
-        //    GameCreator.addActiveObject({
+        //    GameCreator.addFreeObject({
         //        objectName: name,
         //        width: width,
         //        height: height,

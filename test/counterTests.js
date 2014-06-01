@@ -51,7 +51,9 @@ function commonCounterTests() {
 
 module("UniqueCounter", {
     setup: function() {
-        redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, unique: true, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+        var image = new Image();
+        image.src = '../assets/red_ball.gif';
+        redBall = GameCreator.addGlobalObject({image: image, unique: true, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
         redBall.parentCounters["testCounter"] = new GameCreator.Counter();
         GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
         GameCreator.scenes.push([]);
@@ -81,7 +83,9 @@ test("Counter value preserved between scenes", function() {
 
 module("Counter", {
   setup: function() {
-    redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+    var image = new Image();
+    image.src = '../assets/red_ball.gif';
+    redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     counter = GameCreator.scenes[0][0].counters["testCounter"];

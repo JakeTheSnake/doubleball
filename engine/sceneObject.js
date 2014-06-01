@@ -53,8 +53,8 @@
         this.x = args.x;
         this.y = args.y;
 
-        this.width = args.width !== undefined ? args.width : state.width;
-        this.height = args.height !== undefined ? args.height : state.height;
+        this.width = args.width !== undefined ? args.width : state.attributes.width;
+        this.height = args.height !== undefined ? args.height : state.attributes.height;
         this.parent = globalObj;
         this.objectName = args.objectName !== undefined ? args.objectName : globalObj.objectName;
         this.instanceId = this.objectName + GameCreator.getUniqueId();
@@ -88,6 +88,6 @@
     };
 
     GameCreator.SceneObject.prototype.getCurrentState = function() {
-        return GameCreator.helperFunctions.getObjectById(this.parent.states, this.currentState);
+        return GameCreator.helpers.getObjectById(this.parent.states, this.currentState);
     }
 }());

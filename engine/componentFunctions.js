@@ -114,10 +114,22 @@
     };
 
     GameCreator.commonObjectFunctions.getDefaultState = function() {
-        return GameCreator.helperFunctions.getObjectById(this.states, 0);
+        return GameCreator.helpers.getObjectById(this.states, 0);
     };
 
     GameCreator.commonObjectFunctions.getState = function(stateId) {
-      return GameCreator.helperFunctions.getObjectById(this.states, stateId);  
-    }
+      return GameCreator.helpers.getObjectById(this.states, stateId);  
+    };
+
+    GameCreator.commonObjectFunctions.createState = function(name) {
+        var newStateId = this.states.length;
+        var newStateName = name || "state" + newStateId;
+        var newState = {
+            name: newStateName,
+            id: newStateId,
+            attributes: {}
+        };
+        this.states.push(newState);
+        return newState;
+    };
 }());

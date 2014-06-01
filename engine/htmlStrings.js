@@ -38,6 +38,11 @@ GameCreator.htmlStrings = {
         return '<input id="'+ inputId +'" type="checkbox" class="checkboxField" data-type="checkbox" data-attrName="' +
             attrName + '" ' + (checked ? 'checked' : '') + ' />'
     },
+
+    imageInput: function(inputId, attrName, value) {
+        return '<input id="'+ inputId +'" type="text" class="textField" data-type="image" data-attrName="' + attrName + '" value="' + (value ? value.src : '') + '"/>'
+    },
+
     inputLabel: function(inputId, labelText) {
         return '<label for=' + inputId + ' class="textFieldLabel">' + labelText + '</label>';
     },
@@ -99,7 +104,7 @@ GameCreator.htmlStrings = {
         var button = document.createElement("button");
         $(button).append(object.objectName);
         $(button).addClass("library-global-object-button");
-        $(button).attr("data-imgsrc", object.getDefaultState().image.src);
+        $(button).attr("data-imgsrc", object.getDefaultState().attributes.image.src);
         var div = $(document.createElement("div")).append(button);
         return div;
     },
@@ -142,42 +147,37 @@ GameCreator.htmlStrings = {
         return result;
     },
     
-    imageSrcInput: function(state) {
-        return GameCreator.htmlStrings.inputLabel("global-object-image-src", "Image:") + 
-            GameCreator.htmlStrings.stringInput("global-object-image-src", "image.src", (state && state.image ? state.image.src : ""))
-    },
-
-    
     addGlobalObjectWindow: function() {
         var result = "";
 
         result += '<div id="dialogue-window-title">Add new object</div> \
                    <div id="dialogue-window-menu"> \
-                   <a class="tab dialogue-window-tab active" data-uifunction="setupAddActiveObjectForm">Active object</a> \
-                   <a class="tab dialogue-window-tab" data-uifunction="setupAddPlayerObjectForm">Player object</a> \
-                   <a class="tab dialogue-window-tab" data-uifunction="setupAddCounterObjectForm">Counter object</a> \
+                   <a class="tab dialogue-window-tab active" data-object-type="FreeObject">Free object</a> \
+                   <a class="tab dialogue-window-tab" data-object-type="RouteObject">Route object</a> \
+                   <a class="tab dialogue-window-tab" data-object-type="PlatformObject">Platform object</a> \
+                   <a class="tab dialogue-window-tab" data-object-type="TopDownObject">Top-down object</a> \
+                   <a class="tab dialogue-window-tab" data-object-type="MouseObject">Mouse object</a> \
+                   <a class="tab dialogue-window-tab" data-object-type="CounterObjectImage">Counter object image</a> \
+                   <a class="tab dialogue-window-tab" data-object-type="CounterObjectText">Counter object text</a> \
                    </div> \
                    <div id="add-global-object-window-content"></div>';
 
         return result;
     },
-    addPlayerObjectForm: function() {
-        return  GameCreator.htmlStrings.inputLabel("player-object-name", "Name:") + GameCreator.htmlStrings.stringInput("player-object-name", "objectName", "") +
-                '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") + GameCreator.htmlStrings.rangeInput("player-object-width", "width", "") +
-                '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") + GameCreator.htmlStrings.rangeInput("player-object-height", "height", "") +
-                '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("player-object-src", "Image Src:") + GameCreator.htmlStrings.stringInput("player-object-src", "image.src", "") +
-                '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
+
+    addGlobalObjectForm: function(objectType) {
+        var result = GameCreator.htmlStrings.inputLabel('global-object-name', 'Name ') +
+                GameCreator.htmlStrings.stringInput('global-object-name', 'objectName') +
+                '<br style="clear:both;"/>';
+        result += GameCreator.helpers.getAttributeForm(GameCreator[objectType].objectAttributes,
+            GameCreator[objectType].objectAttributes);
+        result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique ') +
                 GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique') +
                 '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("player-object-type", "Control:") + GameCreator.htmlStrings.singleSelector("player-object-type", {"Mouse": "MouseObject", "Platform": "PlatformObject", "Top Down": "TopDownObject"}) + '<br style="clear:both;"/>' +
-                '<div id="add-player-object-movement-parameters"></div><button class="saveButton regularButton">Save</button>'
+                '<button class="saveButton regularButton">Save</button>';
+        return result;       
     },
     
-
     collisionObjectSelector: function(object) {
         var result = '';
         var selectableObjects = {};
@@ -203,7 +203,7 @@ GameCreator.htmlStrings = {
     	return result;
 	},
 	
-	createCounterEventForm: function(){
+	createCounterEventForm: function() {
 		var result = GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
 		result += GameCreator.htmlStrings.singleSelector("edit-counter-event-type", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
 		result += GameCreator.htmlStrings.inputLabel("edit-counter-event-value", "Value:");
@@ -211,19 +211,30 @@ GameCreator.htmlStrings = {
     	result += '<button class="saveButton regularButton">Save</button>';
     	return result;
 	},
-    debugInformation: function(info){
+    debugInformation: function(info) {
         var result = '';
         for(var key in info){
-            if (info.hasOwnProperty(key)){
+            if (info.hasOwnProperty(key)) {
                 result += '<span>' + key + ': ' + info[key] + '</span><br/>';
             }
         }
         return result;
     },
-	sceneTab: function(sceneNr, sceneActive){
+	sceneTab: function(sceneNr, sceneActive) {
 		return '<div class="tab scene-tab ' + (sceneActive ? 'active' : '') + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
 	},
-	addSceneTab: function(){
+	addSceneTab: function() {
 		return '<div id="add-scene-tab" class="tab scene-tab">+</div>';
-	}
+	},
+
+    sceneObjectForm: function(sceneObject) {
+        var result = '<div id="edit-scene-object-form">';
+        var state = sceneObject.parent.getState(sceneObject.currentState);        
+        result += GameCreator.helpers.getAttributeForm(state.attributes,
+                GameCreator[sceneObject.parent.objectType].objectAttributes,
+                sceneObject);
+        result += '</div>';
+        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
+        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+    }
 };

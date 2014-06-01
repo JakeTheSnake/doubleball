@@ -71,11 +71,13 @@ Objekt-hierarki
 
 Det finns olika typer av objekt:
 
-ActiveObject - Icke spelarstyrt objekt
+FreeObject - Icke spelarstyrt objekt som rör sig fritt över spelplanen
+RouteObject - Icke spelarstyrt objekt som rör sig efter en förutbestämd bana
 TopDownObject - Spelarobjekt som styrs med tangentbord, kan röra sig i åtta riktningar
 MouseObject - Spelarobjekt som ersätter muspekaren
 PlatformObject - Spelarobjekt som styrs med tangentbord, super mario style
-Counter-objekt
+TextCounter-objekt - Objekt som följer en Counter och visar dess värde med text
+ImageCounter-objekt - Samma som ovan fast med ikoner
 Text-objekt
 
 Objekt-state

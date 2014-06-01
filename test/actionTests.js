@@ -12,7 +12,9 @@ var runtimeObject;
 module("ActionTests", {
   setup: function() {
     container = $("#qunit-fixture");
-    redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+    var image = new Image();
+    image.src = '../assets/red_ball.gif';
+    redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
     existingActions = [];
     caption = "An object collided with yo mama";
     GameCreator.UI.createEditActionsArea(caption, GameCreator.actions,
@@ -133,7 +135,9 @@ test("Run timed Action every 1000 ms", function() {
 
 module("Real Action Tests", {
   setup: function() {
-    redBall = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "ActiveObject");
+    var image = new Image();
+    image.src = '../assets/red_ball.gif';
+    redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
   },
   teardown: function() {
   }
@@ -186,7 +190,9 @@ test("Create Action Test", function() {
 });
 
 test("Shoot Action Test", function() {
-    GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "projectile", width:[20], height:[30]}, "ActiveObject");
+    var image = new Image();
+    image.src = '../assets/red_ball.gif';
+    GameCreator.addGlobalObject({image: image, objectName: "projectile", width:[20], height:[30]}, "FreeObject");
     setupCollisionEventForNewObject("Shoot", {objectToShoot: "projectile", projectileSpeed: 500, projectileDirection: "Left"});
 
     GameCreator.checkCollisions();
@@ -225,7 +231,9 @@ module("ActionTriggers", {
                                                 runnable: function() {return true;}
                                             });
     testValue = 0;
-    platformZealot = GameCreator.addGlobalObject({image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
+    var img = new Image();
+    img.src = '../assets/red_ball.gif';
+    platformZealot = GameCreator.addGlobalObject({image: img, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
     runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
     runtimeObject = GameCreator.createRuntimeObject(platformZealot, {x: 50, y: 60, speedX: -500, speedY: 50});
     newEvent = new GameCreator.Event();

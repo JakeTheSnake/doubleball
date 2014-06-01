@@ -1,23 +1,23 @@
 GameCreator.commonObjectViews = {
     addCommonObjectViews: function(object) {
+        GameCreator.commonObjectViews.addCounterObjectViews(object);
         object.getEditWindow = GameCreator.commonObjectViews.getEditWindow;
         object.getCountersContent = GameCreator.commonObjectViews.getCountersContent;
         object.getCollisionsContent = GameCreator.commonObjectViews.getCollisionsContent;
         object.getCounterEventsContent = GameCreator.commonObjectViews.getCounterEventsContent;
-        object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
         object.getNonStatePropertiesForm = GameCreator.commonObjectViews.getNonStatePropertiesForm;
     },
 
     addPlayerObjectViews: function(object) {
         GameCreator.commonObjectViews.addCommonObjectViews(object);
         object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
-        object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
         object.getKeyEventsContent = GameCreator.commonObjectViews.getKeyEventsContent;
         object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
     },
 
     addCounterObjectViews: function(object) {
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
+        object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
     },
 
     /******************************
@@ -107,33 +107,27 @@ GameCreator.commonObjectViews = {
     },
 
     getNonStatePropertiesForm: function() {
-        return '<div id="global-object-non-state-properties-content">' +
+        return '<div id="object-non-state-properties-content">' +
                 GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
                 GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique) +
                 '</div>';
+    },
+
+    getPropertiesForm: function(stateId) {
+        var state = this.getState(stateId);
+        var result = '<div id="object-properties-content">' 
+        result += GameCreator.helpers.getAttributeForm(state.attributes,
+            GameCreator[this.objectType].objectAttributes,
+            state.attributes);
+        result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>' +
+                '</div>';
+        return result;
     },
     
     /******************************
      * COMMON PLAYER OBJECT VIEWS *
      ******************************/
-    getPropertiesForm: function(stateId) {
-        var state = this.getState(stateId);
-        var result = '<div id="global-object-properties-content">' 
-        result += '<div>' +
-                GameCreator.htmlStrings.inputLabel("player-object-width", "Width:") +
-                GameCreator.htmlStrings.rangeInput("player-object-width", "width", state.width) +
-                '<br style="clear:both;"/>' +
-                GameCreator.htmlStrings.inputLabel("player-object-height", "Height:") +
-                GameCreator.htmlStrings.rangeInput("player-object-height", "height", state.height) + '</div>' +
-                '<br style="clear:both;"/>' +
-                '<div style="height: 10px"></div>' +
-                GameCreator[this.objectType].movementInputs(state) +
-                GameCreator.htmlStrings.imageSrcInput(state) +
-                '<br style="clear:both"/>' +
-                '<button class="regularButton" id="save-global-object-properties-button">Save</button>' +
-                '</div>';
-        return result;
-    },
+    
 
     getKeySelector: function() {
         result = "";

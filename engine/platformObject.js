@@ -1,7 +1,7 @@
 /*global GameCreator, $, document*/
 (function() {
     "use strict";
-    GameCreator.PlatformObject = function(image, args) {
+    GameCreator.PlatformObject = function(args) {
         GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
@@ -18,9 +18,9 @@
         this.keyRightPressed = false;
         this.keyUpPressed = false;
 
-        this.getDefaultState().accY = (!args.accY && args.accY !== 0) ? [5] : args.accY;
-        this.getDefaultState().acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
-        this.getDefaultState().maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
+        this.getDefaultState().attributes.accY = (!args.accY && args.accY !== 0) ? [5] : args.accY;
+        this.getDefaultState().attributes.acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
+        this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
 
         //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
         this.facingLeft = true;
@@ -31,6 +31,14 @@
 
         this.objectType = "PlatformObject";
     };
+
+    GameCreator.PlatformObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
+
+    GameCreator.PlatformObject.objectAttributes = $.extend(GameCreator.PlatformObject.objectAttributes, {
+        "accY": GameCreator.htmlStrings.rangeInput,
+        "acceleration": GameCreator.htmlStrings.rangeInput,
+        "maxSpeed": GameCreator.htmlStrings.rangeInput
+    });
 
     GameCreator.PlatformObject.prototype = Object.create(GameCreator.BaseObject.prototype);
 
@@ -126,11 +134,11 @@
         sceneObject.speedY = args.speedY || [0];
 
         sceneObject.objectBeneath = false;
-        sceneObject.acceleration = args.acceleration !== undefined ? args.acceleration : state.acceleration;
+        sceneObject.acceleration = args.acceleration !== undefined ? args.acceleration : state.attributes.acceleration;
 
-        sceneObject.accY = args.accY !== undefined ? args.accY : state.accY;
+        sceneObject.accY = args.accY !== undefined ? args.accY : state.attributes.accY;
 
-        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.maxSpeed;
+        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.attributes.maxSpeed;
         sceneObject.keyCooldown = {space: false};
     };
 

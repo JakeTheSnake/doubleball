@@ -1,7 +1,7 @@
 /*global GameCreator, $, document*/
 (function() {
     "use strict";
-    GameCreator.MouseObject = function(image, args) {
+    GameCreator.MouseObject = function(args) {
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
         GameCreator.addObjFunctions.commonObjectFunctions(this);
@@ -20,13 +20,22 @@
         this.latestMouseX = 0;
         this.latestMouseY = 0;
 
-        this.getDefaultState().maxX = (!args.maxX && args.maxX !== 0) ? GameCreator.width : args.maxX;
-        this.getDefaultState().maxY = (!args.maxY && args.maxY !== 0) ? GameCreator.height : args.maxY;
-        this.getDefaultState().minX = args.minX || 0;
-        this.getDefaultState().minY = args.minY || 0;
+        this.getDefaultState().attributes.maxX = (!args.maxX && args.maxX !== 0) ? GameCreator.width : args.maxX;
+        this.getDefaultState().attributes.maxY = (!args.maxY && args.maxY !== 0) ? GameCreator.height : args.maxY;
+        this.getDefaultState().attributes.minX = args.minX || 0;
+        this.getDefaultState().attributes.minY = args.minY || 0;
 
         this.objectType = "MouseObject";
     };
+
+    GameCreator.MouseObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
+
+    GameCreator.MouseObject.objectAttributes = $.extend(GameCreator.MouseObject.objectAttributes, {
+        "maxX": GameCreator.htmlStrings.numberInput,
+        "maxY": GameCreator.htmlStrings.numberInput,
+        "minY": GameCreator.htmlStrings.numberInput,
+        "minX": GameCreator.htmlStrings.numberInput
+    });
 
     GameCreator.MouseObject.prototype = Object.create(GameCreator.BaseObject.prototype);
     GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.MouseObject.prototype);
@@ -92,10 +101,10 @@
 
     GameCreator.MouseObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.getCurrentState();
-        sceneObject.maxX = args.maxX !== undefined ? args.maxX : state.maxX;
-        sceneObject.maxY = args.maxY !== undefined ? args.maxY : state.maxY;
-        sceneObject.minX = args.minX !== undefined ? args.minX : state.minX;
-        sceneObject.minY = args.minY !== undefined ? args.minY : state.minY;
+        sceneObject.maxX = args.maxX !== undefined ? args.maxX : state.attributes.maxX;
+        sceneObject.maxY = args.maxY !== undefined ? args.maxY : state.attributes.maxY;
+        sceneObject.minX = args.minX !== undefined ? args.minX : state.attributes.minX;
+        sceneObject.minY = args.minY !== undefined ? args.minY : state.attributes.minY;
     };
 
     GameCreator.MouseObject.prototype.shoot = function(staticParameters) {

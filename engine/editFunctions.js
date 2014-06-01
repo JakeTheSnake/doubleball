@@ -12,17 +12,10 @@
         },
 
         addGlobalObject: function(args, objectType) {
-            var image = new Image();
-            image.src = args.image ? args.image.src : '';
-            var globalObj = new GameCreator[objectType](image, args);
+            var globalObj = new GameCreator[objectType](args);
             GameCreator.globalIdCounter += 1;
             globalObj.id = GameCreator.globalIdCounter;
             GameCreator.UI.createLibraryItem(globalObj);
-            image.onload = function() {
-                globalObj.imageReady = true;
-                GameCreator.render();
-            };
-
             GameCreator.globalObjects[globalObj.objectName] = globalObj;
             return globalObj;
         },
