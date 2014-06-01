@@ -129,11 +129,11 @@ GameCreator.UI = {
             var parameters = {};
 
             for (var i = 0; i < action.params.length; i++) {
-                parameters[action.params[i].inputId] = GameCreator.helperFunctions.getValue($("#" + action.params[i].inputId));
+                parameters[action.params[i].inputId] = GameCreator.helpers.getValue($("#" + action.params[i].inputId));
             }
             
-            var timingType = GameCreator.helperFunctions.getValue($("#timing-selector"));
-            var timingTime = GameCreator.helperFunctions.getValue($("#timing-time"));
+            var timingType = GameCreator.helpers.getValue($("#timing-selector"));
+            var timingTime = GameCreator.helpers.getValue($("#timing-time"));
             var timing = {type: timingType, time: timingTime};
 
             var selectedAction = new GameCreator.RuntimeAction(action.name, parameters, timing);

@@ -9,7 +9,7 @@
 
     GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
         object.bounce = function(params) {
-            switch (GameCreator.helperFunctions.determineQuadrant(params.collisionObject, this)) {
+            switch (GameCreator.helpers.determineQuadrant(params.collisionObject, this)) {
             case 1:
                 this.speedY = -Math.abs(this.speedY);
                 break;
@@ -55,7 +55,7 @@
                     if (isKeyPressed && !this.keyCooldown[key]) {
                         if (keyEvents.length === 0) {
                             keyEvents.push(new GameCreator.Event());
-                            actions = GameCreator.helperFunctions.getNonCollisionActions(this.parent.objectType);
+                            actions = GameCreator.helpers.getNonCollisionActions(this.parent.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 "Pressed " + key + " actions for " + this.parent.objectName,
                                  actions,
@@ -90,7 +90,7 @@
                 this.speedX = 0;
             } else {
                 obj = params.collisionObject;
-                quadrant = GameCreator.helperFunctions.determineQuadrant(obj, this);
+                quadrant = GameCreator.helpers.determineQuadrant(obj, this);
                 if (this.speedY > 0 && quadrant === 1) {
                     this.speedY = 0;
                     this.objectBeneath = true;

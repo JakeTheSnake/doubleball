@@ -10,7 +10,7 @@
             GameCreator.commonObjectViews.addPlayerObjectViews(this);
             GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
         }
-        GameCreator.helperFunctions.setStandardProperties(this, image, args);
+        GameCreator.helpers.setStandardProperties(this, args);
 
         this.isCollidable = true;
         this.isMovable = true;
@@ -34,19 +34,19 @@
 
     GameCreator.TopDownObject.prototype.initialize = function() {
         this.invalidated = true;
-        this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
-        this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
-        this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
-        this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
-        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
-        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
-        this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
-        this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
+        this.speedY = GameCreator.helpers.getRandomFromRange(this.speedY);
+        this.speedX = GameCreator.helpers.getRandomFromRange(this.speedX);
+        this.accY = GameCreator.helpers.getRandomFromRange(this.accY);
+        this.accX = GameCreator.helpers.getRandomFromRange(this.accX);
+        this.width = GameCreator.helpers.getRandomFromRange(this.width);
+        this.height = GameCreator.helpers.getRandomFromRange(this.height);
+        this.x = GameCreator.helpers.getRandomFromRange(this.x);
+        this.y = GameCreator.helpers.getRandomFromRange(this.y);
     };
 
     GameCreator.TopDownObject.prototype.calculateSpeed = function() {
         var maxSpeed = this.maxSpeed;
-        var angularMaxSpeed = GameCreator.helperFunctions.calcAngularSpeed(maxSpeed);
+        var angularMaxSpeed = GameCreator.helpers.calcAngularSpeed(maxSpeed);
         //Should only be able to affect movement if there is something beneath object.
         if (this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 1;
@@ -149,8 +149,8 @@
 
     GameCreator.TopDownObject.prototype.shoot = function(staticParameters) {
         var x = 0, y = 0, speedX = 0, speedY = 0;
-        var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
-        var angularSpeed = GameCreator.helperFunctions.calcAngularSpeed(projectileSpeed);
+        var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
+        var angularSpeed = GameCreator.helpers.calcAngularSpeed(projectileSpeed);
         var facing = this.facing;
         var target, unitVector;
         switch (staticParameters.projectileDirection) {
@@ -230,7 +230,7 @@
             }
             x = this.x + (this.facingLeft ? 0 : this.width);
             y = this.y;
-            unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
+            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }

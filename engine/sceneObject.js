@@ -48,7 +48,7 @@
         this.invalidated = true;
         this.currentState = args.currentState || 0;
 
-        var state = GameCreator.helperFunctions.getObjectById(globalObj.states, this.currentState);
+        var state = GameCreator.helpers.getObjectById(globalObj.states, this.currentState);
 
         this.x = args.x;
         this.y = args.y;

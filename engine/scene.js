@@ -35,7 +35,7 @@
         },
 
         selectScene: function(params) {
-            var scene = GameCreator.helperFunctions.calculateScene(GameCreator.activeScene, params);
+            var scene = GameCreator.helpers.calculateScene(GameCreator.activeScene, params);
             GameCreator.activeScene = scene;
             GameCreator.switchScene(scene);
         },

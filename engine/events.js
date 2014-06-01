@@ -29,7 +29,7 @@ GameCreator.Event.prototype.addCondition = function(condition, parameters) {
 
 GameCreator.eventConditions = {
     exists: function(parameters) {
-        var item = GameCreator.helperFunctions.
+        var item = GameCreator.helpers.
                 getObjectById(GameCreator.collidableObjects, parameters.objId);
         if (item) {
             return parameters.count === item.runtimeObjects.length;

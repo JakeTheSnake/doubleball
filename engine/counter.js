@@ -47,7 +47,7 @@
 
         changeValue: function(change) {
             var i;
-            this.value += GameCreator.helperFunctions.getRandomFromRange(change);
+            this.value += GameCreator.helpers.getRandomFromRange(change);
 
             //Check if change triggers any actions
             if (change > 0) {
@@ -64,7 +64,7 @@
 
         setValue: function(inValue) {
             var i;
-            var value = GameCreator.helperFunctions.getRandomFromRange(inValue);
+            var value = GameCreator.helpers.getRandomFromRange(inValue);
 
             if (value > this.value) {
                 for (i = 0; i < this.parentCounter.onIncrease.length; i += 1) {

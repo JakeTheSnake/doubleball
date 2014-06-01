@@ -12,7 +12,7 @@
             GameCreator.commonObjectControllers.addCommonObjectControllers(this);
         }
 
-        GameCreator.helperFunctions.setStandardProperties(this, image, args);
+        GameCreator.helpers.setStandardProperties(this, args);
 
         this.keyLeftPressed = false;
         this.keyRightPressed = false;
@@ -107,16 +107,16 @@
 
     GameCreator.PlatformObject.prototype.initialize = function() {
         this.invalidated = true;
-        this.speedY = GameCreator.helperFunctions.getRandomFromRange(this.speedY);
-        this.speedX = GameCreator.helperFunctions.getRandomFromRange(this.speedX);
-        this.accY = GameCreator.helperFunctions.getRandomFromRange(this.accY);
-        this.accX = GameCreator.helperFunctions.getRandomFromRange(this.accX);
-        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
-        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
-        this.acceleration = GameCreator.helperFunctions.getRandomFromRange(this.acceleration);
-        this.maxSpeed = GameCreator.helperFunctions.getRandomFromRange(this.maxSpeed);
-        this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
-        this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
+        this.speedY = GameCreator.helpers.getRandomFromRange(this.speedY);
+        this.speedX = GameCreator.helpers.getRandomFromRange(this.speedX);
+        this.accY = GameCreator.helpers.getRandomFromRange(this.accY);
+        this.accX = GameCreator.helpers.getRandomFromRange(this.accX);
+        this.width = GameCreator.helpers.getRandomFromRange(this.width);
+        this.height = GameCreator.helpers.getRandomFromRange(this.height);
+        this.acceleration = GameCreator.helpers.getRandomFromRange(this.acceleration);
+        this.maxSpeed = GameCreator.helpers.getRandomFromRange(this.maxSpeed);
+        this.x = GameCreator.helpers.getRandomFromRange(this.x);
+        this.y = GameCreator.helpers.getRandomFromRange(this.y);
     };
 
     GameCreator.PlatformObject.prototype.instantiateSceneObject = function(sceneObject, args) {
@@ -135,7 +135,7 @@
     };
 
     GameCreator.PlatformObject.prototype.shoot = function(staticParameters) {
-        var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
+        var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var target, unitVector;
         switch (staticParameters.projectileDirection) {
@@ -172,7 +172,7 @@
             }
             x = this.x + (this.facingLeft ? 0 : this.width);
             y = this.y;
-            unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
+            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }

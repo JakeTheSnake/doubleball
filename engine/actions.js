@@ -36,7 +36,7 @@
 
         (function(thisAction, thisRuntimeObj) {
             timerFunction(
-                GameCreator.helperFunctions.getRandomFromRange(thisAction.timing.time),
+                GameCreator.helpers.getRandomFromRange(thisAction.timing.time),
                 function() {
                     if (GameCreator.actions[thisAction.name].runnable.call(thisRuntimeObj)) {
                         GameCreator.actions[thisAction.name].action.call(thisRuntimeObj, thisAction.parameters);

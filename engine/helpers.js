@@ -1,7 +1,7 @@
 /*global GameCreator*/
 (function() {
     "use strict";
-    GameCreator.helperFunctions.determineQuadrant = function(base, obj) {
+    GameCreator.helpers.determineQuadrant = function(base, obj) {
         var x = obj.x;
         var y = obj.y;
         var width = obj.width;
@@ -46,8 +46,8 @@
         }
     };
 
-    GameCreator.helperFunctions.doCollision = function(object, targetObject) {
-        var currentEventItem = GameCreator.helperFunctions.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+    GameCreator.helpers.doCollision = function(object, targetObject) {
+        var currentEventItem = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
         var j, choosableActions, newEventItem, currentEvent;
         targetObject.invalidated = true;
         if (currentEventItem !== undefined) {
@@ -75,7 +75,7 @@
         }
     };
 
-    GameCreator.helperFunctions.checkCollisions = function(object) {
+    GameCreator.helpers.checkCollisions = function(object) {
         if (object.objectBeneath !== undefined) {
             object.objectBeneath = false;
         }
@@ -89,19 +89,19 @@
 
         if (x < 1) {
             collisionObject = GameCreator.borderObjects.borderL;
-            GameCreator.helperFunctions.doCollision(object, collisionObject);
+            GameCreator.helpers.doCollision(object, collisionObject);
         }
         if (x + width > GameCreator.width - 1) {
             collisionObject = GameCreator.borderObjects.borderR;
-            GameCreator.helperFunctions.doCollision(object, collisionObject);
+            GameCreator.helpers.doCollision(object, collisionObject);
         }
         if (y < 1) {
             collisionObject = GameCreator.borderObjects.borderT;
-            GameCreator.helperFunctions.doCollision(object, collisionObject);
+            GameCreator.helpers.doCollision(object, collisionObject);
         }
         if (y + height > GameCreator.height - 1) {
             collisionObject = GameCreator.borderObjects.borderB;
-            GameCreator.helperFunctions.doCollision(object, collisionObject);
+            GameCreator.helpers.doCollision(object, collisionObject);
         }
 
         if (GameCreator.state === 'directing') {
@@ -109,20 +109,20 @@
                 runtimeObjectsItem = GameCreator.collidableObjects[j];
                 for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                     targetObject = runtimeObjectsItem.runtimeObjects[i];
-                    if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
-                        GameCreator.helperFunctions.doCollision(object, targetObject);
+                    if (GameCreator.helpers.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
+                        GameCreator.helpers.doCollision(object, targetObject);
                     }
                 }
             }
         } else {
             for (j = 0; j < object.parent.onCollideEvents.length; j += 1) {
                 collisionItem = object.parent.onCollideEvents[j];
-                runtimeObjectsItem = GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, collisionItem.id);
-                if (GameCreator.helperFunctions.eventItemHasActions(collisionItem) && runtimeObjectsItem) {
+                runtimeObjectsItem = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, collisionItem.id);
+                if (GameCreator.helpers.eventItemHasActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                         targetObject = runtimeObjectsItem.runtimeObjects[i];
-                        if (GameCreator.helperFunctions.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
-                            GameCreator.helperFunctions.doCollision(object, targetObject);
+                        if (GameCreator.helpers.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
+                            GameCreator.helpers.doCollision(object, targetObject);
                         }
                     }
                 }
@@ -130,7 +130,7 @@
         }
     };
 
-    GameCreator.helperFunctions.eventItemHasActions = function(eventItem) {
+    GameCreator.helpers.eventItemHasActions = function(eventItem) {
         var i;
         for (i = 0; i < eventItem.events.length; i += 1) {
             if (eventItem.events[i].actions.length > 0) {
@@ -140,7 +140,7 @@
         return false;
     }
 
-    GameCreator.helperFunctions.checkObjectCollision = function(object, targetObject) {
+    GameCreator.helpers.checkObjectCollision = function(object, targetObject) {
         if (!(object === targetObject)) {
             if ((Math.abs((object.x + object.width / 2) - (targetObject.x + targetObject.width / 2)) < object.width / 2 + targetObject.width / 2) &&
                     (Math.abs((object.y + object.height / 2) - (targetObject.y + targetObject.height / 2)) < object.height / 2 + targetObject.height / 2)) {
@@ -150,11 +150,11 @@
         return false;
     };
 
-    GameCreator.helperFunctions.calcAngularSpeed = function(maxSpeed) {
+    GameCreator.helpers.calcAngularSpeed = function(maxSpeed) {
         return Math.pow(Math.pow(maxSpeed, 2) / 2, 0.5);
     };
 
-    GameCreator.helperFunctions.toString = function(thing) {
+    GameCreator.helpers.toString = function(thing) {
         if (typeof (thing) === "object") {
             if (thing.objectName) {
                 return thing.objectName;
@@ -165,15 +165,15 @@
         return String(thing);
     };
 
-    GameCreator.helperFunctions.parseBool = function(string) {
+    GameCreator.helpers.parseBool = function(string) {
         return string === 'true' ? true : false;
     };
 
-    GameCreator.helperFunctions.parseRange = function(string) {
+    GameCreator.helpers.parseRange = function(string) {
         return string.split(":", 2);
     };
 
-    GameCreator.helperFunctions.calcUnitVector = function(x, y) {
+    GameCreator.helpers.calcUnitVector = function(x, y) {
         var magnitude = Math.sqrt((x * x) + (y * y));
         if (magnitude === 0) {
             return {x: 0, y: 0};
@@ -181,7 +181,7 @@
         return {x: x / magnitude, y: y / magnitude};
     };
 
-    GameCreator.helperFunctions.findGlobalObjectByName = function(name) {
+    GameCreator.helpers.findGlobalObjectByName = function(name) {
         var object = GameCreator.globalObjects[name];
         if (!object) {
             object = GameCreator.borderObjects[name];
@@ -189,7 +189,7 @@
         return object;
     };
 
-    GameCreator.helperFunctions.findGlobalObjectById = function(id) {
+    GameCreator.helpers.findGlobalObjectById = function(id) {
         var objects = Object.keys(GameCreator.globalObjects);
         var i;
         for (i = 0; i < objects.length; i += 1) {
@@ -205,16 +205,18 @@
         }
     };
 
-    GameCreator.helperFunctions.getValue = function(input) {
+    GameCreator.helpers.getValue = function(input) {
         var i, range;
         if (input.attr("data-type") === "string" && input.val().length !== 0) {
             return input.val();
         } else if (input.attr("data-type") === "number" && input.val().length !== 0) {
             return parseFloat(input.val());
+        } else if (input.attr("data-type") === "image" && input.val().length !== 0) {
+            return GameCreator.helpers.parseImage(input.val());
         } else if (input.attr("data-type") === "bool" && input.val().length !== 0) {
-            return GameCreator.helperFunctions.parseBool(input.val());
+            return GameCreator.helpers.parseBool(input.val());
         } else if (input.attr("data-type") === "range" && input.val().length !== 0) {
-            range = GameCreator.helperFunctions.parseRange(input.val());
+            range = GameCreator.helpers.parseRange(input.val());
             for (i = 0; i < range.length; i += 1) {
                 range[i] = parseFloat(range[i]);
             }
@@ -226,7 +228,17 @@
         }
     };
 
-    GameCreator.helperFunctions.getRandomFromRange = function(range) {
+    GameCreator.helpers.parseImage = function(imgSrc) {
+        var image = new Image();
+        image.src = imgSrc;
+        image.onload = function() {
+                $(image).data('loaded', true);
+                GameCreator.render();
+            };
+        return image;
+    }
+
+    GameCreator.helpers.getRandomFromRange = function(range) {
         var value;
         if (Array.isArray(range)) {
             if (range.length === 2) {
@@ -242,7 +254,7 @@
         return value;
     };
 
-    GameCreator.helperFunctions.calculateScene = function(activeScene, params) {
+    GameCreator.helpers.calculateScene = function(activeScene, params) {
         switch (params.changeType) {
         case 'increment':
             return activeScene + params.changeValue;
@@ -253,7 +265,7 @@
         }
     };
 
-    GameCreator.helperFunctions.getObjectById = function(array, id) {
+    GameCreator.helpers.getObjectById = function(array, id) {
         var i;
         for (i = 0; i < array.length; i += 1) {
             if (array[i].id === id) {
@@ -262,7 +274,7 @@
         }
     };
 
-    GameCreator.helperFunctions.removeObjectFromArrayById = function(array, id) {
+    GameCreator.helpers.removeObjectFromArrayById = function(array, id) {
         var found = false;
         var i;
         for (i = 0; i < array.length; i += 1) {
@@ -276,7 +288,7 @@
         }
     };
 
-    GameCreator.helperFunctions.setStandardProperties = function(globalObj, image, args) {
+    GameCreator.helpers.setStandardProperties = function(globalObj, args) {
         globalObj.objectName = args.objectName;
         globalObj.unique = args.unique;
         globalObj.parentCounters = {};
@@ -286,17 +298,50 @@
         globalObj.states = [{
             name: "Default",
             id: 0,
-            image: image,
-            width: args.width,
-            height: args.height
+            attributes: {
+                image: args.image,
+                width: args.width,
+                height: args.height
+            }
         }];
     };
 
-    GameCreator.helperFunctions.getNonCollisionActions = function(objectType) {
+    GameCreator.helpers.getStandardAttributes = function() {
+        return {"image": GameCreator.htmlStrings.imageInput,
+          "width": GameCreator.htmlStrings.rangeInput,
+          "height": GameCreator.htmlStrings.rangeInput};
+    };
+
+    GameCreator.helpers.getNonCollisionActions = function(objectType) {
         if (objectType === "MouseObject") {
             return GameCreator.actionGroups.mouseNonCollisionActions;
         } else {
             return GameCreator.actionGroups.nonCollisionActions;
         }
     };
+
+    GameCreator.helpers.labelize = function(name) {
+        var segments = name.match(/([A-Z]?[a-z]*)/g);
+        for (var i = 0; i < segments.length; i++) {
+            segments[i] = segments[i].charAt(0).toUpperCase() + segments[i].slice(1);
+        }
+        return segments.join(" ");
+    };
+
+    GameCreator.helpers.getAttributeForm = function(attributes, attrToInputMap, defaults) {
+        var result = '';
+        var attrNames = Object.keys(attributes);
+        for (var i = 0; i < attrNames.length; i++) {
+            var elementId = 'object-property-' + attrNames[i];
+            var defaultValue;
+            if (defaults) {
+                defaultValue = defaults[attrNames[i]];
+            }
+            result += GameCreator.htmlStrings.inputLabel(elementId, 
+                GameCreator.helpers.labelize(attrNames[i])) +
+                attrToInputMap[attrNames[i]](elementId, attrNames[i], defaultValue) +
+                '<br style="clear:both;"/>';
+        }
+        return result;
+    }
 }());

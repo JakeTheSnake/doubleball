@@ -11,7 +11,7 @@
             GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
         }
 
-        GameCreator.helperFunctions.setStandardProperties(this, image, args);
+        GameCreator.helpers.setStandardProperties(this, args);
 
         this.isCollidable = true;
         this.isMovable = true;
@@ -32,10 +32,10 @@
     GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.MouseObject.prototype);
 
     GameCreator.MouseObject.prototype.initialize = function() {
-        this.width = GameCreator.helperFunctions.getRandomFromRange(this.width);
-        this.height = GameCreator.helperFunctions.getRandomFromRange(this.height);
-        this.x = GameCreator.helperFunctions.getRandomFromRange(this.x);
-        this.y = GameCreator.helperFunctions.getRandomFromRange(this.y);
+        this.width = GameCreator.helpers.getRandomFromRange(this.width);
+        this.height = GameCreator.helpers.getRandomFromRange(this.height);
+        this.x = GameCreator.helpers.getRandomFromRange(this.x);
+        this.y = GameCreator.helpers.getRandomFromRange(this.y);
     };
 
     GameCreator.MouseObject.prototype.move = function() {
@@ -100,7 +100,7 @@
 
     GameCreator.MouseObject.prototype.shoot = function(staticParameters) {
         var x = 0, y = 0, speedX = 0, speedY = 0;
-        var projectileSpeed = GameCreator.helperFunctions.getRandomFromRange(staticParameters.projectileSpeed);
+        var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
         var target, unitVector;
         switch (staticParameters.projectileDirection) {
         case "Default":
@@ -132,7 +132,7 @@
             }
             x = this.x + this.width / 2;
             y = this.y + this.height / 2;
-            unitVector = GameCreator.helperFunctions.calcUnitVector(target.x - (this.x + this.width / 2), target.y - (this.y + this.height / 2));
+            unitVector = GameCreator.helpers.calcUnitVector(target.x - (this.x + this.width / 2), target.y - (this.y + this.height / 2));
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
             break;

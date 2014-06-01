@@ -34,7 +34,7 @@
 
         addObjFunctions: {},
         commonObjectFunctions: {},
-        helperFunctions: {},
+        helpers: {},
 
         selectedObject: undefined, //The currently selected scene object.
         draggedObject: undefined,
@@ -130,7 +130,7 @@
             for (j = 0; j < GameCreator.collidableObjects.length; j += 1) {
                 runtimeObjects = GameCreator.collidableObjects[j].runtimeObjects;
                 for (i = 0; i < runtimeObjects.length; i += 1) {
-                    GameCreator.helperFunctions.checkCollisions(runtimeObjects[i]);
+                    GameCreator.helpers.checkCollisions(runtimeObjects[i]);
                 }
             }
         },
@@ -273,10 +273,10 @@
 
         addToRuntime: function(runtimeObj) {
             if (runtimeObj.parent.isCollidable) {
-                if (!GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, runtimeObj.parent.id)) {
+                if (!GameCreator.helpers.getObjectById(GameCreator.collidableObjects, runtimeObj.parent.id)) {
                     GameCreator.collidableObjects.push({id: runtimeObj.parent.id, runtimeObjects: []});
                 }
-                GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, runtimeObj.parent.id).runtimeObjects.push(runtimeObj);
+                GameCreator.helpers.getObjectById(GameCreator.collidableObjects, runtimeObj.parent.id).runtimeObjects.push(runtimeObj);
             }
             if (runtimeObj.parent.isMovable) {
                 GameCreator.movableObjects.push(runtimeObj);
@@ -318,6 +318,7 @@
             }
             return result;
         },
+
         changeCounter: function(runtimeObj, params) {
             var selectedObjectId = params.counterObject;
             var counterCarrier;
@@ -335,6 +336,7 @@
                 counterCarrier.counters[params.counterName].changeValue(params.counterValue);
             }
         },
+        
         getClickedObject: function(x, y) {
             var i, runtimeObj;
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {

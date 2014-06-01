@@ -8,7 +8,7 @@ GameCreator.htmlStrings = {
         }
         for (var key in collection) {
             if (collection.hasOwnProperty(key)) {
-                result += "<option value='" + GameCreator.helperFunctions.toString(collection[key]) + "'" + (selectedKey === key ? " selected" : "") + ">" + key + "</option>";
+                result += "<option value='" + GameCreator.helpers.toString(collection[key]) + "'" + (selectedKey === key ? " selected" : "") + ">" + key + "</option>";
             }
         };
         result += "</select></div>";
@@ -184,9 +184,9 @@ GameCreator.htmlStrings = {
         var objName, objId;
         $.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
         for (objName in selectableObjects) {
-            objId = GameCreator.helperFunctions.findGlobalObjectByName(objName).id;
+            objId = GameCreator.helpers.findGlobalObjectByName(objName).id;
             if (selectableObjects.hasOwnProperty(objName) && 
-                !GameCreator.helperFunctions.getObjectById(object.onCollideEvents, objId) && 
+                !GameCreator.helpers.getObjectById(object.onCollideEvents, objId) && 
                 selectableObjects[objName].isCollidable && 
                 objName != object.objectName) {
                 result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].getDefaultState().image.outerHTML + '</br><span>' + objName + '</span></div>';

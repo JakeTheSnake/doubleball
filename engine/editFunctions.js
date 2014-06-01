@@ -243,10 +243,10 @@
                 if (attrName) {
                     attrName = attrName.split('.');
                     if (attrName.length === 1) {
-                        obj[attrName[0]] = GameCreator.helperFunctions.getValue(input);
+                        obj[attrName[0]] = GameCreator.helpers.getValue(input);
                     } else {
                         obj[attrName[0]] = obj[attrName[0]] || {};                       
-                        obj[attrName[0]][attrName[1]] = GameCreator.helperFunctions.getValue(input);
+                        obj[attrName[0]][attrName[1]] = GameCreator.helpers.getValue(input);
                     }
                 }
             }

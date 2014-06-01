@@ -79,12 +79,12 @@
 
     GameCreator.BaseObject.prototype.removeFromGame = function() {
         GameCreator.invalidate(this);
-        GameCreator.helperFunctions.removeObjectFromArrayById(
-            GameCreator.helperFunctions.getObjectById(GameCreator.collidableObjects, this.parent.id).runtimeObjects,
+        GameCreator.helpers.removeObjectFromArrayById(
+            GameCreator.helpers.getObjectById(GameCreator.collidableObjects, this.parent.id).runtimeObjects,
             this.instanceId);
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.movableObjects, this.instanceId);
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.renderableObjects, this.instanceId);
-        GameCreator.helperFunctions.removeObjectFromArrayById(GameCreator.eventableObjects, this.instanceId);
+        GameCreator.helpers.removeObjectFromArrayById(GameCreator.movableObjects, this.instanceId);
+        GameCreator.helpers.removeObjectFromArrayById(GameCreator.renderableObjects, this.instanceId);
+        GameCreator.helpers.removeObjectFromArrayById(GameCreator.eventableObjects, this.instanceId);
         var index = GameCreator.objectsToDestroy.indexOf(this);
         if (index !== -1) {
             GameCreator.objectsToDestroy.splice(index, 1);
