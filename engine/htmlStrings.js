@@ -231,7 +231,7 @@ GameCreator.htmlStrings = {
         var result = '<div id="edit-scene-object-form">';
         var state = sceneObject.parent.getState(sceneObject.currentState);        
         result += GameCreator.helpers.getAttributeForm(state.attributes,
-                GameCreator[sceneObject.parent.objectType].objectAttributes,
+                GameCreator[sceneObject.parent.objectType].objectSceneAttributes,
                 sceneObject);
         result += '</div>';
         result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';

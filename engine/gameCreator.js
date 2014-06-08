@@ -120,7 +120,9 @@
             for (i = 0; i < GameCreator.movableObjects.length; i += 1) {
                 if (!GameCreator.paused) {
                     runtimeObj = GameCreator.movableObjects[i];
-                    runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime / 1000);
+                    if(runtimeObj.parent.calculateSpeed) {
+                        runtimeObj.parent.calculateSpeed.call(runtimeObj, deltaTime / 1000);
+                    }
                 }
             }
         },

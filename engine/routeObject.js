@@ -32,6 +32,9 @@
         "speed": GameCreator.htmlStrings.rangeInput
     });
 
+    GameCreator.RouteObject.objectSceneAttributes = $.extend({}, GameCreator.RouteObject.objectAttributes);
+    delete GameCreator.RouteObject.objectSceneAttributes["image"];
+
     GameCreator.RouteObject.prototype = Object.create(GameCreator.BaseObject.prototype);
 
     GameCreator.addObjFunctions.stoppableObjectFunctions(GameCreator.RouteObject.prototype);

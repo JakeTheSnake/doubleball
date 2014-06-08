@@ -33,6 +33,9 @@
         "maxSpeed": GameCreator.htmlStrings.rangeInput
     });
 
+    GameCreator.TopDownObject.objectSceneAttributes = $.extend({}, GameCreator.TopDownObject.objectAttributes);
+    delete GameCreator.TopDownObject.objectSceneAttributes["image"];
+
     GameCreator.TopDownObject.prototype = Object.create(GameCreator.BaseObject.prototype);
 
     GameCreator.addObjFunctions.stoppableObjectFunctions(GameCreator.TopDownObject.prototype);

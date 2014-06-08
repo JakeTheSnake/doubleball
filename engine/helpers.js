@@ -332,16 +332,22 @@
         var result = '';
         var attrNames = Object.keys(attributes);
         for (var i = 0; i < attrNames.length; i++) {
-            var elementId = 'object-property-' + attrNames[i];
-            var defaultValue;
-            if (defaults) {
-                defaultValue = defaults[attrNames[i]];
+            if(attrToInputMap[attrNames[i]]) {
+                var elementId = 'object-property-' + attrNames[i];
+                var defaultValue;
+                if (defaults) {
+                    defaultValue = defaults[attrNames[i]];
+                }
+                result += GameCreator.htmlStrings.inputLabel(elementId, 
+                    GameCreator.helpers.labelize(attrNames[i])) +
+                    attrToInputMap[attrNames[i]](elementId, attrNames[i], defaultValue) +
+                    '<br style="clear:both;"/>';
             }
-            result += GameCreator.htmlStrings.inputLabel(elementId, 
-                GameCreator.helpers.labelize(attrNames[i])) +
-                attrToInputMap[attrNames[i]](elementId, attrNames[i], defaultValue) +
-                '<br style="clear:both;"/>';
         }
         return result;
-    }
+    };
+
+    GameCreator.helpers.startsWith = function(baseString, comparator) {
+        return baseString.substring(0, comparator.length - 1) === comparator;
+    };
 }());

@@ -27,6 +27,11 @@ GameCreator.CounterObjectImage.objectAttributes = GameCreator.helpers.getStandar
 GameCreator.CounterObjectImage.objectAttributes = $.extend(GameCreator.CounterObjectImage.objectAttributes, {
                         "size": GameCreator.htmlStrings.numberInput
                      });
+delete GameCreator.CounterObjectImage.objectAttributes["width"];
+delete GameCreator.CounterObjectImage.objectAttributes["height"];
+
+GameCreator.CounterObjectImage.objectSceneAttributes = $.extend({}, GameCreator.CounterObjectImage.objectAttributes);
+delete GameCreator.CounterObjectImage.objectSceneAttributes["image"];
 
 GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
@@ -60,8 +65,11 @@ GameCreator.CounterObjectImage.prototype.initialize = function() {
     this.height = GameCreator.helpers.getRandomFromRange(this.height);
 };
 
+GameCreator.CounterObjectImage.prototype.onGameStarted = function() {};
+
 GameCreator.CounterObjectImage.prototype.onCreate = function() {};
 
 GameCreator.CounterObjectImage.prototype.instantiateSceneObject = function(sceneObject, args) {
-    
+    var state = sceneObject.parent.getDefaultState();
+    sceneObject.size = state.attributes.size;
 };

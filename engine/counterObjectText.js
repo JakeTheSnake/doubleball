@@ -25,13 +25,14 @@ GameCreator.CounterObjectText = function(args) {
     GameCreator.globalObjects[this.objectName] = this;
 };
 
-GameCreator.CounterObjectText.objectAttributes = GameCreator.helpers.getStandardAttributes();
-
-GameCreator.CounterObjectText.objectAttributes = $.extend(GameCreator.CounterObjectText.objectAttributes, {
+GameCreator.CounterObjectText.objectAttributes = {
                         "font": GameCreator.htmlStrings.stringInput, 
                         "color": GameCreator.htmlStrings.stringInput,
                         "size": GameCreator.htmlStrings.numberInput
-                     });
+                     };
+
+GameCreator.CounterObjectText.objectSceneAttributes = $.extend({}, GameCreator.CounterObjectText.objectAttributes);
+delete GameCreator.CounterObjectText.objectSceneAttributes["image"];
 
 GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.

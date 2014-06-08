@@ -226,7 +226,7 @@ GameCreator.UI = {
     editSceneObject: function() {
         $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.objectName + '</div>');
         var objectType = GameCreator.selectedObject.parent.objectType;
-        if (objectType.startsWith("CounterObject")) {
+        if (GameCreator.helpers.startsWith(objectType, "CounterObject")) {
             var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInScene());
             var obj = GameCreator.selectedObject;
             $("#edit-scene-object-content").html(GameCreator[objectType].sceneObjectForm(obj, uniqueIds));

@@ -35,6 +35,9 @@
         "speedY": GameCreator.htmlStrings.rangeInput
     });
 
+    GameCreator.FreeObject.objectSceneAttributes = $.extend({}, GameCreator.FreeObject.objectAttributes);
+    delete GameCreator.FreeObject.objectSceneAttributes["image"];
+
     GameCreator.FreeObject.prototype = Object.create(GameCreator.BaseObject.prototype);
 
     GameCreator.addObjFunctions.stoppableObjectFunctions(GameCreator.FreeObject.prototype);
