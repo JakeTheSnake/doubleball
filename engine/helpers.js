@@ -348,6 +348,6 @@
     };
 
     GameCreator.helpers.startsWith = function(baseString, comparator) {
-        return baseString.substring(0, comparator.length - 1) === comparator;
+        return baseString.substring(0, comparator.length) === comparator;
     };
 }());

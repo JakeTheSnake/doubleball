@@ -35,14 +35,14 @@ delete GameCreator.CounterObjectImage.objectSceneAttributes["image"];
 
 GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
-    var counterCarrier = GameCreator.getSceneObjectById(obj.counterCarrier);
+    var counterObject = GameCreator.getSceneObjectById(obj.counterObject);
     var i;
     var value = 0;
-    if (counterCarrier) {
-        if (counterCarrier.parent.unique && counterCarrier.parent.counters[obj.counterName]) {
-            value = counterCarrier.parent.counters[obj.counterName].value;
-        } else if (counterCarrier.counters[obj.counterName]) {
-            value = counterCarrier.counters[obj.counterName].value;
+    if (counterObject) {
+        if (counterObject.parent.unique && counterObject.parent.counters[obj.counterName]) {
+            value = counterObject.parent.counters[obj.counterName].value;
+        } else if (counterObject.counters[obj.counterName]) {
+            value = counterObject.counters[obj.counterName].value;
         }
     }
     var currentAttributes = obj.parent.getDefaultState().attributes;
