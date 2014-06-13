@@ -28,10 +28,6 @@
                 return  '';
         },
 
-        getStateForm: function(stateId) {
-            return 'CONTENT FOR STATE ' + stateId;
-        },
-
         getEditWindow: function() {
             var result = "";
 

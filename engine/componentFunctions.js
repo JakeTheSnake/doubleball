@@ -5,6 +5,7 @@
     GameCreator.addObjFunctions.commonObjectFunctions = function(object) {
         object.getDefaultState = GameCreator.commonObjectFunctions.getDefaultState;
         object.getState = GameCreator.commonObjectFunctions.getState;
+        object.createState = GameCreator.commonObjectFunctions.createState;
     }
 
     GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
@@ -121,13 +122,13 @@
       return GameCreator.helpers.getObjectById(this.states, stateId);  
     };
 
-    GameCreator.commonObjectFunctions.createState = function(name) {
+    GameCreator.commonObjectFunctions.createState = function(name, attributes) {
         var newStateId = this.states.length;
         var newStateName = name || "state" + newStateId;
         var newState = {
             name: newStateName,
             id: newStateId,
-            attributes: {}
+            attributes: attributes ? attributes : {}
         };
         this.states.push(newState);
         return newState;

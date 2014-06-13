@@ -5,7 +5,3 @@ GameCreator.TopDownObject.prototype.getTabs = function() {
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 };
 
-GameCreator.TopDownObject.prototype.getStateForm = function(stateId) {
-    return 'CONTENT FOR STATE ' + stateId;
-};
-

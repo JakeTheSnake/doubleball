@@ -4,7 +4,3 @@ GameCreator.FreeObject.prototype.getTabs = function() {
                 '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
 };
 
-GameCreator.FreeObject.prototype.getStateForm = function(stateId) {
-    return 'CONTENT FOR STATE ' + stateId;
-};
-

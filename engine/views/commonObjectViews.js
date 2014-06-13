@@ -101,7 +101,7 @@ GameCreator.commonObjectViews = {
         result += '<div id="add-state-tab" class="tab state-tab">+</div>'
         result += '</div><br style="clear:both;"/>';
         result += '<div id="state-content">';
-        result += this.getStateForm(0);
+        result += this.getPropertiesForm(0);
         result += '</div>'
         return result;
     },
