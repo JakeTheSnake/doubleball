@@ -133,4 +133,6 @@
         this.states.push(newState);
         return newState;
     };
+
+    
 }());

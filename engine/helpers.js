@@ -350,4 +350,25 @@
     GameCreator.helpers.startsWith = function(baseString, comparator) {
         return baseString.substring(0, comparator.length) === comparator;
     };
+
+
+
+    GameCreator.helpers.setMouseCursor = function(dragFunc) {
+        var cursor = "auto";
+        switch (dragFunc) {
+            case GameCreator.SceneObject.prototype.resizeLeft:
+            case GameCreator.SceneObject.prototype.resizeRight:
+                cursor = "w-resize";
+                break;
+            case GameCreator.SceneObject.prototype.resizeTop:
+            case GameCreator.SceneObject.prototype.resizeBottom:
+                cursor = "n-resize";
+                break;
+            default:
+                cursor = "auto";
+                break;
+        }
+        $(GameCreator.mainCanvas).css("cursor", cursor);
+    }
+
 }());
