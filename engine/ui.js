@@ -242,6 +242,11 @@ GameCreator.UI = {
         }
     },
 
+    updateSceneObjectForm: function(sceneObj) {
+        $("#edit-scene-object-form input[data-attrname=width").val(sceneObj.width);
+        $("#edit-scene-object-form input[data-attrname=height").val(sceneObj.height);
+    },
+
     unselectSceneObject: function() {
         $("#edit-scene-object-title").html("");
         $("#edit-scene-object-content").html("");

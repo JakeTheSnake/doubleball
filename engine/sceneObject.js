@@ -123,6 +123,7 @@
         this.height[this.height.length-1] = diffY ? diffY : this.height[this.height.length-1];
         this.displayWidth = this.width[this.width.length - 1];
         this.displayHeight = this.height[this.height.length - 1];
+        GameCreator.UI.updateSceneObjectForm(this);
     };
 
     GameCreator.SceneObject.prototype.cleanupSize = function() {
@@ -142,6 +143,8 @@
         }
         this.displayWidth = this.width[this.width.length - 1];
         this.displayHeight = this.height[this.height.length - 1];
+        this.clickOffsetX = null;
+        this.clickOffsetY = null;
     };
 
     GameCreator.SceneObject.prototype.resizeLeft = function(x, y) {
@@ -167,6 +170,10 @@
     };
 
     GameCreator.SceneObject.prototype.moveObject = function(x, y) {
+        if (!this.clickOffsetX) {
+            this.clickOffsetX = x - this.x;
+            this.clickOffsetY = y - this.y;
+        }
         this.x = x - this.clickOffsetX;
         this.y = y - this.clickOffsetY;
     };

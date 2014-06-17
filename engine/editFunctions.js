@@ -307,8 +307,6 @@
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {
                 obj = GameCreator.renderableObjects[i];
                 if (x >= obj.x && x <= obj.x + obj.displayWidth && y >= obj.y && y <= obj.y + obj.displayHeight) {
-                    obj.clickOffsetX = x - obj.x;
-                    obj.clickOffsetY = y - obj.y;
                     return obj;
                 }
             }
