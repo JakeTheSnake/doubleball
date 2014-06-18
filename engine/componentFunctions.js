@@ -6,6 +6,8 @@
         object.getDefaultState = GameCreator.commonObjectFunctions.getDefaultState;
         object.getState = GameCreator.commonObjectFunctions.getState;
         object.createState = GameCreator.commonObjectFunctions.createState;
+        object.removeAttributeFromState = GameCreator.commonObjectFunctions.removeAttributeFromState;
+        object.resetStateAttributes = GameCreator.commonObjectFunctions.resetStateAttributes;
     }
 
     GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
@@ -134,5 +136,17 @@
         return newState;
     };
 
-    
+    GameCreator.commonObjectFunctions.removeAttributeFromState = function(attributeName, stateId) {
+        var state = this.getState(stateId);
+        if(!state.attributes[attributeName]) {
+            return false;
+        }
+        delete state.attributes[attributeName];
+        return true;
+    };
+
+    GameCreator.commonObjectFunctions.resetStateAttributes = function(stateId) {
+        var state = this.getState(stateId);
+        state.attributes = $.extend({}, this.getDefaultState().attributes);
+    };
 }());

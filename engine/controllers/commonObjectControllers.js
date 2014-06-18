@@ -128,8 +128,8 @@ GameCreator.commonObjectControllers = {
 
     setupEditStateForm: function(container, stateId) {
         var globalObj = this;
-        var html =  this.getPropertiesForm(stateId);
-        var state = GameCreator.helpers.getObjectById(globalObj.states, stateId);
+        var html = globalObj.getPropertiesForm(stateId);
+        var state = globalObj.getState(stateId);
         container.html(html);
         var attributeNames = Object.keys(state.attributes);
         if(stateId != 0) {
@@ -137,12 +137,12 @@ GameCreator.commonObjectControllers = {
                 $('#state-content [data-attrname="' + attributeNames[i] + '"]').after('<span class="remove-attribute-button" data-attribute="' + attributeNames[i] + '">X</span>');
             }
             container.find('.remove-attribute-button').on('click', function() {
-                delete state.attributes[$(this).data('attribute')];
+                globalObj.removeAttributeFromState($(this).data('attribute'), stateId);
                 globalObj.setupEditStateForm(container, stateId);
             });
             container.append('<button class="regularButton" id="reset-attributes-button">Reset Attributes</button>');
             $('#reset-attributes-button').on('click', function(){
-                state.attributes = $.extend({}, globalObj.getDefaultState().attributes);
+                globalObj.resetStateAttributes(stateId);
                 globalObj.setupEditStateForm(container, stateId);
             });
         }

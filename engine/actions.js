@@ -109,14 +109,14 @@
                           runnableFunction: function() {return true;}
                         }),
           Counter:  new GameCreator.Action({
-                          action: function(params){GameCreator.changeCounter(this, params); },
+                          action: function(params) {GameCreator.changeCounter(this, params); },
                           params: [{
                                   inputId: "counterObject",
-                                  input: function(thisName) {return GameCreator.UI.setupSingleSelectorWithListener(
-                                      "counterObject", 
-                                      $.extend({"this": thisName}, GameCreator.getUniqueIDsInScene()), 
-                                      "change", 
-                                      function(){$("#counter-name").replaceWith(GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj($(this).val()))); }
+                                  input: function() {return GameCreator.UI.setupSingleSelectorWithListener(
+                                      "counterObject",
+                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInScene()),
+                                      "change",
+                                      function(){$("#counterName").replaceWith(GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj($(this).val()))); }
                                       ); },
                                   label: function() {return GameCreator.htmlStrings.inputLabel("counterObject", "Object"); }
                               },
@@ -138,6 +138,28 @@
                             ],
                         name: "Counter",
                         timing: {at: true, every: true, after: true},
+                      }),
+          SwitchState:  new GameCreator.Action({
+                          action: function(params) {GameCreator.changeState(this, params); },
+                          params: [{
+                                  inputId: "objectId",
+                                  input: function() {return GameCreator.UI.setupSingleSelectorWithListener(
+                                      "objectId",
+                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInScene()),
+                                      "change",
+                                      function(){$("#stateId").replaceWith(GameCreator.htmlStrings.singleSelector("stateId", GameCreator.getStatesForGlobalObj($(this).val()))); }
+                                      ); },
+                                  label: function() {return GameCreator.htmlStrings.inputLabel("objectId", "Object"); }
+                              },
+                              {
+                                  inputId: "stateId",
+                                  input: function(thisName){return GameCreator.htmlStrings.singleSelector("stateId", GameCreator.getStatesForGlobalObj(thisName)); },
+                                  label: function(){return GameCreator.htmlStrings.inputLabel("stateId", "State"); }
+                              },
+
+                            ],
+                        name: "SwitchState",
+                        timing: {at: true, every: false, after: true},
                       }),
           Restart: new GameCreator.Action({
                         action: GameCreator.restartGame,
@@ -174,6 +196,7 @@
           Counter: GameCreator.actions.Counter,
           Restart: GameCreator.actions.Restart,
           SwitchScene: GameCreator.actions.SwitchScene,
+          SwitchState: GameCreator.actions.SwitchState,
       },
 
       mouseCollisionActions: {
@@ -183,6 +206,7 @@
           Counter: GameCreator.actions.Counter,
           Restart: GameCreator.actions.Restart,
           SwitchScene: GameCreator.actions.SwitchScene,
+          SwitchState: GameCreator.actions.SwitchState,
       },
 
       nonCollisionActions: {
@@ -193,6 +217,7 @@
           Counter: GameCreator.actions.Counter,
           Restart: GameCreator.actions.Restart,
           SwitchScene: GameCreator.actions.SwitchScene,
+          SwitchState: GameCreator.actions.SwitchState,
       },
 
       mouseNonCollisionActions: {
@@ -202,6 +227,7 @@
           Counter: GameCreator.actions.Counter,
           Restart: GameCreator.actions.Restart,
           SwitchScene: GameCreator.actions.SwitchScene,
+          SwitchState: GameCreator.actions.SwitchState,
         },
 
         onCreateActions: {
@@ -209,6 +235,7 @@
           Shoot: GameCreator.actions.Shoot,
           Create: GameCreator.actions.Create,
           Counter: GameCreator.actions.Counter,
+          SwitchState: GameCreator.actions.SwitchState,
         }
     };
 }());

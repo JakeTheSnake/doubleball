@@ -316,6 +316,42 @@
         addScene: function() {
             GameCreator.scenes.push([]);
             GameCreator.UI.setupSceneTabs(GameCreator.scenes);
-        }
+        },
+
+        getCountersForGlobalObj: function(globalObjName) {
+            var obj, counter, tmpObj;
+            var result = {};
+            if (GameCreator.globalObjects.hasOwnProperty(globalObjName)) {
+                obj = GameCreator.globalObjects[globalObjName];
+            } else {
+                tmpObj = GameCreator.getSceneObjectById(globalObjName);
+                obj = tmpObj ? tmpObj.parent : null;
+            }
+            if (obj) {
+                for (counter in obj.parentCounters) {
+                    if (obj.parentCounters.hasOwnProperty(counter)) {
+                        result[counter] = counter;
+                    }
+                }
+            }
+            return result;
+        },
+
+        getStatesForGlobalObj: function(globalObjName) {
+            var obj, tmpObj, i;
+            var result = {};
+            if (GameCreator.globalObjects.hasOwnProperty(globalObjName)) {
+                obj = GameCreator.globalObjects[globalObjName];
+            } else {
+                tmpObj = GameCreator.getSceneObjectById(globalObjName);
+                obj = tmpObj ? tmpObj.parent : null;
+            }
+            if (obj) {
+                for (i = 0; i < obj.states.length; i += 1) {                 
+                    result[obj.states[i].name] = obj.states[i].id;
+                }
+            }
+            return result;
+        },
     });
 }());

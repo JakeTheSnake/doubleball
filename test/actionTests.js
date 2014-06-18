@@ -204,7 +204,7 @@ test("Shoot Action Test", function() {
 test("Counter Action Test", function() {
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     
-    var runtimeObj = setupCollisionEventForNewObject("Counter", {counterObject: "red_ball", counterName: "testCounter", counterType: "Set", counterValue: 5});
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {counterObject: "this", counterName: "testCounter", counterType: "Set", counterValue: 5});
     var counter = runtimeObj.counters["testCounter"];
 
     GameCreator.checkCollisions();
@@ -220,6 +220,15 @@ test("SwitchScene Action Test", function() {
     GameCreator.checkCollisions();
 
     deepEqual(GameCreator.activeScene, 1, "Scene was switched.");
+});
+
+test("SwitchState Action Test", function() {
+    var runtimeObj = setupCollisionEventForNewObject("SwitchState", {objectId: "this", stateId: 1});
+    runtimeObj.parent.createState('TestState', {});
+
+    GameCreator.checkCollisions();
+
+    deepEqual(runtimeObj.currentState, 1);
 });
 
 var newEvent;

@@ -129,4 +129,52 @@ test("Add Mouse Object", function() {
     ok(mouseZealot.getDefaultState().attributes.image.src.indexOf("red_ball.gif") != -1, "Image is set correctly.");
 });
 
+var redBall;
+
+module("State Tests", {
+    setup: function() {
+        var image = new Image();
+        image.src = '../assets/red_ball.gif';
+        redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30], speedX: -500, speedY: 50}, "FreeObject");
+    },
+    teardown: function() {
+
+    }
+});
+
+test("Add State", function() {
+    var state = redBall.createState('Teststate', {});
+    ok(redBall.getState(state.id), 'State was added');
+    deepEqual(Object.keys(redBall.getState).length, 0, 'State attributes is empty');
+});
+
+test("Remove State", function() {
+    var state = redBall.createState('Teststate', $.extend({}, redBall.getDefaultState().attributes));
+    ok(state.attributes.width, 'State created with width attribute');
+    redBall.removeAttributeFromState('width', state.id);
+    deepEqual(state.attributes.width, undefined, 'Width removed from state');
+});
+
+test("Reset State", function() {
+    var state = redBall.createState('Teststate', {});
+    redBall.resetStateAttributes(state.id);
+    deepEqual(state.attributes.length, redBall.getDefaultState().attributes.length);
+});
+
+test("Change State", function() {
+    var state = redBall.createState('Teststate', {});
+    redBall.resetStateAttributes(state.id);
+    var runtimeObject = GameCreator.createRuntimeObject(redBall, {x: 50, y: 60});
+    state.attributes.width = [100];
+    state.attributes.height = [200];
+    state.attributes.speedX = 10;
+    state.attributes.speedY = 20;
+    runtimeObject.setState(state.id);
+    deepEqual(runtimeObject.currentState, state.id);
+    deepEqual(runtimeObject.width, 100);
+    deepEqual(runtimeObject.height, 200);
+    deepEqual(runtimeObject.speedX, 10);
+    deepEqual(runtimeObject.speedY, 20);
+});
+
 })();

@@ -47,15 +47,16 @@
     GameCreator.SceneObject.prototype.instantiate = function(globalObj, args) {
         this.invalidated = true;
         this.currentState = args.currentState || 0;
-
-        var state = GameCreator.helpers.getObjectById(globalObj.states, this.currentState);
+        this.parent = globalObj;
+        var state = this.getCurrentState();
 
         this.x = args.x;
         this.y = args.y;
 
         this.width = args.width !== undefined ? args.width.slice(0) : state.attributes.width.slice(0);
         this.height = args.height !== undefined ? args.height.slice(0) : state.attributes.height.slice(0);
-        this.parent = globalObj;
+        this.image = args.image !== undefined ? args.image : state.attributes.image;
+        
         this.objectName = args.objectName !== undefined ? args.objectName : globalObj.objectName;
         this.instanceId = this.objectName + GameCreator.getUniqueId();
 
@@ -111,6 +112,17 @@
         }
         return null;
     };
+
+    GameCreator.SceneObject.prototype.setState = function(stateId) {
+        var state = this.parent.getState(stateId);
+        var attributes = Object.keys(state.attributes);
+        var i, stateAttribute;
+        for (i = 0; i < attributes.length; i += 1) {
+            stateAttribute = state.attributes[attributes[i]];
+            this[attributes[i]] = Array.isArray(stateAttribute) ? GameCreator.helpers.getRandomFromRange(stateAttribute) : stateAttribute;
+        }
+        this.currentState = stateId;
+    }
 
     GameCreator.SceneObject.prototype.resizeObject = function(diffX, diffY) {
         if (this.width.length == 2 && diffX) {

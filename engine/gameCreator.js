@@ -302,29 +302,11 @@
             }
             return allGlobalObjects;
         },
-        getCountersForGlobalObj: function(globalObjName) {
-            var obj, counter, tmpObj;
-            var result = {};
-            if (GameCreator.globalObjects.hasOwnProperty(globalObjName)) {
-                obj = GameCreator.globalObjects[globalObjName];
-            } else {
-                tmpObj = GameCreator.getSceneObjectById(globalObjName);
-                obj = tmpObj ? tmpObj.parent : null;
-            }
-            if (obj) {
-                for (counter in obj.parentCounters) {
-                    if (obj.parentCounters.hasOwnProperty(counter)) {
-                        result[counter] = counter;
-                    }
-                }
-            }
-            return result;
-        },
 
         changeCounter: function(runtimeObj, params) {
             var selectedObjectId = params.counterObject;
             var counterCarrier;
-            if (runtimeObj.objectName !== selectedObjectId) {
+            if (selectedObjectId !== 'this') {
                 runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
             }
             if (runtimeObj.parent.unique) {
@@ -332,11 +314,19 @@
             } else {
                 counterCarrier = runtimeObj;
             }
-            if (params.counterType === "set") {
+            if (params.counterType === 'set') {
                 counterCarrier.counters[params.counterName].setValue(params.counterValue);
             } else {
                 counterCarrier.counters[params.counterName].changeValue(params.counterValue);
             }
+        },
+
+        changeState: function(runtimeObj, params) {
+            var selectedObjectId = params.objectId;
+            if (selectedObjectId !== 'this') {
+                runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
+            }
+            runtimeObj.setState(parseInt(params.stateId, 10));
         },
         
         getClickedObject: function(x, y) {
