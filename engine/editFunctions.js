@@ -39,10 +39,10 @@
             if (GameCreator.selectedObject) {
                 var selobj = GameCreator.selectedObject;
                 GameCreator.uiContext.beginPath();
-                GameCreator.uiContext.moveTo(selobj.x, selobj.y);
-                GameCreator.uiContext.lineTo(selobj.x + selobj.displayWidth, selobj.y);
-                GameCreator.uiContext.lineTo(selobj.x + selobj.displayWidth, selobj.y + selobj.displayHeight);
-                GameCreator.uiContext.lineTo(selobj.x, selobj.y + selobj.displayHeight);
+                GameCreator.uiContext.moveTo(selobj.x+2, selobj.y+2);
+                GameCreator.uiContext.lineTo(selobj.x-2 + selobj.displayWidth, selobj.y+2);
+                GameCreator.uiContext.lineTo(selobj.x-2 + selobj.displayWidth, selobj.y-2 + selobj.displayHeight);
+                GameCreator.uiContext.lineTo(selobj.x+2, selobj.y-2 + selobj.displayHeight);
                 GameCreator.uiContext.closePath();
                 GameCreator.uiContext.stroke();
             }

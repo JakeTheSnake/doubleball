@@ -93,19 +93,27 @@
     }
 
     GameCreator.SceneObject.prototype.getDragFunction = function(x, y) {
-        var border = 3;
+        var border = 8;
         if (y >= this.y && 
                 y <= this.y + this.displayHeight &&
                 x >= this.x &&
                 x <= this.x + this.displayWidth) {
-            if (Math.abs(this.x - x) <= border) {
-                return this.resizeLeft;
+            if (Math.abs(this.x - x) <= border && Math.abs(this.y - y) <= border) {
+                return this.resizeNW;
+            } else if (Math.abs(this.x + this.displayWidth - x) <= border && Math.abs(this.y - y) <= border) {
+                return this.resizeNE;
+            } else if (Math.abs(this.x - x) <= border && Math.abs(this.y + this.displayHeight - y) <= border) {
+                return this.resizeSW;
+            } else if (Math.abs(this.y + this.displayHeight - y) <= border && Math.abs(this.x + this.displayWidth - x) <= border) {
+                return this.resizeSE;
+            } else if (Math.abs(this.x - x) <= border) {
+                return this.resizeW;
             } else if (Math.abs(this.x + this.displayWidth - x) <= border) {
-                return this.resizeRight;
+                return this.resizeE;
             } else if (Math.abs(this.y - y) <= border) {
-                return this.resizeTop;
+                return this.resizeN;
             } else if (Math.abs(this.y + this.displayHeight - y) <= border) {
-                return this.resizeBottom;
+                return this.resizeS;
             } else {
                 return this.moveObject;
             }
@@ -159,24 +167,53 @@
         this.clickOffsetY = null;
     };
 
-    GameCreator.SceneObject.prototype.resizeLeft = function(x, y) {
+    GameCreator.SceneObject.prototype.resizeNW = function(x, y) {
+        var diffX = this.x + this.displayWidth - x;
+        var diffY = this.y + this.displayHeight - y;
+        this.x = x;
+        this.y = y;
+        this.resizeObject(diffX, diffY);
+    };
+
+    GameCreator.SceneObject.prototype.resizeNE = function(x, y) {
+        var diffX = x - this.x;
+        var diffY = this.y + this.displayHeight - y;
+        this.y = y;
+        this.resizeObject(diffX, diffY);
+    };
+
+    GameCreator.SceneObject.prototype.resizeSE = function(x, y) {
+        var diffY = y - this.y;
+        var diffX = x - this.x;
+
+        this.resizeObject(diffX, diffY);
+    };
+
+    GameCreator.SceneObject.prototype.resizeSW = function(x, y) {
+        var diffX = this.x + this.displayWidth - x;
+        var diffY = y - this.y;
+        this.x = x;
+        this.resizeObject(diffX, diffY);
+    };
+
+    GameCreator.SceneObject.prototype.resizeW = function(x, y) {
         var diffX = this.x + this.displayWidth - x;
         this.x = x;
         this.resizeObject(diffX, null);
     };
 
-    GameCreator.SceneObject.prototype.resizeRight = function(x, y) {
+    GameCreator.SceneObject.prototype.resizeE = function(x, y) {
         var diffX = x - this.x;
         this.resizeObject(diffX, null);
     };
 
-    GameCreator.SceneObject.prototype.resizeTop = function(x, y) {
+    GameCreator.SceneObject.prototype.resizeN = function(x, y) {
         var diffY = this.y + this.displayHeight - y;
         this.y = y;
         this.resizeObject(null, diffY);
     };
 
-    GameCreator.SceneObject.prototype.resizeBottom = function(x, y) {
+    GameCreator.SceneObject.prototype.resizeS = function(x, y) {
         var diffY = y - this.y;
         this.resizeObject(null, diffY);
     };

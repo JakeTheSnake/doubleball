@@ -356,13 +356,24 @@
     GameCreator.helpers.setMouseCursor = function(dragFunc) {
         var cursor = "auto";
         switch (dragFunc) {
-            case GameCreator.SceneObject.prototype.resizeLeft:
-            case GameCreator.SceneObject.prototype.resizeRight:
+            case GameCreator.SceneObject.prototype.resizeNW:
+            case GameCreator.SceneObject.prototype.resizeSE:
+                cursor = "nw-resize"
+                break;
+            case GameCreator.SceneObject.prototype.resizeNE:
+            case GameCreator.SceneObject.prototype.resizeSW:
+                cursor = "ne-resize"
+                break;
+            case GameCreator.SceneObject.prototype.resizeW:
+            case GameCreator.SceneObject.prototype.resizeE:
                 cursor = "w-resize";
                 break;
-            case GameCreator.SceneObject.prototype.resizeTop:
-            case GameCreator.SceneObject.prototype.resizeBottom:
+            case GameCreator.SceneObject.prototype.resizeN:
+            case GameCreator.SceneObject.prototype.resizeS:
                 cursor = "n-resize";
+                break;
+            case GameCreator.SceneObject.prototype.moveObject:
+                cursor = "move";
                 break;
             default:
                 cursor = "auto";
