@@ -174,6 +174,7 @@
         },
 
         invalidate: function(obj) {
+            var width, height;
             var x = parseInt(obj.x, 10);
             var y = parseInt(obj.y, 10);
             var xCorr = 0;
@@ -186,9 +187,16 @@
                 yCorr = y;
                 y = 0;
             }
+            if (GameCreator.state == 'editing') {
+                width = obj.displayWidth;
+                height = obj.displayHeight;
+            } else {
+                width = parseInt(obj.width, 10);
+                height = parseInt(obj.height, 10);
+            }
             GameCreator.mainContext.clearRect(x, y,
-                obj.displayWidth + xCorr + 1,
-                obj.displayHeight + yCorr + 1);
+                obj.width + xCorr + 1,
+                obj.height + yCorr + 1);
             obj.invalidated = true;
         },
 
