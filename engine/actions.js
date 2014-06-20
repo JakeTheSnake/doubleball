@@ -187,55 +187,55 @@
     };
 
     GameCreator.actionGroups = {
-      collisionActions: {
-          Bounce: GameCreator.actions.Bounce,
-          Stop: GameCreator.actions.Stop,
-          Destroy: GameCreator.actions.Destroy,
-          Shoot: GameCreator.actions.Shoot,
-          Create: GameCreator.actions.Create,
-          Counter: GameCreator.actions.Counter,
-          Restart: GameCreator.actions.Restart,
-          SwitchScene: GameCreator.actions.SwitchScene,
-          SwitchState: GameCreator.actions.SwitchState,
-      },
+        collisionActions: {
+            Bounce: GameCreator.actions.Bounce,
+            Stop: GameCreator.actions.Stop,
+            Destroy: GameCreator.actions.Destroy,
+            Shoot: GameCreator.actions.Shoot,
+            Create: GameCreator.actions.Create,
+            Counter: GameCreator.actions.Counter,
+            Restart: GameCreator.actions.Restart,
+            SwitchScene: GameCreator.actions.SwitchScene,
+            SwitchState: GameCreator.actions.SwitchState,
+        },
 
-      mouseCollisionActions: {
-          Destroy: GameCreator.actions.Destroy,
-          Shoot: GameCreator.actions.Shoot,
-          Create: GameCreator.actions.Create,
-          Counter: GameCreator.actions.Counter,
-          Restart: GameCreator.actions.Restart,
-          SwitchScene: GameCreator.actions.SwitchScene,
-          SwitchState: GameCreator.actions.SwitchState,
-      },
+        mouseCollisionActions: {
+            Destroy: GameCreator.actions.Destroy,
+            Shoot: GameCreator.actions.Shoot,
+            Create: GameCreator.actions.Create,
+            Counter: GameCreator.actions.Counter,
+            Restart: GameCreator.actions.Restart,
+            SwitchScene: GameCreator.actions.SwitchScene,
+            SwitchState: GameCreator.actions.SwitchState,
+        },
 
-      nonCollisionActions: {
-          Stop: GameCreator.actions.Stop,
-          Destroy: GameCreator.actions.Destroy,
-          Shoot: GameCreator.actions.Shoot,
-          Create: GameCreator.actions.Create,
-          Counter: GameCreator.actions.Counter,
-          Restart: GameCreator.actions.Restart,
-          SwitchScene: GameCreator.actions.SwitchScene,
-          SwitchState: GameCreator.actions.SwitchState,
-      },
+        nonCollisionActions: {
+            Stop: GameCreator.actions.Stop,
+            Destroy: GameCreator.actions.Destroy,
+            Shoot: GameCreator.actions.Shoot,
+            Create: GameCreator.actions.Create,
+            Counter: GameCreator.actions.Counter,
+            Restart: GameCreator.actions.Restart,
+            SwitchScene: GameCreator.actions.SwitchScene,
+            SwitchState: GameCreator.actions.SwitchState,
+        },
 
-      mouseNonCollisionActions: {
-          Destroy: GameCreator.actions.Destroy,
-          Shoot: GameCreator.actions.Shoot,
-          Create: GameCreator.actions.Create,
-          Counter: GameCreator.actions.Counter,
-          Restart: GameCreator.actions.Restart,
-          SwitchScene: GameCreator.actions.SwitchScene,
-          SwitchState: GameCreator.actions.SwitchState,
+        mouseNonCollisionActions: {
+            Destroy: GameCreator.actions.Destroy,
+            Shoot: GameCreator.actions.Shoot,
+            Create: GameCreator.actions.Create,
+            Counter: GameCreator.actions.Counter,
+            Restart: GameCreator.actions.Restart,
+            SwitchScene: GameCreator.actions.SwitchScene,
+            SwitchState: GameCreator.actions.SwitchState,
         },
 
         onCreateActions: {
-          Destroy: GameCreator.actions.Destroy,
-          Shoot: GameCreator.actions.Shoot,
-          Create: GameCreator.actions.Create,
-          Counter: GameCreator.actions.Counter,
-          SwitchState: GameCreator.actions.SwitchState,
+            Destroy: GameCreator.actions.Destroy,
+            Shoot: GameCreator.actions.Shoot,
+            Create: GameCreator.actions.Create,
+            Counter: GameCreator.actions.Counter,
+            SwitchState: GameCreator.actions.SwitchState,
         }
     };
 }());

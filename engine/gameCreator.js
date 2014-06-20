@@ -215,7 +215,7 @@
             $(document).off("mousemove.gameKeyListener");
             $(document).off("mousedown.gameKeyListener");
             $(document).off("mouseup.gameKeyListener");
-            $(GameCreator.mainCanvas).off("mousedown.runningScene");
+            $(GameCreator.mainCanvas).off(".runningScene");
             $(GameCreator.mainCanvas).css("cursor", "default");
         },
         pauseGame: function() {
