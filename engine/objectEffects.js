@@ -7,7 +7,7 @@ GameCreator.effects.FadeOut = function(runtimeObj) {
     this.y = runtimeObj.y;
     this.width = runtimeObj.width;
     this.height = runtimeObj.height;
-    this.image = runtimeObj.parent.image;
+    this.image = runtimeObj.image;
     this.fadeOutTime = 200;
     this.currentAlpha = 1;
 }
@@ -48,7 +48,7 @@ GameCreator.effects.Shrink.prototype.update = function(deltaTime) {
 
 GameCreator.effects.Shrink.prototype.draw = function(context) {
     if (this.width >= 0 && this.height >= 0) {
-        context.drawImage(this.runtimeObj.parent.image, this.x, this.y, this.width, this.height);
+        context.drawImage(this.runtimeObj.image, this.x, this.y, this.width, this.height);
         return true;
     }
     return false;
@@ -70,7 +70,7 @@ GameCreator.effects.RiseAndFade.prototype.update = function(deltaTime) {
 GameCreator.effects.RiseAndFade.prototype.draw = function(context) {
     if (this.currentAlpha >= 0) {
         context.globalAlpha = this.currentAlpha;
-        context.drawImage(this.runtimeObj.parent.image, this.runtimeObj.x, this.y, this.runtimeObj.width, this.runtimeObj.height);
+        context.drawImage(this.runtimeObj.image, this.runtimeObj.x, this.y, this.runtimeObj.width, this.runtimeObj.height);
         context.globalAlpha = 1.0;
         return true;
     }
