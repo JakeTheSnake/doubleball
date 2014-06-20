@@ -195,8 +195,8 @@
                 height = parseInt(obj.height, 10);
             }
             GameCreator.mainContext.clearRect(x, y,
-                obj.width + xCorr + 1,
-                obj.height + yCorr + 1);
+                width + xCorr + 1,
+                height + yCorr + 1);
             obj.invalidated = true;
         },
 
