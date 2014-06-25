@@ -1,20 +1,20 @@
 Version 0.2:
 
-- Render Optimization (Test on different platforms)
-
 - Scene properties (Background).
 	-Background in separate canvas layer.
-
-- Object states (tabs under properties for the global object, preferably nameable)
-	Tricky. What attributes should be governed by state?
-	SpeedX/SpeedY can't really be set by state as that would mess stuff up...
-	Make img src changeable.
-    	Actions:
-    		-Change Object States
 
 - Fix Issue #7
 
 - Backend
+
+- Welcome view
+- Edit game view
+    - Save game
+    - Edit name
+- Play game view
+- My pages
+    - Samma som welcome men utan stor logga och med lista på ens spel istället
+    - Härifrån kan man edita, renamea publicera spel etc.
 
 DONE:
 -Unique Objects
@@ -36,6 +36,7 @@ Version 0.3
 - Scene properties (state, scenestartedactions?)
 - Conditions
 - The Advanced Debugger (some way to filterable way to print info)
+- Render Optimization (Test on different platforms)
 
 Objects:
  	- Text
