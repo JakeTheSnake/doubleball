@@ -226,9 +226,9 @@ GameCreator.UI = {
     editSceneObject: function() {
         $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.objectName + '</div>');
         var objectType = GameCreator.selectedObject.parent.objectType;
+        var obj = GameCreator.selectedObject;
         if (GameCreator.helpers.startsWith(objectType, "CounterObject")) {
             var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInScene());
-            var obj = GameCreator.selectedObject;
             $("#edit-scene-object-content").html(GameCreator[objectType].sceneObjectForm(obj, uniqueIds));
             $("#add-counter-object-counter-selector").html();
             $("#add-counter-counter-object").on("change", function() {
@@ -236,6 +236,11 @@ GameCreator.UI = {
                     GameCreator.htmlStrings.inputLabel("add-counter-counter-name", "Counter") +
                     GameCreator.htmlStrings.singleSelector("add-counter-counter-name", $(this).val() ? GameCreator.getCountersForGlobalObj($(this).val()) : {}, "counterName")
                 );
+            });
+        } else if (objectType === 'RouteObject') {
+            $("#edit-scene-object-content").html(GameCreator.RouteObject.sceneObjectForm(GameCreator.selectedObject));
+            $("#edit-route-button").on("click", function(){
+                GameCreator.drawRoute(obj.route);
             });
         } else {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.sceneObjectForm(GameCreator.selectedObject));

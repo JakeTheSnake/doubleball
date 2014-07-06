@@ -81,8 +81,8 @@
             });
             $(window).on("mouseup.editScene", function(e) {
                 if (GameCreator.draggedNode) {
-                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].x = e.pageX - GameCreator.mainCanvasOffsetX - 10;
-                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].y = e.pageY - GameCreator.mainCanvasOffsetY - 10;
+                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].x = e.pageX - GameCreator.mainCanvas.offsetLeft - 10;
+                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].y = e.pageY - GameCreator.mainCanvas.offsetTop - 10;
                     GameCreator.draggedNode = undefined;
                     GameCreator.drawRoute(GameCreator.selectedObject.route);
                     return false;
@@ -100,6 +100,7 @@
                     dragFunc = null;
                     GameCreator.unselectSceneObject();
                     GameCreator.drawSelectionLine();
+                    GameCreator.hideRoute();
                 }
                 GameCreator.render(false);
             });
