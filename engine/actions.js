@@ -88,22 +88,19 @@
                           timing: {at: true, every: true, after: true},
                         }),
           Create:   new GameCreator.Action({    
-                          action: function(params){GameCreator.createRuntimeObject(params, {}); },
-                          params: [{
-                                    inputId: "objectToCreate",
-                                    input: function() {return GameCreator.htmlStrings.singleSelector("objectToCreate", GameCreator.getGlobalObjects()); },
-                                    label: function() {return GameCreator.htmlStrings.inputLabel("objectToCreate", "Object"); }
-                                 },
-                                 {
-                                    inputId: "x",
-                                    input: function() {return GameCreator.htmlStrings.rangeInput("x", "x", ""); },
-                                    label: function() {return GameCreator.htmlStrings.inputLabel("x", "X") + '<br style="clear: both"/>'; }
-                                 },
-                                {
-                                    inputId: "y",
-                                    input: function() {return GameCreator.htmlStrings.rangeInput("y", "y", ""); },
-                                    label: function() {return GameCreator.htmlStrings.inputLabel("y", "Y") + '<br style="clear: both"/>'; }
-                                 }],
+                          action: function(params) {GameCreator.createRuntimeObject(params, {}); },
+                          params: {"objectToCreate": 
+                                    {param: GameCreator.SceneObjectParameter,
+                                    mandatory: true},
+                                   "x": 
+                                   {param: GameCreator.NumberParameter,
+                                    mandatory: false,
+                                    defaultValue: 0},
+                                   "y": 
+                                   {param: GameCreator.NumberParameter,
+                                    mandatory: false,
+                                    defaultValue: 0}
+                                  },
                           name: "Create",
                           timing: {at: true, every: true, after: true},
                           runnableFunction: function() {return true;}

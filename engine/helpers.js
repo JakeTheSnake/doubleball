@@ -382,4 +382,12 @@
         $(GameCreator.mainCanvas).css("cursor", cursor);
     }
 
+    Array.prototype.collect = function(collectFunc) {
+        var result = [];
+        for (var i = 0; i < this.length; i++) {
+            result.push(collectFunc(this[i]));
+        }
+        return result;
+    }
+
 }());
