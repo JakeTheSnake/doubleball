@@ -5,7 +5,7 @@ GameCreator.Event = function() {
 
 GameCreator.Event.prototype.checkConditions = function() {
     for (var i = 0; i < this.conditions.length; i++) {
-        if (this.conditions[i]() === false) {
+        if (this.conditions[i].evaluate() === false) {
             return false;
         }
     }
@@ -21,10 +21,8 @@ GameCreator.Event.prototype.runActions = function(runtimeObj, parameters) {
     }
 }
 
-GameCreator.Event.prototype.addCondition = function(condition, parameters) {
-    this.conditions.push(function() {
-        return GameCreator.eventConditions[condition](parameters);
-    });
+GameCreator.Event.prototype.addCondition = function(condition) {
+    this.conditions.push(condition);
 }
 
 GameCreator.eventConditions = {
@@ -49,3 +47,46 @@ GameCreator.eventConditions = {
 
     },
 }
+
+GameCreator.Condition = function(args) {
+    this.evaluate = args.evaluate;
+    this.parameters = args.parameters;
+}
+
+GameCreator.conditions =
+{
+    exists: new GameCreator.Condition({
+        evaluate: function(params) {
+            var item = GameCreator.helpers.
+                getObjectById(GameCreator.collidableObjects, params.objId);
+            if (item) {
+                return params.count === item.runtimeObjects.length;
+            }
+            return false;
+        },
+        params: {
+            objId: GameCreator.GlobalObjectParameter,
+            count: GameCreator.NumberParameter
+        }
+    })
+}
+
+GameCreator.RuntimeCondition = function(name, params, value) {
+    this.name = name;
+    this.parameters = params;
+    this.mandatory = true;
+    this.value = value;
+}
+
+GameCreator.RuntimeCondition.prototype.evaluate = function() {
+    return GameCreator.eventConditions[this.name](this.parameters);
+}
+
+GameCreator.RuntimeCondition.prototype.getAllParameters = function() {
+    return GameCreator.conditions[this.name].params;
+}
+
+GameCreator.RuntimeCondition.prototype.getParameter = function(name) {
+    return GameCreator.conditions[this.name].params[name];
+}
+

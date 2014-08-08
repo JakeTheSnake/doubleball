@@ -13,11 +13,29 @@
 
     GameCreator.Action.prototype.runnable = function() {return !this.isDestroyed; };
 
+    
+
     GameCreator.RuntimeAction = function(name, parameters, timing) {
         this.name = name;
         this.parameters = parameters || {};
         this.timing = timing || {};
     };
+
+    GameCreator.RuntimeAction.prototype.getAllParameters = function() {
+        return GameCreator.actions[this.name].params;
+    }
+
+    GameCreator.RuntimeAction.prototype.getParameter = function(name) {
+        return GameCreator.actions[this.name].params[name].param;
+    }
+
+    GameCreator.RuntimeAction.prototype.getParamMandatory = function(name) {
+        return GameCreator.actions[this.name].params[name].mandatory;
+    }
+
+    GameCreator.RuntimeAction.prototype.getParamDefaultValue = function(name) {
+        return GameCreator.actions[this.name].params[name].defaultValue;
+    }
 
     GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj) {
         var timerFunction;
@@ -103,7 +121,7 @@
                                   },
                           name: "Create",
                           timing: {at: true, every: true, after: true},
-                          runnableFunction: function() {return true;}
+                          runnableFunction: function() { return true; }
                         }),
           Counter:  new GameCreator.Action({
                           action: function(params) {GameCreator.changeCounter(this, params); },
