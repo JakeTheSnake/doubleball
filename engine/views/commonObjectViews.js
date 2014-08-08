@@ -1,11 +1,14 @@
 GameCreator.commonObjectViews = {
     addCommonObjectViews: function(object) {
-        GameCreator.commonObjectViews.addCounterObjectViews(object);
         object.getEditWindow = GameCreator.commonObjectViews.getEditWindow;
         object.getCountersContent = GameCreator.commonObjectViews.getCountersContent;
         object.getCollisionsContent = GameCreator.commonObjectViews.getCollisionsContent;
         object.getCounterEventsContent = GameCreator.commonObjectViews.getCounterEventsContent;
+        object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
         object.getNonStatePropertiesForm = GameCreator.commonObjectViews.getNonStatePropertiesForm;
+        object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
+        object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
+        object.getEventsContent = GameCreator.commonObjectViews.getEventsContent;
     },
 
     addPlayerObjectViews: function(object) {
@@ -16,6 +19,7 @@ GameCreator.commonObjectViews = {
     },
 
     addCounterObjectViews: function(object) {
+        object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
         object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
     },
@@ -27,18 +31,31 @@ GameCreator.commonObjectViews = {
     getEditWindow: function() {
         var result = "";
 
-        result += '<div id="dialogue-window-title">Edit object</div> \
-                   <div id="dialogue-window-menu"> \
-                   <a class="tab dialogue-window-tab active" data-uifunction="setupPropertiesForm">Properties</a>';
-
-        result += this.getTabs();
-
-        result += '<a class="tab dialogue-window-tab" data-uifunction="setupOnDestroyActionsForm">On destroy</a> \
-                   <a class="tab dialogue-window-tab" data-uifunction="setupOnCreateActionsForm">On create</a> \
-                   <a class="tab dialogue-window-tab" data-uifunction="setupStatesForm">States</a> \
+        result += '<div class="dialogue bottom"> \
+                   <!-- Panel: Object manager --> \
+                   <div id="object-manager" class="panel panel-default"> \
+                   <div class="panel-heading "> \
+                   <span class="panel-title">Object manager</span> \
                    </div> \
-                   <div id="edit-global-object-window-content"></div>';
-
+                   <!-- Panel: Edit --> \
+                   <div class="col border-right"> \
+                   <div class="panel-heading"> \
+                   <span class="panel-title">Edit</span> \
+                   </div> \
+                   <ul id="dialogue-panel-edit" class="nav nav-tabs nav-stacked"> \
+                   <li data-uifunction="setupPropertiesForm">Properties</li> \
+                   <li data-uifunction="setupStatesForm">States</li> \
+                   <li data-uifunction="setupEventsForm">Events</li> \
+                   <li data-uifunction="setupCountersForm">Counters</li> \
+                   </ul> \
+                   </div> \
+                   <div id="dialogue-edit-content"> \
+                   </div> \
+                   </div> \
+                   </div> \
+                   </div> \
+                   </div>';
+                   
         return result;
     },
 
@@ -106,21 +123,68 @@ GameCreator.commonObjectViews = {
         return result;
     },
 
-    getNonStatePropertiesForm: function() {
-        return '<div id="object-non-state-properties-content">' +
-                GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
-                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique) +
-                '</div>';
+    getPropertiesContent: function(stateId) {
+        var result = "";
+            result += '<div id="properties" class="col border-right"> \
+                       <div class="panel-heading"> \
+                       <span class="panel-title">Properties</span> \
+                       </div> \
+                       <div class="panel-body"> \
+                       <div class="panel-paragraph"> \
+                       <div> \
+                       <div id="object-properties-content">'
+
+            result += this.getPropertiesForm(0);
+
+            result += '</div> \
+                       <div id="object-non-state-properties-content">'
+
+            result += this.getNonStatePropertiesForm();
+
+            result += '</div> \
+                       <button class="regularButton" id="save-global-object-properties-button">Save</button> \
+                       </div> \
+                       </div> \
+                       </div> \
+                       </div> \
+                       </div>';
+
+        return result;
     },
 
     getPropertiesForm: function(stateId) {
         var state = this.getState(stateId);
-        var result = '<div id="object-properties-content">' 
+        var result = "";    
         result += GameCreator.helpers.getAttributeForm(state.attributes,
-            GameCreator[this.objectType].objectAttributes,
-            state.attributes);
-        result += '<button class="regularButton" id="save-global-object-properties-button">Save</button>' +
-                '</div>';
+        GameCreator[this.objectType].objectAttributes,
+        state.attributes);
+
+        return result;
+    },
+
+    getNonStatePropertiesForm: function() {
+        return  GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
+                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique)
+    },
+
+    getEventsContent: function() {
+        var result = "";
+            result += '<div class="col border-right"> \
+                       <div class="panel-heading"> \
+                       <span class="panel-title">Events</span> \
+                       </div> \
+                       <ul id="dialogue-panel-events" class="nav nav-tabs nav-stacked"> \
+                       <li data-uifunction="setupOnCreateActionsForm">On Create</li> \
+                       <li data-uifunction="setupCollisionsForm">On Collide</li> \
+                       <li data-uifunction="setupOnDestroyActionsForm">On Destroy</li> \
+                       <li data-uifunction="setupEditCounterEvents">On Count</li>';
+            
+            result += this.getEvents();
+
+            result += '</ul> \
+                       </div> \
+                       <div id="dialogue-events-content"> \
+                       </div>';
         return result;
     },
     

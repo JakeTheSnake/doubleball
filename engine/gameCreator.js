@@ -401,4 +401,14 @@
             });
         }
     };
+
+    var borderKeys = Object.keys(GameCreator.borderObjects);
+
+    for (var i = 0; i < borderKeys.length; i += 1 ) {
+        var attribute = {attributes: {image: GameCreator.borderObjects[borderKeys[i]].image}};
+        GameCreator.borderObjects[borderKeys[i]].getDefaultState = function() {
+            return attribute;
+        };
+    }
+
 }());

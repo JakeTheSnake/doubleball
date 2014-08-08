@@ -7,19 +7,19 @@ GameCreator.UI = {
 
     redrawLibrary: function() {
         var i, keys, listElementButton, globalObj;
-        $("#global-object-list").html('');
+        $(".global-object-list").html('');
         keys = Object.keys(GameCreator.globalObjects);
         for (i = 0; i < keys.length; i += 1) {
             globalObj = GameCreator.globalObjects[keys[i]];
-            listElementButton = GameCreator.htmlStrings.globalObjectEditButton(globalObj);
-            $("#global-object-list").append(listElementButton);
+            listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
+            $(".global-object-list").append(listElementButton);
             this.setupLibraryItemListeners(listElementButton, globalObj);
         }
     },
     
     createLibraryItem: function(globalObj) {
-        var listElementButton = GameCreator.htmlStrings.globalObjectEditButton(globalObj);
-        $("#global-object-list").append(listElementButton);
+        var listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
+        $(".global-object-list").append(listElementButton);
         this.setupLibraryItemListeners(listElementButton, globalObj);
     },
 
@@ -29,7 +29,7 @@ GameCreator.UI = {
         });
         $(listElementButton).on("mousedown", function(e){
             var image = new Image();
-            image.src = $(this).find("button").attr("data-imgsrc");
+            image.src = $(this).attr("data-imgsrc");
             $(image).css("position", "absolute");
             $(image).css("top", e.pageY-45);
             $(image).css("left", e.pageX-45);
@@ -97,7 +97,6 @@ GameCreator.UI = {
         });
     },
     
-    
     setupEditActionsContent: function(text, choosableActions, selectedActions, thisName) {
         $("#action-selector").on("change", function() {
             $("#select-action-parameters-content").html("");
@@ -147,13 +146,17 @@ GameCreator.UI = {
     
     openAddGlobalObjectDialogue: function() {
         GameCreator.UI.openDialogue(900, 570, GameCreator.htmlStrings.addGlobalObjectWindow());
-        $("#dialogue-window").find(".tab").first().addClass("active");
+        /*
         $("#dialogue-window").find(".tab").on("click", function() {
             GameCreator.UI.setupAddObjectForm($(this).data("object-type"));
             $(this).parent().find(".tab").removeClass("active");
             $(this).addClass("active");
         });
+        */
+
+        /*
         GameCreator.UI.setupAddObjectForm("FreeObject");
+        */
     },
 
     setupAddObjectForm: function(objectType) {
@@ -165,13 +168,15 @@ GameCreator.UI = {
     
     openEditGlobalObjectDialogue: function(globalObj) {
         GameCreator.UI.openDialogue(900, 570, globalObj.getEditWindow());
-        $("#dialogue-window").find(".tab").first().addClass("active");  
-        $("#dialogue-window").find(".tab").on("click", function() {
-            globalObj[$(this).data("uifunction")]($("#dialogue-window").find("#edit-global-object-window-content"));
-            $(this).parent().find(".tab").removeClass("active");
+
+        $("#dialogue-panel-edit").find("li").on("click", function() {
+            globalObj[$(this).data("uifunction")]($("#dialogue-edit-content"));
+            $(this).parent().find("li").removeClass("active");
             $(this).addClass("active");
         });
-        globalObj.setupPropertiesForm($("#dialogue-window").find("#edit-global-object-window-content"));
+
+        globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
+        $("#dialogue-panel-edit").find("li:first-child").addClass("active");
     },
     
     //General dialogue functions
@@ -181,7 +186,6 @@ GameCreator.UI = {
         height = height || 570;
         $("#dialogue-window").css("width", width).css("height", height).css("left", ($(window).width() / 2 - width / 2)).show();
         $("#dialogue-window").html(content);
-        $("#dialogue-overlay").css("height", $(document).height());
         $("#dialogue-overlay").show();
     },
     
@@ -199,20 +203,24 @@ GameCreator.UI = {
         $("#debug-info-pane").html(GameCreator.htmlStrings.debugInformation(info));
     },
 
-    setupSceneTabs: function(scenes){
+    setupSceneTabs: function(scenes) {
         var result = '';
-        $('#scene-tabs').show();
-        for(var i = 0; i < scenes.length; i++){
+        $('#toolbar-scenes').show();
+
+        result += '<ul class="nav nav-tabs" role="tablist">';
+        for(var i = 0; i < scenes.length; i++) {
             result += GameCreator.htmlStrings.sceneTab(i, GameCreator.activeScene === i);
         };
         result += GameCreator.htmlStrings.addSceneTab();
-        $('#scene-tabs').html(result);
-        $('#scene-tabs').off('click');
-        $('#scene-tabs').on('click', '.tab:not(#add-scene-tab)', function(){
+        result += '</ul>';
+
+        $('#toolbar-scenes').html(result);
+        $('#toolbar-scenes').off('click');
+        $('#toolbar-scenes').on('click', '.nav-tabs > li:not(#add-scene-tab)', function(){
             GameCreator.activeScene = parseInt($(this).data('scenenr'));
             GameCreator.editActiveScene();
         });
-        $('#scene-tabs').one('click', '#add-scene-tab', function(){
+        $('#toolbar-scenes').one('click', '#add-scene-tab', function(){
             GameCreator.addScene();
         });
     },
@@ -259,6 +267,6 @@ GameCreator.UI = {
 
     directSceneMode: function() {
         $(".routeNodeContainer").remove();
-        $('#scene-tabs').hide();
+        $('#toolbar-scenes').hide();
     }
 }

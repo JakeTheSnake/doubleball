@@ -24,7 +24,7 @@
                 return  '';
         },
 
-        getTabs: function() {
+        getEvents: function() {
                 return  '';
         },
 

@@ -10,21 +10,17 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
-html, body {
-    margin: 0;
-    padding: 0;
-    min-height: 100%;
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
 }
 
-/*
- * Borders and padding are drawn inside the set width
- * of your content. The margin is drawn outside.
- */
-
-*, *:before, *:after {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+html {
+    font-size: 1em;
+    line-height: 1.4;
 }
 
 /*
@@ -49,11 +45,11 @@ html, body {
 
 hr {
     display: block;
-    margin: 1px 0;
-    padding: 0;
     height: 1px;
     border: 0;
     border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
 }
 
 /*
@@ -73,9 +69,9 @@ video {
  */
 
 fieldset {
+    border: 0;
     margin: 0;
     padding: 0;
-    border: 0;
 }
 
 /*
@@ -87,301 +83,686 @@ textarea {
 }
 
 /* ==========================================================================
-   Author's custom styles
+   Browse Happy prompt
    ========================================================================== */
 
-canvas {
-    position: absolute;
-    border: 2px solid;
-    border-radius: 10px;
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
 }
 
-#canvas {
-    overflow: hidden;
-    height: 100%;
-    background-image: url('../img/canvas_grid.gif');
-    background-position: top center;
-    background-repeat: repeat;
+/* ====================================================================================================================================================
+   Author's custom resets
+   ==================================================================================================================================================== */
+
+html, body {
+  margin: 0;
+  padding: 0;
+
+  background-color: #000000;
+  overflow: hidden;
 }
+
+menu, ol, ul, button {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, p {
+  padding: 0;
+  margin: 0;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+a:last-child, button:last-child, img:last-child, p:last-child {
+  margin-bottom: 0;
+}
+
+/*
+
+  Todo:
+  
+  2. Object manager Properties panel
+  3. Properties:
+    - Instance
+    - Position/Size/Speed/Acceleration etc...
+    
+*/
+
+/* ====================================================================================================================================================
+   Author's base layout, classes and conditions
+   ==================================================================================================================================================== */
+
+canvas {
+  position: absolute;
+  border-right: 2px solid;
+  border-bottom: 2px solid;
+}
+
+h1, h2, h3 {
+  color: #FFE373;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  background-image: url('../images/title_underline.png');
+  background-repeat: repeat-x;
+  background-position: left bottom;
+  margin-bottom: 15px;
+}
+
+h1 {
+  font-size: 1.6em;
+  padding-bottom: 1px;
+  
+}
+
+h2 {
+  font-size: 1.4em;
+  padding-bottom: 2px;
+}
+
+h3 {
+  font-size: 1.2em;
+  padding-bottom: 3px;
+}
+
+h1 + p,
+h2 + p,
+h3 + p {
+  margin-top: -4px;
+}
+
+p {
+  padding: 0;
+  margin-bottom: 20px;
+  color: #F5F5F5;
+  font-size: 12px;
+  font-family: 'Droid Serif', sans-serif;
+  line-height: 150%;
+}
+
+p + p {
+  margin-top: -9px;
+}
+
+p + img {
+  margin-top: -5px;
+}
+
+img {
+  border: 2px solid #505050;
+  margin-bottom: 20px;
+}
+
+/* ==========================================================================
+   TEMPORARY PLEASE CHANGE FOR THE LOVE OF GOD!!!!
+   ========================================================================== */
 
 #ui-canvas {
-    pointer-events: none;
+  pointer-events: none;
 }
 
-#container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 80px 0 0 0;
-    min-height: 850px;
+#dialogue-edit-content {
+  height: 100%;
 }
 
-/* ================================
-   Top UI
-   =============================== */
+/* ==========================================================================
+   Container, rows and columns
+   ========================================================================== */
 
-#top-ui {
-    margin-top: -80px;
-    height: 80px;
-    background-color: #323232;
+.container-fluid {
+  padding: 0;
+  margin-right: auto;
+  margin-left: auto;
+  overflow: hidden;
 }
 
-/* ================================
-   Scenes UI
-   =============================== */
-
-#scene-ui {
-    height: 40px;
-    background-color: #4d4d4d;
+.row {
+  clear: both;
 }
 
-.scene-tab {
-    display: block;
-    margin: 0 1px 0 0;
-    padding: 10px 0 2px 9px;
+.col {
+  position: relative;
+  background-color: #323232;
+  min-height: 1px;
+  height: 100%;
+  float: left;
+}
+
+/* ==========================================================================
+   Panels
+   ========================================================================== */
+
+.panel {
+  padding-left: 2px;
+}
+
+.panel-heading {
+  background-color: #2574A9;
+  margin: 0 0 2px 0;
+  padding: 3px 0 0 7px;
+  height: 27px;
+}
+
+.panel-default > .panel-heading {
+  background-color: #505050;
+}
+
+.panel-success > .panel-heading {
+  background-color: #239D58;
+}
+
+.panel-edit > .panel-heading {
+  background-color: #E5A52E;
+}
+
+.panel-warning > .panel-heading {
+  background-color: #CE5144;
+}
+
+.panel-title {
+  color: #ffffff;
+  font-size: 14px;
+  font-family: 'Droid Sans', sans-serif;
+  text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+.panel-body {
+  margin: 0;
+  padding: 18px 30px 30px 28px;
+}
+
+.panel-body h1:first-child {
+  margin-top: -8px;
+}
+
+.panel-body h2:first-child {
+  margin-top: -3px;
+}
+
+.panel-paragraph {
+  margin-bottom: 30px;
+}
+
+/* ==========================================================================
+   Borders
+   ========================================================================== */
+
+.border-top {
+  background-image: url('../images/border_top.png');
+  background-repeat: repeat-x;
+  background-position: left top;
+}
+
+.border-bottom {
+  background-image: url('../images/border_bottom.png');
+  background-repeat: repeat-x;
+  background-position: left bottom;
+}
+
+.border-right {
+  background-image: url('../images/border_right.png');
+  background-repeat: repeat-y;
+  background-position: top right;
+}
+
+.border-left {
+  background-image: url('../images/border_left.png');
+  background-repeat: repeat-y;
+  background-position: top left;
+}
+
+/* ==========================================================================
+   Toolbars
+   ========================================================================== */
+
+#toolbar-top {
+  background-color: #323232;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  height: 72px;
+}
+
+#toolbar-bottom {
+  position: absolute;
+  top: 72px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+#toolbar-bottom > .left {
+  position: absolute;
+  background-color: #323232;
+  width: 50px;
+  height: 100%;
+}
+
+#toolbar-bottom > .middle {
+  position: absolute;
+  top: 0;
+  right: 330px;
+  bottom: 0;
+  left: 50px;
+  background-image: url('../images/canvas_grid.gif');
+  background-position: top center;
+  background-repeat: repeat;
+}
+
+#toolbar-bottom > .right {
+  position: absolute;
+  background-color: #323232;
+  width: 330px;
+  height: 100%;
+  right: 0;
+  overflow: hidden;
+}
+
+#toolbar-scenes {
+  background-color: #323232;
+  height: 36px;
+}
+
+/* ==========================================================================
+   dialogues
+   ========================================================================== */
+
+#dialogue-overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.85);
+  overflow: hidden;
+  z-index: 1;
+}
+
+#dialogue-overlay.ng-hide {
+  opacity: 0;
+}
+
+#dialogue-overlay,
+#dialogue-overlay.ng-hide {
+  -webkit-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+}
+
+.dialogue {
+  background-color: #323232;
+  position: absolute;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.dialogue > .panel {
+  margin: 0;
+  padding: 0;
+}
+
+#object-manager > .panel-heading {
+  margin-bottom: 2px;
+}
+
+#dialogue-window > .top {
+  width: 100%;
+  top: 0;
+}
+
+#dialogue-window > .right {
+  height: 100%;
+  right: 0;
+}
+
+#dialogue-window > .bottom {
+  width: 100%;
+  bottom: 0;
+}
+
+#dialogue-window > .bottom.ng-hide {
+  bottom: -400px;
+}
+
+#dialogue-window > .bottom,
+#dialogue-window > .bottom.ng-hide {
+  -webkit-transition: all linear 0.2s;
+  transition: all linear 0.2s;
+}
+
+#dialogue-window > .left {
+  height: 100%;
+  left: 0;
+}
+
+/*
+ * dialogue: Object manager;
+ */
+
+#object-manager {
+  height: 400px;
+}
+
+#object-manager > #library {
+  width: 328px;
+}
+
+#object-manager > .col {
+  padding-right: 2px;
+}
+
+#object-manager > #properties {
+  width: 650px;
+  height: 100%;
+}
+
+/* ====================================================================================================================================================
+   Author's savigation, button, tab and icon classes
+   ==================================================================================================================================================== */
+
+.nav {
+  list-style: none;
+}
+
+.nav-tabs > li {
+  background-color: #505050;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  width: 157px;
+  height: 27px;
+  font-size: 1em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: left;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  vertical-align: middle;
+  padding: 7px 0 0 13px;
+  float: left;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.nav-tabs > li:hover {
+  background-color: #5E5E5E;
+}
+
+.nav-tabs > li:active {
+  background-color: #3D3D3D;
+}
+
+.nav-tabs > li.active {
+  background-color: #2574A9;
+}
+
+.nav-stacked > li {
+  display: block;
+  float: none;
+  margin-right: 0;
+  margin-bottom: 2px;
+}
+
+#object-manager .nav-tabs > li {
+  font-size: 0.9em;
+  height: 33px;
+  padding-top: 15px;
+}
+
+#object-manager .nav-tabs > li.active {
+   background-color: #239D58;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+  background-color: #505050;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  margin-bottom: 0;
+  width: 86px;
+  height: 34px;
+  font-size: 0.9em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 8px 0;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn.disabled,
+.btn[disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #808080;
+  background-color: #505050;
+}
+
+/*
+ * Button: Large
+ */
+
+.btn-lg {
+  width: 160px;
+  height: 48px;
+  font-size: 1em;
+}
+
+/*
+ * Button: Small
+ */
+
+.btn-sm {
+  width: 34px;
+  height: 34px;
+}
+
+/*
+ * Button: Default
+ */
+
+.btn-default {
+  color: #808080;
+  background-color: #505050;
+}
+
+.btn-default:hover {
+  background-color: #5e5e5e;
+}
+
+.btn-default:active {
+  background-color: #3D3D3D;
+}
+
+/*
+ * Button: Success
+ */
+
+.btn-success {
+  background-color: #239D58;
+}
+
+.btn-success:hover {
+  background-color: #27AE60;
+}
+
+.btn-success:active {
+  background-color: #1C8047;
+}
+
+/*
+ * Button: Edit
+ */
+
+.btn-edit {
+  background-color: #E5A52E;
+}
+
+.btn-edit:hover {
+  background-color: #F5B031;
+}
+
+.btn-edit:active {
+  background-color: #C78F28;
+}
+
+/*
+ * Button: Warning
+ */
+
+.btn-warning {
+  background-color: #CE5144;
+}
+
+.btn-warning:hover {
+  background-color: #DE5849;
+}
+
+.btn-warning:active {
+  background-color: #B0463A;
+}
+
+/*
+ * Button-groups
+ */
+
+.btn-group {
+
+}
+
+/* ==========================================================================
+   Inputfields
+   ========================================================================== */
+
+
+
+/* ====================================================================================================================================================
+   Author's specific styles
+   ==================================================================================================================================================== */
+
+#logo {
     float: left;
-    width: 170px;
-    height: 40px;
-    border: 0;
-    background-color: #70757b;
-    color: #ffffff;
-    text-align: left;
-    font-size: 14px;
-    font-family: verdana, sans-serif;
+    background-image: url(../images/logo_arcadeforge.png);
+    width: 178px;
+    height: 22px;
+    margin: 24px 22px 0 22px;
     cursor: pointer;
 }
 
-.scene-tab.active {
-    background-color: #8b9199;
-    pointer-events: none;
+#properties {
+  height: 377px;
 }
-
-.scene-tab:hover {
-    background-color: #797e85;
-}
-
-/* ===============================
-   Left UI
-   =============================== */
-
-#left-ui {
-    float: left;
-    width: 50px;
-    height: 100%;
-    background-color: #323232;
-}
-
-/* =============================
-   Right UI
-   ============================= */
-
-#right-ui {
-    float: right;
-    overflow: hidden;
-    padding: 0 2px 0 2px;
-    width: 330px;
-    height: 100%;
-    background-color: #323232;
-}
-
-#right-ui .ui-title {
-    margin: 0 0 2px 0;
-    padding: 7px 0 0 9px;
-    width: 326px;
-    height: 30px;
-    background-color: #2574a9;
-    color: #ffffff;
-    font-size: 14px;
-    font-family: 'Droid Sans', sans-serif;
-}
-
-/* ------------------------------
-   Properties
-   ------------------------------ */
-
-#properties-ui {
-    height: 375px;
-}
-
-/* ------------------------------
-   Library
-   ------------------------------ */
-
-#library-ui {
-    height: 100%;
-}
-
-/* Library preview */
 
 #library-preview {
-    margin: 0 0 2px 0;
-    height: 110px;
-    background: url('../img/library_preview_grid.gif');
+  margin-bottom: 2px;
+  height: 110px;
+  background: url('../images/library_preview_grid.gif');
 }
-
-/* Library explorer */
 
 #library-explorer {
-    overflow-x: hidden;
-    overflow-y: scroll;
-    margin: 0 0 2px 0;
-    height: 220px;
-    background-color: #f5f5f5;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin-bottom: 2px;
+  height: 220px;
+  background-color: #F5F5F5;
 }
 
-.library-global-object-button {
-    margin: 0 0 2px 5px;
-    padding: 0 0 0 22px;
-    width: 100%;
-    height: 16px;
-    border: 0;
-    text-align: left;
-    font-size: 12px;
-    font-family: verdana;
-    background: url('../img/library_explorer_icon_object.gif') no-repeat;
+#library-menu > button {
+  float: left;
 }
 
-/* Library menu */
+.global-object-list > li {
+  margin: 0 5px 0 5px;
+  padding: 4px 0 0 27px;
+  height: 18px;
+  border: 0;
+  font-size: 12px;
+  font-color: #242424;
+  font-family: 'Droid Sans', sans-serif;
+  text-decoration: none;
+  background: url('../images/library_explorer_icon_object.png') no-repeat 5px center;
+  cursor: pointer;
 
-#library-menu {
-    height: 34px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
-.library-menu-button {
-    display: block;
-    float: left;
-    margin: 0 2px 0 0;
-    padding: 8px 0;
-    width: 86px;
-    height: 34px;
-    border: 0;
-    background-color: #505050;
-    color: #808080;
-    text-align: center;
-    font-size: 16px;
-    font-family: 'Droid Sans', sans-serif;
-    pointer-events: none;
+.global-object-list > li:hover {
+  background-color: #E0EEE6;
 }
 
-.library-menu-button.active {
-    background-color: #27ae60;
-    color: #ffffff;
-    cursor: pointer;
-    pointer-events: auto;
+.global-object-list > li:active {
+  background-color: #CCE7D7;
 }
 
-.library-menu-button.active:hover {
-    background-color: #2dcc6f;
+.global-object-list > li.active {
+  background-color: #CCE7D7;
+  pointer-events: none;
+  cursor: not-allowed;
 }
 
-/* =============================
-   Dialogue window
-   ============================= */
-#dialogue-overlay {
-    position: absolute;
-    z-index: 1;
-    display: none;
-    width: 100%;
-    height: 100%;
-    background-color: #000000;
-    opacity: 0.7;
+.global-object-list > li.ng-leave {
+    transition: 0.5s;
+    opacity: 1;
 }
 
-#dialogue-window {
-    position: absolute;
-    top: 110px;
-    z-index: 2;
-    display: none;
-    overflow: hidden;
-    background-color: #dcdddd;
-}
-   
-#dialogue-window-title {
-    padding: 7px 0 0 9px;
-    height: 30px;
-    background-color: #2574a9;
-    color: #ffffff;
-    font-size: 14px;
-    font-family: 'Droid Sans', sans-serif;
-}
-
-/* Dialogue window menu */
-
-#dialogue-window-menu {
-    float: left;
-    width: 170px;
-    height: 100%;
-    background-color: #adb3ba;
-}
-
-.dialogue-window-tab {
-    display: block;
-    margin: 0 0 1px 0;
-    padding: 10px 0 2px 9px;
-    width: 170px;
-    height: 40px;
-    border: 0;
-    background-color: #70757b;
-    color: #ffffff;
-    text-align: left;
-    font-size: 14px;
-    font-family: verdana, sans-serif;
-    cursor: pointer;
-}
-
-.dialogue-window-tab.active {
-    background-color: #8b9199;
-    pointer-events: none;
-}
-
-.dialogue-window-tab:hover {
-    background-color: #797e85;
-}
-
-/* State content */
-
-.state-tab {
-    display: block;
-    margin: 0 1px 0 0;
-    padding: 10px 0 2px 9px;
-    float: left;
-    width: 90px;
-    height: 40px;
-    border: 0;
-    background-color: #70757b;
-    color: #ffffff;
-    text-align: left;
-    font-size: 14px;
-    font-family: verdana, sans-serif;
-    cursor: pointer;
-}
-
-.state-tab.active {
-    background-color: #8b9199;
-    pointer-events: none;
-}
-
-.state-tab:hover {
-    background-color: #797e85;
-}
-
-/* Dialogue window content */
-
-#edit-global-object-window-content {
-    float: left;
-    width: 730px;
-}
-
-#add-global-object-window-content {
-    float: left;
-    width: 730px;
+.global-object-list > li.ng-leave-active {
+    opacity: 0;
 }
 
 /* ==========================================================================
    Helper classes
    ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
 
 /*
  * Hide from both screenreaders and browsers: h5bp.com/u
@@ -390,6 +771,36 @@ canvas {
 .hidden {
     display: none !important;
     visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
 }
 
 /*
@@ -402,14 +813,120 @@ canvas {
 
 /*
  * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
  */
 
 .clearfix:before,
 .clearfix:after {
-    display: table; /* 2 */
     content: " "; /* 1 */
+    display: table; /* 2 */
 }
 
 .clearfix:after {
     clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
 }

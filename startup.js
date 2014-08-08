@@ -89,12 +89,8 @@ window.onload = function () {
         //}
         
         // UI
-        
+         
         $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
         $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue)
-        
-        $( ".ui-btn" ).button();
-        $("#mode").buttonset();
-        
     }
     

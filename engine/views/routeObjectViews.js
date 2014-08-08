@@ -15,9 +15,7 @@
 
     GameCreator.RouteObject.sceneObjectForm = sceneObjectFormFunction;
 
-    GameCreator.RouteObject.prototype.getTabs = function() {
-            return  '<a class="tab dialogue-window-tab" data-uifunction="setupCollisionsForm">Collisions</a>' +
-                    '<a class="tab dialogue-window-tab" data-uifunction="setupOnClickActionsForm">On click</a>' +
-                    '<a class="tab dialogue-window-tab" data-uifunction="setupCountersForm">Counters</a>';
+    GameCreator.RouteObject.prototype.getEvents = function() {
+        return  '<li data-uifunction="setupOnClickActionsForm">On Click</li>';
     };
 }());

@@ -7,14 +7,16 @@ GameCreator.commonObjectControllers = {
     },
 
     addCommonObjectControllers: function(object) {
-        GameCreator.commonObjectControllers.addCounterObjectControllers(object);
         object.setupOnClickActionsForm = GameCreator.commonObjectControllers.setupOnClickActionsForm;
         object.setupOnDestroyActionsForm = GameCreator.commonObjectControllers.setupOnDestroyActionsForm;
         object.setupOnCreateActionsForm = GameCreator.commonObjectControllers.setupOnCreateActionsForm;
         object.setupEditCounterEvents = GameCreator.commonObjectControllers.setupEditCounterEvents;
         object.setupStatesForm = GameCreator.commonObjectControllers.setupStatesForm;
+        object.setupEditStateForm = GameCreator.commonObjectControllers.setupEditStateForm;
         object.setupCountersForm = GameCreator.commonObjectControllers.setupCountersForm;
+        object.setupPropertiesForm = GameCreator.commonObjectControllers.setupPropertiesForm;
         object.setupCollisionsForm = GameCreator.commonObjectControllers.setupCollisionsForm;
+        object.setupEventsForm = GameCreator.commonObjectControllers.setupEventsForm;
     },
 
     addPlayerObjectControllers: function(object) {
@@ -28,8 +30,7 @@ GameCreator.commonObjectControllers = {
      *****************************/
     setupPropertiesForm: function(container) {
         var globalObj = this;
-        var html =  this.getPropertiesForm(0) +
-                    this.getNonStatePropertiesForm();
+        var html = this.getPropertiesContent();
         container.html(html);
         container.find("#save-global-object-properties-button").on("click", function() {
             GameCreator.saveFormInputToObject("object-properties-content", GameCreator.helpers.getObjectById(globalObj.states, 0).attributes);
@@ -146,13 +147,34 @@ GameCreator.commonObjectControllers = {
                 globalObj.setupEditStateForm(container, stateId);
             });
         }
-        container.find('#save-global-object-properties-button').on('click', function() {
+        $('#save-global-object-properties-button').on('click', function() {
             GameCreator.saveFormInputToObject("object-properties-content", state.attributes);
             GameCreator.saveFormInputToObject("object-non-state-properties-content", globalObj);
             GameCreator.UI.redrawLibrary();
         });
     },
-    
+
+
+
+
+
+    setupEventsForm: function(container) {
+        var globalObj = this;
+        var html = this.getEventsContent();
+        container.html(html);
+
+        $("#dialogue-panel-events").find("li").on("click", function() {
+            globalObj[$(this).data("uifunction")]($("#dialogue-events-content"));
+            $(this).parent().find("li").removeClass("active");
+            $(this).addClass("active");
+        });
+    },
+
+
+
+
+
+
     setupCountersForm: function(container) {
        container.html(this.getCountersContent());
        var globalObj = this;

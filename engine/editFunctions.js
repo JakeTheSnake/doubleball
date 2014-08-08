@@ -219,7 +219,7 @@
             }
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
-            $("#global-object-list").html("");
+            $(".global-object-list").html("");
             //Load globalObjects
             parsedSave = JSON.parse(savedJson);
             for (name in parsedSave.globalObjects) {

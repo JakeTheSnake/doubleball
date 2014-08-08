@@ -14,12 +14,15 @@ GameCreator.htmlStrings = {
         result += "</select></div>";
         return result;
     },
+
     numberInput: function(inputId, attrName, value) {
         return '<input id="'+ inputId +'" type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
+
     stringInput: function(inputId, attrName, value) {
         return '<input id="'+ inputId +'" type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
+
     rangeInput: function(inputId, attrName, value) {
         var valueString;
         if (Array.isArray(value)) {
@@ -34,6 +37,7 @@ GameCreator.htmlStrings = {
         }
         return '<input id="'+ inputId +'" type="text" class="rangeField" data-type="range" data-attrName="' + attrName + '" value="' + (valueString === undefined ? '' : valueString) + '"/>'
     },
+
     checkboxInput: function(inputId, attrName, checked) {
         return '<input id="'+ inputId +'" type="checkbox" class="checkboxField" data-type="checkbox" data-attrName="' +
             attrName + '" ' + (checked ? 'checked' : '') + ' />'
@@ -46,9 +50,11 @@ GameCreator.htmlStrings = {
     inputLabel: function(inputId, labelText) {
         return '<label for=' + inputId + ' class="textFieldLabel">' + labelText + '</label>';
     },
+
     parameterGroup: function(parameterInput) {
         return '<div class="actionParameter">' + parameterInput + '</div>'
     },
+
     timingGroup: function(timings) {
         var applicableTimings = {"Now":"now"};
         if (timings.after) {
@@ -65,6 +71,7 @@ GameCreator.htmlStrings = {
         result += '<div id="timing-parameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timing-time", "time","3000") + 'ms</div>';
         return result;
     },
+
     actionRow: function(name, action) {
         var result = '<div class="actionRow headingNormalBlack"><div class="headingNormalBlack removeActionBox"><a class="removeActionButton" href="">X</a></div>\
         <span class="actionText">' + name;
@@ -76,19 +83,24 @@ GameCreator.htmlStrings = {
         result += '</span></span></div><br style="clear:both;"/>';
         return result;
     },
+
     collisionMenuElement: function(object) {
         return '<div class="collisionMenuElement headingNormalBlack" data-name="' + object.objectName + '" ><span>' + object.objectName + '</span>' + '<br/>' +
-        object.getDefaultState().image.outerHTML + '</div>';
+        object.getDefaultState().attributes.image.outerHTML + '</div>';
     },
+
     keyMenuElement: function(keyName) {
         return '<div class="keyMenuElement headingNormalBlack" data-name="' + keyName + '"><span>' + keyName + '</span></div>';
     },
+
     counterMenuElement: function(counterName) {
         return '<div class="counterMenuElement headingNormalBlack" data-name="' + counterName + '"><span>' + counterName + '</span></div>';
     },
+
     counterEventMenuElement: function(value, type) {
     	return '<div class="counterEventMenuElement headingNormalBlack" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></div>';
     },
+
     globalObjectElement: function(object) {
         var image = object.getDefaultState().image;
         $(image).css("width","65");
@@ -100,13 +112,13 @@ GameCreator.htmlStrings = {
         $(div).attr("id", "object-library-element-" + object.objectName);
         return div;
     },
-    globalObjectEditButton: function(object) {
-        var button = document.createElement("button");
-        $(button).append(object.objectName);
-        $(button).addClass("library-global-object-button");
-        $(button).attr("data-imgsrc", object.getDefaultState().attributes.image.src);
-        var div = $(document.createElement("div")).append(button);
-        return div;
+
+    globalObjectLibraryItem: function(object) {
+        var libraryItem = document.createElement("li");
+        $(libraryItem).append(object.objectName);
+        $(libraryItem).addClass("library-global-object-button");
+        $(libraryItem).attr("data-imgsrc", object.getDefaultState().attributes.image.src);
+        return libraryItem;
     },
 
     routeNode: function(node, index) {
@@ -118,6 +130,7 @@ GameCreator.htmlStrings = {
         }
         return result;
     },
+
     editActionsWindow: function(description, actions, existingActions) { 
         var result = "";
         result += '<div id="select-action-window" style="height: 100%"> \
@@ -136,6 +149,7 @@ GameCreator.htmlStrings = {
         result += '</div></div></div>';
         return result;
     },
+
     selectedActionsList: function(existingActions) {
         var result = "";
         for (var i = 0; i < existingActions.length; i++) {
@@ -146,7 +160,7 @@ GameCreator.htmlStrings = {
         }
         return result;
     },
-    
+
     addGlobalObjectWindow: function() {
         var result = "";
 
@@ -161,7 +175,6 @@ GameCreator.htmlStrings = {
                    <a class="tab dialogue-window-tab" data-object-type="CounterObjectText">Counter object text</a> \
                    </div> \
                    <div id="add-global-object-window-content"></div>';
-
         return result;
     },
 
@@ -189,7 +202,7 @@ GameCreator.htmlStrings = {
                 !GameCreator.helpers.getObjectById(object.onCollideEvents, objId) && 
                 selectableObjects[objName].isCollidable && 
                 objName != object.objectName) {
-                result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].getDefaultState().image.outerHTML + '</br><span>' + objName + '</span></div>';
+                result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].getDefaultState().attributes.image.outerHTML + '</br><span>' + objName + '</span></div>';
             }
         }
     	return result;
@@ -211,6 +224,7 @@ GameCreator.htmlStrings = {
     	result += '<button class="saveButton regularButton">Save</button>';
     	return result;
 	},
+    
     debugInformation: function(info) {
         var result = '';
         for(var key in info){
@@ -220,11 +234,13 @@ GameCreator.htmlStrings = {
         }
         return result;
     },
+
 	sceneTab: function(sceneNr, sceneActive) {
-		return '<div class="tab scene-tab ' + (sceneActive ? 'active' : '') + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</div>';
+        return '<li class="tab ' + (sceneActive ? 'active' : '')  + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</li>';
 	},
+
 	addSceneTab: function() {
-		return '<div id="add-scene-tab" class="tab scene-tab">+</div>';
+        return '<li id="add-scene-tab">+</li>';
 	},
 
     sceneObjectForm: function(sceneObject) {
