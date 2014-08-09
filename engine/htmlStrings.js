@@ -20,7 +20,7 @@ GameCreator.htmlStrings = {
     },
 
     stringInput: function(inputId, attrName, value) {
-        return '<input id="'+ inputId +'" type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+        return '<input type="text" class="textField" id="'+ inputId +'" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
 
     rangeInput: function(inputId, attrName, value) {
@@ -48,7 +48,7 @@ GameCreator.htmlStrings = {
     },
 
     inputLabel: function(inputId, labelText) {
-        return '<label for=' + inputId + ' class="textFieldLabel">' + labelText + '</label>';
+        return '<label for=' + inputId + '>' + labelText + '</label>';
     },
 
     parameterGroup: function(parameterInput) {

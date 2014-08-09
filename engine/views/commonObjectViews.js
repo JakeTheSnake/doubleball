@@ -125,13 +125,12 @@ GameCreator.commonObjectViews = {
 
     getPropertiesContent: function(stateId) {
         var result = "";
-            result += '<div id="properties" class="col border-right"> \
+            result += '<div id="dialogue-properties" class="col border-right"> \
                        <div class="panel-heading"> \
                        <span class="panel-title">Properties</span> \
                        </div> \
                        <div class="panel-body"> \
                        <div class="panel-paragraph"> \
-                       <div> \
                        <div id="object-properties-content">'
 
             result += this.getPropertiesForm(0);
@@ -142,29 +141,73 @@ GameCreator.commonObjectViews = {
             result += this.getNonStatePropertiesForm();
 
             result += '</div> \
-                       <button class="regularButton" id="save-global-object-properties-button">Save</button> \
                        </div> \
+                       <div class="panel-paragraph"> \
+                       <h2>Set default graphic</h2> \
                        </div> \
                        </div> \
                        </div> \
                        </div>';
+
+      /*
+      <div class="row"> \
+      <button class="regularButton" id="save-global-object-properties-button">Save</button> \
+      </div> \
+     */
 
         return result;
     },
 
     getPropertiesForm: function(stateId) {
         var state = this.getState(stateId);
-        var result = "";    
-        result += GameCreator.helpers.getAttributeForm(state.attributes,
-        GameCreator[this.objectType].objectAttributes,
-        state.attributes);
+        var result = "";
+        
+        result += '<div class="form-group"> \
+                   <div class="form-item"> \
+                   <label for="object-property-image">Image 1</label> \
+                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                   </div> \
+                   </div> \
+                   <div class="form-group"> \
+                   <div class="form-item"> \
+                   <label for="object-property-image">Image 3</label> \
+                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                   </div> \
+                   <div class="form-item"> \
+                   <label for="object-property-image">Image 4</label> \
+                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                   </div> \
+                   </div>';
+
+
+        /*
+          GameCreator.helpers.getAttributeForm(state.attributes, GameCreator[this.objectType].objectAttributes, state.attributes);
+        */
 
         return result;
     },
 
     getNonStatePropertiesForm: function() {
-        return  GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
-                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique)
+        var result = "";
+        
+        result += '<div class="form-group"> \
+                   <div class="form-item"> \
+                   <label for="object-property-image">Image 5</label> \
+                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                   </div> \
+                   <div class="form-item"> \
+                   <label for="object-property-image">Image 6</label> \
+                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                   </div> \
+                   </div>';
+
+        return result;
+
+
+        /*
+          GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
+          GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique)
+        */
     },
 
     getEventsContent: function() {

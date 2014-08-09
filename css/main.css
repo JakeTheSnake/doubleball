@@ -105,7 +105,7 @@ html, body {
   overflow: hidden;
 }
 
-menu, ol, ul, button {
+menu, ol, ul, button, input, label {
   border: 0;
   margin: 0;
   padding: 0;
@@ -132,11 +132,12 @@ a:last-child, button:last-child, img:last-child, p:last-child {
 
   Todo:
   
-  2. Object manager Properties panel
-  3. Properties:
-    - Instance
-    - Position/Size/Speed/Acceleration etc...
-    
+  * Object manager: Properties
+  * Object manager: States
+  * Object manager: Add library
+  * Check all ID's so that they are unique
+  * Add scene button: Change size according to PSD.
+
 */
 
 /* ====================================================================================================================================================
@@ -201,6 +202,26 @@ p + img {
 img {
   border: 2px solid #505050;
   margin-bottom: 20px;
+}
+
+label {
+  display: inline-block;
+  color: #F5F5F5;
+  font-size: 12px;
+  font-family: 'Droid Sans', sans-serif;
+  margin-bottom: 3px;
+}
+
+input {
+  display: block;
+  color: #1E1E1E;
+  font-size: 12px;
+  font-family: 'Droid Sans', sans-serif;
+  border: 1px solid #A1A6AE;
+  margin-left: 1px;
+  height: 22px;
+  padding: 2px 0 0 6px;
+  width: 163px;
 }
 
 /* ==========================================================================
@@ -394,16 +415,6 @@ img {
   z-index: 1;
 }
 
-#dialogue-overlay.ng-hide {
-  opacity: 0;
-}
-
-#dialogue-overlay,
-#dialogue-overlay.ng-hide {
-  -webkit-transition: all linear 0.2s;
-  transition: all linear 0.2s;
-}
-
 .dialogue {
   background-color: #323232;
   position: absolute;
@@ -435,19 +446,26 @@ img {
   bottom: 0;
 }
 
-#dialogue-window > .bottom.ng-hide {
-  bottom: -400px;
-}
-
-#dialogue-window > .bottom,
-#dialogue-window > .bottom.ng-hide {
-  -webkit-transition: all linear 0.2s;
-  transition: all linear 0.2s;
-}
-
 #dialogue-window > .left {
   height: 100%;
   left: 0;
+}
+
+/*
+ * dialogue: Library;
+ */
+
+#dialogue-library {
+  width: 328px;
+}
+
+/*
+ * dialogue: Properties;
+ */
+
+#dialogue-properties {
+  width: 650px;
+  height: 100%;
 }
 
 /*
@@ -458,17 +476,8 @@ img {
   height: 400px;
 }
 
-#object-manager > #library {
-  width: 328px;
-}
-
-#object-manager > .col {
+#object-manager .col {
   padding-right: 2px;
-}
-
-#object-manager > #properties {
-  width: 650px;
-  height: 100%;
 }
 
 /* ====================================================================================================================================================
@@ -625,7 +634,7 @@ img {
 
 .btn-edit {
   background-color: #E5A52E;
-}
+} 
 
 .btn-edit:hover {
   background-color: #F5B031;
@@ -660,10 +669,17 @@ img {
 }
 
 /* ==========================================================================
-   Inputfields
+   Forms
    ========================================================================== */
 
+.form-group {
+  margin-bottom: 7px;
+}
 
+.form-item {
+  display: inline-block;
+  margin-right: 25px;
+}
 
 /* ====================================================================================================================================================
    Author's specific styles
@@ -730,15 +746,6 @@ img {
   background-color: #CCE7D7;
   pointer-events: none;
   cursor: not-allowed;
-}
-
-.global-object-list > li.ng-leave {
-    transition: 0.5s;
-    opacity: 1;
-}
-
-.global-object-list > li.ng-leave-active {
-    opacity: 0;
 }
 
 /* ==========================================================================

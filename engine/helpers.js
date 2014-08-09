@@ -338,10 +338,13 @@
                 if (defaults) {
                     defaultValue = defaults[attrNames[i]];
                 }
-                result += GameCreator.htmlStrings.inputLabel(elementId, 
-                    GameCreator.helpers.labelize(attrNames[i])) +
-                    attrToInputMap[attrNames[i]](elementId, attrNames[i], defaultValue) +
-                    '<br style="clear:both;"/>';
+
+                result += '<div class="form-group">'
+
+                result += GameCreator.htmlStrings.inputLabel(elementId, GameCreator.helpers.labelize(attrNames[i])) +
+                          attrToInputMap[attrNames[i]](elementId, attrNames[i], defaultValue);
+
+                result += '</div>';
             }
         }
         return result;
