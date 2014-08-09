@@ -94,11 +94,11 @@ GameCreator.htmlStrings = {
     },
 
     counterMenuElement: function(counterName) {
-        return '<div class="counterMenuElement headingNormalBlack" data-name="' + counterName + '"><span>' + counterName + '</span></div>';
+        return '<li class="counterMenuElement headingNormalBlack" data-name="' + counterName + '"><span>' + counterName + '</span></li>';
     },
 
     counterEventMenuElement: function(value, type) {
-    	return '<div class="counterEventMenuElement headingNormalBlack" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></div>';
+    	return '<li class="counterEventMenuElement headingNormalBlack" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></li>';
     },
 
     globalObjectElement: function(object) {
@@ -208,20 +208,22 @@ GameCreator.htmlStrings = {
     	return result;
 	},
     
-    createCounterForm: function() {
+    createCounterForm: function(inputId) {
     	var result = '<div>'
-    	result += GameCreator.htmlStrings.inputLabel("counter-name", "Name:");
-    	result += GameCreator.htmlStrings.stringInput("counter-name", "name", "");
+    	result += GameCreator.htmlStrings.inputLabel(inputId, "Name:");
+    	result += GameCreator.htmlStrings.stringInput(inputId, "name", "");
     	result += '<button class="saveButton regularButton">Save</button>';
+        result += '</div>'
     	return result;
 	},
 	
 	createCounterEventForm: function() {
-		var result = GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
+		var result = '<div>' + GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
 		result += GameCreator.htmlStrings.singleSelector("edit-counter-event-type", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
 		result += GameCreator.htmlStrings.inputLabel("edit-counter-event-value", "Value:");
     	result += GameCreator.htmlStrings.numberInput("edit-counter-event-value", "value", "");
     	result += '<button class="saveButton regularButton">Save</button>';
+        result += '</div>';
     	return result;
 	},
     

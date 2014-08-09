@@ -84,62 +84,19 @@ GameCreator.commonObjectControllers = {
             });
         });
     },
+
+    
     
     setupOnDestroyActionsForm: function(container) {
-        var text = "Actions on Destruction";
-        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
+        var choosableActions = GameCreator.actionGroups.onCreateActions;
         
-        if (this.onDestroyEvents.length === 0) {
-            this.onDestroyEvents.push(new GameCreator.ConditionActionSet());
-        }
-        
-        var existingActions = this.onDestroyEvents[0].actions;
-        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, this.objectName);
+        GameCreator.UI.setupEditEventColumns(this.onDestroySets, container);
     },
 
     setupOnCreateActionsForm: function(container, selectedSet) {
-        var text = "Actions on Creation";
         var choosableActions = GameCreator.actionGroups.onCreateActions;
         
-        if (this.onCreateSets.length === 0) {
-            var caSet = new GameCreator.ConditionActionSet();
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
-            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 200, y: 100}));
-            this.onCreateSets.push(caSet);
-            var caSet2 = new GameCreator.ConditionActionSet();
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
-            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 300, y: 400}));
-            this.onCreateSets.push(caSet2);
-        }
-
-        var caSetVMs = [];
-
-        for (var i = 0; i < this.onCreateSets.length; i++) {
-            caSetVMs.push(new GameCreator.CASetVM(this.onCreateSets[i]));
-        }
-
-        var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
-        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        //html += GameCreator.htmlStrings.getSelectionColumn(this.onCreateSets[selectedSet]);
-        
-        container.html(html);
-
-        var conditionsColumn = $("#dialogue-panel-conditions");
-        for (i = 0; i < caSetVMs.length; i+=1) {
-            $(conditionsColumn).append(caSetVMs[i].getPresentation());
-        }
-
-        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM){
-            var isActive;
-            conditionsColumn.html('');
-            for (i = 0; i < caSetVMs.length; i+=1) {
-                isActive = activeCASetVM === caSetVMs[i];
-                $(conditionsColumn).append(caSetVMs[i].getPresentation(isActive));
-            }
-        })
-        // Setup listeners
+        GameCreator.UI.setupEditEventColumns(this.onCreateSets, container);  
     },
 
     setupStatesForm: function(container, selectedState) {
@@ -199,32 +156,40 @@ GameCreator.commonObjectControllers = {
     },
 
     setupCountersForm: function(container) {
-       container.html(this.getCountersContent());
-       var globalObj = this;
-       $("#add-new-counter-button").on("click", function(){
-            $("#edit-counters-counter-content").html(GameCreator.htmlStrings.createCounterForm());
-            $("#edit-counters-counter-content .saveButton").one("click", function(){
-                var counterName = $("#edit-counters-counter-content #counter-name").val();
+        container.html(GameCreator.htmlStrings.getColumn("Counters", "dialogue-panel-counters"));
+        container.append('<div id="dialogue-counter-content"></div>');
+        $("#dialogue-panel-counters").html(this.getCountersContent());
+        var globalObj = this;
+        $("#add-new-counter-button").on("click", function() {
+            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createCounterForm("dialogue-add-counter-name"));
+            $("#dialogue-panel-counters .saveButton").one("click", function() {
+                var counterName = $("#dialogue-add-counter-name").val();
                 globalObj.parentCounters[counterName] = new GameCreator.Counter();
                 globalObj.setupCountersForm(container);
             });
         });
-        container.find(".counterMenuElement").on("click", function(){
+        container.find(".counterMenuElement").on("click", function() {
             var counterName = $(this).data("name");
-            globalObj.setupEditCounterEvents(counterName, $("#edit-counter-event-content"));
-      });
+            container.find(".counterMenuElement").removeClass('active');
+            $(this).addClass("active");
+            globalObj.setupEditCounterEvents(counterName);
+        });
     },
     
-    setupEditCounterEvents: function(counterName, container) {
-        container.html(this.getCounterEventsContent(counterName));
+    setupEditCounterEvents: function(counterName) {
+        var container = $('#dialogue-counter-content');
+        container.html(GameCreator.htmlStrings.getColumn('Events', "dialogue-panel-counter-events"));
+        var counterEventContent = document.createElement('div');
+        container.append(counterEventContent);
+        $('#dialogue-panel-counter-events').html(this.getCounterEventsContent(counterName));
         var globalObj = this;
         $("#edit-counter-event-actions-content").html("");
-        $("#add-new-counter-event-button").on("click", function(){
-            $("#edit-counter-event-actions-content").html(GameCreator.htmlStrings.createCounterEventForm());
+        $("#add-new-counter-event-button").on("click", function() {
+            $('#dialogue-panel-counter-events').append(GameCreator.htmlStrings.createCounterEventForm('dialogue-add-counter-event'));
             $("#edit-counter-event-value-field").hide();
-            $("#edit-counter-event-actions-content .saveButton").one("click", function(){
-                var eventType = $("#edit-counter-event-actions-content #edit-counter-event-type").val();
-                var eventValue = $("#edit-counter-event-actions-content #edit-counter-event-value").val();
+            $("#dialogue-panel-counter-events .saveButton").one("click", function() {
+                var eventType = $("#edit-counter-event-type").val();
+                var eventValue = $("#edit-counter-event-value").val();
                 globalObj.parentCounters[counterName][eventType][eventValue] = [];
                 globalObj.setupEditCounterEvents(counterName, container);
             });
@@ -234,22 +199,11 @@ GameCreator.commonObjectControllers = {
             var eventType = $(this).data("type");
             var eventValue = $(this).data("value");
             var existingActions;
+            $(this).parent().find('.counterEventMenuElement').removeClass('active');
+            $(this).addClass('active');
+            var onCounterEventSets = globalObj.parentCounters[counterName].getCounterEventSets(eventType, eventValue);
 
-            //If there is no eventValue it's an onIncrease or onDecrease event.
-            if (eventValue) {
-                existingActions = globalObj.parentCounters[counterName][eventType][eventValue];
-            } else {
-                existingActions = globalObj.parentCounters[counterName][eventType];
-            }
-
-            var actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
-            GameCreator.UI.createEditActionsArea(
-                "Actions on " + eventType + " " + eventValue,
-                actions,
-                existingActions,
-                $("#edit-counter-event-actions-content"),
-                globalObj.objectName
-            );
+            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(counterEventContent));
         }); 
     },
 

@@ -108,8 +108,8 @@ test("Add action through object destruction", function() {
     selectAction("testAction");
     addSelectedAction();
 
-    deepEqual(runtimeObj.parent.onDestroyEvents.length, 1, "Event was added");
-    deepEqual(runtimeObj.parent.onDestroyEvents[0].actions.length, 1, "Action was added");
+    deepEqual(runtimeObj.parent.onDestroySets.length, 1, "Event was added");
+    deepEqual(runtimeObj.parent.onDestroySets[0].actions.length, 1, "Action was added");
 
     GameCreator.runFrame(10);
 

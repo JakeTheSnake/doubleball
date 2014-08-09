@@ -62,8 +62,7 @@ GameCreator.commonObjectViews = {
     getCounterEventsContent: function(counterName){
         var counter = this.parentCounters[counterName];
         var value;
-        var result = '<button id="add-new-counter-event-button" class="regularButton">Add</button>';
-        result += GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
+        var result = GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
         result += GameCreator.htmlStrings.counterEventMenuElement("", "onDecrease");
         for (value in counter.atValue) {
             if (counter.atValue.hasOwnProperty(value)){
@@ -80,6 +79,7 @@ GameCreator.commonObjectViews = {
                 result += GameCreator.htmlStrings.counterEventMenuElement(value, "belowValue");
             }
         };
+        result += '<li><button id="add-new-counter-event-button" class="regularButton">Add</button></li>';
         return result;
     },
 
@@ -97,15 +97,12 @@ GameCreator.commonObjectViews = {
     },
 
     getCountersContent: function() {
-        var result = '<div id="edit-counters-menu">';
-        result += '<button id="add-new-counter-button" class="regularButton">Add</button>';
+        var result = '';
         var keys = Object.keys(this.parentCounters);
         for (var i = 0; i < keys.length; i++) {
             result += GameCreator.htmlStrings.counterMenuElement(keys[i]);
         }
-        result += '</div><div id="edit-counters-counter-content">'
-        result += '<div id="edit-counter-event-content"></div>';
-        result += '<div id="edit-counter-event-actions-content"></div></div>';
+        result += '<li><button id="add-new-counter-button" class="regularButton">Add</button></li>';
         return result;
     },
 
@@ -219,8 +216,7 @@ GameCreator.commonObjectViews = {
                        <ul id="dialogue-panel-events" class="nav nav-tabs nav-stacked"> \
                        <li data-uifunction="setupOnCreateActionsForm">On Create</li> \
                        <li data-uifunction="setupCollisionsForm">On Collide</li> \
-                       <li data-uifunction="setupOnDestroyActionsForm">On Destroy</li> \
-                       <li data-uifunction="setupEditCounterEvents">On Count</li>';
+                       <li data-uifunction="setupOnDestroyActionsForm">On Destroy</li>';
             
             result += this.getEvents();
 

@@ -166,4 +166,12 @@
         this.initialValue = 0;
     };
 
+    GameCreator.Counter.prototype.getCounterEventSets = function(eventType, eventValue) {
+        if (eventType === 'onIncrease' || eventType === 'onDecrease') {
+            return this[eventType];
+        } else {
+            return this[eventType][eventValue];
+        }
+    };
+
 }());

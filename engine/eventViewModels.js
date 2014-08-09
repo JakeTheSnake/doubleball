@@ -92,10 +92,11 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         $(listItem).append(names.join(' & '));
 
         $(listItem).on('click', function(){
+            var actionsColumn = $("#dialogue-panel-actions");
+            actionsColumn.html('');
+            
             for (i = 0; i < that.actionVMs.length; i+=1) {
-                var actionsColumn = $("#dialogue-panel-actions");
-
-                actionsColumn.html('');
+                
                 var listItem = document.createElement('li');
                 $(listItem).append(that.actionVMs[i].getPresentation());
                 actionsColumn.append(listItem);

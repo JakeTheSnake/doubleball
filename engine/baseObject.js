@@ -23,9 +23,9 @@
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
         var i, currentSet;
         if (!GameCreator.paused) {
-            if (this.parent.onDestroyEvents.length === 0) {
+            if (this.parent.onDestroySets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet();
-                this.parent.onDestroyEvents.push(currentSet);
+                this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been destroyed!",
                     GameCreator.actionGroups.nonCollisionActions,
@@ -34,8 +34,8 @@
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                for (i = 0; i < this.parent.onDestroyEvents.length; i++) {
-                    currentSet = this.parent.onDestroyEvents[i];
+                for (i = 0; i < this.parent.onDestroySets.length; i++) {
+                    currentSet = this.parent.onDestroySets[i];
                     if (currentSet.checkConditions()) {
                         currentSet.runActions(this);
                     }

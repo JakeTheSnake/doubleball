@@ -293,7 +293,7 @@
         globalObj.unique = args.unique;
         globalObj.parentCounters = {};
         globalObj.counters = {};
-        globalObj.onDestroyEvents = [];
+        globalObj.onDestroySets = [];
         globalObj.onCreateSets = [];
         globalObj.states = [{
             name: "Default",

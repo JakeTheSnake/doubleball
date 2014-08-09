@@ -278,7 +278,7 @@ test("Trigger action by creation", function() {
 
 
 test("Trigger action by destruction", function() {
-    platformZealot.onDestroyEvents = [newEvent];
+    platformZealot.onDestroySets = [newEvent];
 
     runtimeObject.parent.destroy.call(runtimeObject);
 

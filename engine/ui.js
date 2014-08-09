@@ -268,5 +268,46 @@ GameCreator.UI = {
     directSceneMode: function() {
         $(".routeNodeContainer").remove();
         $('#toolbar-scenes').hide();
-    }
+    },
+
+    setupEditEventColumns: function(caSets, container) {
+        if (caSets.length === 0) {
+            var caSet = new GameCreator.ConditionActionSet();
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
+            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 200, y: 100}));
+            caSets.push(caSet);
+            var caSet2 = new GameCreator.ConditionActionSet();
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
+            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 300, y: 400}));
+            caSets.push(caSet2);
+        }
+
+        var caSetVMs = [];
+
+        for (var i = 0; i < caSets.length; i++) {
+            caSetVMs.push(new GameCreator.CASetVM(caSets[i]));
+        }
+
+        var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
+        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        //html += GameCreator.htmlStrings.getSelectionColumn(caSets[selectedSet]);
+        
+        container.html(html);
+
+        var conditionsColumn = $("#dialogue-panel-conditions");
+        for (i = 0; i < caSetVMs.length; i+=1) {
+            $(conditionsColumn).append(caSetVMs[i].getPresentation());
+        }
+
+        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM){
+            var isActive;
+            conditionsColumn.html('');
+            for (i = 0; i < caSetVMs.length; i+=1) {
+                isActive = activeCASetVM === caSetVMs[i];
+                $(conditionsColumn).append(caSetVMs[i].getPresentation(isActive));
+            }
+        })
+    },
 }
