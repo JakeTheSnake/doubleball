@@ -252,5 +252,21 @@ GameCreator.htmlStrings = {
         result += '</div>';
         result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
         return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
-    }
+    },
+
+    getColumn: function(title, id) {
+        var result = "";
+        var i;
+
+        result += '<div class="col border-right"> \
+                   <div class="panel-heading"> \
+                   <span class="panel-title">' + title + '</span> \
+                   </div> \
+                   <ul id="' + id + '" class="nav nav-tabs nav-stacked">\
+                   </ul> \
+                   </div>';
+                   
+        return result;
+    },
+
 };

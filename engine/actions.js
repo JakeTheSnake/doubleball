@@ -26,7 +26,7 @@
     }
 
     GameCreator.RuntimeAction.prototype.getParameter = function(name) {
-        return GameCreator.actions[this.name].params[name].param;
+        return GameCreator.actions[this.name].params[name];
     }
 
     GameCreator.RuntimeAction.prototype.getParamMandatory = function(name) {

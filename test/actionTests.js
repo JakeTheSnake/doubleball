@@ -147,7 +147,7 @@ function setupCollisionEventForNewObject(action, parameters) {
     var parameters = parameters || {};
     var timing = {type: "now"};
     var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
-    var collideEvent = new GameCreator.Event();
+    var collideEvent = new GameCreator.ConditionActionSet();
     collideEvent.actions.push(bounceAction);
     redBall.onCollideEvents.push({id: GameCreator.borderObjects.borderL.id, events: [collideEvent]});
     return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
@@ -245,7 +245,7 @@ module("ActionTriggers", {
     platformZealot = GameCreator.addGlobalObject({image: img, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
     runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
     runtimeObject = GameCreator.createRuntimeObject(platformZealot, {x: 50, y: 60, speedX: -500, speedY: 50});
-    newEvent = new GameCreator.Event();
+    newEvent = new GameCreator.ConditionActionSet();
     newEvent.actions.push(runtimeAction);
   },
   teardown: function() {
@@ -269,7 +269,7 @@ test("Trigger action by key", function() {
 });
 
 test("Trigger action by creation", function() {
-    platformZealot.onCreateEvents = [newEvent];
+    platformZealot.onCreateSets = [newEvent];
 
     GameCreator.callOnCreateForNewObjects();
 

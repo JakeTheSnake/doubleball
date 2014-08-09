@@ -21,23 +21,23 @@
     };
 
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
-        var i, currentEvent;
+        var i, currentSet;
         if (!GameCreator.paused) {
             if (this.parent.onDestroyEvents.length === 0) {
-                currentEvent = new GameCreator.Event();
-                this.parent.onDestroyEvents.push(currentEvent);
+                currentSet = new GameCreator.ConditionActionSet();
+                this.parent.onDestroyEvents.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been destroyed!",
                     GameCreator.actionGroups.nonCollisionActions,
-                    currentEvent.actions,
+                    currentSet.actions,
                     this.objectName
                 );
-                GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: this});
+                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
                 for (i = 0; i < this.parent.onDestroyEvents.length; i++) {
-                    currentEvent = this.parent.onDestroyEvents[i];
-                    if (currentEvent.checkConditions()) {
-                        currentEvent.runActions(this);
+                    currentSet = this.parent.onDestroyEvents[i];
+                    if (currentSet.checkConditions()) {
+                        currentSet.runActions(this);
                     }
                 }
             }
@@ -54,23 +54,23 @@
     };
 
     GameCreator.BaseObject.prototype.runOnCreateActions = function() {
-        var i, currentEvent;
+        var i, currentSet;
         if (!GameCreator.paused) {
-            if (this.parent.onCreateEvents.length === 0) {
-                currentEvent = new GameCreator.Event();
-                this.parent.onCreateEvents.push(currentEvent);
+            if (this.parent.onCreateSets.length === 0) {
+                currentSet = new GameCreator.ConditionActionSet();
+                this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been created!",
                     GameCreator.actionGroups.nonCollisionActions,
-                    currentEvent.actions,
+                    currentSet.actions,
                     this.objectName
                 );
-                GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: this});
+                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                for (i = 0; i < this.parent.onCreateEvents.length; i++) {
-                    currentEvent = this.parent.onCreateEvents[i];
-                    if (currentEvent.checkConditions()) {
-                        currentEvent.runActions(this);
+                for (i = 0; i < this.parent.onCreateSets.length; i++) {
+                    currentSet = this.parent.onCreateSets[i];
+                    if (currentSet.checkConditions()) {
+                        currentSet.runActions(this);
                     }
                 }
             }

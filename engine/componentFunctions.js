@@ -57,7 +57,7 @@
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
                         if (keyEvents.length === 0) {
-                            keyEvents.push(new GameCreator.Event());
+                            keyEvents.push(new GameCreator.ConditionActionSet());
                             actions = GameCreator.helpers.getNonCollisionActions(this.parent.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 "Pressed " + key + " actions for " + this.parent.objectName,

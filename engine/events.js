@@ -1,9 +1,9 @@
-GameCreator.Event = function() {
+GameCreator.ConditionActionSet = function() {
     this.conditions = [];
     this.actions = [];
 }
 
-GameCreator.Event.prototype.checkConditions = function() {
+GameCreator.ConditionActionSet.prototype.checkConditions = function() {
     for (var i = 0; i < this.conditions.length; i++) {
         if (this.conditions[i].evaluate() === false) {
             return false;
@@ -12,7 +12,7 @@ GameCreator.Event.prototype.checkConditions = function() {
     return true;
 }
 
-GameCreator.Event.prototype.runActions = function(runtimeObj, parameters) {
+GameCreator.ConditionActionSet.prototype.runActions = function(runtimeObj, parameters) {
     for (var i = 0; i < this.actions.length; i++) {
         if (parameters) {
             $.extend(this.actions[i].parameters, parameters);
@@ -21,36 +21,13 @@ GameCreator.Event.prototype.runActions = function(runtimeObj, parameters) {
     }
 }
 
-GameCreator.Event.prototype.addCondition = function(condition) {
+GameCreator.ConditionActionSet.prototype.addCondition = function(condition) {
     this.conditions.push(condition);
-}
-
-GameCreator.eventConditions = {
-    exists: function(parameters) {
-        var item = GameCreator.helpers.
-                getObjectById(GameCreator.collidableObjects, parameters.objId);
-        if (item) {
-            return parameters.count === item.runtimeObjects.length;
-        }
-        return false;
-    },
-
-    counterValue: function(parameters) {
-
-    },
-
-    objectWithinArea: function(parameters) {
-
-    },
-
-    objectOutsideDisplay: function(parameters) {
-
-    },
 }
 
 GameCreator.Condition = function(args) {
     this.evaluate = args.evaluate;
-    this.parameters = args.parameters;
+    this.params = args.params;
 }
 
 GameCreator.conditions =
@@ -65,21 +42,26 @@ GameCreator.conditions =
             return false;
         },
         params: {
-            objId: GameCreator.GlobalObjectParameter,
-            count: GameCreator.NumberParameter
+            objId: {
+                param: GameCreator.GlobalObjectParameter,
+                mandatory: true,
+            },
+            count: {
+                param: GameCreator.NumberParameter,
+                mandatory: true
+            }
         }
     })
 }
 
-GameCreator.RuntimeCondition = function(name, params, value) {
+GameCreator.RuntimeCondition = function(name, params) {
     this.name = name;
     this.parameters = params;
     this.mandatory = true;
-    this.value = value;
 }
 
 GameCreator.RuntimeCondition.prototype.evaluate = function() {
-    return GameCreator.eventConditions[this.name](this.parameters);
+    return GameCreator.conditions[this.name].evaluate(this.parameters);
 }
 
 GameCreator.RuntimeCondition.prototype.getAllParameters = function() {

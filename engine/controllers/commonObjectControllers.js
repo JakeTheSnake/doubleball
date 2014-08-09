@@ -78,7 +78,7 @@ GameCreator.commonObjectControllers = {
             $("#edit-collision-actions-object-content").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
             $(".addCollisionObjectElement").one("click", function() {
                 var targetId = GameCreator.helpers.findGlobalObjectByName($(this).data("objectname")).id;
-                var newEventItem = {id: targetId, events: [new GameCreator.Event()]};
+                var newEventItem = {id: targetId, events: [new GameCreator.ConditionActionSet()]};
                 globalObj.onCollideEvents.push(newEventItem);
                 globalObj.setupCollisionsForm(container);
             });
@@ -90,24 +90,56 @@ GameCreator.commonObjectControllers = {
         var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
         if (this.onDestroyEvents.length === 0) {
-            this.onDestroyEvents.push(new GameCreator.Event());
+            this.onDestroyEvents.push(new GameCreator.ConditionActionSet());
         }
         
         var existingActions = this.onDestroyEvents[0].actions;
         GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, this.objectName);
     },
 
-    setupOnCreateActionsForm: function(container) {
+    setupOnCreateActionsForm: function(container, selectedSet) {
         var text = "Actions on Creation";
         var choosableActions = GameCreator.actionGroups.onCreateActions;
         
-        if (this.onCreateEvents.length === 0) {
-            this.onCreateEvents.push(new GameCreator.Event());
+        if (this.onCreateSets.length === 0) {
+            var caSet = new GameCreator.ConditionActionSet();
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
+            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 200, y: 100}));
+            this.onCreateSets.push(caSet);
+            var caSet2 = new GameCreator.ConditionActionSet();
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
+            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 300, y: 400}));
+            this.onCreateSets.push(caSet2);
         }
-        
-        var existingActions = this.onCreateEvents[0].actions;
 
-        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, this.objectName);
+        var caSetVMs = [];
+
+        for (var i = 0; i < this.onCreateSets.length; i++) {
+            caSetVMs.push(new GameCreator.CASetVM(this.onCreateSets[i]));
+        }
+
+        var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
+        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        //html += GameCreator.htmlStrings.getSelectionColumn(this.onCreateSets[selectedSet]);
+        
+        container.html(html);
+
+        var conditionsColumn = $("#dialogue-panel-conditions");
+        for (i = 0; i < caSetVMs.length; i+=1) {
+            $(conditionsColumn).append(caSetVMs[i].getPresentation());
+        }
+
+        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM){
+            var isActive;
+            conditionsColumn.html('');
+            for (i = 0; i < caSetVMs.length; i+=1) {
+                isActive = activeCASetVM === caSetVMs[i];
+                $(conditionsColumn).append(caSetVMs[i].getPresentation(isActive));
+            }
+        })
+        // Setup listeners
     },
 
     setupStatesForm: function(container, selectedState) {
@@ -154,10 +186,6 @@ GameCreator.commonObjectControllers = {
         });
     },
 
-
-
-
-
     setupEventsForm: function(container) {
         var globalObj = this;
         var html = this.getEventsContent();
@@ -169,11 +197,6 @@ GameCreator.commonObjectControllers = {
             $(this).addClass("active");
         });
     },
-
-
-
-
-
 
     setupCountersForm: function(container) {
        container.html(this.getCountersContent());
@@ -251,7 +274,7 @@ GameCreator.commonObjectControllers = {
         $("#add-new-key-button").on("click", function(){
             $("#edit-key-actions-key-content").html(globalObj.getKeySelector());
             $(".addKeyObjectElement").one("click", function() {
-                globalObj.keyEvents[$(this).data("keyname")].push(new GameCreator.Event());
+                globalObj.keyEvents[$(this).data("keyname")].push(new GameCreator.ConditionActionSet());
                 globalObj.setupKeyEventsForm(container);
             });
         });

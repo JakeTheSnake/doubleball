@@ -3,11 +3,16 @@
 module("EventTest");
 
 test("Test condition on event", function() {
-    var testEvent = new GameCreator.Event();
+    var testEvent = new GameCreator.ConditionActionSet();
     var testBool = false;
-    GameCreator.eventConditions.testConditions = function(parameters) { testBool = parameters.testValue; return true; };
+    GameCreator.conditions.testCondition = new GameCreator.Condition({ 
+        evaluate: function(parameters) { testBool = parameters.testValue; return true; },
+        params: {
+            testValue: GameCreator.BooleanParameter
+        }
+    });
     
-    testEvent.addCondition(new GameCreator.Condition("testConditions", {testValue: true}));
+    testEvent.addCondition(new GameCreator.RuntimeCondition("testCondition", {testValue: true}));
     deepEqual(testEvent.conditions.length, 1, "Condition was added to Event");
     ok(testEvent.checkConditions(), "Condition returned true");
     ok(testBool, "Condition was run correctly.");
@@ -15,8 +20,8 @@ test("Test condition on event", function() {
 
 test("Test exists condition", function() {
     var redBall = createGlobalObject();
-    var existsEvent = new GameCreator.Event();
-    existsEvent.addCondition(new GameCreator.Condition("exists", {objId: redBall.id, count: 1}));
+    var existsEvent = new GameCreator.ConditionActionSet();
+    existsEvent.addCondition(new GameCreator.RuntimeCondition("exists", {objId: redBall.id, count: 1}));
     ok(!existsEvent.checkConditions(), "No object exists, should return false");
 
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});

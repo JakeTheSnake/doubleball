@@ -10,6 +10,10 @@ GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, def
     this.value = defaultValue;
 };
 
+GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
+    var result = '<div>' + this.name + ': ' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</div>';
+}
+
 GameCreator.SceneObjectParameter = function(name, eventDataItem, mandatory, defaultValue) {
     this.name = name;
     this.eventDataItem = eventDataItem;
@@ -22,15 +26,15 @@ GameCreator.SceneObjectParameter.prototype.getPresentation = function() {
     return result;
 };
 
-GameCreator.NumberParameter = function(name, eventDataItem, mandatory, defaultValue) {
+GameCreator.NumberParameter = function(name, eventDataItem, mandatory, value) {
     this.name = name;
     this.eventDataItem = eventDataItem;
     this.mandatory = mandatory;
-    this.value = defaultValue;
+    this.value = value;
 };
 
 GameCreator.NumberParameter.prototype.getPresentation = function() {
-    var result = "<div>" + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.defaultValue) + "</div>";
+    var result = '<div>' + this.name + ': ' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</div>";
     return result;
 };
 
@@ -51,7 +55,58 @@ GameCreator.NumberParameter.prototype.attachListener = function() {
     });
 }
 
-GameCreator.EventDataItem = function(databaseObject) {
+GameCreator.CASetVM = function(caSet) {
+    this.caSet = caSet;
+
+    this.conditionVMs = this.getVMItemList(this.caSet.conditions);
+    this.actionVMs = this.getVMItemList(this.caSet.actions);
+}
+
+GameCreator.CASetVM.prototype.getVMItemList = function(collection) {
+    var i;
+    var result = [];
+    for (i = 0; i < collection.length; i++) {
+        result.push(new GameCreator.CASetItemVM(collection[i]));
+    }
+    return result;
+}
+
+GameCreator.CASetVM.prototype.getPresentation = function(active) {
+    var conditionsList, listItem = document.createElement('li');
+    var i, names, that = this;
+
+    if (active) {
+        $(listItem).addClass('active');
+        conditionsList = document.createElement('ul');
+
+        for (i = 0; i < this.conditionVMs.length; i+=1) {
+            $(conditionsList).append(this.conditionVMs[i].getPresentation());
+        }
+
+        $(listItem).append(conditionsList);
+    } else {
+        names = [];
+        for (i = 0; i < this.conditionVMs.length; i+=1) {
+            names.push(this.conditionVMs[i].databaseObject.name);
+        }
+        $(listItem).append(names.join(' & '));
+
+        $(listItem).on('click', function(){
+            for (i = 0; i < that.actionVMs.length; i+=1) {
+                var actionsColumn = $("#dialogue-panel-actions");
+
+                actionsColumn.html('');
+                var listItem = document.createElement('li');
+                $(listItem).append(that.actionVMs[i].getPresentation());
+                actionsColumn.append(listItem);
+            }
+            $("#dialogue-panel-conditions").trigger('redrawList', that);
+        });
+    }
+    return listItem;
+}
+
+GameCreator.CASetItemVM = function(databaseObject) {
     this.databaseObject = databaseObject; // Pointer to the saved action in the event 
     this.parameters = this.getSelectedParameters();
     this.redrawSelectedParameters();
@@ -60,12 +115,27 @@ GameCreator.EventDataItem = function(databaseObject) {
     // eventDataItem in the UI and enables the user to add parameters to it.
 };
 
+GameCreator.CASetItemVM.prototype.getPresentation = function() {
+    var result = document.createElement('li');
+    var title =document.createElement('span');
+    $(title).append(this.databaseObject.name);
+    $(result).append(title);
+    var paramList = document.createElement('ul');
+    for (var i = 0; i < this.parameters.length; i+=1) {
+        var paramItem = document.createElement('li');
+        $(paramItem).append(this.parameters[i].getPresentation())
+        $(paramList).append(paramItem);
+    }
+    $(result).append(paramList);
+    return result;
+}
+
 /**
  * Returns the list of addable parmeters for this action item.
  *
  * The list will include the parameters not currently used.
  */
-GameCreator.EventDataItem.prototype.getAvailableParameters = function() {
+GameCreator.CASetItemVM.prototype.getAvailableParameters = function() {
     var result = [];
     var existingParams = Object.keys(this.databaseObject.parameters); 
     var allParams = this.databaseObject.getAllParameters();
@@ -77,7 +147,7 @@ GameCreator.EventDataItem.prototype.getAvailableParameters = function() {
             var mandatory = this.databaseObject.getParamMandatory(param);
             var defaultValue = this.databaseObject.getParamDefaultValue(param);
             result.push(
-                new currentParam(param, this, mandatory, defaultValue)
+                new currentParam.param(param, this, mandatory, defaultValue)
             );
         }
     }
@@ -85,16 +155,16 @@ GameCreator.EventDataItem.prototype.getAvailableParameters = function() {
     return result;
 };
 
-GameCreator.EventDataItem.prototype.getSelectedParameters = function() {
-    var eventDataItem = this;
+GameCreator.CASetItemVM.prototype.getSelectedParameters = function() {
+    var caSetItemVM = this;
     var allParams = this.databaseObject.getAllParameters();
     return Object.keys(this.databaseObject.parameters).collect(function(item) {
-       var currentParam = eventDataItem.databaseObject.getParameter(item);
-       return new currentParam(item, eventDataItem, currentParam.mandatory, eventDataItem.databaseObject.parameters[item]);
+       var currentParam = caSetItemVM.databaseObject.getParameter(item);
+       return new currentParam.param(item, caSetItemVM, currentParam.mandatory, caSetItemVM.databaseObject.parameters[item]);
     });
 }
 
-GameCreator.EventDataItem.prototype.getParameter = function(name) {
+GameCreator.CASetItemVM.prototype.getParameter = function(name) {
     var i;
     for (i = 0; i < this.parameters.length; i++) {
         if (this.parameters[i].name == name) {
@@ -104,18 +174,18 @@ GameCreator.EventDataItem.prototype.getParameter = function(name) {
     return null;
 }
 
-GameCreator.EventDataItem.prototype.appendParameter = function(name) {
+GameCreator.CASetItemVM.prototype.appendParameter = function(name) {
     var paramObject = GameCreator.actions[this.runtimeAction.name].params[name];
     var parameter = new paramObject.param(name, this, paramObject.mandatory, paramObject.defaultValue);
     this.parameters.append(parameter);
 }
 
-GameCreator.EventDataItem.prototype.removeParameter = function(name) {
+GameCreator.CASetItemVM.prototype.removeParameter = function(name) {
     delete this.runtimeAction.params[name];
     this.redrawSelectedParameters();
 }
 
-GameCreator.EventDataItem.prototype.redrawSelectedParameters = function() {
+GameCreator.CASetItemVM.prototype.redrawSelectedParameters = function() {
     var i;
     this.parameters = this.getSelectedParameters();
     for (i = 0; i < this.parameters.length; i++) {

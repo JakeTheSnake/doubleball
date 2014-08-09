@@ -77,26 +77,26 @@
 
         sceneStarted: function() {
             $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e) {
-                var i, currentEvent;
+                var i, currentSet;
                 var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left, e.pageY - $("#main-canvas").offset().top);
                 
                 if (runtimeObj && runtimeObj.parent) {
                     var globalObj = runtimeObj.parent;
                     if (globalObj.onClickEvents.length === 0) {
-                        currentEvent = new GameCreator.Event();
-                        globalObj.onClickEvents.push(currentEvent);
+                        currentSet = new GameCreator.ConditionActionSet();
+                        globalObj.onClickEvents.push(currentSet);
                         GameCreator.UI.openEditActionsWindow(
                             "Clicked on " + globalObj.objectName,
                              GameCreator.actionGroups.nonCollisionActions,
-                             currentEvent.actions,
+                             currentSet.actions,
                              globalObj.objectName
                             );
-                        GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: runtimeObj});
+                        GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: runtimeObj});
                     } else {
                         for (i = 0; i < globalObj.onClickEvents.length; i++) {
-                            currentEvent = globalObj.onClickEvents[i];
-                            if (currentEvent.checkConditions()) {
-                                currentEvent.runActions(runtimeObj);
+                            currentSet = globalObj.onClickEvents[i];
+                            if (currentSet.checkConditions()) {
+                                currentSet.runActions(runtimeObj);
                             }
                         }
                     }                  

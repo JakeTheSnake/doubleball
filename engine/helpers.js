@@ -47,14 +47,14 @@
     };
 
     GameCreator.helpers.doCollision = function(object, targetObject) {
-        var currentEventItem = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
-        var j, choosableActions, newEventItem, currentEvent;
+        var currentSetsItem = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+        var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
-        if (currentEventItem !== undefined) {
-            for (j = 0; j < currentEventItem.events.length; j += 1) {
-                currentEvent = currentEventItem.events[j];
-                if (currentEvent.checkConditions()) {
-                    currentEvent.runActions(object, {collisionObject: targetObject});
+        if (currentSetItem !== undefined) {
+            for (j = 0; j < currentSetsItem.sets.length; j += 1) {
+                currentSet = currentSetsItem.sets[j];
+                if (currentSet.checkConditions()) {
+                    currentSet.runActions(object, {collisionObject: targetObject});
                 }
             }
         }
@@ -64,12 +64,12 @@
             } else {
                 choosableActions = GameCreator.actionGroups.collisionActions;
             }
-            newEventItem = {id: targetObject.parent.id, events: [new GameCreator.Event()]};
-            object.parent.onCollideEvents.push(newEventItem);
+            newSetsItem = {id: targetObject.parent.id, sets: [new GameCreator.ConditionActionSet()]};
+            object.parent.onCollideEvents.push(newSetsItem);
             GameCreator.UI.openEditActionsWindow(
                 "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'",
                 choosableActions,
-                newEventItem.events[0].actions,
+                newSetsItem.sets[0].actions,
                 object.objectName
             );
         }
@@ -294,7 +294,7 @@
         globalObj.parentCounters = {};
         globalObj.counters = {};
         globalObj.onDestroyEvents = [];
-        globalObj.onCreateEvents = [];
+        globalObj.onCreateSets = [];
         globalObj.states = [{
             name: "Default",
             id: 0,
