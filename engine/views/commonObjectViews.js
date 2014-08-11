@@ -14,8 +14,7 @@ GameCreator.commonObjectViews = {
     addPlayerObjectViews: function(object) {
         GameCreator.commonObjectViews.addCommonObjectViews(object);
         object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
-        object.getKeyEventsContent = GameCreator.commonObjectViews.getKeyEventsContent;
-        object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
+        object.getKeysContent = GameCreator.commonObjectViews.getKeysContent;
     },
 
     addCounterObjectViews: function(object) {
@@ -251,16 +250,14 @@ GameCreator.commonObjectViews = {
         return result;
     },
 
-    getKeyEventsContent: function() {
-        var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
-        result += '<div id="add-new-key-button" class="regularButton">Add</div>';
+    getKeysContent: function() {
+        var result = '';
         for (var keyName in this.keyEvents) {
             if (this.keyEvents[keyName].length > 0) {
                 result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
         }
-        result += '</div></div><div id="edit-key-actions-key-content"></div>';
+        result += '<li><div id="add-new-key-button" class="regularButton">Add</div></li>';
         return result;
     },
-
 }

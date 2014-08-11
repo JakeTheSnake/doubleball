@@ -203,7 +203,9 @@ GameCreator.commonObjectControllers = {
      * PLAYER OBJECT CONTROLLERS  *
      *****************************/
     setupKeyEventsForm: function(container) {
-        container.html(this.getKeyEventsContent());
+        container.html(GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys"));
+        container.append('<div id="dialogue-keys-content"></div>');
+        $("#dialogue-panel-keys").html(this.getKeysContent());
         var globalObj = this;
         container.find(".keyMenuElement").on("click", function(){
             var keyName = $(this).data("name");
