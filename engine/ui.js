@@ -270,7 +270,7 @@ GameCreator.UI = {
         $('#toolbar-scenes').hide();
     },
 
-    setupEditEventColumns: function(caSets, container) {
+    setupEditEventColumns: function(caSets, columnParentContainer) {
         if (caSets.length === 0) {
             var caSet = new GameCreator.ConditionActionSet();
             caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
@@ -292,22 +292,42 @@ GameCreator.UI = {
 
         var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
         html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        //html += GameCreator.htmlStrings.getSelectionColumn(caSets[selectedSet]);
+        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
         
-        container.html(html);
+        columnParentContainer.html(html);
 
         var conditionsColumn = $("#dialogue-panel-conditions");
         for (i = 0; i < caSetVMs.length; i+=1) {
             $(conditionsColumn).append(caSetVMs[i].getPresentation());
         }
 
-        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM){
+        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM, newRuntimeCondition){
             var isActive;
             conditionsColumn.html('');
+            if (newRuntimeCondition !== undefined) {
+                activeCASetVM.addCondition(newRuntimeCondition);
+            }
             for (i = 0; i < caSetVMs.length; i+=1) {
                 isActive = activeCASetVM === caSetVMs[i];
                 $(conditionsColumn).append(caSetVMs[i].getPresentation(isActive));
             }
         })
+    },
+
+    populateSelectConditionList: function(VMcollection, activeCASetVM) {
+        var i;
+
+        var column = $("#dialogue-panel-add-list");
+
+        for (i = 0; i < Object.keys(GameCreator.conditions).length; i++) {
+            var listItem = document.createElement('li');
+            var conditionName = Object.keys(GameCreator.conditions)[i];
+            $(listItem).data('condition', conditionName);
+            $(listItem).append(conditionName);
+            $(listItem).on('click', function() {
+                $("#dialogue-panel-conditions").trigger('redrawList', [activeCASetVM, $(this).data('condition')]);
+            });
+            column.append(listItem);
+        }
     },
 }

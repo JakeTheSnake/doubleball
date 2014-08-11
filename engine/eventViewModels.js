@@ -71,6 +71,12 @@ GameCreator.CASetVM.prototype.getVMItemList = function(collection) {
     return result;
 }
 
+GameCreator.CASetVM.prototype.addCondition = function(conditionName) {
+    var runtimeCondition = new GameCreator.RuntimeCondition(conditionName, {});
+    this.caSet.conditions.push(runtimeCondition);
+    this.conditionVMs = this.getVMItemList(this.caSet.conditions);
+};
+
 GameCreator.CASetVM.prototype.getPresentation = function(active) {
     var conditionsList, listItem = document.createElement('li');
     var i, names, that = this;
@@ -83,6 +89,13 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
             $(conditionsList).append(this.conditionVMs[i].getPresentation());
         }
 
+        var addConditionButton = document.createElement('li');
+        $(addConditionButton).html('+');
+
+        $(addConditionButton).on('click', function() {
+            GameCreator.UI.populateSelectConditionList(that.conditionVMs, that);
+            });
+        $(conditionsList).append(addConditionButton);
         $(listItem).append(conditionsList);
     } else {
         names = [];
