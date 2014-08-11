@@ -37,7 +37,16 @@ GameCreator.commonObjectViews = {
                    <div class="panel-heading "> \
                    <span class="panel-title">Object manager</span> \
                    </div> \
-                   <!-- Panel: Edit --> \
+                   <div id="dialogue-library" class="col border-right"> \
+                   <div class="panel-heading"> \
+                   <span class="panel-title">Library</span> \
+                   </div> \
+                   <div id="dialogue-library-preview" class="library-preview panel-paragraph"></div> \
+                   <div id="dialogue-library-explorer" class="library-explorer"> \
+                   <ul class="global-object-list"> \
+                   </ul> \
+                   </div> \
+                   </div> \
                    <div class="col border-right"> \
                    <div class="panel-heading"> \
                    <span class="panel-title">Edit</span> \
@@ -55,6 +64,7 @@ GameCreator.commonObjectViews = {
                    </div> \
                    </div> \
                    </div>';
+
                    
         return result;
     },
@@ -122,6 +132,7 @@ GameCreator.commonObjectViews = {
 
     getPropertiesContent: function(stateId) {
         var result = "";
+            
             result += '<div id="dialogue-properties" class="col border-right"> \
                        <div class="panel-heading"> \
                        <span class="panel-title">Properties</span> \
@@ -141,40 +152,38 @@ GameCreator.commonObjectViews = {
                        </div> \
                        <div class="panel-paragraph"> \
                        <h2>Set default graphic</h2> \
+                       <div class="form-group"> \
+                       <div class="form-item"> \
+                       <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="http://"> \
+                       </div> \
+                       </div> \
                        </div> \
                        </div> \
                        </div> \
                        </div>';
-
-      /*
-      <div class="row"> \
-      <button class="regularButton" id="save-global-object-properties-button">Save</button> \
-      </div> \
-     */
-
+                       
         return result;
     },
 
     getPropertiesForm: function(stateId) {
         var state = this.getState(stateId);
         var result = "";
-        
-        result += '<div class="form-group"> \
-                   <div class="form-item"> \
-                   <label for="object-property-image">Image 1</label> \
-                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
-                   </div> \
-                   </div> \
-                   <div class="form-group"> \
-                   <div class="form-item"> \
-                   <label for="object-property-image">Image 3</label> \
-                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
-                   </div> \
-                   <div class="form-item"> \
-                   <label for="object-property-image">Image 4</label> \
-                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
-                   </div> \
-                   </div>';
+            result += '<div class="form-group"> \
+                       <div class="form-item"> \
+                       <label for="object-property-image">Image 1</label> \
+                       <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                       </div> \
+                       </div> \
+                       <div class="form-group"> \
+                       <div class="form-item"> \
+                       <label for="object-property-image">Image 3</label> \
+                       <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                       </div> \
+                       <div class="form-item"> \
+                       <label for="object-property-image">Image 4</label> \
+                       <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                       </div> \
+                       </div>';
 
 
         /*
@@ -186,17 +195,16 @@ GameCreator.commonObjectViews = {
 
     getNonStatePropertiesForm: function() {
         var result = "";
-        
-        result += '<div class="form-group"> \
-                   <div class="form-item"> \
-                   <label for="object-property-image">Image 5</label> \
-                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
-                   </div> \
-                   <div class="form-item"> \
-                   <label for="object-property-image">Image 6</label> \
-                   <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
-                   </div> \
-                   </div>';
+            result += '<div class="form-group"> \
+                       <div class="form-item"> \
+                       <label for="object-property-image">Image 5</label> \
+                       <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                       </div> \
+                       <div class="form-item"> \
+                       <label for="object-property-image">Image 6</label> \
+                       <input id="object-property-width" type="text" data-type="range" data-attrname="width" value="500"> \
+                       </div> \
+                       </div>';
 
         return result;
 

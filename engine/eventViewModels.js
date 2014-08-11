@@ -12,6 +12,7 @@ GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, def
 
 GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
     var result = '<div>' + this.name + ': ' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</div>';
+    return result;
 }
 
 GameCreator.SceneObjectParameter = function(name, eventDataItem, mandatory, defaultValue) {

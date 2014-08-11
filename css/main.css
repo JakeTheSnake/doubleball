@@ -116,6 +116,10 @@ h1, h2, h3, p {
   margin: 0;
 }
 
+ol, ul, li {
+  list-style: none;
+}
+
 button:focus {
     outline: 0;
 }
@@ -232,8 +236,35 @@ input {
   pointer-events: none;
 }
 
-#dialogue-edit-content {
-  height: 100%;
+#dialogue-panel-conditions {
+  color: #F5F5F5;
+  font-size: 1em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+}
+
+#dialogue-panel-conditions > li {
+  background-color: #505050;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  width: 157px;
+  font-size: 1em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: left;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  vertical-align: middle;
+  padding: 7px 0 0 13px;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#dialogue-panel-conditions > li.active {
+  background-color: #239D58;
 }
 
 /* ==========================================================================
@@ -427,10 +458,6 @@ input {
   padding: 0;
 }
 
-#object-manager > .panel-heading {
-  margin-bottom: 2px;
-}
-
 #dialogue-window > .top {
   width: 100%;
   top: 0;
@@ -464,7 +491,23 @@ input {
  */
 
 #dialogue-properties {
-  width: 650px;
+  width: 750px;
+  height: 100%;
+}
+
+/*
+ * dialogue: Edit content;
+ */
+
+#dialogue-edit-content {
+  height: 100%;
+}
+
+/*
+ * dialogue: Events content;
+ */
+
+#dialogue-events-content {
   height: 100%;
 }
 
@@ -473,11 +516,42 @@ input {
  */
 
 #object-manager {
-  height: 400px;
+  height: 600px;
+}
+
+#object-manager > .panel-heading {
+  margin-bottom: 2px;
 }
 
 #object-manager .col {
   padding-right: 2px;
+}
+
+#object-manager .nav-tabs > li {
+  font-size: 0.9em;
+  height: 33px;
+  padding-top: 15px;
+}
+
+#object-manager .nav-tabs > li.active {
+  display: block;
+  background-color: #239D58;
+}
+
+/* KEEEP WORKING HERE FFS ON EVENTS > COLLISIONS TABS! */
+
+#object-manager .nav-tabs > li {
+  font-size: 0.9em;
+  height: 33px;
+  padding-top: 15px;
+}
+
+#object-manager .nav-tabs > li > ul {
+  overflow: hidden;
+}
+
+#object-manager .nav-tabs > li > ul > li {
+  height: 100px;
 }
 
 /* ====================================================================================================================================================
@@ -527,16 +601,6 @@ input {
   float: none;
   margin-right: 0;
   margin-bottom: 2px;
-}
-
-#object-manager .nav-tabs > li {
-  font-size: 0.9em;
-  height: 33px;
-  padding-top: 15px;
-}
-
-#object-manager .nav-tabs > li.active {
-   background-color: #239D58;
 }
 
 /* ==========================================================================
@@ -698,13 +762,13 @@ input {
   height: 377px;
 }
 
-#library-preview {
+.library-preview {
   margin-bottom: 2px;
   height: 110px;
   background: url('../images/library_preview_grid.gif');
 }
 
-#library-explorer {
+.library-explorer {
   overflow-x: hidden;
   overflow-y: scroll;
   margin-bottom: 2px;
@@ -712,7 +776,7 @@ input {
   background-color: #F5F5F5;
 }
 
-#library-menu > button {
+.library-menu > button {
   float: left;
 }
 
