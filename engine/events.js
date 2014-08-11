@@ -48,7 +48,8 @@ GameCreator.conditions =
             },
             count: {
                 param: GameCreator.NumberParameter,
-                mandatory: true
+                mandatory: false,
+                defaultValue: 1
             }
         }
     })

@@ -11,7 +11,7 @@ GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, def
 };
 
 GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
-    var result = '<div>' + this.name + ': ' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</div>';
+    var result = '<div ' + (this.value === undefined ? 'style="color: #FF0000;"' : '') +'>' + this.name + ': ' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</div>';
     return result;
 }
 
@@ -35,7 +35,7 @@ GameCreator.NumberParameter = function(name, eventDataItem, mandatory, value) {
 };
 
 GameCreator.NumberParameter.prototype.getPresentation = function() {
-    var result = '<div>' + this.name + ': ' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</div>";
+    var result = '<div ' + (this.value === undefined ? 'style="color: #FF0000;"' : '') +'>' + this.name + ': ' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</div>";
     return result;
 };
 
@@ -73,7 +73,12 @@ GameCreator.CASetVM.prototype.getVMItemList = function(collection) {
 }
 
 GameCreator.CASetVM.prototype.addCondition = function(conditionName) {
-    var runtimeCondition = new GameCreator.RuntimeCondition(conditionName, {});
+    var params = {}, i;
+    var paramNames = Object.keys(GameCreator.conditions[conditionName].params);
+    for (i = 0; i < paramNames.length; i+=1) {
+        params[paramNames[i]] = GameCreator.conditions[conditionName].params[paramNames[i]].defaultValue;
+    }
+    var runtimeCondition = new GameCreator.RuntimeCondition(conditionName, params);
     this.caSet.conditions.push(runtimeCondition);
     this.conditionVMs = this.getVMItemList(this.caSet.conditions);
 };

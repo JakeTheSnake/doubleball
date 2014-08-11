@@ -319,6 +319,8 @@ GameCreator.UI = {
 
         var column = $("#dialogue-panel-add-list");
 
+        column.html('');
+
         for (i = 0; i < Object.keys(GameCreator.conditions).length; i++) {
             var listItem = document.createElement('li');
             var conditionName = Object.keys(GameCreator.conditions)[i];
