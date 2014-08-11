@@ -77,29 +77,10 @@
 
         sceneStarted: function() {
             $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e) {
-                var i, currentSet;
                 var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left, e.pageY - $("#main-canvas").offset().top);
-                
                 if (runtimeObj && runtimeObj.parent) {
                     var globalObj = runtimeObj.parent;
-                    if (globalObj.onClickEvents.length === 0) {
-                        currentSet = new GameCreator.ConditionActionSet();
-                        globalObj.onClickEvents.push(currentSet);
-                        GameCreator.UI.openEditActionsWindow(
-                            "Clicked on " + globalObj.objectName,
-                             GameCreator.actionGroups.nonCollisionActions,
-                             currentSet.actions,
-                             globalObj.objectName
-                            );
-                        GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: runtimeObj});
-                    } else {
-                        for (i = 0; i < globalObj.onClickEvents.length; i++) {
-                            currentSet = globalObj.onClickEvents[i];
-                            if (currentSet.checkConditions()) {
-                                currentSet.runActions(runtimeObj);
-                            }
-                        }
-                    }                  
+                    globalObj.runOnClickActions();
                 }
             });
         }

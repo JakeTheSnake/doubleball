@@ -243,14 +243,6 @@
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
             SwitchState: GameCreator.actions.SwitchState,
-        },
-
-        onCreateActions: {
-            Destroy: GameCreator.actions.Destroy,
-            Shoot: GameCreator.actions.Shoot,
-            Create: GameCreator.actions.Create,
-            Counter: GameCreator.actions.Counter,
-            SwitchState: GameCreator.actions.SwitchState,
         }
     };
 }());

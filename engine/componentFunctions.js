@@ -112,7 +112,7 @@
     };
 
     GameCreator.addObjFunctions.clickableObjectAttributes = function(object) {
-        object.onClickEvents = [];
+        object.onClickSets = [];
         object.isClickable = true;
     };
 

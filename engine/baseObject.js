@@ -28,7 +28,7 @@
                 this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been destroyed!",
-                    GameCreator.actionGroups.nonCollisionActions,
+                    GameCreator.helpers.getNonCollisionActions(this.objectType),
                     currentSet.actions,
                     this.objectName
                 );
@@ -61,7 +61,7 @@
                 this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been created!",
-                    GameCreator.actionGroups.nonCollisionActions,
+                    GameCreator.helpers.getNonCollisionActions(this.objectType),
                     currentSet.actions,
                     this.objectName
                 );
@@ -74,6 +74,30 @@
                     }
                 }
             }
+        }
+    };
+
+    GameCreator.BaseObject.prototype.runOnClickActions = function() {
+        var i, currentSet;
+        if (!GameCreator.paused) {
+            if (globalObj.onClickSets.length === 0) {
+                currentSet = new GameCreator.ConditionActionSet();
+                globalObj.onClickSets.push(currentSet);
+                GameCreator.UI.openEditActionsWindow(
+                    "Clicked on " + globalObj.objectName,
+                     GameCreator.helpers.getNonCollisionActions(this.objectType),
+                     currentSet.actions,
+                     globalObj.objectName
+                    );
+                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: runtimeObj});
+            } else {
+                for (i = 0; i < globalObj.onClickSets.length; i++) {
+                    currentSet = globalObj.onClickSets[i];
+                    if (currentSet.checkConditions()) {
+                        currentSet.runActions(runtimeObj);
+                    }
+                }
+            }                  
         }
     };
 

@@ -39,19 +39,6 @@ GameCreator.commonObjectControllers = {
             GameCreator.UI.closeDialogue();
         });
     },
- 
-    setupOnClickActionsForm: function(container) {
-        var text = "Actions on click";
-        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
-
-        if (this.onClickActions == undefined) {
-            this.onClickActions = [];
-        }
-
-        var existingActions = this.onClickActions;
-        GameCreator.UI.createEditActionsArea(text, choosableActions, existingActions, container, this.objectName);
-    },
-
         
     setupCollisionsForm: function(container) {
         var collisionObjects = [];
@@ -85,18 +72,22 @@ GameCreator.commonObjectControllers = {
         });
     },
 
-    
-    
     setupOnDestroyActionsForm: function(container) {
-        var choosableActions = GameCreator.actionGroups.onCreateActions;
+        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
         GameCreator.UI.setupEditEventColumns(this.onDestroySets, container);
     },
 
-    setupOnCreateActionsForm: function(container, selectedSet) {
-        var choosableActions = GameCreator.actionGroups.onCreateActions;
+    setupOnCreateActionsForm: function(container) {
+        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
         GameCreator.UI.setupEditEventColumns(this.onCreateSets, container);  
+    },
+
+    setupOnClickActionsForm: function(container) {
+        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
+        
+        GameCreator.UI.setupEditEventColumns(this.onClickSets, container);    
     },
 
     setupStatesForm: function(container, selectedState) {
