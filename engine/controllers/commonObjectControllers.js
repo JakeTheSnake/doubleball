@@ -189,7 +189,6 @@ GameCreator.commonObjectControllers = {
         container.find(".counterEventMenuElement").on("click", function() {
             var eventType = $(this).data("type");
             var eventValue = $(this).data("value");
-            var existingActions;
             $(this).parent().find('.counterEventMenuElement').removeClass('active');
             $(this).addClass('active');
             var onCounterEventSets = globalObj.parentCounters[counterName].getCounterEventSets(eventType, eventValue);
@@ -206,20 +205,20 @@ GameCreator.commonObjectControllers = {
         container.html(GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys"));
         container.append('<div id="dialogue-keys-content"></div>');
         $("#dialogue-panel-keys").html(this.getKeysContent());
+        var keyEventContent = document.createElement('div');
+        container.append(keyEventContent);
         var globalObj = this;
         container.find(".keyMenuElement").on("click", function(){
             var keyName = $(this).data("name");
-            var actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
-            GameCreator.UI.createEditActionsArea(
-                "Actions on " + keyName,
-                actions,
-                globalObj.keyEvents[keyName][0].actions,
-                $("#edit-key-actions-key-content"),
-                globalObj.objectName
-            );
+            var onKeyEventSets = globalObj.keyEvents[keyName]
+
+            $(this).parent().find('.keyMenuElement').removeClass('active');
+            $(this).addClass('active');
+
+            GameCreator.UI.setupEditEventColumns(onKeyEventSets, $(keyEventContent));
         });
         $("#add-new-key-button").on("click", function(){
-            $("#edit-key-actions-key-content").html(globalObj.getKeySelector());
+            $("#dialogue-keys-content").html(globalObj.getKeySelector());
             $(".addKeyObjectElement").one("click", function() {
                 globalObj.keyEvents[$(this).data("keyname")].push(new GameCreator.ConditionActionSet());
                 globalObj.setupKeyEventsForm(container);

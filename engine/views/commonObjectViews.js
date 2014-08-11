@@ -257,7 +257,7 @@ GameCreator.commonObjectViews = {
                 result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
         }
-        result += '<li><div id="add-new-key-button" class="regularButton">Add</div></li>';
+        result += '<li><button id="add-new-key-button" class="regularButton">Add</div></li>';
         return result;
     },
 }

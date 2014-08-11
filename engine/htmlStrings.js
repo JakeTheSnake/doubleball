@@ -90,7 +90,7 @@ GameCreator.htmlStrings = {
     },
 
     keyMenuElement: function(keyName) {
-        return '<li class="keyMenuElement headingNormalBlack" data-name="' + keyName + '"><span>' + keyName + '</span></li>';
+        return '<li class="keyMenuElement" data-name="' + keyName + '">' + keyName + '</li>';
     },
 
     counterMenuElement: function(counterName) {
@@ -265,7 +265,7 @@ GameCreator.htmlStrings = {
                    <span class="panel-title">' + title + '</span> \
                    </div> \
                    <div class="col"> \
-                   <ul id="' + id + '"> \
+                   <ul id="' + id + '" class="nav nav-tabs nav-stacked"> \
                    </ul> \
                    </div> \
                    </div>';
