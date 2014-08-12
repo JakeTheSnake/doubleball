@@ -16,7 +16,7 @@ module("EventDataItemTests", {
 test("EventDataItem parameters", function() {
     var params = {objectToCreate: "red_ball", y: 60};
     var runtimeAction = new GameCreator.RuntimeAction("Create", params, {type: "at", time: 1000});
-    var eventDataItem = new GameCreator.CASetItemVM(runtimeAction);
+    var eventDataItem = new GameCreator.ActionItemVM(runtimeAction);
     var selectedParameters = eventDataItem.getSelectedParameters();
 
     deepEqual(selectedParameters.length, Object.keys(params).length, "getParameterList returned correct length of parameters.")
@@ -25,7 +25,7 @@ test("EventDataItem parameters", function() {
 
 test("Addable parameters", function() {
     var runtimeAction = new GameCreator.RuntimeAction("Create", {}, {type: "at", time: 1000});
-    var eventDataItem = new GameCreator.CASetItemVM(runtimeAction);
+    var eventDataItem = new GameCreator.ActionItemVM(runtimeAction);
 
     var availableParameters = eventDataItem.getAvailableParameters();
     deepEqual(availableParameters.length, Object.keys(GameCreator.actions.Create.params).length, "All remaining parameters can be added");
@@ -34,7 +34,7 @@ test("Addable parameters", function() {
 test("Save parameter updates database", function() {
     var params = {objectToCreate: "red_ball", y: 60};
     var runtimeAction = new GameCreator.RuntimeAction("Create", params, {type: "at", time: 1000});
-    var eventDataItem = new GameCreator.CASetItemVM(runtimeAction);
+    var eventDataItem = new GameCreator.ActionItemVM(runtimeAction);
 
     var parameterItem = eventDataItem.getParameter("y");
     deepEqual(parameterItem.value, 60, "ParameterItem should have same value as in database");

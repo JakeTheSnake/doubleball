@@ -29,14 +29,6 @@
         return GameCreator.actions[this.name].params[name];
     }
 
-    GameCreator.RuntimeAction.prototype.getParamMandatory = function(name) {
-        return GameCreator.actions[this.name].params[name].mandatory;
-    }
-
-    GameCreator.RuntimeAction.prototype.getParamDefaultValue = function(name) {
-        return GameCreator.actions[this.name].params[name].defaultValue;
-    }
-
     GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj) {
         var timerFunction;
         if (this.timing.type === "after") {

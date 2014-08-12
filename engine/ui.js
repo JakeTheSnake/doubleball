@@ -275,12 +275,12 @@ GameCreator.UI = {
             var caSet = new GameCreator.ConditionActionSet();
             caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
             caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
-            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 200, y: 100}));
+            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball'}));
             caSets.push(caSet);
             var caSet2 = new GameCreator.ConditionActionSet();
             caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
             caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
-            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 300, y: 400}));
+            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 'red_ball', x: 300}));
             caSets.push(caSet2);
         }
 
@@ -311,12 +311,11 @@ GameCreator.UI = {
                 isActive = activeCASetVM === caSetVMs[i];
                 $(conditionsColumn).append(caSetVMs[i].getPresentation(isActive));
             }
-        })
+        });
     },
 
     populateSelectConditionList: function(VMcollection, activeCASetVM) {
         var i;
-
         var column = $("#dialogue-panel-add-list");
 
         column.html('');
