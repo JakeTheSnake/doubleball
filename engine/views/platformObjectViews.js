@@ -3,3 +3,31 @@ GameCreator.PlatformObject.prototype.getEvents = function() {
 			 <li data-uifunction="setupKeyEventsForm">On Keypress</li>';
 };
 
+GameCreator.PlatformObject.prototype.getPropertiesForm = function() {
+    var result = ' \
+<div class="form-group"> \
+    <div id="object-property-width-container" class="form-item"> \
+    </div> \
+    <div id="object-property-height-container" class="form-item"> \
+    </div> \
+</div> \
+<div class="form-group"> \
+    <div id="object-property-maxSpeed-container" class="form-item"> \
+    </div> \
+    <div id="object-property-acceleration-container" class="form-item"> \
+    </div> \
+</div>\
+<div class="form-group"> \
+    <div id="object-property-accY-container" class="form-item"> \
+    </div> \
+</div> \
+<div class="panel-paragraph"> \
+    <h2>Set default graphic</h2> \
+    <div class="form-group"> \
+        <div id="object-property-image-container" class="form-item"> \
+        </div> \
+    </div> \
+</div>';
+    return result;
+};
+

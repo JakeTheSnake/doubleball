@@ -317,7 +317,7 @@
             if (selectedObjectId !== 'this') {
                 runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
             }
-            if (runtimeObj.parent.unique) {
+            if (runtimeObj.parent.attributes.unique) {
                 counterCarrier = runtimeObj.parent;
             } else {
                 counterCarrier = runtimeObj;

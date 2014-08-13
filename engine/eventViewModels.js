@@ -3,11 +3,11 @@
 // Scene Object
 // Counter
 // Timing
-GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, defaultValue) {
+GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, value) {
     this.name = name;
     this.eventDataItem = eventDataItem;
     this.mandatory = mandatory;
-    this.value = defaultValue;
+    this.value = value;
 };
 
 GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
@@ -15,11 +15,11 @@ GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
     return result;
 }
 
-GameCreator.SceneObjectParameter = function(name, eventDataItem, mandatory, defaultValue) {
+GameCreator.SceneObjectParameter = function(name, eventDataItem, mandatory, value) {
     this.name = name;
     this.eventDataItem = eventDataItem;
     this.mandatory = mandatory;
-    this.value = defaultValue;
+    this.value = value;
 };
 
 GameCreator.SceneObjectParameter.prototype.getPresentation = function() {
@@ -208,14 +208,14 @@ GameCreator.ActionItemVM.prototype.getAvailableParameters = function() {
 
             // Clicking on the parameter name
             $(parameterItem).on('click', function() {
-                actionItemVM.appendParameter(param);
+                actionItemVM.appendParameter($(this).data('actionName'));
                 $(this).remove();
             });
             parameterList.push(parameterItem);
         }
     }
 
-    return resultList;
+    return parameterList;
 };
 
 GameCreator.ActionItemVM.prototype.getSelectedParameters = function() {

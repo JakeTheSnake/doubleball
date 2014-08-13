@@ -30,6 +30,8 @@
 
     GameCreator.MouseObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+    GameCreator.MouseObject.objectNonStateAttributes = GameCreator.helpers.getStandardNonStateAttributes();
+
     GameCreator.MouseObject.objectAttributes = $.extend(GameCreator.MouseObject.objectAttributes, {
         "maxX": GameCreator.htmlStrings.numberInput,
         "maxY": GameCreator.htmlStrings.numberInput,

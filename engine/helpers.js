@@ -290,7 +290,9 @@
 
     GameCreator.helpers.setStandardProperties = function(globalObj, args) {
         globalObj.objectName = args.objectName;
-        globalObj.unique = args.unique;
+        globalObj.attributes = {
+            unique: args.unique
+        };
         globalObj.parentCounters = {};
         globalObj.counters = {};
         globalObj.onDestroySets = [];
@@ -312,6 +314,10 @@
           "height": GameCreator.htmlStrings.rangeInput};
     };
 
+    GameCreator.helpers.getStandardNonStateAttributes = function() {
+        return {"unique": GameCreator.htmlStrings.checkboxInput};
+    };
+
     GameCreator.helpers.getNonCollisionActions = function(objectType) {
         if (objectType === "MouseObject") {
             return GameCreator.actionGroups.mouseNonCollisionActions;
@@ -328,26 +334,21 @@
         return segments.join(" ");
     };
 
-    GameCreator.helpers.getAttributeForm = function(attributes, attrToInputMap, defaults) {
-        var result = '';
-        var attrNames = Object.keys(attributes);
-        for (var i = 0; i < attrNames.length; i++) {
-            if(attrToInputMap[attrNames[i]]) {
-                var elementId = 'object-property-' + attrNames[i];
-                var defaultValue;
-                if (defaults) {
-                    defaultValue = defaults[attrNames[i]];
-                }
+    GameCreator.helpers.populateAttributeForm = function(attributes, attrToInputMap, containerId) {
+        var i;
 
-                result += '<div class="form-group">'
-
-                result += GameCreator.htmlStrings.inputLabel(elementId, GameCreator.helpers.labelize(attrNames[i])) +
-                          attrToInputMap[attrNames[i]](elementId, attrNames[i], defaultValue);
-
-                result += '</div>';
-            }
+        for (i = 0; i < Object.keys(attributes).length; i++) {
+            var attributeName = Object.keys(attributes)[i];
+            var elementId = 'object-property-' + attributeName;
+            $("#object-property-" + attributeName + "-container").html(
+                GameCreator.htmlStrings.inputLabel(elementId, GameCreator.helpers.labelize(attributeName)) +
+                attrToInputMap[attributeName](elementId, attributeName, attributes[attributeName])
+            );
         }
-        return result;
+        $('#' + containerId + ' input').on('change', function() {
+            GameCreator.saveInputValueToObject($(this), attributes);
+        });
+        
     };
 
     GameCreator.helpers.startsWith = function(baseString, comparator) {

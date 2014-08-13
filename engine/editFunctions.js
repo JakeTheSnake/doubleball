@@ -251,18 +251,22 @@
         //Since all inputs are tagged with "data-attrname" and "data-type" we have this general function for saving all object types.
         saveFormInputToObject: function(formId, obj) {
             var inputs = $("#" + formId + " input, #" + formId + " select");
-            var input, i, attrName;
+            var input, i;
             for (i = 0; i < inputs.length; i += 1) {
                 input = $(inputs[i]);
-                attrName = input.attr('data-attrname');
-                if (attrName) {
-                    attrName = attrName.split('.');
-                    if (attrName.length === 1) {
-                        obj[attrName[0]] = GameCreator.helpers.getValue(input);
-                    } else {
-                        obj[attrName[0]] = obj[attrName[0]] || {};                       
-                        obj[attrName[0]][attrName[1]] = GameCreator.helpers.getValue(input);
-                    }
+                GameCreator.saveInputValueToObject(input, obj);
+            }
+        },
+
+        saveInputValueToObject: function(input, obj) {
+            var attrName = input.data('attrname');
+            if (attrName) {
+                attrName = attrName.split('.');
+                if (attrName.length === 1) {
+                    obj[attrName[0]] = GameCreator.helpers.getValue(input);
+                } else {
+                    obj[attrName[0]] = obj[attrName[0]] || {};                       
+                    obj[attrName[0]][attrName[1]] = GameCreator.helpers.getValue(input);
                 }
             }
         },

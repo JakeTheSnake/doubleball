@@ -28,6 +28,8 @@
 
     GameCreator.RouteObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+    GameCreator.RouteObject.objectNonStateAttributes = GameCreator.helpers.getStandardNonStateAttributes();
+
     GameCreator.RouteObject.objectAttributes = $.extend(GameCreator.RouteObject.objectAttributes, {
         "speed": GameCreator.htmlStrings.rangeInput
     });

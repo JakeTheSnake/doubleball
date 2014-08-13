@@ -3,7 +3,7 @@
     "use strict";
     GameCreator.resetCounters = function(sceneObject, parentCounters) {
         var counterCarrier, counter;
-        if (sceneObject.parent.unique) {
+        if (sceneObject.parent.attributes.unique) {
             counterCarrier = sceneObject.parent;
         } else {
             counterCarrier = sceneObject;
@@ -11,7 +11,7 @@
         for (counter in parentCounters) {
             if (parentCounters.hasOwnProperty(counter)) {
                 if (counterCarrier.counters[counter]) {
-                    if (!sceneObject.parent.unique) {
+                    if (!sceneObject.parent.attributes.unique) {
                         counterCarrier.counters[counter].reset();
                     }
                 } else {

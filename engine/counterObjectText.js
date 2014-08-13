@@ -32,7 +32,6 @@ GameCreator.CounterObjectText.objectAttributes = {
                      };
 
 GameCreator.CounterObjectText.objectSceneAttributes = $.extend({}, GameCreator.CounterObjectText.objectAttributes);
-delete GameCreator.CounterObjectText.objectSceneAttributes["image"];
 
 GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
@@ -40,7 +39,7 @@ GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
     var sceneObject = GameCreator.getSceneObjectById(obj.counterObject);
     var i;
     if (sceneObject) {
-        if (sceneObject.parent.unique && sceneObject.parent.counters[obj.counterName]) {
+        if (sceneObject.parent.attributes.unique && sceneObject.parent.counters[obj.counterName]) {
             value = sceneObject.parent.counters[obj.counterName].value;
         } else if (sceneObject.counters[obj.counterName]) {
             value = sceneObject.counters[obj.counterName].value;

@@ -40,9 +40,43 @@
             result +=  '</div><div id="edit-global-object-window-content"></div>';
 
             return result;
-        }
+        },
+
     };
+
 
     $.extend(GameCreator.CounterObjectText.prototype, counterObjectPrototypeFunctions);
     $.extend(GameCreator.CounterObjectImage.prototype, counterObjectPrototypeFunctions);
+
+    GameCreator.CounterObjectText.prototype.getPropertiesForm = function() {
+    var result = ' \
+<div class="form-group"> \
+    <div id="object-property-font-container" class="form-item"> \
+    </div> \
+    <div id="object-property-size-container" class="form-item"> \
+    </div> \
+</div> \
+<div class="form-group"> \
+    <div id="object-property-color-container" class="form-item"> \
+    </div> \
+</div>';
+
+    return result;
+    };
+
+    GameCreator.CounterObjectImage.prototype.getPropertiesForm = function() {
+    var result = ' \
+<div class="form-group"> \
+    <div id="object-property-size-container" class="form-item"> \
+    </div> \
+</div> \
+<div class="panel-paragraph"> \
+    <h2>Set default graphic</h2> \
+    <div class="form-group"> \
+        <div id="object-property-image-container" class="form-item"> \
+        </div> \
+    </div> \
+</div>';
+    return result;
+};
 }());

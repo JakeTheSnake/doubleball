@@ -28,6 +28,8 @@
 
     GameCreator.FreeObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+    GameCreator.FreeObject.objectNonStateAttributes = GameCreator.helpers.getStandardNonStateAttributes();
+
     GameCreator.FreeObject.objectAttributes = $.extend(GameCreator.FreeObject.objectAttributes, {
         "accX": GameCreator.htmlStrings.rangeInput,
         "accY": GameCreator.htmlStrings.rangeInput,

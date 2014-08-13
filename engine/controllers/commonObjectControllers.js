@@ -32,12 +32,11 @@ GameCreator.commonObjectControllers = {
         var globalObj = this;
         var html = this.getPropertiesContent();
         container.html(html);
-        container.find("#save-global-object-properties-button").on("click", function() {
-            GameCreator.saveFormInputToObject("object-properties-content", GameCreator.helpers.getObjectById(globalObj.states, 0).attributes);
-            GameCreator.saveFormInputToObject("object-non-state-properties-content", globalObj);
-            GameCreator.UI.redrawLibrary();
-            GameCreator.UI.closeDialogue();
-        });
+        var globalObjAttributes = this.getDefaultState().attributes;
+
+        GameCreator.helpers.populateAttributeForm(globalObjAttributes, GameCreator[this.objectType].objectAttributes, 'object-properties-content');
+        GameCreator.helpers.populateAttributeForm(this.attributes, GameCreator[this.objectType].objectNonStateAttributes, 'object-non-state-properties-content');
+        
     },
         
     setupCollisionsForm: function(container) {

@@ -29,6 +29,8 @@
 
     GameCreator.TopDownObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+    GameCreator.TopDownObject.objectNonStateAttributes = GameCreator.helpers.getStandardNonStateAttributes();
+
     GameCreator.TopDownObject.objectAttributes = $.extend(GameCreator.TopDownObject.objectAttributes, {
         "maxSpeed": GameCreator.htmlStrings.rangeInput
     });

@@ -34,6 +34,8 @@
 
     GameCreator.PlatformObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+    GameCreator.PlatformObject.objectNonStateAttributes = GameCreator.helpers.getStandardNonStateAttributes();
+
     GameCreator.PlatformObject.objectAttributes = $.extend(GameCreator.PlatformObject.objectAttributes, {
         "accY": GameCreator.htmlStrings.rangeInput,
         "acceleration": GameCreator.htmlStrings.rangeInput,

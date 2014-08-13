@@ -39,7 +39,7 @@ GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
     var i;
     var value = 0;
     if (counterObject) {
-        if (counterObject.parent.unique && counterObject.parent.counters[obj.counterName]) {
+        if (counterObject.parent.attributes.unique && counterObject.parent.counters[obj.counterName]) {
             value = counterObject.parent.counters[obj.counterName].value;
         } else if (counterObject.counters[obj.counterName]) {
             value = counterObject.counters[obj.counterName].value;
