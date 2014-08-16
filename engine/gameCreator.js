@@ -11,7 +11,6 @@
         state: 'editing', //State can be editing, directing or playing. 
         then: undefined, // The time before last frame
         draggedGlobalElement: undefined,
-        context: undefined,
         canvasOffsetX: 110,
         canvasOffsetY: 10,
 
@@ -263,9 +262,9 @@
         resumeGame: function() {
             var i, activeScene;
             GameCreator.paused = false;
-            activeScene = GameCreator.scenes[GameCreator.activeScene];
-            for (i = 0; i < activeScene.length; i += 1) {
-                activeScene[i].parent.onGameStarted();
+            activeScene = GameCreator.getActiveScene();
+            for (i = 0; i < activeScene.objects.length; i += 1) {
+                activeScene.objects[i].parent.onGameStarted();
             }
         },
         createRuntimeObject: function(globalObj, args) {

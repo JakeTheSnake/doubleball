@@ -22,8 +22,9 @@ window.onload = function () {
         GameCreator.uiCanvas.height = GameCreator.height;
         $("#canvas-container").append(GameCreator.uiCanvas);
         
-        GameCreator.scenes.push([]);
-        GameCreator.activeScene = 0;
+        var startupScene = new GameCreator.Scene()
+        GameCreator.scenes.push(startupScene);
+        GameCreator.activeSceneId = startupScene.id;
         
         //Create FreeObjects
         

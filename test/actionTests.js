@@ -219,7 +219,7 @@ test("SwitchScene Action Test", function() {
 
     GameCreator.checkCollisions();
 
-    deepEqual(GameCreator.activeScene, 1, "Scene was switched.");
+    deepEqual(GameCreator.activeSceneId, 1, "Scene was switched.");
 });
 
 test("SwitchState Action Test", function() {

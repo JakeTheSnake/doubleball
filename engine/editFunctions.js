@@ -21,7 +21,7 @@
         },
 
         directActiveScene: function() {
-            GameCreator.directScene(GameCreator.scenes[GameCreator.activeScene]);
+            GameCreator.directScene(GameCreator.getActiveScene());
         },
 
         directScene: function(scene) {
@@ -55,18 +55,26 @@
         },
 
         editActiveScene: function() {
-            this.editScene(GameCreator.scenes[GameCreator.activeScene]);
+            GameCreator.editScene(GameCreator.getActiveScene());
+        },
+
+        uniqueSceneId: 0,
+
+        getUniqueSceneId: function() {
+            GameCreator.uniqueSceneId += 1;
+            return GameCreator.uniqueSceneId;
         },
 
         editScene: function(scene) {
             var i, obj, dragFunc, mouseLeft, mouseTop;
             GameCreator.reset();
-            GameCreator.resetScene(scene);
+            scene.reset();
+            scene.drawBackground();
             GameCreator.state = 'editing';
             //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
             //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
-            for (i = 0; i < scene.length; i += 1) {
-                obj = scene[i];
+            for (i = 0; i < scene.objects.length; i += 1) {
+                obj = scene.objects[i];
                 if (obj.parent.isRenderable) {
                     GameCreator.renderableObjects.push(obj);
                     GameCreator.render(true);
@@ -319,7 +327,7 @@
         },
 
         addScene: function() {
-            GameCreator.scenes.push([]);
+            GameCreator.scenes.push(new GameCreator.Scene());
             GameCreator.UI.setupSceneTabs(GameCreator.scenes);
         },
 

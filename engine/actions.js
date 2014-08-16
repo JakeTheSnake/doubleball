@@ -91,7 +91,7 @@
                                  {
                                     inputId: "projectileDirection",
                                     input: function() {return GameCreator.htmlStrings.singleSelector("projectileDirection", $.extend(GameCreator.directions,
-                                                                                                                            GameCreator.getUniqueIDsInScene())); },
+                                                                                                                            GameCreator.getUniqueIDsInActiveScene())); },
                                     label: function() {return GameCreator.htmlStrings.inputLabel("projectileDirection", "Direction"); }
                                  }],
                           name: "Shoot",
@@ -121,7 +121,7 @@
                                   inputId: "counterObject",
                                   input: function() {return GameCreator.UI.setupSingleSelectorWithListener(
                                       "counterObject",
-                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInScene()),
+                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInActiveScene()),
                                       "change",
                                       function(){$("#counterName").replaceWith(GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj($(this).val()))); }
                                       ); },
@@ -152,7 +152,7 @@
                                   inputId: "objectId",
                                   input: function() {return GameCreator.UI.setupSingleSelectorWithListener(
                                       "objectId",
-                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInScene()),
+                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInActiveScene()),
                                       "change",
                                       function(){$("#stateId").replaceWith(GameCreator.htmlStrings.singleSelector("stateId", GameCreator.getStatesForGlobalObj($(this).val()))); }
                                       ); },

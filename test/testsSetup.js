@@ -30,8 +30,9 @@ QUnit.testStart = function() {
     GameCreator.currentEffects = [];
     GameCreator.bufferedActions = [];
     GameCreator.scenes = [];
-    GameCreator.scenes.push([]);
-    GameCreator.activeScene = 0;
+    var newScene = new GameCreator.Scene();
+    GameCreator.scenes.push(newScene);
+    GameCreator.activeSceneId = newScene.id;
 };
 
 function createGlobalObject(type, args) {

@@ -55,7 +55,7 @@ GameCreator.UI = {
                 if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
                     var args = {x: x - offsetX - globalObj.getDefaultState().attributes.width[0] / 2, 
                                 y: y - offsetY - globalObj.getDefaultState().attributes.height[0] / 2};
-                    var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.scenes[GameCreator.activeScene], args);
+                    var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.getActiveScene(), args);
                 }
                 $(image).remove();
                 $(window).off("mousemove.dragGlobalMenuItem");
@@ -209,7 +209,7 @@ GameCreator.UI = {
 
         result += '<ul class="nav nav-tabs" role="tablist">';
         for(var i = 0; i < scenes.length; i++) {
-            result += GameCreator.htmlStrings.sceneTab(i, GameCreator.activeScene === i);
+            result += GameCreator.htmlStrings.sceneTab(scenes[i], GameCreator.activeSceneId === scenes[i].id);
         };
         result += GameCreator.htmlStrings.addSceneTab();
         result += '</ul>';
@@ -217,7 +217,7 @@ GameCreator.UI = {
         $('#toolbar-scenes').html(result);
         $('#toolbar-scenes').off('click');
         $('#toolbar-scenes').on('click', '.nav-tabs > li:not(#add-scene-tab)', function(){
-            GameCreator.activeScene = parseInt($(this).data('scenenr'));
+            GameCreator.activeSceneId = parseInt($(this).data('sceneid'));
             GameCreator.editActiveScene();
         });
         $('#toolbar-scenes').one('click', '#add-scene-tab', function(){
@@ -236,7 +236,7 @@ GameCreator.UI = {
         var objectType = GameCreator.selectedObject.parent.objectType;
         var obj = GameCreator.selectedObject;
         if (GameCreator.helpers.startsWith(objectType, "CounterObject")) {
-            var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInScene());
+            var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInActiveScene());
             $("#edit-scene-object-content").html(GameCreator[objectType].sceneObjectForm(obj, uniqueIds));
             $("#add-counter-object-counter-selector").html();
             $("#add-counter-counter-object").on("change", function() {

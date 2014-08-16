@@ -36,7 +36,6 @@ GameCreator.commonObjectControllers = {
 
         GameCreator.helpers.populateAttributeForm(globalObjAttributes, GameCreator[this.objectType].objectAttributes, 'object-properties-content');
         GameCreator.helpers.populateAttributeForm(this.attributes, GameCreator[this.objectType].objectNonStateAttributes, 'object-non-state-properties-content');
-        
     },
         
     setupCollisionsForm: function(container) {

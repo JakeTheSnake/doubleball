@@ -34,7 +34,7 @@ module("Scene Object Tests", {
 });
 
 test("Add Object to scene", function() {
-    var sceneObject = GameCreator.scenes[0][0];
+    var sceneObject = GameCreator.scenes[0].objects[0];
     ok(sceneObject, "Scene object added to scene");
     deepEqual(sceneObject.x, 5, "Scene object correct x.");
     deepEqual(sceneObject.y, 6, "Scene object correct y.");
@@ -49,9 +49,9 @@ test("Delete selected scene object", function() {
     var sceneObject = GameCreator.getClickedObjectEditing(6, 7);
     GameCreator.selectedObject = sceneObject;
 
-    deepEqual(GameCreator.scenes[0].length, 1, "Scene object was added to scene.");
+    deepEqual(GameCreator.scenes[0].objects.length, 1, "Scene object was added to scene.");
     GameCreator.deleteSelectedObject();
-    deepEqual(GameCreator.scenes[0].length, 0, "Delete scene object from scene.");
+    deepEqual(GameCreator.scenes[0].objects.length, 0, "Delete scene object from scene.");
 });
 
 })();
