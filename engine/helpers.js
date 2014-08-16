@@ -47,12 +47,12 @@
     };
 
     GameCreator.helpers.doCollision = function(object, targetObject) {
-        var currentSetsItem = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+        var caSets = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
         var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
-        if (currentSetItem !== undefined) {
-            for (j = 0; j < currentSetsItem.sets.length; j += 1) {
-                currentSet = currentSetsItem.sets[j];
+        if (caSets !== undefined) {
+            for (j = 0; j < caSets.sets.length; j += 1) {
+                currentSet = caSets.sets[j];
                 if (currentSet.checkConditions()) {
                     currentSet.runActions(object, {collisionObject: targetObject});
                 }
@@ -118,7 +118,7 @@
             for (j = 0; j < object.parent.onCollideEvents.length; j += 1) {
                 collisionItem = object.parent.onCollideEvents[j];
                 runtimeObjectsItem = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, collisionItem.id);
-                if (GameCreator.helpers.eventItemHasActions(collisionItem) && runtimeObjectsItem) {
+                if (GameCreator.helpers.caSetsHaveActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                         targetObject = runtimeObjectsItem.runtimeObjects[i];
                         if (GameCreator.helpers.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
@@ -130,10 +130,14 @@
         }
     };
 
-    GameCreator.helpers.eventItemHasActions = function(eventItem) {
+    /**
+    * This function check if any Condition-Action-Set in this event contains actions.
+    * If it does, we don't have to check for any collisions.
+    */
+    GameCreator.helpers.caSetsHaveActions = function(eventItem) {
         var i;
-        for (i = 0; i < eventItem.events.length; i += 1) {
-            if (eventItem.events[i].actions.length > 0) {
+        for (i = 0; i < eventItem.sets.length; i += 1) {
+            if (eventItem.sets[i].actions.length > 0) {
                 return true;
             }
         }

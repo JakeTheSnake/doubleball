@@ -149,7 +149,7 @@ function setupCollisionEventForNewObject(action, parameters) {
     var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
     var collideEvent = new GameCreator.ConditionActionSet();
     collideEvent.actions.push(bounceAction);
-    redBall.onCollideEvents.push({id: GameCreator.borderObjects.borderL.id, events: [collideEvent]});
+    redBall.onCollideEvents.push({id: GameCreator.borderObjects.borderL.id, sets: [collideEvent]});
     return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
 }
 

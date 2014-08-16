@@ -30,6 +30,7 @@ QUnit.testStart = function() {
     GameCreator.currentEffects = [];
     GameCreator.bufferedActions = [];
     GameCreator.scenes = [];
+    GameCreator.uniqueSceneId = 0;
     var newScene = new GameCreator.Scene();
     GameCreator.scenes.push(newScene);
     GameCreator.activeSceneId = newScene.id;
@@ -37,6 +38,6 @@ QUnit.testStart = function() {
 
 function createGlobalObject(type, args) {
     args = args || {};
-    $.extend(args, {image: {src: "../assets/red_ball.gif"}, objectName: "red_ball", width:[20], height:[30]});
+    $.extend(args, {image: {src: "../assets/red_ball.gif"}, objectName: type || "red_ball", width:[20], height:[30]});
     return GameCreator.addGlobalObject(args, type || "FreeObject");
 }

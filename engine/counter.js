@@ -2,6 +2,11 @@
 (function() {
     "use strict";
     GameCreator.resetCounters = function(sceneObject, parentCounters) {
+        if (sceneObject.parent instanceof GameCreator.CounterObjectText ||
+            sceneObject.parent instanceof GameCreator.CounterObjectImage) {
+            // CounterObjects do not have counters themselves.
+            return;
+        }
         var counterCarrier, counter;
         if (sceneObject.parent.attributes.unique) {
             counterCarrier = sceneObject.parent;
