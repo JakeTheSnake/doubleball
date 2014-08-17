@@ -111,13 +111,13 @@ menu, ol, ul, button, input, label {
   padding: 0;
 }
 
+ol, ul, li {
+  list-style: none;
+}
+
 h1, h2, h3, p {
   padding: 0;
   margin: 0;
-}
-
-ol, ul, li {
-  list-style: none;
 }
 
 button:focus {
@@ -234,37 +234,6 @@ input {
 
 #ui-canvas {
   pointer-events: none;
-}
-
-#dialogue-panel-conditions {
-  color: #F5F5F5;
-  font-size: 1em;
-  font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
-}
-
-#dialogue-panel-conditions > li {
-  background-color: #505050;
-  color: #fff;
-  cursor: pointer;
-  margin-right: 2px;
-  width: 157px;
-  font-size: 1em;
-  font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
-  text-align: left;
-  text-shadow: 1px 1px rgba(0,0,0,0.2);
-  vertical-align: middle;
-  padding: 7px 0 0 13px;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-#dialogue-panel-conditions > li.active {
-  background-color: #239D58;
 }
 
 /* ==========================================================================
@@ -433,17 +402,24 @@ input {
    ========================================================================== */
 
 #dialogue-overlay {
-  display: none;
+  display: block;
   position: absolute;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
+  background: rgba(0, 0, 0, 0.85);
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
   overflow: hidden;
   z-index: 1;
+
+  -webkit-transition: all ease-out 0.2s;
+  transition: all ease-out 0.2s;
+}
+
+#dialogue-overlay.ng-hide {
+  opacity: 0;
 }
 
 .dialogue {
@@ -451,6 +427,9 @@ input {
   position: absolute;
   overflow: hidden;
   z-index: 1;
+
+  -webkit-transition: all ease-out 0.2s;
+  transition: all ease-out 0.2s;
 }
 
 .dialogue > .panel {
@@ -463,9 +442,19 @@ input {
   top: 0;
 }
 
+#dialogue-window > .top.ng-hide {
+  opacity: 0;
+  top: -300px;
+}
+
 #dialogue-window > .right {
   height: 100%;
   right: 0;
+}
+
+#dialogue-window > .right.ng-hide {
+  opacity: 0;
+  right: -300px;
 }
 
 #dialogue-window > .bottom {
@@ -473,9 +462,19 @@ input {
   bottom: 0;
 }
 
+#dialogue-window > .bottom.ng-hide {
+  opacity: 0;
+  bottom: -300px;
+}
+
 #dialogue-window > .left {
   height: 100%;
   left: 0;
+}
+
+#dialogue-window > .left.ng-hide {
+  opacity: 0;
+  left: -300px;
 }
 
 /*
@@ -491,23 +490,7 @@ input {
  */
 
 #dialogue-properties {
-  width: 750px;
-  height: 100%;
-}
-
-/*
- * dialogue: Edit content;
- */
-
-#dialogue-edit-content {
-  height: 100%;
-}
-
-/*
- * dialogue: Events content;
- */
-
-#dialogue-events-content {
+  width: 650px;
   height: 100%;
 }
 
@@ -519,12 +502,12 @@ input {
   height: 600px;
 }
 
-#object-manager > .panel-heading {
-  margin-bottom: 2px;
-}
-
 #object-manager .col {
   padding-right: 2px;
+}
+
+#object-manager > .panel-heading {
+  margin-bottom: 2px;
 }
 
 #object-manager .nav-tabs > li {
@@ -534,24 +517,62 @@ input {
 }
 
 #object-manager .nav-tabs > li.active {
+   background-color: #239D58;
+}
+
+/*
+ * dialogue: Dialogue panel conditions
+ */
+
+#dialogue-panel-conditions.nav-tabs > li.active {
+  width: auto;
+  padding: 0;
+  background-color: #323232;
+  height: auto;
+  cursor: default;
+}
+
+#conditions-group {
+  border: 1px solid #239D58;
+}
+
+#conditions-group > span {
   display: block;
   background-color: #239D58;
+  padding: 5px 0 0 12px;
+  height: 24px;
+  margin-bottom: 2px;
 }
 
-/* KEEEP WORKING HERE FFS ON EVENTS > COLLISIONS TABS! */
-
-#object-manager .nav-tabs > li {
+#condition > span {
+  display: block;
+  background-color: #424242;
+  padding: 1px 0 1px 12px;
   font-size: 0.9em;
-  height: 33px;
-  padding-top: 15px;
 }
 
-#object-manager .nav-tabs > li > ul {
-  overflow: hidden;
+#condition table {
+  width: 100%;
+  background-color: #383838;
+  margin-bottom: 2px;
 }
 
-#object-manager .nav-tabs > li > ul > li {
-  height: 100px;
+#condition tr {
+  border-bottom: 1px solid #323232;
+}
+
+#condition tr:last-child {
+  border-bottom: none;
+}
+
+#condition td {
+  font-size: 0.9em;
+  padding: 4px 0 3px 6px;
+}
+
+#condition td:first-child {
+  color: #FDFF9A;
+  padding: 4px 0 3px 12px;
 }
 
 /* ====================================================================================================================================================
@@ -594,6 +615,7 @@ input {
 
 .nav-tabs > li.active {
   background-color: #2574A9;
+  cursor: default;
 }
 
 .nav-stacked > li {
@@ -601,6 +623,10 @@ input {
   float: none;
   margin-right: 0;
   margin-bottom: 2px;
+}
+
+.nav-stacked > li:last-child {
+  margin-bottom: 0px;
 }
 
 /* ==========================================================================

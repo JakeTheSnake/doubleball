@@ -131,17 +131,23 @@ GameCreator.ConditionItemVM = function(databaseObject) {
 };
 
 GameCreator.ConditionItemVM.prototype.getPresentation = function() {
-    var result = document.createElement('li');
+    var result = document.createElement('div');
+        result.id = ('condition')
     var title =document.createElement('span');
+    
     $(title).append(this.databaseObject.name);
     $(result).append(title);
-    var paramList = document.createElement('ul');
+
+    var paramList = document.createElement('table');
     for (var i = 0; i < this.parameters.length; i+=1) {
-        var paramItem = document.createElement('li');
-        $(paramItem).append(this.parameters[i].getPresentation())
-        $(paramList).append(paramItem);
+        var paramItemRow = document.createElement('tr');
+        var paramItemCell = document.createElement('td');
+        $(paramItemCell).append(this.parameters[i].getPresentation())
+        $(paramItemRow).append(paramItemCell);
+        $(paramList).append(paramItemRow);
     }
     $(result).append(paramList);
+
     return result;
 }
 
