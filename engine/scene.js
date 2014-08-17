@@ -117,8 +117,7 @@
             $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e) {
                 var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left, e.pageY - $("#main-canvas").offset().top);
                 if (runtimeObj && runtimeObj.parent) {
-                    var globalObj = runtimeObj.parent;
-                    globalObj.runOnClickActions();
+                    runtimeObj.parent.runOnClickActions.call(runtimeObj);
                 }
             });
         }

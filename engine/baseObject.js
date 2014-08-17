@@ -23,7 +23,7 @@
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
         var i, currentSet;
         if (!GameCreator.paused) {
-            if (this.parent.onDestroySets.length === 0) {
+            if (GameCreator.state === 'directing' && this.parent.onDestroySets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet();
                 this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
@@ -56,7 +56,7 @@
     GameCreator.BaseObject.prototype.runOnCreateActions = function() {
         var i, currentSet;
         if (!GameCreator.paused) {
-            if (this.parent.onCreateSets.length === 0) {
+            if (GameCreator.state === 'directing' && this.parent.onCreateSets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet();
                 this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
@@ -80,19 +80,19 @@
     GameCreator.BaseObject.prototype.runOnClickActions = function() {
         var i, currentSet;
         if (!GameCreator.paused) {
-            if (globalObj.onClickSets.length === 0) {
+            if (GameCreator.state === 'directing' && this.parent.onClickSets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet();
-                globalObj.onClickSets.push(currentSet);
+                this.parent.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    "Clicked on " + globalObj.objectName,
+                    "Clicked on " + this.parent.objectName,
                      GameCreator.helpers.getNonCollisionActions(this.objectType),
                      currentSet.actions,
-                     globalObj.objectName
+                     this.parent.objectName
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: runtimeObj});
             } else {
-                for (i = 0; i < globalObj.onClickSets.length; i++) {
-                    currentSet = globalObj.onClickSets[i];
+                for (i = 0; i < this.parent.onClickSets.length; i++) {
+                    currentSet = this.parent.onClickSets[i];
                     if (currentSet.checkConditions()) {
                         currentSet.runActions(runtimeObj);
                     }
