@@ -236,6 +236,71 @@ input {
   pointer-events: none;
 }
 
+.properties-group {
+  display: block;
+  height: 53px;
+}
+
+.properties-value {
+  float: left;
+  width: 120px;
+}
+
+.properties-value > label {
+  display: block;
+  color: #FDFF9A;
+  font-size: 0.7em;
+  font-family: 'Droid Sans', sans-serif;
+}
+
+.properties-value > table {
+  position: relative;
+  top: -1px;
+  left: 9px;
+}
+
+.properties-value > table tr {
+  height: 19px;
+}
+
+.properties-value > table td {
+  font-size: 0.8em;
+  color: #65FFFF;
+  font-family: 'Droid Sans', sans-serif;
+  line-height: 1;
+}
+
+.properties-value > table td:first-child {
+  width: 25px;
+  font-size: 0.8em;
+  color: #F5F5F5;
+  font-family: 'Droid Sans', sans-serif;
+}
+
+.properties-value > table td input {
+  color: #F5F5F5;
+  font-family: 'Droid Sans', sans-serif;
+  padding: 1px 0 0 4px;
+  line-height: 1;
+  background-color: #505050;
+  width: 60px;
+  height: 12px;
+}
+
+.glyphicon {
+  background-color: #505050;
+  position: relative;
+  display: inline-block;
+  top: 6px;
+  left: 1px;
+  float: left;
+  width: 24px;
+  height: 24px;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 /* ==========================================================================
    Container, rows and columns
    ========================================================================== */
@@ -298,8 +363,13 @@ input {
 }
 
 .panel-body {
+  overflow-y: scroll;
   margin: 0;
   padding: 18px 30px 30px 28px;
+}
+
+#properties .panel-body {
+  height: 295px;
 }
 
 .panel-body h1:first-child {
@@ -311,7 +381,8 @@ input {
 }
 
 .panel-paragraph {
-  margin-bottom: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 /* ==========================================================================
@@ -398,7 +469,7 @@ input {
 }
 
 /* ==========================================================================
-   dialogues
+   Dialogues
    ========================================================================== */
 
 #dialogue-overlay {
@@ -478,7 +549,7 @@ input {
 }
 
 /*
- * dialogue: Library;
+ * Dialogue: Library;
  */
 
 #dialogue-library {
@@ -486,7 +557,7 @@ input {
 }
 
 /*
- * dialogue: Properties;
+ * Dialogue: Properties;
  */
 
 #dialogue-properties {
@@ -495,7 +566,7 @@ input {
 }
 
 /*
- * dialogue: Object manager;
+ * Dialogue: Object manager;
  */
 
 #object-manager {
@@ -521,7 +592,7 @@ input {
 }
 
 /*
- * dialogue: Dialogue panel conditions
+ * Dialogue: Panel conditions
  */
 
 #dialogue-panel-conditions.nav-tabs > li.active {
@@ -544,33 +615,33 @@ input {
   margin-bottom: 2px;
 }
 
-#condition > span {
+#condition-parameters > span {
   display: block;
   background-color: #424242;
   padding: 1px 0 1px 12px;
   font-size: 0.9em;
 }
 
-#condition table {
+#condition-parameters table {
   width: 100%;
   background-color: #383838;
   margin-bottom: 2px;
 }
 
-#condition tr {
+#condition-parameters tr {
   border-bottom: 1px solid #323232;
 }
 
-#condition tr:last-child {
+#condition-parameters tr:last-child {
   border-bottom: none;
 }
 
-#condition td {
+#condition-parameters td {
   font-size: 0.9em;
   padding: 4px 0 3px 6px;
 }
 
-#condition td:first-child {
+#condition-parameters td:first-child {
   color: #FDFF9A;
   padding: 4px 0 3px 12px;
 }
