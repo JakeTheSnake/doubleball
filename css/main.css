@@ -473,7 +473,7 @@ input {
    ========================================================================== */
 
 #dialogue-overlay {
-  display: block;
+  display: none;
   position: absolute;
   top: 0;
   right: 0;
@@ -487,10 +487,6 @@ input {
 
   -webkit-transition: all ease-out 0.2s;
   transition: all ease-out 0.2s;
-}
-
-#dialogue-overlay.ng-hide {
-  opacity: 0;
 }
 
 .dialogue {
@@ -513,19 +509,9 @@ input {
   top: 0;
 }
 
-#dialogue-window > .top.ng-hide {
-  opacity: 0;
-  top: -300px;
-}
-
 #dialogue-window > .right {
   height: 100%;
   right: 0;
-}
-
-#dialogue-window > .right.ng-hide {
-  opacity: 0;
-  right: -300px;
 }
 
 #dialogue-window > .bottom {
@@ -533,19 +519,9 @@ input {
   bottom: 0;
 }
 
-#dialogue-window > .bottom.ng-hide {
-  opacity: 0;
-  bottom: -300px;
-}
-
 #dialogue-window > .left {
   height: 100%;
   left: 0;
-}
-
-#dialogue-window > .left.ng-hide {
-  opacity: 0;
-  left: -300px;
 }
 
 /*
