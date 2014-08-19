@@ -39,10 +39,10 @@
             if (GameCreator.selectedObject) {
                 var selobj = GameCreator.selectedObject;
                 GameCreator.uiContext.beginPath();
-                GameCreator.uiContext.moveTo(selobj.x+2, selobj.y+2);
-                GameCreator.uiContext.lineTo(selobj.x-2 + selobj.displayWidth, selobj.y+2);
-                GameCreator.uiContext.lineTo(selobj.x-2 + selobj.displayWidth, selobj.y-2 + selobj.displayHeight);
-                GameCreator.uiContext.lineTo(selobj.x+2, selobj.y-2 + selobj.displayHeight);
+                GameCreator.uiContext.moveTo(selobj.attributes.x+2, selobj.attributes.y+2);
+                GameCreator.uiContext.lineTo(selobj.attributes.x-2 + selobj.displayWidth, selobj.attributes.y+2);
+                GameCreator.uiContext.lineTo(selobj.attributes.x-2 + selobj.displayWidth, selobj.attributes.y-2 + selobj.displayHeight);
+                GameCreator.uiContext.lineTo(selobj.attributes.x+2, selobj.attributes.y-2 + selobj.displayHeight);
                 GameCreator.uiContext.closePath();
                 GameCreator.uiContext.stroke();
             }
@@ -136,6 +136,8 @@
                         GameCreator.helpers.setMouseCursor(dragFunc);
                         dragFunc.call(GameCreator.selectedObject, mouseLeft, mouseTop);
                         GameCreator.drawSelectionLine();
+                        GameCreator.UI.updateSceneObjectForm(GameCreator.selectedObject);
+
                     }
                     GameCreator.render(true);
                 }
@@ -319,7 +321,7 @@
             var i, obj;
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {
                 obj = GameCreator.renderableObjects[i];
-                if (x >= obj.x && x <= obj.x + obj.displayWidth && y >= obj.y && y <= obj.y + obj.displayHeight) {
+                if (x >= obj.attributes.x && x <= obj.attributes.x + obj.displayWidth && y >= obj.attributes.y && y <= obj.attributes.y + obj.displayHeight) {
                     return obj;
                 }
             }

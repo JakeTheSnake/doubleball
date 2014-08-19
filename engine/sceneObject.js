@@ -2,15 +2,21 @@
 (function() {
     "use strict";
     GameCreator.SceneObject = function() {
-        this.x = 0;
-        this.y = 0;
-        this.accX = 0;
-        this.accY = 0;
-        this.speedX = 0;
-        this.speedY = 0;
         this.displayWidth = 0;
         this.displayHeight = 0;
         this.counters = {};
+
+        this.attributes = {
+            x: 0,
+            y: 0,
+            accX: 0,
+            accY: 0,
+            speedX: 0,
+            speedY: 0,
+            width: 0,
+            height: 0,
+            instanceId: undefined,
+        };
 
         this.clickOffsetX = 0;
         this.clickOffsetY = 0;
@@ -22,9 +28,6 @@
 
         //Name of object; by default same as the name of global object from which it was created.
         this.objectName = undefined;
-
-        //Unique ID for this specific scene object.
-        this.instanceId = undefined;
     };
 
 
@@ -39,8 +42,8 @@
     };
 
     GameCreator.SceneObject.prototype.update = function() {
-        this.displayWidth = parseInt(this.width[this.width.length - 1], 10);
-        this.displayHeight = parseInt(this.height[this.height.length - 1], 10);
+        this.displayWidth = parseInt(this.attributes.width[this.attributes.width.length - 1], 10);
+        this.displayHeight = parseInt(this.attributes.height[this.attributes.height.length - 1], 10);
         GameCreator.invalidate(this);
     };
 
@@ -50,15 +53,15 @@
         this.parent = globalObj;
         var state = this.getCurrentState();
 
-        this.x = args.x;
-        this.y = args.y;
+        this.attributes.x = args.x;
+        this.attributes.y = args.y;
 
-        this.width = args.width !== undefined ? args.width.slice(0) : state.attributes.width.slice(0);
-        this.height = args.height !== undefined ? args.height.slice(0) : state.attributes.height.slice(0);
+        this.attributes.width = args.width !== undefined ? args.width.slice(0) : state.attributes.width.slice(0);
+        this.attributes.height = args.height !== undefined ? args.height.slice(0) : state.attributes.height.slice(0);
         this.image = args.image !== undefined ? args.image : state.attributes.image;
         
         this.objectName = args.objectName !== undefined ? args.objectName : globalObj.objectName;
-        this.instanceId = this.objectName + GameCreator.getUniqueId();
+        this.attributes.instanceId = this.objectName + GameCreator.getUniqueId();
 
         globalObj.instantiateSceneObject(this, args);
 
@@ -94,25 +97,25 @@
 
     GameCreator.SceneObject.prototype.getDragFunction = function(x, y) {
         var border = 8;
-        if (y >= this.y && 
-                y <= this.y + this.displayHeight &&
-                x >= this.x &&
-                x <= this.x + this.displayWidth) {
-            if (Math.abs(this.x - x) <= border && Math.abs(this.y - y) <= border) {
+        if (y >= this.attributes.y && 
+                y <= this.attributes.y + this.displayHeight &&
+                x >= this.attributes.x &&
+                x <= this.attributes.x + this.displayWidth) {
+            if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.attributes.y - y) <= border) {
                 return this.resizeNW;
-            } else if (Math.abs(this.x + this.displayWidth - x) <= border && Math.abs(this.y - y) <= border) {
+            } else if (Math.abs(this.attributes.x + this.displayWidth - x) <= border && Math.abs(this.attributes.y - y) <= border) {
                 return this.resizeNE;
-            } else if (Math.abs(this.x - x) <= border && Math.abs(this.y + this.displayHeight - y) <= border) {
+            } else if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.y + this.displayHeight - y) <= border) {
                 return this.resizeSW;
-            } else if (Math.abs(this.y + this.displayHeight - y) <= border && Math.abs(this.x + this.displayWidth - x) <= border) {
+            } else if (Math.abs(this.attributes.y + this.displayHeight - y) <= border && Math.abs(this.attributes.x + this.displayWidth - x) <= border) {
                 return this.resizeSE;
-            } else if (Math.abs(this.x - x) <= border) {
+            } else if (Math.abs(this.attributes.x - x) <= border) {
                 return this.resizeW;
-            } else if (Math.abs(this.x + this.displayWidth - x) <= border) {
+            } else if (Math.abs(this.attributes.x + this.displayWidth - x) <= border) {
                 return this.resizeE;
-            } else if (Math.abs(this.y - y) <= border) {
+            } else if (Math.abs(this.attributes.y - y) <= border) {
                 return this.resizeN;
-            } else if (Math.abs(this.y + this.displayHeight - y) <= border) {
+            } else if (Math.abs(this.attributes.y + this.displayHeight - y) <= border) {
                 return this.resizeS;
             } else {
                 return this.moveObject;
@@ -133,97 +136,97 @@
     }
 
     GameCreator.SceneObject.prototype.resizeObject = function(diffX, diffY) {
-        if (this.width.length == 2 && diffX) {
-            this.width[0] = diffX * this.width[0]/this.width[1];
+        if (this.attributes.width.length == 2 && diffX) {
+            this.attributes.width[0] = diffX * this.attributes.width[0]/this.attributes.width[1];
         }
-        if (this.height.length == 2 && diffY) {
-            this.height[0] = diffY * this.height[0]/this.height[1];
+        if (this.attributes.height.length == 2 && diffY) {
+            this.attributes.height[0] = diffY * this.attributes.height[0]/this.attributes.height[1];
         }
-        this.width[this.width.length-1] = diffX ? diffX : this.width[this.width.length-1];
-        this.height[this.height.length-1] = diffY ? diffY : this.height[this.height.length-1];
-        this.displayWidth = this.width[this.width.length - 1];
-        this.displayHeight = this.height[this.height.length - 1];
+        this.attributes.width[this.attributes.width.length-1] = diffX ? diffX : this.attributes.width[this.attributes.width.length-1];
+        this.attributes.height[this.attributes.height.length-1] = diffY ? diffY : this.attributes.height[this.attributes.height.length-1];
+        this.displayWidth = this.attributes.width[this.attributes.width.length - 1];
+        this.displayHeight = this.attributes.height[this.attributes.height.length - 1];
         GameCreator.UI.updateSceneObjectForm(this);
     };
 
     GameCreator.SceneObject.prototype.cleanupSize = function() {
-        if (this.width.length == 2) {
-            this.width[0] = Math.abs(Math.round(this.width[0]));
+        if (this.attributes.width.length == 2) {
+            this.attributes.width[0] = Math.abs(Math.round(this.attributes.width[0]));
         }
-        if (this.height.length == 2) {
-            this.height[0] = Math.abs(Math.round(this.height[0]));
+        if (this.attributes.height.length == 2) {
+            this.attributes.height[0] = Math.abs(Math.round(this.attributes.height[0]));
         }
-        if (this.width[this.width.length-1] < 0) {
-            this.width[this.width.length-1] = Math.abs(Math.round(this.width[this.width.length-1]));
-            this.x = this.x - this.width[this.width.length-1];
+        if (this.attributes.width[this.attributes.width.length-1] < 0) {
+            this.attributes.width[this.attributes.width.length-1] = Math.abs(Math.round(this.attributes.width[this.attributes.width.length-1]));
+            this.attributes.x = this.attributes.x - this.attributes.width[this.attributes.width.length-1];
         }
-        if (this.height[this.height.length-1] < 0) {
-            this.height[this.height.length-1] = Math.abs(Math.round(this.height[this.height.length-1]));
-            this.y = this.y - this.height[this.height.length-1];
+        if (this.attributes.height[this.attributes.height.length-1] < 0) {
+            this.attributes.height[this.attributes.height.length-1] = Math.abs(Math.round(this.attributes.height[this.attributes.height.length-1]));
+            this.attributes.y = this.attributes.y - this.attributes.height[this.attributes.height.length-1];
         }
-        this.displayWidth = this.width[this.width.length - 1];
-        this.displayHeight = this.height[this.height.length - 1];
+        this.displayWidth = this.attributes.width[this.attributes.width.length - 1];
+        this.displayHeight = this.attributes.height[this.attributes.height.length - 1];
         this.clickOffsetX = null;
         this.clickOffsetY = null;
     };
 
     GameCreator.SceneObject.prototype.resizeNW = function(x, y) {
-        var diffX = this.x + this.displayWidth - x;
-        var diffY = this.y + this.displayHeight - y;
-        this.x = x;
-        this.y = y;
+        var diffX = this.attributes.x + this.displayWidth - x;
+        var diffY = this.attributes.y + this.displayHeight - y;
+        this.attributes.x = x;
+        this.attributes.y = y;
         this.resizeObject(diffX, diffY);
     };
 
     GameCreator.SceneObject.prototype.resizeNE = function(x, y) {
-        var diffX = x - this.x;
-        var diffY = this.y + this.displayHeight - y;
-        this.y = y;
+        var diffX = x - this.attributes.x;
+        var diffY = this.attributes.y + this.displayHeight - y;
+        this.attributes.y = y;
         this.resizeObject(diffX, diffY);
     };
 
     GameCreator.SceneObject.prototype.resizeSE = function(x, y) {
-        var diffY = y - this.y;
-        var diffX = x - this.x;
+        var diffY = y - this.attributes.y;
+        var diffX = x - this.attributes.x;
 
         this.resizeObject(diffX, diffY);
     };
 
     GameCreator.SceneObject.prototype.resizeSW = function(x, y) {
-        var diffX = this.x + this.displayWidth - x;
-        var diffY = y - this.y;
-        this.x = x;
+        var diffX = this.attributes.x + this.displayWidth - x;
+        var diffY = y - this.attributes.y;
+        this.attributes.x = x;
         this.resizeObject(diffX, diffY);
     };
 
     GameCreator.SceneObject.prototype.resizeW = function(x, y) {
-        var diffX = this.x + this.displayWidth - x;
-        this.x = x;
+        var diffX = this.attributes.x + this.displayWidth - x;
+        this.attributes.x = x;
         this.resizeObject(diffX, null);
     };
 
     GameCreator.SceneObject.prototype.resizeE = function(x, y) {
-        var diffX = x - this.x;
+        var diffX = x - this.attributes.x;
         this.resizeObject(diffX, null);
     };
 
     GameCreator.SceneObject.prototype.resizeN = function(x, y) {
-        var diffY = this.y + this.displayHeight - y;
-        this.y = y;
+        var diffY = this.attributes.y + this.displayHeight - y;
+        this.attributes.y = y;
         this.resizeObject(null, diffY);
     };
 
     GameCreator.SceneObject.prototype.resizeS = function(x, y) {
-        var diffY = y - this.y;
+        var diffY = y - this.attributes.y;
         this.resizeObject(null, diffY);
     };
 
     GameCreator.SceneObject.prototype.moveObject = function(x, y) {
         if (!this.clickOffsetX) {
-            this.clickOffsetX = x - this.x;
-            this.clickOffsetY = y - this.y;
+            this.clickOffsetX = x - this.attributes.x;
+            this.clickOffsetY = y - this.attributes.y;
         }
-        this.x = x - this.clickOffsetX;
-        this.y = y - this.clickOffsetY;
+        this.attributes.x = x - this.clickOffsetX;
+        this.attributes.y = y - this.clickOffsetY;
     };
 }());

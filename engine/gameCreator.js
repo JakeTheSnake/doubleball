@@ -174,15 +174,15 @@
 
         invalidate: function(obj) {
             var width, height;
-            var x = parseInt(obj.x, 10);
-            var y = parseInt(obj.y, 10);
+            var x = parseInt(obj.attributes.x, 10);
+            var y = parseInt(obj.attributes.y, 10);
             var xCorr = 0;
             var yCorr = 0;
-            if (obj.x < 0) {
+            if (obj.attributes.x < 0) {
                 xCorr = x;
                 x = 0;
             }
-            if (obj.y < 0) {
+            if (obj.attributes.y < 0) {
                 yCorr = y;
                 y = 0;
             }
@@ -190,8 +190,8 @@
                 width = obj.displayWidth;
                 height = obj.displayHeight;
             } else {
-                width = parseInt(obj.width, 10);
-                height = parseInt(obj.height, 10);
+                width = parseInt(obj.attributes.width, 10);
+                height = parseInt(obj.attributes.height, 10);
             }
             GameCreator.mainContext.clearRect(x, y,
                 width + xCorr + 1,

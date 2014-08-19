@@ -15,8 +15,8 @@ GameCreator.htmlStrings = {
         return result;
     },
 
-    numberInput: function(inputId, attrName, value) {
-        return '<input id="'+ inputId +'" type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+    numberInput: function(attrName, value) {
+        return '<input type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
 
     stringInput: function(inputId, attrName, value) {
@@ -47,8 +47,8 @@ GameCreator.htmlStrings = {
         return '<input id="'+ inputId +'" type="text" class="textField" data-type="image" data-attrName="' + attrName + '" value="' + (value ? value.src : '') + '"/>'
     },
 
-    inputLabel: function(inputId, labelText) {
-        return '<label for=' + inputId + '>' + labelText + '</label>';
+    inputLabel: function(labelText) {
+        return '<label>' + labelText + '</label>';
     },
 
     parameterGroup: function(parameterInput) {
@@ -246,14 +246,7 @@ GameCreator.htmlStrings = {
 	},
 
     sceneObjectForm: function(sceneObject) {
-        var result = '<div id="edit-scene-object-form">';
-        var state = sceneObject.parent.getState(sceneObject.currentState);        
-        result += GameCreator.helpers.getAttributeForm(state.attributes,
-                GameCreator[sceneObject.parent.objectType].objectSceneAttributes,
-                sceneObject);
-        result += '</div>';
-        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
-        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
+ 
     },
 
     getColumn: function(title, id) {

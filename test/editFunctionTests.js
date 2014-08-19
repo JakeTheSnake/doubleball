@@ -36,8 +36,8 @@ module("Scene Object Tests", {
 test("Add Object to scene", function() {
     var sceneObject = GameCreator.scenes[0].objects[0];
     ok(sceneObject, "Scene object added to scene");
-    deepEqual(sceneObject.x, 5, "Scene object correct x.");
-    deepEqual(sceneObject.y, 6, "Scene object correct y.");
+    deepEqual(sceneObject.attributes.x, 5, "Scene object correct x.");
+    deepEqual(sceneObject.attributes.y, 6, "Scene object correct y.");
 });
 
 test("Get Clicked Object in edit mode", function() {

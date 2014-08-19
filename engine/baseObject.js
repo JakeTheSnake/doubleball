@@ -131,34 +131,34 @@
     GameCreator.BaseObject.prototype.draw = function(context, obj) {
         var image = obj.image;
         if ($(image).data('loaded')) {
-            if (Array.isArray(obj.width) || Array.isArray(obj.height)) {
+            if (Array.isArray(obj.attributes.width) || Array.isArray(obj.attributes.height)) {
                 var maxHeight, minHeight, maxWidth, minWidth;
-                if (obj.width.length === 2) {
-                    maxWidth = obj.width[1];
-                    minWidth = obj.width[0];
-                } else if (obj.width.length === 1) {
-                    maxWidth = obj.width[0];
-                    minWidth = obj.width[0];
+                if (obj.attributes.width.length === 2) {
+                    maxWidth = obj.attributes.width[1];
+                    minWidth = obj.attributes.width[0];
+                } else if (obj.attributes.width.length === 1) {
+                    maxWidth = obj.attributes.width[0];
+                    minWidth = obj.attributes.width[0];
                 } else {
-                    maxWidth = obj.width;
-                    minWidth = obj.width;
+                    maxWidth = obj.attributes.width;
+                    minWidth = obj.attributes.width;
                 }
-                if (obj.height.length === 2) {
-                    maxHeight = obj.height[1];
-                    minHeight = obj.height[0];
-                } else if (obj.height.length === 1) {
-                    maxHeight = obj.height[0];
-                    minHeight = obj.height[0];
+                if (obj.attributes.height.length === 2) {
+                    maxHeight = obj.attributes.height[1];
+                    minHeight = obj.attributes.height[0];
+                } else if (obj.attributes.height.length === 1) {
+                    maxHeight = obj.attributes.height[0];
+                    minHeight = obj.attributes.height[0];
                 } else {
-                    maxHeight = obj.height;
-                    minHeight = obj.height;
+                    maxHeight = obj.attributes.height;
+                    minHeight = obj.attributes.height;
                 }
                 context.globalAlpha = 0.5;
-                context.drawImage(image, obj.x, obj.y, maxWidth, maxHeight);
+                context.drawImage(image, obj.attributes.x, obj.attributes.y, maxWidth, maxHeight);
                 context.globalAlpha = 1.0;
-                context.drawImage(image, obj.x, obj.y, minWidth, minHeight);
+                context.drawImage(image, obj.attributes.x, obj.attributes.y, minWidth, minHeight);
             } else {
-                context.drawImage(image, obj.x, obj.y, obj.width, obj.height);
+                context.drawImage(image, obj.attributes.x, obj.attributes.y, obj.attributes.width, obj.attributes.height);
             }
             obj.invalidated = false;
         }

@@ -343,21 +343,28 @@
         return segments.join(" ");
     };
 
-    GameCreator.helpers.populateAttributeForm = function(attributes, attrToInputMap, containerId) {
+    GameCreator.helpers.populateGlobalObjectPropertiesForm = function(attributes, attrToInputMap, containerId) {
         var i;
 
-        for (i = 0; i < Object.keys(attributes).length; i++) {
+        for (i = 0; i < Object.keys(attributes).length; i += 1) {
             var attributeName = Object.keys(attributes)[i];
-            var elementId = 'object-property-' + attributeName;
             $("#object-property-" + attributeName + "-container").html(
-                GameCreator.htmlStrings.inputLabel(elementId, GameCreator.helpers.labelize(attributeName)) +
-                attrToInputMap[attributeName](elementId, attributeName, attributes[attributeName])
+                GameCreator.htmlStrings.inputLabel(GameCreator.helpers.labelize(attributeName)) +
+                attrToInputMap[attributeName](attributeName, attributes[attributeName])
             );
         }
         $('#' + containerId + ' input').on('change', function() {
             GameCreator.saveInputValueToObject($(this), attributes);
         });
-        
+    };
+
+    GameCreator.helpers.populateSceneObjectForm = function(sceneObject) {
+        var i;
+        var attributes = sceneObject.attributes;
+        for (i = 0; i < Object.keys(attributes).length; i += 1) {
+            var attributeName = Object.keys(attributes)[i];
+            GameCreator.UI.setupNumberPresenter($("#scene-object-property-" + attributeName), sceneObject, attributeName);
+        }
     };
 
     GameCreator.helpers.startsWith = function(baseString, comparator) {

@@ -216,11 +216,11 @@ GameCreator.UI = {
 
         $('#toolbar-scenes').html(result);
         $('#toolbar-scenes').off('click');
-        $('#toolbar-scenes').on('click', '.nav-tabs > li:not(#add-scene-tab)', function(){
+        $('#toolbar-scenes').on('click', '.nav-tabs > li:not(#add-scene-tab)', function() {
             GameCreator.activeSceneId = parseInt($(this).data('sceneid'));
             GameCreator.editActiveScene();
         });
-        $('#toolbar-scenes').one('click', '#add-scene-tab', function(){
+        $('#toolbar-scenes').one('click', '#add-scene-tab', function() {
             GameCreator.addScene();
         });
     },
@@ -232,10 +232,12 @@ GameCreator.UI = {
     },
 
     editSceneObject: function() {
-        $("#edit-scene-object-title").html('<div class="headingNormalBlack">' + GameCreator.selectedObject.objectName + '</div>');
+
         var objectType = GameCreator.selectedObject.parent.objectType;
-        var obj = GameCreator.selectedObject;
-        if (GameCreator.helpers.startsWith(objectType, "CounterObject")) {
+
+        GameCreator.UI.setupSceneObjectForm(GameCreator.selectedObject);
+
+        /*if (GameCreator.helpers.startsWith(objectType, "CounterObject")) {
             var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInActiveScene());
             $("#edit-scene-object-content").html(GameCreator[objectType].sceneObjectForm(obj, uniqueIds));
             $("#add-counter-object-counter-selector").html();
@@ -252,12 +254,15 @@ GameCreator.UI = {
             });
         } else {
             $("#edit-scene-object-content").html(GameCreator.htmlStrings.sceneObjectForm(GameCreator.selectedObject));
-        }
+        }*/
+
     },
 
     updateSceneObjectForm: function(sceneObj) {
-        $("#edit-scene-object-form input[data-attrname=width").val(sceneObj.width);
-        $("#edit-scene-object-form input[data-attrname=height").val(sceneObj.height);
+        $("#scene-object-property-width span").html(sceneObj.attributes.width);
+        $("#scene-object-property-height span").html(sceneObj.attributes.height);
+        $("#scene-object-property-x span").html(sceneObj.attributes.x);
+        $("#scene-object-property-y span").html(sceneObj.attributes.y);
     },
 
     unselectSceneObject: function() {
@@ -330,5 +335,31 @@ GameCreator.UI = {
             });
             column.append(listItem);
         }
+    },
+
+    setupSceneObjectForm: function(sceneObject) {
+        var container = $('#scene-object-properties-container');
+        container.html(sceneObject.parent.getSceneObjectForm());
+        GameCreator.helpers.populateSceneObjectForm(sceneObject);
+    },
+
+    setupNumberPresenter: function(container, sceneObject, attrName) {
+        var display = document.createElement('span');
+        var attributes = sceneObject.attributes;
+        $(display).html(attributes[attrName]);
+        container.html(display);
+        var onClickFunc = function() {
+            container.html(GameCreator.htmlStrings.numberInput(attrName, attributes[attrName]));
+            $(container).find('input').focus();
+            $(container).find('input').on('blur', function() {
+                GameCreator.invalidate(sceneObject);
+                GameCreator.saveInputValueToObject($(this), attributes);
+                $(display).html(attributes[attrName]);
+                container.html(display);
+                $(display).on('click', onClickFunc);
+                GameCreator.render(true);
+            });
+        }
+        $(display).on('click', onClickFunc);
     },
 }
