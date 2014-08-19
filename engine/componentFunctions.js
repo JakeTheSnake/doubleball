@@ -48,28 +48,28 @@
 
     GameCreator.addObjFunctions.keyObjectFunctions = function(object) {
         object.checkEvents = function() {
-            var j, key, isKeyPressed, keyEvents, actions;
+            var j, key, isKeyPressed, keySets, actions;
             //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
             for (key in this.parent.keyPressed) {
                 if (this.parent.keyPressed.hasOwnProperty(key)) {
                     isKeyPressed = this.parent.keyPressed[key];
-                    keyEvents = this.parent.keyEvents[key];
+                    keySets = this.parent.keyEvents[key];
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
-                        if (keyEvents.length === 0) {
-                            keyEvents.push(new GameCreator.ConditionActionSet());
+                        if (GameCreator.state === 'directing' && keySets.length === 0) {
+                            keySets.push(new GameCreator.ConditionActionSet());
                             actions = GameCreator.helpers.getNonCollisionActions(this.parent.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 "Pressed " + key + " actions for " + this.parent.objectName,
                                  actions,
-                                 keyEvents[0].actions,
+                                 keySets[0].actions,
                                  this.objectName
                                 );
-                            GameCreator.bufferedActions.push({actionArray: keyEvents[0].actions, runtimeObj: this});    
+                            GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {
-                            for (j = 0; j < keyEvents.length; j++) {
-                                if (keyEvents[j].checkConditions()) {
-                                    keyEvents[j].runActions(this);
+                            for (j = 0; j < keySets.length; j++) {
+                                if (keySets[j].checkConditions()) {
+                                    keySets[j].runActions(this);
                                     this.keyCooldown[key] = true;
                                     // This anonymous function should ensure that keyAction in the timeout callback
                                     // has the state that it has when the timeout is declared.
