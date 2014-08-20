@@ -100,7 +100,7 @@
           Create:   new GameCreator.Action({    
                           action: function(params) {GameCreator.createRuntimeObject(params, {}); },
                           params: {"objectToCreate": 
-                                    {param: GameCreator.SceneObjectParameter,
+                                    {param: GameCreator.GlobalObjectParameter,
                                     mandatory: true},
                                    "x": 
                                    {param: GameCreator.NumberParameter,
@@ -133,7 +133,7 @@
                       }),
           SwitchState:  new GameCreator.Action({
                           action: function(params) {GameCreator.changeState(this, params); },
-                          params: {"targetObject":
+                          params: {"objectState":
                                     {param: GameCreator.StateParameter,
                                      mandatory: true
                                  }
@@ -149,14 +149,10 @@
                       }),
           SwitchScene: new GameCreator.Action({
                                 action: function(params){GameCreator.selectScene(params); },
-                                params: {"changeType":
+                                params: {"scene":
                                             {param: GameCreator.SwitchSceneParameter,
                                              mandatory: true,
-                                            },
-                                        "changeValue":
-                                            {param: GameCreator.NumberParameter,
-                                             mandatory: true
-                                         }
+                                            }
                                      },
                                 name: "SwitchScene",
                                 timing: {at: true, every: true, after: true},

@@ -19,11 +19,11 @@ GameCreator.htmlStrings = {
         return '<input type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
 
-    stringInput: function(inputId, attrName, value) {
-        return '<input type="text" class="textField" id="'+ inputId +'" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+    stringInput: function(attrName, value) {
+        return '<input type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
 
-    rangeInput: function(inputId, attrName, value) {
+    rangeInput: function(attrName, value) {
         var valueString;
         if (Array.isArray(value)) {
             if (value.length === 1) {
@@ -35,7 +35,7 @@ GameCreator.htmlStrings = {
         } else {
             valueString = value;
         }
-        return '<input id="'+ inputId +'" type="text" class="rangeField" data-type="range" data-attrName="' + attrName + '" value="' + (valueString === undefined ? '' : valueString) + '"/>'
+        return '<input type="text" class="rangeField" data-type="range" data-attrName="' + attrName + '" value="' + (valueString === undefined ? '' : valueString) + '"/>'
     },
 
     checkboxInput: function(inputId, attrName, checked) {

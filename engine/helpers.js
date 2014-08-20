@@ -363,7 +363,7 @@
         var attributes = sceneObject.attributes;
         for (i = 0; i < Object.keys(attributes).length; i += 1) {
             var attributeName = Object.keys(attributes)[i];
-            GameCreator.UI.setupNumberPresenter($("#scene-object-property-" + attributeName), sceneObject, attributeName);
+            GameCreator.UI.setupValuePresenter($("#scene-object-property-" + attributeName), sceneObject, attributeName);
         }
     };
 
@@ -402,6 +402,21 @@
         $(GameCreator.mainCanvas).css("cursor", cursor);
     }
 
+    GameCreator.helpers.getPresentationForInputValue = function(value, type) {
+        switch (type) {
+            case "rangeInput":
+                if (value.length == 1) {
+                    return value[0];
+                } else if (value.length == 2) {
+                    return (value[0] + ":" + value[1]);
+                } else {
+                    return value;
+                }
+            default:
+                return value;
+        }
+    }
+
     Array.prototype.collect = function(collectFunc) {
         var result = [];
         for (var i = 0; i < this.length; i++) {
@@ -409,5 +424,7 @@
         }
         return result;
     }
+
+
 
 }());

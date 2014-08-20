@@ -343,18 +343,19 @@ GameCreator.UI = {
         GameCreator.helpers.populateSceneObjectForm(sceneObject);
     },
 
-    setupNumberPresenter: function(container, sceneObject, attrName) {
+    setupValuePresenter: function(container, sceneObject, attrName) {
         var display = document.createElement('span');
         var attributes = sceneObject.attributes;
-        $(display).html(attributes[attrName]);
+        var inputType = $(container).data('inputtype');
+        $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType));
         container.html(display);
         var onClickFunc = function() {
-            container.html(GameCreator.htmlStrings.numberInput(attrName, attributes[attrName]));
+            container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName]));
             $(container).find('input').focus();
             $(container).find('input').on('blur', function() {
                 GameCreator.invalidate(sceneObject);
                 GameCreator.saveInputValueToObject($(this), attributes);
-                $(display).html(attributes[attrName]);
+                $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType));
                 container.html(display);
                 $(display).on('click', onClickFunc);
                 GameCreator.render(true);

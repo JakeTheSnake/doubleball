@@ -47,24 +47,24 @@
 
     GameCreator.FreeObject.prototype.initialize = function() {
         this.invalidated = true;
-        this.speedY = GameCreator.helpers.getRandomFromRange(this.speedY);
-        this.speedX = GameCreator.helpers.getRandomFromRange(this.speedX);
-        this.accY = GameCreator.helpers.getRandomFromRange(this.accY);
-        this.accX = GameCreator.helpers.getRandomFromRange(this.accX);
-        this.width = GameCreator.helpers.getRandomFromRange(this.width);
-        this.height = GameCreator.helpers.getRandomFromRange(this.height);
-        this.x = GameCreator.helpers.getRandomFromRange(this.x);
-        this.y = GameCreator.helpers.getRandomFromRange(this.y);
+        this.attributes.speedY = GameCreator.helpers.getRandomFromRange(this.attributes.speedY);
+        this.attributes.speedX = GameCreator.helpers.getRandomFromRange(this.attributes.speedX);
+        this.attributes.accY = GameCreator.helpers.getRandomFromRange(this.attributes.accY);
+        this.attributes.accX = GameCreator.helpers.getRandomFromRange(this.attributes.accX);
+        this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
+        this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
+        this.attributes.x = GameCreator.helpers.getRandomFromRange(this.attributes.x);
+        this.attributes.y = GameCreator.helpers.getRandomFromRange(this.attributes.y);
     };
 
     GameCreator.FreeObject.prototype.calculateSpeed = function() {
-        this.speedY += this.accY;
-        this.speedX += this.accX;
+        this.attributes.speedY += this.attributes.accY;
+        this.attributes.speedX += this.attributes.accX;
     };
 
     GameCreator.FreeObject.prototype.shoot = function(staticParameters) {
         var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
-        var unitVector = GameCreator.helpers.calcUnitVector(this.speedX, this.speedY);
+        var unitVector = GameCreator.helpers.calcUnitVector(this.attributes.speedX, this.attributes.speedY);
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var target;
         switch (staticParameters.projectileDirection) {
@@ -75,27 +75,27 @@
                 speedY = unitVector.y * projectileSpeed;
             }
             speedX = unitVector.x * projectileSpeed;
-            x = this.x;
-            y = this.y;
+            x = this.attributes.x;
+            y = this.attributes.y;
             break;
         case "Up":
-            x = this.x + this.width / 2;
-            y = this.y;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y;
             speedY = -projectileSpeed;
             break;
         case "Down":
-            x = this.x + this.width / 2;
-            y = this.y + this.height;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height;
             speedY = projectileSpeed;
             break;
         case "Left":
-            x = this.x;
-            y = this.y + this.height / 2;
+            x = this.attributes.x;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = -projectileSpeed;
             break;
         case "Right":
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
+            x = this.attributes.x + this.attributes.width;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = projectileSpeed;
             break;
         default:
@@ -104,9 +104,9 @@
                 // We did not find the target, return without shooting anything.
                 return;
             }
-            x = this.x + this.width / 2;
-            y = this.y + this.height / 2;
-            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x, target.y - this.y);
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height / 2;
+            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.attributes.x, target.y - this.attributes.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }
@@ -123,10 +123,10 @@
 
     GameCreator.FreeObject.prototype.move = function(modifier) {
         var targetX, targetY, preDiffX, preDiffY, unitVector, postDiffX, postDiffY, nextIndexOffset;
-        if (this.speedX !== 0 || this.speedY !== 0) {
+        if (this.attributes.speedX !== 0 || this.attributes.speedY !== 0) {
             GameCreator.invalidate(this);
         }
-        this.x += this.speedX * modifier;
-        this.y += this.speedY * modifier;
+        this.attributes.x += this.attributes.speedX * modifier;
+        this.attributes.y += this.attributes.speedY * modifier;
     };
 }());
