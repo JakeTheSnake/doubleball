@@ -46,55 +46,56 @@
 
     GameCreator.TopDownObject.prototype.initialize = function() {
         this.invalidated = true;
-        this.speedY = GameCreator.helpers.getRandomFromRange(this.speedY);
-        this.speedX = GameCreator.helpers.getRandomFromRange(this.speedX);
-        this.accY = GameCreator.helpers.getRandomFromRange(this.accY);
-        this.accX = GameCreator.helpers.getRandomFromRange(this.accX);
-        this.width = GameCreator.helpers.getRandomFromRange(this.width);
-        this.height = GameCreator.helpers.getRandomFromRange(this.height);
-        this.x = GameCreator.helpers.getRandomFromRange(this.x);
-        this.y = GameCreator.helpers.getRandomFromRange(this.y);
+        this.attributes.speedY = GameCreator.helpers.getRandomFromRange(this.attributes.speedY);
+        this.attributes.speedX = GameCreator.helpers.getRandomFromRange(this.attributes.speedX);
+        this.attributes.accY = GameCreator.helpers.getRandomFromRange(this.attributes.accY);
+        this.attributes.accX = GameCreator.helpers.getRandomFromRange(this.attributes.accX);
+        this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
+        this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
+        this.attributes.x = GameCreator.helpers.getRandomFromRange(this.attributes.x);
+        this.attributes.y = GameCreator.helpers.getRandomFromRange(this.attributes.y);
+        this.attributes.maxSpeed = GameCreator.helpers.getRandomFromRange(this.attributes.maxSpeed);
     };
 
     GameCreator.TopDownObject.prototype.calculateSpeed = function() {
-        var maxSpeed = this.maxSpeed;
+        var maxSpeed = this.attributes.maxSpeed;
         var angularMaxSpeed = GameCreator.helpers.calcAngularSpeed(maxSpeed);
         //Should only be able to affect movement if there is something beneath object.
         if (this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 1;
-            this.speedX = 0;
-            this.speedY = -maxSpeed;
+            this.attributes.speedX = 0;
+            this.attributes.speedY = -maxSpeed;
         } else if (this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 2;
-            this.speedX = angularMaxSpeed;
-            this.speedY = -angularMaxSpeed;
+            this.attributes.speedX = angularMaxSpeed;
+            this.attributes.speedY = -angularMaxSpeed;
         } else if (!this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 3;
-            this.speedX = maxSpeed;
-            this.speedY = 0;
+            this.attributes.speedX = maxSpeed;
+            this.attributes.speedY = 0;
         } else if (!this.parent.keyUpPressed && this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 4;
-            this.speedX = angularMaxSpeed;
-            this.speedY = angularMaxSpeed;
+            this.attributes.speedX = angularMaxSpeed;
+            this.attributes.speedY = angularMaxSpeed;
         } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 5;
-            this.speedX = 0;
-            this.speedY = maxSpeed;
+            this.attributes.speedX = 0;
+            this.attributes.speedY = maxSpeed;
         } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && this.parent.keyLeftPressed) {
             this.facing = 6;
-            this.speedX = -angularMaxSpeed;
-            this.speedY = angularMaxSpeed;
+            this.attributes.speedX = -angularMaxSpeed;
+            this.attributes.speedY = angularMaxSpeed;
         } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
             this.facing = 7;
-            this.speedX = -maxSpeed;
-            this.speedY = 0;
+            this.attributes.speedX = -maxSpeed;
+            this.attributes.speedY = 0;
         } else if (this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
             this.facing = 8;
-            this.speedX = -angularMaxSpeed;
-            this.speedY = -angularMaxSpeed;
+            this.attributes.speedX = -angularMaxSpeed;
+            this.attributes.speedY = -angularMaxSpeed;
         } else {
-            Math.abs(this.speedX) < 0.1 ? this.speedX = 0 : this.speedX *= 0.9;
-            Math.abs(this.speedY) < 0.1 ? this.speedY = 0 : this.speedY *= 0.9;
+            Math.abs(this.attributes.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.9;
+            Math.abs(this.attributes.speedY) < 0.1 ? this.attributes.speedY = 0 : this.attributes.speedY *= 0.9;
         }
     };
 
@@ -148,14 +149,14 @@
 
     GameCreator.TopDownObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.getCurrentState();
-        sceneObject.accX = args.accX || [0];
-        sceneObject.accY = args.accY || [0];
-        sceneObject.speedX = args.speedX || [0];
-        sceneObject.speedY = args.speedY || [0];
+        sceneObject.attributes.accX = args.accX || [0];
+        sceneObject.attributes.accY = args.accY || [0];
+        sceneObject.attributes.speedX = args.speedX || [0];
+        sceneObject.attributes.speedY = args.speedY || [0];
 
         sceneObject.facing = 1;
 
-        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.attributes.maxSpeed;
+        sceneObject.attributes.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.attributes.maxSpeed;
         sceneObject.keyCooldown = {space: false};
     };
 
@@ -169,69 +170,69 @@
         case "Default":
             switch (facing) {
             case 1:
-                x = this.x + this.width / 2;
-                y = this.y;
+                x = this.attributes.x + this.attributes.width / 2;
+                y = this.attributes.y;
                 speedY = -projectileSpeed;
                 break;
             case 2:
-                x = this.x + this.width;
-                y = this.y;
+                x = this.attributes.x + this.attributes.width;
+                y = this.attributes.y;
                 speedX = angularSpeed;
                 speedY = -angularSpeed;
                 break;
             case 3:
-                x = this.x + this.width;
-                y = this.y + this.height / 2;
+                x = this.attributes.x + this.attributes.width;
+                y = this.attributes.y + this.attributes.height / 2;
                 speedX = projectileSpeed;
                 break;
             case 4:
-                x = this.x + this.width;
-                y = this.y + this.height;
+                x = this.attributes.x + this.attributes.width;
+                y = this.attributes.y + this.attributes.height;
                 speedX = angularSpeed;
                 speedY = angularSpeed;
                 break;
             case 5:
-                x = this.x + this.width / 2;
-                y = this.y + this.height;
+                x = this.attributes.x + this.attributes.width / 2;
+                y = this.attributes.y + this.attributes.height;
                 speedY = projectileSpeed;
                 break;
             case 6:
-                x = this.x;
-                y = this.y + this.height;
+                x = this.attributes.x;
+                y = this.attributes.y + this.attributes.height;
                 speedX = -angularSpeed;
                 speedY = angularSpeed;
                 break;
             case 7:
-                x = this.x;
-                y = this.y + this.height / 2;
+                x = this.attributes.x;
+                y = this.attributes.y + this.attributes.height / 2;
                 speedX = -projectileSpeed;
                 break;
             case 8:
-                x = this.x;
-                y = this.y;
+                x = this.attributes.x;
+                y = this.attributes.y;
                 speedX = -angularSpeed;
                 speedY = -angularSpeed;
                 break;
             }
             break;
         case "Up":
-            x = this.x + this.width / 2;
-            y = this.y;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y;
             speedY = -projectileSpeed;
             break;
         case "Down":
-            x = this.x + this.width / 2;
-            y = this.y + this.height;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height;
             speedY = projectileSpeed;
             break;
         case "Left":
-            x = this.x;
-            y = this.y + this.height / 2;
+            x = this.attributes.x;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = -projectileSpeed;
             break;
         case "Right":
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
+            x = this.attributes.x + this.attributes.width;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = projectileSpeed;
             break;
         default:
@@ -240,9 +241,9 @@
                 // We did not find the target, return without shooting anything.
                 return;
             }
-            x = this.x + (this.facingLeft ? 0 : this.width);
-            y = this.y;
-            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
+            x = this.attributes.x + (this.facingLeft ? 0 : this.attributes.width);
+            y = this.attributes.y;
+            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.attributes.width), target.y - this.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }
