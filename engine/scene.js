@@ -53,11 +53,13 @@
         getSceneObjectById: function(id) {
             var i, sceneObj;
             var activeScene;
-            activeScene = GameCreator.getActiveScene();
-            for (i = 0; i < activeScene.objects.length; i += 1) {
-                sceneObj = activeScene.objects[i];
-                if (sceneObj.instanceId === id) {
-                    return sceneObj;
+            if (id !== undefined) {
+                activeScene = GameCreator.getActiveScene();
+                for (i = 0; i < activeScene.objects.length; i += 1) {
+                    sceneObj = activeScene.objects[i];
+                    if (sceneObj.instanceId === id) {
+                        return sceneObj;
+                    }
                 }
             }
             return null;

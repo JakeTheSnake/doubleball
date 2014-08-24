@@ -240,7 +240,7 @@
                 GameCreator.render();
             };
         return image;
-    }
+    };
 
     GameCreator.helpers.getRandomFromRange = function(range) {
         var value;
@@ -400,7 +400,7 @@
                 break;
         }
         $(GameCreator.mainCanvas).css("cursor", cursor);
-    }
+    };
 
     GameCreator.helpers.getPresentationForInputValue = function(value, type) {
         switch (type) {
@@ -415,7 +415,7 @@
             default:
                 return value;
         }
-    }
+    };
 
     Array.prototype.collect = function(collectFunc) {
         var result = [];
@@ -423,7 +423,7 @@
             result.push(collectFunc(this[i]));
         }
         return result;
-    }
+    };
 
 
 

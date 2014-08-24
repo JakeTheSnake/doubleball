@@ -63,6 +63,9 @@
 
         render: function (forceRender) {
             var i, obj;
+            GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             for (i = 0; i < GameCreator.renderableObjects.length; i += 1) {
                 obj = GameCreator.renderableObjects[i];
                 // TODO: Deactivated invalidation
@@ -173,7 +176,7 @@
         },
 
         invalidate: function(obj) {
-            var width, height;
+            /*var width, height;
             var x = parseInt(obj.attributes.x, 10);
             var y = parseInt(obj.attributes.y, 10);
             var xCorr = 0;
@@ -196,7 +199,7 @@
             GameCreator.mainContext.clearRect(x, y,
                 width + xCorr + 1,
                 height + yCorr + 1);
-            obj.invalidated = true;
+            obj.invalidated = true;*/
         },
 
         reset: function() {

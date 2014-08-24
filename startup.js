@@ -32,6 +32,8 @@ window.onload = function () {
         var ballImage = GameCreator.helpers.parseImage("assets/ball.png");
         var barImage = GameCreator.helpers.parseImage("assets/bar1.png");
         var zerglingImage = GameCreator.helpers.parseImage("assets/zergling.png");
+        var blackBallImage = GameCreator.helpers.parseImage("assets/black_ball.gif");
+        var zealotImage = GameCreator.helpers.parseImage("assets/zealot.gif");
 
         var globalBall = GameCreator.addGlobalObject({image: redBallImage, objectName: "red_ball", width:[50],x:[1,100], y:[1,100], height:[50]}, "FreeObject");
         var globalBall2 = GameCreator.addGlobalObject({image: ballImage, objectName: "ball", width:[70],x:[1,100], y:[1,100], height:[70]}, "FreeObject");
@@ -48,19 +50,18 @@ window.onload = function () {
         
         //Create Mouseobject
         
-        //var globalMousePlayer = GameCreator.addGlobalObject({image: {src: "assets/zealot.gif"}, objectName: "muszealoten",x:[1,100], y:[1,100], width: [80], height: [80]}, "mouseObject")
-        //GameCreator.createInstance(globalMousePlayer, GameCreator.scenes[0], {x:100, y:200})
+        var globalMousePlayer = GameCreator.addGlobalObject({image: zealotImage, objectName: "muszealoten",x:[1,100], y:[1,100], width: [80], height: [80]}, "MouseObject")
         
         //Create Platformobject
         
-        //var globalPlatformPlayer = GameCreator.addGlobalObject({image: {src: "assets/zealot.gif"}, x:[1,100], y:[1,100],objectName: "hoppzealoten", width: [80], height: [80]}, "platformObject")
-        //GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
+        var globalPlatformPlayer = GameCreator.addGlobalObject({image: zealotImage,objectName: "hoppzealoten", width: [80], height: [80]}, "PlatformObject")
         
         //Create TopDownObject
         
         var globalTopDownPlayer = GameCreator.addGlobalObject({image: zerglingImage, x:[1,100], y:[1,100], objectName: "zerglingen", width: [80], height: [80]}, "TopDownObject")
         
-        
+        var globalTextCounter = GameCreator.addGlobalObject({objectName: "textCounter"}, "CounterObjectText");
+        var globalImageCounter = GameCreator.addGlobalObject({image: blackBallImage, width: [50], height: [50], objectName: "imageCounter"}, "CounterObjectImage");
         //GameCreator.loadScene(GameCreator.scenes[0]);
         
         GameCreator.editScene(GameCreator.scenes[0]);
