@@ -567,6 +567,7 @@ input {
    background-color: #239D58;
 }
 
+
 /*
  * Dialogue: Panel conditions
  */
@@ -579,11 +580,11 @@ input {
   cursor: default;
 }
 
-#conditions-group {
+.conditions-group {
   border: 1px solid #239D58;
 }
 
-#conditions-group > span {
+.conditions-group > span {
   display: block;
   background-color: #239D58;
   padding: 5px 0 0 12px;
@@ -591,33 +592,33 @@ input {
   margin-bottom: 2px;
 }
 
-#condition-parameters > span {
+.condition-parameters > span {
   display: block;
   background-color: #424242;
   padding: 1px 0 1px 12px;
   font-size: 0.9em;
 }
 
-#condition-parameters table {
+.condition-parameters table {
   width: 100%;
   background-color: #383838;
   margin-bottom: 2px;
 }
 
-#condition-parameters tr {
+.condition-parameters tr {
   border-bottom: 1px solid #323232;
 }
 
-#condition-parameters tr:last-child {
+.condition-parameters tr:last-child {
   border-bottom: none;
 }
 
-#condition-parameters td {
+.condition-parameters td {
   font-size: 0.9em;
   padding: 4px 0 3px 6px;
 }
 
-#condition-parameters td:first-child {
+.condition-parameters td:first-child {
   color: #FDFF9A;
   padding: 4px 0 3px 12px;
 }

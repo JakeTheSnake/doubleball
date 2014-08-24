@@ -87,7 +87,8 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
 
     if (active) {
         $(listItem).addClass('active');
-        conditionsList = document.createElement('ul');
+        conditionsList = document.createElement('div');
+        conditionsList.className = 'conditions-group';
 
         for (i = 0; i < this.conditionVMs.length; i+=1) {
             $(conditionsList).append(this.conditionVMs[i].getPresentation());
@@ -132,8 +133,8 @@ GameCreator.ConditionItemVM = function(databaseObject) {
 
 GameCreator.ConditionItemVM.prototype.getPresentation = function() {
     var result = document.createElement('div');
-        result.id = ('condition')
-    var title =document.createElement('span');
+        result.className = 'condition-parameters';
+    var title = document.createElement('span');
     
     $(title).append(this.databaseObject.name);
     $(result).append(title);

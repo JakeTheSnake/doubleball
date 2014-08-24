@@ -257,10 +257,8 @@ GameCreator.htmlStrings = {
                    <div class="panel-heading"> \
                    <span class="panel-title">' + title + '</span> \
                    </div> \
-                   <div class="col"> \
                    <ul id="' + id + '" class="nav nav-tabs nav-stacked"> \
                    </ul> \
-                   </div> \
                    </div>';
                    
         return result;
