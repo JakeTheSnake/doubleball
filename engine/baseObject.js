@@ -121,10 +121,10 @@
     GameCreator.BaseObject.prototype.checkEvents = function() {};
 
     GameCreator.BaseObject.prototype.move = function(modifier) {
-        if (this.speedX !== 0 || this.speedY !== 0) {
+        if (this.attributes.speedX !== 0 || this.attributes.speedY !== 0) {
             GameCreator.invalidate(this);
-            this.x += this.speedX * modifier;
-            this.y += this.speedY * modifier;
+            this.attributes.x += this.attributes.speedX * modifier;
+            this.attributes.y += this.attributes.speedY * modifier;
         }
     };
 

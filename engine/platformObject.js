@@ -54,25 +54,25 @@
     GameCreator.PlatformObject.prototype.calculateSpeed = function() {
         //Should only be able to affect movement if there is something beneath object.
         if (this.parent.keyUpPressed && this.objectBeneath) {
-            this.speedY = -600;
+            this.attributes.speedY = -600;
         }
         if (this.parent.keyRightPressed) {
             this.facingLeft = false;
-            this.accX = this.acceleration;
+            this.attributes.accX = this.attributes.acceleration;
         } else if (this.parent.keyLeftPressed) {
             this.facingLeft = true;
-            this.accX = -this.acceleration;
+            this.attributes.accX = -this.attributes.acceleration;
         } else if (this.objectBeneath) {
-            this.accX = 0;
-            Math.abs(this.speedX) < 0.1 ? this.speedX = 0 : this.speedX *= 0.9;
+            this.attributes.accX = 0;
+            Math.abs(this.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.9;
         } else {
-            this.accX = 0;
+            this.attributes.accX = 0;
         }
         //Add acceleration only if object is moving below max movement speed in that direction.
-        if ((this.accX > 0 && this.speedX < this.maxSpeed) || (this.accX < 0 && this.speedX > -this.maxSpeed)) {
-            this.speedX += this.accX;
+        if ((this.attributes.accX > 0 && this.attributes.speedX < this.attributes.maxSpeed) || (this.attributes.accX < 0 && this.attributes.speedX > -this.attributes.maxSpeed)) {
+            this.attributes.speedX += this.attributes.accX;
         }
-        this.speedY += this.accY;
+        this.attributes.speedY += this.attributes.accY;
     };
 
     GameCreator.PlatformObject.prototype.onGameStarted = function() {
@@ -120,30 +120,30 @@
 
     GameCreator.PlatformObject.prototype.initialize = function() {
         this.invalidated = true;
-        this.speedY = GameCreator.helpers.getRandomFromRange(this.speedY);
-        this.speedX = GameCreator.helpers.getRandomFromRange(this.speedX);
-        this.accY = GameCreator.helpers.getRandomFromRange(this.accY);
-        this.accX = GameCreator.helpers.getRandomFromRange(this.accX);
-        this.width = GameCreator.helpers.getRandomFromRange(this.width);
-        this.height = GameCreator.helpers.getRandomFromRange(this.height);
-        this.acceleration = GameCreator.helpers.getRandomFromRange(this.acceleration);
-        this.maxSpeed = GameCreator.helpers.getRandomFromRange(this.maxSpeed);
-        this.x = GameCreator.helpers.getRandomFromRange(this.x);
-        this.y = GameCreator.helpers.getRandomFromRange(this.y);
+        this.attributes.speedY = GameCreator.helpers.getRandomFromRange(this.attributes.speedY);
+        this.attributes.speedX = GameCreator.helpers.getRandomFromRange(this.attributes.speedX);
+        this.attributes.accY = GameCreator.helpers.getRandomFromRange(this.attributes.accY);
+        this.attributes.accX = GameCreator.helpers.getRandomFromRange(this.attributes.accX);
+        this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
+        this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
+        this.attributes.acceleration = GameCreator.helpers.getRandomFromRange(this.attributes.acceleration);
+        this.attributes.maxSpeed = GameCreator.helpers.getRandomFromRange(this.attributes.maxSpeed);
+        this.attributes.x = GameCreator.helpers.getRandomFromRange(this.attributes.x);
+        this.attributes.y = GameCreator.helpers.getRandomFromRange(this.attributes.y);
     };
 
     GameCreator.PlatformObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.getCurrentState();
-        sceneObject.accX = args.accX || [0];
-        sceneObject.speedX = args.speedX || [0];
-        sceneObject.speedY = args.speedY || [0];
+        sceneObject.attributes.accX = args.accX || [0];
+        sceneObject.attributes.speedX = args.speedX || [0];
+        sceneObject.attributes.speedY = args.speedY || [0];
 
         sceneObject.objectBeneath = false;
-        sceneObject.acceleration = args.acceleration !== undefined ? args.acceleration : state.attributes.acceleration;
+        sceneObject.attributes.acceleration = args.acceleration !== undefined ? args.acceleration : state.attributes.acceleration;
 
-        sceneObject.accY = args.accY !== undefined ? args.accY : state.attributes.accY;
+        sceneObject.attributes.accY = args.accY !== undefined ? args.accY : state.attributes.accY;
 
-        sceneObject.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.attributes.maxSpeed;
+        sceneObject.attributes.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.attributes.maxSpeed;
         sceneObject.keyCooldown = {space: false};
     };
 
