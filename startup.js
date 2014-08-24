@@ -50,7 +50,7 @@ window.onload = function () {
         
         //Create Mouseobject
         
-        var globalMousePlayer = GameCreator.addGlobalObject({image: zealotImage, objectName: "muszealoten",x:[1,100], y:[1,100], width: [80], height: [80]}, "MouseObject")
+        var globalMousePlayer = GameCreator.addGlobalObject({image: zealotImage, objectName: "muszealoten", width: [80], height: [80]}, "MouseObject")
         
         //Create Platformobject
         
