@@ -45,14 +45,14 @@ GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
             value = sceneObject.counters[obj.counterName].value;
         }
     }
-    context.font = obj.size + "px " + obj.font;
-    context.fillStyle = obj.color;
-    context.fillText(value, obj.x, obj.y + obj.size);
+    context.font = obj.attributes.size + "px " + obj.font;
+    context.fillStyle = obj.attributes.color;
+    context.fillText(value, obj.attributes.x, obj.attributes.y + obj.attributes.size);
 };
 
 GameCreator.CounterObjectText.prototype.initialize = function() {
-    this.width = GameCreator.helpers.getRandomFromRange(this.width);
-    this.height = GameCreator.helpers.getRandomFromRange(this.height);
+    this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
+    this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
 };
 
 GameCreator.CounterObjectText.prototype.onGameStarted = function() {};
@@ -61,7 +61,7 @@ GameCreator.CounterObjectText.prototype.onCreate = function() {};
 
 GameCreator.CounterObjectText.prototype.instantiateSceneObject = function(sceneObject, args) {
     var state = sceneObject.parent.getDefaultState();
-    sceneObject.font = state.attributes.font;
-    sceneObject.color = state.attributes.color;
-    sceneObject.size = state.attributes.size;
+    sceneObject.attributes.font = state.attributes.font;
+    sceneObject.attributes.color = state.attributes.color;
+    sceneObject.attributes.size = state.attributes.size;
 };
