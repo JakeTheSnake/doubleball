@@ -11,7 +11,7 @@ GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, val
 };
 
 GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
-    var result = '<div ' + (this.value === undefined ? 'style="color: #FF0000;"' : '') +'>' + this.name + ': ' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</div>';
+    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</td>';
     return result;
 }
 
@@ -23,7 +23,7 @@ GameCreator.SceneObjectParameter = function(name, eventDataItem, mandatory, valu
 };
 
 GameCreator.SceneObjectParameter.prototype.getPresentation = function() {
-    var result = "<div>" + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.defaultValue) + "</div>";
+    var result = "<td>" + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.defaultValue) + "</td>";
     return result;
 };
 
@@ -35,7 +35,7 @@ GameCreator.NumberParameter = function(name, eventDataItem, mandatory, value) {
 };
 
 GameCreator.NumberParameter.prototype.getPresentation = function() {
-    var result = '<div ' + (this.value === undefined ? 'style="color: #FF0000;"' : '') +'>' + this.name + ': ' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</div>";
+    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
     return result;
 };
 
@@ -152,9 +152,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
     var paramList = document.createElement('table');
     for (var i = 0; i < this.parameters.length; i+=1) {
         var paramItemRow = document.createElement('tr');
-        var paramItemCell = document.createElement('td');
-        $(paramItemCell).append(this.parameters[i].getPresentation())
-        $(paramItemRow).append(paramItemCell);
+        $(paramItemRow).append(this.parameters[i].getPresentation());
         $(paramList).append(paramItemRow);
     }
     $(result).append(paramList);

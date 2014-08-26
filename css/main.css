@@ -572,8 +572,25 @@ input {
  * Dialogue: Panel conditions
  */
 
-#dialogue-panel-conditions.nav-tabs > li.active {
+#dialogue-edit-content {
+  height: 100%;
+}
+
+#dialogue-events-content {
+  height: 100%;
+}
+
+#dialogue-events-content .col {
+  width: 200px;
+}
+
+#dialogue-panel-conditions.nav-tabs > li,
+#dialogue-panel-actions.nav-tabs > li {
   width: auto;
+}
+
+#dialogue-panel-conditions.nav-tabs > li.active, 
+#dialogue-panel-actions.nav-tabs > li.active {
   padding: 0;
   background-color: #323232;
   height: auto;
