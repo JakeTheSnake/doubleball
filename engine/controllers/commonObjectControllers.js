@@ -71,21 +71,21 @@ GameCreator.commonObjectControllers = {
     },
 
     setupOnDestroyActionsForm: function(container) {
-        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
+        var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
-        GameCreator.UI.setupEditEventColumns(this.onDestroySets, container);
+        GameCreator.UI.setupEditEventColumns(this.onDestroySets, container, selectableActions);
     },
 
     setupOnCreateActionsForm: function(container) {
-        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
+        var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
-        GameCreator.UI.setupEditEventColumns(this.onCreateSets, container);  
+        GameCreator.UI.setupEditEventColumns(this.onCreateSets, container, selectableActions);  
     },
 
     setupOnClickActionsForm: function(container) {
-        var choosableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
+        var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
-        GameCreator.UI.setupEditEventColumns(this.onClickSets, container);    
+        GameCreator.UI.setupEditEventColumns(this.onClickSets, container, selectableActions);    
     },
 
     setupStatesForm: function(container, selectedState) {

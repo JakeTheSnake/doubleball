@@ -117,7 +117,7 @@ GameCreator.UI = {
             });
         });
         
-        $( "#select-action-add-action" ).click(function( event ) {                
+        $("#select-action-add-action" ).click(function( event ) {                
             var action = choosableActions[$("#action-selector").val()];
             var parameters = {};
 
@@ -275,7 +275,7 @@ GameCreator.UI = {
         $('#toolbar-scenes').hide();
     },
 
-    setupEditEventColumns: function(caSets, columnParentContainer) {
+    setupEditEventColumns: function(caSets, columnParentContainer, selectableActions) {
         if (caSets.length === 0) {
             var caSet = new GameCreator.ConditionActionSet();
             caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
@@ -292,7 +292,7 @@ GameCreator.UI = {
         var caSetVMs = [];
 
         for (var i = 0; i < caSets.length; i++) {
-            caSetVMs.push(new GameCreator.CASetVM(caSets[i]));
+            caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions));
         }
 
         var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
@@ -306,20 +306,37 @@ GameCreator.UI = {
             $(conditionsColumn).append(caSetVMs[i].getPresentation());
         }
 
-        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM, newRuntimeCondition){
+        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM){
             var isActive;
             conditionsColumn.html('');
-            if (newRuntimeCondition !== undefined) {
-                activeCASetVM.addCondition(newRuntimeCondition);
-            }
             for (i = 0; i < caSetVMs.length; i+=1) {
                 isActive = activeCASetVM === caSetVMs[i];
                 $(conditionsColumn).append(caSetVMs[i].getPresentation(isActive));
             }
+            $("#dialogue-panel-add-list").empty();
+        });
+
+        $("#dialogue-panel-actions").on('redrawList', function(evt, activeCASetVM){
+            var actionsColumn = $("#dialogue-panel-actions");
+            actionsColumn.html('');
+            
+            for (i = 0; i < activeCASetVM.actionVMs.length; i+=1) {
+                var listItem = document.createElement('li');
+                $(listItem).append(activeCASetVM.actionVMs[i].getPresentation());
+                actionsColumn.append(listItem);
+            }
+            
+            var addActionButton = document.createElement('div');
+            $(addActionButton).html('<span>LÄGG TILL EN ACTION</span>');
+            $(addActionButton).on('click', function() {
+                GameCreator.UI.populateSelectActionList(activeCASetVM);
+            });
+            actionsColumn.append(addActionButton);
+            $("#dialogue-panel-add-list").empty();
         });
     },
 
-    populateSelectConditionList: function(VMcollection, activeCASetVM) {
+    populateSelectConditionList: function(activeCASetVM) {
         var i;
         var column = $("#dialogue-panel-add-list");
 
@@ -331,7 +348,27 @@ GameCreator.UI = {
             $(listItem).data('condition', conditionName);
             $(listItem).append(conditionName);
             $(listItem).on('click', function() {
-                $("#dialogue-panel-conditions").trigger('redrawList', [activeCASetVM, $(this).data('condition')]);
+                activeCASetVM.addCondition($(this).data('condition'));
+                $("#dialogue-panel-conditions").trigger('redrawList', activeCASetVM);
+            });
+            column.append(listItem);
+        }
+    },
+
+    populateSelectActionList: function(activeCASetVM) {
+        var i;
+        var column = $("#dialogue-panel-add-list");
+
+        column.html('');
+
+        for (i = 0; i < Object.keys(activeCASetVM.selectableActions).length; i++) {
+            var listItem = document.createElement('li');
+            var actionName = Object.keys(activeCASetVM.selectableActions)[i];
+            $(listItem).data('action', actionName);
+            $(listItem).append(actionName);
+            $(listItem).on('click', function() {
+                activeCASetVM.addAction($(this).data('action'))
+                $("#dialogue-panel-actions").trigger('redrawList', activeCASetVM);
             });
             column.append(listItem);
         }

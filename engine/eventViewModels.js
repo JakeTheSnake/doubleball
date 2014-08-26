@@ -1,71 +1,14 @@
-// Number
-// Random number
-// Scene Object
-// Counter
-// Timing
-GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
-    this.mandatory = mandatory;
-    this.value = value;
-};
-
-GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</td>';
-    return result;
-}
-
-GameCreator.SceneObjectParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
-    this.mandatory = mandatory;
-    this.value = value;
-};
-
-GameCreator.SceneObjectParameter.prototype.getPresentation = function() {
-    var result = "<td>" + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.defaultValue) + "</td>";
-    return result;
-};
-
-GameCreator.NumberParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
-    this.mandatory = mandatory;
-    this.value = value;
-};
-
-GameCreator.NumberParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
-    return result;
-};
-
-/**
- * This function updates the database with the current parameter value
- * stored in the "value" field.
- */
-GameCreator.NumberParameter.prototype.saveParameterValue = function() {
-    this.eventDataItem.databaseObject.parameters[this.name] = this.value;
-}
-
-GameCreator.NumberParameter.prototype.attachListener = function() {
-    var param = this;
-    $("#" + this.name + "-input").blur(function() {
-        param.value = GameCreator.helper.getValue(this);
-        param.saveParameterValue();
-        param.eventDataItem.redrawSelectedParameters();
-    });
-}
-
-GameCreator.CASetVM = function(caSet) {
+GameCreator.CASetVM = function(caSet, selectableActions) {
     var i;
     this.caSet = caSet;
     this.actionVMs = [];
     this.conditionVMs = [];
+    this.selectableActions = selectableActions;
     for (i = 0; i < this.caSet.actions.length; i++) {
         this.actionVMs.push(new GameCreator.ActionItemVM(this.caSet.actions[i]));
     }
 
-    for (i = 0; i < this.caSet.actions.length; i++) {
+    for (i = 0; i < this.caSet.conditions.length; i++) {
         this.conditionVMs.push(new GameCreator.ConditionItemVM(this.caSet.conditions[i]));
     }
 }
@@ -80,6 +23,17 @@ GameCreator.CASetVM.prototype.addCondition = function(conditionName) {
     this.caSet.conditions.push(runtimeCondition);
     this.conditionVMs.push(new GameCreator.ConditionItemVM(runtimeCondition));
 };
+
+GameCreator.CASetVM.prototype.addAction = function(actionName) {
+    var j, runtimeAction, parameterName, parameters = {};
+    for(j = 0; j < Object.keys(GameCreator.actions[actionName].params).length; j += 1) {
+        parameterName = Object.keys(GameCreator.actions[actionName].params)[j];
+        parameters[parameterName] = GameCreator.actions[actionName].params[parameterName].defaultValue;
+    }
+    runtimeAction = new GameCreator.RuntimeAction(actionName, parameters);
+    this.caSet.actions.push(runtimeAction);
+    this.actionVMs.push(new GameCreator.ActionItemVM(runtimeAction));
+}
 
 GameCreator.CASetVM.prototype.getPresentation = function(active) {
     var conditionsList, listItem = document.createElement('li');
@@ -108,8 +62,8 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         $(addConditionButton).html('+');
 
         $(addConditionButton).on('click', function() {
-            GameCreator.UI.populateSelectConditionList(that.conditionVMs, that);
-            });
+            GameCreator.UI.populateSelectConditionList(that);
+        });
         $(conditionsList).append(addConditionButton);
         $(listItem).append(conditionsList);
     } else {
@@ -120,15 +74,7 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         $(listItem).append(names.join(' & '));
 
         $(listItem).on('click', function(){
-            var actionsColumn = $("#dialogue-panel-actions");
-            actionsColumn.html('');
-            
-            for (i = 0; i < that.actionVMs.length; i+=1) {
-                
-                var listItem = document.createElement('li');
-                $(listItem).append(that.actionVMs[i].getPresentation());
-                actionsColumn.append(listItem);
-            }
+            $("#dialogue-panel-actions").trigger('redrawList', that);
             $("#dialogue-panel-conditions").trigger('redrawList', that);
         });
     }
@@ -170,7 +116,7 @@ GameCreator.ConditionItemVM.prototype.getSelectedParameters = function() {
 
 GameCreator.ActionItemVM = function(databaseObject) {
     this.databaseObject = databaseObject; // Pointer to the saved action in the event 
-    this.parameters = this.getSelectedParameters();
+    this.parameters = this.getParameters();
 };
 
 GameCreator.ActionItemVM.prototype.getPresentation = function() {
@@ -180,60 +126,21 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
     
     // Action title
     $(title).append(this.databaseObject.name);
-    $(title).on('click', function() {
-        var availableParameters = actionItemVM.getAvailableParameters();
-        var i;
-        $("#dialogue-panel-add-list").html('');
-        for (i = 0; i < availableParameters.length; i++) {
-            $("#dialogue-panel-add-list").append(availableParameters[i]);
-        }
-    });
+
     $(result).append(title);
 
     // Action parameter list
-    var paramList = document.createElement('ul');
+    var paramList = document.createElement('table');
     for (var i = 0; i < this.parameters.length; i+=1) {
-        var paramItem = document.createElement('li');
+        var paramItem = document.createElement('tr');
         $(paramItem).append(this.parameters[i].getPresentation())
         $(paramList).append(paramItem);
     }
     $(result).append(paramList);
-    this.uiItem = result;
     return result;
 }
 
-/**
- * Returns the list of addable parmeters for this action item.
- *
- * The list will include the parameters not currently used.
- */
-GameCreator.ActionItemVM.prototype.getAvailableParameters = function() {
-    var parameterList = [];
-
-    var existingParams = Object.keys(this.databaseObject.parameters); 
-    var allParams = this.databaseObject.getAllParameters();
-    var actionItemVM = this;
-
-    for (var i = 0; i < Object.keys(allParams).length; i++) {
-        var param = Object.keys(allParams)[i];
-        if (existingParams.indexOf(param) === -1) {
-            var parameterItem = document.createElement('li');
-            $(parameterItem).append(param);
-            $(parameterItem).data('actionName', param);
-
-            // Clicking on the parameter name
-            $(parameterItem).on('click', function() {
-                actionItemVM.appendParameter($(this).data('actionName'));
-                $(this).remove();
-            });
-            parameterList.push(parameterItem);
-        }
-    }
-
-    return parameterList;
-};
-
-GameCreator.ActionItemVM.prototype.getSelectedParameters = function() {
+GameCreator.ActionItemVM.prototype.getParameters = function() {
     var caSetItemVM = this;
     return Object.keys(this.databaseObject.parameters).collect(function(item) {
        var currentParam = caSetItemVM.databaseObject.getParameter(item);
@@ -250,19 +157,3 @@ GameCreator.ActionItemVM.prototype.getParameter = function(name) {
     }
     return null;
 }
-
-GameCreator.ActionItemVM.prototype.appendParameter = function(name) {
-    var paramObject = GameCreator.actions[this.databaseObject.name].params[name];
-    var parameter = new paramObject.param(name, this, paramObject.mandatory, paramObject.defaultValue);
-    this.databaseObject.parameters[name] = paramObject.defaultValue;
-    this.parameters.push(parameter);
-    $(this.uiItem).replaceWith(this.getPresentation());
-}
-
-GameCreator.ActionItemVM.prototype.removeParameter = function(name) {
-    delete this.databaseObject.params[name];
-    this.redrawSelectedParameters();
-}
-
-
-
