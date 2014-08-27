@@ -590,7 +590,7 @@ input {
 }
 
 #dialogue-panel-conditions.nav-tabs > li.active, 
-#dialogue-panel-actions.nav-tabs > li.active {
+#dialogue-panel-actions.nav-tabs > li {
   padding: 0;
   background-color: #323232;
   height: auto;

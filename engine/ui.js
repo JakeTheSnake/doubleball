@@ -321,9 +321,7 @@ GameCreator.UI = {
             actionsColumn.html('');
             
             for (i = 0; i < activeCASetVM.actionVMs.length; i+=1) {
-                var listItem = document.createElement('li');
-                $(listItem).append(activeCASetVM.actionVMs[i].getPresentation());
-                actionsColumn.append(listItem);
+                $(actionsColumn).append(activeCASetVM.actionVMs[i].getPresentation());
             }
             
             var addActionButton = document.createElement('div');

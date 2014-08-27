@@ -121,6 +121,7 @@ GameCreator.ActionItemVM = function(databaseObject) {
 
 GameCreator.ActionItemVM.prototype.getPresentation = function() {
     var result = document.createElement('li');
+        result.className = 'condition-parameters';
     var title = document.createElement('span');
     var actionItemVM = this;
     
