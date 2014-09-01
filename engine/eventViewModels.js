@@ -98,7 +98,11 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
     var paramList = document.createElement('table');
     for (var i = 0; i < this.parameters.length; i+=1) {
         var paramItemRow = document.createElement('tr');
-        $(paramItemRow).append(this.parameters[i].getPresentation());
+        $(paramItemRow).append(this.parameters[i].getLabel());
+        var paramValuePresenter = this.parameters[i].getValuePresenter();
+        $(paramItemRow).append(paramValuePresenter);
+
+        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.databaseObject.parameters, this.parameters[i].name);
         $(paramList).append(paramItemRow);
     }
     $(result).append(paramList);
@@ -108,9 +112,9 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
 
 GameCreator.ConditionItemVM.prototype.getSelectedParameters = function() {
     var caSetItemVM = this;
-    return Object.keys(this.databaseObject.parameters).collect(function(item) {
-       var currentParam = caSetItemVM.databaseObject.getParameter(item);
-       return new currentParam.param(item, caSetItemVM, currentParam.mandatory, caSetItemVM.databaseObject.parameters[item]);
+    return Object.keys(this.databaseObject.parameters).collect(function(paramName) {
+       var currentParam = caSetItemVM.databaseObject.getParameter(paramName);
+       return new currentParam.param(caSetItemVM.parameters, paramName, currentParam.mandatory);
     });
 }
 
@@ -134,7 +138,10 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
     var paramList = document.createElement('table');
     for (var i = 0; i < this.parameters.length; i+=1) {
         var paramItem = document.createElement('tr');
-        $(paramItem).append(this.parameters[i].getPresentation())
+        $(paramItem).append(this.parameters[i].getLabel());
+        var paramValuePresenter = this.parameters[i].getValuePresenter();
+        $(paramItem).append(paramValuePresenter);
+        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.databaseObject.parameters, this.parameters[i].name);
         $(paramList).append(paramItem);
     }
     $(result).append(paramList);
@@ -143,9 +150,9 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
 
 GameCreator.ActionItemVM.prototype.getParameters = function() {
     var caSetItemVM = this;
-    return Object.keys(this.databaseObject.parameters).collect(function(item) {
-       var currentParam = caSetItemVM.databaseObject.getParameter(item);
-       return new currentParam.param(item, caSetItemVM, currentParam.mandatory, caSetItemVM.databaseObject.parameters[item]);
+    return Object.keys(this.databaseObject.parameters).collect(function(paramName) {
+       var currentParam = caSetItemVM.databaseObject.getParameter(paramName);
+       return new currentParam.param(caSetItemVM.databaseObject.parameters, paramName, currentParam.mandatory);
     });
 }
 

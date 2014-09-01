@@ -363,7 +363,7 @@
         var attributes = sceneObject.attributes;
         for (i = 0; i < Object.keys(attributes).length; i += 1) {
             var attributeName = Object.keys(attributes)[i];
-            GameCreator.UI.setupValuePresenter($("#scene-object-property-" + attributeName), sceneObject, attributeName);
+            GameCreator.UI.setupValuePresenter($("#scene-object-property-" + attributeName), attributes, attributeName, sceneObject);
         }
     };
 

@@ -1,111 +1,121 @@
 /**
 * All Paremeters are currently just dummy objects
 */
+(function() {
+"use strict";
 
-GameCreator.GlobalObjectParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.GlobalObjectParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.GlobalObjectParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.singleSelector(this.name, GameCreator.globalObjects) + '</td>';
+GameCreator.GlobalObjectParameter.prototype.getValuePresenter = function() {
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'globalObjectInput');
     return result;
 }
 
-GameCreator.SceneObjectParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.SceneObjectParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.SceneObjectParameter.prototype.getPresentation = function() {
+GameCreator.SceneObjectParameter.prototype.getValuePresenter = function() {
     var result = "<td>" + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.defaultValue) + "</td>";
     return result;
 };
 
-GameCreator.NumberParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.NumberParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.NumberParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.NumberParameter.prototype.getValuePresenter = function() {
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'numberInput');
     return result;
 };
 
-GameCreator.EffectParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.EffectParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.EffectParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.EffectParameter.prototype.getValuePresenter = function() {
+    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
     return result;
 };
 
-GameCreator.DirectionParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.DirectionParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.DirectionParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.DirectionParameter.prototype.getValuePresenter = function() {
+    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
     return result;
 };
 
-GameCreator.CounterParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.CounterParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.CounterParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.CounterParameter.prototype.getValuePresenter = function() {
+    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
     return result;
 };
 
-GameCreator.CounterChangeTypeParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.CounterChangeTypeParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.CounterChangeTypeParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.CounterChangeTypeParameter.prototype.getValuePresenter = function() {
+    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
     return result;
 };
 
-GameCreator.StateParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.StateParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.StateParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.StateParameter.prototype.getValuePresenter = function() {
+    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
     return result;
 };
 
-GameCreator.SwitchSceneParameter = function(name, eventDataItem, mandatory, value) {
-    this.name = name;
-    this.eventDataItem = eventDataItem;
+GameCreator.SwitchSceneParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
     this.mandatory = mandatory;
-    this.value = value;
 };
 
-GameCreator.SwitchSceneParameter.prototype.getPresentation = function() {
-    var result = '<td>' + this.name + ':</td><td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.SwitchSceneParameter.prototype.getValuePresenter = function() {
+    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
     return result;
 };
+
+var labelFunction = function() {
+    return '<td>' + this.name + ':</td>';
+}
+
+GameCreator.GlobalObjectParameter.prototype.getLabel = labelFunction;
+GameCreator.SceneObjectParameter.prototype.getLabel = labelFunction;
+GameCreator.NumberParameter.prototype.getLabel = labelFunction;
+GameCreator.EffectParameter.prototype.getLabel = labelFunction;
+GameCreator.DirectionParameter.prototype.getLabel = labelFunction;
+GameCreator.SwitchSceneParameter.prototype.getLabel = labelFunction;
+GameCreator.StateParameter.prototype.getLabel = labelFunction;
+GameCreator.CounterChangeTypeParameter.prototype.getLabel = labelFunction;
+
+})();

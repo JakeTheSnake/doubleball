@@ -1,6 +1,6 @@
 GameCreator.htmlStrings = {
     singleSelector: function(elementId, collection, attrName, selectedKey) {
-        var result = '<div><select class="selectorField" id="' + elementId + '" data-type="text"';
+        var result = '<select class="selectorField" id="' + elementId + '" data-type="text"';
         if (attrName) {
         	result += ' data-attrName="' + attrName + '">'
         } else {
@@ -11,12 +11,16 @@ GameCreator.htmlStrings = {
                 result += "<option value='" + GameCreator.helpers.toString(collection[key]) + "'" + (selectedKey === key ? " selected" : "") + ">" + key + "</option>";
             }
         };
-        result += "</select></div>";
+        result += "</select>";
         return result;
     },
 
     numberInput: function(attrName, value) {
         return '<input type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+    },
+
+    globalObjectInput: function(attrName, value) {
+        return '<input type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
 
     stringInput: function(attrName, value) {
