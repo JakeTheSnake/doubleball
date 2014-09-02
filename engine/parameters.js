@@ -57,7 +57,8 @@ GameCreator.DirectionParameter = function(paramCollection, paramName, mandatory)
 };
 
 GameCreator.DirectionParameter.prototype.getValuePresenter = function() {
-    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'directionInput');
     return result;
 };
 

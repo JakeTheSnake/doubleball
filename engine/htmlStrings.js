@@ -27,6 +27,10 @@ GameCreator.htmlStrings = {
         return '<input type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
 
+    directionInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector('', GameCreator.directions, attrName, value);
+    },
+
     rangeInput: function(attrName, value) {
         var valueString;
         if (Array.isArray(value)) {

@@ -379,31 +379,48 @@ GameCreator.UI = {
     },
 
     setupValuePresenter: function(container, attributes, attrName, sceneObject) {
-        var input, paramLen;
+        var input, select, paramLen, onClickFunc, closeInput, inputOpen = false;
         container = $(container);
         var display = document.createElement('span');
         var inputType = container.data('inputtype');
         $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType));
         container.html(display);
-        var onClickFunc = function() {
-            container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName]));
-            input = container.find('input');
-            input.focus();
-            paramLen = (attributes[attrName] || '').toString().length;
-            input[0].setSelectionRange(paramLen, paramLen);
-            input.on('blur', function() {
-                if (sceneObject) {
-                    GameCreator.invalidate(sceneObject);
-                }
-                GameCreator.saveInputValueToObject($(this), attributes);
-                $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType));
-                container.html(display);
-                container.parent().on('click', onClickFunc);
-                if (sceneObject) {
-                    GameCreator.render(true);
-                }
-            });
+
+        closeInput = function(input) {
+            $(window).off('click.closeDropDown');
+            inputOpen = false;
+            if (sceneObject) {
+                GameCreator.invalidate(sceneObject);
+            }
+            GameCreator.saveInputValueToObject($(input), attributes);
+            $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType));
+            container.html(display);
+            container.parent().off('click').on('click', onClickFunc);
+            if (sceneObject) {
+                GameCreator.render(true);
+            }
         }
-        container.parent().on('click', onClickFunc);
+
+        onClickFunc = function(evt) {
+            if (!inputOpen) {
+                inputOpen = true;
+                container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName]));
+                input = container.find('input, select');
+                if (input[0].nodeName === 'INPUT') {
+                    paramLen = (attributes[attrName] || '').toString().length;
+                    input[0].setSelectionRange(paramLen, paramLen);
+                    input.on('blur', function() {
+                        closeInput(this);
+                    });
+                } else {
+                    input.on('blur change', function() {
+                        closeInput(this);
+                    });
+                }
+                input.focus();
+            }
+        }
+
+        container.parent().off('click').on('click', onClickFunc);
     },
 }
