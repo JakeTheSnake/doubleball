@@ -58,8 +58,8 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
             $(conditionsList).append(this.conditionVMs[i].getPresentation());
         }
 
-        var addConditionButton = document.createElement('li');
-        $(addConditionButton).html('+');
+        var addConditionButton = document.createElement('button');
+        $(addConditionButton).html('Add collision');
 
         $(addConditionButton).on('click', function() {
             GameCreator.UI.populateSelectConditionList(that);

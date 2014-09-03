@@ -324,8 +324,8 @@ GameCreator.UI = {
                 $(actionsColumn).append(activeCASetVM.actionVMs[i].getPresentation());
             }
             
-            var addActionButton = document.createElement('div');
-            $(addActionButton).html('<span>LÄGG TILL EN ACTION</span>');
+            var addActionButton = document.createElement('button');
+            $(addActionButton).html('Add action');
             $(addActionButton).on('click', function() {
                 GameCreator.UI.populateSelectActionList(activeCASetVM);
             });
