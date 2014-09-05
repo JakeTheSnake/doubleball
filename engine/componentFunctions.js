@@ -5,6 +5,7 @@
     GameCreator.addObjFunctions.commonObjectFunctions = function(object) {
         object.getDefaultState = GameCreator.commonObjectFunctions.getDefaultState;
         object.getState = GameCreator.commonObjectFunctions.getState;
+        object.isShootable = GameCreator.commonObjectFunctions.isShootable;
         object.createState = GameCreator.commonObjectFunctions.createState;
         object.removeAttributeFromState = GameCreator.commonObjectFunctions.removeAttributeFromState;
         object.resetStateAttributes = GameCreator.commonObjectFunctions.resetStateAttributes;
@@ -122,6 +123,11 @@
 
     GameCreator.commonObjectFunctions.getState = function(stateId) {
       return GameCreator.helpers.getObjectById(this.states, stateId);  
+    };
+
+
+    GameCreator.commonObjectFunctions.isShootable = function() {
+        return $.inArray(this.objectType, ['FreeObject', 'PlatformObject', 'TopDownObject']) != -1;
     };
 
     GameCreator.commonObjectFunctions.createState = function(name, attributes) {

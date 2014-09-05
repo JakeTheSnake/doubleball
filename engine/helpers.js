@@ -417,6 +417,35 @@
         }
     };
 
+    GameCreator.helpers.getPrettyName = function(databaseName) {
+        var prettyNames = {
+            objectToCreate: 'Object',
+            objectToShoot: 'Object',
+            projectileSpeed: 'Speed',
+            projectileDirection: 'Direction',
+            objectState: 'State',
+            objId: 'Object',
+            effect: 'Effect',
+            counterObject: 'Object',
+            type: 'Type',
+            value: 'Value',
+            scene: 'Scene',
+            count: 'Count',
+        }
+        return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName;
+    };
+
+    GameCreator.helpers.getShootableObjectIds = function(){
+        var i, result = {};
+        var objectNames = Object.keys(GameCreator.globalObjects);
+        for(i = 0; i < objectNames.length; i += 1) {
+            if(GameCreator.globalObjects[objectNames[i]].isShootable()) {
+                result[objectNames[i]] = GameCreator.globalObjects[objectNames[i]].id;
+            }
+        }
+        return result;
+    };
+
     Array.prototype.collect = function(collectFunc) {
         var result = [];
         for (var i = 0; i < this.length; i++) {

@@ -14,7 +14,19 @@ GameCreator.GlobalObjectParameter.prototype.getValuePresenter = function() {
     var result = document.createElement('td');
     result.setAttribute('data-inputtype', 'globalObjectInput');
     return result;
-}
+};
+
+GameCreator.ShootableObjectParameter = function(paramCollection, paramName, mandatory) {
+    this.name = paramName;
+    this.paramCollection = paramCollection;
+    this.mandatory = mandatory;
+};
+
+GameCreator.ShootableObjectParameter.prototype.getValuePresenter = function() {
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'shootableObjectInput');
+    return result;
+};
 
 GameCreator.SceneObjectParameter = function(paramCollection, paramName, mandatory) {
     this.name = paramName;
@@ -107,16 +119,18 @@ GameCreator.SwitchSceneParameter.prototype.getValuePresenter = function() {
 };
 
 var labelFunction = function() {
-    return '<td>' + this.name + ':</td>';
+    return '<td>' + GameCreator.helpers.getPrettyName(this.name) + ':</td>';
 }
 
 GameCreator.GlobalObjectParameter.prototype.getLabel = labelFunction;
+GameCreator.ShootableObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.SceneObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.NumberParameter.prototype.getLabel = labelFunction;
 GameCreator.EffectParameter.prototype.getLabel = labelFunction;
 GameCreator.DirectionParameter.prototype.getLabel = labelFunction;
 GameCreator.SwitchSceneParameter.prototype.getLabel = labelFunction;
 GameCreator.StateParameter.prototype.getLabel = labelFunction;
+GameCreator.CounterParameter.prototype.getLabel = labelFunction;
 GameCreator.CounterChangeTypeParameter.prototype.getLabel = labelFunction;
 
 })();

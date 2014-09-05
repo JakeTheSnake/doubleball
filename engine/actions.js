@@ -82,7 +82,7 @@
           Shoot:   new GameCreator.Action({    
                           action: function(params) {this.parent.shoot.call(this, params); },
                           params: {"objectToShoot":
-                                    {param: GameCreator.GlobalObjectParameter,
+                                    {param: GameCreator.ShootableObjectParameter,
                                      mandatory: true
                                      },
                                     "projectileSpeed":

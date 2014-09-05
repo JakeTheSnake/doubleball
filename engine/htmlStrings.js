@@ -20,7 +20,11 @@ GameCreator.htmlStrings = {
     },
 
     globalObjectInput: function(attrName, value) {
-        return '<input type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+        return GameCreator.htmlStrings.singleSelector('', GameCreator.globalObjects, attrName, value);
+    },
+
+    shootableObjectInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector('', GameCreator.helpers.getShootableObjectIds(), attrName, value);
     },
 
     stringInput: function(attrName, value) {
