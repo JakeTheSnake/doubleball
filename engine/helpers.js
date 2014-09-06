@@ -412,6 +412,10 @@
                 } else {
                     return value;
                 }
+            case "globalObjectInput":
+                return value ? GameCreator.helpers.findGlobalObjectById(Number(value)).objectName : '';
+            case "shootableObjectInput":
+                return value ? GameCreator.helpers.findGlobalObjectById(Number(value)).objectName : '';
             default:
                 return value;
         }
@@ -442,6 +446,15 @@
             if(GameCreator.globalObjects[objectNames[i]].isShootable()) {
                 result[objectNames[i]] = GameCreator.globalObjects[objectNames[i]].id;
             }
+        }
+        return result;
+    };
+
+    GameCreator.helpers.getGlobalObjectIds = function(){
+        var i, result = {};
+        var objectNames = Object.keys(GameCreator.globalObjects);
+        for(i = 0; i < objectNames.length; i += 1) {
+            result[objectNames[i]] = GameCreator.globalObjects[objectNames[i]].id;
         }
         return result;
     };

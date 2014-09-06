@@ -20,7 +20,7 @@ GameCreator.htmlStrings = {
     },
 
     globalObjectInput: function(attrName, value) {
-        return GameCreator.htmlStrings.singleSelector('', GameCreator.globalObjects, attrName, value);
+        return GameCreator.htmlStrings.singleSelector('', GameCreator.helpers.getGlobalObjectIds(), attrName, value);
     },
 
     shootableObjectInput: function(attrName, value) {
