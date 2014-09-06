@@ -275,17 +275,17 @@ GameCreator.UI = {
         $('#toolbar-scenes').hide();
     },
 
-    setupEditEventColumns: function(caSets, columnParentContainer, selectableActions) {
+    setupEditEventColumns: function(caSets, columnParentContainer, selectableActions, globalObj) {
         if (caSets.length === 0) {
-            var caSet = new GameCreator.ConditionActionSet();
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
-            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1}));
+            var caSet = new GameCreator.ConditionActionSet(globalObj);
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}, globalObj));
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}, globalObj));
+            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1}, globalObj));
             caSets.push(caSet);
-            var caSet2 = new GameCreator.ConditionActionSet();
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
-            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1, x: 300}));
+            var caSet2 = new GameCreator.ConditionActionSet(globalObj);
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}, globalObj));
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}, globalObj));
+            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1, x: 300}, globalObj));
             caSets.push(caSet2);
         }
 
@@ -378,25 +378,25 @@ GameCreator.UI = {
         GameCreator.helpers.populateSceneObjectForm(sceneObject);
     },
 
-    setupValuePresenter: function(container, attributes, attrName, sceneObject) {
+    setupValuePresenter: function(container, attributes, attrName, obj) {
         var input, select, paramLen, onClickFunc, closeInput, inputOpen = false;
         container = $(container);
         var display = document.createElement('span');
         var inputType = container.data('inputtype');
-        $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType));
+        $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType, obj));
         container.html(display);
 
         closeInput = function(input) {
             $(window).off('click.closeDropDown');
             inputOpen = false;
-            if (sceneObject) {
-                GameCreator.invalidate(sceneObject);
+            if (obj instanceof GameCreator.SceneObject) {
+                GameCreator.invalidate(obj);
             }
             GameCreator.saveInputValueToObject($(input), attributes);
-            $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType));
+            $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType, obj));
             container.html(display);
             container.parent().off('click').on('click', onClickFunc);
-            if (sceneObject) {
+            if (obj instanceof GameCreator.SceneObject) {
                 GameCreator.render(true);
             }
         }
@@ -404,7 +404,7 @@ GameCreator.UI = {
         onClickFunc = function(evt) {
             if (!inputOpen) {
                 inputOpen = true;
-                container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName]));
+                container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName], obj));
                 input = container.find('input, select');
                 if (input[0].nodeName === 'INPUT') {
                     paramLen = (attributes[attrName] || '').toString().length;

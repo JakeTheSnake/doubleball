@@ -27,6 +27,18 @@ GameCreator.htmlStrings = {
         return GameCreator.htmlStrings.singleSelector('', GameCreator.helpers.getShootableObjectIds(), attrName, value);
     },
 
+    destroyEffectInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector('', GameCreator.effects.destroyEffects, attrName, value);
+    },
+
+    stateInput: function(attrName, value, globalObj) {
+        var selectableStates = {};//globalObj.states.map(function(state){
+        globalObj.states.forEach(function(state){
+            selectableStates[state.name] = state.id;
+        });
+        return GameCreator.htmlStrings.singleSelector('', selectableStates, attrName, value);
+    },
+
     stringInput: function(attrName, value) {
         return '<input type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },

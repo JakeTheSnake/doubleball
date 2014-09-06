@@ -73,19 +73,19 @@ GameCreator.commonObjectControllers = {
     setupOnDestroyActionsForm: function(container) {
         var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
-        GameCreator.UI.setupEditEventColumns(this.onDestroySets, container, selectableActions);
+        GameCreator.UI.setupEditEventColumns(this.onDestroySets, container, selectableActions, this);
     },
 
     setupOnCreateActionsForm: function(container) {
         var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
-        GameCreator.UI.setupEditEventColumns(this.onCreateSets, container, selectableActions);  
+        GameCreator.UI.setupEditEventColumns(this.onCreateSets, container, selectableActions, this);  
     },
 
     setupOnClickActionsForm: function(container) {
         var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         
-        GameCreator.UI.setupEditEventColumns(this.onClickSets, container, selectableActions);    
+        GameCreator.UI.setupEditEventColumns(this.onClickSets, container, selectableActions, this);    
     },
 
     setupStatesForm: function(container, selectedState) {
@@ -190,8 +190,8 @@ GameCreator.commonObjectControllers = {
             $(this).parent().find('.counterEventMenuElement').removeClass('active');
             $(this).addClass('active');
             var onCounterEventSets = globalObj.parentCounters[counterName].getCounterEventSets(eventType, eventValue);
-
-            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(counterEventContent));
+            var selectableActions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
+            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(counterEventContent), selectableActions, globalObj);
         }); 
     },
 
@@ -212,8 +212,8 @@ GameCreator.commonObjectControllers = {
 
             $(this).parent().find('.keyMenuElement').removeClass('active');
             $(this).addClass('active');
-
-            GameCreator.UI.setupEditEventColumns(onKeyEventSets, $(keyEventContent));
+            var selectableActions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
+            GameCreator.UI.setupEditEventColumns(onKeyEventSets, $(keyEventContent), selectableActions, globalObj);
         });
         $("#add-new-key-button").on("click", function(){
             $("#dialogue-keys-content").html(globalObj.getKeySelector());

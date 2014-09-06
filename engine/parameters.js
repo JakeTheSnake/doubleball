@@ -28,17 +28,6 @@ GameCreator.ShootableObjectParameter.prototype.getValuePresenter = function() {
     return result;
 };
 
-GameCreator.SceneObjectParameter = function(paramCollection, paramName, mandatory) {
-    this.name = paramName;
-    this.paramCollection = paramCollection;
-    this.mandatory = mandatory;
-};
-
-GameCreator.SceneObjectParameter.prototype.getValuePresenter = function() {
-    var result = "<td>" + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.defaultValue) + "</td>";
-    return result;
-};
-
 GameCreator.NumberParameter = function(paramCollection, paramName, mandatory) {
     this.name = paramName;
     this.paramCollection = paramCollection;
@@ -51,14 +40,15 @@ GameCreator.NumberParameter.prototype.getValuePresenter = function() {
     return result;
 };
 
-GameCreator.EffectParameter = function(paramCollection, paramName, mandatory) {
+GameCreator.DestroyEffectParameter = function(paramCollection, paramName, mandatory) {
     this.name = paramName;
     this.paramCollection = paramCollection;
     this.mandatory = mandatory;
 };
 
-GameCreator.EffectParameter.prototype.getValuePresenter = function() {
-    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+GameCreator.DestroyEffectParameter.prototype.getValuePresenter = function() {
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'destroyEffectInput');
     return result;
 };
 
@@ -103,7 +93,8 @@ GameCreator.StateParameter = function(paramCollection, paramName, mandatory) {
 };
 
 GameCreator.StateParameter.prototype.getValuePresenter = function() {
-    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'stateInput');
     return result;
 };
 
@@ -124,9 +115,8 @@ var labelFunction = function() {
 
 GameCreator.GlobalObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.ShootableObjectParameter.prototype.getLabel = labelFunction;
-GameCreator.SceneObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.NumberParameter.prototype.getLabel = labelFunction;
-GameCreator.EffectParameter.prototype.getLabel = labelFunction;
+GameCreator.DestroyEffectParameter.prototype.getLabel = labelFunction;
 GameCreator.DirectionParameter.prototype.getLabel = labelFunction;
 GameCreator.SwitchSceneParameter.prototype.getLabel = labelFunction;
 GameCreator.StateParameter.prototype.getLabel = labelFunction;

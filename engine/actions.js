@@ -72,7 +72,7 @@
           Destroy: new GameCreator.Action({   
                           action: function(params) {this.parent.destroy.call(this, params); },
                           params: {"effect":
-                                    {param: GameCreator.EffectParameter,
+                                    {param: GameCreator.DestroyEffectParameter,
                                      mandatory: false,
                                      defaultValue: null}
                                  },

@@ -5,11 +5,11 @@ GameCreator.CASetVM = function(caSet, selectableActions) {
     this.conditionVMs = [];
     this.selectableActions = selectableActions;
     for (i = 0; i < this.caSet.actions.length; i++) {
-        this.actionVMs.push(new GameCreator.ActionItemVM(this.caSet.actions[i]));
+        this.actionVMs.push(new GameCreator.ActionItemVM(this.caSet.actions[i], caSet));
     }
 
     for (i = 0; i < this.caSet.conditions.length; i++) {
-        this.conditionVMs.push(new GameCreator.ConditionItemVM(this.caSet.conditions[i]));
+        this.conditionVMs.push(new GameCreator.ConditionItemVM(this.caSet.conditions[i], caSet));
     }
 }
 
@@ -21,7 +21,7 @@ GameCreator.CASetVM.prototype.addCondition = function(conditionName) {
     }
     var runtimeCondition = new GameCreator.RuntimeCondition(conditionName, params);
     this.caSet.conditions.push(runtimeCondition);
-    this.conditionVMs.push(new GameCreator.ConditionItemVM(runtimeCondition));
+    this.conditionVMs.push(new GameCreator.ConditionItemVM(runtimeCondition, this.caSet));
 };
 
 GameCreator.CASetVM.prototype.addAction = function(actionName) {
@@ -32,7 +32,7 @@ GameCreator.CASetVM.prototype.addAction = function(actionName) {
     }
     runtimeAction = new GameCreator.RuntimeAction(actionName, parameters);
     this.caSet.actions.push(runtimeAction);
-    this.actionVMs.push(new GameCreator.ActionItemVM(runtimeAction));
+    this.actionVMs.push(new GameCreator.ActionItemVM(runtimeAction, this.caSet));
 }
 
 GameCreator.CASetVM.prototype.getPresentation = function(active) {
@@ -82,9 +82,10 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
 }
 
 
-GameCreator.ConditionItemVM = function(databaseObject) {
+GameCreator.ConditionItemVM = function(databaseObject, caSet) {
     this.databaseObject = databaseObject; // Pointer to the saved action in the event 
     this.parameters = this.getSelectedParameters();
+    this.caSet = caSet;
 };
 
 GameCreator.ConditionItemVM.prototype.getPresentation = function() {
@@ -102,7 +103,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
         var paramValuePresenter = this.parameters[i].getValuePresenter();
         $(paramItemRow).append(paramValuePresenter);
 
-        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.databaseObject.parameters, this.parameters[i].name);
+        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.databaseObject.parameters, this.parameters[i].name, this.caSet.globalObj);
         $(paramList).append(paramItemRow);
     }
     $(result).append(paramList);
@@ -118,9 +119,10 @@ GameCreator.ConditionItemVM.prototype.getSelectedParameters = function() {
     });
 }
 
-GameCreator.ActionItemVM = function(databaseObject) {
+GameCreator.ActionItemVM = function(databaseObject, caSet) {
     this.databaseObject = databaseObject; // Pointer to the saved action in the event 
     this.parameters = this.getParameters();
+    this.caSet = caSet;
 };
 
 GameCreator.ActionItemVM.prototype.getPresentation = function() {
@@ -141,7 +143,7 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
         $(paramItem).append(this.parameters[i].getLabel());
         var paramValuePresenter = this.parameters[i].getValuePresenter();
         $(paramItem).append(paramValuePresenter);
-        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.databaseObject.parameters, this.parameters[i].name);
+        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.databaseObject.parameters, this.parameters[i].name, this.caSet.globalObj);
         $(paramList).append(paramItem);
     }
     $(result).append(paramList);

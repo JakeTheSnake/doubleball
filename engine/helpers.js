@@ -402,7 +402,7 @@
         $(GameCreator.mainCanvas).css("cursor", cursor);
     };
 
-    GameCreator.helpers.getPresentationForInputValue = function(value, type) {
+    GameCreator.helpers.getPresentationForInputValue = function(value, type, obj) {
         switch (type) {
             case "rangeInput":
                 if (value.length == 1) {
@@ -416,6 +416,8 @@
                 return value ? GameCreator.helpers.findGlobalObjectById(Number(value)).objectName : '';
             case "shootableObjectInput":
                 return value ? GameCreator.helpers.findGlobalObjectById(Number(value)).objectName : '';
+            case "stateInput":
+                return value ? GameCreator.helpers.getObjectById(obj.states, Number(value)).name : '';
             default:
                 return value;
         }

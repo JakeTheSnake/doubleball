@@ -1,6 +1,7 @@
-GameCreator.ConditionActionSet = function() {
+GameCreator.ConditionActionSet = function(globalObj) {
     this.conditions = [];
     this.actions = [];
+    this.globalObj = globalObj;
 }
 
 GameCreator.ConditionActionSet.prototype.checkConditions = function() {

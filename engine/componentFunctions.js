@@ -127,7 +127,7 @@
 
 
     GameCreator.commonObjectFunctions.isShootable = function() {
-        return $.inArray(this.objectType, ['FreeObject', 'PlatformObject', 'TopDownObject']) != -1;
+        return ['FreeObject', 'PlatformObject', 'TopDownObject'].indexOf(this.objectType) != -1;
     };
 
     GameCreator.commonObjectFunctions.createState = function(name, attributes) {
