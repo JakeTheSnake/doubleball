@@ -1,5 +1,5 @@
 GameCreator.htmlStrings = {
-    singleSelector: function(elementId, collection, attrName, selectedKey) {
+    singleSelector: function(elementId, collection, attrName, selectedValue) {
         var result = '<select class="selectorField" id="' + elementId + '" data-type="text"';
         if (attrName) {
         	result += ' data-attrName="' + attrName + '">'
@@ -8,7 +8,7 @@ GameCreator.htmlStrings = {
         }
         for (var key in collection) {
             if (collection.hasOwnProperty(key)) {
-                result += "<option value='" + GameCreator.helpers.toString(collection[key]) + "'" + (selectedKey === key ? " selected" : "") + ">" + key + "</option>";
+                result += "<option value='" + GameCreator.helpers.toString(collection[key]) + "'" + (collection[key] + '' === selectedValue + '' ? " selected" : "") + ">" + key + "</option>";
             }
         };
         result += "</select>";
