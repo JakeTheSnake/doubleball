@@ -115,10 +115,10 @@
 
     GameCreator.FreeObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.getCurrentState();
-        sceneObject.accX = args.accX !== undefined ? args.accX : state.attributes.accX;
-        sceneObject.accY = args.accY !== undefined ? args.accY : state.attributes.accY;
-        sceneObject.speedX = args.speedX !== undefined ? args.speedX : state.attributes.speedX;
-        sceneObject.speedY = args.speedY !== undefined ? args.speedY : state.attributes.speedY;
+        sceneObject.attributes.accX = args.accX !== undefined ? args.accX : state.attributes.accX;
+        sceneObject.attributes.accY = args.accY !== undefined ? args.accY : state.attributes.accY;
+        sceneObject.attributes.speedX = args.speedX !== undefined ? args.speedX : state.attributes.speedX;
+        sceneObject.attributes.speedY = args.speedY !== undefined ? args.speedY : state.attributes.speedY;
     };
 
     GameCreator.FreeObject.prototype.move = function(modifier) {

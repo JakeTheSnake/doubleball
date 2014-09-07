@@ -2,20 +2,20 @@
 (function() {
     "use strict";
     GameCreator.helpers.determineQuadrant = function(base, obj) {
-        var x = obj.x;
-        var y = obj.y;
-        var width = obj.width;
-        var height = obj.height;
-        var baseWidth = base.width;
-        var baseHeight = base.height;
+        var x = obj.attributes.x;
+        var y = obj.attributes.y;
+        var width = obj.attributes.width;
+        var height = obj.attributes.height;
+        var baseWidth = base.attributes.width;
+        var baseHeight = base.attributes.height;
         var objMidX = x + width / 2;
         var objMidY = y + height / 2;
-        var baseMidX = base.x + base.width / 2;
-        var baseMidY = base.y + base.height / 2;
-        var baseEdgeTL = {x: base.x, y: base.y};
-        var baseEdgeTR = {x: base.x + baseWidth, y: base.y};
-        var baseEdgeBL = {x: base.x + baseHeight, y: base.y};
-        var baseEdgeBR = {x: base.x + baseWidth, y: base.y + baseHeight};
+        var baseMidX = base.attributes.x + base.attributes.width / 2;
+        var baseMidY = base.attributes.y + base.attributes.height / 2;
+        var baseEdgeTL = {x: base.attributes.x, y: base.y};
+        var baseEdgeTR = {x: base.attributes.x + baseWidth, y: base.attributes.y};
+        var baseEdgeBL = {x: base.attributes.x + baseHeight, y: base.attributes.y};
+        var baseEdgeBR = {x: base.attributes.x + baseWidth, y: base.attributes.y + baseHeight};
         //Top left quadrant
         if (objMidX - baseMidX <= 0 && objMidY - baseMidY <= 0) {
             if (objMidX - baseEdgeTL.x > objMidY - baseEdgeTL.y) {
@@ -81,10 +81,10 @@
         }
 
         //Check for border collisions.
-        var x = object.x;
-        var y = object.y;
-        var width = object.width;
-        var height = object.height;
+        var x = object.attributes.x;
+        var y = object.attributes.y;
+        var width = object.attributes.width;
+        var height = object.attributes.height;
         var i, j, runtimeObjectsItem, collisionObject, targetObject, collisionItem;
 
         if (x < 1) {

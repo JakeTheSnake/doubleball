@@ -18,7 +18,7 @@ test("Move left test", function() {
 
     GameCreator.runFrame(10);
 
-    ok(runtimeObj.x < 70, "Object moved left.");
+    ok(runtimeObj.attributes.x < 70, "Object moved left.");
 });
 
 test("Moved right test", function() {
@@ -26,7 +26,7 @@ test("Moved right test", function() {
 
     GameCreator.runFrame(10);
 
-    ok(runtimeObj.x > 70, "Object moved right.");
+    ok(runtimeObj.attributes.x > 70, "Object moved right.");
 });
 
 module("System Test - Direct Mode", {

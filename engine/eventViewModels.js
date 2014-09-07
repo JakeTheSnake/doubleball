@@ -47,19 +47,26 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         conditionsList = document.createElement('div');
         conditionsList.className = 'conditions-group';
 
-        names = [];
-        for (i = 0; i < this.conditionVMs.length; i+=1) {
-            names.push(this.conditionVMs[i].databaseObject.name);
-        }
-        $(title).append(names.join(' & '));
-        $(conditionsList).append(title);
+        if (this.conditionVMs.length === 0) {
+            $(title).append('Always');
+            $(conditionsList).append(title);
 
-        for (i = 0; i < this.conditionVMs.length; i+=1) {
-            $(conditionsList).append(this.conditionVMs[i].getPresentation());
+            $(conditionsList).append('<div class="condition-parameters"><span>Always</span></div>');
+        } else {
+            names = [];
+            for (i = 0; i < this.conditionVMs.length; i+=1) {
+                names.push(this.conditionVMs[i].databaseObject.name);
+            }
+            $(title).append(names.join(' & '));
+            $(conditionsList).append(title);
+
+            for (i = 0; i < this.conditionVMs.length; i+=1) {
+                $(conditionsList).append(this.conditionVMs[i].getPresentation());
+            }
         }
 
         var addConditionButton = document.createElement('button');
-        $(addConditionButton).html('Add collision');
+        $(addConditionButton).html('Add condition');
 
         $(addConditionButton).on('click', function() {
             GameCreator.UI.populateSelectConditionList(that);
@@ -67,12 +74,15 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         $(conditionsList).append(addConditionButton);
         $(listItem).append(conditionsList);
     } else {
-        names = [];
-        for (i = 0; i < this.conditionVMs.length; i+=1) {
-            names.push(this.conditionVMs[i].databaseObject.name);
+        if (this.conditionVMs.length === 0) {
+            $(listItem).append('Always');
+        } else {
+            names = [];
+            for (i = 0; i < this.conditionVMs.length; i+=1) {
+                names.push(this.conditionVMs[i].databaseObject.name);
+            }
+            $(listItem).append(names.join(' & '));
         }
-        $(listItem).append(names.join(' & '));
-
         $(listItem).on('click', function(){
             $("#dialogue-panel-actions").trigger('redrawList', that);
             $("#dialogue-panel-conditions").trigger('redrawList', that);

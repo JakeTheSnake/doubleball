@@ -15,16 +15,16 @@
         object.bounce = function(params) {
             switch (GameCreator.helpers.determineQuadrant(params.collisionObject, this)) {
             case 1:
-                this.speedY = -Math.abs(this.speedY);
+                this.attributes.speedY = -Math.abs(this.attributes.speedY);
                 break;
             case 2:
-                this.speedX = Math.abs(this.speedX);
+                this.attributes.speedX = Math.abs(this.attributes.speedX);
                 break;
             case 3:
-                this.speedY = Math.abs(this.speedY);
+                this.attributes.speedY = Math.abs(this.attributes.speedY);
                 break;
             case 4:
-                this.speedX = -Math.abs(this.speedX);
+                this.attributes.speedX = -Math.abs(this.attributes.speedX);
                 break;
             }
         };
@@ -90,23 +90,23 @@
         object.stop = function(params) {
             var obj, quadrant;
             if (!params || !params.hasOwnProperty("collisionObject")) {
-                this.speedY = 0;
-                this.speedX = 0;
+                this.attributes.speedY = 0;
+                this.attributes.speedX = 0;
             } else {
                 obj = params.collisionObject;
                 quadrant = GameCreator.helpers.determineQuadrant(obj, this);
-                if (this.speedY > 0 && quadrant === 1) {
-                    this.speedY = 0;
+                if (this.attributes.speedY > 0 && quadrant === 1) {
+                    this.attributes.speedY = 0;
                     this.objectBeneath = true;
                 }
-                if (this.speedX < 0 && quadrant === 2) {
-                    this.speedX = 0;
+                if (this.attributes.speedX < 0 && quadrant === 2) {
+                    this.attributes.speedX = 0;
                 }
-                if (this.speedY < 0 && quadrant === 3) {
-                    this.speedY = 0;
+                if (this.attributes.speedY < 0 && quadrant === 3) {
+                    this.attributes.speedY = 0;
                 }
-                if (this.speedX > 0 && quadrant === 4) {
-                    this.speedX = 0;
+                if (this.attributes.speedX > 0 && quadrant === 4) {
+                    this.attributes.speedX = 0;
                 }
             }
         };

@@ -1,10 +1,10 @@
 
 
 test("Save Form Data to Object", function() {
-    var rangeField = GameCreator.htmlStrings.rangeInput('rangeField', 'range', '1:300');
-    var numberField = GameCreator.htmlStrings.numberInput('numberField', 'number', '200');
-    var stringField = GameCreator.htmlStrings.stringInput('textField', 'string', 'kastrull');
-    var checkbox = GameCreator.htmlStrings.checkboxInput('checkboxField', 'checkbox', true);
+    var rangeField = GameCreator.htmlStrings.rangeInput('range', '1:300');
+    var numberField = GameCreator.htmlStrings.numberInput('number', '200');
+    var stringField = GameCreator.htmlStrings.stringInput('string', 'kastrull');
+    var checkbox = GameCreator.htmlStrings.checkboxInput('checkbox', true);
     $("#qunit-fixture").html('<form id="test-form">' + rangeField + numberField + stringField + checkbox + '</form>');
     var obj = {};
 

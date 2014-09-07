@@ -258,7 +258,6 @@
             GameCreator.editScene(GameCreator.scenes[0]);
         },
 
-        //Since all inputs are tagged with "data-attrname" and "data-type" we have this general function for saving all object types.
         saveFormInputToObject: function(formId, obj) {
             var inputs = $("#" + formId + " input, #" + formId + " select");
             var input, i;
@@ -285,13 +284,6 @@
             GameCreator.invalidate(GameCreator.selectedObject);
             GameCreator.selectedObject.remove();
             GameCreator.unselectSceneObject();
-            GameCreator.render();
-        },
-
-        saveSceneObject: function(formId, obj) {
-            GameCreator.saveFormInputToObject(formId, obj);
-            GameCreator.hideRoute();
-            obj.update();
             GameCreator.render();
         },
 

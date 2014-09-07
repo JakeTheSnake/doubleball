@@ -40,12 +40,6 @@
         draggedNode: undefined,
         idCounter: 0, // Counter used for scene objects' instance IDs
         globalIdCounter: 0, // Counter used for global objects ID
-        borderObjects: {
-            borderL: {objectName: "borderL", parent: {id: -1}, id: -1, x: -500, y: -500, height: GCHeight + 1000, width: 500, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()), isCollidable: true},
-            borderR: {objectName: "borderR", parent: {id: -2}, id: -2, x: GCWidth, y: -500, height: GCHeight + 1000, width: 500, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()), isCollidable: true},
-            borderT: {objectName: "borderT", parent: {id: -3}, id: -3, x: -500, y: -500, height: 500, width: GCWidth + 1000, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()), isCollidable: true},
-            borderB: {objectName: "borderB", parent: {id: -4}, id: -4, x: -500, y: GCHeight, height: 500, width: GCWidth + 1000, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()), isCollidable: true}
-        },
 
         gameLoop: function () {
             var now = Date.now();
@@ -402,15 +396,68 @@
                     });
                 }
             });
-        }
+        },
+        borderObjects: {
+            borderL: {
+                objectName: "borderL", 
+                parent: {id: -1}, 
+                id: -1, 
+                isCollidable: true,
+                attributes: {
+                    x: -500, 
+                    y: -500, 
+                    height: GCHeight + 1000, 
+                    width: 500,
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()),
+                }
+            },
+            borderR: {
+                objectName: "borderR", 
+                parent: {id: -2}, 
+                id: -2, 
+                isCollidable: true,
+                attributes: {
+                    x: GCWidth, 
+                    y: -500, 
+                    height: GCHeight + 1000, 
+                    width: 500, 
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()),
+                },
+            },
+            borderT: {
+                objectName: "borderT", 
+                parent: {id: -3}, 
+                id: -3, 
+                isCollidable: true,
+                attributes: {
+                    x: -500, 
+                    y: -500, 
+                    height: 500, 
+                    width: GCWidth + 1000, 
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()),
+                },
+            },
+            borderB: {
+                objectName: "borderB", 
+                parent: {id: -4}, 
+                id: -4, 
+                isCollidable: true,
+                attributes: {
+                    x: -500, 
+                    y: GCHeight, 
+                    height: 500, 
+                    width: GCWidth + 1000, 
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()),
+                },
+            },
+        },
     };
 
     var borderKeys = Object.keys(GameCreator.borderObjects);
 
     for (var i = 0; i < borderKeys.length; i += 1 ) {
-        var attribute = {attributes: {image: GameCreator.borderObjects[borderKeys[i]].image}};
         GameCreator.borderObjects[borderKeys[i]].getDefaultState = function() {
-            return attribute;
+            return {attributes: this.attributes};
         };
     }
 

@@ -74,13 +74,13 @@ GameCreator.htmlStrings = {
         return '<input type="text" class="rangeField" data-type="range" data-attrName="' + attrName + '" value="' + (valueString === undefined ? '' : valueString) + '"/>'
     },
 
-    checkboxInput: function(inputId, attrName, checked) {
-        return '<input id="'+ inputId +'" type="checkbox" class="checkboxField" data-type="checkbox" data-attrName="' +
+    checkboxInput: function(attrName, checked) {
+        return '<input type="checkbox" class="checkboxField" data-type="checkbox" data-attrName="' +
             attrName + '" ' + (checked ? 'checked' : '') + ' />'
     },
 
-    imageInput: function(inputId, attrName, value) {
-        return '<input id="'+ inputId +'" type="text" class="textField" data-type="image" data-attrName="' + attrName + '" value="' + (value ? value.src : '') + '"/>'
+    imageInput: function(attrName, value) {
+        return '<input type="text" class="textField" data-type="image" data-attrName="' + attrName + '" value="' + (value ? value.src : '') + '"/>'
     },
 
     inputLabel: function(labelText) {

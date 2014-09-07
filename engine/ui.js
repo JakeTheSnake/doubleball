@@ -250,8 +250,10 @@ GameCreator.UI = {
     },
 
     setupEditEventColumns: function(caSets, columnParentContainer, selectableActions, globalObj) {
+        var caSet;
+
         if (caSets.length === 0) {
-            var caSet = new GameCreator.ConditionActionSet(globalObj);
+            caSet = new GameCreator.ConditionActionSet(globalObj);
             caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
             caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
             caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1}));
@@ -276,17 +278,23 @@ GameCreator.UI = {
         columnParentContainer.html(html);
 
         var conditionsColumn = $("#dialogue-panel-conditions");
-        for (i = 0; i < caSetVMs.length; i+=1) {
-            $(conditionsColumn).append(caSetVMs[i].getPresentation());
-        }
 
         $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM){
             var isActive;
             conditionsColumn.html('');
             for (i = 0; i < caSetVMs.length; i+=1) {
                 isActive = activeCASetVM === caSetVMs[i];
-                $(conditionsColumn).append(caSetVMs[i].getPresentation(isActive));
+                conditionsColumn.append(caSetVMs[i].getPresentation(isActive));
             }
+            var addCaSetButton = $(document.createElement('li'));
+            addCaSetButton.html('<button>Add condition set</button>');
+            conditionsColumn.append(addCaSetButton);
+            addCaSetButton.on('click', function() {
+                caSet = new GameCreator.ConditionActionSet(globalObj);
+                caSets.push(caSet);
+                caSetVMs.push(new GameCreator.CASetVM(caSet, selectableActions));
+                $("#dialogue-panel-conditions").trigger('redrawList');
+            });
             $("#dialogue-panel-add-list").empty();
         });
 
@@ -295,7 +303,7 @@ GameCreator.UI = {
             actionsColumn.html('');
             
             for (i = 0; i < activeCASetVM.actionVMs.length; i+=1) {
-                $(actionsColumn).append(activeCASetVM.actionVMs[i].getPresentation());
+                actionsColumn.append(activeCASetVM.actionVMs[i].getPresentation());
             }
             
             var addActionButton = document.createElement('button');
@@ -306,6 +314,8 @@ GameCreator.UI = {
             actionsColumn.append(addActionButton);
             $("#dialogue-panel-add-list").empty();
         });
+
+        $("#dialogue-panel-conditions").trigger('redrawList');
     },
 
     populateSelectConditionList: function(activeCASetVM) {
