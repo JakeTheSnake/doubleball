@@ -193,11 +193,6 @@ GameCreator.UI = {
         $("#dialogue-window").hide();
         $("#dialogue-overlay").hide();
     },
-    
-    setupSingleSelectorWithListener: function(elementId, collection, event, callback, attrName, selectedKey) {
-      $(document.body).on(event, "#" + elementId, callback);
-      return GameCreator.htmlStrings.singleSelector(elementId, collection, attrName, selectedKey);
-    },
 
     showDebugInformation: function(info){
         $("#debug-info-pane").html(GameCreator.htmlStrings.debugInformation(info));
@@ -232,30 +227,9 @@ GameCreator.UI = {
     },
 
     editSceneObject: function() {
-
         var objectType = GameCreator.selectedObject.parent.objectType;
 
         GameCreator.UI.setupSceneObjectForm(GameCreator.selectedObject);
-
-        /*if (GameCreator.helpers.startsWith(objectType, "CounterObject")) {
-            var uniqueIds = $.extend({" ": undefined}, GameCreator.getUniqueIDsInActiveScene());
-            $("#edit-scene-object-content").html(GameCreator[objectType].sceneObjectForm(obj, uniqueIds));
-            $("#add-counter-object-counter-selector").html();
-            $("#add-counter-counter-object").on("change", function() {
-                $("#counter-list-content").html(
-                    GameCreator.htmlStrings.inputLabel("add-counter-counter-name", "Counter") +
-                    GameCreator.htmlStrings.singleSelector("add-counter-counter-name", $(this).val() ? GameCreator.getCountersForGlobalObj($(this).val()) : {}, "counterName")
-                );
-            });
-        } else if (objectType === 'RouteObject') {
-            $("#edit-scene-object-content").html(GameCreator.RouteObject.sceneObjectForm(GameCreator.selectedObject));
-            $("#edit-route-button").on("click", function(){
-                GameCreator.drawRoute(obj.route);
-            });
-        } else {
-            $("#edit-scene-object-content").html(GameCreator.htmlStrings.sceneObjectForm(GameCreator.selectedObject));
-        }*/
-
     },
 
     updateSceneObjectForm: function(sceneObj) {
@@ -278,14 +252,14 @@ GameCreator.UI = {
     setupEditEventColumns: function(caSets, columnParentContainer, selectableActions, globalObj) {
         if (caSets.length === 0) {
             var caSet = new GameCreator.ConditionActionSet(globalObj);
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}, globalObj));
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}, globalObj));
-            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1}, globalObj));
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
+            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
+            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1}));
             caSets.push(caSet);
             var caSet2 = new GameCreator.ConditionActionSet(globalObj);
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}, globalObj));
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}, globalObj));
-            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1, x: 300}, globalObj));
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
+            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
+            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1, x: 300}));
             caSets.push(caSet2);
         }
 

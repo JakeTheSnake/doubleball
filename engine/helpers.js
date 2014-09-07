@@ -418,6 +418,10 @@
                 return value ? GameCreator.helpers.findGlobalObjectById(Number(value)).objectName : '';
             case "stateInput":
                 return value ? GameCreator.helpers.getObjectById(obj.states, Number(value)).name : '';
+            case "counterInput":
+                return value ? value.split('::').join(' - ') : '';
+            case "counterTypeInput":
+                return value ? GameCreator.helpers.getPrettyName(value) : '';
             default:
                 return value;
         }
@@ -432,11 +436,13 @@
             objectState: 'State',
             objId: 'Object',
             effect: 'Effect',
-            counterObject: 'Object',
+            counterObject: 'Counter',
             type: 'Type',
             value: 'Value',
             scene: 'Scene',
             count: 'Count',
+            change: 'Change to',
+            set: 'Set to',
         }
         return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName;
     };

@@ -27,6 +27,21 @@
         this.objects.push(sceneObject);
     };
 
+    GameCreator.Scene.prototype.getSelectableCounters = function(globalObj) {
+        var i, counterNames, result = {};
+        counterNames = Object.keys(globalObj.parentCounters);
+        counterNames.forEach(function(name){
+            result['This - ' + name] = 'this::' + name;
+        });
+        this.objects.forEach(function(object) {
+            counterNames = Object.keys(object.counters);
+            counterNames.forEach(function(name) {
+                result[object.attributes.instanceId + ' - ' + name] = object.attributes.instanceId + '::' + name;
+            });
+        });
+        return result;
+    };
+
     GameCreator.Scene.prototype.reset = function() {
         var i;
         for (i = 0; i < this.objects.length; i += 1) {

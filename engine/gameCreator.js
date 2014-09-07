@@ -314,7 +314,8 @@
         },
 
         changeCounter: function(runtimeObj, params) {
-            var selectedObjectId = params.counterObject;
+            var selectedObjectId = params.counterObject.split('::')[0];
+            var counterName = params.counterObject.split('::')[1];
             var counterCarrier;
             if (selectedObjectId !== 'this') {
                 runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
@@ -325,9 +326,9 @@
                 counterCarrier = runtimeObj;
             }
             if (params.counterType === 'set') {
-                counterCarrier.counters[params.counterName].setValue(params.counterValue);
+                counterCarrier.counters[counterName].setValue(params.counterValue);
             } else {
-                counterCarrier.counters[params.counterName].changeValue(params.counterValue);
+                counterCarrier.counters[counterName].changeValue(params.counterValue);
             }
         },
 
@@ -394,9 +395,9 @@
             GameCreator.playScene(GameCreator.scenes[0]);
         },
         resetGlobalCounters: function() {
-            Object.keys(GameCreator.globalObjects).map(function(key) {
+            Object.keys(GameCreator.globalObjects).forEach(function(key) {
                 if (GameCreator.globalObjects[key].counters) {
-                    Object.keys(GameCreator.globalObjects[key].counters).map(function(counterKey) {
+                    Object.keys(GameCreator.globalObjects[key].counters).forEach(function(counterKey) {
                         GameCreator.globalObjects[key].counters[counterKey].reset();
                     });
                 }

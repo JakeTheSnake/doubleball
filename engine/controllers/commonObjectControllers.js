@@ -150,10 +150,15 @@ GameCreator.commonObjectControllers = {
         $("#dialogue-panel-counters").html(this.getCountersContent());
         var globalObj = this;
         $("#add-new-counter-button").on("click", function() {
-            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createCounterForm("dialogue-add-counter-name"));
-            $("#dialogue-panel-counters .saveButton").one("click", function() {
-                var counterName = $("#dialogue-add-counter-name").val();
+            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createCounterForm());
+            $("#create-counter-form button").one("click", function() {
+                var counterName = $("#create-counter-form input").val();
                 globalObj.parentCounters[counterName] = new GameCreator.Counter();
+                GameCreator.getActiveScene().objects.forEach(function(sceneObj){
+                    if(sceneObj.parent === globalObj) {
+                        GameCreator.resetCounters(sceneObj, sceneObj.parent.parentCounters);
+                    }
+                });
                 globalObj.setupCountersForm(container);
             });
         });

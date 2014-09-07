@@ -71,7 +71,8 @@ GameCreator.CounterParameter = function(paramCollection, paramName, mandatory) {
 };
 
 GameCreator.CounterParameter.prototype.getValuePresenter = function() {
-    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'counterInput');
     return result;
 };
 
@@ -82,7 +83,8 @@ GameCreator.CounterChangeTypeParameter = function(paramCollection, paramName, ma
 };
 
 GameCreator.CounterChangeTypeParameter.prototype.getValuePresenter = function() {
-    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'counterTypeInput');
     return result;
 };
 

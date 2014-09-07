@@ -1,6 +1,6 @@
 GameCreator.htmlStrings = {
-    singleSelector: function(elementId, collection, attrName, selectedValue) {
-        var result = '<select class="selectorField" id="' + elementId + '" data-type="text"';
+    singleSelector: function(collection, attrName, selectedValue) {
+        var result = '<select class="selectorField" data-type="text"';
         if (attrName) {
         	result += ' data-attrName="' + attrName + '">'
         } else {
@@ -20,15 +20,15 @@ GameCreator.htmlStrings = {
     },
 
     globalObjectInput: function(attrName, value) {
-        return GameCreator.htmlStrings.singleSelector('', GameCreator.helpers.getGlobalObjectIds(), attrName, value);
+        return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getGlobalObjectIds(), attrName, value);
     },
 
     shootableObjectInput: function(attrName, value) {
-        return GameCreator.htmlStrings.singleSelector('', GameCreator.helpers.getShootableObjectIds(), attrName, value);
+        return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getShootableObjectIds(), attrName, value);
     },
 
     destroyEffectInput: function(attrName, value) {
-        return GameCreator.htmlStrings.singleSelector('', GameCreator.effects.destroyEffects, attrName, value);
+        return GameCreator.htmlStrings.singleSelector(GameCreator.effects.destroyEffects, attrName, value);
     },
 
     stateInput: function(attrName, value, globalObj) {
@@ -36,7 +36,15 @@ GameCreator.htmlStrings = {
         globalObj.states.forEach(function(state){
             selectableStates[state.name] = state.id;
         });
-        return GameCreator.htmlStrings.singleSelector('', selectableStates, attrName, value);
+        return GameCreator.htmlStrings.singleSelector(selectableStates, attrName, value);
+    },
+
+    counterInput: function(attrName, value, globalObj) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.getActiveScene().getSelectableCounters(globalObj), attrName, value)
+    },
+
+    counterTypeInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector({'Change to': 'change', 'Set to': 'set'}, attrName, value);
     },
 
     stringInput: function(attrName, value) {
@@ -44,7 +52,7 @@ GameCreator.htmlStrings = {
     },
 
     directionInput: function(attrName, value) {
-        return GameCreator.htmlStrings.singleSelector('', GameCreator.directions, attrName, value);
+        return GameCreator.htmlStrings.singleSelector(GameCreator.directions, attrName, value);
     },
 
     rangeInput: function(attrName, value) {
@@ -77,23 +85,6 @@ GameCreator.htmlStrings = {
 
     parameterGroup: function(parameterInput) {
         return '<div class="actionParameter">' + parameterInput + '</div>'
-    },
-
-    timingGroup: function(timings) {
-        var applicableTimings = {"Now":"now"};
-        if (timings.after) {
-            applicableTimings["After"] = "after";
-        }
-        if (timings.every) {
-            applicableTimings["Every"] = "every";
-        }
-        if (timings.at) {
-            applicableTimings["At"] = "at";
-        }
-
-        var result = GameCreator.htmlStrings.singleSelector("timing-selector", applicableTimings);
-        result += '<div id="timing-parameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timing-time", "time","3000") + 'ms</div>';
-        return result;
     },
 
     actionRow: function(name, action) {
@@ -232,11 +223,10 @@ GameCreator.htmlStrings = {
     	return result;
 	},
     
-    createCounterForm: function(inputId) {
-    	var result = '<div>'
-    	result += GameCreator.htmlStrings.inputLabel(inputId, "Name:");
-    	result += GameCreator.htmlStrings.stringInput(inputId, "name", "");
-    	result += '<button class="saveButton regularButton">Save</button>';
+    createCounterForm: function() {
+    	var result = '<div id="create-counter-form">'
+    	result += '<input type="text" class="textField" placeholder="Name of counter"/>'
+    	result += '<button>Save</button>';
         result += '</div>'
     	return result;
 	},

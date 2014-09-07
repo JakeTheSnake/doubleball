@@ -1,24 +1,6 @@
 (function() {
     "use strict";
 
-    var sceneObjectFormFunction = function(sceneObject, counterCarriers) {
-        var result = '<div id="edit-scene-object-form">';
-        result += '<div id="add-counter-object-counter-selector">' + 
-            GameCreator.htmlStrings.inputLabel('add-counter-counter-object', 'Object') +
-            GameCreator.htmlStrings.singleSelector('add-counter-counter-object', counterCarriers, 'counterObject', sceneObject.counterObject) +
-            '<div id="counter-list-content"></div>' +
-            '</div>' + 
-            '<br style="clear:both;"/>';
-        result += GameCreator.helpers.getAttributeForm(GameCreator[sceneObject.parent.objectType].objectSceneAttributes,
-            GameCreator[sceneObject.parent.objectType].objectAttributes,
-            sceneObject);
-        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button>';
-        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
-    };
-
-    GameCreator.CounterObjectText.sceneObjectForm = sceneObjectFormFunction;
-    GameCreator.CounterObjectImage.sceneObjectForm = sceneObjectFormFunction;
-
     var counterObjectPrototypeFunctions = {
         getNonStatePropertiesForm: function() {
                 return  '';

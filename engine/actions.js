@@ -118,15 +118,22 @@
           Counter:  new GameCreator.Action({
                         action: function(params) {GameCreator.changeCounter(this, params); },
                         params: {"counterObject":
-                                    {param: GameCreator.CounterParameter,
-                                     mandatory: true,
+                                    {
+                                        param: GameCreator.CounterParameter,
+                                        mandatory: true,
                                     },
                                     "type":
-                                    {param: GameCreator.CounterChangeTypeParameter,
-                                     mandatory: true},
+                                    {
+                                        param: GameCreator.CounterChangeTypeParameter,
+                                        mandatory: false,
+                                        defaultValue: 'change',
+                                    },
                                     "value":
-                                    {param: GameCreator.NumberParameter,
-                                     mandatory: true}
+                                    {
+                                        param: GameCreator.NumberParameter,
+                                        mandatory: false,
+                                        defaultValue: 1,
+                                    },
                                 },
                         name: "Counter",
                         timing: {at: true, every: true, after: true},
