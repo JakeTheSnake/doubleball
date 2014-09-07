@@ -47,6 +47,10 @@ GameCreator.htmlStrings = {
         return GameCreator.htmlStrings.singleSelector({'Change to': 'change', 'Set to': 'set'}, attrName, value);
     },
 
+    sceneInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getSelectableScenes(), attrName, value);
+    },
+
     stringInput: function(attrName, value) {
         return '<input type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },

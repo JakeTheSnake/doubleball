@@ -107,7 +107,8 @@ GameCreator.SwitchSceneParameter = function(paramCollection, paramName, mandator
 };
 
 GameCreator.SwitchSceneParameter.prototype.getValuePresenter = function() {
-    var result = '<td>' + GameCreator.htmlStrings.rangeInput(this.name + "-input", this.name, this.value) + "</td>";
+    var result = document.createElement('td');
+    result.setAttribute('data-inputtype', 'sceneInput');
     return result;
 };
 

@@ -422,6 +422,8 @@
                 return value ? value.split('::').join(' - ') : '';
             case "counterTypeInput":
                 return value ? GameCreator.helpers.getPrettyName(value) : '';
+            case "sceneInput":
+                return value ? GameCreator.getSceneById(Number(value)).attributes.name : '';
             default:
                 return value;
         }
@@ -458,7 +460,15 @@
         return result;
     };
 
-    GameCreator.helpers.getGlobalObjectIds = function(){
+    GameCreator.helpers.getSelectableScenes = function() {
+        var result = {};
+        GameCreator.scenes.forEach(function(scene){
+            result[scene.attributes.name] = scene.id;
+        });
+        return result;
+    };
+
+    GameCreator.helpers.getGlobalObjectIds = function() {
         var i, result = {};
         var objectNames = Object.keys(GameCreator.globalObjects);
         for(i = 0; i < objectNames.length; i += 1) {
