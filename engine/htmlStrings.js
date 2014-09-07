@@ -221,11 +221,16 @@ GameCreator.htmlStrings = {
                 !GameCreator.helpers.getObjectById(object.onCollideEvents, objId) && 
                 selectableObjects[objName].isCollidable && 
                 objName != object.objectName) {
-                result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].getDefaultState().attributes.image.outerHTML + '</br><span>' + objName + '</span></div>';
+                result += '<li data-objectname="' + objName + '">' + GameCreator.htmlStrings.selectGlobalObjectPresentation(objId) + '</li>';
             }
         }
     	return result;
 	},
+
+    selectGlobalObjectPresentation: function(globalObjectId) {
+        var globalObject = GameCreator.helpers.findGlobalObjectById(globalObjectId);
+        return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>'
+    },
     
     createCounterForm: function() {
     	var result = '<div id="create-counter-form">'

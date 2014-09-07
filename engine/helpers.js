@@ -335,6 +335,14 @@
         }
     };
 
+    GameCreator.helpers.getCollisionActions = function(objectType) {
+        if (objectType === "MouseObject") {
+            return GameCreator.actionGroups.mouseCollisionActions;
+        } else {
+            return GameCreator.actionGroups.collisionActions;
+        }
+    };
+
     GameCreator.helpers.labelize = function(name) {
         var segments = name.match(/([A-Z]?[a-z]*)/g);
         for (var i = 0; i < segments.length; i++) {

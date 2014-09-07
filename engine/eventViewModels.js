@@ -48,7 +48,7 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         conditionsList.className = 'conditions-group';
 
         if (this.conditionVMs.length === 0) {
-            $(title).append('Always');
+            $(title).append('&#9660; Always');
             $(conditionsList).append(title);
 
             $(conditionsList).append('<div class="condition-parameters"><span>Always</span></div>');
@@ -57,12 +57,16 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
             for (i = 0; i < this.conditionVMs.length; i+=1) {
                 names.push(this.conditionVMs[i].databaseObject.name);
             }
-            $(title).append(names.join(' & '));
+            $(title).append('&#9660; ' + names.join(' & '));
             $(conditionsList).append(title);
 
             for (i = 0; i < this.conditionVMs.length; i+=1) {
                 $(conditionsList).append(this.conditionVMs[i].getPresentation());
             }
+            $(title).on('click', function(){
+                $("#dialogue-panel-conditions").trigger('redrawList', null);
+                $("#dialogue-panel-actions").empty();
+            });
         }
 
         var addConditionButton = document.createElement('button');
@@ -75,13 +79,13 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         $(listItem).append(conditionsList);
     } else {
         if (this.conditionVMs.length === 0) {
-            $(listItem).append('Always');
+            $(listItem).append('&#9658; Always');
         } else {
             names = [];
             for (i = 0; i < this.conditionVMs.length; i+=1) {
                 names.push(this.conditionVMs[i].databaseObject.name);
             }
-            $(listItem).append(names.join(' & '));
+            $(listItem).append('&#9658; ' + names.join(' & '));
         }
         $(listItem).on('click', function(){
             $("#dialogue-panel-actions").trigger('redrawList', that);

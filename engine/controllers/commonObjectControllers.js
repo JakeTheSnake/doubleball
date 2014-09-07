@@ -44,30 +44,47 @@ GameCreator.commonObjectControllers = {
         for(var i = 0; i < this.onCollideEvents.length; i++) {
             collisionObjects.push(GameCreator.helpers.findGlobalObjectById(this.onCollideEvents[i].id));
         }
-        container.html(this.getCollisionsContent(collisionObjects));
-        container.find(".collisionMenuElement").on("click", function(){
-            var targetName = $(this).data("name");
-            var actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
-            var targetId = GameCreator.helpers.findGlobalObjectByName(targetName).id;
-            var existingActions = GameCreator.helpers.getObjectById(globalObj.onCollideEvents, targetId).events[0].actions;
-            GameCreator.UI.createEditActionsArea(
-                "Actions for collision with " + targetName, 
-                actions,
-                existingActions,
-                $("#edit-collision-actions-object-content"),
-                globalObj.objectName
-            );
-        });
 
-        $("#add-new-collision-button").on("click", function() {
-            $("#edit-collision-actions-object-content").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
-            $(".addCollisionObjectElement").one("click", function() {
-                var targetId = GameCreator.helpers.findGlobalObjectByName($(this).data("objectname")).id;
-                var newEventItem = {id: targetId, events: [new GameCreator.ConditionActionSet()]};
-                globalObj.onCollideEvents.push(newEventItem);
-                globalObj.setupCollisionsForm(container);
+        var html = GameCreator.htmlStrings.getColumn('With', 'dialogue-panel-with');
+        html += GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
+        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
+        container.html(html);
+
+        GameCreator.UI.setupActionsColumn();
+
+        $("#dialogue-panel-with").on('redrawList', function(evt) {
+            $('#dialogue-panel-with').empty();
+            globalObj.onCollideEvents.forEach(function(collisionItem) {
+                var collisionListItem = $(document.createElement('li'));
+                var globalObject = GameCreator.helpers.findGlobalObjectById(collisionItem.id);
+                collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
+                $("#dialogue-panel-with").append(collisionListItem);
+                collisionListItem.on('click', function() {
+                    GameCreator.UI.setupConditionsColumn(collisionItem.caSets, GameCreator.helpers.getCollisionActions(globalObject), globalObject);
+
+                    $("#dialogue-panel-conditions").trigger('redrawList');
+                });
+
+            });
+
+            $('#dialogue-panel-with').append('<li><button id="add-new-collision-button">Add</button></li>');
+
+            $("#add-new-collision-button").on("click", function() {
+                $("#dialogue-panel-add-list").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
+                $("#dialogue-panel-add-list li").one("click", function() {
+                    var targetId = GameCreator.helpers.findGlobalObjectByName($(this).data("objectname")).id;
+                    var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet()]};
+                    globalObj.onCollideEvents.push(collisionItem);
+                    $("#dialogue-panel-with").trigger('redrawList');
+                    $("#dialogue-panel-add-list").empty();
+                });
             });
         });
+        
+        $("#dialogue-panel-with").trigger('redrawList');
+
+        
     },
 
     setupOnDestroyActionsForm: function(container) {

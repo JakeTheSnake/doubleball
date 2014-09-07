@@ -265,22 +265,27 @@ GameCreator.UI = {
             caSets.push(caSet2);
         }
 
-        var caSetVMs = [];
-
-        for (var i = 0; i < caSets.length; i++) {
-            caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions));
-        }
-
         var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
         html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
         html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
         
         columnParentContainer.html(html);
 
-        var conditionsColumn = $("#dialogue-panel-conditions");
+        GameCreator.UI.setupConditionsColumn(caSets, selectableActions, globalObj);
+        GameCreator.UI.setupActionsColumn();
 
-        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM){
+        $("#dialogue-panel-conditions").trigger('redrawList');
+    },
+
+    setupConditionsColumn: function(caSets, selectableActions, globalObj) {
+        var caSetVMs = [];
+
+        for (var i = 0; i < caSets.length; i++) {
+            caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions));
+        }
+        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM) {
             var isActive;
+            var conditionsColumn = $("#dialogue-panel-conditions");
             conditionsColumn.html('');
             for (i = 0; i < caSetVMs.length; i+=1) {
                 isActive = activeCASetVM === caSetVMs[i];
@@ -297,8 +302,10 @@ GameCreator.UI = {
             });
             $("#dialogue-panel-add-list").empty();
         });
+    },
 
-        $("#dialogue-panel-actions").on('redrawList', function(evt, activeCASetVM){
+    setupActionsColumn: function() {
+        $("#dialogue-panel-actions").on('redrawList', function(evt, activeCASetVM) {
             var actionsColumn = $("#dialogue-panel-actions");
             actionsColumn.html('');
             
@@ -314,8 +321,6 @@ GameCreator.UI = {
             actionsColumn.append(addActionButton);
             $("#dialogue-panel-add-list").empty();
         });
-
-        $("#dialogue-panel-conditions").trigger('redrawList');
     },
 
     populateSelectConditionList: function(activeCASetVM) {
