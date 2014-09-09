@@ -291,8 +291,9 @@ GameCreator.UI = {
                 isActive = activeCASetVM === caSetVMs[i];
                 conditionsColumn.append(caSetVMs[i].getPresentation(isActive));
             }
-            var addCaSetButton = $(document.createElement('li'));
-            addCaSetButton.html('<button>Add condition set</button>');
+            var addCaSetButton = $(document.createElement('button'));
+            $(addCaSetButton).addClass('icon-plus');
+            addCaSetButton.html('Add condition group');
             conditionsColumn.append(addCaSetButton);
             addCaSetButton.on('click', function() {
                 caSet = new GameCreator.ConditionActionSet(globalObj);
@@ -314,6 +315,7 @@ GameCreator.UI = {
             }
             
             var addActionButton = document.createElement('button');
+            $(addActionButton).addClass('icon-plus');
             $(addActionButton).html('Add action');
             $(addActionButton).on('click', function() {
                 GameCreator.UI.populateSelectActionList(activeCASetVM);

@@ -49,10 +49,10 @@ GameCreator.commonObjectViews = {
                    <span class="panel-title">Edit</span> \
                    </div> \
                    <ul id="dialogue-panel-edit" class="nav nav-tabs nav-stacked"> \
-                   <li data-uifunction="setupPropertiesForm">Properties</li> \
-                   <li data-uifunction="setupStatesForm">States</li> \
-                   <li data-uifunction="setupEventsForm">Events</li> \
-                   <li data-uifunction="setupCountersForm">Counters</li> \
+                   <li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
+                   <li data-uifunction="setupStatesForm"><i class="icon-codeopen" /><span>States</span></li> \
+                   <li data-uifunction="setupEventsForm"><i class="icon-codeopen" /><span>Events</span></li> \
+                   <li data-uifunction="setupCountersForm"><i class="icon-codeopen" /><span>Counters</span></li> \
                    </ul> \
                    </div> \
                    <div id="dialogue-edit-content"> \
@@ -171,9 +171,9 @@ GameCreator.commonObjectViews = {
                        <span class="panel-title">Events</span> \
                        </div> \
                        <ul id="dialogue-panel-events" class="nav nav-tabs nav-stacked"> \
-                       <li data-uifunction="setupOnCreateActionsForm">On Create</li> \
-                       <li data-uifunction="setupCollisionsForm">On Collide</li> \
-                       <li data-uifunction="setupOnDestroyActionsForm">On Destroy</li>';
+                       <li data-uifunction="setupOnCreateActionsForm"><i class="icon-codeopen" /><span>On Create</span></li> \
+                       <li data-uifunction="setupCollisionsForm"><i class="icon-codeopen" /><span>On Collide</span></li> \
+                       <li data-uifunction="setupOnDestroyActionsForm"><i class="icon-codeopen" /><span>On Destroy</span></li>';
             
             result += this.getEvents();
 

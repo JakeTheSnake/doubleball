@@ -1,6 +1,6 @@
 GameCreator.TopDownObject.prototype.getEvents = function() {
-	return  '<li data-uifunction="setupOnClickActionsForm">On Click</li> \
-			 <li data-uifunction="setupKeyEventsForm">On Keypress</li>';
+	return  '<li data-uifunction="setupOnClickActionsForm"><i class="icon-codeopen" /><span>On Click</span></li> \
+			 <li data-uifunction="setupKeyEventsForm"><i class="icon-codeopen" /><span>On Keypress</span></li>';
 };
 
 GameCreator.TopDownObject.prototype.getPropertiesForm = function() {

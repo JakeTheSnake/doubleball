@@ -1,5 +1,5 @@
 GameCreator.MouseObject.prototype.getEvents = function(){
-	return  '<li data-uifunction="setupKeyEventsForm">On Keypress</li>';
+	return  '<li data-uifunction="setupKeyEventsForm"><i class="icon-codeopen" /><span>On Keypress</span></li>';
 };
 
 GameCreator.MouseObject.prototype.getPropertiesForm = function(stateId) {

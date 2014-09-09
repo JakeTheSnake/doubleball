@@ -132,17 +132,61 @@ a:last-child, button:last-child, img:last-child, p:last-child {
   margin-bottom: 0;
 }
 
-/*
+/* ====================================================================================================================================================
+   Author's icons
+   ==================================================================================================================================================== */
 
-  Todo:
-  
-  * Object manager: Properties
-  * Object manager: States
-  * Object manager: Add library
-  * Check all ID's so that they are unique
-  * Add scene button: Change size according to PSD.
-
-*/
+@font-face {
+  font-family: 'icons';
+  src: url('../font/icons.eot?99267613');
+  src: url('../font/icons.eot?99267613#iefix') format('embedded-opentype'),
+       url('../font/icons.woff?99267613') format('woff'),
+       url('../font/icons.ttf?99267613') format('truetype'),
+       url('../font/icons.svg?99267613#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+ 
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  color: #FFFFFF;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+ 
+.icon-down-open:before { content: '\e800'; font-size: 60%; margin-right: 7px; }
+.icon-cancel:before { content: '\e801'; } /* '' */
+.icon-right-open:before { content: '\e802'; font-size: 60%; margin-right: 6px; }
+.icon-down-dir:before { content: '\e803'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-right-dir:before { content: '\e804'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-plus:before { content: '\e805'; font-size: 80%; margin-right: 9px; } /* '' */
+.icon-minus:before { content: '\e806'; } /* '' */
+.icon-cog:before { content: '\e807'; } /* '' */
+.icon-menu:before { content: '\e808'; } /* '' */
+.icon-up-dir:before { content: '\e809'; } /* '' */
+.icon-left-dir:before { content: '\e80a'; } /* '' */
+.icon-left-open:before { content: '\e80b';  font-size: 60%; } /* '' */
+.icon-up-open:before { content: '\e80c';  font-size: 60%; } /* '' */
+.icon-angle-left:before { content: '\e80d'; } /* '' */
+.icon-angle-right:before { content: '\e80e'; } /* '' */
+.icon-angle-up:before { content: '\e80f'; } /* '' */
+.icon-angle-down:before { content: '\e810'; } /* '' */
+.icon-eye:before { content: '\e811'; } /* '' */
+.icon-eye-off:before { content: '\e812'; } /* '' */
+.icon-ok:before { content: '\e813'; } /* '' */
+.icon-help:before { content: '\e814'; } /* '' */
+.icon-info:before { content: '\e815'; } /* '' */
+.icon-attention-alt:before { content: '\e816'; } /* '' */
+.icon-codeopen:before { content: '\e817';  font-size: 100%; margin-right: 13px; } /* '' */
 
 /* ====================================================================================================================================================
    Author's base layout, classes and conditions
@@ -490,7 +534,7 @@ input {
 }
 
 .dialogue {
-  background-color: #323232;
+  background-color: #1E1E1E;
   position: absolute;
   overflow: hidden;
   z-index: 1;
@@ -549,6 +593,10 @@ input {
   height: 600px;
 }
 
+#object-manager ul {
+  font-size: 0.9em;
+}
+
 #object-manager .col {
   padding-right: 2px;
 }
@@ -558,13 +606,26 @@ input {
 }
 
 #object-manager .nav-tabs > li {
-  font-size: 0.9em;
   height: 33px;
   padding-top: 15px;
 }
 
 #object-manager .nav-tabs > li.active {
    background-color: #239D58;
+}
+
+#object-manager button {
+  display: block;
+  width: 210px;
+  height: 29px;
+  padding: 0 0 0 8px;
+  background-color: #239D58;
+  font-size: 1em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: left;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  color: #fff;
 }
 
 /*
@@ -590,7 +651,15 @@ input {
 #dialogue-events-content .nav-tabs > li {
   width: auto;
   height: 25px;
-  padding: 5px 0 0 22px;
+  padding: 5px 0 0 9px;
+}
+
+#dialogue-events-content button:hover {
+  background-color: #27AE60;
+}
+
+#dialogue-events-content button:active {
+  background-color: #1C8047;
 }
 
 #dialogue-panel-conditions.nav-tabs > li.active,
@@ -615,40 +684,20 @@ input {
 .conditions-group > span {
   display: block;
   background-color: #239D58;
-  padding: 5px 0 0 21px;
+  padding: 4px 0 0 7px;
   height: 24px;
   margin-bottom: 2px;
 }
 
-/* TODO:
-  - Rename make the button properly
-*/
-#dialogue-events-content button {
-  display: block;
-  width: 208px;
-  height: 29px;
-  padding: 0 0 0 21px;
-  background-color: #239D58;
-  font-size: 1em;
-  font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
-  text-align: left;
-  text-shadow: 1px 1px rgba(0,0,0,0.2);
-  color: #fff;
+.conditions-group > button {
+  width: 208px !important;
 }
 
-#dialogue-events-content button:hover {
-  background-color: #27AE60;
-}
-
-#dialogue-events-content button:active {
-  background-color: #1C8047;
-}
 
 .condition-parameters > span {
   display: block;
   background-color: #424242;
-  padding: 5px 0 5px 21px;
+  padding: 5px 0 5px 5px;
   margin-bottom: 1px;
   font-size: 0.8em;
 }

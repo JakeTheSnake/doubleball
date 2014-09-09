@@ -68,7 +68,7 @@ GameCreator.commonObjectControllers = {
 
             });
 
-            $('#dialogue-panel-with').append('<li><button id="add-new-collision-button">Add</button></li>');
+            $('#dialogue-panel-with').append('<button id="add-new-collision-button">Add</button>');
 
             $("#add-new-collision-button").on("click", function() {
                 $("#dialogue-panel-add-list").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));

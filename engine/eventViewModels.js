@@ -38,17 +38,17 @@ GameCreator.CASetVM.prototype.addAction = function(actionName) {
 GameCreator.CASetVM.prototype.getPresentation = function(active) {
     var conditionsList, listItem = document.createElement('li');
     var title = document.createElement('span');
-    
     var i, names, that = this;
 
     if (active) {
         $(listItem).addClass('active');
+        $(title).addClass('icon-down-open');
 
         conditionsList = document.createElement('div');
         conditionsList.className = 'conditions-group';
 
         if (this.conditionVMs.length === 0) {
-            $(title).append('&#9660; Always');
+            $(title).append('Always');
             $(conditionsList).append(title);
 
             $(conditionsList).append('<div class="condition-parameters"><span>Always</span></div>');
@@ -57,7 +57,7 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
             for (i = 0; i < this.conditionVMs.length; i+=1) {
                 names.push(this.conditionVMs[i].databaseObject.name);
             }
-            $(title).append('&#9660; ' + names.join(' & '));
+            $(title).append(names.join(' & '));
             $(conditionsList).append(title);
 
             for (i = 0; i < this.conditionVMs.length; i+=1) {
@@ -70,6 +70,7 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         }
 
         var addConditionButton = document.createElement('button');
+        $(addConditionButton).addClass('icon-plus');
         $(addConditionButton).html('Add condition');
 
         $(addConditionButton).on('click', function() {
@@ -79,13 +80,15 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         $(listItem).append(conditionsList);
     } else {
         if (this.conditionVMs.length === 0) {
-            $(listItem).append('&#9658; Always');
+            $(listItem).append('Always');
         } else {
             names = [];
             for (i = 0; i < this.conditionVMs.length; i+=1) {
                 names.push(this.conditionVMs[i].databaseObject.name);
             }
-            $(listItem).append('&#9658; ' + names.join(' & '));
+            $(title).addClass('icon-right-open');
+            $(title).append(names.join(' & '));
+            $(listItem).append(title);
         }
         $(listItem).on('click', function(){
             $("#dialogue-panel-actions").trigger('redrawList', that);
@@ -106,7 +109,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
     var result = document.createElement('div');
         result.className = 'condition-parameters';
     var title = document.createElement('span');
-    
+    $(title).addClass('icon-down-dir');
     $(title).append(this.databaseObject.name);
     $(result).append(title);
 
@@ -143,6 +146,7 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
     var result = document.createElement('li');
         result.className = 'condition-parameters';
     var title = document.createElement('span');
+    $(title).addClass('icon-down-dir');
     var actionItemVM = this;
     
     // Action title

@@ -2,7 +2,7 @@
     "use strict";
     
     GameCreator.RouteObject.prototype.getEvents = function() {
-        return  '<li data-uifunction="setupOnClickActionsForm">On Click</li>';
+        return  '<li data-uifunction="setupOnClickActionsForm"><i class="icon-codeopen" /><span>On Click</span></li>';
     };
 
     GameCreator.RouteObject.prototype.getPropertiesForm = function(stateId) {
