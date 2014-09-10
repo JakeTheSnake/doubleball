@@ -152,9 +152,9 @@ GameCreator.htmlStrings = {
 
     editActionsWindow: function(description, actions, existingActions) { 
         var result = "";
-        result += '<div id="select-action-window" style="height: 100%"> \
-        <div id="select-actions-header" class="dialogueHeader">' + description + '</div> \
-        <div id="select-actions-content" class="dialogueContent">\
+        result += '<div class="dialogue bottom"><div id="select-action-window" class="panel-default"> \
+        <div id="select-actions-header" class="panel-heading"><span class="panel-title">' + description + '</span></div> \
+        <div id="select-actions-content" style="color: white">\
             <div id="select-action-dropdown-container" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("action-selector", actions) + '</div>\
             <div id="select-action-parameters-container" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
             <div id="select-action-parameters-content"></div></div>\
@@ -165,7 +165,7 @@ GameCreator.htmlStrings = {
     	result += '<br style="clear:both"/>'
         result += '<div id="select-action-result">';
         result += GameCreator.htmlStrings.selectedActionsList(existingActions);
-        result += '</div></div></div>';
+        result += '</div></div></div></div>';
         return result;
     },
 

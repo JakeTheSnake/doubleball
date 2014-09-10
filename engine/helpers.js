@@ -146,8 +146,8 @@
 
     GameCreator.helpers.checkObjectCollision = function(object, targetObject) {
         if (!(object === targetObject)) {
-            if ((Math.abs((object.x + object.width / 2) - (targetObject.x + targetObject.width / 2)) < object.width / 2 + targetObject.width / 2) &&
-                    (Math.abs((object.y + object.height / 2) - (targetObject.y + targetObject.height / 2)) < object.height / 2 + targetObject.height / 2)) {
+            if ((Math.abs((object.attributes.x + object.attributes.width / 2) - (targetObject.attributes.x + targetObject.attributes.width / 2)) < object.attributes.width / 2 + targetObject.attributes.width / 2) &&
+                    (Math.abs((object.attributes.y + object.attributes.height / 2) - (targetObject.attributes.y + targetObject.attributes.height / 2)) < object.attributes.height / 2 + targetObject.attributes.height / 2)) {
                 return true;
             }
         }
