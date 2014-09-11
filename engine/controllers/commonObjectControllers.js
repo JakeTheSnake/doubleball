@@ -74,7 +74,7 @@ GameCreator.commonObjectControllers = {
                 $("#dialogue-panel-add-list").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
                 $("#dialogue-panel-add-list li").one("click", function() {
                     var targetId = GameCreator.helpers.findGlobalObjectByName($(this).data("objectname")).id;
-                    var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet()]};
+                    var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet(globalObj)]};
                     globalObj.onCollideEvents.push(collisionItem);
                     $("#dialogue-panel-with").trigger('redrawList');
                     $("#dialogue-panel-add-list").empty();
@@ -240,7 +240,7 @@ GameCreator.commonObjectControllers = {
         $("#add-new-key-button").on("click", function(){
             $("#dialogue-keys-content").html(globalObj.getKeySelector());
             $(".addKeyObjectElement").one("click", function() {
-                globalObj.keyEvents[$(this).data("keyname")].push(new GameCreator.ConditionActionSet());
+                globalObj.keyEvents[$(this).data("keyname")].push(new GameCreator.ConditionActionSet(globalObj));
                 globalObj.setupKeyEventsForm(container);
             });
         });

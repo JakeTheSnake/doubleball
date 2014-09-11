@@ -47,12 +47,13 @@
     };
 
     GameCreator.helpers.doCollision = function(object, targetObject) {
-        var caSets = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+        var event = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+        var caSets = event ? event.caSets : undefined;
         var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
         if (caSets !== undefined) {
-            for (j = 0; j < caSets.sets.length; j += 1) {
-                currentSet = caSets.sets[j];
+            for (j = 0; j < caSets.length; j += 1) {
+                currentSet = caSets[j];
                 if (currentSet.checkConditions()) {
                     currentSet.runActions(object, {collisionObject: targetObject});
                 }
@@ -64,13 +65,11 @@
             } else {
                 choosableActions = GameCreator.actionGroups.collisionActions;
             }
-            newSetsItem = {id: targetObject.parent.id, sets: [new GameCreator.ConditionActionSet()]};
+            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object)]};
             object.parent.onCollideEvents.push(newSetsItem);
             GameCreator.UI.openEditActionsWindow(
                 "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'",
-                choosableActions,
-                newSetsItem.sets[0].actions,
-                object.objectName
+                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType))
             );
         }
     };

@@ -64,40 +64,22 @@ GameCreator.UI = {
             return false;
         });
     },
-    
-    
-    /**
-     * Renders an edit action form inside a specified container.
-     * text: The text that should be show as description of the dialogue.
-     * actions: The actions the user should be able to select from
-     * existingActions: An object or an array, containing actions already chosen.
-     * container: The container
-     * thisName: The name of the object whose actiosn will be edited with this form.
-     **/
-    createEditActionsArea: function(text, choosableActions, existingActions, container, thisName) {
-        container.html(GameCreator.htmlStrings.editActionsWindow(text, choosableActions, existingActions));
-        GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
-    },
  
-    openEditActionsWindow: function(text, choosableActions, existingActions, thisName) {  
+    openEditActionsWindow: function(text, caSetVM) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         GameCreator.pauseGame();
         
-        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(text, choosableActions, existingActions));
-        GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
-    
-        $("#edit-actions-window-cancel").on("click", function() {
-            GameCreator.UI.closeDialogue();
-            GameCreator.resumeGame();
-            
-        });
+        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow());
+        GameCreator.UI.setupActionsColumn();
+        GameCreator.UI.populateSelectActionList(caSetVM);
+        //GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
         
         $("#dialogue-overlay").one("click", function() {
             GameCreator.resumeGame();
         });
     },
     
-    setupEditActionsContent: function(text, choosableActions, selectedActions, thisName) {
+    /*setupEditActionsContent: function(text, choosableActions, selectedActions, thisName) {
         $("#action-selector").on("change", function() {
             $("#select-action-parameters-content").html("");
             $("#select-action-timing-content").html("");
@@ -140,7 +122,7 @@ GameCreator.UI = {
           $(this).parent().parent().remove();
           return false;
       });
-    },
+    },*/
     
     //Add global object functions
     

@@ -58,13 +58,11 @@
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
                         if (GameCreator.state === 'directing' && keySets.length === 0) {
-                            keySets.push(new GameCreator.ConditionActionSet());
+                            keySets.push(new GameCreator.ConditionActionSet(this));
                             actions = GameCreator.helpers.getNonCollisionActions(this.parent.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 "Pressed " + key + " actions for " + this.parent.objectName,
-                                 actions,
-                                 keySets[0].actions,
-                                 this.objectName
+                                 new GameCreator.CASetVM(keySets[0], GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                                 );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {

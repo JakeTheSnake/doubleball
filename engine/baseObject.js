@@ -24,13 +24,11 @@
         var i, currentSet;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && this.parent.onDestroySets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet();
+                currentSet = new GameCreator.ConditionActionSet(this);
                 this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been destroyed!",
-                    GameCreator.helpers.getNonCollisionActions(this.objectType),
-                    currentSet.actions,
-                    this.objectName
+                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -57,13 +55,11 @@
         var i, currentSet;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && this.parent.onCreateSets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet();
+                currentSet = new GameCreator.ConditionActionSet(this);
                 this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been created!",
-                    GameCreator.helpers.getNonCollisionActions(this.objectType),
-                    currentSet.actions,
-                    this.objectName
+                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -81,13 +77,11 @@
         var i, currentSet;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && this.parent.onClickSets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet();
+                currentSet = new GameCreator.ConditionActionSet(this);
                 this.parent.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "Clicked on " + this.parent.objectName,
-                     GameCreator.helpers.getNonCollisionActions(this.objectType),
-                     currentSet.actions,
-                     this.parent.objectName
+                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: runtimeObj});
             } else {

@@ -150,34 +150,12 @@ GameCreator.htmlStrings = {
         return result;
     },
 
-    editActionsWindow: function(description, actions, existingActions) { 
-        var result = "";
-        result += '<div class="dialogue bottom"><div id="select-action-window" class="panel-default"> \
-        <div id="select-actions-header" class="panel-heading"><span class="panel-title">' + description + '</span></div> \
-        <div id="select-actions-content" style="color: white">\
-            <div id="select-action-dropdown-container" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("action-selector", actions) + '</div>\
-            <div id="select-action-parameters-container" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
-            <div id="select-action-parameters-content"></div></div>\
-            <div id="select-action-timing-container" class="group" style="display:none;"><div class="groupHeading">Timing</div>\
-            <div id="select-action-timing-content"></div></div> \
-            <div id="select-action-add-button"><button id="select-action-add-action" class="regularButton addActionButton">Add</button></div>'
-        
-    	result += '<br style="clear:both"/>'
-        result += '<div id="select-action-result">';
-        result += GameCreator.htmlStrings.selectedActionsList(existingActions);
-        result += '</div></div></div></div>';
-        return result;
-    },
-
-    selectedActionsList: function(existingActions) {
-        var result = "";
-        for (var i = 0; i < existingActions.length; i++) {
-            var action = existingActions[i];
-            var selectedAction = {action: action.action, parameters: {}};
-
-            result += GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction);
-        }
-        return result;
+    editActionsWindow: function() {
+        var html = '<div class="dialogue bottom"><div id="select-action-window" class="panel-default" style="height: 400px">';
+        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
+        html += '</div></div>'
+        return html;
     },
 
     addGlobalObjectWindow: function() {
