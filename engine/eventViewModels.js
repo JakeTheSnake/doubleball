@@ -164,7 +164,12 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
         GameCreator.UI.setupValuePresenter(paramValuePresenter, this.databaseObject.parameters, this.parameters[i].name, this.caSet.globalObj);
         $(paramList).append(paramItem);
     }
+    var timingItem = $(document.createElement('tr'));
+    var timingParam = new GameCreator.TimingParameter(this.databaseObject);
+    timingParam.setupValuePresenter(timingItem);
+    $(paramList).append(timingItem);
     $(result).append(paramList);
+
     return result;
 }
 

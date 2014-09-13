@@ -112,9 +112,67 @@ GameCreator.SwitchSceneParameter.prototype.getValuePresenter = function() {
     return result;
 };
 
+GameCreator.TimingParameter = function(runtimeAction) {
+    this.runtimeAction = runtimeAction;
+    this.name = 'Timing';
+};
+
+GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) {
+
+    var parent = document.createElement('td');
+    var presentation = document.createElement('span');
+    var prettyName = GameCreator.helpers.getPrettyName(this.runtimeAction.timing.type);
+    var param = this;
+
+    $(presentation).html(prettyName + ' ' + (this.runtimeAction.timing.time || ''));
+    
+    var onClickFunc = function() {
+        $(parent).html(GameCreator.htmlStrings.singleSelector(
+            GameCreator.helpers.getSelectableTimings(param.runtimeAction.name),
+            '', param.runtimeAction.timing.type)
+        );
+        var timingTypeSelect = $(parent).find('select')[0];
+        $(timingTypeSelect).focus();
+        var timingValue = GameCreator.htmlStrings.numberInput('', param.runtimeAction.timing.time);
+        $(parent).append(timingValue);
+        var input = $(parent).find('input');
+        $(input).hide();
+        $(timingTypeSelect).change(function() {
+            if ($(this).val() !== 'now') {
+                $(input).show();
+            } else {
+                $(input).hide();
+            }
+        });
+
+        $(timingTypeSelect).trigger('change');
+
+        $(parent).off('focusout').on('focusout', function() {
+            setTimeout(function() {
+                if ($(parent).find(':focus').length === 0) {
+                    param.runtimeAction.timing.type = $(timingTypeSelect).val();
+                    param.runtimeAction.timing.time = Number($($(parent).find('input')[0]).val());
+                    var presentation = document.createElement('span');
+                    prettyName = GameCreator.helpers.getPrettyName(param.runtimeAction.timing.type);
+                    $(presentation).html(prettyName + ' ' + (param.runtimeAction.timing.time || ''));
+                    $(presentation).click(onClickFunc);
+                    $(parent).html(presentation);
+                }
+            }, 0);
+        });
+    };
+
+    $(presentation).click(onClickFunc);
+
+    $(parent).html(presentation);
+
+    container.html(this.getLabel());
+    container.append(parent);
+};
+
 var labelFunction = function() {
     return '<td>' + GameCreator.helpers.getPrettyName(this.name) + ':</td>';
-}
+};
 
 GameCreator.GlobalObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.ShootableObjectParameter.prototype.getLabel = labelFunction;
@@ -125,5 +183,6 @@ GameCreator.SwitchSceneParameter.prototype.getLabel = labelFunction;
 GameCreator.StateParameter.prototype.getLabel = labelFunction;
 GameCreator.CounterParameter.prototype.getLabel = labelFunction;
 GameCreator.CounterChangeTypeParameter.prototype.getLabel = labelFunction;
+GameCreator.TimingParameter.prototype.getLabel = labelFunction;
 
 })();

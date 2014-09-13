@@ -135,8 +135,8 @@
     */
     GameCreator.helpers.caSetsHaveActions = function(eventItem) {
         var i;
-        for (i = 0; i < eventItem.sets.length; i += 1) {
-            if (eventItem.sets[i].actions.length > 0) {
+        for (i = 0; i < eventItem.caSets.length; i += 1) {
+            if (eventItem.caSets[i].actions.length > 0) {
                 return true;
             }
         }
@@ -444,16 +444,11 @@
             projectileDirection: 'Direction',
             objectState: 'State',
             objId: 'Object',
-            effect: 'Effect',
             counterObject: 'Counter',
-            type: 'Type',
-            value: 'Value',
-            scene: 'Scene',
-            count: 'Count',
             change: 'Change to',
             set: 'Set to',
         }
-        return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName;
+        return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName.charAt(0).toUpperCase() + databaseName.slice(1);
     };
 
     GameCreator.helpers.getShootableObjectIds = function(){
@@ -484,6 +479,18 @@
         return result;
     };
 
+    GameCreator.helpers.getSelectableTimings = function(actionName) {
+        var timings = GameCreator.actions[actionName].timing;
+        var selectableTimings = {'Now': 'now'};
+        var timingKeys = Object.keys(timings);
+        for (var i = 0; i < timingKeys.length; i+=1) {
+            if (timings[timingKeys[i]]) {
+                selectableTimings[GameCreator.helpers.getPrettyName(timingKeys[i])] = timingKeys[i];
+            }
+        }
+        return selectableTimings;
+    };
+
     Array.prototype.collect = function(collectFunc) {
         var result = [];
         for (var i = 0; i < this.length; i++) {
@@ -491,6 +498,8 @@
         }
         return result;
     };
+
+
 
 
 
