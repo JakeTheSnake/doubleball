@@ -12,7 +12,7 @@
         var objMidY = y + height / 2;
         var baseMidX = base.attributes.x + base.attributes.width / 2;
         var baseMidY = base.attributes.y + base.attributes.height / 2;
-        var baseEdgeTL = {x: base.attributes.x, y: base.y};
+        var baseEdgeTL = {x: base.attributes.x, y: base.attributes.y};
         var baseEdgeTR = {x: base.attributes.x + baseWidth, y: base.attributes.y};
         var baseEdgeBL = {x: base.attributes.x + baseHeight, y: base.attributes.y};
         var baseEdgeBR = {x: base.attributes.x + baseWidth, y: base.attributes.y + baseHeight};
@@ -370,7 +370,7 @@
         var attributes = sideObject.attributes;
         for (i = 0; i < Object.keys(attributes).length; i += 1) {
             var attributeName = Object.keys(attributes)[i];
-            GameCreator.UI.setupValuePresenter($("#side-property-" + attributeName), attributes, attributeName, onChangeCallback, sideObject);
+            GameCreator.UI.setupValuePresenter($("#side-property-" + attributeName), attributes, attributeName, sideObject, onChangeCallback);
         }
     };
 
@@ -496,7 +496,10 @@
     Array.prototype.collect = function(collectFunc) {
         var result = [];
         for (var i = 0; i < this.length; i++) {
-            result.push(collectFunc(this[i]));
+            var collectedValue = collectFunc(this[i]);
+            if (collectedValue !== undefined) {
+                result.push(collectedValue);
+            }
         }
         return result;
     };

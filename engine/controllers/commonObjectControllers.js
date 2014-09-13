@@ -62,7 +62,7 @@ GameCreator.commonObjectControllers = {
                 $("#dialogue-panel-with").append(collisionListItem);
                 collisionListItem.on('click', function() {
                     GameCreator.UI.setupConditionsColumn(collisionItem.caSets, GameCreator.helpers.getCollisionActions(globalObject), globalObject);
-
+                    $('#dialogue-panel-actions').empty();
                     $("#dialogue-panel-conditions").trigger('redrawList');
                 });
 

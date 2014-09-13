@@ -341,7 +341,7 @@ GameCreator.UI = {
         GameCreator.helpers.populateSidePropertiesForm(sceneObject);
     },
 
-    setupValuePresenter: function(container, attributes, attrName, onChangeCallback, obj) {
+    setupValuePresenter: function(container, attributes, attrName, obj, onChangeCallback) {
         var input, select, paramLen, onClickFunc, closeInput, inputOpen = false;
         container = $(container);
         var display = document.createElement('span');

@@ -176,8 +176,10 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
 GameCreator.ActionItemVM.prototype.getParameters = function() {
     var caSetItemVM = this;
     return Object.keys(this.databaseObject.parameters).collect(function(paramName) {
-       var currentParam = caSetItemVM.databaseObject.getParameter(paramName);
-       return new currentParam.param(caSetItemVM.databaseObject.parameters, paramName, currentParam.mandatory);
+        var currentParam = caSetItemVM.databaseObject.getParameter(paramName);
+        if (currentParam) {
+            return new currentParam.param(caSetItemVM.databaseObject.parameters, paramName, currentParam.mandatory);
+        }
     });
 }
 
