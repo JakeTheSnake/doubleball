@@ -51,7 +51,6 @@
         stopEditing: function() {
             $(GameCreator.mainCanvas).off(".editScene");
             GameCreator.selectedObject = null;
-            GameCreator.UI.unselectSceneObject();
         },
 
         editActiveScene: function() {
@@ -69,6 +68,7 @@
             var i, obj, dragFunc, mouseLeft, mouseTop;
             GameCreator.reset();
             scene.reset();
+            GameCreator.setupScenePropertiesForm();
             scene.drawBackground();
             GameCreator.state = 'editing';
             //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
@@ -106,9 +106,9 @@
                     GameCreator.UI.editSceneObject();
                 } else {
                     dragFunc = null;
-                    GameCreator.unselectSceneObject();
                     GameCreator.drawSelectionLine();
                     GameCreator.hideRoute();
+                    GameCreator.setupScenePropertiesForm();
                 }
                 GameCreator.render(false);
             });
@@ -143,8 +143,21 @@
                 }
             });
 
-            GameCreator.UI.setupSceneTabs(GameCreator.scenes);
+            GameCreator.UI.setupSceneTabs();
             GameCreator.render(false);
+        },
+
+        setupScenePropertiesForm: function() {
+            var onChangeCallback = function() {
+                GameCreator.UI.setupSceneTabs();
+                GameCreator.render(true);
+                GameCreator.getActiveScene().drawBackground();
+            };
+            setTimeout(function() {
+                $('#side-properties-form-container').html(GameCreator.htmlStrings.getScenePropertiesForm());
+                GameCreator.helpers.populateSidePropertiesForm(GameCreator.getActiveScene(), onChangeCallback);
+                GameCreator.getActiveScene().drawBackground();
+            }, 0);
         },
 
         dereferenceCounters: function(counterCarrier) {
@@ -283,13 +296,7 @@
         deleteSelectedObject: function() {
             GameCreator.invalidate(GameCreator.selectedObject);
             GameCreator.selectedObject.remove();
-            GameCreator.unselectSceneObject();
             GameCreator.render();
-        },
-
-        unselectSceneObject: function() {
-            GameCreator.selectedObject = null;
-            GameCreator.UI.unselectSceneObject();
         },
 
         hideRoute: function() {
@@ -322,7 +329,7 @@
 
         addScene: function() {
             GameCreator.scenes.push(new GameCreator.Scene());
-            GameCreator.UI.setupSceneTabs(GameCreator.scenes);
+            GameCreator.UI.setupSceneTabs();
         },
 
         getCountersForGlobalObj: function(globalObjName) {

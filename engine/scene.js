@@ -7,19 +7,26 @@
         this.id = GameCreator.getUniqueSceneId();
         this.attributes = {
             name: 'Scene ' + this.id,
-            backgroundColor: "#FFFFFF",
-            backgroundImage: null
+            bgColor: "white",
+            bgImage: null
         }
     };
 
     GameCreator.Scene.prototype.drawBackground = function() {
         var context = GameCreator.bgContext;
         context.clearRect(0, 0, GameCreator.width, GameCreator.height)
-        context.fillStyle = this.attributes.backgroundColor;
+        context.fillStyle = this.attributes.bgColor;
         context.fillRect(0, 0, GameCreator.width, GameCreator.height);
 
-        if (this.attributes.backgroundImage != null) {
-            context.drawImage(this.attributes.backgroundImage, 0, 0, GameCreator.width, GameCreator.height);
+        if (this.attributes.bgImage != null) {
+            if ($(this.attributes.bgImage).data('loaded')) {
+                context.drawImage(this.attributes.bgImage, 0, 0, GameCreator.width, GameCreator.height);
+            } else {
+                this.attributes.bgImage.onload = function() {
+                    $(this).data('loaded', true);
+                    context.drawImage(this, 0, 0, GameCreator.width, GameCreator.height);
+                }
+            }
         }
     };
 

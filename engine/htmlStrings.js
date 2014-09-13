@@ -265,4 +265,35 @@ GameCreator.htmlStrings = {
         return result;
     },
 
+    getScenePropertiesForm: function() {
+        var result = ' \
+<div class="panel-paragraph border-bottom"> \
+    <h1 id="side-property-name" data-inputtype="stringInput"></h1> \
+    <p></p> \
+</div> \
+<div class="panel-paragraph properties-group border-bottom"> \
+    <div class="properties-value"> \
+        <label>Background Color</label> \
+        <span class="glyphicon icon-position"></span> \
+        <table> \
+            <tr> \
+                <td id="side-property-bgColor" data-inputtype="stringInput"></td> \
+            </tr> \
+        </table> \
+    </div> \
+</div>\
+<div class="panel-paragraph properties-group border-bottom"> \
+    <div class="properties-value"> \
+        <label>Background Image</label> \
+        <span class="glyphicon icon-position"></span> \
+        <table> \
+            <tr> \
+                <td id="side-property-bgImage" data-inputtype="imageInput"></td> \
+            </tr> \
+        </table> \
+    </div> \
+</div>'
+        return result;
+},
+
 };

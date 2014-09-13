@@ -59,7 +59,6 @@
             var i, obj;
             GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
-            GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             for (i = 0; i < GameCreator.renderableObjects.length; i += 1) {
                 obj = GameCreator.renderableObjects[i];
                 // TODO: Deactivated invalidation

@@ -65,7 +65,7 @@
 GameCreator.CounterObjectText.prototype.getSceneObjectForm = function() {
 var result = ' \
 <div class="panel-paragraph border-bottom"> \
-    <h1 id="scene-object-property-instanceId" data-inputtype="stringInput"></h1> \
+    <h1 id="side-property-instanceId" data-inputtype="stringInput"></h1> \
     <p></p> \
 </div> \
 <div class="panel-paragraph properties-group border-bottom"> \
@@ -75,11 +75,11 @@ var result = ' \
         <table> \
             <tr> \
                 <td>X:</td> \
-                <td id="scene-object-property-x" data-inputtype="numberInput"></td> \
+                <td id="side-property-x" data-inputtype="numberInput"></td> \
             </tr> \
             <tr> \
                 <td>Y:</td> \
-                <td id="scene-object-property-y" data-inputtype="numberInput"></td> \
+                <td id="side-property-y" data-inputtype="numberInput"></td> \
             </tr> \
         </table> \
     </div> \
@@ -89,7 +89,7 @@ var result = ' \
         <table> \
             <tr> \
                 <td>Name:</td> \
-                <td id="scene-object-property-font" data-inputtype="stringInput"></td> \
+                <td id="side-property-font" data-inputtype="stringInput"></td> \
             </tr> \
         </table> \
     </div> \
@@ -101,11 +101,11 @@ var result = ' \
         <table> \
             <tr> \
                 <td>Size:</td> \
-                <td id="scene-object-property-size" data-inputtype="numberInput"></td> \
+                <td id="side-property-size" data-inputtype="numberInput"></td> \
             </tr> \
             <tr> \
                 <td>Color:</td> \
-                <td id="scene-object-property-color" data-inputtype="stringInput"></td> \
+                <td id="side-property-color" data-inputtype="stringInput"></td> \
             </tr> \
         </table> \
     </div> \
@@ -116,7 +116,7 @@ return result;
 GameCreator.CounterObjectImage.prototype.getSceneObjectForm = function() {
 var result = ' \
 <div class="panel-paragraph border-bottom"> \
-    <h1 id="scene-object-property-instanceId" data-inputtype="stringInput"></h1> \
+    <h1 id="side-property-instanceId" data-inputtype="stringInput"></h1> \
     <p></p> \
 </div> \
 <div class="panel-paragraph properties-group border-bottom"> \
@@ -126,11 +126,11 @@ var result = ' \
         <table> \
             <tr> \
                 <td>X:</td> \
-                <td id="scene-object-property-x" data-inputtype="numberInput"></td> \
+                <td id="side-property-x" data-inputtype="numberInput"></td> \
             </tr> \
             <tr> \
                 <td>Y:</td> \
-                <td id="scene-object-property-y" data-inputtype="numberInput"></td> \
+                <td id="side-property-y" data-inputtype="numberInput"></td> \
             </tr> \
         </table> \
     </div> \
@@ -140,13 +140,13 @@ var result = ' \
         <table> \
             <tr> \
                 <td>W:</td> \
-                <td id="scene-object-property-width" data-inputtype="rangeInput"></td> \
+                <td id="side-property-width" data-inputtype="rangeInput"></td> \
             </tr> \
         </table> \
         <table> \
             <tr> \
                 <td>H:</td> \
-                <td id="scene-object-property-height" data-inputtype="rangeInput"></td> \
+                <td id="side-property-height" data-inputtype="rangeInput"></td> \
             </tr> \
         </table> \
     </div> \

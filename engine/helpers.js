@@ -235,9 +235,9 @@
         var image = new Image();
         image.src = imgSrc;
         image.onload = function() {
-                $(image).data('loaded', true);
-                GameCreator.render();
-            };
+            $(image).data('loaded', true);
+            GameCreator.render();
+        };
         return image;
     };
 
@@ -365,12 +365,12 @@
         });
     };
 
-    GameCreator.helpers.populateSceneObjectForm = function(sceneObject) {
+    GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {
         var i;
-        var attributes = sceneObject.attributes;
+        var attributes = sideObject.attributes;
         for (i = 0; i < Object.keys(attributes).length; i += 1) {
             var attributeName = Object.keys(attributes)[i];
-            GameCreator.UI.setupValuePresenter($("#scene-object-property-" + attributeName), attributes, attributeName, sceneObject);
+            GameCreator.UI.setupValuePresenter($("#side-property-" + attributeName), attributes, attributeName, onChangeCallback, sideObject);
         }
     };
 
@@ -431,6 +431,8 @@
                 return value ? GameCreator.helpers.getPrettyName(value) : '';
             case "sceneInput":
                 return value ? GameCreator.getSceneById(Number(value)).attributes.name : '';
+            case "imageInput":
+                return value ? value.src : '';
             default:
                 return value;
         }

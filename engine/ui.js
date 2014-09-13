@@ -180,13 +180,14 @@ GameCreator.UI = {
         $("#debug-info-pane").html(GameCreator.htmlStrings.debugInformation(info));
     },
 
-    setupSceneTabs: function(scenes) {
+    setupSceneTabs: function() {
         var result = '';
+
         $('#toolbar-scenes').show();
 
         result += '<ul class="nav nav-tabs" role="tablist">';
-        for(var i = 0; i < scenes.length; i++) {
-            result += GameCreator.htmlStrings.sceneTab(scenes[i], GameCreator.activeSceneId === scenes[i].id);
+        for(var i = 0; i < GameCreator.scenes.length; i++) {
+            result += GameCreator.htmlStrings.sceneTab(GameCreator.scenes[i], GameCreator.activeSceneId === GameCreator.scenes[i].id);
         };
         result += GameCreator.htmlStrings.addSceneTab();
         result += '</ul>';
@@ -202,12 +203,6 @@ GameCreator.UI = {
         });
     },
     
-    deleteSelectedObject: function() {
-        GameCreator.deleteSelectedObject();
-        $("#edit-scene-object-content").html("");
-        $("#edit-scene-object-title").html("");
-    },
-
     editSceneObject: function() {
         var objectType = GameCreator.selectedObject.parent.objectType;
 
@@ -215,15 +210,10 @@ GameCreator.UI = {
     },
 
     updateSceneObjectForm: function(sceneObj) {
-        $("#scene-object-property-width span").html(sceneObj.attributes.width);
-        $("#scene-object-property-height span").html(sceneObj.attributes.height);
-        $("#scene-object-property-x span").html(sceneObj.attributes.x);
-        $("#scene-object-property-y span").html(sceneObj.attributes.y);
-    },
-
-    unselectSceneObject: function() {
-        $("#edit-scene-object-title").html("");
-        $("#edit-scene-object-content").html("");
+        $("#side-property-width span").html(sceneObj.attributes.width);
+        $("#side-property-height span").html(sceneObj.attributes.height);
+        $("#side-property-x span").html(sceneObj.attributes.x);
+        $("#side-property-y span").html(sceneObj.attributes.y);
     },
 
     directSceneMode: function() {
@@ -346,12 +336,12 @@ GameCreator.UI = {
     },
 
     setupSceneObjectForm: function(sceneObject) {
-        var container = $('#scene-object-properties-container');
+        var container = $('#side-properties-form-container');
         container.html(sceneObject.parent.getSceneObjectForm());
-        GameCreator.helpers.populateSceneObjectForm(sceneObject);
+        GameCreator.helpers.populateSidePropertiesForm(sceneObject);
     },
 
-    setupValuePresenter: function(container, attributes, attrName, obj) {
+    setupValuePresenter: function(container, attributes, attrName, onChangeCallback, obj) {
         var input, select, paramLen, onClickFunc, closeInput, inputOpen = false;
         container = $(container);
         var display = document.createElement('span');
@@ -371,6 +361,9 @@ GameCreator.UI = {
             container.parent().off('click').on('click', onClickFunc);
             if (obj instanceof GameCreator.SceneObject) {
                 GameCreator.render(true);
+            }
+            if (onChangeCallback) {
+                onChangeCallback();
             }
         }
 
