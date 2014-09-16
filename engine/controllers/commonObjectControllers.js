@@ -62,6 +62,8 @@ GameCreator.commonObjectControllers = {
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
                 $("#dialogue-panel-with").append(collisionListItem);
                 collisionListItem.on('click', function() {
+                    $(this).parent().find('.active').removeClass('active');
+                    $(this).addClass('active');
                     GameCreator.UI.setupConditionsColumn(collisionItem.caSets, GameCreator.helpers.getCollisionActions(globalObject), globalObject);
                     $('#dialogue-panel-actions').empty();
                     $("#dialogue-panel-conditions").trigger('redrawList');
@@ -191,6 +193,7 @@ GameCreator.commonObjectControllers = {
         var container = $('#dialogue-counter-content');
         container.html(GameCreator.htmlStrings.getColumn('Events', "dialogue-panel-counter-events"));
         var counterEventContent = document.createElement('div');
+        $(counterEventContent).addClass('content');
         container.append(counterEventContent);
         $('#dialogue-panel-counter-events').html(this.getCounterEventsContent(counterName));
         var globalObj = this;
@@ -213,7 +216,7 @@ GameCreator.commonObjectControllers = {
             $(this).addClass('active');
             var onCounterEventSets = globalObj.parentCounters[counterName].getCounterEventSets(eventType, eventValue);
             var selectableActions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
-            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(container), selectableActions, globalObj);
+            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(counterEventContent), selectableActions, globalObj);
         }); 
     },
 

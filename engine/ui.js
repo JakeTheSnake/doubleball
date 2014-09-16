@@ -79,51 +79,6 @@ GameCreator.UI = {
         });
     },
     
-    /*setupEditActionsContent: function(text, choosableActions, selectedActions, thisName) {
-        $("#action-selector").on("change", function() {
-            $("#select-action-parameters-content").html("");
-            $("#select-action-timing-content").html("");
-            $("#select-action-parameters-container").css("display", "block");
-            $("#select-action-timing-container").css("display", "block");
-            for(var i = 0;i < choosableActions[$(this).val()].params.length;++i) {
-                $("#select-action-parameters-content").append(GameCreator.htmlStrings.parameterGroup(choosableActions[$(this).val()].params[i].label() + choosableActions[$(this).val()].params[i].input(thisName)));
-            }
-            var timing = choosableActions[$("#action-selector").val()].timing;
-            $("#select-action-timing-content").append(GameCreator.htmlStrings.timingGroup(timing));
-            $("#timing-selector").on("change", function() {
-                if ($("#timing-selector").val() === "now") {
-                    $("#timing-parameter").css("display", "none");
-                } else {
-                    $("#timing-parameter").css("display", "block");
-                }
-            });
-        });
-        
-        $("#select-action-add-action" ).click(function( event ) {                
-            var action = choosableActions[$("#action-selector").val()];
-            var parameters = {};
-
-            for (var i = 0; i < action.params.length; i++) {
-                parameters[action.params[i].inputId] = GameCreator.helpers.getValue($("#" + action.params[i].inputId));
-            }
-            
-            var timingType = GameCreator.helpers.getValue($("#timing-selector"));
-            var timingTime = GameCreator.helpers.getValue($("#timing-time"));
-            var timing = {type: timingType, time: timingTime};
-
-            var selectedAction = new GameCreator.RuntimeAction(action.name, parameters, timing);
-            selectedActions.push(selectedAction);
-            
-            $("#select-action-result").html(GameCreator.htmlStrings.selectedActionsList(selectedActions));
-        });
-        
-        $("#select-action-window").on("click", ".removeActionButton", function(){
-          selectedActions.splice($("#select-action-window").find(".removeActionButton").index(this), 1);
-          $(this).parent().parent().remove();
-          return false;
-      });
-    },*/
-    
     //Add global object functions
     
     openAddGlobalObjectDialogue: function() {
@@ -252,7 +207,6 @@ GameCreator.UI = {
 
     setupConditionsColumn: function(caSets, selectableActions, globalObj) {
         var caSetVMs = [];
-
         for (var i = 0; i < caSets.length; i++) {
             caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions));
         }
@@ -267,7 +221,8 @@ GameCreator.UI = {
             $("#dialogue-panel-conditions").trigger('redrawList');
         });
 
-        $("#dialogue-panel-conditions").parent().append(addCaSetButton)
+        $("#dialogue-panel-conditions").parent().find('button').remove();
+        $("#dialogue-panel-conditions").parent().append(addCaSetButton);
         $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM) {
             var isActive;
             var conditionsColumn = $("#dialogue-panel-conditions");
@@ -283,20 +238,21 @@ GameCreator.UI = {
     },
 
     setupActionsColumn: function() {
-        var addActionButton = document.createElement('button');
-        $(addActionButton).addClass('icon-plus btn btn-success');
-        $(addActionButton).html('Add action');
+        var actionsColumn = $("#dialogue-panel-actions");
+        actionsColumn.on('redrawList', function(evt, activeCASetVM) {
+            actionsColumn.parent().find('button').remove();
+            actionsColumn.empty();
+            var addActionButton = document.createElement('button');
+            $(addActionButton).addClass('icon-plus btn btn-success');
+            $(addActionButton).html('Add action');
 
-        $("#dialogue-panel-actions").parent().append(addActionButton);
-        $("#dialogue-panel-actions").on('redrawList', function(evt, activeCASetVM) {
-            var actionsColumn = $("#dialogue-panel-actions");
-            actionsColumn.html('');
+            actionsColumn.parent().append(addActionButton);
             
             for (i = 0; i < activeCASetVM.actionVMs.length; i+=1) {
                 actionsColumn.append(activeCASetVM.actionVMs[i].getPresentation());
             }
             
-            actionsColumn.parent().find('button').on('click', function() {
+            actionButton.on('click', function() {
                 GameCreator.UI.populateSelectActionList(activeCASetVM);
             });
 
