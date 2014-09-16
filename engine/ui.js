@@ -230,6 +230,7 @@ GameCreator.UI = {
             caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
             caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1}));
             caSets.push(caSet);
+
             var caSet2 = new GameCreator.ConditionActionSet(globalObj);
             caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
             caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
@@ -255,29 +256,38 @@ GameCreator.UI = {
         for (var i = 0; i < caSets.length; i++) {
             caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions));
         }
+
+        var addCaSetButton = $(document.createElement('button'));
+        $(addCaSetButton).addClass('icon-plus btn btn-success');
+        $(addCaSetButton).html('Create group');
+        $(addCaSetButton).on('click', function() {
+            caSet = new GameCreator.ConditionActionSet(globalObj);
+            caSets.push(caSet);
+            caSetVMs.push(new GameCreator.CASetVM(caSet, selectableActions));
+            $("#dialogue-panel-conditions").trigger('redrawList');
+        });
+
+        $("#dialogue-panel-conditions").parent().append(addCaSetButton)
         $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM) {
             var isActive;
             var conditionsColumn = $("#dialogue-panel-conditions");
             conditionsColumn.html('');
+
             for (i = 0; i < caSetVMs.length; i+=1) {
                 isActive = activeCASetVM === caSetVMs[i];
                 conditionsColumn.append(caSetVMs[i].getPresentation(isActive));
             }
-            var addCaSetButton = $(document.createElement('button'));
-            $(addCaSetButton).addClass('icon-plus');
-            addCaSetButton.html('Add condition group');
-            conditionsColumn.append(addCaSetButton);
-            addCaSetButton.on('click', function() {
-                caSet = new GameCreator.ConditionActionSet(globalObj);
-                caSets.push(caSet);
-                caSetVMs.push(new GameCreator.CASetVM(caSet, selectableActions));
-                $("#dialogue-panel-conditions").trigger('redrawList');
-            });
+
             $("#dialogue-panel-add-list").empty();
         });
     },
 
     setupActionsColumn: function() {
+        var addActionButton = document.createElement('button');
+        $(addActionButton).addClass('icon-plus btn btn-success');
+        $(addActionButton).html('Add action');
+
+        $("#dialogue-panel-actions").parent().append(addActionButton);
         $("#dialogue-panel-actions").on('redrawList', function(evt, activeCASetVM) {
             var actionsColumn = $("#dialogue-panel-actions");
             actionsColumn.html('');
@@ -286,13 +296,10 @@ GameCreator.UI = {
                 actionsColumn.append(activeCASetVM.actionVMs[i].getPresentation());
             }
             
-            var addActionButton = document.createElement('button');
-            $(addActionButton).addClass('icon-plus');
-            $(addActionButton).html('Add action');
-            $(addActionButton).on('click', function() {
+            actionsColumn.parent().find('button').on('click', function() {
                 GameCreator.UI.populateSelectActionList(activeCASetVM);
             });
-            actionsColumn.append(addActionButton);
+
             $("#dialogue-panel-add-list").empty();
         });
     },
@@ -306,12 +313,14 @@ GameCreator.UI = {
         for (i = 0; i < Object.keys(GameCreator.conditions).length; i++) {
             var listItem = document.createElement('li');
             var conditionName = Object.keys(GameCreator.conditions)[i];
+
             $(listItem).data('condition', conditionName);
             $(listItem).append(conditionName);
             $(listItem).on('click', function() {
                 activeCASetVM.addCondition($(this).data('condition'));
                 $("#dialogue-panel-conditions").trigger('redrawList', activeCASetVM);
             });
+
             column.append(listItem);
         }
     },
@@ -325,12 +334,14 @@ GameCreator.UI = {
         for (i = 0; i < Object.keys(activeCASetVM.selectableActions).length; i++) {
             var listItem = document.createElement('li');
             var actionName = Object.keys(activeCASetVM.selectableActions)[i];
+
             $(listItem).data('action', actionName);
             $(listItem).append(actionName);
             $(listItem).on('click', function() {
                 activeCASetVM.addAction($(this).data('action'))
                 $("#dialogue-panel-actions").trigger('redrawList', activeCASetVM);
             });
+
             column.append(listItem);
         }
     },

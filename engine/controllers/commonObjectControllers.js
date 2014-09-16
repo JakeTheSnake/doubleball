@@ -53,6 +53,7 @@ GameCreator.commonObjectControllers = {
 
         GameCreator.UI.setupActionsColumn();
 
+        $('#dialogue-panel-with').parent().append('<button id="add-new-collision-button" class="icon-plus btn btn-success">Add</button>');
         $("#dialogue-panel-with").on('redrawList', function(evt) {
             $('#dialogue-panel-with').empty();
             globalObj.onCollideEvents.forEach(function(collisionItem) {
@@ -67,8 +68,6 @@ GameCreator.commonObjectControllers = {
                 });
 
             });
-
-            $('#dialogue-panel-with').append('<button id="add-new-collision-button">Add</button>');
 
             $("#add-new-collision-button").on("click", function() {
                 $("#dialogue-panel-add-list").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
@@ -163,8 +162,9 @@ GameCreator.commonObjectControllers = {
 
     setupCountersForm: function(container) {
         container.html(GameCreator.htmlStrings.getColumn("Counters", "dialogue-panel-counters"));
-        container.append('<div id="dialogue-counter-content"></div>');
+        container.append('<div id="dialogue-counter-content" class="content"></div>');
         $("#dialogue-panel-counters").html(this.getCountersContent());
+        $("#dialogue-panel-counters").parent().append('<button id="add-new-counter-button" class="icon-plus btn btn-success">Add</button>');
         var globalObj = this;
         $("#add-new-counter-button").on("click", function() {
             $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createCounterForm());
@@ -213,7 +213,7 @@ GameCreator.commonObjectControllers = {
             $(this).addClass('active');
             var onCounterEventSets = globalObj.parentCounters[counterName].getCounterEventSets(eventType, eventValue);
             var selectableActions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
-            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(counterEventContent), selectableActions, globalObj);
+            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(container), selectableActions, globalObj);
         }); 
     },
 

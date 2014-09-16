@@ -70,7 +70,7 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
         }
 
         var addConditionButton = document.createElement('button');
-        $(addConditionButton).addClass('icon-plus');
+        $(addConditionButton).addClass('icon-plus btn btn-success');
         $(addConditionButton).html('Add condition');
 
         $(addConditionButton).on('click', function() {

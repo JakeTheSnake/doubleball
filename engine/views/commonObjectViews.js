@@ -30,16 +30,16 @@ GameCreator.commonObjectViews = {
 
         result += '<div class="dialogue bottom"> \
                    <!-- Panel: Object manager --> \
-                   <div id="object-manager" class="panel panel-default"> \
+                   <div id="object-manager" class="panel panel-dialogue"> \
                    <div class="panel-heading "> \
                    <span class="panel-title">Object manager</span> \
                    </div> \
-                   <div id="dialogue-library" class="col border-right"> \
+                   <div id="object-manager-library" class="col border-right"> \
                    <div class="panel-heading"> \
                    <span class="panel-title">Library</span> \
                    </div> \
-                   <div id="dialogue-library-preview" class="library-preview panel-paragraph"></div> \
-                   <div id="dialogue-library-explorer" class="library-explorer"> \
+                   <div id="object-manager-library-preview" class="library-preview panel-paragraph"></div> \
+                   <div id="object-manager-library-explorer" class="library-explorer"> \
                    <ul class="global-object-list"> \
                    </ul> \
                    </div> \
@@ -48,14 +48,14 @@ GameCreator.commonObjectViews = {
                    <div class="panel-heading"> \
                    <span class="panel-title">Edit</span> \
                    </div> \
-                   <ul id="dialogue-panel-edit" class="nav nav-tabs nav-stacked"> \
+                   <ul id="dialogue-panel-edit" class="nav nav-stacked nav-tabs nav-tabs-success"> \
                    <li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
                    <li data-uifunction="setupStatesForm"><i class="icon-codeopen" /><span>States</span></li> \
                    <li data-uifunction="setupEventsForm"><i class="icon-codeopen" /><span>Events</span></li> \
                    <li data-uifunction="setupCountersForm"><i class="icon-codeopen" /><span>Counters</span></li> \
                    </ul> \
                    </div> \
-                   <div id="dialogue-edit-content"> \
+                   <div id="dialogue-edit-content" class="content"> \
                    </div> \
                    </div> \
                    </div> \
@@ -86,13 +86,13 @@ GameCreator.commonObjectViews = {
                 result += GameCreator.htmlStrings.counterEventMenuElement(value, "belowValue");
             }
         };
-        result += '<li><button id="add-new-counter-event-button" class="regularButton">Add</button></li>';
+        result += '<button id="add-new-counter-event-button" class="icon-plus btn btn-success">Add</button>';
         return result;
     },
 
     getCollisionsContent: function(collisionObjects) {
         var result = '<div id="edit-collision-actions-object-menu-container"><div id="edit-collision-actions-object-menu">';
-        result += '<button id="add-new-collision-button" class="regularButton">Add</button>';
+        result += '<button id="add-new-collision-button" class="icon-plus btn btn-success">Add whatever?</button>';
 
         for(var i = 0; i < collisionObjects.length; i++) {
             result += GameCreator.htmlStrings.collisionMenuElement(collisionObjects[i]);
@@ -109,7 +109,6 @@ GameCreator.commonObjectViews = {
         for (var i = 0; i < keys.length; i++) {
             result += GameCreator.htmlStrings.counterMenuElement(keys[i]);
         }
-        result += '<li><button id="add-new-counter-button" class="regularButton">Add</button></li>';
         return result;
     },
 
@@ -130,7 +129,7 @@ GameCreator.commonObjectViews = {
     getPropertiesContent: function() {
         var result = "";
             
-            result += '<div id="dialogue-properties" class="col border-right"> \
+            result += '<div id="object-manager-properties" class="col border-right"> \
                        <div class="panel-heading"> \
                        <span class="panel-title">Properties</span> \
                        </div> \
@@ -170,7 +169,7 @@ GameCreator.commonObjectViews = {
                        <div class="panel-heading"> \
                        <span class="panel-title">Events</span> \
                        </div> \
-                       <ul id="dialogue-panel-events" class="nav nav-tabs nav-stacked"> \
+                       <ul id="dialogue-panel-events" class="nav nav-stacked nav-tabs nav-tabs-success"> \
                        <li data-uifunction="setupOnCreateActionsForm"><i class="icon-codeopen" /><span>On Create</span></li> \
                        <li data-uifunction="setupCollisionsForm"><i class="icon-codeopen" /><span>On Collide</span></li> \
                        <li data-uifunction="setupOnDestroyActionsForm"><i class="icon-codeopen" /><span>On Destroy</span></li>';
@@ -179,7 +178,7 @@ GameCreator.commonObjectViews = {
 
             result += '</ul> \
                        </div> \
-                       <div id="dialogue-events-content"> \
+                       <div id="dialogue-events-content" class="content"> \
                        </div>';
         return result;
     },

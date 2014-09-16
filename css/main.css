@@ -94,7 +94,7 @@ textarea {
 }
 
 /* ====================================================================================================================================================
-   Author's custom resets
+   Custom resets
    ==================================================================================================================================================== */
 
 html, body {
@@ -133,63 +133,7 @@ a:last-child, button:last-child, img:last-child, p:last-child {
 }
 
 /* ====================================================================================================================================================
-   Author's icons
-   ==================================================================================================================================================== */
-
-@font-face {
-  font-family: 'icons';
-  src: url('../font/icons.eot?99267613');
-  src: url('../font/icons.eot?99267613#iefix') format('embedded-opentype'),
-       url('../font/icons.woff?99267613') format('woff'),
-       url('../font/icons.ttf?99267613') format('truetype'),
-       url('../font/icons.svg?99267613#icons') format('svg');
-  font-weight: normal;
-  font-style: normal;
-}
- 
-[class^="icon-"]:before, [class*=" icon-"]:before {
-  font-family: "icons";
-  font-style: normal;
-  font-weight: normal;
-  speak: none;
-  color: #FFFFFF;
-  display: inline-block;
-  text-decoration: inherit;
-  width: 1em;
-  text-align: center;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1em;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-}
- 
-.icon-down-open:before { content: '\e800'; font-size: 60%; margin-right: 7px; }
-.icon-cancel:before { content: '\e801'; } /* '' */
-.icon-right-open:before { content: '\e802'; font-size: 60%; margin-right: 6px; }
-.icon-down-dir:before { content: '\e803'; font-size: 110%; margin-right: 6px; } /* '' */
-.icon-right-dir:before { content: '\e804'; font-size: 110%; margin-right: 6px; } /* '' */
-.icon-plus:before { content: '\e805'; font-size: 80%; margin-right: 9px; } /* '' */
-.icon-minus:before { content: '\e806'; } /* '' */
-.icon-cog:before { content: '\e807'; } /* '' */
-.icon-menu:before { content: '\e808'; } /* '' */
-.icon-up-dir:before { content: '\e809'; } /* '' */
-.icon-left-dir:before { content: '\e80a'; } /* '' */
-.icon-left-open:before { content: '\e80b';  font-size: 60%; } /* '' */
-.icon-up-open:before { content: '\e80c';  font-size: 60%; } /* '' */
-.icon-angle-left:before { content: '\e80d'; } /* '' */
-.icon-angle-right:before { content: '\e80e'; } /* '' */
-.icon-angle-up:before { content: '\e80f'; } /* '' */
-.icon-angle-down:before { content: '\e810'; } /* '' */
-.icon-eye:before { content: '\e811'; } /* '' */
-.icon-eye-off:before { content: '\e812'; } /* '' */
-.icon-ok:before { content: '\e813'; } /* '' */
-.icon-help:before { content: '\e814'; } /* '' */
-.icon-info:before { content: '\e815'; } /* '' */
-.icon-attention-alt:before { content: '\e816'; } /* '' */
-.icon-codeopen:before { content: '\e817';  font-size: 100%; margin-right: 13px; } /* '' */
-
-/* ====================================================================================================================================================
-   Author's base layout, classes and conditions
+   Custom base layout, classes and conditions
    ==================================================================================================================================================== */
 
 canvas {
@@ -273,81 +217,12 @@ input {
 }
 
 /* ==========================================================================
-   TEMPORARY PLEASE CHANGE FOR THE LOVE OF GOD!!!!
+   Container, rows and columns
    ========================================================================== */
 
 #ui-canvas {
   pointer-events: none;
 }
-
-.properties-group {
-  display: block;
-  height: 53px;
-}
-
-.properties-value {
-  float: left;
-  width: 120px;
-}
-
-.properties-value > label {
-  display: block;
-  color: #FDFF9A;
-  font-size: 0.7em;
-  font-family: 'Droid Sans', sans-serif;
-}
-
-.properties-value > table {
-  position: relative;
-  top: -1px;
-  left: 9px;
-}
-
-.properties-value > table tr {
-  height: 19px;
-}
-
-.properties-value > table td {
-  font-size: 0.8em;
-  color: #65FFFF;
-  font-family: 'Droid Sans', sans-serif;
-  line-height: 1;
-}
-
-.properties-value > table td:first-child {
-  width: 25px;
-  font-size: 0.8em;
-  color: #F5F5F5;
-  font-family: 'Droid Sans', sans-serif;
-}
-
-.properties-value > table td input {
-  color: #F5F5F5;
-  font-family: 'Droid Sans', sans-serif;
-  padding: 1px 0 0 4px;
-  line-height: 1;
-  background-color: #505050;
-  width: 60px;
-  height: 12px;
-}
-
-.glyphicon {
-  background-color: #505050;
-  position: relative;
-  display: inline-block;
-  top: 6px;
-  left: 1px;
-  float: left;
-  width: 24px;
-  height: 24px;
-
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* ==========================================================================
-   Container, rows and columns
-   ========================================================================== */
 
 .container-fluid {
   padding: 0;
@@ -377,26 +252,14 @@ input {
 }
 
 .panel-heading {
-  background-color: #2574A9;
+  background-color: #2574a9;
   margin: 0 0 2px 0;
   padding: 3px 0 0 7px;
   height: 27px;
 }
 
-.panel-default > .panel-heading {
-  background-color: #505050;
-}
-
-.panel-success > .panel-heading {
-  background-color: #239D58;
-}
-
-.panel-edit > .panel-heading {
-  background-color: #E5A52E;
-}
-
-.panel-warning > .panel-heading {
-  background-color: #CE5144;
+.panel-dialogue > .panel-heading {
+  background-color: #323232;
 }
 
 .panel-title {
@@ -410,10 +273,6 @@ input {
   overflow-y: scroll;
   margin: 0;
   padding: 18px 30px 30px 28px;
-}
-
-#properties .panel-body {
-  height: 295px;
 }
 
 .panel-body h1:first-child {
@@ -569,24 +428,7 @@ input {
 }
 
 /*
- * Dialogue: Library;
- */
-
-#dialogue-library {
-  width: 248px;
-}
-
-/*
- * Dialogue: Properties;
- */
-
-#dialogue-properties {
-  width: 650px;
-  height: 100%;
-}
-
-/*
- * Dialogue: Object manager
+ * Object manager
  */
 
 #object-manager {
@@ -595,71 +437,69 @@ input {
 
 #object-manager ul {
   font-size: 0.9em;
-}
-
-#object-manager .col {
-  padding-right: 2px;
-}
-
-#object-manager > .panel-heading {
   margin-bottom: 2px;
 }
 
-#object-manager .nav-tabs > li {
-  height: 33px;
-  padding-top: 15px;
+#object-manager .col {
+  min-width: 160px;
+  padding-right: 2px;
 }
 
-#object-manager .nav-tabs > li.active {
-   background-color: #239D58;
+#object-manager .panel-heading {
+  margin-bottom: 2px;
 }
 
-#object-manager button {
-  display: block;
-  width: 210px;
-  height: 29px;
-  padding: 0 0 0 8px;
-  background-color: #239D58;
-  font-size: 1em;
-  font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
+#object-manager .content {
+  height: 100%;
+}
+
+#object-manager .btn {
+  width: 100%;
   text-align: left;
-  text-shadow: 1px 1px rgba(0,0,0,0.2);
-  color: #fff;
+  padding-left: 8px;
 }
 
-/*
- * Dialogue: Edit content
- */
-
-#dialogue-edit-content {
-  height: 100%;
-}
-
-/*
- * Dialogue: Events content
- */
-
-#dialogue-events-content {
-  height: 100%;
-}
-
-#dialogue-events-content .col {
-  width: 210px;
-}
-
-#dialogue-events-content .nav-tabs > li {
+#object-manager .nav-tabs > li {
   width: auto;
-  height: 25px;
-  padding: 5px 0 0 9px;
+  padding-right: 30px;
 }
 
-#dialogue-events-content button:hover {
-  background-color: #27AE60;
+/*
+ * Object manager: Library;
+ */
+
+#object-manager-library {
+  width: 248px;
 }
 
-#dialogue-events-content button:active {
-  background-color: #1C8047;
+/*
+ * Object manager: Properties;
+ */
+
+#object-manager-properties {
+  width: 650px;
+  height: 100%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#dialogue-events-content .col,
+#dialogue-counter-content .col {
+  width: 210px;
 }
 
 #dialogue-panel-conditions.nav-tabs > li.active,
@@ -669,10 +509,6 @@ input {
   height: auto;
   cursor: default;
 }
-
-/*
- * Dialogue: Panel conditions
- */
 
 /* TODO:
   - Rename conditions-group
@@ -685,7 +521,7 @@ input {
   display: block;
   background-color: #239D58;
   padding: 4px 0 0 7px;
-  height: 24px;
+  height: 29px;
   margin-bottom: 2px;
 }
 
@@ -744,187 +580,69 @@ input {
   outline: none;
 }
 
-/* ====================================================================================================================================================
-   Author's savigation, button, tab and icon classes
-   ==================================================================================================================================================== */
-
-.nav {
-  list-style: none;
-}
-
-.nav-tabs > li {
-  background-color: #505050;
-  color: #fff;
-  cursor: pointer;
-  margin-right: 2px;
-  width: 147px;
-  height: 27px;
-  font-size: 1em;
-  font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
-  text-align: left;
-  text-shadow: 1px 1px rgba(0,0,0,0.2);
-  vertical-align: middle;
-  padding: 7px 0 0 13px;
-  float: left;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-.nav-tabs > li:hover {
-  background-color: #5E5E5E;
-}
-
-.nav-tabs > li:active {
-  background-color: #3D3D3D;
-}
-
-.nav-tabs > li.active {
-  background-color: #2574A9;
-  cursor: default;
-}
-
-.nav-stacked > li {
+.properties-group {
   display: block;
-  float: none;
-  margin-right: 0;
-  margin-bottom: 2px;
+  height: 53px;
 }
 
-.nav-stacked > li:last-child {
-  margin-bottom: 0px;
+.properties-value {
+  float: left;
+  width: 120px;
 }
 
-/* ==========================================================================
-   Buttons
-   ========================================================================== */
-
-.btn {
-  background-color: #505050;
-  border: 0;
-  border-radius: 0;
-  color: #fff;
-  cursor: pointer;
-  margin-right: 2px;
-  margin-bottom: 0;
-  width: 86px;
-  height: 34px;
-  font-size: 0.9em;
+.properties-value > label {
+  display: block;
+  color: #FDFF9A;
+  font-size: 0.7em;
   font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
-  text-align: center;
-  text-shadow: 1px 1px rgba(0,0,0,0.2);
-  white-space: nowrap;
-  vertical-align: middle;
-  padding: 8px 0;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
-.btn.disabled,
-.btn[disabled] {
-  pointer-events: none;
-  cursor: not-allowed;
-  color: #808080;
+.properties-value > table {
+  position: relative;
+  top: -1px;
+  left: 9px;
+}
+
+.properties-value > table tr {
+  height: 19px;
+}
+
+.properties-value > table td {
+  font-size: 0.8em;
+  color: #65FFFF;
+  font-family: 'Droid Sans', sans-serif;
+  line-height: 1;
+}
+
+.properties-value > table td:first-child {
+  width: 25px;
+  font-size: 0.8em;
+  color: #F5F5F5;
+  font-family: 'Droid Sans', sans-serif;
+}
+
+.properties-value > table td input {
+  color: #F5F5F5;
+  font-family: 'Droid Sans', sans-serif;
+  padding: 1px 0 0 4px;
+  line-height: 1;
   background-color: #505050;
+  width: 60px;
+  height: 12px;
 }
 
-/*
- * Button: Large
- */
-
-.btn-lg {
-  width: 160px;
-  height: 48px;
-  font-size: 1em;
-}
-
-/*
- * Button: Small
- */
-
-.btn-sm {
-  width: 34px;
-  height: 34px;
-}
-
-/*
- * Button: Default
- */
-
-.btn-default {
-  color: #808080;
+.glyphicon {
   background-color: #505050;
-}
+  position: relative;
+  display: inline-block;
+  top: 6px;
+  left: 1px;
+  float: left;
+  width: 24px;
+  height: 24px;
 
-.btn-default:hover {
-  background-color: #5e5e5e;
-}
-
-.btn-default:active {
-  background-color: #3D3D3D;
-}
-
-/*
- * Button: Success
- */
-
-.btn-success {
-  background-color: #239D58;
-}
-
-.btn-success:hover {
-  background-color: #27AE60;
-}
-
-.btn-success:active {
-  background-color: #1C8047;
-}
-
-/*
- * Button: Edit
- */
-
-.btn-edit {
-  background-color: #E5A52E;
-} 
-
-.btn-edit:hover {
-  background-color: #F5B031;
-}
-
-.btn-edit:active {
-  background-color: #C78F28;
-}
-
-/*
- * Button: Warning
- */
-
-.btn-warning {
-  background-color: #CE5144;
-}
-
-.btn-warning:hover {
-  background-color: #DE5849;
-}
-
-.btn-warning:active {
-  background-color: #B0463A;
-}
-
-/*
- * Button-groups
- */
-
-.btn-group {
-
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==========================================================================
@@ -955,6 +673,10 @@ input {
 
 #properties {
   height: 377px;
+}
+
+#properties .panel-body {
+  height: 295px;
 }
 
 .library-preview {
@@ -1006,6 +728,254 @@ input {
   pointer-events: none;
   cursor: not-allowed;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ====================================================================================================================================================
+   Custom navigation classes
+   ==================================================================================================================================================== */
+
+.nav {
+  list-style: none;
+}
+
+.nav-tabs > li {
+  background-color: #505050;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  width: 147px;
+  height: 27px;
+  font-size: 1em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: left;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  vertical-align: middle;
+  padding: 7px 0 0 13px;
+  float: left;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.nav-tabs > li:hover {
+  background-color: #5E5E5E;
+}
+
+.nav-tabs > li.active {
+  background-color: #2574A9;
+  cursor: default;
+}
+
+.nav-tabs-success > li.active {
+  background-color: #239D58;
+}
+
+.nav-tabs-edit > li.active {
+  background-color: #E5A52E;
+}
+
+.nav-tabs-warning > li.active {
+  background-color: #CE5144;
+}
+
+.nav-stacked > li {
+  display: block;
+  float: none;
+  margin-right: 0;
+  margin-bottom: 2px;
+}
+
+.nav-stacked > li:last-child {
+  margin-bottom: 0px;
+}
+
+/* ====================================================================================================================================================
+   Custom button classes
+   ==================================================================================================================================================== */
+
+.btn {
+  background-color: #505050;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  margin-bottom: 0;
+  width: 86px;
+  height: 34px;
+  font-size: 0.9em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 8px 0;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn.disabled,
+.btn[disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #808080;
+  background-color: #505050;
+}
+
+/*
+ * Button: Success
+ */
+
+.btn-success {
+  background-color: #239D58;
+}
+
+.btn-success:hover {
+  background-color: #27AE60;
+}
+
+.btn-success:active {
+  background-color: #1C8047;
+}
+
+/*
+ * Button: Edit
+ */
+
+.btn-edit {
+  background-color: #E5A52E;
+} 
+
+.btn-edit:hover {
+  background-color: #F5B031;
+}
+
+.btn-edit:active {
+  background-color: #C78F28;
+}
+
+/*
+ * Button: Warning
+ */
+
+.btn-warning {
+  background-color: #CE5144;
+}
+
+.btn-warning:hover {
+  background-color: #DE5849;
+}
+
+.btn-warning:active {
+  background-color: #B0463A;
+}
+
+/* ====================================================================================================================================================
+   Custom icon classes
+   ==================================================================================================================================================== */
+
+@font-face {
+  font-family: 'icons';
+  src: url('../font/icons.eot?99267613');
+  src: url('../font/icons.eot?99267613#iefix') format('embedded-opentype'),
+       url('../font/icons.woff?99267613') format('woff'),
+       url('../font/icons.ttf?99267613') format('truetype'),
+       url('../font/icons.svg?99267613#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+ 
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  color: #FFFFFF;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+ 
+.icon-down-open:before { content: '\e800'; font-size: 60%; margin-right: 7px; }
+.icon-cancel:before { content: '\e801'; } /* '' */
+.icon-right-open:before { content: '\e802'; font-size: 60%; margin-right: 6px; }
+.icon-down-dir:before { content: '\e803'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-right-dir:before { content: '\e804'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-plus:before { content: '\e805'; font-size: 80%; margin-right: 9px; } /* '' */
+.icon-minus:before { content: '\e806'; } /* '' */
+.icon-cog:before { content: '\e807'; } /* '' */
+.icon-menu:before { content: '\e808'; } /* '' */
+.icon-up-dir:before { content: '\e809'; } /* '' */
+.icon-left-dir:before { content: '\e80a'; } /* '' */
+.icon-left-open:before { content: '\e80b';  font-size: 60%; } /* '' */
+.icon-up-open:before { content: '\e80c';  font-size: 60%; } /* '' */
+.icon-angle-left:before { content: '\e80d'; } /* '' */
+.icon-angle-right:before { content: '\e80e'; } /* '' */
+.icon-angle-up:before { content: '\e80f'; } /* '' */
+.icon-angle-down:before { content: '\e810'; } /* '' */
+.icon-eye:before { content: '\e811'; } /* '' */
+.icon-eye-off:before { content: '\e812'; } /* '' */
+.icon-ok:before { content: '\e813'; } /* '' */
+.icon-help:before { content: '\e814'; } /* '' */
+.icon-info:before { content: '\e815'; } /* '' */
+.icon-attention-alt:before { content: '\e816'; } /* '' */
+.icon-codeopen:before { content: '\e817';  font-size: 100%; margin-right: 13px; } /* '' */
 
 /* ==========================================================================
    Helper classes
