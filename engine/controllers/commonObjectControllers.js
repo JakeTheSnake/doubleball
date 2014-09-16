@@ -2,7 +2,7 @@ GameCreator.commonObjectControllers = {
     
     addCounterObjectControllers: function(object) {
         object.setupPropertiesForm = GameCreator.commonObjectControllers.setupPropertiesForm;
-        object.setupStatesForm = GameCreator.commonObjectControllers.setupStatesForm;
+        object.setupStatesColumn = GameCreator.commonObjectControllers.setupStatesColumn;
         object.setupEditStateForm = GameCreator.commonObjectControllers.setupEditStateForm;
     },
 
@@ -11,7 +11,7 @@ GameCreator.commonObjectControllers = {
         object.setupOnDestroyActionsForm = GameCreator.commonObjectControllers.setupOnDestroyActionsForm;
         object.setupOnCreateActionsForm = GameCreator.commonObjectControllers.setupOnCreateActionsForm;
         object.setupEditCounterEvents = GameCreator.commonObjectControllers.setupEditCounterEvents;
-        object.setupStatesForm = GameCreator.commonObjectControllers.setupStatesForm;
+        object.setupStatesColumn = GameCreator.commonObjectControllers.setupStatesColumn;
         object.setupEditStateForm = GameCreator.commonObjectControllers.setupEditStateForm;
         object.setupCountersForm = GameCreator.commonObjectControllers.setupCountersForm;
         object.setupPropertiesForm = GameCreator.commonObjectControllers.setupPropertiesForm;
@@ -106,48 +106,57 @@ GameCreator.commonObjectControllers = {
         GameCreator.UI.setupEditEventColumns(this.onClickSets, container, selectableActions, this);    
     },
 
-    setupStatesForm: function(container, selectedState) {
-        selectedState = (selectedState ? selectedState : 0);
+    setupStatesColumn: function(container, selectedState) {
+        container.html(GameCreator.htmlStrings.getColumn("States", "dialogue-panel-states"));
+        container.append('<div id="dialogue-state-content" class="content"></div>');
+        $("#dialogue-panel-states").html(this.getStatesContent());
+        $("#dialogue-panel-states").parent().append('<button id="add-new-state-button" class="icon-plus btn btn-success">Add</button>');
         var globalObj = this;
-        container.html(this.getStatesContent(this.states));
-        $('#state-tabs').find('.tab[data-state="' + selectedState + '"]').addClass('active');
-        $('#state-tabs').on('click', '.tab:not(#add-state-tab)', function(){
-            $('.state-tab').removeClass('active');
-            $(this).addClass('active');
-            globalObj.setupEditStateForm($('#state-content'), $(this).data('state'));
+        $("#add-new-state-button").on("click", function() {
+            $("#create-state-form").remove();
+            var saveCallback = function() {
+                var stateName = $("#create-state-form input").val();
+                globalObj.createState(stateName);
+                globalObj.setupStatesColumn(container);
+            };
+            $("#dialogue-panel-states").append(GameCreator.htmlStrings.createNameSelectionForm('State name', 'create-state-form', saveCallback));
         });
-        $('#add-state-tab').on('click', function(){
-            globalObj.createState('State ' + globalObj.states.length, $.extend({}, globalObj.getDefaultState().attributes));
-            globalObj.setupStatesForm(container, globalObj.states.length - 1);
+        container.find(".defaultMenuElement").on("click", function() {
+            var state = $(this).data("id");
+            container.find(".defaultMenuElement").removeClass('active');
+            $(this).addClass("active");
+            globalObj.setupEditStateForm(state);
         });
-        this.setupEditStateForm($('#state-content'), selectedState);
     },
 
-    setupEditStateForm: function(container, stateId) {
+    setupEditStateForm: function(stateId) {
+        var state = this.getState(stateId);
+        $('#dialogue-state-content').html(this.getStatePropertiesContent('State: ' + state.name));
+        $('#dialogue-state-content').append(GameCreator.htmlStrings.getColumn("Properties", "dialogue-panel-state-properties"));
+        GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[this.objectType].objectAttributes, 'state-properties-content');
         var globalObj = this;
-        var html = globalObj.getPropertiesForm(stateId);
-        var state = globalObj.getState(stateId);
-        container.html(html);
-        var attributeNames = Object.keys(state.attributes);
-        if(stateId != 0) {
-            for(var i = 0; i < attributeNames.length; i += 1) {
-                $('#state-content [data-attrname="' + attributeNames[i] + '"]').after('<span class="remove-attribute-button" data-attribute="' + attributeNames[i] + '">X</span>');
+        var propertiesColumn = $('#dialogue-panel-state-properties');
+        var allAttributes = Object.keys(globalObj.getDefaultState().attributes);
+        for (var i = 0; i < allAttributes.length; i += 1) {
+            var listItem = document.createElement('li');
+            if (state.attributes[allAttributes[i]] !== undefined) {
+                $(listItem).addClass('active');
             }
-            container.find('.remove-attribute-button').on('click', function() {
-                globalObj.removeAttributeFromState($(this).data('attribute'), stateId);
-                globalObj.setupEditStateForm(container, stateId);
-            });
-            container.append('<button class="regularButton" id="reset-attributes-button">Reset Attributes</button>');
-            $('#reset-attributes-button').on('click', function(){
-                globalObj.resetStateAttributes(stateId);
-                globalObj.setupEditStateForm(container, stateId);
-            });
+            $(listItem).html(GameCreator.helpers.labelize(allAttributes[i]));
+            $(listItem).click(function(index) {
+                if (state.attributes[allAttributes[index]] !== undefined) {
+                    $('#object-property-' + allAttributes[index] + '-container').empty();
+                    delete state.attributes[allAttributes[index]];
+                } else {
+                    state.attributes[allAttributes[index]] = globalObj.getDefaultState().attributes[allAttributes[index]];    
+                }
+                
+                $(this).toggleClass('active');
+                GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[globalObj.objectType].objectAttributes, 'state-properties-content');
+                
+            }.bind(listItem, i));
+            propertiesColumn.append(listItem);
         }
-        $('#save-global-object-properties-button').on('click', function() {
-            GameCreator.saveFormInputToObject("object-properties-content", state.attributes);
-            GameCreator.saveFormInputToObject("object-non-state-properties-content", globalObj);
-            GameCreator.UI.redrawLibrary();
-        });
     },
 
     setupEventsForm: function(container) {
@@ -169,8 +178,8 @@ GameCreator.commonObjectControllers = {
         $("#dialogue-panel-counters").parent().append('<button id="add-new-counter-button" class="icon-plus btn btn-success">Add</button>');
         var globalObj = this;
         $("#add-new-counter-button").on("click", function() {
-            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createCounterForm());
-            $("#create-counter-form button").one("click", function() {
+            $("#create-counter-form").remove();
+            var saveCallback = function() {
                 var counterName = $("#create-counter-form input").val();
                 globalObj.parentCounters[counterName] = new GameCreator.Counter();
                 GameCreator.getActiveScene().objects.forEach(function(sceneObj){
@@ -179,11 +188,13 @@ GameCreator.commonObjectControllers = {
                     }
                 });
                 globalObj.setupCountersForm(container);
-            });
+            };
+            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createNameSelectionForm('Counter name', 'create-counter-form', saveCallback));
+            
         });
-        container.find(".counterMenuElement").on("click", function() {
+        container.find(".defaultMenuElement").on("click", function() {
             var counterName = $(this).data("name");
-            container.find(".counterMenuElement").removeClass('active');
+            container.find(".active").removeClass('active');
             $(this).addClass("active");
             globalObj.setupEditCounterEvents(counterName);
         });
@@ -231,11 +242,11 @@ GameCreator.commonObjectControllers = {
         var keyEventContent = document.createElement('div');
         container.append(keyEventContent);
         var globalObj = this;
-        container.find(".keyMenuElement").on("click", function(){
+        container.find(".defaultMenuElement").on("click", function(){
             var keyName = $(this).data("name");
             var onKeyEventSets = globalObj.keyEvents[keyName]
 
-            $(this).parent().find('.keyMenuElement').removeClass('active');
+            $(this).parent().find('.defaultMenuElement').removeClass('active');
             $(this).addClass('active');
             var selectableActions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
             GameCreator.UI.setupEditEventColumns(onKeyEventSets, $(keyEventContent), selectableActions, globalObj);

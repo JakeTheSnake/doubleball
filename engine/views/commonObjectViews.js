@@ -5,6 +5,7 @@ GameCreator.commonObjectViews = {
         object.getCollisionsContent = GameCreator.commonObjectViews.getCollisionsContent;
         object.getCounterEventsContent = GameCreator.commonObjectViews.getCounterEventsContent;
         object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
+        object.getStatePropertiesContent = GameCreator.commonObjectViews.getStatePropertiesContent;
         object.getNonStatePropertiesForm = GameCreator.commonObjectViews.getNonStatePropertiesForm;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
         object.getEventsContent = GameCreator.commonObjectViews.getEventsContent;
@@ -50,7 +51,7 @@ GameCreator.commonObjectViews = {
                    </div> \
                    <ul id="dialogue-panel-edit" class="nav nav-stacked nav-tabs nav-tabs-success"> \
                    <li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
-                   <li data-uifunction="setupStatesForm"><i class="icon-codeopen" /><span>States</span></li> \
+                   <li data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></li> \
                    <li data-uifunction="setupEventsForm"><i class="icon-codeopen" /><span>Events</span></li> \
                    <li data-uifunction="setupCountersForm"><i class="icon-codeopen" /><span>Counters</span></li> \
                    </ul> \
@@ -107,29 +108,42 @@ GameCreator.commonObjectViews = {
         var result = '';
         var keys = Object.keys(this.parentCounters);
         for (var i = 0; i < keys.length; i++) {
-            result += GameCreator.htmlStrings.counterMenuElement(keys[i]);
+            result += GameCreator.htmlStrings.defaultMenuElement(keys[i]);
         }
         return result;
     },
 
-    getStatesContent: function(states) {
-        var result = '<h>Edit states</h>';
-        result += '<div id="state-tabs">';
-        for(i = 0; i < states.length; i += 1) {
-            result += '<div class="tab state-tab" data-state=' + i + '>' + states[i].name + '</div>';
+    getStatesContent: function() {
+        var i, result = '';
+        for (i = 0; i < this.states.length; i++) {
+            if(this.states[i].name !== "Default") {
+                result += GameCreator.htmlStrings.stateMenuElement(this.states[i].id, this.states[i].name);
+            }
         }
-        result += '<div id="add-state-tab" class="tab state-tab">+</div>'
-        result += '</div><br style="clear:both;"/>';
-        result += '<div id="state-content">';
-        result += this.getPropertiesForm(0);
-        result += '</div>'
+        return result;
+    },
+
+    getStatePropertiesContent: function(title) {
+        var result = '\
+        <div class="col border-right object-manager-properties"> \
+            <div class="panel-heading"> \
+                <span class="panel-title">' + title + '</span> \
+            </div> \
+            <div class="panel-body"> \
+                <div class="panel-paragraph"> \
+                    <div id="state-properties-content">';
+                        result += this.getPropertiesForm() +
+                    '</div>\
+                </div>\
+            </div>\
+        </div>';
         return result;
     },
 
     getPropertiesContent: function() {
         var result = "";
             
-            result += '<div id="object-manager-properties" class="col border-right"> \
+            result += '<div class="col border-right object-manager-properties"> \
                        <div class="panel-heading"> \
                        <span class="panel-title">Properties</span> \
                        </div> \
@@ -203,7 +217,7 @@ GameCreator.commonObjectViews = {
         var result = '';
         for (var keyName in this.keyEvents) {
             if (this.keyEvents[keyName].length > 0) {
-                result += GameCreator.htmlStrings.keyMenuElement(keyName);
+                result += GameCreator.htmlStrings.defaultMenuElement(keyName);
             }
         }
         result += '<li><button id="add-new-key-button" class="regularButton">Add</div></li>';

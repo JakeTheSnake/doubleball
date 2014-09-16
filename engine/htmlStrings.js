@@ -108,12 +108,12 @@ GameCreator.htmlStrings = {
         object.getDefaultState().attributes.image.outerHTML + '</div>';
     },
 
-    keyMenuElement: function(keyName) {
-        return '<li class="keyMenuElement" data-name="' + keyName + '">' + keyName + '</li>';
+    defaultMenuElement: function(text) {
+        return '<li class="defaultMenuElement headingNormalBlack" data-name="' + text + '"><span>' + text + '</span></li>';
     },
 
-    counterMenuElement: function(counterName) {
-        return '<li class="counterMenuElement headingNormalBlack" data-name="' + counterName + '"><span>' + counterName + '</span></li>';
+    stateMenuElement: function(id, name) {
+        return '<li class="defaultMenuElement headingNormalBlack" data-id="' + id + '"><span>' + name + '</span></li>';
     },
 
     counterEventMenuElement: function(value, type) {
@@ -209,14 +209,31 @@ GameCreator.htmlStrings = {
         var globalObject = GameCreator.helpers.findGlobalObjectById(globalObjectId);
         return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>'
     },
-    
-    createCounterForm: function() {
-    	var result = '<div id="create-counter-form">'
-    	result += '<input type="text" class="textField" placeholder="Name of counter"/>'
-    	result += '<button>Save</button>';
-        result += '</div>'
-    	return result;
-	},
+
+    createNameSelectionForm: function(placeholder, id, saveCallback) {
+        var result = document.createElement('div');
+        $(result).attr('id', id);
+
+        var nameInput = document.createElement('input');
+        $(nameInput).attr('type', 'text');
+        $(nameInput).addClass('textField');
+        $(nameInput).attr('placeholder', placeholder);
+        $(result).append(nameInput);
+
+        var saveButton = document.createElement('button');
+        $(saveButton).click(saveCallback);
+        $(saveButton).html('Save');
+        $(result).append(saveButton);
+
+        var cancelButton = document.createElement('button');
+        $(cancelButton).click(function() {
+            $(this).parent().remove();
+        });
+        $(cancelButton).html('Cancel');
+        $(result).append(cancelButton);
+
+        return result;
+    },
 	
 	createCounterEventForm: function() {
 		var result = '<div>' + GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");

@@ -18,7 +18,7 @@
                        <a class="tab dialogue-window-tab active" data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></a>';
 
             result += this.getTabs();
-            result +=  '<a class="tab dialogue-window-tab" data-uifunction="setupStatesForm"><i class="icon-codeopen" /><span>States</span></a>';
+            result +=  '<a class="tab dialogue-window-tab" data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></a>';
             result +=  '</div><div id="edit-global-object-window-content"></div>';
 
             return result;

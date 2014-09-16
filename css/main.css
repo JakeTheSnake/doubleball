@@ -476,7 +476,7 @@ input {
  * Object manager: Properties;
  */
 
-#object-manager-properties {
+.object-manager-properties {
   width: 650px;
   height: 100%;
 }
