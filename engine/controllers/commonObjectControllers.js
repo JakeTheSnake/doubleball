@@ -145,7 +145,7 @@ GameCreator.commonObjectControllers = {
                 $(listItem).addClass('active');
             } else {
                 $('#object-property-' + allAttributes[i] + '-container').addClass('fade-disable');
-                $('#object-property-' + allAttributes[index] + '-container input').attr('disabled', 'true');
+                $('#object-property-' + allAttributes[i] + '-container input').attr('disabled', 'true');
             }
             $(listItem).html(GameCreator.helpers.labelize(allAttributes[i]));
             $(listItem).click(function(index) {
