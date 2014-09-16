@@ -151,7 +151,7 @@ GameCreator.commonObjectViews = {
                        <div class="panel-paragraph"> \
                        <div id="object-properties-content">'
 
-            result += this.getPropertiesForm(0);
+            result += this.getPropertiesForm();
 
             result += '</div> \
                        <div id="object-non-state-properties-content">'

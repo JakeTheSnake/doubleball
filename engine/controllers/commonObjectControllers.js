@@ -133,7 +133,9 @@ GameCreator.commonObjectControllers = {
         var state = this.getState(stateId);
         $('#dialogue-state-content').html(this.getStatePropertiesContent('State: ' + state.name));
         $('#dialogue-state-content').append(GameCreator.htmlStrings.getColumn("Properties", "dialogue-panel-state-properties"));
+        GameCreator.helpers.populateGlobalObjectPropertiesForm(this.getDefaultState().attributes, GameCreator[this.objectType].objectAttributes, 'state-properties-content');
         GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[this.objectType].objectAttributes, 'state-properties-content');
+
         var globalObj = this;
         var propertiesColumn = $('#dialogue-panel-state-properties');
         var allAttributes = Object.keys(globalObj.getDefaultState().attributes);
@@ -141,18 +143,21 @@ GameCreator.commonObjectControllers = {
             var listItem = document.createElement('li');
             if (state.attributes[allAttributes[i]] !== undefined) {
                 $(listItem).addClass('active');
+            } else {
+                $('#object-property-' + allAttributes[i] + '-container').addClass('fade-disable');
+                $('#object-property-' + allAttributes[index] + '-container input').attr('disabled', 'true');
             }
             $(listItem).html(GameCreator.helpers.labelize(allAttributes[i]));
             $(listItem).click(function(index) {
                 if (state.attributes[allAttributes[index]] !== undefined) {
-                    $('#object-property-' + allAttributes[index] + '-container').empty();
                     delete state.attributes[allAttributes[index]];
+                    $('#object-property-' + allAttributes[index] + '-container input').attr('disabled', 'true');
                 } else {
+                    $('#object-property-' + allAttributes[index] + '-container input').removeAttr('disabled');
                     state.attributes[allAttributes[index]] = globalObj.getDefaultState().attributes[allAttributes[index]];    
                 }
-                
+                $('#object-property-' + allAttributes[index] + '-container').toggleClass('fade-disable');
                 $(this).toggleClass('active');
-                GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[globalObj.objectType].objectAttributes, 'state-properties-content');
                 
             }.bind(listItem, i));
             propertiesColumn.append(listItem);
