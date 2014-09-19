@@ -82,19 +82,26 @@ GameCreator.UI = {
     //Add global object functions
     
     openAddGlobalObjectDialogue: function() {
-        GameCreator.UI.openDialogue(900, 570, GameCreator.htmlStrings.addGlobalObjectWindow());
-        /*
-        $("#dialogue-window").find(".tab").on("click", function() {
-            GameCreator.UI.setupAddObjectForm($(this).data("object-type"));
-            $(this).parent().find(".tab").removeClass("active");
-            $(this).addClass("active");
-        });
-        */
-
-        /*
-        GameCreator.UI.setupAddObjectForm("FreeObject");
-        */
+        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.addGlobalObjectWindow());
+        GameCreator.UI.populateSelectObjectTypeGroupList();
     },
+
+
+    /*
+
+    addGlobalObjectForm: function(objectType) {
+        var result = GameCreator.htmlStrings.inputLabel('global-object-name', 'Name ') +
+                GameCreator.htmlStrings.stringInput('global-object-name', 'objectName') +
+                '<br style="clear:both;"/>';
+        result += GameCreator.helpers.getAttributeForm(GameCreator[objectType].objectAttributes,
+            GameCreator[objectType].objectAttributes);
+        result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique ') +
+                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique') +
+                '<br style="clear:both;"/>' +
+                '<button class="saveButton regularButton">Save</button>';
+        return result;       
+    },
+    */
 
     setupAddObjectForm: function(objectType) {
         $("#add-global-object-window-content").html(GameCreator.htmlStrings.addGlobalObjectForm(objectType));
@@ -282,14 +289,14 @@ GameCreator.UI = {
     },
 
     populateSelectActionList: function(activeCASetVM) {
-        var i;
+        var i, keys = Object.keys(activeCASetVM.selectableActions);
         var column = $("#dialogue-panel-add-list");
 
         column.html('');
 
-        for (i = 0; i < Object.keys(activeCASetVM.selectableActions).length; i++) {
+        for (i = 0; i < keys.length; i++) {
             var listItem = document.createElement('li');
-            var actionName = Object.keys(activeCASetVM.selectableActions)[i];
+            var actionName = keys[i];
 
             $(listItem).data('action', actionName);
             $(listItem).append(actionName);
@@ -300,6 +307,49 @@ GameCreator.UI = {
 
             column.append(listItem);
         }
+    },
+
+    populateSelectObjectTypeGroupList: function() {
+        var listItem, column = $("#dialogue-panel-object-type-group");
+        column.html('');
+        var objectGroups = [
+            {text: 'Player Objects', value: 'playerObjectTypes'}, 
+            {text: 'Game Objects', value: 'gameObjectTypes'},
+            {text: 'Counters', value: 'counterObjectTypes'} 
+        ]
+        objectGroups.forEach(function(group){
+            listItem = document.createElement('li');
+            $(listItem).append(group.text);
+            $(listItem).on('click', function() {
+                $("#add-global-object-form-content").empty();
+                column.find('.active').removeClass('active');
+                $(this).addClass('active');
+                GameCreator.UI.populateSelectObjectTypeList(GameCreator.objectTypeGroups[group.value]);
+            });
+            column.append(listItem);
+        });
+    },
+
+    populateSelectObjectTypeList: function(objectTypeGroup) {
+        var i, keys = Object.keys(objectTypeGroup);
+        var column = $("#dialogue-panel-object-type");
+
+        column.html('');
+        for (i = 0; i < keys.length; i++) {
+            var listItem = document.createElement('li');
+
+            $(listItem).append(keys[i]);
+            $(listItem).on('click', function(index) {
+                column.find('.active').removeClass('active');
+                $(this).addClass('active');
+                var globalObject = new GameCreator[objectTypeGroup[keys[index]]]({});
+                $("#add-global-object-form-content").html(globalObject.getPropertiesForm(0));
+                GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObject.getDefaultState().attributes, GameCreator[globalObject.objectType].objectAttributes, 'add-global-object-form-content');
+            }.bind(listItem, i));
+
+            column.append(listItem);
+        }
+        
     },
 
     setupSceneObjectForm: function(sceneObject) {

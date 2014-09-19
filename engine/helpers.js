@@ -297,9 +297,10 @@
     };
 
     GameCreator.helpers.setStandardProperties = function(globalObj, args) {
+        args = args ? args : {};
         globalObj.objectName = args.objectName;
         globalObj.attributes = {
-            unique: args.unique
+            unique: args.unique != undefined ? args.unique : false
         };
         globalObj.parentCounters = {};
         globalObj.counters = {};
@@ -309,9 +310,9 @@
             name: "Default",
             id: 0,
             attributes: {
-                image: args.image,
-                width: args.width,
-                height: args.height
+                image: args.image != undefined ? args.image : '',
+                width: args.width != undefined ? args.width : 0,
+                height: args.height != undefined ? args.width : 0,
             }
         }];
     };

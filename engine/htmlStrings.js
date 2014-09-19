@@ -159,33 +159,12 @@ GameCreator.htmlStrings = {
     },
 
     addGlobalObjectWindow: function() {
-        var result = "";
-
-        result += '<div id="dialogue-window-title">Add new object</div> \
-                   <div id="dialogue-window-menu"> \
-                   <a class="tab dialogue-window-tab active" data-object-type="FreeObject">Free object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="RouteObject">Route object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="PlatformObject">Platform object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="TopDownObject">Top-down object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="MouseObject">Mouse object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="CounterObjectImage">Counter object image</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="CounterObjectText">Counter object text</a> \
-                   </div> \
-                   <div id="add-global-object-window-content"></div>';
-        return result;
-    },
-
-    addGlobalObjectForm: function(objectType) {
-        var result = GameCreator.htmlStrings.inputLabel('global-object-name', 'Name ') +
-                GameCreator.htmlStrings.stringInput('global-object-name', 'objectName') +
-                '<br style="clear:both;"/>';
-        result += GameCreator.helpers.getAttributeForm(GameCreator[objectType].objectAttributes,
-            GameCreator[objectType].objectAttributes);
-        result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique ') +
-                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique') +
-                '<br style="clear:both;"/>' +
-                '<button class="saveButton regularButton">Save</button>';
-        return result;       
+        var html = '<div class="dialogue bottom"><div id="add-global-object-window" class="panel-default" style="height: 400px">';
+        html += GameCreator.htmlStrings.getColumn('Type of object', 'dialogue-panel-object-type-group');
+        html += GameCreator.htmlStrings.getColumn('Object', 'dialogue-panel-object-type');
+        html += '<div id="add-global-object-form-content"></div>'
+        html += '</div></div>'
+        return html;
     },
     
     collisionObjectSelector: function(object) {

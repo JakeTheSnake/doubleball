@@ -11,6 +11,22 @@
             Right: "Right"
         },
 
+        objectTypeGroups: {
+            playerObjectTypes: {
+                'Topdown Object': 'TopDownObject',
+                'Mouse Object': 'MouseObject',
+                'Platform Object': 'PlatformObject',
+            },
+            gameObjectTypes: {
+                'Free Object': 'FreeObject',
+                'Route Object': 'RouteObject'
+            },
+            counterObjectTypes: {
+                'Text Counter': 'CounterObjectText',
+                'Image Counter': 'CounterObjectImage'
+            },
+        },
+
         addGlobalObject: function(args, objectType) {
             var globalObj = new GameCreator[objectType](args);
             GameCreator.globalIdCounter += 1;
