@@ -252,7 +252,7 @@ GameCreator.UI = {
                 actionsColumn.append(activeCASetVM.actionVMs[i].getPresentation());
             }
             
-            actionButton.on('click', function() {
+            $(addActionButton).on('click', function() {
                 GameCreator.UI.populateSelectActionList(activeCASetVM);
             });
 
