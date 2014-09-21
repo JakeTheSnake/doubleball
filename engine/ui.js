@@ -379,7 +379,7 @@ GameCreator.UI = {
             if (obj instanceof GameCreator.SceneObject) {
                 GameCreator.invalidate(obj);
             }
-            GameCreator.saveInputValueToObject($(input), attributes);
+            var value = GameCreator.saveInputValueToObject($(input), attributes);
             $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType, obj));
             container.html(display);
             container.parent().off('click').on('click', onClickFunc);
@@ -387,7 +387,7 @@ GameCreator.UI = {
                 GameCreator.render(true);
             }
             if (onChangeCallback) {
-                onChangeCallback();
+                onChangeCallback(value);
             }
         }
 

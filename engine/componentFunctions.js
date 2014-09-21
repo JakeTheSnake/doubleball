@@ -67,7 +67,7 @@
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {
                             for (j = 0; j < keySets.length; j++) {
-                                if (keySets[j].checkConditions()) {
+                                if (keySets[j].checkConditions(this)) {
                                     keySets[j].runActions(this);
                                     this.keyCooldown[key] = true;
                                     // This anonymous function should ensure that keyAction in the timeout callback

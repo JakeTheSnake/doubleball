@@ -4,9 +4,9 @@ GameCreator.ConditionActionSet = function(globalObj) {
     this.globalObj = globalObj;
 }
 
-GameCreator.ConditionActionSet.prototype.checkConditions = function() {
+GameCreator.ConditionActionSet.prototype.checkConditions = function(runtimeObj) {
     for (var i = 0; i < this.conditions.length; i++) {
-        if (this.conditions[i].evaluate() === false) {
+        if (this.conditions[i].evaluate(runtimeObj) === false) {
             return false;
         }
     }
@@ -34,7 +34,7 @@ GameCreator.Condition = function(args) {
 GameCreator.conditions =
 {
     exists: new GameCreator.Condition({
-        evaluate: function(params) {
+        evaluate: function(runtimeObj, params) {
             var item = GameCreator.helpers.
                 getObjectById(GameCreator.collidableObjects, params.objId);
             if (item) {
@@ -53,17 +53,39 @@ GameCreator.conditions =
                 defaultValue: 1
             }
         }
+    }),
+
+    state: new GameCreator.Condition({
+        evaluate: function(runtimeObj, params) {
+            if (params.objId === 'this') {
+                return runtimeObj.currentState === params.state;
+            } else {
+                return GameCreator.getRuntimeObject(params.objId).currentState === params.state;
+            }
+        },
+        params: {
+            objId: {
+                param: GameCreator.SceneObjectParameter,
+                mandatory: false,
+                defaultValue: 'this',
+                observer: 'state'
+            },
+            state: {
+                param: GameCreator.StateParameter,
+                mandatory: false,
+                defaultValue: 0
+            }
+        }
     })
 }
 
 GameCreator.RuntimeCondition = function(name, params) {
     this.name = name;
     this.parameters = params;
-    this.mandatory = true;
 }
 
-GameCreator.RuntimeCondition.prototype.evaluate = function() {
-    return GameCreator.conditions[this.name].evaluate(this.parameters);
+GameCreator.RuntimeCondition.prototype.evaluate = function(runtimeObj) {
+    return GameCreator.conditions[this.name].evaluate(runtimeObj, this.parameters);
 }
 
 GameCreator.RuntimeCondition.prototype.getAllParameters = function() {

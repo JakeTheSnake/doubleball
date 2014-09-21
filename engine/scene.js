@@ -79,7 +79,7 @@
                 activeScene = GameCreator.getActiveScene();
                 for (i = 0; i < activeScene.objects.length; i += 1) {
                     sceneObj = activeScene.objects[i];
-                    if (sceneObj.instanceId === id) {
+                    if (sceneObj.attributes.instanceId === id) {
                         return sceneObj;
                     }
                 }
@@ -92,12 +92,12 @@
         },
 
         getUniqueIDsInActiveScene: function() {
-            var result = {};
+            var result = {'this': 'this'};
             var i, sceneObj, activeScene;
             activeScene = GameCreator.getActiveScene();
             for (i = 0; i < activeScene.objects.length; i += 1) {
                 sceneObj = activeScene.objects[i];
-                result[sceneObj.instanceId] = sceneObj.instanceId;
+                result[sceneObj.attributes.instanceId] = sceneObj.attributes.instanceId;
             }
             return result;
         },

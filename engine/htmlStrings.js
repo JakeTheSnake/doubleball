@@ -23,6 +23,10 @@ GameCreator.htmlStrings = {
         return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getGlobalObjectIds(), attrName, value);
     },
 
+    sceneObjectInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.getUniqueIDsInActiveScene(), attrName, value);
+    },
+
     shootableObjectInput: function(attrName, value) {
         return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getShootableObjectIds(), attrName, value);
     },
@@ -32,7 +36,7 @@ GameCreator.htmlStrings = {
     },
 
     stateInput: function(attrName, value, globalObj) {
-        var selectableStates = {};//globalObj.states.map(function(state){
+        var selectableStates = {};
         globalObj.states.forEach(function(state){
             selectableStates[state.name] = state.id;
         });

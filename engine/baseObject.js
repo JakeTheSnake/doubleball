@@ -34,7 +34,7 @@
             } else {
                 for (i = 0; i < this.parent.onDestroySets.length; i++) {
                     currentSet = this.parent.onDestroySets[i];
-                    if (currentSet.checkConditions()) {
+                    if (currentSet.checkConditions(this)) {
                         currentSet.runActions(this);
                     }
                 }
@@ -65,7 +65,7 @@
             } else {
                 for (i = 0; i < this.parent.onCreateSets.length; i++) {
                     currentSet = this.parent.onCreateSets[i];
-                    if (currentSet.checkConditions()) {
+                    if (currentSet.checkConditions(this)) {
                         currentSet.runActions(this);
                     }
                 }
@@ -83,12 +83,12 @@
                     "Clicked on " + this.parent.objectName,
                      new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                     );
-                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: runtimeObj});
+                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
                 for (i = 0; i < this.parent.onClickSets.length; i++) {
                     currentSet = this.parent.onClickSets[i];
-                    if (currentSet.checkConditions()) {
-                        currentSet.runActions(runtimeObj);
+                    if (currentSet.checkConditions(this)) {
+                        currentSet.runActions(this);
                     }
                 }
             }                  

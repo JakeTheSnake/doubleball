@@ -54,7 +54,7 @@
         if (caSets !== undefined) {
             for (j = 0; j < caSets.length; j += 1) {
                 currentSet = caSets[j];
-                if (currentSet.checkConditions()) {
+                if (currentSet.checkConditions(object)) {
                     currentSet.runActions(object, {collisionObject: targetObject});
                 }
             }
@@ -413,32 +413,35 @@
     };
 
     GameCreator.helpers.getPresentationForInputValue = function(value, type, obj) {
-        switch (type) {
-            case "rangeInput":
-                if (value.length == 1) {
-                    return value[0];
-                } else if (value.length == 2) {
-                    return (value[0] + ":" + value[1]);
-                } else {
+        if (value !== undefined && value !== null) {
+            switch (type) {
+                case "rangeInput":
+                    if (value.length == 1) {
+                        return value[0];
+                    } else if (value.length == 2) {
+                        return (value[0] + ":" + value[1]);
+                    } else {
+                        return value;
+                    }
+                case "globalObjectInput":
+                    return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
+                case "shootableObjectInput":
+                    return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
+                case "stateInput":
+                    return GameCreator.helpers.getObjectById(obj.states, Number(value)).name;
+                case "counterInput":
+                    return value.split('::').join(' - ');
+                case "counterTypeInput":
+                    return GameCreator.helpers.getPrettyName(value);
+                case "sceneInput":
+                    return GameCreator.getSceneById(Number(value)).attributes.name;
+                case "imageInput":
+                    return value.src;
+                default:
                     return value;
-                }
-            case "globalObjectInput":
-                return value ? GameCreator.helpers.findGlobalObjectById(Number(value)).objectName : '';
-            case "shootableObjectInput":
-                return value ? GameCreator.helpers.findGlobalObjectById(Number(value)).objectName : '';
-            case "stateInput":
-                return value ? GameCreator.helpers.getObjectById(obj.states, Number(value)).name : '';
-            case "counterInput":
-                return value ? value.split('::').join(' - ') : '';
-            case "counterTypeInput":
-                return value ? GameCreator.helpers.getPrettyName(value) : '';
-            case "sceneInput":
-                return value ? GameCreator.getSceneById(Number(value)).attributes.name : '';
-            case "imageInput":
-                return value ? value.src : '';
-            default:
-                return value;
+            }
         }
+        return '';
     };
 
     GameCreator.helpers.getPrettyName = function(databaseName) {

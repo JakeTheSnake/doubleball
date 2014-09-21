@@ -300,12 +300,14 @@
             var attrName = input.data('attrname');
             if (attrName) {
                 attrName = attrName.split('.');
+                var value = GameCreator.helpers.getValue(input);
                 if (attrName.length === 1) {
-                    obj[attrName[0]] = GameCreator.helpers.getValue(input);
+                    obj[attrName[0]] = value;
                 } else {
                     obj[attrName[0]] = obj[attrName[0]] || {};                       
-                    obj[attrName[0]][attrName[1]] = GameCreator.helpers.getValue(input);
+                    obj[attrName[0]][attrName[1]] = value;
                 }
+                return value;
             }
         },
 
