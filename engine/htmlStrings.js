@@ -24,7 +24,9 @@ GameCreator.htmlStrings = {
     },
 
     sceneObjectInput: function(attrName, value) {
-        return GameCreator.htmlStrings.singleSelector(GameCreator.getUniqueIDsInActiveScene(), attrName, value);
+        var ids = GameCreator.getUniqueIDsInActiveScene();
+        ids['this'] = 'this';
+        return GameCreator.htmlStrings.singleSelector(ids, attrName, value);
     },
 
     shootableObjectInput: function(attrName, value) {
@@ -44,7 +46,12 @@ GameCreator.htmlStrings = {
     },
 
     counterInput: function(attrName, value, globalObj) {
-        return GameCreator.htmlStrings.singleSelector(GameCreator.getActiveScene().getSelectableCounters(globalObj), attrName, value)
+        var counters = {};
+        var counterNames = Object.keys(globalObj.parentCounters);
+        for (var i = 0; i < counterNames.length; i += 1) {
+            counters[counterNames[i]] = counterNames[i];
+        }
+        return GameCreator.htmlStrings.singleSelector(counters, attrName, value)
     },
 
     counterTypeInput: function(attrName, value) {

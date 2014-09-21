@@ -76,6 +76,37 @@ GameCreator.conditions =
                 defaultValue: 0
             }
         }
+    }),
+
+    counter: new GameCreator.Condition({
+        evaluate: function(runtimeObj, params) {
+            if (params.objId === 'this') {
+                return runtimeObj.counters[params.counter].value === params.value;
+            } else {
+                var sceneObject = GameCreator.getSceneObjectById(params.objId);
+                if (sceneObject) {
+                    return sceneObject.counters[params.counter].value === params.value;
+                }
+                return false;
+            }
+        },
+        params: {
+            objId: {
+                param: GameCreator.SceneObjectParameter,
+                mandatory: false,
+                defaulValue: 'this',
+                observer: 'counter'
+            },
+            counter: {
+                param: GameCreator.CounterParameter,
+                mandatory: true,
+            },
+            value: {
+                param: GameCreator.NumberParameter,
+                mandatory: false,
+                defaultValue: 0
+            }
+        }
     })
 }
 

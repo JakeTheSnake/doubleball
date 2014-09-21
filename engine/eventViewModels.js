@@ -103,6 +103,7 @@ GameCreator.ConditionItemVM = function(model, caSet) {
     this.model = model; // Pointer to the saved action in the event 
     this.parameters = this.getSelectedParameters();
     this.caSet = caSet;
+    this.template = GameCreator.conditions[this.model.name];
 };
 
 GameCreator.ConditionItemVM.prototype.getPresentation = function() {
@@ -138,7 +139,7 @@ GameCreator.ConditionItemVM.prototype.getSelectedParameters = function() {
     });
 }
 
-GameCreator.ConditionItemVM.prototype.updateParameter = function(paramName, value) {    
+GameCreator.ConditionItemVM.prototype.updateParameter = function(paramName, value) {
     for (var i = 0; i < this.parameters.length; i += 1) {
         if (this.parameters[i].name === paramName) {
             this.parameters[i].update(value);
@@ -150,6 +151,7 @@ GameCreator.ActionItemVM = function(model, caSet) {
     this.model = model; // Pointer to the saved action in the event 
     this.parameters = this.getParameters();
     this.caSet = caSet;
+    this.template = GameCreator.actions[this.model.name];
 };
 
 GameCreator.ActionItemVM.prototype.getPresentation = function() {
@@ -171,7 +173,10 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
         $(paramItem).append(this.parameters[i].getLabel());
         var paramValuePresenter = this.parameters[i].element;
         $(paramItem).append(paramValuePresenter);
-        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, this.parameters[i].name, this.caSet.globalObj);
+        var observerParam = GameCreator.actions[this.model.name].params[this.parameters[i].name].observer;
+        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
+            this.parameters[i].name, this.caSet.globalObj,
+            this.updateParameter.bind(this, observerParam));
         $(paramList).append(paramItem);
     }
     var timingItem = $(document.createElement('tr'));
@@ -188,7 +193,7 @@ GameCreator.ActionItemVM.prototype.getParameters = function() {
     return Object.keys(this.model.parameters).collect(function(paramName) {
         var currentParam = caSetItemVM.model.getParameter(paramName);
         if (currentParam) {
-            return new currentParam.param(caSetItemVM.model.parameters, paramName, currentParam.mandatory);
+            return new currentParam.param(caSetItemVM, paramName, currentParam.mandatory);
         }
     });
 }
@@ -203,4 +208,10 @@ GameCreator.ActionItemVM.prototype.getParameter = function(name) {
     return null;
 }
 
-GameCreator.ActionItemVM.prototype.updateParameter = GameCreator.ConditionItemVM.prototype.updateParameter;
+GameCreator.ActionItemVM.prototype.updateParameter =  function(paramName, value) {
+    for (var i = 0; i < this.parameters.length; i += 1) {
+        if (this.parameters[i].name === paramName) {
+            this.parameters[i].update(value);
+        }
+    }
+}

@@ -24,7 +24,7 @@
         var i, currentSet;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && this.parent.onDestroySets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet(this);
+                currentSet = new GameCreator.ConditionActionSet(this.parent);
                 this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been destroyed!",
@@ -55,7 +55,7 @@
         var i, currentSet;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && this.parent.onCreateSets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet(this);
+                currentSet = new GameCreator.ConditionActionSet(this.parent);
                 this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been created!",
@@ -77,7 +77,7 @@
         var i, currentSet;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && this.parent.onClickSets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet(this);
+                currentSet = new GameCreator.ConditionActionSet(this.parent);
                 this.parent.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "Clicked on " + this.parent.objectName,

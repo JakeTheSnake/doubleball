@@ -139,7 +139,7 @@ test("Shoot Action Test", function() {
 test("Counter Action Test", function() {
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     
-    var runtimeObj = setupCollisionEventForNewObject("Counter", {counterObject: "this::testCounter", counterType: "Set", counterValue: 5});
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {objId: 'this', counter: "testCounter", counterType: "Set", value: 5});
     var counter = runtimeObj.counters["testCounter"];
 
     GameCreator.checkCollisions();

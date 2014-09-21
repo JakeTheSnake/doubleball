@@ -307,8 +307,8 @@
         },
 
         changeCounter: function(runtimeObj, params) {
-            var selectedObjectId = params.counterObject.split('::')[0];
-            var counterName = params.counterObject.split('::')[1];
+            var selectedObjectId = params.objId;
+            var counterName = params.counter;
             var counterCarrier;
             if (selectedObjectId !== 'this') {
                 runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
@@ -319,9 +319,9 @@
                 counterCarrier = runtimeObj;
             }
             if (params.counterType === 'set') {
-                counterCarrier.counters[counterName].setValue(params.counterValue);
+                counterCarrier.counters[counterName].setValue(params.value);
             } else {
-                counterCarrier.counters[counterName].changeValue(params.counterValue);
+                counterCarrier.counters[counterName].changeValue(params.value);
             }
         },
 

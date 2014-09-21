@@ -429,8 +429,6 @@
                     return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
                 case "stateInput":
                     return GameCreator.helpers.getObjectById(obj.states, Number(value)).name;
-                case "counterInput":
-                    return value.split('::').join(' - ');
                 case "counterTypeInput":
                     return GameCreator.helpers.getPrettyName(value);
                 case "sceneInput":

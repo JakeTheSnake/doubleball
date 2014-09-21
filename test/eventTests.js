@@ -51,4 +51,16 @@ test("Test state condition on instanceId", function() {
     ok(caSet.checkConditions(runtimeObj), 'Object should be in new state');
 });
 
+test("Test counter condition on this", function() {
+    var redBall = createGlobalObject();
+    redBall.parentCounters['counter'] = new GameCreator.Counter();
+    var caSet = new GameCreator.ConditionActionSet();
+    caSet.addCondition(new GameCreator.RuntimeCondition("counter", {objId: 'this', counter: 'counter', value: 1}));
+    var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
+    runtimeObj.counters['counter'].value = 0;
+    ok(!caSet.checkConditions(runtimeObj), 'Condition should fail because counter does not equal 1');
+    runtimeObj.counters['counter'].value = 1;
+    ok(caSet.checkConditions(runtimeObj), 'Condition should pass because counter equals 1');
+});
+
 })();

@@ -4,6 +4,27 @@
 (function() {
 "use strict";
 
+
+var updateParameter = function(sceneObjectId, observer) {
+    var globalObj;
+    if (sceneObjectId === 'this') {
+        globalObj = this.itemVM.caSet.globalObj;
+    } else {
+        globalObj = GameCreator.getSceneObjectById(sceneObjectId).parent;
+    }
+
+    var paramValuePresenter = this.getValuePresenter();
+    $(this.element).replaceWith(paramValuePresenter);
+    this.element = paramValuePresenter;
+    var observer = this.itemVM.template.params[this.name].observer;
+    var defaultValue = this.itemVM.template.params[this.name].defaultValue;
+    this.itemVM.model.parameters[this.name] = defaultValue;
+
+    GameCreator.UI.setupValuePresenter(paramValuePresenter, this.itemVM.model.parameters,
+        this.name, globalObj,
+        this.itemVM.updateParameter.bind(this.itemVM, observer));
+}
+
 GameCreator.GlobalObjectParameter = function(itemVM, paramName, mandatory) {
     this.name = paramName;
     this.itemVM = itemVM;
@@ -82,6 +103,8 @@ GameCreator.CounterParameter.prototype.getValuePresenter = function() {
     return element;
 };
 
+GameCreator.CounterParameter.prototype.update = updateParameter;
+
 GameCreator.CounterChangeTypeParameter = function(itemVM, paramName, mandatory) {
     this.name = paramName;
     this.itemVM = itemVM;
@@ -121,23 +144,7 @@ GameCreator.StateParameter.prototype.getValuePresenter = function() {
     return element;
 };
 
-GameCreator.StateParameter.prototype.update = function(sceneObjectId) {
-    var globalObj;
-    if (sceneObjectId === 'this') {
-        globalObj = this.itemVM.caSet.globalObj;
-    } else {
-        globalObj = GameCreator.getSceneObjectById(sceneObjectId).parent;
-    }
-
-    var paramValuePresenter = this.getValuePresenter();
-    $(this.element).replaceWith(paramValuePresenter);
-    this.element = paramValuePresenter;
-    this.itemVM.model.parameters[this.name] = 0;
-    var observerParam = GameCreator.conditions[this.itemVM.model.name].params[this.name].observer;
-    GameCreator.UI.setupValuePresenter(paramValuePresenter, this.itemVM.model.parameters,
-        this.name, globalObj,
-        this.itemVM.updateParameter.bind(this.itemVM, observerParam));
-}
+GameCreator.StateParameter.prototype.update = updateParameter;
 
 GameCreator.SwitchSceneParameter = function(itemVM, paramName, mandatory) {
     this.name = paramName;

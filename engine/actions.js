@@ -117,24 +117,32 @@
                         }),
           Counter:  new GameCreator.Action({
                         action: function(params) {GameCreator.changeCounter(this, params); },
-                        params: {"counterObject":
-                                    {
-                                        param: GameCreator.CounterParameter,
-                                        mandatory: true,
-                                    },
-                                    "type":
-                                    {
-                                        param: GameCreator.CounterChangeTypeParameter,
-                                        mandatory: false,
-                                        defaultValue: 'change',
-                                    },
-                                    "value":
-                                    {
-                                        param: GameCreator.NumberParameter,
-                                        mandatory: false,
-                                        defaultValue: 1,
-                                    },
-                                },
+                        params: {
+                          "objId":
+                          {
+                              param: GameCreator.SceneObjectParameter,
+                              mandatory: false,
+                              defaultValue: 'this',
+                              observer: 'counter'
+                          },
+                          "counter":
+                          {
+                              param: GameCreator.CounterParameter,
+                              mandatory: true,
+                          },
+                          "type":
+                          {
+                              param: GameCreator.CounterChangeTypeParameter,
+                              mandatory: false,
+                              defaultValue: 'change',
+                          },
+                          "value":
+                          {
+                              param: GameCreator.NumberParameter,
+                              mandatory: false,
+                              defaultValue: 1,
+                          },
+                        },
                         name: "Counter",
                         timing: {at: true, every: true, after: true},
                       }),
