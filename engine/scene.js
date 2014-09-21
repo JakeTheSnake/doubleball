@@ -1,11 +1,66 @@
 /*global GameCreator, $*/
 (function() {
     "use strict";
+
+    GameCreator.Scene = function() {
+        this.objects = [];
+        this.id = GameCreator.getUniqueSceneId();
+        this.attributes = {
+            name: 'Scene ' + this.id,
+            bgColor: "white",
+            bgImage: null
+        }
+    };
+
+    GameCreator.Scene.prototype.drawBackground = function() {
+        var context = GameCreator.bgContext;
+        context.clearRect(0, 0, GameCreator.width, GameCreator.height)
+        context.fillStyle = this.attributes.bgColor;
+        context.fillRect(0, 0, GameCreator.width, GameCreator.height);
+
+        if (this.attributes.bgImage != null) {
+            if ($(this.attributes.bgImage).data('loaded')) {
+                context.drawImage(this.attributes.bgImage, 0, 0, GameCreator.width, GameCreator.height);
+            } else {
+                this.attributes.bgImage.onload = function() {
+                    $(this).data('loaded', true);
+                    context.drawImage(this, 0, 0, GameCreator.width, GameCreator.height);
+                }
+            }
+        }
+    };
+
+    GameCreator.Scene.prototype.addSceneObject = function(sceneObject) {
+        this.objects.push(sceneObject);
+    };
+
+    GameCreator.Scene.prototype.getSelectableCounters = function(globalObj) {
+        var i, counterNames, result = {};
+        counterNames = Object.keys(globalObj.parentCounters);
+        counterNames.forEach(function(name){
+            result['This - ' + name] = 'this::' + name;
+        });
+        this.objects.forEach(function(object) {
+            counterNames = Object.keys(object.counters);
+            counterNames.forEach(function(name) {
+                result[object.attributes.instanceId + ' - ' + name] = object.attributes.instanceId + '::' + name;
+            });
+        });
+        return result;
+    };
+
+    GameCreator.Scene.prototype.reset = function() {
+        var i;
+        for (i = 0; i < this.objects.length; i += 1) {
+            this.objects[i].reset();
+        }
+    };
+
     $.extend(GameCreator, {
         createSceneObject: function (globalObj, scene, args) {
             var sceneObj = new GameCreator.SceneObject();
             sceneObj.instantiate(globalObj, args);
-            scene.push(sceneObj);
+            scene.addSceneObject(sceneObj);
             if (sceneObj.parent.isRenderable) {
                 GameCreator.renderableObjects.push(sceneObj);
                 GameCreator.render(false);
@@ -13,30 +68,43 @@
             return sceneObj;
         },
 
+        getActiveScene: function() {
+            return GameCreator.getSceneById(GameCreator.activeSceneId);
+        },
+
         getSceneObjectById: function(id) {
             var i, sceneObj;
-            for (i = 0; i < GameCreator.scenes[GameCreator.activeScene].length; i += 1) {
-                sceneObj = GameCreator.scenes[GameCreator.activeScene][i];
-                if (sceneObj.instanceId === id) {
-                    return sceneObj;
+            var activeScene;
+            if (id !== undefined) {
+                activeScene = GameCreator.getActiveScene();
+                for (i = 0; i < activeScene.objects.length; i += 1) {
+                    sceneObj = activeScene.objects[i];
+                    if (sceneObj.attributes.instanceId === id) {
+                        return sceneObj;
+                    }
                 }
             }
             return null;
         },
 
-        getUniqueIDsInScene: function() {
-            var result = {};
-            var i, sceneObj;
-            for (i = 0; i < GameCreator.scenes[GameCreator.activeScene].length; i += 1) {
-                sceneObj = GameCreator.scenes[GameCreator.activeScene][i];
-                result[sceneObj.instanceId] = sceneObj.instanceId;
+        getSceneById: function(id) {
+            return GameCreator.helpers.getObjectById(GameCreator.scenes, id);
+        },
+
+        getUniqueIDsInActiveScene: function() {
+            var result = {'this': 'this'};
+            var i, sceneObj, activeScene;
+            activeScene = GameCreator.getActiveScene();
+            for (i = 0; i < activeScene.objects.length; i += 1) {
+                sceneObj = activeScene.objects[i];
+                result[sceneObj.attributes.instanceId] = sceneObj.attributes.instanceId;
             }
             return result;
         },
 
         selectScene: function(params) {
-            var scene = GameCreator.helpers.calculateScene(GameCreator.activeScene, params);
-            GameCreator.activeScene = scene;
+            var scene = GameCreator.helpers.calculateScene(GameCreator.activeSceneId, params);
+            GameCreator.activeSceneId = scene.id;
             GameCreator.switchScene(scene);
         },
 
@@ -51,9 +119,11 @@
         switchScene: function(scene) {
             var i, obj;
             GameCreator.reset();
-            GameCreator.resetScene(scene);
-            for (i = 0; i < scene.length; i += 1) {
-                obj = $.extend({}, scene[i]);
+            scene.reset();
+            scene.drawBackground();
+            for (i = 0; i < scene.objects.length; i += 1) {
+                obj = $.extend({}, scene.objects[i]);
+                obj.attributes = $.extend({}, scene.objects[i].attributes);
                 GameCreator.addToRuntime(obj);
                 obj.parent.onGameStarted();
                 obj.setCounterParent();
@@ -68,38 +138,11 @@
             GameCreator.sceneStarted();
         },
 
-        resetScene: function(scene) {
-            var i;
-            for (i = 0; i < scene.length; i += 1) {
-                scene[i].reset();
-            }
-        },
-
         sceneStarted: function() {
             $(GameCreator.mainCanvas).on("mousedown.runningScene", function(e) {
-                var i, currentEvent;
                 var runtimeObj = GameCreator.getClickedObject(e.pageX - $("#main-canvas").offset().left, e.pageY - $("#main-canvas").offset().top);
-                
                 if (runtimeObj && runtimeObj.parent) {
-                    var globalObj = runtimeObj.parent;
-                    if (globalObj.onClickEvents.length === 0) {
-                        currentEvent = new GameCreator.Event();
-                        globalObj.onClickEvents.push(currentEvent);
-                        GameCreator.UI.openEditActionsWindow(
-                            "Clicked on " + globalObj.objectName,
-                             GameCreator.actionGroups.nonCollisionActions,
-                             currentEvent.actions,
-                             globalObj.objectName
-                            );
-                        GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: runtimeObj});
-                    } else {
-                        for (i = 0; i < globalObj.onClickEvents.length; i++) {
-                            currentEvent = globalObj.onClickEvents[i];
-                            if (currentEvent.checkConditions()) {
-                                currentEvent.runActions(runtimeObj);
-                            }
-                        }
-                    }                  
+                    runtimeObj.parent.runOnClickActions.call(runtimeObj);
                 }
             });
         }

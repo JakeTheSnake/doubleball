@@ -20,7 +20,9 @@
             <!-- Toolbar top -->
             <div id="toolbar-top" class="row border-bottom">
                 <a href="http://arcadeforge.com/" target="_self" id="logo"></a>
-                <button type="button" id="add-global-object-button" class="btn btn-success btn-lg">Show Dialogue</button>
+                <button type="button" id="run-game-button" class="btn btn-success btn-lg">Run Game</button>
+                <button type="button" id="edit-game-button" class="btn btn-success btn-lg">Edit Game</button>
+                <button type="button" id="direct-game-button" class="btn btn-success btn-lg">Direct Game</button>
             </div>
 
             <!-- Toolbar bottom -->
@@ -49,11 +51,8 @@
                         <div class="panel-heading">
                             <span class="panel-title">Properties</span>
                         </div>
-                        <div class="panel-body">
-                            <div class="panel-paragraph">
-                                <h1>Text and images</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam vestibulum erat in lobortis lacinia. Nulla dapibus malesuada nisl, sed rhoncus risus fermentum et. Cras id vulputate neque, non pretium sapien.</p>
-                            </div>
+                        <div id="side-properties-form-container" class="panel-body">
+                            
                         </div>
                     </div>
 
@@ -62,13 +61,13 @@
                         <div class="panel-heading">
                             <span class="panel-title">Library</span>
                         </div>
-                        <div id="library-preview" class="panel-paragraph"></div>
-                        <div id="library-explorer">
+                        <div id="library-preview" class="library-preview panel-paragraph"></div>
+                        <div id="library-explorer" class="library-explorer">
                             <ul class="global-object-list">
                             </ul>
                         </div>
-                        <div id="library-menu">
-                            <button type="button" class="btn btn-success">Add</button>
+                        <div id="library-menu" class="library-menu">
+                            <button id="add-global-object-button" type="button" class="btn btn-success">Add</button>
                             <button type="button" class="btn btn-edit">Edit</button>
                             <button type="button" class="btn btn-warning">Delete</button>
                         </div>
@@ -94,6 +93,8 @@
         <script src="engine/componentFunctions.js"></script>
         <script src="engine/editFunctions.js"></script>
         <script src="engine/htmlStrings.js"></script>
+        <script src="engine/parameters.js"></script>
+        <script src="engine/eventViewModels.js"></script>
         <script src="engine/actions.js"></script>
         <script src="engine/freeObject.js"></script>
         <script src="engine/routeObject.js"></script>
@@ -116,5 +117,6 @@
         <script src="engine/views/counterObjectViews.js"></script>
         <script src="engine/views/commonObjectViews.js"></script>
         <script src="engine/controllers/commonObjectControllers.js"></script>
+
     </body>
 </html>

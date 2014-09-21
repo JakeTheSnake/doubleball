@@ -11,7 +11,6 @@
         state: 'editing', //State can be editing, directing or playing. 
         then: undefined, // The time before last frame
         draggedGlobalElement: undefined,
-        context: undefined,
         canvasOffsetX: 110,
         canvasOffsetY: 10,
 
@@ -41,12 +40,6 @@
         draggedNode: undefined,
         idCounter: 0, // Counter used for scene objects' instance IDs
         globalIdCounter: 0, // Counter used for global objects ID
-        borderObjects: {
-            borderL: {objectName: "borderL", parent: {id: -1}, id: -1, x: -500, y: -500, height: GCHeight + 1000, width: 500, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()), isCollidable: true},
-            borderR: {objectName: "borderR", parent: {id: -2}, id: -2, x: GCWidth, y: -500, height: GCHeight + 1000, width: 500, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()), isCollidable: true},
-            borderT: {objectName: "borderT", parent: {id: -3}, id: -3, x: -500, y: -500, height: 500, width: GCWidth + 1000, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()), isCollidable: true},
-            borderB: {objectName: "borderB", parent: {id: -4}, id: -4, x: -500, y: GCHeight, height: 500, width: GCWidth + 1000, image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()), isCollidable: true}
-        },
 
         gameLoop: function () {
             var now = Date.now();
@@ -64,6 +57,8 @@
 
         render: function (forceRender) {
             var i, obj;
+            GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             for (i = 0; i < GameCreator.renderableObjects.length; i += 1) {
                 obj = GameCreator.renderableObjects[i];
                 // TODO: Deactivated invalidation
@@ -174,16 +169,16 @@
         },
 
         invalidate: function(obj) {
-            var width, height;
-            var x = parseInt(obj.x, 10);
-            var y = parseInt(obj.y, 10);
+            /*var width, height;
+            var x = parseInt(obj.attributes.x, 10);
+            var y = parseInt(obj.attributes.y, 10);
             var xCorr = 0;
             var yCorr = 0;
-            if (obj.x < 0) {
+            if (obj.attributes.x < 0) {
                 xCorr = x;
                 x = 0;
             }
-            if (obj.y < 0) {
+            if (obj.attributes.y < 0) {
                 yCorr = y;
                 y = 0;
             }
@@ -191,13 +186,13 @@
                 width = obj.displayWidth;
                 height = obj.displayHeight;
             } else {
-                width = parseInt(obj.width, 10);
-                height = parseInt(obj.height, 10);
+                width = parseInt(obj.attributes.width, 10);
+                height = parseInt(obj.attributes.height, 10);
             }
             GameCreator.mainContext.clearRect(x, y,
                 width + xCorr + 1,
                 height + yCorr + 1);
-            obj.invalidated = true;
+            obj.invalidated = true;*/
         },
 
         reset: function() {
@@ -263,9 +258,9 @@
         resumeGame: function() {
             var i, activeScene;
             GameCreator.paused = false;
-            activeScene = GameCreator.scenes[GameCreator.activeScene];
-            for (i = 0; i < activeScene.length; i += 1) {
-                activeScene[i].parent.onGameStarted();
+            activeScene = GameCreator.getActiveScene();
+            for (i = 0; i < activeScene.objects.length; i += 1) {
+                activeScene.objects[i].parent.onGameStarted();
             }
         },
         createRuntimeObject: function(globalObj, args) {
@@ -312,20 +307,21 @@
         },
 
         changeCounter: function(runtimeObj, params) {
-            var selectedObjectId = params.counterObject;
+            var selectedObjectId = params.objId;
+            var counterName = params.counter;
             var counterCarrier;
             if (selectedObjectId !== 'this') {
                 runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
             }
-            if (runtimeObj.parent.unique) {
+            if (runtimeObj.parent.attributes.unique) {
                 counterCarrier = runtimeObj.parent;
             } else {
                 counterCarrier = runtimeObj;
             }
             if (params.counterType === 'set') {
-                counterCarrier.counters[params.counterName].setValue(params.counterValue);
+                counterCarrier.counters[counterName].setValue(params.value);
             } else {
-                counterCarrier.counters[params.counterName].changeValue(params.counterValue);
+                counterCarrier.counters[counterName].changeValue(params.value);
             }
         },
 
@@ -392,22 +388,75 @@
             GameCreator.playScene(GameCreator.scenes[0]);
         },
         resetGlobalCounters: function() {
-            Object.keys(GameCreator.globalObjects).map(function(key) {
+            Object.keys(GameCreator.globalObjects).forEach(function(key) {
                 if (GameCreator.globalObjects[key].counters) {
-                    Object.keys(GameCreator.globalObjects[key].counters).map(function(counterKey) {
+                    Object.keys(GameCreator.globalObjects[key].counters).forEach(function(counterKey) {
                         GameCreator.globalObjects[key].counters[counterKey].reset();
                     });
                 }
             });
-        }
+        },
+        borderObjects: {
+            borderL: {
+                objectName: "borderL", 
+                parent: {id: -1}, 
+                id: -1, 
+                isCollidable: true,
+                attributes: {
+                    x: -500, 
+                    y: -500, 
+                    height: GCHeight + 1000, 
+                    width: 500,
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()),
+                }
+            },
+            borderR: {
+                objectName: "borderR", 
+                parent: {id: -2}, 
+                id: -2, 
+                isCollidable: true,
+                attributes: {
+                    x: GCWidth, 
+                    y: -500, 
+                    height: GCHeight + 1000, 
+                    width: 500, 
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()),
+                },
+            },
+            borderT: {
+                objectName: "borderT", 
+                parent: {id: -3}, 
+                id: -3, 
+                isCollidable: true,
+                attributes: {
+                    x: -500, 
+                    y: -500, 
+                    height: 500, 
+                    width: GCWidth + 1000, 
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()),
+                },
+            },
+            borderB: {
+                objectName: "borderB", 
+                parent: {id: -4}, 
+                id: -4, 
+                isCollidable: true,
+                attributes: {
+                    x: -500, 
+                    y: GCHeight, 
+                    height: 500, 
+                    width: GCWidth + 1000, 
+                    image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()),
+                },
+            },
+        },
     };
 
     var borderKeys = Object.keys(GameCreator.borderObjects);
 
     for (var i = 0; i < borderKeys.length; i += 1 ) {
-        var attribute = {attributes: {image: GameCreator.borderObjects[borderKeys[i]].image}};
         GameCreator.borderObjects[borderKeys[i]].getDefaultState = function() {
-            return attribute;
+            return {attributes: this.attributes};
         };
     }
 

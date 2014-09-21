@@ -18,7 +18,7 @@ test("Move left test", function() {
 
     GameCreator.runFrame(10);
 
-    ok(runtimeObj.x < 70, "Object moved left.");
+    ok(runtimeObj.attributes.x < 70, "Object moved left.");
 });
 
 test("Moved right test", function() {
@@ -26,7 +26,7 @@ test("Moved right test", function() {
 
     GameCreator.runFrame(10);
 
-    ok(runtimeObj.x > 70, "Object moved right.");
+    ok(runtimeObj.attributes.x > 70, "Object moved right.");
 });
 
 module("System Test - Direct Mode", {
@@ -58,7 +58,7 @@ function addSelectedAction() {
 
 test("Add action through keypress", function() {
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {x: 70, y: 70, speed: 300});
-    runtimeObj.parent.onCreateEvents.push(new GameCreator.Event());
+    runtimeObj.parent.onCreateSets.push(new GameCreator.ConditionActionSet());
     $("#qunit-fixture").append('<div id="dialogue-window"></div>');
     runtimeObj.parent.keyPressed.space = true;
 
@@ -89,8 +89,8 @@ test("Add action through object creation", function() {
     selectAction("testAction");
     addSelectedAction();
 
-    deepEqual(runtimeObj.parent.onCreateEvents.length, 1, "Event was added");
-    deepEqual(runtimeObj.parent.onCreateEvents[0].actions.length, 1, "Action was added");
+    deepEqual(runtimeObj.parent.onCreateSets.length, 1, "Event was added");
+    deepEqual(runtimeObj.parent.onCreateSets[0].actions.length, 1, "Action was added");
 
     GameCreator.runFrame(10);
 
@@ -100,7 +100,7 @@ test("Add action through object creation", function() {
 test("Add action through object destruction", function() {
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {x: 70, y: 70, speed: 300});
     $("#qunit-fixture").append('<div id="dialogue-window"></div>');
-    runtimeObj.parent.onCreateEvents.push(new GameCreator.Event());
+    runtimeObj.parent.onCreateSets.push(new GameCreator.ConditionActionSet());
     runtimeObj.parent.destroy.call(runtimeObj);
 
     deepEqual($("#select-action-window").length, 1, "Action Window popped up");
@@ -108,8 +108,8 @@ test("Add action through object destruction", function() {
     selectAction("testAction");
     addSelectedAction();
 
-    deepEqual(runtimeObj.parent.onDestroyEvents.length, 1, "Event was added");
-    deepEqual(runtimeObj.parent.onDestroyEvents[0].actions.length, 1, "Action was added");
+    deepEqual(runtimeObj.parent.onDestroySets.length, 1, "Event was added");
+    deepEqual(runtimeObj.parent.onDestroySets[0].actions.length, 1, "Action was added");
 
     GameCreator.runFrame(10);
 

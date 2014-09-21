@@ -21,23 +21,21 @@
     };
 
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
-        var i, currentEvent;
+        var i, currentSet;
         if (!GameCreator.paused) {
-            if (this.parent.onDestroyEvents.length === 0) {
-                currentEvent = new GameCreator.Event();
-                this.parent.onDestroyEvents.push(currentEvent);
+            if (GameCreator.state === 'directing' && this.parent.onDestroySets.length === 0) {
+                currentSet = new GameCreator.ConditionActionSet(this.parent);
+                this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been destroyed!",
-                    GameCreator.actionGroups.nonCollisionActions,
-                    currentEvent.actions,
-                    this.objectName
+                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                 );
-                GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: this});
+                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                for (i = 0; i < this.parent.onDestroyEvents.length; i++) {
-                    currentEvent = this.parent.onDestroyEvents[i];
-                    if (currentEvent.checkConditions()) {
-                        currentEvent.runActions(this);
+                for (i = 0; i < this.parent.onDestroySets.length; i++) {
+                    currentSet = this.parent.onDestroySets[i];
+                    if (currentSet.checkConditions(this)) {
+                        currentSet.runActions(this);
                     }
                 }
             }
@@ -54,26 +52,46 @@
     };
 
     GameCreator.BaseObject.prototype.runOnCreateActions = function() {
-        var i, currentEvent;
+        var i, currentSet;
         if (!GameCreator.paused) {
-            if (this.parent.onCreateEvents.length === 0) {
-                currentEvent = new GameCreator.Event();
-                this.parent.onCreateEvents.push(currentEvent);
+            if (GameCreator.state === 'directing' && this.parent.onCreateSets.length === 0) {
+                currentSet = new GameCreator.ConditionActionSet(this.parent);
+                this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     "'" + this.parent.objectName + "' has been created!",
-                    GameCreator.actionGroups.nonCollisionActions,
-                    currentEvent.actions,
-                    this.objectName
+                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                 );
-                GameCreator.bufferedActions.push({actionArray: currentEvent.actions, runtimeObj: this});
+                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                for (i = 0; i < this.parent.onCreateEvents.length; i++) {
-                    currentEvent = this.parent.onCreateEvents[i];
-                    if (currentEvent.checkConditions()) {
-                        currentEvent.runActions(this);
+                for (i = 0; i < this.parent.onCreateSets.length; i++) {
+                    currentSet = this.parent.onCreateSets[i];
+                    if (currentSet.checkConditions(this)) {
+                        currentSet.runActions(this);
                     }
                 }
             }
+        }
+    };
+
+    GameCreator.BaseObject.prototype.runOnClickActions = function() {
+        var i, currentSet;
+        if (!GameCreator.paused) {
+            if (GameCreator.state === 'directing' && this.parent.onClickSets.length === 0) {
+                currentSet = new GameCreator.ConditionActionSet(this.parent);
+                this.parent.onClickSets.push(currentSet);
+                GameCreator.UI.openEditActionsWindow(
+                    "Clicked on " + this.parent.objectName,
+                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
+                    );
+                GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
+            } else {
+                for (i = 0; i < this.parent.onClickSets.length; i++) {
+                    currentSet = this.parent.onClickSets[i];
+                    if (currentSet.checkConditions(this)) {
+                        currentSet.runActions(this);
+                    }
+                }
+            }                  
         }
     };
 
@@ -97,44 +115,44 @@
     GameCreator.BaseObject.prototype.checkEvents = function() {};
 
     GameCreator.BaseObject.prototype.move = function(modifier) {
-        if (this.speedX !== 0 || this.speedY !== 0) {
+        if (this.attributes.speedX !== 0 || this.attributes.speedY !== 0) {
             GameCreator.invalidate(this);
-            this.x += this.speedX * modifier;
-            this.y += this.speedY * modifier;
+            this.attributes.x += this.attributes.speedX * modifier;
+            this.attributes.y += this.attributes.speedY * modifier;
         }
     };
 
     GameCreator.BaseObject.prototype.draw = function(context, obj) {
         var image = obj.image;
         if ($(image).data('loaded')) {
-            if (Array.isArray(obj.width) || Array.isArray(obj.height)) {
+            if (Array.isArray(obj.attributes.width) || Array.isArray(obj.attributes.height)) {
                 var maxHeight, minHeight, maxWidth, minWidth;
-                if (obj.width.length === 2) {
-                    maxWidth = obj.width[1];
-                    minWidth = obj.width[0];
-                } else if (obj.width.length === 1) {
-                    maxWidth = obj.width[0];
-                    minWidth = obj.width[0];
+                if (obj.attributes.width.length === 2) {
+                    maxWidth = obj.attributes.width[1];
+                    minWidth = obj.attributes.width[0];
+                } else if (obj.attributes.width.length === 1) {
+                    maxWidth = obj.attributes.width[0];
+                    minWidth = obj.attributes.width[0];
                 } else {
-                    maxWidth = obj.width;
-                    minWidth = obj.width;
+                    maxWidth = obj.attributes.width;
+                    minWidth = obj.attributes.width;
                 }
-                if (obj.height.length === 2) {
-                    maxHeight = obj.height[1];
-                    minHeight = obj.height[0];
-                } else if (obj.height.length === 1) {
-                    maxHeight = obj.height[0];
-                    minHeight = obj.height[0];
+                if (obj.attributes.height.length === 2) {
+                    maxHeight = obj.attributes.height[1];
+                    minHeight = obj.attributes.height[0];
+                } else if (obj.attributes.height.length === 1) {
+                    maxHeight = obj.attributes.height[0];
+                    minHeight = obj.attributes.height[0];
                 } else {
-                    maxHeight = obj.height;
-                    minHeight = obj.height;
+                    maxHeight = obj.attributes.height;
+                    minHeight = obj.attributes.height;
                 }
                 context.globalAlpha = 0.5;
-                context.drawImage(image, obj.x, obj.y, maxWidth, maxHeight);
+                context.drawImage(image, obj.attributes.x, obj.attributes.y, maxWidth, maxHeight);
                 context.globalAlpha = 1.0;
-                context.drawImage(image, obj.x, obj.y, minWidth, minHeight);
+                context.drawImage(image, obj.attributes.x, obj.attributes.y, minWidth, minHeight);
             } else {
-                context.drawImage(image, obj.x, obj.y, obj.width, obj.height);
+                context.drawImage(image, obj.attributes.x, obj.attributes.y, obj.attributes.width, obj.attributes.height);
             }
             obj.invalidated = false;
         }

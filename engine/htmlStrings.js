@@ -1,6 +1,6 @@
 GameCreator.htmlStrings = {
-    singleSelector: function(elementId, collection, attrName, selectedKey) {
-        var result = '<div><select class="selectorField" id="' + elementId + '" data-type="text"';
+    singleSelector: function(collection, attrName, selectedValue) {
+        var result = '<select class="selectorField" data-type="text"';
         if (attrName) {
         	result += ' data-attrName="' + attrName + '">'
         } else {
@@ -8,22 +8,69 @@ GameCreator.htmlStrings = {
         }
         for (var key in collection) {
             if (collection.hasOwnProperty(key)) {
-                result += "<option value='" + GameCreator.helpers.toString(collection[key]) + "'" + (selectedKey === key ? " selected" : "") + ">" + key + "</option>";
+                result += "<option value='" + GameCreator.helpers.toString(collection[key]) + "'" + (collection[key] + '' === selectedValue + '' ? " selected" : "") + ">" + key + "</option>";
             }
         };
-        result += "</select></div>";
+        result += "</select>";
         return result;
     },
 
-    numberInput: function(inputId, attrName, value) {
-        return '<input id="'+ inputId +'" type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+    numberInput: function(attrName, value) {
+        return '<input type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
     },
 
-    stringInput: function(inputId, attrName, value) {
-        return '<input id="'+ inputId +'" type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+    globalObjectInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getGlobalObjectIds(), attrName, value);
     },
 
-    rangeInput: function(inputId, attrName, value) {
+    sceneObjectInput: function(attrName, value) {
+        var ids = GameCreator.getUniqueIDsInActiveScene();
+        ids['this'] = 'this';
+        return GameCreator.htmlStrings.singleSelector(ids, attrName, value);
+    },
+
+    shootableObjectInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getShootableObjectIds(), attrName, value);
+    },
+
+    destroyEffectInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.effects.destroyEffects, attrName, value);
+    },
+
+    stateInput: function(attrName, value, globalObj) {
+        var selectableStates = {};
+        globalObj.states.forEach(function(state){
+            selectableStates[state.name] = state.id;
+        });
+        return GameCreator.htmlStrings.singleSelector(selectableStates, attrName, value);
+    },
+
+    counterInput: function(attrName, value, globalObj) {
+        var counters = {};
+        var counterNames = Object.keys(globalObj.parentCounters);
+        for (var i = 0; i < counterNames.length; i += 1) {
+            counters[counterNames[i]] = counterNames[i];
+        }
+        return GameCreator.htmlStrings.singleSelector(counters, attrName, value)
+    },
+
+    counterTypeInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector({'Change to': 'change', 'Set to': 'set'}, attrName, value);
+    },
+
+    sceneInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getSelectableScenes(), attrName, value);
+    },
+
+    stringInput: function(attrName, value) {
+        return '<input type="text" class="textField" data-type="string" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
+    },
+
+    directionInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector(GameCreator.directions, attrName, value);
+    },
+
+    rangeInput: function(attrName, value) {
         var valueString;
         if (Array.isArray(value)) {
             if (value.length === 1) {
@@ -35,41 +82,24 @@ GameCreator.htmlStrings = {
         } else {
             valueString = value;
         }
-        return '<input id="'+ inputId +'" type="text" class="rangeField" data-type="range" data-attrName="' + attrName + '" value="' + (valueString === undefined ? '' : valueString) + '"/>'
+        return '<input type="text" class="rangeField" data-type="range" data-attrName="' + attrName + '" value="' + (valueString === undefined ? '' : valueString) + '"/>'
     },
 
-    checkboxInput: function(inputId, attrName, checked) {
-        return '<input id="'+ inputId +'" type="checkbox" class="checkboxField" data-type="checkbox" data-attrName="' +
+    checkboxInput: function(attrName, checked) {
+        return '<input type="checkbox" class="checkboxField" data-type="checkbox" data-attrName="' +
             attrName + '" ' + (checked ? 'checked' : '') + ' />'
     },
 
-    imageInput: function(inputId, attrName, value) {
-        return '<input id="'+ inputId +'" type="text" class="textField" data-type="image" data-attrName="' + attrName + '" value="' + (value ? value.src : '') + '"/>'
+    imageInput: function(attrName, value) {
+        return '<input type="text" class="textField" data-type="image" data-attrName="' + attrName + '" value="' + (value ? value.src : '') + '"/>'
     },
 
-    inputLabel: function(inputId, labelText) {
-        return '<label for=' + inputId + ' class="textFieldLabel">' + labelText + '</label>';
+    inputLabel: function(labelText) {
+        return '<label>' + labelText + '</label>';
     },
 
     parameterGroup: function(parameterInput) {
         return '<div class="actionParameter">' + parameterInput + '</div>'
-    },
-
-    timingGroup: function(timings) {
-        var applicableTimings = {"Now":"now"};
-        if (timings.after) {
-            applicableTimings["After"] = "after";
-        }
-        if (timings.every) {
-            applicableTimings["Every"] = "every";
-        }
-        if (timings.at) {
-            applicableTimings["At"] = "at";
-        }
-
-        var result = GameCreator.htmlStrings.singleSelector("timing-selector", applicableTimings);
-        result += '<div id="timing-parameter" class="justText" style="display:none">' + GameCreator.htmlStrings.rangeInput("timing-time", "time","3000") + 'ms</div>';
-        return result;
     },
 
     actionRow: function(name, action) {
@@ -89,16 +119,16 @@ GameCreator.htmlStrings = {
         object.getDefaultState().attributes.image.outerHTML + '</div>';
     },
 
-    keyMenuElement: function(keyName) {
-        return '<div class="keyMenuElement headingNormalBlack" data-name="' + keyName + '"><span>' + keyName + '</span></div>';
+    defaultMenuElement: function(text) {
+        return '<li class="defaultMenuElement headingNormalBlack" data-name="' + text + '"><span>' + text + '</span></li>';
     },
 
-    counterMenuElement: function(counterName) {
-        return '<div class="counterMenuElement headingNormalBlack" data-name="' + counterName + '"><span>' + counterName + '</span></div>';
+    stateMenuElement: function(id, name) {
+        return '<li class="defaultMenuElement headingNormalBlack" data-id="' + id + '"><span>' + name + '</span></li>';
     },
 
     counterEventMenuElement: function(value, type) {
-    	return '<div class="counterEventMenuElement headingNormalBlack" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></div>';
+    	return '<li class="counterEventMenuElement headingNormalBlack" data-value="' + value + '" data-type="' + type + '"><span>' + type + " " + value+ '</span></li>';
     },
 
     globalObjectElement: function(object) {
@@ -131,64 +161,21 @@ GameCreator.htmlStrings = {
         return result;
     },
 
-    editActionsWindow: function(description, actions, existingActions) { 
-        var result = "";
-        result += '<div id="select-action-window" style="height: 100%"> \
-        <div id="select-actions-header" class="dialogueHeader">' + description + '</div> \
-        <div id="select-actions-content" class="dialogueContent">\
-            <div id="select-action-dropdown-container" class="group"><div class="groupHeading">Action</div>' + GameCreator.htmlStrings.singleSelector("action-selector", actions) + '</div>\
-            <div id="select-action-parameters-container" class="group" style="display:none;"><div class="groupHeading">Parameters</div>\
-            <div id="select-action-parameters-content"></div></div>\
-            <div id="select-action-timing-container" class="group" style="display:none;"><div class="groupHeading">Timing</div>\
-            <div id="select-action-timing-content"></div></div> \
-            <div id="select-action-add-button"><button id="select-action-add-action" class="regularButton addActionButton">Add</button></div>'
-        
-    	result += '<br style="clear:both"/>'
-        result += '<div id="select-action-result">';
-        result += GameCreator.htmlStrings.selectedActionsList(existingActions);
-        result += '</div></div></div>';
-        return result;
-    },
-
-    selectedActionsList: function(existingActions) {
-        var result = "";
-        for (var i = 0; i < existingActions.length; i++) {
-            var action = existingActions[i];
-            var selectedAction = {action: action.action, parameters: {}};
-
-            result += GameCreator.htmlStrings.actionRow(existingActions[i].name, selectedAction);
-        }
-        return result;
+    editActionsWindow: function() {
+        var html = '<div class="dialogue bottom"><div id="select-action-window" class="panel-default" style="height: 400px">';
+        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
+        html += '</div></div>'
+        return html;
     },
 
     addGlobalObjectWindow: function() {
-        var result = "";
-
-        result += '<div id="dialogue-window-title">Add new object</div> \
-                   <div id="dialogue-window-menu"> \
-                   <a class="tab dialogue-window-tab active" data-object-type="FreeObject">Free object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="RouteObject">Route object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="PlatformObject">Platform object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="TopDownObject">Top-down object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="MouseObject">Mouse object</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="CounterObjectImage">Counter object image</a> \
-                   <a class="tab dialogue-window-tab" data-object-type="CounterObjectText">Counter object text</a> \
-                   </div> \
-                   <div id="add-global-object-window-content"></div>';
-        return result;
-    },
-
-    addGlobalObjectForm: function(objectType) {
-        var result = GameCreator.htmlStrings.inputLabel('global-object-name', 'Name ') +
-                GameCreator.htmlStrings.stringInput('global-object-name', 'objectName') +
-                '<br style="clear:both;"/>';
-        result += GameCreator.helpers.getAttributeForm(GameCreator[objectType].objectAttributes,
-            GameCreator[objectType].objectAttributes);
-        result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique ') +
-                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique') +
-                '<br style="clear:both;"/>' +
-                '<button class="saveButton regularButton">Save</button>';
-        return result;       
+        var html = '<div class="dialogue bottom"><div id="add-global-object-window" class="panel-default" style="height: 570px">';
+        html += GameCreator.htmlStrings.getColumn('Type of object', 'dialogue-panel-object-type-group');
+        html += GameCreator.htmlStrings.getColumn('Object', 'dialogue-panel-object-type');
+        html += '<div class="col" id="add-global-object-form-content"></div>'
+        html += '</div></div>'
+        return html;
     },
     
     collisionObjectSelector: function(object) {
@@ -202,26 +189,49 @@ GameCreator.htmlStrings = {
                 !GameCreator.helpers.getObjectById(object.onCollideEvents, objId) && 
                 selectableObjects[objName].isCollidable && 
                 objName != object.objectName) {
-                result += '<div class="addCollisionObjectElement" data-objectname="' + objName + '" style="float:left;cursor:pointer">' + selectableObjects[objName].getDefaultState().attributes.image.outerHTML + '</br><span>' + objName + '</span></div>';
+                result += '<li data-objectname="' + objName + '">' + GameCreator.htmlStrings.selectGlobalObjectPresentation(objId) + '</li>';
             }
         }
     	return result;
 	},
-    
-    createCounterForm: function() {
-    	var result = '<div>'
-    	result += GameCreator.htmlStrings.inputLabel("counter-name", "Name:");
-    	result += GameCreator.htmlStrings.stringInput("counter-name", "name", "");
-    	result += '<button class="saveButton regularButton">Save</button>';
-    	return result;
-	},
+
+    selectGlobalObjectPresentation: function(globalObjectId) {
+        var globalObject = GameCreator.helpers.findGlobalObjectById(globalObjectId);
+        return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>'
+    },
+
+    createNameSelectionForm: function(placeholder, id, saveCallback) {
+        var result = document.createElement('div');
+        $(result).attr('id', id);
+
+        var nameInput = document.createElement('input');
+        $(nameInput).attr('type', 'text');
+        $(nameInput).addClass('textField');
+        $(nameInput).attr('placeholder', placeholder);
+        $(result).append(nameInput);
+
+        var saveButton = document.createElement('button');
+        $(saveButton).click(saveCallback);
+        $(saveButton).html('Save');
+        $(result).append(saveButton);
+
+        var cancelButton = document.createElement('button');
+        $(cancelButton).click(function() {
+            $(this).parent().remove();
+        });
+        $(cancelButton).html('Cancel');
+        $(result).append(cancelButton);
+
+        return result;
+    },
 	
 	createCounterEventForm: function() {
-		var result = GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
+		var result = '<div>' + GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
 		result += GameCreator.htmlStrings.singleSelector("edit-counter-event-type", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
 		result += GameCreator.htmlStrings.inputLabel("edit-counter-event-value", "Value:");
     	result += GameCreator.htmlStrings.numberInput("edit-counter-event-value", "value", "");
     	result += '<button class="saveButton regularButton">Save</button>';
+        result += '</div>';
     	return result;
 	},
     
@@ -235,8 +245,8 @@ GameCreator.htmlStrings = {
         return result;
     },
 
-	sceneTab: function(sceneNr, sceneActive) {
-        return '<li class="tab ' + (sceneActive ? 'active' : '')  + '" data-sceneNr="' + sceneNr + '">' + sceneNr + '</li>';
+	sceneTab: function(scene, sceneActive) {
+        return '<li class="tab ' + (sceneActive ? 'active' : '')  + '" data-sceneid="' + scene.id + '">' + scene.attributes.name + '</li>';
 	},
 
 	addSceneTab: function() {
@@ -244,13 +254,53 @@ GameCreator.htmlStrings = {
 	},
 
     sceneObjectForm: function(sceneObject) {
-        var result = '<div id="edit-scene-object-form">';
-        var state = sceneObject.parent.getState(sceneObject.currentState);        
-        result += GameCreator.helpers.getAttributeForm(state.attributes,
-                GameCreator[sceneObject.parent.objectType].objectSceneAttributes,
-                sceneObject);
-        result += '</div>';
-        result += '<button id="save-scene-object-button" onClick="GameCreator.saveSceneObject(\'edit-scene-object-form\', GameCreator.selectedObject)"  class="regularButton">Save</button></div>';
-        return result += '<button id="delete-scene-object-button" onClick="GameCreator.UI.deleteSelectedObject()" class="regularButton">Delete</button></div>'
-    }
+ 
+    },
+
+    getColumn: function(title, id) {
+        var result = "";
+        var i;
+
+        result += '<div class="col border-right"> \
+                   <div class="panel-heading"> \
+                   <span class="panel-title">' + title + '</span> \
+                   </div> \
+                   <ul id="' + id + '" class="nav nav-stacked nav-tabs nav-tabs-success"> \
+                   </ul> \
+                   </div>';
+                   
+        return result;
+    },
+
+    getScenePropertiesForm: function() {
+        var result = ' \
+<div class="panel-paragraph border-bottom"> \
+    <h1 id="side-property-name" data-inputtype="stringInput"></h1> \
+    <p></p> \
+</div> \
+<div class="panel-paragraph properties-group border-bottom"> \
+    <div class="properties-value"> \
+        <label>Background Color</label> \
+        <span class="glyphicon icon-position"></span> \
+        <table> \
+            <tr> \
+                <td id="side-property-bgColor" data-inputtype="stringInput"></td> \
+            </tr> \
+        </table> \
+    </div> \
+</div>\
+<div class="panel-paragraph properties-group border-bottom"> \
+    <div class="properties-value"> \
+        <label>Background Image</label> \
+        <span class="glyphicon icon-position"></span> \
+        <table> \
+            <tr> \
+                <td id="side-property-bgImage" data-inputtype="imageInput"></td> \
+            </tr> \
+        </table> \
+    </div> \
+</div>'
+        return result;
+},
+
 };

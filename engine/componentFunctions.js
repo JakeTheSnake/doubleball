@@ -5,6 +5,7 @@
     GameCreator.addObjFunctions.commonObjectFunctions = function(object) {
         object.getDefaultState = GameCreator.commonObjectFunctions.getDefaultState;
         object.getState = GameCreator.commonObjectFunctions.getState;
+        object.isShootable = GameCreator.commonObjectFunctions.isShootable;
         object.createState = GameCreator.commonObjectFunctions.createState;
         object.removeAttributeFromState = GameCreator.commonObjectFunctions.removeAttributeFromState;
         object.resetStateAttributes = GameCreator.commonObjectFunctions.resetStateAttributes;
@@ -14,16 +15,16 @@
         object.bounce = function(params) {
             switch (GameCreator.helpers.determineQuadrant(params.collisionObject, this)) {
             case 1:
-                this.speedY = -Math.abs(this.speedY);
+                this.attributes.speedY = -Math.abs(this.attributes.speedY);
                 break;
             case 2:
-                this.speedX = Math.abs(this.speedX);
+                this.attributes.speedX = Math.abs(this.attributes.speedX);
                 break;
             case 3:
-                this.speedY = Math.abs(this.speedY);
+                this.attributes.speedY = Math.abs(this.attributes.speedY);
                 break;
             case 4:
-                this.speedX = -Math.abs(this.speedX);
+                this.attributes.speedX = -Math.abs(this.attributes.speedX);
                 break;
             }
         };
@@ -48,28 +49,26 @@
 
     GameCreator.addObjFunctions.keyObjectFunctions = function(object) {
         object.checkEvents = function() {
-            var j, key, isKeyPressed, keyEvents, actions;
+            var j, key, isKeyPressed, keySets, actions;
             //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
             for (key in this.parent.keyPressed) {
                 if (this.parent.keyPressed.hasOwnProperty(key)) {
                     isKeyPressed = this.parent.keyPressed[key];
-                    keyEvents = this.parent.keyEvents[key];
+                    keySets = this.parent.keyEvents[key];
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
-                        if (keyEvents.length === 0) {
-                            keyEvents.push(new GameCreator.Event());
+                        if (GameCreator.state === 'directing' && keySets.length === 0) {
+                            keySets.push(new GameCreator.ConditionActionSet(this.parent));
                             actions = GameCreator.helpers.getNonCollisionActions(this.parent.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 "Pressed " + key + " actions for " + this.parent.objectName,
-                                 actions,
-                                 keyEvents[0].actions,
-                                 this.objectName
+                                 new GameCreator.CASetVM(keySets[0], GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                                 );
-                            GameCreator.bufferedActions.push({actionArray: keyEvents[0].actions, runtimeObj: this});    
+                            GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {
-                            for (j = 0; j < keyEvents.length; j++) {
-                                if (keyEvents[j].checkConditions()) {
-                                    keyEvents[j].runActions(this);
+                            for (j = 0; j < keySets.length; j++) {
+                                if (keySets[j].checkConditions(this)) {
+                                    keySets[j].runActions(this);
                                     this.keyCooldown[key] = true;
                                     // This anonymous function should ensure that keyAction in the timeout callback
                                     // has the state that it has when the timeout is declared.
@@ -89,30 +88,30 @@
         object.stop = function(params) {
             var obj, quadrant;
             if (!params || !params.hasOwnProperty("collisionObject")) {
-                this.speedY = 0;
-                this.speedX = 0;
+                this.attributes.speedY = 0;
+                this.attributes.speedX = 0;
             } else {
                 obj = params.collisionObject;
                 quadrant = GameCreator.helpers.determineQuadrant(obj, this);
-                if (this.speedY > 0 && quadrant === 1) {
-                    this.speedY = 0;
+                if (this.attributes.speedY > 0 && quadrant === 1) {
+                    this.attributes.speedY = 0;
                     this.objectBeneath = true;
                 }
-                if (this.speedX < 0 && quadrant === 2) {
-                    this.speedX = 0;
+                if (this.attributes.speedX < 0 && quadrant === 2) {
+                    this.attributes.speedX = 0;
                 }
-                if (this.speedY < 0 && quadrant === 3) {
-                    this.speedY = 0;
+                if (this.attributes.speedY < 0 && quadrant === 3) {
+                    this.attributes.speedY = 0;
                 }
-                if (this.speedX > 0 && quadrant === 4) {
-                    this.speedX = 0;
+                if (this.attributes.speedX > 0 && quadrant === 4) {
+                    this.attributes.speedX = 0;
                 }
             }
         };
     };
 
     GameCreator.addObjFunctions.clickableObjectAttributes = function(object) {
-        object.onClickEvents = [];
+        object.onClickSets = [];
         object.isClickable = true;
     };
 
@@ -122,6 +121,11 @@
 
     GameCreator.commonObjectFunctions.getState = function(stateId) {
       return GameCreator.helpers.getObjectById(this.states, stateId);  
+    };
+
+
+    GameCreator.commonObjectFunctions.isShootable = function() {
+        return ['FreeObject', 'PlatformObject', 'TopDownObject'].indexOf(this.objectType) != -1;
     };
 
     GameCreator.commonObjectFunctions.createState = function(name, attributes) {

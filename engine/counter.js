@@ -2,8 +2,13 @@
 (function() {
     "use strict";
     GameCreator.resetCounters = function(sceneObject, parentCounters) {
+        if (sceneObject.parent instanceof GameCreator.CounterObjectText ||
+            sceneObject.parent instanceof GameCreator.CounterObjectImage) {
+            // CounterObjects do not have counters themselves.
+            return;
+        }
         var counterCarrier, counter;
-        if (sceneObject.parent.unique) {
+        if (sceneObject.parent.attributes.unique) {
             counterCarrier = sceneObject.parent;
         } else {
             counterCarrier = sceneObject;
@@ -11,7 +16,7 @@
         for (counter in parentCounters) {
             if (parentCounters.hasOwnProperty(counter)) {
                 if (counterCarrier.counters[counter]) {
-                    if (!sceneObject.parent.unique) {
+                    if (!sceneObject.parent.attributes.unique) {
                         counterCarrier.counters[counter].reset();
                     }
                 } else {
@@ -164,6 +169,14 @@
         this.aboveValue = {};
         this.belowValue = {};
         this.initialValue = 0;
+    };
+
+    GameCreator.Counter.prototype.getCounterEventSets = function(eventType, eventValue) {
+        if (eventType === 'onIncrease' || eventType === 'onDecrease') {
+            return this[eventType];
+        } else {
+            return this[eventType][eventValue];
+        }
     };
 
 }());

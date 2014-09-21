@@ -30,6 +30,8 @@
 
     GameCreator.MouseObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+    GameCreator.MouseObject.objectNonStateAttributes = GameCreator.helpers.getStandardNonStateAttributes();
+
     GameCreator.MouseObject.objectAttributes = $.extend(GameCreator.MouseObject.objectAttributes, {
         "maxX": GameCreator.htmlStrings.numberInput,
         "maxY": GameCreator.htmlStrings.numberInput,
@@ -44,26 +46,26 @@
     GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.MouseObject.prototype);
 
     GameCreator.MouseObject.prototype.initialize = function() {
-        this.width = GameCreator.helpers.getRandomFromRange(this.width);
-        this.height = GameCreator.helpers.getRandomFromRange(this.height);
-        this.x = GameCreator.helpers.getRandomFromRange(this.x);
-        this.y = GameCreator.helpers.getRandomFromRange(this.y);
+        this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
+        this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
+        this.attributes.x = GameCreator.helpers.getRandomFromRange(this.attributes.x);
+        this.attributes.y = GameCreator.helpers.getRandomFromRange(this.attributes.y);
     };
 
     GameCreator.MouseObject.prototype.move = function() {
         GameCreator.invalidate(this);
         var offset = $(GameCreator.mainCanvas).offset();
-        this.x = this.parent.latestMouseX - offset.left;
-        this.y = this.parent.latestMouseY - offset.top;
-        if (this.x > this.maxX) {
-            this.x = this.maxX;
-        } else if (this.x < this.minX) {
-            this.x = this.minX;
+        this.attributes.x = this.parent.latestMouseX - offset.left;
+        this.attributes.y = this.parent.latestMouseY - offset.top;
+        if (this.attributes.x + this.attributes.width > this.attributes.maxX) {
+            this.attributes.x = this.attributes.maxX - this.attributes.width;
+        } else if (this.attributes.x < this.attributes.minX) {
+            this.attributes.x = this.attributes.minX;
         }
-        if (this.y > this.maxY) {
-            this.y = this.maxY;
-        } else if (this.y < this.minY) {
-            this.y = this.minY;
+        if (this.attributes.y + this.attributes.height > this.attributes.maxY) {
+            this.attributes.y = this.attributes.maxY - this.attributes.height;
+        } else if (this.attributes.y < this.attributes.minY) {
+            this.attributes.y = this.attributes.minY;
         }
     };
 
@@ -104,10 +106,10 @@
 
     GameCreator.MouseObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.getCurrentState();
-        sceneObject.maxX = args.maxX !== undefined ? args.maxX : state.attributes.maxX;
-        sceneObject.maxY = args.maxY !== undefined ? args.maxY : state.attributes.maxY;
-        sceneObject.minX = args.minX !== undefined ? args.minX : state.attributes.minX;
-        sceneObject.minY = args.minY !== undefined ? args.minY : state.attributes.minY;
+        sceneObject.attributes.maxX = args.maxX !== undefined ? args.maxX : state.attributes.maxX;
+        sceneObject.attributes.maxY = args.maxY !== undefined ? args.maxY : state.attributes.maxY;
+        sceneObject.attributes.minX = args.minX !== undefined ? args.minX : state.attributes.minX;
+        sceneObject.attributes.minY = args.minY !== undefined ? args.minY : state.attributes.minY;
     };
 
     GameCreator.MouseObject.prototype.shoot = function(staticParameters) {

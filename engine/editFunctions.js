@@ -11,6 +11,22 @@
             Right: "Right"
         },
 
+        objectTypeGroups: {
+            playerObjectTypes: {
+                'Topdown Object': 'TopDownObject',
+                'Mouse Object': 'MouseObject',
+                'Platform Object': 'PlatformObject',
+            },
+            gameObjectTypes: {
+                'Free Object': 'FreeObject',
+                'Route Object': 'RouteObject'
+            },
+            counterObjectTypes: {
+                'Text Counter': 'CounterObjectText',
+                'Image Counter': 'CounterObjectImage'
+            },
+        },
+
         addGlobalObject: function(args, objectType) {
             var globalObj = new GameCreator[objectType](args);
             GameCreator.globalIdCounter += 1;
@@ -21,7 +37,7 @@
         },
 
         directActiveScene: function() {
-            GameCreator.directScene(GameCreator.scenes[GameCreator.activeScene]);
+            GameCreator.directScene(GameCreator.getActiveScene());
         },
 
         directScene: function(scene) {
@@ -39,10 +55,10 @@
             if (GameCreator.selectedObject) {
                 var selobj = GameCreator.selectedObject;
                 GameCreator.uiContext.beginPath();
-                GameCreator.uiContext.moveTo(selobj.x+2, selobj.y+2);
-                GameCreator.uiContext.lineTo(selobj.x-2 + selobj.displayWidth, selobj.y+2);
-                GameCreator.uiContext.lineTo(selobj.x-2 + selobj.displayWidth, selobj.y-2 + selobj.displayHeight);
-                GameCreator.uiContext.lineTo(selobj.x+2, selobj.y-2 + selobj.displayHeight);
+                GameCreator.uiContext.moveTo(selobj.attributes.x+2, selobj.attributes.y+2);
+                GameCreator.uiContext.lineTo(selobj.attributes.x-2 + selobj.displayWidth, selobj.attributes.y+2);
+                GameCreator.uiContext.lineTo(selobj.attributes.x-2 + selobj.displayWidth, selobj.attributes.y-2 + selobj.displayHeight);
+                GameCreator.uiContext.lineTo(selobj.attributes.x+2, selobj.attributes.y-2 + selobj.displayHeight);
                 GameCreator.uiContext.closePath();
                 GameCreator.uiContext.stroke();
             }
@@ -51,22 +67,30 @@
         stopEditing: function() {
             $(GameCreator.mainCanvas).off(".editScene");
             GameCreator.selectedObject = null;
-            GameCreator.UI.unselectSceneObject();
         },
 
         editActiveScene: function() {
-            this.editScene(GameCreator.scenes[GameCreator.activeScene]);
+            GameCreator.editScene(GameCreator.getActiveScene());
+        },
+
+        uniqueSceneId: 0,
+
+        getUniqueSceneId: function() {
+            GameCreator.uniqueSceneId += 1;
+            return GameCreator.uniqueSceneId;
         },
 
         editScene: function(scene) {
             var i, obj, dragFunc, mouseLeft, mouseTop;
             GameCreator.reset();
-            GameCreator.resetScene(scene);
+            scene.reset();
+            GameCreator.setupScenePropertiesForm();
+            scene.drawBackground();
             GameCreator.state = 'editing';
             //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
             //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
-            for (i = 0; i < scene.length; i += 1) {
-                obj = scene[i];
+            for (i = 0; i < scene.objects.length; i += 1) {
+                obj = scene.objects[i];
                 if (obj.parent.isRenderable) {
                     GameCreator.renderableObjects.push(obj);
                     GameCreator.render(true);
@@ -98,9 +122,9 @@
                     GameCreator.UI.editSceneObject();
                 } else {
                     dragFunc = null;
-                    GameCreator.unselectSceneObject();
                     GameCreator.drawSelectionLine();
                     GameCreator.hideRoute();
+                    GameCreator.setupScenePropertiesForm();
                 }
                 GameCreator.render(false);
             });
@@ -128,13 +152,28 @@
                         GameCreator.helpers.setMouseCursor(dragFunc);
                         dragFunc.call(GameCreator.selectedObject, mouseLeft, mouseTop);
                         GameCreator.drawSelectionLine();
+                        GameCreator.UI.updateSceneObjectForm(GameCreator.selectedObject);
+
                     }
                     GameCreator.render(true);
                 }
             });
 
-            GameCreator.UI.setupSceneTabs(GameCreator.scenes);
+            GameCreator.UI.setupSceneTabs();
             GameCreator.render(false);
+        },
+
+        setupScenePropertiesForm: function() {
+            var onChangeCallback = function() {
+                GameCreator.UI.setupSceneTabs();
+                GameCreator.render(true);
+                GameCreator.getActiveScene().drawBackground();
+            };
+            setTimeout(function() {
+                $('#side-properties-form-container').html(GameCreator.htmlStrings.getScenePropertiesForm());
+                GameCreator.helpers.populateSidePropertiesForm(GameCreator.getActiveScene(), onChangeCallback);
+                GameCreator.getActiveScene().drawBackground();
+            }, 0);
         },
 
         dereferenceCounters: function(counterCarrier) {
@@ -248,42 +287,34 @@
             GameCreator.editScene(GameCreator.scenes[0]);
         },
 
-        //Since all inputs are tagged with "data-attrname" and "data-type" we have this general function for saving all object types.
         saveFormInputToObject: function(formId, obj) {
             var inputs = $("#" + formId + " input, #" + formId + " select");
-            var input, i, attrName;
+            var input, i;
             for (i = 0; i < inputs.length; i += 1) {
                 input = $(inputs[i]);
-                attrName = input.attr('data-attrname');
-                if (attrName) {
-                    attrName = attrName.split('.');
-                    if (attrName.length === 1) {
-                        obj[attrName[0]] = GameCreator.helpers.getValue(input);
-                    } else {
-                        obj[attrName[0]] = obj[attrName[0]] || {};                       
-                        obj[attrName[0]][attrName[1]] = GameCreator.helpers.getValue(input);
-                    }
+                GameCreator.saveInputValueToObject(input, obj);
+            }
+        },
+
+        saveInputValueToObject: function(input, obj) {
+            var attrName = input.data('attrname');
+            if (attrName) {
+                attrName = attrName.split('.');
+                var value = GameCreator.helpers.getValue(input);
+                if (attrName.length === 1) {
+                    obj[attrName[0]] = value;
+                } else {
+                    obj[attrName[0]] = obj[attrName[0]] || {};                       
+                    obj[attrName[0]][attrName[1]] = value;
                 }
+                return value;
             }
         },
 
         deleteSelectedObject: function() {
             GameCreator.invalidate(GameCreator.selectedObject);
             GameCreator.selectedObject.remove();
-            GameCreator.unselectSceneObject();
             GameCreator.render();
-        },
-
-        saveSceneObject: function(formId, obj) {
-            GameCreator.saveFormInputToObject(formId, obj);
-            GameCreator.hideRoute();
-            obj.update();
-            GameCreator.render();
-        },
-
-        unselectSceneObject: function() {
-            GameCreator.selectedObject = null;
-            GameCreator.UI.unselectSceneObject();
         },
 
         hideRoute: function() {
@@ -307,7 +338,7 @@
             var i, obj;
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {
                 obj = GameCreator.renderableObjects[i];
-                if (x >= obj.x && x <= obj.x + obj.displayWidth && y >= obj.y && y <= obj.y + obj.displayHeight) {
+                if (x >= obj.attributes.x && x <= obj.attributes.x + obj.displayWidth && y >= obj.attributes.y && y <= obj.attributes.y + obj.displayHeight) {
                     return obj;
                 }
             }
@@ -315,8 +346,8 @@
         },
 
         addScene: function() {
-            GameCreator.scenes.push([]);
-            GameCreator.UI.setupSceneTabs(GameCreator.scenes);
+            GameCreator.scenes.push(new GameCreator.Scene());
+            GameCreator.UI.setupSceneTabs();
         },
 
         getCountersForGlobalObj: function(globalObjName) {

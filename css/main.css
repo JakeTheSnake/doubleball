@@ -94,7 +94,7 @@ textarea {
 }
 
 /* ====================================================================================================================================================
-   Author's custom resets
+   Custom resets
    ==================================================================================================================================================== */
 
 html, body {
@@ -105,10 +105,14 @@ html, body {
   overflow: hidden;
 }
 
-menu, ol, ul, button {
+menu, ol, ul, button, input, label {
   border: 0;
   margin: 0;
   padding: 0;
+}
+
+ol, ul, li {
+  list-style: none;
 }
 
 h1, h2, h3, p {
@@ -128,19 +132,8 @@ a:last-child, button:last-child, img:last-child, p:last-child {
   margin-bottom: 0;
 }
 
-/*
-
-  Todo:
-  
-  2. Object manager Properties panel
-  3. Properties:
-    - Instance
-    - Position/Size/Speed/Acceleration etc...
-    
-*/
-
 /* ====================================================================================================================================================
-   Author's base layout, classes and conditions
+   Custom base layout, classes and conditions
    ==================================================================================================================================================== */
 
 canvas {
@@ -203,21 +196,33 @@ img {
   margin-bottom: 20px;
 }
 
-/* ==========================================================================
-   TEMPORARY PLEASE CHANGE FOR THE LOVE OF GOD!!!!
-   ========================================================================== */
-
-#ui-canvas {
-  pointer-events: none;
+label {
+  display: inline-block;
+  color: #F5F5F5;
+  font-size: 12px;
+  font-family: 'Droid Sans', sans-serif;
+  margin-bottom: 3px;
 }
 
-#dialogue-edit-content {
-  height: 100%;
+input {
+  display: block;
+  color: #1E1E1E;
+  font-size: 12px;
+  font-family: 'Droid Sans', sans-serif;
+  border: 1px solid #A1A6AE;
+  margin-left: 1px;
+  height: 22px;
+  padding: 2px 0 0 6px;
+  width: 163px;
 }
 
 /* ==========================================================================
    Container, rows and columns
    ========================================================================== */
+
+#ui-canvas {
+  pointer-events: none;
+}
 
 .container-fluid {
   padding: 0;
@@ -247,26 +252,14 @@ img {
 }
 
 .panel-heading {
-  background-color: #2574A9;
+  background-color: #2574a9;
   margin: 0 0 2px 0;
   padding: 3px 0 0 7px;
   height: 27px;
 }
 
-.panel-default > .panel-heading {
-  background-color: #505050;
-}
-
-.panel-success > .panel-heading {
-  background-color: #239D58;
-}
-
-.panel-edit > .panel-heading {
-  background-color: #E5A52E;
-}
-
-.panel-warning > .panel-heading {
-  background-color: #CE5144;
+.panel-dialogue > .panel-heading {
+  background-color: #323232;
 }
 
 .panel-title {
@@ -277,6 +270,7 @@ img {
 }
 
 .panel-body {
+  overflow-y: scroll;
   margin: 0;
   padding: 18px 30px 30px 28px;
 }
@@ -290,7 +284,8 @@ img {
 }
 
 .panel-paragraph {
-  margin-bottom: 30px;
+  padding-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 /* ==========================================================================
@@ -377,7 +372,7 @@ img {
 }
 
 /* ==========================================================================
-   dialogues
+   Dialogues
    ========================================================================== */
 
 #dialogue-overlay {
@@ -387,37 +382,29 @@ img {
   right: 0;
   bottom: 0;
   left: 0;
+  background: rgba(0, 0, 0, 0.85);
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.85);
   overflow: hidden;
   z-index: 1;
-}
 
-#dialogue-overlay.ng-hide {
-  opacity: 0;
-}
-
-#dialogue-overlay,
-#dialogue-overlay.ng-hide {
-  -webkit-transition: all linear 0.2s;
-  transition: all linear 0.2s;
+  -webkit-transition: all ease-out 0.2s;
+  transition: all ease-out 0.2s;
 }
 
 .dialogue {
-  background-color: #323232;
+  background-color: #1E1E1E;
   position: absolute;
   overflow: hidden;
   z-index: 1;
+
+  -webkit-transition: all ease-out 0.2s;
+  transition: all ease-out 0.2s;
 }
 
 .dialogue > .panel {
   margin: 0;
   padding: 0;
-}
-
-#object-manager > .panel-heading {
-  margin-bottom: 2px;
 }
 
 #dialogue-window > .top {
@@ -435,235 +422,245 @@ img {
   bottom: 0;
 }
 
-#dialogue-window > .bottom.ng-hide {
-  bottom: -400px;
-}
-
-#dialogue-window > .bottom,
-#dialogue-window > .bottom.ng-hide {
-  -webkit-transition: all linear 0.2s;
-  transition: all linear 0.2s;
-}
-
 #dialogue-window > .left {
   height: 100%;
   left: 0;
 }
 
 /*
- * dialogue: Object manager;
+ * Object manager
  */
 
 #object-manager {
-  height: 400px;
+  height: 600px;
 }
 
-#object-manager > #library {
-  width: 328px;
+#object-manager ul {
+  font-size: 0.9em;
+  margin-bottom: 2px;
 }
 
-#object-manager > .col {
+#object-manager .col {
+  min-width: 160px;
   padding-right: 2px;
 }
 
-#object-manager > #properties {
+#object-manager .panel-heading {
+  margin-bottom: 2px;
+}
+
+#object-manager .content {
+  height: 100%;
+}
+
+#object-manager .btn {
+  width: 100%;
+  text-align: left;
+  padding-left: 8px;
+}
+
+#object-manager .nav-tabs > li {
+  width: auto;
+  padding-right: 30px;
+}
+
+/*
+ * Object manager: Library;
+ */
+
+#object-manager-library {
+  width: 248px;
+}
+
+/*
+ * Object manager: Properties;
+ */
+
+.object-manager-properties {
   width: 650px;
   height: 100%;
 }
 
-/* ====================================================================================================================================================
-   Author's savigation, button, tab and icon classes
-   ==================================================================================================================================================== */
 
-.nav {
-  list-style: none;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#dialogue-events-content .col,
+#dialogue-counter-content .col {
+  width: 210px;
 }
 
-.nav-tabs > li {
-  background-color: #505050;
-  color: #fff;
-  cursor: pointer;
-  margin-right: 2px;
-  width: 157px;
-  height: 27px;
-  font-size: 1em;
-  font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
-  text-align: left;
-  text-shadow: 1px 1px rgba(0,0,0,0.2);
-  vertical-align: middle;
-  padding: 7px 0 0 13px;
-  float: left;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+#dialogue-panel-conditions.nav-tabs > li.active,
+#dialogue-panel-actions.nav-tabs > li {
+  padding: 0;
+  background-color: #323232;
+  height: auto;
+  cursor: default;
 }
 
-.nav-tabs > li:hover {
-  background-color: #5E5E5E;
+/* TODO:
+  - Rename conditions-group
+*/
+.conditions-group {
+  border: 1px solid #239D58;
 }
 
-.nav-tabs > li:active {
-  background-color: #3D3D3D;
-}
-
-.nav-tabs > li.active {
-  background-color: #2574A9;
-}
-
-.nav-stacked > li {
+.conditions-group > span {
   display: block;
-  float: none;
-  margin-right: 0;
+  background-color: #239D58;
+  padding: 4px 0 0 7px;
+  height: 29px;
   margin-bottom: 2px;
 }
 
-#object-manager .nav-tabs > li {
-  font-size: 0.9em;
-  height: 33px;
-  padding-top: 15px;
+.conditions-group > button {
+  width: 208px !important;
 }
 
-#object-manager .nav-tabs > li.active {
-   background-color: #239D58;
+
+.condition-parameters > span {
+  display: block;
+  background-color: #424242;
+  padding: 5px 0 5px 5px;
+  margin-bottom: 1px;
+  font-size: 0.8em;
 }
 
-/* ==========================================================================
-   Buttons
-   ========================================================================== */
+.condition-parameters table {
+  width: 100%;
+  background-color: #383838;
+  margin-bottom: 2px;
+}
 
-.btn {
+.condition-parameters tr {
+  height: 26px;
+  border-bottom: 1px solid #323232;
+}
+
+.condition-parameters tr:last-child {
+  border-bottom: none;
+}
+
+.condition-parameters td {
+  font-size: 0.8em;
+}
+
+.condition-parameters td:first-child {
+  color: #FDFF9A;
+  padding-left: 21px;
+  width: 60px;
+}
+
+.condition-parameters td > span {
+  color: #65FFFF;
+}
+
+.condition-parameters td > input {
   background-color: #505050;
-  border: 0;
-  border-radius: 0;
-  color: #fff;
-  cursor: pointer;
-  margin-right: 2px;
-  margin-bottom: 0;
-  width: 86px;
-  height: 34px;
-  font-size: 0.9em;
+  border: 1px solid #595959;
+  color: #f5f5f5;
+  height: 17px;
+  padding: 0 0 0 4px;
+  width: 112px;
+}
+
+.condition-parameters td > input:focus {
+  outline: none;
+}
+
+.properties-group {
+  display: block;
+  height: 53px;
+}
+
+.properties-value {
+  float: left;
+  width: 120px;
+}
+
+.properties-value > label {
+  display: block;
+  color: #FDFF9A;
+  font-size: 0.7em;
   font-family: 'Droid Sans', sans-serif;
-  font-weight: 400;
-  text-align: center;
-  text-shadow: 1px 1px rgba(0,0,0,0.2);
-  white-space: nowrap;
-  vertical-align: middle;
-  padding: 8px 0;
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
 }
 
-.btn.disabled,
-.btn[disabled] {
-  pointer-events: none;
-  cursor: not-allowed;
-  color: #808080;
+.properties-value > table {
+  position: relative;
+  top: -1px;
+  left: 9px;
+}
+
+.properties-value > table tr {
+  height: 19px;
+}
+
+.properties-value > table td {
+  font-size: 0.8em;
+  color: #65FFFF;
+  font-family: 'Droid Sans', sans-serif;
+  line-height: 1;
+}
+
+.properties-value > table td:first-child {
+  width: 25px;
+  font-size: 0.8em;
+  color: #F5F5F5;
+  font-family: 'Droid Sans', sans-serif;
+}
+
+.properties-value > table td input {
+  color: #F5F5F5;
+  font-family: 'Droid Sans', sans-serif;
+  padding: 1px 0 0 4px;
+  line-height: 1;
   background-color: #505050;
+  width: 60px;
+  height: 12px;
 }
 
-/*
- * Button: Large
- */
-
-.btn-lg {
-  width: 160px;
-  height: 48px;
-  font-size: 1em;
-}
-
-/*
- * Button: Small
- */
-
-.btn-sm {
-  width: 34px;
-  height: 34px;
-}
-
-/*
- * Button: Default
- */
-
-.btn-default {
-  color: #808080;
+.glyphicon {
   background-color: #505050;
-}
+  position: relative;
+  display: inline-block;
+  top: 6px;
+  left: 1px;
+  float: left;
+  width: 24px;
+  height: 24px;
 
-.btn-default:hover {
-  background-color: #5e5e5e;
-}
-
-.btn-default:active {
-  background-color: #3D3D3D;
-}
-
-/*
- * Button: Success
- */
-
-.btn-success {
-  background-color: #239D58;
-}
-
-.btn-success:hover {
-  background-color: #27AE60;
-}
-
-.btn-success:active {
-  background-color: #1C8047;
-}
-
-/*
- * Button: Edit
- */
-
-.btn-edit {
-  background-color: #E5A52E;
-}
-
-.btn-edit:hover {
-  background-color: #F5B031;
-}
-
-.btn-edit:active {
-  background-color: #C78F28;
-}
-
-/*
- * Button: Warning
- */
-
-.btn-warning {
-  background-color: #CE5144;
-}
-
-.btn-warning:hover {
-  background-color: #DE5849;
-}
-
-.btn-warning:active {
-  background-color: #B0463A;
-}
-
-/*
- * Button-groups
- */
-
-.btn-group {
-
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==========================================================================
-   Inputfields
+   Forms
    ========================================================================== */
 
+.form-group {
+  margin-bottom: 7px;
+}
 
+.form-item {
+  display: inline-block;
+  margin-right: 25px;
+}
+
+.fade-disable {
+    opacity: 0.4;
+}
 
 /* ====================================================================================================================================================
    Author's specific styles
@@ -682,13 +679,17 @@ img {
   height: 377px;
 }
 
-#library-preview {
+#properties .panel-body {
+  height: 295px;
+}
+
+.library-preview {
   margin-bottom: 2px;
   height: 110px;
   background: url('../images/library_preview_grid.gif');
 }
 
-#library-explorer {
+.library-explorer {
   overflow-x: hidden;
   overflow-y: scroll;
   margin-bottom: 2px;
@@ -696,7 +697,7 @@ img {
   background-color: #F5F5F5;
 }
 
-#library-menu > button {
+.library-menu > button {
   float: left;
 }
 
@@ -732,14 +733,253 @@ img {
   cursor: not-allowed;
 }
 
-.global-object-list > li.ng-leave {
-    transition: 0.5s;
-    opacity: 1;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ====================================================================================================================================================
+   Custom navigation classes
+   ==================================================================================================================================================== */
+
+.nav {
+  list-style: none;
 }
 
-.global-object-list > li.ng-leave-active {
-    opacity: 0;
+.nav-tabs > li {
+  background-color: #505050;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  width: 147px;
+  height: 27px;
+  font-size: 1em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: left;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  vertical-align: middle;
+  padding: 7px 0 0 13px;
+  float: left;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
+
+.nav-tabs > li:hover {
+  background-color: #5E5E5E;
+}
+
+.nav-tabs > li.active {
+  background-color: #2574A9;
+  cursor: default;
+}
+
+.nav-tabs-success > li.active {
+  background-color: #239D58;
+}
+
+.nav-tabs-edit > li.active {
+  background-color: #E5A52E;
+}
+
+.nav-tabs-warning > li.active {
+  background-color: #CE5144;
+}
+
+.nav-stacked > li {
+  display: block;
+  float: none;
+  margin-right: 0;
+  margin-bottom: 2px;
+}
+
+.nav-stacked > li:last-child {
+  margin-bottom: 0px;
+}
+
+/* ====================================================================================================================================================
+   Custom button classes
+   ==================================================================================================================================================== */
+
+.btn {
+  background-color: #505050;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  margin-bottom: 0;
+  width: 86px;
+  height: 34px;
+  font-size: 0.9em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 8px 0;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn.disabled,
+.btn[disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #808080;
+  background-color: #505050;
+}
+
+/*
+ * Button: Success
+ */
+
+.btn-success {
+  background-color: #239D58;
+}
+
+.btn-success:hover {
+  background-color: #27AE60;
+}
+
+.btn-success:active {
+  background-color: #1C8047;
+}
+
+/*
+ * Button: Edit
+ */
+
+.btn-edit {
+  background-color: #E5A52E;
+} 
+
+.btn-edit:hover {
+  background-color: #F5B031;
+}
+
+.btn-edit:active {
+  background-color: #C78F28;
+}
+
+/*
+ * Button: Warning
+ */
+
+.btn-warning {
+  background-color: #CE5144;
+}
+
+.btn-warning:hover {
+  background-color: #DE5849;
+}
+
+.btn-warning:active {
+  background-color: #B0463A;
+}
+
+/* ====================================================================================================================================================
+   Custom icon classes
+   ==================================================================================================================================================== */
+
+@font-face {
+  font-family: 'icons';
+  src: url('../font/icons.eot?99267613');
+  src: url('../font/icons.eot?99267613#iefix') format('embedded-opentype'),
+       url('../font/icons.woff?99267613') format('woff'),
+       url('../font/icons.ttf?99267613') format('truetype'),
+       url('../font/icons.svg?99267613#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+ 
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  color: #FFFFFF;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+ 
+.icon-down-open:before { content: '\e800'; font-size: 60%; margin-right: 7px; }
+.icon-cancel:before { content: '\e801'; } /* '' */
+.icon-right-open:before { content: '\e802'; font-size: 60%; margin-right: 6px; }
+.icon-down-dir:before { content: '\e803'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-right-dir:before { content: '\e804'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-plus:before { content: '\e805'; font-size: 80%; margin-right: 9px; } /* '' */
+.icon-minus:before { content: '\e806'; } /* '' */
+.icon-cog:before { content: '\e807'; } /* '' */
+.icon-menu:before { content: '\e808'; } /* '' */
+.icon-up-dir:before { content: '\e809'; } /* '' */
+.icon-left-dir:before { content: '\e80a'; } /* '' */
+.icon-left-open:before { content: '\e80b';  font-size: 60%; } /* '' */
+.icon-up-open:before { content: '\e80c';  font-size: 60%; } /* '' */
+.icon-angle-left:before { content: '\e80d'; } /* '' */
+.icon-angle-right:before { content: '\e80e'; } /* '' */
+.icon-angle-up:before { content: '\e80f'; } /* '' */
+.icon-angle-down:before { content: '\e810'; } /* '' */
+.icon-eye:before { content: '\e811'; } /* '' */
+.icon-eye-off:before { content: '\e812'; } /* '' */
+.icon-ok:before { content: '\e813'; } /* '' */
+.icon-help:before { content: '\e814'; } /* '' */
+.icon-info:before { content: '\e815'; } /* '' */
+.icon-attention-alt:before { content: '\e816'; } /* '' */
+.icon-codeopen:before { content: '\e817';  font-size: 100%; margin-right: 13px; } /* '' */
 
 /* ==========================================================================
    Helper classes

@@ -5,23 +5,25 @@ GameCreator.commonObjectViews = {
         object.getCollisionsContent = GameCreator.commonObjectViews.getCollisionsContent;
         object.getCounterEventsContent = GameCreator.commonObjectViews.getCounterEventsContent;
         object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
+        object.getStatePropertiesContent = GameCreator.commonObjectViews.getStatePropertiesContent;
         object.getNonStatePropertiesForm = GameCreator.commonObjectViews.getNonStatePropertiesForm;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
-        object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
         object.getEventsContent = GameCreator.commonObjectViews.getEventsContent;
+        object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
+        object.getTabs = GameCreator.commonObjectViews.getTabs;
     },
 
     addPlayerObjectViews: function(object) {
         GameCreator.commonObjectViews.addCommonObjectViews(object);
         object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
-        object.getKeyEventsContent = GameCreator.commonObjectViews.getKeyEventsContent;
-        object.getKeySelector = GameCreator.commonObjectViews.getKeySelector;
+        object.getKeysContent = GameCreator.commonObjectViews.getKeysContent;
     },
 
     addCounterObjectViews: function(object) {
         object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
-        object.getPropertiesForm = GameCreator.commonObjectViews.getPropertiesForm;
+        object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
+        object.getEditWindow = GameCreator.commonObjectViews.getEditWindow;
     },
 
     /******************************
@@ -33,37 +35,49 @@ GameCreator.commonObjectViews = {
 
         result += '<div class="dialogue bottom"> \
                    <!-- Panel: Object manager --> \
-                   <div id="object-manager" class="panel panel-default"> \
+                   <div id="object-manager" class="panel panel-dialogue"> \
                    <div class="panel-heading "> \
                    <span class="panel-title">Object manager</span> \
                    </div> \
-                   <!-- Panel: Edit --> \
+                   <div id="object-manager-library" class="col border-right"> \
+                   <div class="panel-heading"> \
+                   <span class="panel-title">Library</span> \
+                   </div> \
+                   <div id="object-manager-library-preview" class="library-preview panel-paragraph"></div> \
+                   <div id="object-manager-library-explorer" class="library-explorer"> \
+                   <ul class="global-object-list"> \
+                   </ul> \
+                   </div> \
+                   </div> \
                    <div class="col border-right"> \
                    <div class="panel-heading"> \
                    <span class="panel-title">Edit</span> \
                    </div> \
-                   <ul id="dialogue-panel-edit" class="nav nav-tabs nav-stacked"> \
-                   <li data-uifunction="setupPropertiesForm">Properties</li> \
-                   <li data-uifunction="setupStatesForm">States</li> \
-                   <li data-uifunction="setupEventsForm">Events</li> \
-                   <li data-uifunction="setupCountersForm">Counters</li> \
-                   </ul> \
+                   <ul id="dialogue-panel-edit" class="nav nav-stacked nav-tabs nav-tabs-success">' + this.getTabs() + 
+                   '</ul> \
                    </div> \
-                   <div id="dialogue-edit-content"> \
+                   <div id="dialogue-edit-content" class="content"> \
                    </div> \
                    </div> \
                    </div> \
                    </div> \
                    </div>';
+
                    
         return result;
+    },
+
+    getTabs: function() {
+        return '<li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
+        <li data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></li> \
+        <li data-uifunction="setupEventsForm"><i class="icon-codeopen" /><span>Events</span></li> \
+        <li data-uifunction="setupCountersForm"><i class="icon-codeopen" /><span>Counters</span></li>'
     },
 
     getCounterEventsContent: function(counterName){
         var counter = this.parentCounters[counterName];
         var value;
-        var result = '<button id="add-new-counter-event-button" class="regularButton">Add</button>';
-        result += GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
+        var result = GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
         result += GameCreator.htmlStrings.counterEventMenuElement("", "onDecrease");
         for (value in counter.atValue) {
             if (counter.atValue.hasOwnProperty(value)){
@@ -80,12 +94,13 @@ GameCreator.commonObjectViews = {
                 result += GameCreator.htmlStrings.counterEventMenuElement(value, "belowValue");
             }
         };
+        result += '<button id="add-new-counter-event-button" class="icon-plus btn btn-success">Add</button>';
         return result;
     },
 
     getCollisionsContent: function(collisionObjects) {
         var result = '<div id="edit-collision-actions-object-menu-container"><div id="edit-collision-actions-object-menu">';
-        result += '<button id="add-new-collision-button" class="regularButton">Add</button>';
+        result += '<button id="add-new-collision-button" class="icon-plus btn btn-success">Add whatever?</button>';
 
         for(var i = 0; i < collisionObjects.length; i++) {
             result += GameCreator.htmlStrings.collisionMenuElement(collisionObjects[i]);
@@ -97,44 +112,77 @@ GameCreator.commonObjectViews = {
     },
 
     getCountersContent: function() {
-        var result = '<div id="edit-counters-menu">';
-        result += '<button id="add-new-counter-button" class="regularButton">Add</button>';
+        var result = '';
         var keys = Object.keys(this.parentCounters);
         for (var i = 0; i < keys.length; i++) {
-            result += GameCreator.htmlStrings.counterMenuElement(keys[i]);
+            result += GameCreator.htmlStrings.defaultMenuElement(keys[i]);
         }
-        result += '</div><div id="edit-counters-counter-content">'
-        result += '<div id="edit-counter-event-content"></div>';
-        result += '<div id="edit-counter-event-actions-content"></div></div>';
         return result;
     },
 
-    getStatesContent: function(states) {
-        var result = '<h>Edit states</h>';
-        result += '<div id="state-tabs">';
-        for(i = 0; i < states.length; i += 1) {
-            result += '<div class="tab state-tab" data-state=' + i + '>' + states[i].name + '</div>';
+    getStatesContent: function() {
+        var i, result = '';
+        for (i = 0; i < this.states.length; i++) {
+            if(this.states[i].name !== "Default") {
+                result += GameCreator.htmlStrings.stateMenuElement(this.states[i].id, this.states[i].name);
+            }
         }
-        result += '<div id="add-state-tab" class="tab state-tab">+</div>'
-        result += '</div><br style="clear:both;"/>';
-        result += '<div id="state-content">';
-        result += this.getPropertiesForm(0);
-        result += '</div>'
         return result;
     },
 
-    getPropertiesContent: function(stateId) {
+    getStatePropertiesContent: function(title) {
+        var result = '\
+        <div class="col border-right object-manager-properties"> \
+            <div class="panel-heading"> \
+                <span class="panel-title">' + title + '</span> \
+            </div> \
+            <div class="panel-body"> \
+                <div class="panel-paragraph"> \
+                    <div id="state-properties-content">';
+                        result += this.getPropertiesForm() +
+                    '</div>\
+                </div>\
+            </div>\
+        </div>';
+        return result;
+    },
+
+    getAddGlobalObjectPropertiesContent: function(title) {
+        var result = '\
+        <div class="col border-right object-manager-properties"> \
+            <div class="panel-heading"> \
+                <span class="panel-title">' + title + '</span> \
+            </div> \
+            <div class="panel-body"> \
+                <div class="panel-paragraph"> \
+                    <div id="state-properties-content"> \
+                    <div class="form-group"> \
+                        <div id="object-property-name-container" class="form-item"> \
+                            <label>Name</label> \
+                            <input type="text" id="add-global-object-name-input" placeholder="Object name"/> \
+                        </div> \
+                    </div>';
+                        result += this.getPropertiesForm() +
+                        '<button id="save-new-global-object-button">Save object</button>\
+                    </div>\
+                </div>\
+            </div>\
+        </div>';
+        return result;
+    },
+
+    getPropertiesContent: function() {
         var result = "";
-            result += '<div id="properties" class="col border-right"> \
+            
+            result += '<div class="col border-right object-manager-properties"> \
                        <div class="panel-heading"> \
                        <span class="panel-title">Properties</span> \
                        </div> \
                        <div class="panel-body"> \
                        <div class="panel-paragraph"> \
-                       <div> \
                        <div id="object-properties-content">'
 
-            result += this.getPropertiesForm(0);
+            result += this.getPropertiesForm();
 
             result += '</div> \
                        <div id="object-non-state-properties-content">'
@@ -142,29 +190,22 @@ GameCreator.commonObjectViews = {
             result += this.getNonStatePropertiesForm();
 
             result += '</div> \
-                       <button class="regularButton" id="save-global-object-properties-button">Save</button> \
-                       </div> \
                        </div> \
                        </div> \
                        </div> \
                        </div>';
-
-        return result;
-    },
-
-    getPropertiesForm: function(stateId) {
-        var state = this.getState(stateId);
-        var result = "";    
-        result += GameCreator.helpers.getAttributeForm(state.attributes,
-        GameCreator[this.objectType].objectAttributes,
-        state.attributes);
-
+                       
         return result;
     },
 
     getNonStatePropertiesForm: function() {
-        return  GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique:') +
-                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique', this.unique)
+        var result = "";
+            result += '<div class="form-group"> \
+                        <div id="object-property-unique-container" class="form-item"> \
+                        </div> \
+                       </div>';
+
+        return result;
     },
 
     getEventsContent: function() {
@@ -173,17 +214,16 @@ GameCreator.commonObjectViews = {
                        <div class="panel-heading"> \
                        <span class="panel-title">Events</span> \
                        </div> \
-                       <ul id="dialogue-panel-events" class="nav nav-tabs nav-stacked"> \
-                       <li data-uifunction="setupOnCreateActionsForm">On Create</li> \
-                       <li data-uifunction="setupCollisionsForm">On Collide</li> \
-                       <li data-uifunction="setupOnDestroyActionsForm">On Destroy</li> \
-                       <li data-uifunction="setupEditCounterEvents">On Count</li>';
+                       <ul id="dialogue-panel-events" class="nav nav-stacked nav-tabs nav-tabs-success"> \
+                       <li data-uifunction="setupOnCreateActionsForm"><i class="icon-codeopen" /><span>On Create</span></li> \
+                       <li data-uifunction="setupCollisionsForm"><i class="icon-codeopen" /><span>On Collide</span></li> \
+                       <li data-uifunction="setupOnDestroyActionsForm"><i class="icon-codeopen" /><span>On Destroy</span></li>';
             
             result += this.getEvents();
 
             result += '</ul> \
                        </div> \
-                       <div id="dialogue-events-content"> \
+                       <div id="dialogue-events-content" class="content"> \
                        </div>';
         return result;
     },
@@ -204,16 +244,14 @@ GameCreator.commonObjectViews = {
         return result;
     },
 
-    getKeyEventsContent: function() {
-        var result = '<div id="edit-key-actions-object-menu-container"><div id="edit-key-actions-key-menu">';
-        result += '<div id="add-new-key-button" class="regularButton">Add</div>';
+    getKeysContent: function() {
+        var result = '';
         for (var keyName in this.keyEvents) {
             if (this.keyEvents[keyName].length > 0) {
-                result += GameCreator.htmlStrings.keyMenuElement(keyName);
+                result += GameCreator.htmlStrings.defaultMenuElement(keyName);
             }
         }
-        result += '</div></div><div id="edit-key-actions-key-content"></div>';
+        result += '<li><button id="add-new-key-button" class="regularButton">Add</div></li>';
         return result;
     },
-
 }

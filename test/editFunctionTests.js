@@ -1,10 +1,10 @@
 
 
 test("Save Form Data to Object", function() {
-    var rangeField = GameCreator.htmlStrings.rangeInput('rangeField', 'range', '1:300');
-    var numberField = GameCreator.htmlStrings.numberInput('numberField', 'number', '200');
-    var stringField = GameCreator.htmlStrings.stringInput('textField', 'string', 'kastrull');
-    var checkbox = GameCreator.htmlStrings.checkboxInput('checkboxField', 'checkbox', true);
+    var rangeField = GameCreator.htmlStrings.rangeInput('range', '1:300');
+    var numberField = GameCreator.htmlStrings.numberInput('number', '200');
+    var stringField = GameCreator.htmlStrings.stringInput('string', 'kastrull');
+    var checkbox = GameCreator.htmlStrings.checkboxInput('checkbox', true);
     $("#qunit-fixture").html('<form id="test-form">' + rangeField + numberField + stringField + checkbox + '</form>');
     var obj = {};
 
@@ -34,10 +34,10 @@ module("Scene Object Tests", {
 });
 
 test("Add Object to scene", function() {
-    var sceneObject = GameCreator.scenes[0][0];
+    var sceneObject = GameCreator.scenes[0].objects[0];
     ok(sceneObject, "Scene object added to scene");
-    deepEqual(sceneObject.x, 5, "Scene object correct x.");
-    deepEqual(sceneObject.y, 6, "Scene object correct y.");
+    deepEqual(sceneObject.attributes.x, 5, "Scene object correct x.");
+    deepEqual(sceneObject.attributes.y, 6, "Scene object correct y.");
 });
 
 test("Get Clicked Object in edit mode", function() {
@@ -49,9 +49,9 @@ test("Delete selected scene object", function() {
     var sceneObject = GameCreator.getClickedObjectEditing(6, 7);
     GameCreator.selectedObject = sceneObject;
 
-    deepEqual(GameCreator.scenes[0].length, 1, "Scene object was added to scene.");
+    deepEqual(GameCreator.scenes[0].objects.length, 1, "Scene object was added to scene.");
     GameCreator.deleteSelectedObject();
-    deepEqual(GameCreator.scenes[0].length, 0, "Delete scene object from scene.");
+    deepEqual(GameCreator.scenes[0].objects.length, 0, "Delete scene object from scene.");
 });
 
 })();

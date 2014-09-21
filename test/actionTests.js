@@ -9,71 +9,6 @@ var platformZealot;
 var runtimeAction;
 var runtimeObject;
 
-module("ActionTests", {
-  setup: function() {
-    container = $("#qunit-fixture");
-    var image = new Image();
-    image.src = '../assets/red_ball.gif';
-    redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
-    existingActions = [];
-    caption = "An object collided with yo mama";
-    GameCreator.UI.createEditActionsArea(caption, GameCreator.actions,
-        existingActions, container, "red_ball");    
-  },
-  teardown: function() {
-  }
-});
-
-
-test("Action window components", function() {
-    deepEqual($("#select-action-window #select-actions-header").html(), caption, "Header text was set");
-    deepEqual($("#action-selector").children().length, Object.keys(GameCreator.actions).length, "Action Selector populated");
-
-    var allActions = Object.keys(GameCreator.actions);
-    for (var i = 0; i < allActions.length; i++) {
-        var actionName = allActions[i];    
-        selectAction(actionName);
-
-        var timingOptionsCount = countTimingOptionsForAction(actionName);
-        var actionSelectOptions = $("#select-action-timing-content #timing-selector option");
-        var actionParameters = $("#select-action-parameters-content div.actionParameter")
-        deepEqual(actionSelectOptions.length, timingOptionsCount, "Action: " + actionName + " - Timing content");
-        deepEqual(actionParameters.length, GameCreator.actions[actionName].params.length, "Action: " + actionName + " - Parameter content");        
-    }
-});
-
-test("Add actions", function() {
-    var allActions = Object.keys(GameCreator.actions);
-    addActions(allActions)
-    deepEqual($("#select-action-result div.actionRow").length, allActions.length);
-});
-
-function addActions(actionsToAdd) {
-    var actionsToAdd = Object.keys(GameCreator.actions);
-    for (var i = 0; i < actionsToAdd.length; i++) { // Add all actions
-        var actionName = actionsToAdd[i];    
-        selectAction(actionName);
-        $("#select-action-add-action").trigger("click");
-    }
-}
-
-function selectAction(actionName) {
-    $("#action-selector").val(actionName);
-    $("#action-selector").trigger("change");
-};
-
-function countTimingOptionsForAction(actionName) {
-    var timings = Object.keys(GameCreator.actions[actionName].timing);
-    var count = 1; // Starting at 1 to count "Now"
-    for (var i = 0; i < timings.length; i++) {
-        var timingName = timings[i];
-        if (GameCreator.actions[actionName].timing[timingName] === true) {
-            count++;
-        }
-    }
-    return count;
-};
-
 module("RunActionTests", {
   setup: function() {
     GameCreator.actions["testAction"] = new GameCreator.Action({
@@ -147,18 +82,18 @@ function setupCollisionEventForNewObject(action, parameters) {
     var parameters = parameters || {};
     var timing = {type: "now"};
     var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
-    var collideEvent = new GameCreator.Event();
+    var collideEvent = new GameCreator.ConditionActionSet(redBall);
     collideEvent.actions.push(bounceAction);
-    redBall.onCollideEvents.push({id: GameCreator.borderObjects.borderL.id, events: [collideEvent]});
+    redBall.onCollideEvents.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
     return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
 }
 
 test("Bounce Action Test", function() {
     var runtimeObj = setupCollisionEventForNewObject("Bounce");
-    var oldSpeed = runtimeObj.speedX;
+    var oldSpeed = runtimeObj.attributes.speedX;
     GameCreator.checkCollisions();
 
-    deepEqual(runtimeObj.speedX, -oldSpeed, "Speed was negated with bounce.");
+    deepEqual(runtimeObj.attributes.speedX, -oldSpeed, "Speed was negated with bounce.");
 });
 
 test("Stop Action Test", function() {
@@ -166,7 +101,7 @@ test("Stop Action Test", function() {
 
     GameCreator.checkCollisions();
 
-    deepEqual(runtimeObj.speedX, 0, "Object stopped X.");
+    deepEqual(runtimeObj.attributes.speedX, 0, "Object stopped X.");
 });
 
 
@@ -185,8 +120,8 @@ test("Create Action Test", function() {
     GameCreator.checkCollisions();
 
     deepEqual(GameCreator.renderableObjects.length, 2, "Object was created");
-    deepEqual(GameCreator.renderableObjects[1].x, 50, "Correct X coordinate");
-    deepEqual(GameCreator.renderableObjects[1].y, 60, "Correct Y coordinate");
+    deepEqual(GameCreator.renderableObjects[1].attributes.x, 50, "Correct X coordinate");
+    deepEqual(GameCreator.renderableObjects[1].attributes.y, 60, "Correct Y coordinate");
 });
 
 test("Shoot Action Test", function() {
@@ -198,13 +133,13 @@ test("Shoot Action Test", function() {
     GameCreator.checkCollisions();
 
     deepEqual(GameCreator.renderableObjects.length, 2, "Object was shot");
-    deepEqual(GameCreator.renderableObjects[1].speedX, -500, "Correct X coordinate");
+    deepEqual(GameCreator.renderableObjects[1].attributes.speedX, -500, "Correct X coordinate");
 });
 
 test("Counter Action Test", function() {
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     
-    var runtimeObj = setupCollisionEventForNewObject("Counter", {counterObject: "this", counterName: "testCounter", counterType: "Set", counterValue: 5});
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {objId: 'this', counter: "testCounter", counterType: "Set", value: 5});
     var counter = runtimeObj.counters["testCounter"];
 
     GameCreator.checkCollisions();
@@ -219,7 +154,7 @@ test("SwitchScene Action Test", function() {
 
     GameCreator.checkCollisions();
 
-    deepEqual(GameCreator.activeScene, 1, "Scene was switched.");
+    deepEqual(GameCreator.activeSceneId, 1, "Scene was switched.");
 });
 
 test("SwitchState Action Test", function() {
@@ -245,7 +180,7 @@ module("ActionTriggers", {
     platformZealot = GameCreator.addGlobalObject({image: img, objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
     runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
     runtimeObject = GameCreator.createRuntimeObject(platformZealot, {x: 50, y: 60, speedX: -500, speedY: 50});
-    newEvent = new GameCreator.Event();
+    newEvent = new GameCreator.ConditionActionSet();
     newEvent.actions.push(runtimeAction);
   },
   teardown: function() {
@@ -269,7 +204,7 @@ test("Trigger action by key", function() {
 });
 
 test("Trigger action by creation", function() {
-    platformZealot.onCreateEvents = [newEvent];
+    platformZealot.onCreateSets = [newEvent];
 
     GameCreator.callOnCreateForNewObjects();
 
@@ -278,7 +213,7 @@ test("Trigger action by creation", function() {
 
 
 test("Trigger action by destruction", function() {
-    platformZealot.onDestroyEvents = [newEvent];
+    platformZealot.onDestroySets = [newEvent];
 
     runtimeObject.parent.destroy.call(runtimeObject);
 

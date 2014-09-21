@@ -13,11 +13,21 @@
 
     GameCreator.Action.prototype.runnable = function() {return !this.isDestroyed; };
 
+    
+
     GameCreator.RuntimeAction = function(name, parameters, timing) {
         this.name = name;
         this.parameters = parameters || {};
-        this.timing = timing || {};
+        this.timing = timing || {type: 'now'};;
     };
+
+    GameCreator.RuntimeAction.prototype.getAllParameters = function() {
+        return GameCreator.actions[this.name].params;
+    }
+
+    GameCreator.RuntimeAction.prototype.getParameter = function(name) {
+        return GameCreator.actions[this.name].params[name];
+    }
 
     GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj) {
         var timerFunction;
@@ -59,105 +69,90 @@
                           name: "Stop",
                           timing: {at: false, every: false, after: false},
                         }),
-          Destroy: new GameCreator.Action({  
+          Destroy: new GameCreator.Action({   
                           action: function(params) {this.parent.destroy.call(this, params); },
-                          params: [{    inputId: "effect",
-                                     input: function() {return GameCreator.htmlStrings.singleSelector("effect", $.extend({"None": "None"}, GameCreator.effects.destroyEffects)); },
-                                     label: function() {return GameCreator.htmlStrings.inputLabel("effect", "Effect"); }
-                                 }],
+                          params: {"effect":
+                                    {param: GameCreator.DestroyEffectParameter,
+                                     mandatory: false,
+                                     defaultValue: null}
+                                 },
                           name: "Destroy",
                           timing: {at: true, every: false, after: true},
                         }),
           Shoot:   new GameCreator.Action({    
                           action: function(params) {this.parent.shoot.call(this, params); },
-                          params: [{    inputId: "objectToShoot",
-                                     input: function() {return GameCreator.htmlStrings.singleSelector("objectToShoot", GameCreator.globalObjects); },
-                                     label: function() {return GameCreator.htmlStrings.inputLabel("objectToShoot", "Object"); }
+                          params: {"objectToShoot":
+                                    {param: GameCreator.ShootableObjectParameter,
+                                     mandatory: true
+                                     },
+                                    "projectileSpeed":
+                                     {param: GameCreator.NumberParameter,
+                                      mandatory: false,
+                                      defaultValue: 500},
+                                    "projectileDirection":
+                                     {param: GameCreator.DirectionParameter,
+                                      mandatory: false,
+                                      defaultValue: "default"}
                                  },
-                                 {   inputId: "projectileSpeed",
-                                     input: function() {return GameCreator.htmlStrings.rangeInput("projectileSpeed", "", "500"); },
-                                     label: function() {return GameCreator.htmlStrings.inputLabel("projectileSpeed", "Speed") + '<br style="clear: both"/>'; }
-                                 },
-                                 {
-                                    inputId: "projectileDirection",
-                                    input: function() {return GameCreator.htmlStrings.singleSelector("projectileDirection", $.extend(GameCreator.directions,
-                                                                                                                            GameCreator.getUniqueIDsInScene())); },
-                                    label: function() {return GameCreator.htmlStrings.inputLabel("projectileDirection", "Direction"); }
-                                 }],
                           name: "Shoot",
                           timing: {at: true, every: true, after: true},
                         }),
           Create:   new GameCreator.Action({    
-                          action: function(params){GameCreator.createRuntimeObject(params, {}); },
-                          params: [{
-                                    inputId: "objectToCreate",
-                                    input: function() {return GameCreator.htmlStrings.singleSelector("objectToCreate", GameCreator.getGlobalObjects()); },
-                                    label: function() {return GameCreator.htmlStrings.inputLabel("objectToCreate", "Object"); }
-                                 },
-                                 {
-                                    inputId: "x",
-                                    input: function() {return GameCreator.htmlStrings.rangeInput("x", "x", ""); },
-                                    label: function() {return GameCreator.htmlStrings.inputLabel("x", "X") + '<br style="clear: both"/>'; }
-                                 },
-                                {
-                                    inputId: "y",
-                                    input: function() {return GameCreator.htmlStrings.rangeInput("y", "y", ""); },
-                                    label: function() {return GameCreator.htmlStrings.inputLabel("y", "Y") + '<br style="clear: both"/>'; }
-                                 }],
+                          action: function(params) {GameCreator.createRuntimeObject(params, {}); },
+                          params: {"objectToCreate": 
+                                    {param: GameCreator.GlobalObjectParameter,
+                                    mandatory: true},
+                                   "x": 
+                                   {param: GameCreator.NumberParameter,
+                                    mandatory: false,
+                                    defaultValue: 0},
+                                   "y": 
+                                   {param: GameCreator.NumberParameter,
+                                    mandatory: false,
+                                    defaultValue: 0}
+                                  },
                           name: "Create",
                           timing: {at: true, every: true, after: true},
-                          runnableFunction: function() {return true;}
+                          runnableFunction: function() { return true; }
                         }),
           Counter:  new GameCreator.Action({
-                          action: function(params) {GameCreator.changeCounter(this, params); },
-                          params: [{
-                                  inputId: "counterObject",
-                                  input: function() {return GameCreator.UI.setupSingleSelectorWithListener(
-                                      "counterObject",
-                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInScene()),
-                                      "change",
-                                      function(){$("#counterName").replaceWith(GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj($(this).val()))); }
-                                      ); },
-                                  label: function() {return GameCreator.htmlStrings.inputLabel("counterObject", "Object"); }
-                              },
-                              {
-                                  inputId: "counterName",
-                                  input: function(thisName){return GameCreator.htmlStrings.singleSelector("counterName", GameCreator.getCountersForGlobalObj(thisName)); },
-                                  label: function(){return GameCreator.htmlStrings.inputLabel("counterName", "Counter"); }
-                              },
-                              {
-                                  inputId: "counterType",
-                                  input: function(){return GameCreator.htmlStrings.singleSelector("counterType", {"Set":"set", "Change":"change" }); },
-                                  label: function(){return GameCreator.htmlStrings.inputLabel("counterType", "Type"); }
-                              },
-                              {
-                                  inputId: "counterValue",
-                                  input: function(){return GameCreator.htmlStrings.rangeInput("counterValue", "value", "1"); },
-                                  label: function(){return GameCreator.htmlStrings.inputLabel("counterValue", "Value") + '<br style="clear: both"/>'; }
-                              }
-                            ],
+                        action: function(params) {GameCreator.changeCounter(this, params); },
+                        params: {
+                          "objId":
+                          {
+                              param: GameCreator.SceneObjectParameter,
+                              mandatory: false,
+                              defaultValue: 'this',
+                              observer: 'counter'
+                          },
+                          "counter":
+                          {
+                              param: GameCreator.CounterParameter,
+                              mandatory: true,
+                          },
+                          "type":
+                          {
+                              param: GameCreator.CounterChangeTypeParameter,
+                              mandatory: false,
+                              defaultValue: 'change',
+                          },
+                          "value":
+                          {
+                              param: GameCreator.NumberParameter,
+                              mandatory: false,
+                              defaultValue: 1,
+                          },
+                        },
                         name: "Counter",
                         timing: {at: true, every: true, after: true},
                       }),
           SwitchState:  new GameCreator.Action({
                           action: function(params) {GameCreator.changeState(this, params); },
-                          params: [{
-                                  inputId: "objectId",
-                                  input: function() {return GameCreator.UI.setupSingleSelectorWithListener(
-                                      "objectId",
-                                      $.extend({"this": "this"}, GameCreator.getUniqueIDsInScene()),
-                                      "change",
-                                      function(){$("#stateId").replaceWith(GameCreator.htmlStrings.singleSelector("stateId", GameCreator.getStatesForGlobalObj($(this).val()))); }
-                                      ); },
-                                  label: function() {return GameCreator.htmlStrings.inputLabel("objectId", "Object"); }
-                              },
-                              {
-                                  inputId: "stateId",
-                                  input: function(thisName){return GameCreator.htmlStrings.singleSelector("stateId", GameCreator.getStatesForGlobalObj(thisName)); },
-                                  label: function(){return GameCreator.htmlStrings.inputLabel("stateId", "State"); }
-                              },
-
-                            ],
+                          params: {"objectState":
+                                    {param: GameCreator.StateParameter,
+                                     mandatory: true
+                                 }
+                             },
                         name: "SwitchState",
                         timing: {at: true, every: false, after: true},
                       }),
@@ -169,17 +164,11 @@
                       }),
           SwitchScene: new GameCreator.Action({
                                 action: function(params){GameCreator.selectScene(params); },
-                                params: [{
-                                                inputId: "changeType",
-                                                input: function(){return GameCreator.htmlStrings.singleSelector("changeType", {increment: "increment", decrement: "decrement", setScene: "setScene"}); },
-                                                label: function(){return GameCreator.htmlStrings.inputLabel("changeType", "Type"); }
-                                                },
-                                                {
-                                                    inputId: "changeValue",
-                                                    input: function(){return GameCreator.htmlStrings.numberInput("changeValue", "changeValue", "1"); },
-                                                    label: function(){return GameCreator.htmlStrings.inputLabel("changeValue", "Value"); }
-                                                }
-                                    ],
+                                params: {"scene":
+                                            {param: GameCreator.SwitchSceneParameter,
+                                             mandatory: true,
+                                            }
+                                     },
                                 name: "SwitchScene",
                                 timing: {at: true, every: true, after: true},
                               runnableFunction: function() {return true;}
@@ -227,14 +216,6 @@
             Counter: GameCreator.actions.Counter,
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
-            SwitchState: GameCreator.actions.SwitchState,
-        },
-
-        onCreateActions: {
-            Destroy: GameCreator.actions.Destroy,
-            Shoot: GameCreator.actions.Shoot,
-            Create: GameCreator.actions.Create,
-            Counter: GameCreator.actions.Counter,
             SwitchState: GameCreator.actions.SwitchState,
         }
     };

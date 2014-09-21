@@ -28,6 +28,8 @@
 
     GameCreator.RouteObject.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+    GameCreator.RouteObject.objectNonStateAttributes = GameCreator.helpers.getStandardNonStateAttributes();
+
     GameCreator.RouteObject.objectAttributes = $.extend(GameCreator.RouteObject.objectAttributes, {
         "speed": GameCreator.htmlStrings.rangeInput
     });
@@ -116,7 +118,7 @@
         sceneObject.targetNode = args.targetNode !== undefined ? args.targetNode : 0;
         //If heading backwards or forwards through the grid. (Should switch when reaching a bounce node.)
         sceneObject.routeForward = args.routeForward !== undefined ? args.routeForward : true;
-        sceneObject.speed = args.speed !== undefined ? args.speed : state.attributes.speed;
+        sceneObject.attributes.speed = args.speed !== undefined ? args.speed : state.attributes.speed;
     };
 
     GameCreator.RouteObject.prototype.move = function(modifier) {

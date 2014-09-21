@@ -22,8 +22,9 @@ window.onload = function () {
         GameCreator.uiCanvas.height = GameCreator.height;
         $("#canvas-container").append(GameCreator.uiCanvas);
         
-        GameCreator.scenes.push([]);
-        GameCreator.activeScene = 0;
+        var startupScene = new GameCreator.Scene()
+        GameCreator.scenes.push(startupScene);
+        GameCreator.activeSceneId = startupScene.id;
         
         //Create FreeObjects
         
@@ -31,10 +32,12 @@ window.onload = function () {
         var ballImage = GameCreator.helpers.parseImage("assets/ball.png");
         var barImage = GameCreator.helpers.parseImage("assets/bar1.png");
         var zerglingImage = GameCreator.helpers.parseImage("assets/zergling.png");
+        var blackBallImage = GameCreator.helpers.parseImage("assets/black_ball.gif");
+        var zealotImage = GameCreator.helpers.parseImage("assets/zealot.gif");
 
-        var globalBall = GameCreator.addGlobalObject({image: redBallImage, objectName: "red_ball", width:[50],x:[1,100], y:[1,100], height:[50]}, "FreeObject");
-        var globalBall2 = GameCreator.addGlobalObject({image: ballImage, objectName: "ball", width:[70],x:[1,100], y:[1,100], height:[70]}, "FreeObject");
-        GameCreator.addGlobalObject({image: barImage, objectName:"bar", width:[388], height:[55], x:[1,100], y:[1,100]}, "FreeObject");
+        var globalBall = GameCreator.addGlobalObject({image: redBallImage, objectName: "free_red_ball", width:[50],x:[1,100], y:[1,100], height:[50]}, "FreeObject");
+        var globalBall2 = GameCreator.addGlobalObject({image: ballImage, objectName: "free_ball", width:[70],x:[1,100], y:[1,100], height:[70]}, "FreeObject");
+        GameCreator.addGlobalObject({image: barImage, objectName:"free_bar", width:[388], height:[55], x:[1,100], y:[1,100]}, "FreeObject");
         //var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, speed: 200});
         //GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:200, y:400, speedX: -300, speedY:140});
         //GameCreator.createInstance(globalBall2, GameCreator.scenes[0], {x:200, y:100, speedX: -340, speedY:160});
@@ -47,19 +50,18 @@ window.onload = function () {
         
         //Create Mouseobject
         
-        //var globalMousePlayer = GameCreator.addGlobalObject({image: {src: "assets/zealot.gif"}, objectName: "muszealoten",x:[1,100], y:[1,100], width: [80], height: [80]}, "mouseObject")
-        //GameCreator.createInstance(globalMousePlayer, GameCreator.scenes[0], {x:100, y:200})
+        var globalMousePlayer = GameCreator.addGlobalObject({image: zealotImage, objectName: "mouse_zealot", width: [80], height: [80]}, "MouseObject")
         
         //Create Platformobject
         
-        //var globalPlatformPlayer = GameCreator.addGlobalObject({image: {src: "assets/zealot.gif"}, x:[1,100], y:[1,100],objectName: "hoppzealoten", width: [80], height: [80]}, "platformObject")
-        //GameCreator.createInstance(globalPlatformPlayer, GameCreator.scenes[0], {x:150, y:400, accY: 5});
+        var globalPlatformPlayer = GameCreator.addGlobalObject({image: zealotImage,objectName: "platform_zealot", width: [80], height: [80]}, "PlatformObject")
         
         //Create TopDownObject
         
-        var globalTopDownPlayer = GameCreator.addGlobalObject({image: zerglingImage, x:[1,100], y:[1,100], objectName: "zerglingen", width: [80], height: [80]}, "TopDownObject")
+        var globalTopDownPlayer = GameCreator.addGlobalObject({image: zerglingImage, x:[1,100], y:[1,100], objectName: "topdown_zerg", width: [80], height: [80]}, "TopDownObject")
         
-        
+        var globalTextCounter = GameCreator.addGlobalObject({objectName: "textCounter"}, "CounterObjectText");
+        var globalImageCounter = GameCreator.addGlobalObject({image: blackBallImage, width: [50], height: [50], objectName: "imageCounter"}, "CounterObjectImage");
         //GameCreator.loadScene(GameCreator.scenes[0]);
         
         GameCreator.editScene(GameCreator.scenes[0]);
@@ -92,5 +94,8 @@ window.onload = function () {
          
         $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
         $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue)
+        $("#run-game-button").on("click", GameCreator.playGame)
+        $("#edit-game-button").on("click", GameCreator.editActiveScene)
+        $("#direct-game-button").on("click", GameCreator.directActiveScene)
     }
     

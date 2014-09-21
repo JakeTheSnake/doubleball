@@ -2,20 +2,20 @@
 (function() {
     "use strict";
     GameCreator.helpers.determineQuadrant = function(base, obj) {
-        var x = obj.x;
-        var y = obj.y;
-        var width = obj.width;
-        var height = obj.height;
-        var baseWidth = base.width;
-        var baseHeight = base.height;
+        var x = obj.attributes.x;
+        var y = obj.attributes.y;
+        var width = obj.attributes.width;
+        var height = obj.attributes.height;
+        var baseWidth = base.attributes.width;
+        var baseHeight = base.attributes.height;
         var objMidX = x + width / 2;
         var objMidY = y + height / 2;
-        var baseMidX = base.x + base.width / 2;
-        var baseMidY = base.y + base.height / 2;
-        var baseEdgeTL = {x: base.x, y: base.y};
-        var baseEdgeTR = {x: base.x + baseWidth, y: base.y};
-        var baseEdgeBL = {x: base.x + baseHeight, y: base.y};
-        var baseEdgeBR = {x: base.x + baseWidth, y: base.y + baseHeight};
+        var baseMidX = base.attributes.x + base.attributes.width / 2;
+        var baseMidY = base.attributes.y + base.attributes.height / 2;
+        var baseEdgeTL = {x: base.attributes.x, y: base.attributes.y};
+        var baseEdgeTR = {x: base.attributes.x + baseWidth, y: base.attributes.y};
+        var baseEdgeBL = {x: base.attributes.x + baseHeight, y: base.attributes.y};
+        var baseEdgeBR = {x: base.attributes.x + baseWidth, y: base.attributes.y + baseHeight};
         //Top left quadrant
         if (objMidX - baseMidX <= 0 && objMidY - baseMidY <= 0) {
             if (objMidX - baseEdgeTL.x > objMidY - baseEdgeTL.y) {
@@ -47,14 +47,15 @@
     };
 
     GameCreator.helpers.doCollision = function(object, targetObject) {
-        var currentEventItem = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
-        var j, choosableActions, newEventItem, currentEvent;
+        var event = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+        var caSets = event ? event.caSets : undefined;
+        var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
-        if (currentEventItem !== undefined) {
-            for (j = 0; j < currentEventItem.events.length; j += 1) {
-                currentEvent = currentEventItem.events[j];
-                if (currentEvent.checkConditions()) {
-                    currentEvent.runActions(object, {collisionObject: targetObject});
+        if (caSets !== undefined) {
+            for (j = 0; j < caSets.length; j += 1) {
+                currentSet = caSets[j];
+                if (currentSet.checkConditions(object)) {
+                    currentSet.runActions(object, {collisionObject: targetObject});
                 }
             }
         }
@@ -64,13 +65,11 @@
             } else {
                 choosableActions = GameCreator.actionGroups.collisionActions;
             }
-            newEventItem = {id: targetObject.parent.id, events: [new GameCreator.Event()]};
-            object.parent.onCollideEvents.push(newEventItem);
+            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object)]};
+            object.parent.onCollideEvents.push(newSetsItem);
             GameCreator.UI.openEditActionsWindow(
                 "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'",
-                choosableActions,
-                newEventItem.events[0].actions,
-                object.objectName
+                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType))
             );
         }
     };
@@ -81,10 +80,10 @@
         }
 
         //Check for border collisions.
-        var x = object.x;
-        var y = object.y;
-        var width = object.width;
-        var height = object.height;
+        var x = object.attributes.x;
+        var y = object.attributes.y;
+        var width = object.attributes.width;
+        var height = object.attributes.height;
         var i, j, runtimeObjectsItem, collisionObject, targetObject, collisionItem;
 
         if (x < 1) {
@@ -118,7 +117,7 @@
             for (j = 0; j < object.parent.onCollideEvents.length; j += 1) {
                 collisionItem = object.parent.onCollideEvents[j];
                 runtimeObjectsItem = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, collisionItem.id);
-                if (GameCreator.helpers.eventItemHasActions(collisionItem) && runtimeObjectsItem) {
+                if (GameCreator.helpers.caSetsHaveActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                         targetObject = runtimeObjectsItem.runtimeObjects[i];
                         if (GameCreator.helpers.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
@@ -130,10 +129,14 @@
         }
     };
 
-    GameCreator.helpers.eventItemHasActions = function(eventItem) {
+    /**
+    * This function check if any Condition-Action-Set in this event contains actions.
+    * If it does, we don't have to check for any collisions.
+    */
+    GameCreator.helpers.caSetsHaveActions = function(eventItem) {
         var i;
-        for (i = 0; i < eventItem.events.length; i += 1) {
-            if (eventItem.events[i].actions.length > 0) {
+        for (i = 0; i < eventItem.caSets.length; i += 1) {
+            if (eventItem.caSets[i].actions.length > 0) {
                 return true;
             }
         }
@@ -142,8 +145,8 @@
 
     GameCreator.helpers.checkObjectCollision = function(object, targetObject) {
         if (!(object === targetObject)) {
-            if ((Math.abs((object.x + object.width / 2) - (targetObject.x + targetObject.width / 2)) < object.width / 2 + targetObject.width / 2) &&
-                    (Math.abs((object.y + object.height / 2) - (targetObject.y + targetObject.height / 2)) < object.height / 2 + targetObject.height / 2)) {
+            if ((Math.abs((object.attributes.x + object.attributes.width / 2) - (targetObject.attributes.x + targetObject.attributes.width / 2)) < object.attributes.width / 2 + targetObject.attributes.width / 2) &&
+                    (Math.abs((object.attributes.y + object.attributes.height / 2) - (targetObject.attributes.y + targetObject.attributes.height / 2)) < object.attributes.height / 2 + targetObject.attributes.height / 2)) {
                 return true;
             }
         }
@@ -232,11 +235,11 @@
         var image = new Image();
         image.src = imgSrc;
         image.onload = function() {
-                $(image).data('loaded', true);
-                GameCreator.render();
-            };
+            $(image).data('loaded', true);
+            GameCreator.render();
+        };
         return image;
-    }
+    };
 
     GameCreator.helpers.getRandomFromRange = function(range) {
         var value;
@@ -254,14 +257,19 @@
         return value;
     };
 
-    GameCreator.helpers.calculateScene = function(activeScene, params) {
+    GameCreator.helpers.calculateScene = function(activeSceneId, params) {
+        var activeScene = GameCreator.getActiveScene();
+        var currentSceneNumber;
+        for (currentSceneNumber = 0; currentSceneNumber < GameCreator.scenes.length; i++) {
+            if (GameCreator.scenes[currentSceneNumber] === activeScene) break;
+        }
         switch (params.changeType) {
         case 'increment':
-            return activeScene + params.changeValue;
+            return GameCreator.scenes[(currentSceneNumber + params.changeValue) % GameCreator.scenes.length];
         case 'decrement':
-            return activeScene - params.changeValue;
+            return GameCreator.scenes[(currentSceneNumber - params.changeValue) % GameCreator.scenes.length];
         case 'setScene':
-            return params.changeValue;
+            return GameCreator.helpers.getObjectById(GameCreator.scenes, params.changeValue);
         }
     };
 
@@ -289,19 +297,22 @@
     };
 
     GameCreator.helpers.setStandardProperties = function(globalObj, args) {
+        args = args ? args : {};
         globalObj.objectName = args.objectName;
-        globalObj.unique = args.unique;
+        globalObj.attributes = {
+            unique: args.unique != undefined ? args.unique : false
+        };
         globalObj.parentCounters = {};
         globalObj.counters = {};
-        globalObj.onDestroyEvents = [];
-        globalObj.onCreateEvents = [];
+        globalObj.onDestroySets = [];
+        globalObj.onCreateSets = [];
         globalObj.states = [{
             name: "Default",
             id: 0,
             attributes: {
-                image: args.image,
-                width: args.width,
-                height: args.height
+                image: args.image != undefined ? args.image : '',
+                width: args.width != undefined ? args.width : [50],
+                height: args.height != undefined ? args.width : [50],
             }
         }];
     };
@@ -312,11 +323,23 @@
           "height": GameCreator.htmlStrings.rangeInput};
     };
 
+    GameCreator.helpers.getStandardNonStateAttributes = function() {
+        return {"unique": GameCreator.htmlStrings.checkboxInput};
+    };
+
     GameCreator.helpers.getNonCollisionActions = function(objectType) {
         if (objectType === "MouseObject") {
             return GameCreator.actionGroups.mouseNonCollisionActions;
         } else {
             return GameCreator.actionGroups.nonCollisionActions;
+        }
+    };
+
+    GameCreator.helpers.getCollisionActions = function(objectType) {
+        if (objectType === "MouseObject") {
+            return GameCreator.actionGroups.mouseCollisionActions;
+        } else {
+            return GameCreator.actionGroups.collisionActions;
         }
     };
 
@@ -328,23 +351,30 @@
         return segments.join(" ");
     };
 
-    GameCreator.helpers.getAttributeForm = function(attributes, attrToInputMap, defaults) {
-        var result = '';
-        var attrNames = Object.keys(attributes);
-        for (var i = 0; i < attrNames.length; i++) {
-            if(attrToInputMap[attrNames[i]]) {
-                var elementId = 'object-property-' + attrNames[i];
-                var defaultValue;
-                if (defaults) {
-                    defaultValue = defaults[attrNames[i]];
-                }
-                result += GameCreator.htmlStrings.inputLabel(elementId, 
-                    GameCreator.helpers.labelize(attrNames[i])) +
-                    attrToInputMap[attrNames[i]](elementId, attrNames[i], defaultValue) +
-                    '<br style="clear:both;"/>';
+    GameCreator.helpers.populateGlobalObjectPropertiesForm = function(attributes, attrToInputMap, containerId) {
+        var i, keys = attributes ? Object.keys(attributes) : [];
+
+        for (i = 0; i < keys.length; i += 1) {
+            var attributeName = keys[i];
+            if (attrToInputMap[attributeName]) {
+                $("#object-property-" + attributeName + "-container").html(
+                    GameCreator.htmlStrings.inputLabel(GameCreator.helpers.labelize(attributeName)) +
+                    attrToInputMap[attributeName](attributeName, attributes[attributeName])
+                );
             }
         }
-        return result;
+        $('#' + containerId + ' input').on('change', function() {
+            GameCreator.saveInputValueToObject($(this), attributes);
+        });
+    };
+
+    GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {
+        var i;
+        var attributes = sideObject.attributes;
+        for (i = 0; i < Object.keys(attributes).length; i += 1) {
+            var attributeName = Object.keys(attributes)[i];
+            GameCreator.UI.setupValuePresenter($("#side-property-" + attributeName), attributes, attributeName, sideObject, onChangeCallback);
+        }
     };
 
     GameCreator.helpers.startsWith = function(baseString, comparator) {
@@ -380,6 +410,106 @@
                 break;
         }
         $(GameCreator.mainCanvas).css("cursor", cursor);
-    }
+    };
+
+    GameCreator.helpers.getPresentationForInputValue = function(value, type, obj) {
+        if (value !== undefined && value !== null) {
+            switch (type) {
+                case "rangeInput":
+                    if (value.length == 1) {
+                        return value[0];
+                    } else if (value.length == 2) {
+                        return (value[0] + ":" + value[1]);
+                    } else {
+                        return value;
+                    }
+                case "globalObjectInput":
+                    return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
+                case "shootableObjectInput":
+                    return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
+                case "stateInput":
+                    return GameCreator.helpers.getObjectById(obj.states, Number(value)).name;
+                case "counterTypeInput":
+                    return GameCreator.helpers.getPrettyName(value);
+                case "sceneInput":
+                    return GameCreator.getSceneById(Number(value)).attributes.name;
+                case "imageInput":
+                    return value.src;
+                default:
+                    return value;
+            }
+        }
+        return '';
+    };
+
+    GameCreator.helpers.getPrettyName = function(databaseName) {
+        var prettyNames = {
+            objectToCreate: 'Object',
+            objectToShoot: 'Object',
+            projectileSpeed: 'Speed',
+            projectileDirection: 'Direction',
+            objectState: 'State',
+            objId: 'Object',
+            counterObject: 'Counter',
+            change: 'Change to',
+            set: 'Set to',
+        }
+        return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName.charAt(0).toUpperCase() + databaseName.slice(1);
+    };
+
+    GameCreator.helpers.getShootableObjectIds = function(){
+        var i, result = {};
+        var objectNames = Object.keys(GameCreator.globalObjects);
+        for(i = 0; i < objectNames.length; i += 1) {
+            if(GameCreator.globalObjects[objectNames[i]].isShootable()) {
+                result[objectNames[i]] = GameCreator.globalObjects[objectNames[i]].id;
+            }
+        }
+        return result;
+    };
+
+    GameCreator.helpers.getSelectableScenes = function() {
+        var result = {};
+        GameCreator.scenes.forEach(function(scene){
+            result[scene.attributes.name] = scene.id;
+        });
+        return result;
+    };
+
+    GameCreator.helpers.getGlobalObjectIds = function() {
+        var i, result = {};
+        var objectNames = Object.keys(GameCreator.globalObjects);
+        for(i = 0; i < objectNames.length; i += 1) {
+            result[objectNames[i]] = GameCreator.globalObjects[objectNames[i]].id;
+        }
+        return result;
+    };
+
+    GameCreator.helpers.getSelectableTimings = function(actionName) {
+        var timings = GameCreator.actions[actionName].timing;
+        var selectableTimings = {'Now': 'now'};
+        var timingKeys = Object.keys(timings);
+        for (var i = 0; i < timingKeys.length; i+=1) {
+            if (timings[timingKeys[i]]) {
+                selectableTimings[GameCreator.helpers.getPrettyName(timingKeys[i])] = timingKeys[i];
+            }
+        }
+        return selectableTimings;
+    };
+
+    Array.prototype.collect = function(collectFunc) {
+        var result = [];
+        for (var i = 0; i < this.length; i++) {
+            var collectedValue = collectFunc(this[i]);
+            if (collectedValue !== undefined) {
+                result.push(collectedValue);
+            }
+        }
+        return result;
+    };
+
+
+
+
 
 }());

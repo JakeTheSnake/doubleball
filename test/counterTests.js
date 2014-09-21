@@ -56,7 +56,7 @@ module("UniqueCounter", {
         redBall = GameCreator.addGlobalObject({image: image, unique: true, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
         redBall.parentCounters["testCounter"] = new GameCreator.Counter();
         GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
-        GameCreator.scenes.push([]);
+        GameCreator.scenes.push(new GameCreator.Scene());
         GameCreator.createSceneObject(redBall, GameCreator.scenes[1], {x: 5, y: 6});
         counter = GameCreator.globalObjects["red_ball"].counters["testCounter"];
         testString = "";
@@ -88,7 +88,7 @@ module("Counter", {
     redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
-    counter = GameCreator.scenes[0][0].counters["testCounter"];
+    counter = GameCreator.scenes[0].objects[0].counters["testCounter"];
     testString = "";
     GameCreator.actions["testAction"] = new GameCreator.Action({
                                                 action: function(params) {testString = params.value;},
