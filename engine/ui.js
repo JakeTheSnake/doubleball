@@ -82,7 +82,7 @@ GameCreator.UI = {
     //Add global object functions
     
     openAddGlobalObjectDialogue: function() {
-        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.addGlobalObjectWindow());
+        GameCreator.UI.openDialogue(700, 570, GameCreator.htmlStrings.addGlobalObjectWindow());
         GameCreator.UI.populateSelectObjectTypeGroupList();
     },
 
@@ -343,8 +343,15 @@ GameCreator.UI = {
                 column.find('.active').removeClass('active');
                 $(this).addClass('active');
                 var globalObject = new GameCreator[objectTypeGroup[keys[index]]]({});
-                $("#add-global-object-form-content").html(globalObject.getPropertiesForm(0));
+                $("#add-global-object-form-content").html(globalObject.getAddGlobalObjectPropertiesContent('Properties for ' + GameCreator.helpers.labelize(globalObject.objectType)));
                 GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObject.getDefaultState().attributes, GameCreator[globalObject.objectType].objectAttributes, 'add-global-object-form-content');
+                $("#save-new-global-object-button").click(function() {
+                    var objectName = $("#add-global-object-name-input").val();
+                    globalObject.objectName = objectName;
+                    GameCreator.globalObjects[objectName] = globalObject;
+                    GameCreator.UI.createLibraryItem(globalObject);
+                    GameCreator.UI.closeDialogue();
+                });
             }.bind(listItem, i));
 
             column.append(listItem);

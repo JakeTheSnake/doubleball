@@ -5,7 +5,7 @@
         return  '<li data-uifunction="setupOnClickActionsForm"><i class="icon-codeopen" /><span>On Click</span></li>';
     };
 
-    GameCreator.RouteObject.prototype.getPropertiesForm = function(stateId) {
+    GameCreator.RouteObject.prototype.getPropertiesForm = function() {
         var result = ' \
 <div class="form-group"> \
     <div id="object-property-width-container" class="form-item"> \

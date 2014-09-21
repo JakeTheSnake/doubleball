@@ -311,8 +311,8 @@
             id: 0,
             attributes: {
                 image: args.image != undefined ? args.image : '',
-                width: args.width != undefined ? args.width : 0,
-                height: args.height != undefined ? args.width : 0,
+                width: args.width != undefined ? args.width : [50],
+                height: args.height != undefined ? args.width : [50],
             }
         }];
     };

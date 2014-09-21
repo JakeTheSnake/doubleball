@@ -9,6 +9,7 @@ GameCreator.commonObjectViews = {
         object.getNonStatePropertiesForm = GameCreator.commonObjectViews.getNonStatePropertiesForm;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
         object.getEventsContent = GameCreator.commonObjectViews.getEventsContent;
+        object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
     },
 
     addPlayerObjectViews: function(object) {
@@ -20,6 +21,7 @@ GameCreator.commonObjectViews = {
     addCounterObjectViews: function(object) {
         object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
+        object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
     },
 
     /******************************
@@ -134,6 +136,30 @@ GameCreator.commonObjectViews = {
                     <div id="state-properties-content">';
                         result += this.getPropertiesForm() +
                     '</div>\
+                </div>\
+            </div>\
+        </div>';
+        return result;
+    },
+
+    getAddGlobalObjectPropertiesContent: function(title) {
+        var result = '\
+        <div class="col border-right object-manager-properties"> \
+            <div class="panel-heading"> \
+                <span class="panel-title">' + title + '</span> \
+            </div> \
+            <div class="panel-body"> \
+                <div class="panel-paragraph"> \
+                    <div id="state-properties-content"> \
+                    <div class="form-group"> \
+                        <div id="object-property-name-container" class="form-item"> \
+                            <label>Name</label> \
+                            <input type="text" id="add-global-object-name-input" placeholder="Object name"/> \
+                        </div> \
+                    </div>';
+                        result += this.getPropertiesForm() +
+                        '<button id="save-new-global-object-button">Save object</button>\
+                    </div>\
                 </div>\
             </div>\
         </div>';

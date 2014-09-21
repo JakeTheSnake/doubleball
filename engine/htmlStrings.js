@@ -159,10 +159,10 @@ GameCreator.htmlStrings = {
     },
 
     addGlobalObjectWindow: function() {
-        var html = '<div class="dialogue bottom"><div id="add-global-object-window" class="panel-default" style="height: 400px">';
+        var html = '<div class="dialogue bottom"><div id="add-global-object-window" class="panel-default" style="height: 570px">';
         html += GameCreator.htmlStrings.getColumn('Type of object', 'dialogue-panel-object-type-group');
         html += GameCreator.htmlStrings.getColumn('Object', 'dialogue-panel-object-type');
-        html += '<div id="add-global-object-form-content"></div>'
+        html += '<div class="col" id="add-global-object-form-content"></div>'
         html += '</div></div>'
         return html;
     },
