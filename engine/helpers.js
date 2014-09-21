@@ -352,14 +352,16 @@
     };
 
     GameCreator.helpers.populateGlobalObjectPropertiesForm = function(attributes, attrToInputMap, containerId) {
-        var i;
+        var i, keys = attributes ? Object.keys(attributes) : [];
 
-        for (i = 0; i < Object.keys(attributes).length; i += 1) {
-            var attributeName = Object.keys(attributes)[i];
-            $("#object-property-" + attributeName + "-container").html(
-                GameCreator.htmlStrings.inputLabel(GameCreator.helpers.labelize(attributeName)) +
-                attrToInputMap[attributeName](attributeName, attributes[attributeName])
-            );
+        for (i = 0; i < keys.length; i += 1) {
+            var attributeName = keys[i];
+            if (attrToInputMap[attributeName]) {
+                $("#object-property-" + attributeName + "-container").html(
+                    GameCreator.htmlStrings.inputLabel(GameCreator.helpers.labelize(attributeName)) +
+                    attrToInputMap[attributeName](attributeName, attributes[attributeName])
+                );
+            }
         }
         $('#' + containerId + ' input').on('change', function() {
             GameCreator.saveInputValueToObject($(this), attributes);

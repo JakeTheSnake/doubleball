@@ -12,7 +12,6 @@ GameCreator.CounterObjectImage = function(args) {
     this.getDefaultState().attributes.image = args.image;
     this.getDefaultState().attributes.width = [100]; //TODO: Handle width and height of counters?
     this.getDefaultState().attributes.height = [100];
-    this.getDefaultState().attributes.size = args.size || 20;
 
     this.objectName = args.objectName;
     this.isClickable =  false;

@@ -10,6 +10,7 @@ GameCreator.commonObjectViews = {
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
         object.getEventsContent = GameCreator.commonObjectViews.getEventsContent;
         object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
+        object.getTabs = GameCreator.commonObjectViews.getTabs;
     },
 
     addPlayerObjectViews: function(object) {
@@ -22,6 +23,7 @@ GameCreator.commonObjectViews = {
         object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
         object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
+        object.getEditWindow = GameCreator.commonObjectViews.getEditWindow;
     },
 
     /******************************
@@ -51,12 +53,8 @@ GameCreator.commonObjectViews = {
                    <div class="panel-heading"> \
                    <span class="panel-title">Edit</span> \
                    </div> \
-                   <ul id="dialogue-panel-edit" class="nav nav-stacked nav-tabs nav-tabs-success"> \
-                   <li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
-                   <li data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></li> \
-                   <li data-uifunction="setupEventsForm"><i class="icon-codeopen" /><span>Events</span></li> \
-                   <li data-uifunction="setupCountersForm"><i class="icon-codeopen" /><span>Counters</span></li> \
-                   </ul> \
+                   <ul id="dialogue-panel-edit" class="nav nav-stacked nav-tabs nav-tabs-success">' + this.getTabs() + 
+                   '</ul> \
                    </div> \
                    <div id="dialogue-edit-content" class="content"> \
                    </div> \
@@ -67,6 +65,13 @@ GameCreator.commonObjectViews = {
 
                    
         return result;
+    },
+
+    getTabs: function() {
+        return '<li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
+        <li data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></li> \
+        <li data-uifunction="setupEventsForm"><i class="icon-codeopen" /><span>Events</span></li> \
+        <li data-uifunction="setupCountersForm"><i class="icon-codeopen" /><span>Counters</span></li>'
     },
 
     getCounterEventsContent: function(counterName){

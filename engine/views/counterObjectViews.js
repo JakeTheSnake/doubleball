@@ -10,18 +10,9 @@
                 return  '';
         },
 
-        getEditWindow: function() {
-            var result = "";
-
-            result += '<div id="dialogue-window-title">Edit object</div> \
-                       <div id="dialogue-window-menu"> \
-                       <a class="tab dialogue-window-tab active" data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></a>';
-
-            result += this.getTabs();
-            result +=  '<a class="tab dialogue-window-tab" data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></a>';
-            result +=  '</div><div id="edit-global-object-window-content"></div>';
-
-            return result;
+        getTabs: function() {
+            return '<li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
+            <li data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></li>'
         },
 
     };
@@ -49,7 +40,9 @@
     GameCreator.CounterObjectImage.prototype.getPropertiesForm = function() {
     var result = ' \
 <div class="form-group"> \
-    <div id="object-property-size-container" class="form-item"> \
+    <div id="object-property-width-container" class="form-item"> \
+    </div> \
+    <div id="object-property-height-container" class="form-item"> \
     </div> \
 </div> \
 <div class="panel-paragraph"> \
