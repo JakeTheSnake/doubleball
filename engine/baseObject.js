@@ -27,7 +27,7 @@
                 currentSet = new GameCreator.ConditionActionSet(this.parent);
                 this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    "'" + this.parent.objectName + "' has been destroyed!",
+                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + this.parent.objectName + "' has been destroyed!", this.image.src),
                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
@@ -58,7 +58,7 @@
                 currentSet = new GameCreator.ConditionActionSet(this.parent);
                 this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    "'" + this.parent.objectName + "' has been created!",
+                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + this.parent.objectName + "' has been created!", this.image.src),
                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
@@ -80,7 +80,7 @@
                 currentSet = new GameCreator.ConditionActionSet(this.parent);
                 this.parent.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    "Clicked on " + this.parent.objectName,
+                    GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + this.parent.objectName, this.image.src),
                      new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});

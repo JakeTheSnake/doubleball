@@ -65,11 +65,11 @@ GameCreator.UI = {
         });
     },
  
-    openEditActionsWindow: function(text, caSetVM) {  
+    openEditActionsWindow: function(infoWindowHtml, caSetVM) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         GameCreator.pauseGame();
         
-        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow());
+        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml));
         GameCreator.UI.setupActionsColumn();
         GameCreator.UI.populateSelectActionList(caSetVM);
         //GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);

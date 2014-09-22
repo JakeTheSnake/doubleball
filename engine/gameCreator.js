@@ -408,7 +408,8 @@
                     height: GCHeight + 1000, 
                     width: 500,
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()),
-                }
+                },
+                image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()),
             },
             borderR: {
                 objectName: "borderR", 
@@ -422,6 +423,7 @@
                     width: 500, 
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()),
                 },
+                image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()),
             },
             borderT: {
                 objectName: "borderT", 
@@ -435,6 +437,7 @@
                     width: GCWidth + 1000, 
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()),
                 },
+                image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()),
             },
             borderB: {
                 objectName: "borderB", 
@@ -448,6 +451,7 @@
                     width: GCWidth + 1000, 
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()),
                 },
+                image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()),
             },
         },
     };
