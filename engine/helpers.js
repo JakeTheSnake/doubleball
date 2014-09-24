@@ -257,22 +257,6 @@
         return value;
     };
 
-    GameCreator.helpers.calculateScene = function(activeSceneId, params) {
-        var activeScene = GameCreator.getActiveScene();
-        var currentSceneNumber;
-        for (currentSceneNumber = 0; currentSceneNumber < GameCreator.scenes.length; i++) {
-            if (GameCreator.scenes[currentSceneNumber] === activeScene) break;
-        }
-        switch (params.changeType) {
-        case 'increment':
-            return GameCreator.scenes[(currentSceneNumber + params.changeValue) % GameCreator.scenes.length];
-        case 'decrement':
-            return GameCreator.scenes[(currentSceneNumber - params.changeValue) % GameCreator.scenes.length];
-        case 'setScene':
-            return GameCreator.helpers.getObjectById(GameCreator.scenes, params.changeValue);
-        }
-    };
-
     GameCreator.helpers.getObjectById = function(array, id) {
         var i;
         for (i = 0; i < array.length; i += 1) {

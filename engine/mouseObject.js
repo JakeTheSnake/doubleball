@@ -151,7 +151,7 @@
             speedY = unitVector.y * projectileSpeed;
             break;
         }
-        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
+        GameCreator.createRuntimeObject(GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot)), {x: x, y: y, speedX: speedX, speedY: speedY});
     };
 
     GameCreator.MouseObject.prototype.onDestroy = function() {

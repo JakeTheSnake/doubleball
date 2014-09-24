@@ -247,6 +247,6 @@
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }
-        GameCreator.createRuntimeObject(GameCreator.globalObjects[staticParameters.objectToShoot], {x: x, y: y, speedX: speedX, speedY: speedY});
+        GameCreator.createRuntimeObject(GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot)), {x: x, y: y, speedX: speedX, speedY: speedY});
     };
 }());
