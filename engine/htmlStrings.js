@@ -163,6 +163,9 @@ GameCreator.htmlStrings = {
 
     defaultEventInformationWindow: function(title, imageSrc) {
         var html = '<div id="event-information-window">';
+        html += '<div class="panel-heading"> \
+                 <span class="panel-title">Default event</span> \
+                 </div>';
         html += '<div>' + title + '</div>';
         html += '<img src="' + imageSrc + '"/>';
         html += '</div>';
@@ -170,17 +173,30 @@ GameCreator.htmlStrings = {
     },
 
     collisionEventInformationWindow: function(title, image1Src, image2Src) {
-        var html = '<div id="event-information-window">' +
-        '<div>' + title + '</div>' +
-        '<img src="' + image1Src + '"/>' +
-        '<img src="whateverimage">' +
-        '<img src="' + image2Src + '"/>' +
-        '</div>'
+        var html = '<div id="event-information-window">';
+        html += '<div class="panel-heading"> \
+                 <span class="panel-title">Collision event</span> \
+                 </div>';
+
+        html += '<div id="" class="panel-body"> \
+                 <span>' + title + '</span> \
+                 <div class="image-preview"> \
+                 <img src="' + image1Src + '" height="110px" /> \
+                 </div> \
+                 <div class="image-preview"> \
+                 <img src="' + image2Src + '" height="110px" /> \
+                 </div> \
+                 </div> \
+                 </div>';
+                 
         return html;
     },
 
     editActionsWindow: function(infoWindowHtml) {
-        var html = '<div class="dialogue right"><div id="select-action-window" class="panel-default" style="height: 400px">';
+        var html = '<div class="dialogue right"><div id="select-action-window" class="panel panel-dialogue">';
+        html += '<div class="panel-heading "> \
+                 <span class="panel-title">Set action manager</span> \
+                 </div>';
         html += infoWindowHtml;
         html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
         html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');

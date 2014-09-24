@@ -427,6 +427,17 @@ input {
   left: 0;
 }
 
+#dialogue-window .btn {
+  width: 100%;
+  text-align: left;
+  padding-left: 8px;
+}
+
+#dialogue-window .nav-tabs > li {
+  width: auto;
+  padding-right: 30px;
+}
+
 /*
  * Object manager
  */
@@ -445,23 +456,8 @@ input {
   padding-right: 2px;
 }
 
-#object-manager .panel-heading {
-  margin-bottom: 2px;
-}
-
-#object-manager .content {
+#dialogue-window .content {
   height: 100%;
-}
-
-#object-manager .btn {
-  width: 100%;
-  text-align: left;
-  padding-left: 8px;
-}
-
-#object-manager .nav-tabs > li {
-  width: auto;
-  padding-right: 30px;
 }
 
 /*
@@ -496,6 +492,45 @@ input {
 
 
 
+/*
+ * Set action manager
+ */
+
+#select-action-window {
+  width: 420px;
+  height: 100%;
+}
+
+#select-action-window .col {
+  min-width: 208px;
+  padding-right: 2px;
+}
+
+#select-action-window .panel-body {
+  overflow-y: hidden;
+  height: 250px;
+  background-color: #323232;
+  margin-bottom: 2px;
+}
+
+#select-action-window .image-preview {
+  display:block;
+  width: 170px;
+  height: 110px;
+  background: url('../images/library_preview_grid.gif');
+  float: left;
+}
+
+#select-action-window .image-preview:last-child {
+  float: right;
+}
+
+#select-action-window .image-preview img {
+  height: 90px;
+  border: none;
+  display:block;
+  margin: 10px auto 0 auto;
+}
 
 #dialogue-events-content .col,
 #dialogue-counter-content .col {
