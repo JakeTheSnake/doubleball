@@ -35,7 +35,7 @@ window.onload = function () {
         var blackBallImage = GameCreator.helpers.parseImage("assets/black_ball.gif");
         var zealotImage = GameCreator.helpers.parseImage("assets/zealot.gif");
 
-        var globalBall = GameCreator.addGlobalObject({image: redBallImage, objectName: "free_red_ball", width:[50],x:[1,100], y:[1,100], height:[50]}, "FreeObject");
+        var globalBall = GameCreator.addGlobalObject({image: redBallImage, objectName: "free_route_ball", width:[50],x:[1,100], y:[1,100], height:[50]}, "RouteObject");
         var globalBall2 = GameCreator.addGlobalObject({image: ballImage, objectName: "free_ball", width:[70],x:[1,100], y:[1,100], height:[70]}, "FreeObject");
         GameCreator.addGlobalObject({image: barImage, objectName:"free_bar", width:[388], height:[55], x:[1,100], y:[1,100]}, "FreeObject");
         //var sceneBall = GameCreator.createInstance(globalBall, GameCreator.scenes[0], {x:1, y:400, speedX: 340, speedY:240, speed: 200});

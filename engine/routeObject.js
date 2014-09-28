@@ -44,19 +44,15 @@
 
     GameCreator.RouteObject.prototype.initialize = function() {
         this.invalidated = true;
-        this.speedY = GameCreator.helpers.getRandomFromRange(this.speedY);
-        this.speedX = GameCreator.helpers.getRandomFromRange(this.speedX);
-        this.accY = GameCreator.helpers.getRandomFromRange(this.accY);
-        this.accX = GameCreator.helpers.getRandomFromRange(this.accX);
-        this.width = GameCreator.helpers.getRandomFromRange(this.width);
-        this.height = GameCreator.helpers.getRandomFromRange(this.height);
-        this.x = GameCreator.helpers.getRandomFromRange(this.x);
-        this.y = GameCreator.helpers.getRandomFromRange(this.y);
+        this.attributes.speed = GameCreator.helpers.getRandomFromRange(this.attributes.speed);
+        this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
+        this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
+        this.attributes.x = GameCreator.helpers.getRandomFromRange(this.attributes.x);
+        this.attributes.y = GameCreator.helpers.getRandomFromRange(this.attributes.y);
     };
 
     GameCreator.RouteObject.prototype.calculateSpeed = function() {
-        this.speedY += this.accY;
-        this.speedX += this.accX;
+
     };
 
     GameCreator.RouteObject.prototype.shoot = function(staticParameters) {
@@ -72,27 +68,27 @@
                 speedY = unitVector.y * projectileSpeed;
             }
             speedX = unitVector.x * projectileSpeed;
-            x = this.x;
-            y = this.y;
+            x = this.attributes.x;
+            y = this.attributes.y;
             break;
         case "Up":
-            x = this.x + this.width / 2;
-            y = this.y;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y;
             speedY = -projectileSpeed;
             break;
         case "Down":
-            x = this.x + this.width / 2;
-            y = this.y + this.height;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height;
             speedY = projectileSpeed;
             break;
         case "Left":
-            x = this.x;
-            y = this.y + this.height / 2;
+            x = this.attributes.x;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = -projectileSpeed;
             break;
         case "Right":
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
+            x = this.attributes.x + this.attributes.width;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = projectileSpeed;
             break;
         default:
@@ -101,9 +97,9 @@
                 // We did not find the target, return without shooting anything.
                 return;
             }
-            x = this.x + this.width / 2;
-            y = this.y + this.height / 2;
-            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x, target.y - this.y);
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height / 2;
+            unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x, target.attributes.y - this.attributes.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }
@@ -132,13 +128,13 @@
         }
         targetX = this.route[this.targetNode].x;
         targetY = this.route[this.targetNode].y;
-        preDiffX = this.x - targetX;
-        preDiffY = this.y - targetY;
+        preDiffX = this.attributes.x - targetX;
+        preDiffY = this.attributes.y - targetY;
         unitVector = GameCreator.helpers.calcUnitVector(preDiffX, preDiffY);
-        this.x -= unitVector.x * this.speed * modifier;
-        this.y -= unitVector.y * this.speed * modifier;
-        postDiffX = this.x - targetX;
-        postDiffY = this.y - targetY;
+        this.attributes.x -= unitVector.x * this.attributes.speed * modifier;
+        this.attributes.y -= unitVector.y * this.attributes.speed * modifier;
+        postDiffX = this.attributes.x - targetX;
+        postDiffY = this.attributes.y - targetY;
         //Check if preDiff and postDiff have different "negativity" or are 0. If so we have reached (or moved past) our target.
         if (preDiffX * postDiffX <= 0 && preDiffY * postDiffY <= 0) {
             if (this.route[this.targetNode].bounceNode) {

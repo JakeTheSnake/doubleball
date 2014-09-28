@@ -41,6 +41,11 @@
         GameCreator.drawRoute(this.route);
     };
 
+    GameCreator.SceneObject.prototype.toggleBounceNode = function(index) {
+        this.route[index].bounceNode = !this.route[index].bounceNode;
+        GameCreator.drawRoute(this.route);
+    };
+
     GameCreator.SceneObject.prototype.update = function() {
         this.displayWidth = parseInt(this.attributes.width[this.attributes.width.length - 1], 10);
         this.displayHeight = parseInt(this.attributes.height[this.attributes.height.length - 1], 10);

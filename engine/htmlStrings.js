@@ -152,13 +152,18 @@ GameCreator.htmlStrings = {
     },
 
     routeNode: function(node, index) {
-        var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + GameCreator.mainCanvas.offsetTop) + "px;left:" + (node.x + GameCreator.mainCanvas.offsetLeft) + "px;'><div class='routeNode' data-index='" + index + "'> \
+        var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + $("#main-canvas").offset().top) + "px;left:" + (node.x + $("#main-canvas").offset().left) + "px;'><div class='routeNode' data-index='" + index + "'> \
             <span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
-            <div class='routeNodeActions'><a href='' onclick='GameCreator.selectedObject.insertNode(" + index + "); return false;'>+</a>";
+            <div class='routeNodeActions'><a class='add-node-button data-index='" + index + ">+</a>";
         if (index != 0) {    
-            result += "<a href='' onclick='GameCreator.selectedObject.removeNode(" + index + "); return false;'>X</a></div></div>";
+            result += "<div class='remove-node-button' data-index='" + index + "'>X</div>";
         }
-        return result;
+        if(node.bounceNode) {
+            result += "<div class='toggle-bounce-node-button' data-index='" + index + "'>Turn</div>";
+        } else {
+            result += "<div class='toggle-bounce-node-button' data-index='" + index + "'>Continue</div>";
+        }
+        return result + '</div></div>';
     },
 
     defaultEventInformationWindow: function(title, imageSrc) {

@@ -178,7 +178,7 @@ GameCreator.UI = {
         $("#side-property-y span").html(sceneObj.attributes.y);
     },
 
-    directSceneMode: function() {
+    hideEditModeTools: function() {
         $(".routeNodeContainer").remove();
         $('#toolbar-scenes').hide();
     },

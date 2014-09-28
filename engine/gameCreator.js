@@ -385,6 +385,7 @@
             return this.idCounter;
         },
         playGame: function() {
+            GameCreator.UI.hideEditModeTools();
             GameCreator.playScene(GameCreator.scenes[0]);
         },
         resetGlobalCounters: function() {
