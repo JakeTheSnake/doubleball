@@ -188,16 +188,7 @@ GameCreator.UI = {
 
         if (caSets.length === 0) {
             caSet = new GameCreator.ConditionActionSet(globalObj);
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 6}));
-            caSet.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 7}));
-            caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1}));
             caSets.push(caSet);
-
-            var caSet2 = new GameCreator.ConditionActionSet(globalObj);
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 1, count: 8}));
-            caSet2.addCondition(new GameCreator.RuntimeCondition("exists", {objId: 2, count: 9}));
-            caSet2.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: 1, x: 300}));
-            caSets.push(caSet2);
         }
 
         var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
@@ -278,7 +269,7 @@ GameCreator.UI = {
             var conditionName = Object.keys(GameCreator.conditions)[i];
 
             $(listItem).data('condition', conditionName);
-            $(listItem).append(conditionName);
+            $(listItem).append(GameCreator.helpers.labelize(conditionName));
             $(listItem).on('click', function() {
                 activeCASetVM.addCondition($(this).data('condition'));
                 $("#dialogue-panel-conditions").trigger('redrawList', activeCASetVM);

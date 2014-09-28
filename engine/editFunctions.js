@@ -129,7 +129,9 @@
                 mouseTop = e.pageY - $("#main-canvas").offset().top;
                 GameCreator.hoveredObject = GameCreator.getClickedObjectEditing(mouseLeft, mouseTop);
                 if (GameCreator.hoveredObject) {
-                    GameCreator.drawRoute(GameCreator.hoveredObject.route);
+                    if (GameCreator.hoveredObject.route) {
+                        GameCreator.drawRoute(GameCreator.hoveredObject.route);
+                    }
                     dragFunc = GameCreator.hoveredObject.getDragFunction(mouseLeft, mouseTop);
                     GameCreator.selectedObject = GameCreator.hoveredObject;
                     GameCreator.UI.editSceneObject();

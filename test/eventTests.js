@@ -2,7 +2,7 @@
 
 module("EventTest");
 
-test("Test condition on event", function() {
+test("Condition on event", function() {
     var testEvent = new GameCreator.ConditionActionSet();
     var testBool = false;
     GameCreator.conditions.testCondition = new GameCreator.Condition({ 
@@ -18,10 +18,10 @@ test("Test condition on event", function() {
     ok(testBool, "Condition was run correctly.");
 });
 
-test("Test exists condition", function() {
+test("Exists condition", function() {
     var redBall = createGlobalObject();
     var existsEvent = new GameCreator.ConditionActionSet();
-    existsEvent.addCondition(new GameCreator.RuntimeCondition("exists", {objId: redBall.id, count: 2}));
+    existsEvent.addCondition(new GameCreator.RuntimeCondition("objectExists", {objId: redBall.id, count: 2}));
     GameCreator.createRuntimeObject(redBall, {});
     ok(!existsEvent.checkConditions(), "Only one object exists, should return false");
 
@@ -29,38 +29,50 @@ test("Test exists condition", function() {
     ok(existsEvent.checkConditions(), "Two object exists, should return true");
 });
 
-test("Test state condition on this", function() {
+test("State condition on this", function() {
     var redBall = createGlobalObject();
     var newState = redBall.createState('UltimateState');
     var caSet = new GameCreator.ConditionActionSet();
-    caSet.addCondition(new GameCreator.RuntimeCondition("state", {objId: 'this', state: newState.id}));
+    caSet.addCondition(new GameCreator.RuntimeCondition("isInState", {objId: 'this', state: newState.id}));
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     ok(!caSet.checkConditions(runtimeObj), 'Object should be in default state');
     runtimeObj.setState(newState.id);
     ok(caSet.checkConditions(runtimeObj), 'Object should be in new state');
 });
 
-test("Test state condition on instanceId", function() {
+test("State condition on instanceId", function() {
     var redBall = createGlobalObject();
     var newState = redBall.createState('Over9000');
     var caSet = new GameCreator.ConditionActionSet();
-    var runtimeObj = GameCreator.createRuntimeObject(redBall, {instanceId: 'Goku'});
-    caSet.addCondition(new GameCreator.RuntimeCondition("state", {objId: runtimeObj.instanceId, state: newState.id}));
+    var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
+    caSet.addCondition(new GameCreator.RuntimeCondition("isInState", {objId: runtimeObj.attributes.instanceId, state: newState.id}));
     ok(!caSet.checkConditions(runtimeObj), 'Object should be in default state');
     runtimeObj.setState(newState.id);
     ok(caSet.checkConditions(runtimeObj), 'Object should be in new state');
 });
 
-test("Test counter condition on this", function() {
+test("Counter condition", function() {
     var redBall = createGlobalObject();
     redBall.parentCounters['counter'] = new GameCreator.Counter();
     var caSet = new GameCreator.ConditionActionSet();
-    caSet.addCondition(new GameCreator.RuntimeCondition("counter", {objId: 'this', counter: 'counter', value: 1}));
+    caSet.addCondition(new GameCreator.RuntimeCondition("counterEquals", {objId: 'this', counter: 'counter', value: 1}));
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     runtimeObj.counters['counter'].value = 0;
     ok(!caSet.checkConditions(runtimeObj), 'Condition should fail because counter does not equal 1');
     runtimeObj.counters['counter'].value = 1;
     ok(caSet.checkConditions(runtimeObj), 'Condition should pass because counter equals 1');
+});
+
+test('Collision condition', function() {
+    var redBall = createGlobalObject();
+    var runtimeObj1 = GameCreator.createRuntimeObject(redBall, {x: 100, y: 200});
+    var runtimeObj2 = GameCreator.createRuntimeObject(redBall, {x: 100, y: 200});
+    var caSet = new GameCreator.ConditionActionSet();
+    caSet.addCondition(new GameCreator.RuntimeCondition('collidesWith', {objId: runtimeObj2.attributes.instanceId}));
+    ok(caSet.checkConditions(runtimeObj1), 'Objects should collide');
+    runtimeObj2.attributes.x = 500;
+    runtimeObj2.attributes.y = 500;
+    ok(!caSet.checkConditions(runtimeObj1), 'Objects should no longer collide');
 });
 
 })();

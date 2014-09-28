@@ -31,9 +31,8 @@ GameCreator.Condition = function(args) {
     this.params = args.params;
 }
 
-GameCreator.conditions =
-{
-    exists: new GameCreator.Condition({
+GameCreator.conditions = {
+    objectExists: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
             var item = GameCreator.helpers.
                 getObjectById(GameCreator.collidableObjects, params.objId);
@@ -55,7 +54,7 @@ GameCreator.conditions =
         }
     }),
 
-    state: new GameCreator.Condition({
+    isInState: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
             if (params.objId === 'this') {
                 return runtimeObj.currentState === params.state;
@@ -78,12 +77,12 @@ GameCreator.conditions =
         }
     }),
 
-    counter: new GameCreator.Condition({
+    counterEquals: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
             if (params.objId === 'this') {
                 return runtimeObj.counters[params.counter].value === params.value;
             } else {
-                var sceneObject = GameCreator.getSceneObjectById(params.objId);
+                var sceneObject = GameCreator.getRuntimeObject(params.objId);
                 if (sceneObject) {
                     return sceneObject.counters[params.counter].value === params.value;
                 }
@@ -107,7 +106,29 @@ GameCreator.conditions =
                 defaultValue: 0
             }
         }
+    }),
+
+    collidesWith: new GameCreator.Condition({
+        evaluate: function(runtimeObj, params) {
+            if (params.objId === 'this') {
+                return true;
+            } else {
+                var sceneObject = GameCreator.getRuntimeObject(params.objId);
+                if (sceneObject) {
+                    return GameCreator.helpers.checkObjectCollision(runtimeObj, sceneObject);
+                }
+            }
+            return false;
+        },
+        params: {
+            objId: {
+                param: GameCreator.SceneObjectParameter,
+                mandatory: true
+            },
+        }
     })
+
+
 }
 
 GameCreator.RuntimeCondition = function(name, params) {

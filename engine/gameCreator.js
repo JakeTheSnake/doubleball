@@ -338,13 +338,13 @@
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {
                 runtimeObj = GameCreator.renderableObjects[i];
                 // If in edit mode, this should look for displayWidth instead.
-                if (x >= runtimeObj.x &&
-                    x <= runtimeObj.x + runtimeObj.width &&
-                    y >= runtimeObj.y &&
-                    y <= runtimeObj.y + runtimeObj.height && runtimeObj.parent.isClickable)
+                if (x >= runtimeObj.attributes.x &&
+                    x <= runtimeObj.attributes.x + runtimeObj.attributes.width &&
+                    y >= runtimeObj.attributes.y &&
+                    y <= runtimeObj.attributes.y + runtimeObj.attributes.height && runtimeObj.parent.isClickable)
                 {
-                    runtimeObj.clickOffsetX = x - runtimeObj.x;
-                    runtimeObj.clickOffsetY = y - runtimeObj.y;
+                    runtimeObj.clickOffsetX = x - runtimeObj.attributes.x;
+                    runtimeObj.clickOffsetY = y - runtimeObj.attributes.y;
                     return runtimeObj;
                 }
             }
@@ -375,7 +375,7 @@
         getRuntimeObjectFromCollection: function(collection, instanceId) {
             var i;
             for (i = 0; i < collection.length; i += 1) {
-                if (collection[i].instanceId === instanceId) {
+                if (collection[i].attributes.instanceId === instanceId) {
                     return collection[i];
                 }
             }
