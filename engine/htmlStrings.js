@@ -152,16 +152,16 @@ GameCreator.htmlStrings = {
     },
 
     routeNode: function(node, index) {
-        var result = "<div class='routeNodeContainer' style='position:absolute; top:" + (node.y + $("#main-canvas").offset().top) + "px;left:" + (node.x + $("#main-canvas").offset().left) + "px;'><div class='routeNode' data-index='" + index + "'> \
-            <span class='routeNodeLabel'>" + (index + 1) + "</span></div> \
-            <div class='routeNodeActions'><a class='add-node-button data-index='" + index + ">+</a>";
+        var result = '<div class="routeNodeContainer" style="position:absolute; top:' + (node.y + $("#main-canvas").offset().top) + 'px;left:' + (node.x + $("#main-canvas").offset().left) + 'px;"><div class="routeNode" data-index="' + index + '"> \
+            <span class="routeNodeLabel">' + (index + 1) + '</span></div> \
+            <div class="routeNodeActions"><a class="add-node-button" data-index="' + index + '">+</a>';
         if (index != 0) {    
-            result += "<div class='remove-node-button' data-index='" + index + "'>X</div>";
+            result += '<div class="remove-node-button" data-index="' + index + '">X</div>';
         }
         if(node.bounceNode) {
-            result += "<div class='toggle-bounce-node-button' data-index='" + index + "'>Turn</div>";
+            result += '<div class="toggle-bounce-node-button" data-index="' + index + '">Turn</div>';
         } else {
-            result += "<div class='toggle-bounce-node-button' data-index='" + index + "'>Continue</div>";
+            result += '<div class="toggle-bounce-node-button" data-index="' + index + '">Continue</div>';
         }
         return result + '</div></div>';
     },
