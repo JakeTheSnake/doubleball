@@ -84,7 +84,7 @@ function setupCollisionEventForNewObject(action, parameters) {
     var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
     var collideEvent = new GameCreator.ConditionActionSet(redBall);
     collideEvent.actions.push(bounceAction);
-    redBall.onCollideEvents.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
+    redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
     return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
 }
 
@@ -195,7 +195,7 @@ function assertActionRun() {
 test("Trigger action by key", function() {
     var key = "space";
 
-    platformZealot.keyEvents[key] = [newEvent];
+    platformZealot.onKeySets[key] = [newEvent];
     platformZealot.keyPressed[key] = true;
 
     runtimeObject.parent.checkEvents.call(runtimeObject);

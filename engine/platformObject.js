@@ -23,7 +23,6 @@
         this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
 
         //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
-        this.facingLeft = true;
         this.isCollidable = true;
         this.isMovable = true;
         this.isRenderable = true;
@@ -153,28 +152,28 @@
         var target, unitVector;
         switch (staticParameters.projectileDirection) {
         case "Default":
-            x = this.x + (this.facingLeft ? 0 : this.width);
-            y = this.y;
+            x = this.attributes.x + (this.facingLeft ? 0 : this.attributes.width);
+            y = this.attributes.y;
             speedX = this.facingLeft ? -projectileSpeed : projectileSpeed;
             break;
         case "Up":
-            x = this.x + this.width / 2;
-            y = this.y;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y;
             speedY = -projectileSpeed;
             break;
         case "Down":
-            x = this.x + this.width / 2;
-            y = this.y + this.height;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height;
             speedY = projectileSpeed;
             break;
         case "Left":
-            x = this.x;
-            y = this.y + this.height / 2;
+            x = this.attributes.x;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = -projectileSpeed;
             break;
         case "Right":
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
+            x = this.attributes.x + this.attributes.width;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = projectileSpeed;
             break;
         default:
@@ -183,9 +182,9 @@
                 // We did not find the target, return without shooting anything.
                 return;
             }
-            x = this.x + (this.facingLeft ? 0 : this.width);
-            y = this.y;
-            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.width), target.y - this.y);
+            x = this.attributes.x + (this.facingLeft ? 0 : this.attributes.width);
+            y = this.attributes.y;
+            unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x - (this.facingLeft ? 0 : this.attributes.width), target.attributes.y - this.attributes.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }

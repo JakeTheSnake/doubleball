@@ -47,7 +47,7 @@
     };
 
     GameCreator.helpers.doCollision = function(object, targetObject) {
-        var event = GameCreator.helpers.getObjectById(object.parent.onCollideEvents, targetObject.parent.id);
+        var event = GameCreator.helpers.getObjectById(object.parent.onCollideSets, targetObject.parent.id);
         var caSets = event ? event.caSets : undefined;
         var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
@@ -66,7 +66,7 @@
                 choosableActions = GameCreator.actionGroups.collisionActions;
             }
             newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object)]};
-            object.parent.onCollideEvents.push(newSetsItem);
+            object.parent.onCollideSets.push(newSetsItem);
             GameCreator.UI.openEditActionsWindow(
                 GameCreator.htmlStrings.collisionEventInformationWindow("'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'", object.image.src, targetObject.image.src),
                 new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType))
@@ -114,8 +114,8 @@
                 }
             }
         } else {
-            for (j = 0; j < object.parent.onCollideEvents.length; j += 1) {
-                collisionItem = object.parent.onCollideEvents[j];
+            for (j = 0; j < object.parent.onCollideSets.length; j += 1) {
+                collisionItem = object.parent.onCollideSets[j];
                 runtimeObjectsItem = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, collisionItem.id);
                 if (GameCreator.helpers.caSetsHaveActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {

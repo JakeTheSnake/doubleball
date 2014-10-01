@@ -31,7 +31,7 @@
     };
 
     GameCreator.addObjFunctions.collidableObjectAttributes = function(object) {
-        object.onCollideEvents = [];
+        object.onCollideSets = [];
     };
 
     GameCreator.addObjFunctions.keyObjectAttributes = function(object) {
@@ -40,7 +40,7 @@
             leftMouse: false,
             rightMouse: false
         };
-        object.keyEvents = {
+        object.onKeySets = {
             space: [],
             leftMouse: [],
             rightMouse: []
@@ -54,7 +54,7 @@
             for (key in this.parent.keyPressed) {
                 if (this.parent.keyPressed.hasOwnProperty(key)) {
                     isKeyPressed = this.parent.keyPressed[key];
-                    keySets = this.parent.keyEvents[key];
+                    keySets = this.parent.onKeySets[key];
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
                         if (GameCreator.state === 'directing' && keySets.length === 0) {

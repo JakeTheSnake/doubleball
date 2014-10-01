@@ -92,7 +92,7 @@
                                     "projectileDirection":
                                      {param: GameCreator.DirectionParameter,
                                       mandatory: false,
-                                      defaultValue: "default"}
+                                      defaultValue: "Default"}
                                  },
                           name: "Shoot",
                           timing: {at: true, every: true, after: true},

@@ -226,7 +226,7 @@ GameCreator.htmlStrings = {
         for (objName in selectableObjects) {
             objId = GameCreator.helpers.findGlobalObjectByName(objName).id;
             if (selectableObjects.hasOwnProperty(objName) && 
-                !GameCreator.helpers.getObjectById(object.onCollideEvents, objId) && 
+                !GameCreator.helpers.getObjectById(object.onCollideSets, objId) && 
                 selectableObjects[objName].isCollidable && 
                 objName != object.objectName) {
                 result += '<li data-objectname="' + objName + '">' + GameCreator.htmlStrings.selectGlobalObjectPresentation(objId) + '</li>';

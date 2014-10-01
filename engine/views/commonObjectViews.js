@@ -237,7 +237,7 @@ GameCreator.commonObjectViews = {
         result = "";
         var selectableKeys = this.keyPressed;
         for (var keyName in selectableKeys) {
-            if (selectableKeys.hasOwnProperty(keyName) && this.keyEvents[keyName].length === 0) {
+            if (selectableKeys.hasOwnProperty(keyName) && this.onKeySets[keyName].length === 0) {
                 result += '<div class="addKeyObjectElement" data-keyName="' + keyName + '" style="float:left;cursor:pointer;"><span>' + keyName + '</span></div>';
             }
         }
@@ -246,8 +246,8 @@ GameCreator.commonObjectViews = {
 
     getKeysContent: function() {
         var result = '';
-        for (var keyName in this.keyEvents) {
-            if (this.keyEvents[keyName].length > 0) {
+        for (var keyName in this.onKeySets) {
+            if (this.onKeySets[keyName].length > 0) {
                 result += GameCreator.htmlStrings.defaultMenuElement(keyName);
             }
         }

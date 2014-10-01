@@ -69,8 +69,8 @@ test("Add action through keypress", function() {
     selectAction("testAction");
     addSelectedAction();
 
-    deepEqual(runtimeObj.parent.keyEvents.space.length, 1, "Event was added");
-    deepEqual(runtimeObj.parent.keyEvents.space[0].actions.length, 1, "Action was added");
+    deepEqual(runtimeObj.parent.onKeySets.space.length, 1, "Event was added");
+    deepEqual(runtimeObj.parent.onKeySets.space[0].actions.length, 1, "Action was added");
 
     runtimeObj.parent.keyPressed.space = false;
     GameCreator.runFrame(10);

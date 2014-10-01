@@ -41,8 +41,8 @@ GameCreator.commonObjectControllers = {
     setupCollisionsForm: function(container) {
         var collisionObjects = [];
         var globalObj = this;
-        for(var i = 0; i < this.onCollideEvents.length; i++) {
-            collisionObjects.push(GameCreator.helpers.findGlobalObjectById(this.onCollideEvents[i].id));
+        for(var i = 0; i < this.onCollideSets.length; i++) {
+            collisionObjects.push(GameCreator.helpers.findGlobalObjectById(this.onCollideSets[i].id));
         }
 
         var html = GameCreator.htmlStrings.getColumn('With', 'dialogue-panel-with');
@@ -56,7 +56,7 @@ GameCreator.commonObjectControllers = {
         $('#dialogue-panel-with').parent().append('<button id="add-new-collision-button" class="icon-plus btn btn-success">Add</button>');
         $("#dialogue-panel-with").on('redrawList', function(evt) {
             $('#dialogue-panel-with').empty();
-            globalObj.onCollideEvents.forEach(function(collisionItem) {
+            globalObj.onCollideSets.forEach(function(collisionItem) {
                 var collisionListItem = $(document.createElement('li'));
                 var globalObject = GameCreator.helpers.findGlobalObjectById(collisionItem.id);
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
@@ -76,7 +76,7 @@ GameCreator.commonObjectControllers = {
                 $("#dialogue-panel-add-list li").one("click", function() {
                     var targetId = GameCreator.helpers.findGlobalObjectByName($(this).data("objectname")).id;
                     var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet(globalObj)]};
-                    globalObj.onCollideEvents.push(collisionItem);
+                    globalObj.onCollideSets.push(collisionItem);
                     $("#dialogue-panel-with").trigger('redrawList');
                     $("#dialogue-panel-add-list").empty();
                 });
@@ -249,7 +249,7 @@ GameCreator.commonObjectControllers = {
         var globalObj = this;
         container.find(".defaultMenuElement").on("click", function(){
             var keyName = $(this).data("name");
-            var onKeyEventSets = globalObj.keyEvents[keyName]
+            var onKeyEventSets = globalObj.onKeySets[keyName]
 
             $(this).parent().find('.defaultMenuElement').removeClass('active');
             $(this).addClass('active');
@@ -259,7 +259,7 @@ GameCreator.commonObjectControllers = {
         $("#add-new-key-button").on("click", function(){
             $("#dialogue-keys-content").html(globalObj.getKeySelector());
             $(".addKeyObjectElement").one("click", function() {
-                globalObj.keyEvents[$(this).data("keyname")].push(new GameCreator.ConditionActionSet(globalObj));
+                globalObj.onKeySets[$(this).data("keyname")].push(new GameCreator.ConditionActionSet(globalObj));
                 globalObj.setupKeyEventsForm(container);
             });
         });

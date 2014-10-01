@@ -243,7 +243,7 @@
             }
             x = this.attributes.x + (this.facingLeft ? 0 : this.attributes.width);
             y = this.attributes.y;
-            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.x - (this.facingLeft ? 0 : this.attributes.width), target.y - this.y);
+            unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x - (this.facingLeft ? 0 : this.attributes.width), target.attributes.y - this.attributes.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }

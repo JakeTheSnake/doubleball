@@ -159,22 +159,9 @@
     };
 
     GameCreator.BaseObject.createFromSaved = function(savedObject) {
-        var image = new Image();
-        var obj = new GameCreator[savedObject.objectType](image, {});
-        var name;
-        image.src = savedObject.imageSrc;
-        obj.image = image;
-
-        image.onload = function() {
-            obj.imageReady = true;
-            GameCreator.render();
-        };
-
-        for (name in savedObject) {
-            if (savedObject.hasOwnProperty(name)) {
-                obj[name] = savedObject[name];
-            }
-        }
+        var obj = new GameCreator[savedObject.objectType]({});
+        
+        $.extend(obj, savedObject);
 
         GameCreator.globalObjects[obj.objectName] = obj;
 
