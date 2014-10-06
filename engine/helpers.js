@@ -481,6 +481,13 @@
         return selectableTimings;
     };
 
+    GameCreator.helpers.getIndexOfObjectWithId = function(targetId) {
+        var i;
+        for (i = 0; i < GameCreator.scenes.length; i++) {
+            if (GameCreator.scenes[i].id === targetId) return i;
+        }
+    };
+
     Array.prototype.collect = function(collectFunc) {
         var result = [];
         for (var i = 0; i < this.length; i++) {

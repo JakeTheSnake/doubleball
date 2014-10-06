@@ -87,6 +87,18 @@
             return null;
         },
 
+        swapScenes: function(scene1, scene2) {
+            var i;
+
+            var scene1index = GameCreator.helpers.getIndexOfObjectWithId(scene1);
+            var scene2index = GameCreator.helpers.getIndexOfObjectWithId(scene2);
+            var tempScene = GameCreator.scenes[scene1index];
+            GameCreator.scenes[scene1index] = GameCreator.scenes[scene2index];
+            GameCreator.scenes[scene2index] = tempScene;
+
+            GameCreator.UI.drawSceneTabs();
+        },
+
         getSceneById: function(id) {
             return GameCreator.helpers.getObjectById(GameCreator.scenes, id);
         },

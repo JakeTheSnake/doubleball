@@ -286,7 +286,7 @@ GameCreator.htmlStrings = {
     },
 
 	sceneTab: function(scene, sceneActive) {
-        return '<li class="tab ' + (sceneActive ? 'active' : '')  + '" data-sceneid="' + scene.id + '">' + scene.attributes.name + '</li>';
+        return '<li class="tab ' + (sceneActive ? 'active' : '')  + '" data-sceneid="' + scene.id + '" draggable="true">' + scene.attributes.name + '</li>';
 	},
 
 	addSceneTab: function() {

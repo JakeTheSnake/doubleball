@@ -143,6 +143,42 @@ GameCreator.UI = {
     },
 
     setupSceneTabs: function() {
+        GameCreator.UI.drawSceneTabs();
+        $('#toolbar-scenes').off('click');
+        $('#toolbar-scenes').on('click', '.nav-tabs > li:not(#add-scene-tab)', function() {
+            GameCreator.activeSceneId = parseInt($(this).data('sceneid'));
+            GameCreator.editActiveScene();
+        });
+
+        var draggedSceneId;
+        $('#toolbar-scenes').off('dragstart');
+        $('#toolbar-scenes').off('dragover');
+        $('#toolbar-scenes').off('drop');
+        $('#toolbar-scenes').off('dragleave');
+        $('#toolbar-scenes').on('dragstart', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+            draggedSceneId = parseInt($(this).data('sceneid'));
+            $('#toolbar-scenes').one('drop', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+                e.preventDefault();
+                var droppedSceneId = parseInt($(this).data('sceneid'));
+                GameCreator.swapScenes(draggedSceneId, droppedSceneId);
+            });
+        });
+
+        $('#toolbar-scenes').on('dragleave', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+            $(this).removeClass('scene-swap-highlight');
+        });
+
+        $('#toolbar-scenes').on('dragover', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+            $(this).addClass('scene-swap-highlight');
+            e.preventDefault();
+        });
+
+        $('#toolbar-scenes').one('click', '#add-scene-tab', function() {
+            GameCreator.addScene();
+        });
+    },
+
+    drawSceneTabs: function() {
         var result = '';
 
         $('#toolbar-scenes').show();
@@ -155,14 +191,6 @@ GameCreator.UI = {
         result += '</ul>';
 
         $('#toolbar-scenes').html(result);
-        $('#toolbar-scenes').off('click');
-        $('#toolbar-scenes').on('click', '.nav-tabs > li:not(#add-scene-tab)', function() {
-            GameCreator.activeSceneId = parseInt($(this).data('sceneid'));
-            GameCreator.editActiveScene();
-        });
-        $('#toolbar-scenes').one('click', '#add-scene-tab', function() {
-            GameCreator.addScene();
-        });
     },
     
     editSceneObject: function() {
