@@ -372,7 +372,7 @@ input {
 }
 
 .scene-swap-highlight {
-  border: 2px solid #FFFFFF;
+  border-right: 2px solid #FFFFFF;
 }
 
 /* ==========================================================================

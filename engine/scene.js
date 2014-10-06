@@ -87,14 +87,13 @@
             return null;
         },
 
-        swapScenes: function(scene1, scene2) {
+        insertSceneAfter: function(sceneIdToBeMoved, insertAfterSceneId) {
             var i;
 
-            var scene1index = GameCreator.helpers.getIndexOfObjectWithId(scene1);
-            var scene2index = GameCreator.helpers.getIndexOfObjectWithId(scene2);
-            var tempScene = GameCreator.scenes[scene1index];
-            GameCreator.scenes[scene1index] = GameCreator.scenes[scene2index];
-            GameCreator.scenes[scene2index] = tempScene;
+            var sceneToBeMovedIndex = GameCreator.helpers.getIndexOfObjectWithId(sceneIdToBeMoved);
+            var tempScene = GameCreator.scenes.splice(sceneToBeMovedIndex, 1)[0];
+            var insertAfterSceneIndex = GameCreator.helpers.getIndexOfObjectWithId(insertAfterSceneId);
+            GameCreator.scenes.splice(insertAfterSceneIndex+1, 0, tempScene);
 
             GameCreator.UI.drawSceneTabs();
         },

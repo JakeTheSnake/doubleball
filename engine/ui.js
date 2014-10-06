@@ -160,7 +160,9 @@ GameCreator.UI = {
             $('#toolbar-scenes').one('drop', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
                 e.preventDefault();
                 var droppedSceneId = parseInt($(this).data('sceneid'));
-                GameCreator.swapScenes(draggedSceneId, droppedSceneId);
+                if (draggedSceneId !== droppedSceneId) {
+                    GameCreator.insertSceneAfter(draggedSceneId, droppedSceneId);
+                }
             });
         });
 
