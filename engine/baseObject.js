@@ -28,7 +28,7 @@
                 this.parent.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + this.parent.objectName + "' has been destroyed!", this.image.src),
-                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
+                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType)), this.parent.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -59,7 +59,7 @@
                 this.parent.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + this.parent.objectName + "' has been created!", this.image.src),
-                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
+                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType)), this.parent.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -81,7 +81,7 @@
                 this.parent.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + this.parent.objectName, this.image.src),
-                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
+                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(this.parent.objectType)), this.parent.objectName
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {

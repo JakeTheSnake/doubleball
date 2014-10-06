@@ -10,7 +10,7 @@ GameCreator.CounterObjectText = function(args) {
     }];
 
     this.getDefaultState().attributes.width = [100]; //TODO: Handle width and height of counters?
-    this.getDefaultState().attributes.height = [100];
+    this.getDefaultState().attributes.height = [50];
     this.getDefaultState().attributes.font = args.font || 'Arial';
     this.getDefaultState().attributes.color = args.color || '#000';
     this.getDefaultState().attributes.size = args.size || 20;
@@ -35,7 +35,7 @@ GameCreator.CounterObjectText.objectSceneAttributes = $.extend({}, GameCreator.C
 
 GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
-    var value = obj.parent.textCounter ? "---" : 0;
+    var value = 0;
     var sceneObject = GameCreator.getSceneObjectById(obj.counterObject);
     var i;
     if (sceneObject) {
@@ -45,7 +45,7 @@ GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
             value = sceneObject.counters[obj.counterName].value;
         }
     }
-    context.font = obj.attributes.size + "px " + obj.font;
+    context.font = obj.attributes.size + "px " + obj.attributes.font;
     context.fillStyle = obj.attributes.color;
     context.fillText(value, obj.attributes.x, obj.attributes.y + obj.attributes.size);
 };

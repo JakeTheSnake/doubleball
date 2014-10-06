@@ -65,11 +65,11 @@
             } else {
                 choosableActions = GameCreator.actionGroups.collisionActions;
             }
-            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object)]};
+            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object.parent)]};
             object.parent.onCollideSets.push(newSetsItem);
             GameCreator.UI.openEditActionsWindow(
                 GameCreator.htmlStrings.collisionEventInformationWindow("'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'", object.image.src, targetObject.image.src),
-                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType))
+                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType)), this.parent.objectName
             );
         }
     };
@@ -221,7 +221,7 @@
         } else if (input.attr("data-type") === "range" && input.val().length !== 0) {
             range = GameCreator.helpers.parseRange(input.val());
             for (i = 0; i < range.length; i += 1) {
-                range[i] = parseFloat(range[i]);
+                range[i] = parseFloat(range[i]) || 0;
             }
             return range;
         } else if (input.attr("data-type") === "checkbox" && input.val().length !== 0) {
@@ -254,7 +254,7 @@
         } else {
             value = parseInt(range, 10);
         }
-        return value;
+        return value || 0;
     };
 
     GameCreator.helpers.getObjectById = function(array, id) {
@@ -397,18 +397,17 @@
     };
 
     GameCreator.helpers.getPresentationForInputValue = function(value, type, obj) {
-        if (value !== undefined && value !== null) {
+        if (value !== undefined && value !== null && value !== '') {
             switch (type) {
                 case "rangeInput":
                     if (value.length == 1) {
                         return value[0];
                     } else if (value.length == 2) {
-                        return (value[0] + ":" + value[1]);
+                        return (value[0] + " to " + value[1]);
                     } else {
                         return value;
                     }
                 case "globalObjectInput":
-                    return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
                 case "shootableObjectInput":
                     return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
                 case "stateInput":
@@ -418,12 +417,12 @@
                 case "sceneInput":
                     return GameCreator.getSceneById(Number(value)).attributes.name;
                 case "imageInput":
-                    return value.src;
+                    return '<img src="' + value.src + '" width="40" height="40"/>';
                 default:
                     return value;
             }
         }
-        return '';
+        return '&lt;Edit&gt;';
     };
 
     GameCreator.helpers.getPrettyName = function(databaseName) {
@@ -435,7 +434,7 @@
             objectState: 'State',
             objId: 'Object',
             counterObject: 'Counter',
-            change: 'Change to',
+            change: 'Add',
             set: 'Set to',
         }
         return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName.charAt(0).toUpperCase() + databaseName.slice(1);

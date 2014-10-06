@@ -215,11 +215,10 @@ GameCreator.commonObjectControllers = {
         var globalObj = this;
         $("#edit-counter-event-actions-content").html("");
         $("#add-new-counter-event-button").on("click", function() {
-            $('#dialogue-panel-counter-events').append(GameCreator.htmlStrings.createCounterEventForm('dialogue-add-counter-event'));
-            $("#edit-counter-event-value-field").hide();
+            $('#dialogue-panel-counter-events').append(GameCreator.htmlStrings.getCounterEventForm('dialogue-add-counter-event'));
             $("#dialogue-panel-counter-events .saveButton").one("click", function() {
-                var eventType = $("#edit-counter-event-type").val();
-                var eventValue = $("#edit-counter-event-value").val();
+                var eventType = GameCreator.helpers.getValue($('#dialogue-add-counter-event select'));
+                var eventValue = GameCreator.helpers.getValue($('#dialogue-add-counter-event input'));
                 globalObj.parentCounters[counterName][eventType][eventValue] = [];
                 globalObj.setupEditCounterEvents(counterName, container);
             });
@@ -242,10 +241,11 @@ GameCreator.commonObjectControllers = {
      *****************************/
     setupKeyEventsForm: function(container) {
         container.html(GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys"));
-        container.append('<div id="dialogue-keys-content"></div>');
         $("#dialogue-panel-keys").html(this.getKeysContent());
+        $("#dialogue-panel-keys").parent().append('<div id="dialogue-keys-content"></div>');
+        $("#dialogue-panel-keys").parent().append('<button id="add-new-key-button" class="icon-plus btn btn-success">Add</button>');
         var keyEventContent = document.createElement('div');
-        container.append(keyEventContent);
+        $('#dialogue-events-content').append(keyEventContent);
         var globalObj = this;
         container.find(".defaultMenuElement").on("click", function(){
             var keyName = $(this).data("name");

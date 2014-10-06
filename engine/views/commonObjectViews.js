@@ -37,7 +37,7 @@ GameCreator.commonObjectViews = {
                    <!-- Panel: Object manager --> \
                    <div id="object-manager" class="panel panel-dialogue"> \
                    <div class="panel-heading "> \
-                   <span class="panel-title">Object manager</span> \
+                   <span class="panel-title">Object manager: <span id="object-manager-object-name"></span></span> \
                    </div> \
                    <div id="object-manager-library" class="col border-right"> \
                    <div class="panel-heading"> \
@@ -74,23 +74,23 @@ GameCreator.commonObjectViews = {
         <li data-uifunction="setupCountersForm"><i class="icon-codeopen" /><span>Counters</span></li>'
     },
 
-    getCounterEventsContent: function(counterName){
+    getCounterEventsContent: function(counterName) {
         var counter = this.parentCounters[counterName];
         var value;
         var result = GameCreator.htmlStrings.counterEventMenuElement("", "onIncrease");
         result += GameCreator.htmlStrings.counterEventMenuElement("", "onDecrease");
         for (value in counter.atValue) {
-            if (counter.atValue.hasOwnProperty(value)){
+            if (counter.atValue.hasOwnProperty(value)) {
                 result += GameCreator.htmlStrings.counterEventMenuElement(value, "atValue");
             }
         };
         for (value in counter.aboveValue) {
-            if (counter.aboveValue.hasOwnProperty(value)){
+            if (counter.aboveValue.hasOwnProperty(value)) {
                 result += GameCreator.htmlStrings.counterEventMenuElement(value, "aboveValue");
             }
         };
         for (value in counter.belowValue) {
-            if (counter.belowValue.hasOwnProperty(value)){
+            if (counter.belowValue.hasOwnProperty(value)) {
                 result += GameCreator.htmlStrings.counterEventMenuElement(value, "belowValue");
             }
         };
@@ -251,7 +251,6 @@ GameCreator.commonObjectViews = {
                 result += GameCreator.htmlStrings.defaultMenuElement(keyName);
             }
         }
-        result += '<li><button id="add-new-key-button" class="regularButton">Add</div></li>';
         return result;
     },
 }

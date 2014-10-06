@@ -65,11 +65,11 @@ GameCreator.UI = {
         });
     },
  
-    openEditActionsWindow: function(infoWindowHtml, caSetVM) {  
+    openEditActionsWindow: function(infoWindowHtml, caSetVM, objName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         GameCreator.pauseGame();
         
-        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml));
+        GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
         GameCreator.UI.setupActionsColumn();
         GameCreator.UI.populateSelectActionList(caSetVM);
         //GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
@@ -87,25 +87,12 @@ GameCreator.UI = {
     },
 
 
-    /*
-
-    addGlobalObjectForm: function(objectType) {
-        var result = GameCreator.htmlStrings.inputLabel('global-object-name', 'Name ') +
-                GameCreator.htmlStrings.stringInput('global-object-name', 'objectName') +
-                '<br style="clear:both;"/>';
-        result += GameCreator.helpers.getAttributeForm(GameCreator[objectType].objectAttributes,
-            GameCreator[objectType].objectAttributes);
-        result += GameCreator.htmlStrings.inputLabel('global-object-unique', 'Unique ') +
-                GameCreator.htmlStrings.checkboxInput('global-object-unique', 'unique') +
-                '<br style="clear:both;"/>' +
-                '<button class="saveButton regularButton">Save</button>';
-        return result;       
-    },
-    */
-
     setupAddObjectForm: function(objectType) {
         $("#add-global-object-window-content").html(GameCreator.htmlStrings.addGlobalObjectForm(objectType));
-        $("#add-global-object-window-content .saveButton").on("click", function() {GameCreator.UI.saveNewGlobalObject(objectType);GameCreator.UI.closeDialogue()});
+        $("#add-global-object-window-content .saveButton").on("click", function() {
+            GameCreator.UI.saveNewGlobalObject(objectType);
+            GameCreator.UI.closeDialogue();
+        });
     },
     
     //Edit global object functions
@@ -118,6 +105,8 @@ GameCreator.UI = {
             $(this).parent().find("li").removeClass("active");
             $(this).addClass("active");
         });
+
+        $('#object-manager-object-name').html(globalObj.objectName);
 
         globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
         $("#dialogue-panel-edit").find("li:first-child").addClass("active");
@@ -337,7 +326,7 @@ GameCreator.UI = {
             {text: 'Player Objects', value: 'playerObjectTypes'}, 
             {text: 'Game Objects', value: 'gameObjectTypes'},
             {text: 'Counters', value: 'counterObjectTypes'} 
-        ]
+        ];
         objectGroups.forEach(function(group){
             listItem = document.createElement('li');
             $(listItem).append(group.text);
@@ -383,7 +372,7 @@ GameCreator.UI = {
     setupSceneObjectForm: function(sceneObject) {
         var container = $('#side-properties-form-container');
         container.html(sceneObject.parent.getSceneObjectForm());
-        GameCreator.helpers.populateSidePropertiesForm(sceneObject);
+        GameCreator.helpers.populateSidePropertiesForm(sceneObject, sceneObject.update.bind(sceneObject));
     },
 
     setupValuePresenter: function(container, attributes, attrName, obj, onChangeCallback) {

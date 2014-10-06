@@ -197,10 +197,10 @@ GameCreator.htmlStrings = {
         return html;
     },
 
-    editActionsWindow: function(infoWindowHtml) {
+    editActionsWindow: function(infoWindowHtml, objName) {
         var html = '<div class="dialogue right"><div id="select-action-window" class="panel panel-dialogue">';
         html += '<div class="panel-heading "> \
-                 <span class="panel-title">Set action manager</span> \
+                 <span class="panel-title">Set Action Manager: ' + objName + '</span> \
                  </div>';
         html += infoWindowHtml;
         html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
@@ -265,11 +265,11 @@ GameCreator.htmlStrings = {
         return result;
     },
 	
-	createCounterEventForm: function() {
-		var result = '<div>' + GameCreator.htmlStrings.inputLabel("edit-counter-event-type", "Type:");
-		result += GameCreator.htmlStrings.singleSelector("edit-counter-event-type", {atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
-		result += GameCreator.htmlStrings.inputLabel("edit-counter-event-value", "Value:");
-    	result += GameCreator.htmlStrings.numberInput("edit-counter-event-value", "value", "");
+	getCounterEventForm: function(formId) {
+		var result = '<div id="' + formId + '">' + GameCreator.htmlStrings.inputLabel("Type:");
+		result += GameCreator.htmlStrings.singleSelector({atValue: "atValue", aboveValue: "aboveValue", belowValue: "belowValue"});
+		result += GameCreator.htmlStrings.inputLabel("Value:");
+    	result += GameCreator.htmlStrings.numberInput("value");
     	result += '<button class="saveButton regularButton">Save</button>';
         result += '</div>';
     	return result;

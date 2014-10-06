@@ -154,6 +154,7 @@ GameCreator.ActionItemVM = function(model, caSet) {
     this.template = GameCreator.actions[this.model.name];
 };
 
+
 GameCreator.ActionItemVM.prototype.getPresentation = function() {
     var result = document.createElement('li');
         result.className = 'condition-parameters';
@@ -161,24 +162,13 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
     $(title).addClass('icon-down-dir');
     var actionItemVM = this;
     
-    // Action title
     $(title).append(this.model.name);
 
     $(result).append(title);
 
-    // Action parameter list
     var paramList = document.createElement('table');
-    for (var i = 0; i < this.parameters.length; i+=1) {
-        var paramItem = document.createElement('tr');
-        $(paramItem).append(this.parameters[i].getLabel());
-        var paramValuePresenter = this.parameters[i].element;
-        $(paramItem).append(paramValuePresenter);
-        var observerParam = GameCreator.actions[this.model.name].params[this.parameters[i].name].observer;
-        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
-            this.parameters[i].name, this.caSet.globalObj,
-            this.updateParameter.bind(this, observerParam));
-        $(paramList).append(paramItem);
-    }
+    this.addParameterPresentations(paramList);
+
     var timingItem = $(document.createElement('tr'));
     var timingParam = new GameCreator.TimingParameter(this.model);
     timingParam.setupValuePresenter(timingItem);
@@ -187,6 +177,22 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
 
     return result;
 }
+
+GameCreator.ActionItemVM.prototype.addParameterPresentations = function(container) {
+    for (var i = 0; i < this.parameters.length; i+=1) {
+        var paramItem = document.createElement('tr');
+        $(paramItem).append(this.parameters[i].getLabel());
+
+        var paramValuePresenter = this.parameters[i].element;
+        $(paramItem).append(paramValuePresenter);
+        
+        var observerParam = GameCreator.actions[this.model.name].params[this.parameters[i].name].observer;
+        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
+            this.parameters[i].name, this.caSet.globalObj,
+            this.updateParameter.bind(this, observerParam));
+        $(paramList).append(paramItem);
+    }
+};
 
 GameCreator.ActionItemVM.prototype.getParameters = function() {
     var caSetItemVM = this;

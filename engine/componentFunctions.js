@@ -62,7 +62,7 @@
                             actions = GameCreator.helpers.getNonCollisionActions(this.parent.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + this.parent.objectName, this.image.src),
-                                 new GameCreator.CASetVM(keySets[0], GameCreator.helpers.getNonCollisionActions(this.parent.objectType))
+                                 new GameCreator.CASetVM(keySets[0], GameCreator.helpers.getNonCollisionActions(this.parent.objectType)), this.parent.objectName
                                 );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {

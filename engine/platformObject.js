@@ -9,7 +9,7 @@
         
         if (GameCreator.state !== 'playing') {
             GameCreator.commonObjectViews.addPlayerObjectViews(this);
-            GameCreator.commonObjectControllers.addCommonObjectControllers(this);
+            GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
         }
 
         GameCreator.helpers.setStandardProperties(this, args);
