@@ -110,7 +110,7 @@
                 return this.resizeNW;
             } else if (Math.abs(this.attributes.x + this.displayWidth - x) <= border && Math.abs(this.attributes.y - y) <= border) {
                 return this.resizeNE;
-            } else if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.y + this.displayHeight - y) <= border) {
+            } else if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.attributes.y + this.displayHeight - y) <= border) {
                 return this.resizeSW;
             } else if (Math.abs(this.attributes.y + this.displayHeight - y) <= border && Math.abs(this.attributes.x + this.displayWidth - x) <= border) {
                 return this.resizeSE;

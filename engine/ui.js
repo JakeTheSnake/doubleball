@@ -389,16 +389,22 @@ GameCreator.UI = {
             if (obj instanceof GameCreator.SceneObject) {
                 GameCreator.invalidate(obj);
             }
-            var value = GameCreator.saveInputValueToObject($(input), attributes);
+            try {
+                var value = GameCreator.saveInputValueToObject($(input), attributes);
+                if (onChangeCallback) {
+                    onChangeCallback(value);
+                }
+            } catch (err) {
+                $(display).addClass('properties-validation-flash'); // ANIMATION
+                setTimeout(function() { $(display).removeClass('properties-validation-flash'); }, 700);
+            }
             $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType, obj));
             container.html(display);
             container.parent().off('click').on('click', onClickFunc);
             if (obj instanceof GameCreator.SceneObject) {
                 GameCreator.render(true);
             }
-            if (onChangeCallback) {
-                onChangeCallback(value);
-            }
+            
         }
 
         onClickFunc = function(evt) {

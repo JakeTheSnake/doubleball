@@ -670,6 +670,38 @@ input {
   height: 12px;
 }
 
+.properties-validation-flash {
+    -webkit-animation-name: flasher;
+    -webkit-animation-duration: 0.100s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+    -moz-animation-name: flasher;
+    -moz-animation-duration: 0.100s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+
+    animation-name: flasher;
+    animation-duration: 0.100s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@-moz-keyframes flasher {  
+    0% { color: #FF0000; }
+    100% { color: #F5F5F5; }
+}
+
+@-webkit-keyframes flasher {  
+    0% { color: #FF0000; }
+    100% { color: #F5F5F5; }
+}
+
+@keyframes flasher {  
+    0% { color: #FF0000; }
+    100% { color: #F5F5F5; }
+}
+
 .glyphicon {
   background-color: #505050;
   position: relative;
