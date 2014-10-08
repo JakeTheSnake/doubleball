@@ -122,7 +122,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
         $(paramItemRow).append(paramValuePresenter);
         var observerParam = GameCreator.conditions[this.model.name].params[this.parameters[i].name].observer;
         GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
-            this.parameters[i].name, this.caSet.globalObj,
+            this.parameters[i].name, GameCreator.helpers.findGlobalObjectById(this.caSet.globalObj),
             this.updateParameter.bind(this, observerParam));
         $(paramList).append(paramItemRow);
     }
@@ -188,9 +188,9 @@ GameCreator.ActionItemVM.prototype.addParameterPresentations = function(containe
         
         var observerParam = GameCreator.actions[this.model.name].params[this.parameters[i].name].observer;
         GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
-            this.parameters[i].name, this.caSet.globalObj,
+            this.parameters[i].name, GameCreator.helpers.findGlobalObjectById(this.caSet.globalObj),
             this.updateParameter.bind(this, observerParam));
-        $(paramList).append(paramItem);
+        $(container).append(paramItem);
     }
 };
 

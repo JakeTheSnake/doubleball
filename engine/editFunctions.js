@@ -192,6 +192,16 @@
             }, 0);
         },
 
+        dereferenceImage: function(globalObj) {
+            for(var i = 0; i < globalObj.states.length; i += 1) {
+                globalObj.states[i].attributes.image = globalObj.states[i].attributes.image.src;
+            }
+        },
+
+        referenceImage: function(globalObj) {
+
+        },
+
         saveState: function() {
             var results = {globalObjects: {}, scenes: [], idCounter: 0};
             //TODO: Put this array somewhere more "configy"
@@ -211,7 +221,7 @@
                         newObject[attribute] = oldObject[attribute];
                     }
                 }
-
+                GameCreator.dereferenceImage(newObject);
                 results.globalObjects[newObject.objectName] = newObject;
             }
             //Save scenes
