@@ -199,7 +199,12 @@
         },
 
         referenceImage: function(globalObj) {
-
+            var i, img;
+            for(i = 0; i < globalObj.states.length; i += 1) {
+                img = new Image();
+                img.src = globalObj.states[i].attributes.image;
+                globalObj.states[i].attributes.image = img;
+            }
         },
 
         saveState: function() {
@@ -227,7 +232,7 @@
             //Save scenes
             for (i = 0; i < GameCreator.scenes.length; i += 1) {
                 scene = GameCreator.scenes[i];
-                newScene = new GameCreator.Scene();
+                newScene = new GameCreator.Scene(scene.id);
                 for (n = 0; n < scene.objects.length; n += 1) {
                     oldObject = scene.objects[n];
                     newObject = {};
@@ -248,29 +253,33 @@
         },
 
         restoreState: function(savedJson) {
-            var i, n, parsedSave, name, object, newObject, newScene, savedScene;
+            var i, n, parsedSave, name, oldObject, newObject, newScene, savedScene;
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
+            $(".global-object-list").empty();
             //Load globalObjects
             parsedSave = JSON.parse(savedJson);
-            var globalObjects = Object.keys(parsedSave);
+            var globalObjects = Object.keys(parsedSave.globalObjects);
             globalObjects.forEach(function(objName) {
-                object = parsedSave.globalObjects[objName];
-                newObject = GameCreator[object.objectType].createFromSaved(object);
+                oldObject = parsedSave.globalObjects[objName];
 
-                GameCreator.referenceCounters(object);
+                newObject = new GameCreator[oldObject.objectType]({});
+        
+                $.extend(newObject, oldObject);
+
+                GameCreator.globalObjects[newObject.objectName] = newObject;
+                GameCreator.referenceImage(newObject);
 
                 GameCreator.UI.createLibraryItem(newObject);
             });
             
             //Load scenes
             for (i = 0; i < parsedSave.scenes.length; i += 1) {
-                newScene = [];
                 savedScene = parsedSave.scenes[i];
-                for (n = 0; n < savedScene.length; n += 1) {
-                    object = savedScene[n];
-                    GameCreator.createSceneObject(GameCreator.globalObjects[object.objectName], newScene, object);
-                    GameCreator.referenceCounters(object);
+                newScene = new GameCreator.Scene(savedScene.id);
+                for (n = 0; n < savedScene.objects.length; n += 1) {
+                    newObject = savedScene.objects[n];
+                    GameCreator.createSceneObject(GameCreator.globalObjects[newObject.parent], newScene, newObject);
                 }
                 GameCreator.scenes.push(newScene);
             }

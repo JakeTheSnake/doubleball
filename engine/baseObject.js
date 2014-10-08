@@ -157,14 +157,4 @@
             obj.invalidated = false;
         }
     };
-
-    GameCreator.BaseObject.createFromSaved = function(savedObject) {
-        var obj = new GameCreator[savedObject.objectType]({});
-        
-        $.extend(obj, savedObject);
-
-        GameCreator.globalObjects[obj.objectName] = obj;
-
-        return obj;
-    };
 }());

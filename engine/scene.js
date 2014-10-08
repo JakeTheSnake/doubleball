@@ -2,9 +2,9 @@
 (function() {
     "use strict";
 
-    GameCreator.Scene = function() {
+    GameCreator.Scene = function(id) {
         this.objects = [];
-        this.id = GameCreator.getUniqueSceneId();
+        this.id = (id !== undefined ? id : GameCreator.getUniqueSceneId());
         this.attributes = {
             name: 'Scene ' + this.id,
             bgColor: "white",
