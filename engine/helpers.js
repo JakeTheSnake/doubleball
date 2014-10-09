@@ -69,7 +69,7 @@
             object.parent.onCollideSets.push(newSetsItem);
             GameCreator.UI.openEditActionsWindow(
                 GameCreator.htmlStrings.collisionEventInformationWindow("'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'", object.image.src, targetObject.image.src),
-                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType)), this.parent.objectName
+                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType)), object.parent.objectName
             );
         }
     };
@@ -175,7 +175,7 @@
     GameCreator.helpers.parseRange = function(string) {
         var i, range;
         if (string.indexOf(':') > -1) {
-            if (!(/^\d:\d$/.test(string)) ) {
+            if (!(/^\d+:\d+$/.test(string)) ) {
                 throw '"' + string + '" is not a valid range. Should be "&lt;num&gt;"" or "&lt;num&gt;:&lt;num&gt;"';
             } 
             range = string.split(":", 2);
