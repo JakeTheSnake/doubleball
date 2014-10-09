@@ -173,7 +173,21 @@
     };
 
     GameCreator.helpers.parseRange = function(string) {
-        return string.split(":", 2);
+        var i, range;
+        if (string.indexOf(':') > -1) {
+            if (!(/^\d:\d$/.test(string)) ) {
+                throw '"' + string + '" is not a valid range. Should be "&lt;num&gt;"" or "&lt;num&gt;:&lt;num&gt;"';
+            } 
+            range = string.split(":", 2);
+            for (i = 0; i < range.length; i += 1) {
+                range[i] = GameCreator.helpers.parseNumber(range[i]);
+            }    
+        } else {
+            range = [];
+            range.push(GameCreator.helpers.parseNumber(string));
+        }
+        
+        return range;
     };
 
     GameCreator.helpers.calcUnitVector = function(x, y) {
@@ -211,35 +225,32 @@
     GameCreator.helpers.getValue = function(input) {
         var i, range, value;
         if (input.attr("data-type") === "string" && input.val().length !== 0) {
-            return input.val();
+            return input.val().replace(/</g, '&lt;').replace(/>/g, '&gt;');
         } else if (input.attr("data-type") === "number" && input.val().length !== 0) {
-            value = parseFloat(input.val());
-            if (isNaN(value)) {
-                throw "Not a Number"
-            }
-            return value;
+            return GameCreator.helpers.parseNumber(input.val());           
         } else if (input.attr("data-type") === "image" && input.val().length !== 0) {
             return GameCreator.helpers.parseImage(input.val());
         } else if (input.attr("data-type") === "bool" && input.val().length !== 0) {
             return GameCreator.helpers.parseBool(input.val());
         } else if (input.attr("data-type") === "range" && input.val().length !== 0) {
-            range = GameCreator.helpers.parseRange(input.val());
-            for (i = 0; i < range.length; i += 1) {
-                range[i] = parseFloat(range[i]);
-                if (isNaN(range[i])) {
-                    throw "Invalid range"
-                }
-            }
-            return range;
+            return GameCreator.helpers.parseRange(input.val());
         } else if (input.attr("data-type") === "checkbox" && input.val().length !== 0) {
             return input.is(":checked");
         } else {
-            return input.val();
+            return input.val().replace(/</g, '&lt;').replace(/>/g, '&gt;');
         }
+    };
+
+    GameCreator.helpers.parseNumber = function(value) {
+        if (!(/^\d+$/.test(value))) {
+            throw "'" + value + "' is not a number";
+        }
+        return parseInt(value);
     };
 
     GameCreator.helpers.parseImage = function(imgSrc) {
         var image = new Image();
+        if (!(/(jpg|png|gif)$/.test(imgSrc))) throw '"' + imgSrc + '" is not a valid image URL';
         image.src = imgSrc;
         image.onload = function() {
             $(image).data('loaded', true);
@@ -355,8 +366,21 @@
             }
         }
         $('#' + containerId + ' input').on('change', function() {
-            GameCreator.saveInputValueToObject($(this), attributes);
+            try {
+                GameCreator.saveInputValueToObject($(this), attributes);    
+            } catch (err) {}
         });
+        $('#' + containerId + ' input').blur(function() {
+            try {
+                GameCreator.saveInputValueToObject($(this), attributes);
+            } catch (err) {
+                $(this).addClass('properties-validation-flash'); // ANIMATION
+                var that = $(this);
+                setTimeout(function() { that.removeClass('properties-validation-flash'); }, 700);
+                GameCreator.UI.createValidationBox($(this), err);
+            }
+        });
+        
     };
 
     GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {

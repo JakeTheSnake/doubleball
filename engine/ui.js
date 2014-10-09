@@ -124,6 +124,7 @@ GameCreator.UI = {
     
     closeDialogue: function() {
         $("#dialogue-window").hide();
+        $(".arrow_box").hide();
         $("#dialogue-overlay").hide();
     },
 
@@ -397,6 +398,7 @@ GameCreator.UI = {
             } catch (err) {
                 $(display).addClass('properties-validation-flash'); // ANIMATION
                 setTimeout(function() { $(display).removeClass('properties-validation-flash'); }, 700);
+                GameCreator.UI.createValidationBox(container, err);
             }
             $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType, obj));
             container.html(display);
@@ -434,5 +436,22 @@ GameCreator.UI = {
         }
 
         container.parent().off('click').on('click', onClickFunc);
+    },
+
+    createValidationBox: function(target, message) {
+        var messageBox = document.createElement('div');
+        $(messageBox).addClass('arrow_box');
+        $(messageBox).html(message);
+        var targetBoundingBox = target[0].getBoundingClientRect();
+        messageBox.style.position = 'absolute';
+        document.body.appendChild(messageBox);
+        var msgBoxBoundingBox = messageBox.getBoundingClientRect();
+        messageBox.style['z-index'] = '99';
+        messageBox.style.top = (targetBoundingBox.top - msgBoxBoundingBox.height - 10) + 'px';
+        messageBox.style.left = (targetBoundingBox.left - msgBoxBoundingBox.width / 2 + 10) + 'px';
+        
+        var fade = function() { $(messageBox).fadeOut(200); };
+        setTimeout(fade, 5000);
+        $(messageBox).click(fade);
     },
 }
