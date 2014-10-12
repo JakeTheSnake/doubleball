@@ -204,6 +204,10 @@
                 img = new Image();
                 img.src = globalObj.states[i].attributes.image;
                 globalObj.states[i].attributes.image = img;
+                img.onload = function() {
+                    $(img).data('loaded', true);
+                    GameCreator.render();
+                };
             }
         },
 
@@ -257,6 +261,7 @@
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
             $(".global-object-list").empty();
+            GameCreator.renderableObjects = [];
             //Load globalObjects
             parsedSave = JSON.parse(savedJson);
             var globalObjects = Object.keys(parsedSave.globalObjects);
@@ -279,7 +284,7 @@
                 newScene = new GameCreator.Scene(savedScene.id);
                 for (n = 0; n < savedScene.objects.length; n += 1) {
                     newObject = savedScene.objects[n];
-                    GameCreator.createSceneObject(GameCreator.globalObjects[newObject.parent], newScene, newObject);
+                    GameCreator.createSceneObject(GameCreator.globalObjects[newObject.parent], newScene, newObject.attributes);
                 }
                 GameCreator.scenes.push(newScene);
             }

@@ -13,12 +13,9 @@ GameCreator.ConditionActionSet.prototype.checkConditions = function(runtimeObj) 
     return true;
 }
 
-GameCreator.ConditionActionSet.prototype.runActions = function(runtimeObj, parameters) {
+GameCreator.ConditionActionSet.prototype.runActions = function(runtimeObj, runtimeParameters) {
     for (var i = 0; i < this.actions.length; i++) {
-        if (parameters) {
-            $.extend(this.actions[i].parameters, parameters);
-        }
-        this.actions[i].runAction(runtimeObj);
+        this.actions[i].runAction(runtimeObj, runtimeParameters);
     }
 }
 

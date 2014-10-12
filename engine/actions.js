@@ -29,8 +29,15 @@
         return GameCreator.actions[this.name].params[name];
     }
 
-    GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj) {
-        var timerFunction;
+    GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimeParameters) {
+        var timerFunction, combinedParameters = {};
+
+        if(runtimeParameters) {
+          combinedParameters = $.extend(combinedParameters, runtimeParameters, this.parameters);
+        } else {
+          combinedParameters = this.parameters;
+        }
+
         if (this.timing.type === "after") {
             timerFunction = GameCreator.timerHandler.registerOffset;
         } else if (this.timing.type === "at") {
@@ -39,23 +46,23 @@
             timerFunction = GameCreator.timerHandler.registerInterval;
         } else {
             if (GameCreator.actions[this.name].runnable.call(runtimeObj)) {
-                GameCreator.actions[this.name].action.call(runtimeObj, this.parameters);
+              GameCreator.actions[this.name].action.call(runtimeObj, combinedParameters);
             }
             return;
         }
 
-        (function(thisAction, thisRuntimeObj) {
+        (function(thisAction, thisRuntimeObj, combinedParameters) {
             timerFunction(
                 GameCreator.helpers.getRandomFromRange(thisAction.timing.time),
                 function() {
                     if (GameCreator.actions[thisAction.name].runnable.call(thisRuntimeObj)) {
-                        GameCreator.actions[thisAction.name].action.call(thisRuntimeObj, thisAction.parameters);
+                        GameCreator.actions[thisAction.name].action.call(thisRuntimeObj, combinedParameters);
                         return true;
                     } else {
                         return false;
                     }
                 });
-        })(this, runtimeObj);
+        })(this, runtimeObj, combinedParameters);
     };
 
     GameCreator.actions = {
