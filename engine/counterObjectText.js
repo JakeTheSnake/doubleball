@@ -22,7 +22,6 @@ GameCreator.CounterObjectText = function(args) {
     
     this.isRenderable = true;
     this.objectType = "CounterObjectText";
-    GameCreator.globalObjects[this.objectName] = this;
 };
 
 GameCreator.CounterObjectText.objectAttributes = {

@@ -272,6 +272,27 @@
         
                 $.extend(newObject, oldObject);
 
+                if (newObject.onClickSets) {
+                    newObject.onClickSets = newObject.onClickSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                }
+                if (newObject.onCreateSets) {
+                    newObject.onCreateSets = newObject.onCreateSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                }
+                if (newObject.onDestroySets) {
+                    newObject.onDestroySets = newObject.onDestroySets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                }
+                if (newObject.onCollideSets) {
+                    newObject.onCollideSets.forEach(function(collideArray){
+                        collideArray.caSets = collideArray.caSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                    });
+                }
+                if (newObject.onKeySets) {
+                    var keys = Object.keys(newObject.onKeySets);
+                    keys.forEach(function(key){
+                        newObject.onKeySets[key] = newObject.onKeySets[key].map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                    });
+                }
+
                 GameCreator.globalObjects[newObject.objectName] = newObject;
                 GameCreator.referenceImage(newObject);
 
@@ -292,6 +313,18 @@
             GameCreator.globalIdCounter = parsedSave.globalIdCounter;
             GameCreator.uniqueSceneId = parsedSave.uniqueSceneId;
             GameCreator.editScene(GameCreator.scenes[0]);
+        },
+
+        restoreCaSet: function(caSet) {
+            var newCaSet = new GameCreator.ConditionActionSet({});
+            $.extend(newCaSet, caSet);
+            newCaSet.actions = newCaSet.actions.map(function(action){
+                return $.extend(new GameCreator.RuntimeAction(), action);
+            });
+            newCaSet.conditions = newCaSet.conditions.map(function(action){
+                return $.extend(new GameCreator.RuntimeCondition(), action);
+            });
+            return newCaSet;
         },
 
         saveFormInputToObject: function(formId, obj) {

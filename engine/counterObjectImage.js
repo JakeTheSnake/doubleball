@@ -18,7 +18,6 @@ GameCreator.CounterObjectImage = function(args) {
     
     this.isRenderable = true;
     this.objectType = "CounterObjectImage";
-    GameCreator.globalObjects[this.objectName] = this;
 };
 
 GameCreator.CounterObjectImage.objectAttributes = GameCreator.helpers.getStandardAttributes();
