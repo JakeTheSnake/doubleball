@@ -1,15 +1,16 @@
-GameCreator.CASetVM = function(caSet, selectableActions) {
+GameCreator.CASetVM = function(caSet, selectableActions, globalObj) {
     var i;
     this.caSet = caSet;
     this.actionVMs = [];
     this.conditionVMs = [];
     this.selectableActions = selectableActions;
+    this.globalObj = globalObj;
     for (i = 0; i < this.caSet.actions.length; i++) {
-        this.actionVMs.push(new GameCreator.ActionItemVM(this.caSet.actions[i], caSet));
+        this.actionVMs.push(new GameCreator.ActionItemVM(this.caSet.actions[i], globalObj));
     }
 
     for (i = 0; i < this.caSet.conditions.length; i++) {
-        this.conditionVMs.push(new GameCreator.ConditionItemVM(this.caSet.conditions[i], caSet));
+        this.conditionVMs.push(new GameCreator.ConditionItemVM(this.caSet.conditions[i], globalObj));
     }
 }
 
@@ -21,7 +22,7 @@ GameCreator.CASetVM.prototype.addCondition = function(conditionName) {
     }
     var runtimeCondition = new GameCreator.RuntimeCondition(conditionName, params);
     this.caSet.conditions.push(runtimeCondition);
-    this.conditionVMs.push(new GameCreator.ConditionItemVM(runtimeCondition, this.caSet));
+    this.conditionVMs.push(new GameCreator.ConditionItemVM(runtimeCondition, this.globalObj));
 };
 
 GameCreator.CASetVM.prototype.addAction = function(actionName) {
@@ -32,77 +33,100 @@ GameCreator.CASetVM.prototype.addAction = function(actionName) {
     }
     runtimeAction = new GameCreator.RuntimeAction(actionName, parameters);
     this.caSet.actions.push(runtimeAction);
-    this.actionVMs.push(new GameCreator.ActionItemVM(runtimeAction, this.caSet));
+    this.actionVMs.push(new GameCreator.ActionItemVM(runtimeAction, this.globalObj));
 }
 
 GameCreator.CASetVM.prototype.getPresentation = function(active) {
-    var conditionsList, listItem = document.createElement('li');
-    var title = document.createElement('span');
-    var i, names, that = this;
+    var conditionsList;
+    var listItem = document.createElement('li');
 
     if (active) {
         $(listItem).addClass('active');
-        $(title).addClass('icon-down-open');
-
+        
         conditionsList = document.createElement('div');
         conditionsList.className = 'conditions-group';
 
-        if (this.conditionVMs.length === 0) {
-            $(title).append('Always');
-            $(conditionsList).append(title);
-
-            $(conditionsList).append('<div class="condition-parameters"><span>Always</span></div>');
-        } else {
-            names = [];
-            for (i = 0; i < this.conditionVMs.length; i+=1) {
-                names.push(this.conditionVMs[i].model.name);
-            }
-            $(title).append(names.join(' & '));
-            $(conditionsList).append(title);
-
-            for (i = 0; i < this.conditionVMs.length; i+=1) {
-                $(conditionsList).append(this.conditionVMs[i].getPresentation());
-            }
-            $(title).on('click', function(){
-                $("#dialogue-panel-conditions").trigger('redrawList', null);
-                $("#dialogue-panel-actions").empty();
-            });
-        }
-
-        var addConditionButton = document.createElement('button');
-        $(addConditionButton).addClass('icon-plus btn btn-success');
-        $(addConditionButton).html('Add condition');
-
-        $(addConditionButton).on('click', function() {
-            GameCreator.UI.populateSelectConditionList(that);
-        });
-        $(conditionsList).append(addConditionButton);
+        this.appendActiveTitle(conditionsList);
+        this.appendConditions(conditionsList);    
+        this.appendAddConditionButton(conditionsList);
+        
         $(listItem).append(conditionsList);
     } else {
-        if (this.conditionVMs.length === 0) {
-            $(listItem).append('Always');
-        } else {
-            names = [];
-            for (i = 0; i < this.conditionVMs.length; i+=1) {
-                names.push(this.conditionVMs[i].model.name);
-            }
-            $(title).addClass('icon-right-open');
-            $(title).append(names.join(' & '));
-            $(listItem).append(title);
-        }
-        $(listItem).on('click', function(){
-            $("#dialogue-panel-actions").trigger('redrawList', that);
-            $("#dialogue-panel-conditions").trigger('redrawList', that);
-        });
+        this.appendInactiveTitle(listItem);
+        
+        $(listItem).on('click', function() {
+            $("#dialogue-panel-actions").trigger('redrawList', this);
+            $("#dialogue-panel-conditions").trigger('redrawList', this);
+        }.bind(this));
     }
+
     return listItem;
 }
 
+GameCreator.CASetVM.prototype.appendAddConditionButton = function(conditionsList) {
+    var addConditionButton = document.createElement('button');
+    $(addConditionButton).addClass('icon-plus btn btn-success');
+    $(addConditionButton).html('Add condition');
 
-GameCreator.ConditionItemVM = function(model, caSet) {
+    $(addConditionButton).on('click', function() {
+        GameCreator.UI.populateSelectConditionList(this);
+    }.bind(this));
+    $(conditionsList).append(addConditionButton);
+}
+
+GameCreator.CASetVM.prototype.appendConditions = function(conditionsList) {
+    var i;
+
+    if (this.conditionVMs.length == 0) {
+        $(conditionsList).append('<div class="condition-parameters"><span>Always</span></div>');
+    } else {
+        for (i = 0; i < this.conditionVMs.length; i+=1) {
+            $(conditionsList).append(this.conditionVMs[i].getPresentation());
+        }
+    }
+}
+
+GameCreator.CASetVM.prototype.appendInactiveTitle = function(caSetList) {
+    var title = this.createTitle();
+
+    $(title).addClass('icon-right-open');
+
+    $(caSetList).append(title);
+}
+
+GameCreator.CASetVM.prototype.appendActiveTitle = function(conditionsList) {
+    var title = this.createTitle();
+    
+    $(title).addClass('icon-down-open');
+
+    $(title).on('click', function(){
+        $("#dialogue-panel-conditions").trigger('redrawList', null);
+        $("#dialogue-panel-actions").empty();
+    });
+    $(conditionsList).append(title);
+}
+
+GameCreator.CASetVM.prototype.createTitle = function() {
+    var names = [];
+    var title = document.createElement('span');
+    
+    if (this.conditionVMs.length == 0) {
+        $(title).append('Always');
+    } else {
+        for (i = 0; i < this.conditionVMs.length; i+=1) {
+            names.push(this.conditionVMs[i].model.name);
+        }
+        $(title).append(names.join(' & '));
+    }
+
+    return title;
+}
+
+
+GameCreator.ConditionItemVM = function(model, globalObj) {
     this.model = model; // Pointer to the saved action in the event 
     this.parameters = this.getSelectedParameters();
-    this.caSet = caSet;
+    this.globalObj = globalObj;
     this.template = GameCreator.conditions[this.model.name];
 };
 
@@ -122,7 +146,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
         $(paramItemRow).append(paramValuePresenter);
         var observerParam = GameCreator.conditions[this.model.name].params[this.parameters[i].name].observer;
         GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
-            this.parameters[i].name, GameCreator.helpers.findGlobalObjectById(this.caSet.globalObj),
+            this.parameters[i].name, this.globalObj,
             this.updateParameter.bind(this, observerParam));
         $(paramList).append(paramItemRow);
     }
@@ -147,10 +171,10 @@ GameCreator.ConditionItemVM.prototype.updateParameter = function(paramName, valu
     }
 }
 
-GameCreator.ActionItemVM = function(model, caSet) {
+GameCreator.ActionItemVM = function(model, globalObj) {
     this.model = model; // Pointer to the saved action in the event 
     this.parameters = this.getParameters();
-    this.caSet = caSet;
+    this.globalObj = globalObj;
     this.template = GameCreator.actions[this.model.name];
 };
 
@@ -188,7 +212,7 @@ GameCreator.ActionItemVM.prototype.addParameterPresentations = function(containe
         
         var observerParam = GameCreator.actions[this.model.name].params[this.parameters[i].name].observer;
         GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
-            this.parameters[i].name, GameCreator.helpers.findGlobalObjectById(this.caSet.globalObj),
+            this.parameters[i].name, this.globalObj,
             this.updateParameter.bind(this, observerParam));
         $(container).append(paramItem);
     }

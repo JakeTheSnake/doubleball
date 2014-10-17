@@ -226,7 +226,7 @@ GameCreator.UI = {
     setupConditionsColumn: function(caSets, selectableActions, globalObj) {
         var caSetVMs = [];
         for (var i = 0; i < caSets.length; i++) {
-            caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions));
+            caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions, globalObj));
         }
 
         var addCaSetButton = $(document.createElement('button'));
@@ -235,7 +235,7 @@ GameCreator.UI = {
         $(addCaSetButton).on('click', function() {
             caSet = new GameCreator.ConditionActionSet(globalObj);
             caSets.push(caSet);
-            caSetVMs.push(new GameCreator.CASetVM(caSet, selectableActions));
+            caSetVMs.push(new GameCreator.CASetVM(caSet, selectableActions, globalObj));
             $("#dialogue-panel-conditions").trigger('redrawList');
         });
 

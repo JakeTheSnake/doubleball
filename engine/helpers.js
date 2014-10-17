@@ -67,9 +67,10 @@
             }
             newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object.parent)]};
             object.parent.onCollideSets.push(newSetsItem);
+            var titleString = "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'";
             GameCreator.UI.openEditActionsWindow(
-                GameCreator.htmlStrings.collisionEventInformationWindow("'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'", object.image.src, targetObject.image.src),
-                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType)), object.parent.objectName
+                GameCreator.htmlStrings.collisionEventInformationWindow(titleString, object.image.src, targetObject.image.src),
+                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType), object.parent), object.parent.objectName
             );
         }
     };
