@@ -74,7 +74,7 @@
                                     
                                     setTimeout(function(cooldowns, cooldown) {
                                         cooldowns[cooldown] = false; 
-                                    }.bind(this, keyCooldown, key), 300);
+                                    }.bind(this, this.keyCooldown, key), 300);
                                 }
                             }
                         }
