@@ -53,14 +53,15 @@ GameCreator.commonObjectControllers = {
 
         GameCreator.UI.setupActionsColumn();
 
-        $('#dialogue-panel-with').parent().append('<button id="add-new-collision-button" class="icon-plus btn btn-success">Add</button>');
-        $("#dialogue-panel-with").on('redrawList', function(evt) {
-            $('#dialogue-panel-with').empty();
+        var withColumn = $('#dialogue-panel-with');
+        withColumn.parent().append('<button id="add-new-collision-button" class="icon-plus btn btn-success">Add</button>');
+        withColumn.on('redrawList', function(evt) {
+            withColumn.empty();
             globalObj.onCollideSets.forEach(function(collisionItem) {
                 var collisionListItem = $(document.createElement('li'));
                 var globalObject = GameCreator.helpers.findGlobalObjectById(collisionItem.id);
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
-                $("#dialogue-panel-with").append(collisionListItem);
+                withColumn.append(collisionListItem);
                 collisionListItem.on('click', function() {
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
@@ -77,15 +78,14 @@ GameCreator.commonObjectControllers = {
                     var targetId = GameCreator.helpers.findGlobalObjectByName($(this).data("objectname")).id;
                     var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet(globalObj)]};
                     globalObj.onCollideSets.push(collisionItem);
-                    $("#dialogue-panel-with").trigger('redrawList');
+                    withColumn.trigger('redrawList');
                     $("#dialogue-panel-add-list").empty();
                 });
             });
         });
         
-        $("#dialogue-panel-with").trigger('redrawList');
+        withColumn.trigger('redrawList');
 
-        
     },
 
     setupOnDestroyActionsForm: function(container) {
