@@ -127,8 +127,8 @@ test("Create Action Test", function() {
 test("Shoot Action Test", function() {
     var image = new Image();
     image.src = '../assets/red_ball.gif';
-    GameCreator.addGlobalObject({image: image, objectName: "projectile", width:[20], height:[30]}, "FreeObject");
-    setupCollisionEventForNewObject("Shoot", {objectToShoot: "projectile", projectileSpeed: 500, projectileDirection: "Left"});
+    var objToShoot = GameCreator.addGlobalObject({image: image, objectName: "projectile", width:[20], height:[30]}, "FreeObject");
+    setupCollisionEventForNewObject("Shoot", {objectToShoot: objToShoot.id, projectileSpeed: 500, projectileDirection: "Left"});
 
     GameCreator.checkCollisions();
 
@@ -149,12 +149,13 @@ test("Counter Action Test", function() {
 
 
 test("SwitchScene Action Test", function() {
-    GameCreator.scenes.push([]);
-    var runtimeObj = setupCollisionEventForNewObject("SwitchScene", {changeType: "setScene", changeValue: 1});
+    var newScene = new GameCreator.Scene();
+    GameCreator.scenes.push(newScene);
+    var runtimeObj = setupCollisionEventForNewObject("SwitchScene", {scene: newScene.id});
 
     GameCreator.checkCollisions();
 
-    deepEqual(GameCreator.activeSceneId, 1, "Scene was switched.");
+    deepEqual(GameCreator.activeSceneId, newScene.id, "Scene was switched.");
 });
 
 test("SwitchState Action Test", function() {

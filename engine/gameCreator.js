@@ -10,9 +10,6 @@
         paused: false,
         state: 'editing', //State can be editing, directing or playing. 
         then: undefined, // The time before last frame
-        draggedGlobalElement: undefined,
-        canvasOffsetX: 110,
-        canvasOffsetY: 10,
 
         globalObjects: {}, //Contains key value pairs where key is the (unique)name of the object.
 

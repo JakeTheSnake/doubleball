@@ -77,7 +77,8 @@ commonCounterTests();
 test("Counter value preserved between scenes", function() {
     counter.changeValue(5);
     assertCounter(5, "Counter value increased");
-    GameCreator.selectScene({changeType: "setScene", changeValue: 1});
+    var params = {scene: GameCreator.scenes[1].id}
+    GameCreator.selectScene(params);
     assertCounter(5, "Counter value preserved");
 });
 
