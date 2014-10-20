@@ -60,11 +60,7 @@
             }
         }
         else if (GameCreator.state !== 'playing') {
-            if (object.parent.objectType === "MouseObject") {
-                choosableActions = GameCreator.actionGroups.mouseCollisionActions;
-            } else {
-                choosableActions = GameCreator.actionGroups.collisionActions;
-            }
+            choosableActions = GameCreator.helpers.getCollisionActions(object.parent.objectType);
             newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object.parent)]};
             object.parent.onCollideSets.push(newSetsItem);
             var titleString = "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'";

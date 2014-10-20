@@ -5,22 +5,24 @@ GameCreator.UI = {
         GameCreator.addGlobalObject(args, objectType);
     },
 
-    redrawLibrary: function() {
+    drawDialogueLibrary: function() {
         var i, keys, listElementButton, globalObj;
-        $(".global-object-list").html('');
+        $("#dialogue-window .global-object-list").html('');
         keys = Object.keys(GameCreator.globalObjects);
         for (i = 0; i < keys.length; i += 1) {
             globalObj = GameCreator.globalObjects[keys[i]];
             listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
-            $(".global-object-list").append(listElementButton);
-            this.setupLibraryItemListeners(listElementButton, globalObj);
+            $(listElementButton).on("click", function(iGlobalObject) {
+                GameCreator.UI.openEditGlobalObjectDialogue(iGlobalObject);
+            }.bind(this, globalObj));
+            $("#dialogue-window .global-object-list").append(listElementButton);
         }
     },
     
     createLibraryItem: function(globalObj) {
         var listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
-        $(".global-object-list").append(listElementButton);
         this.setupLibraryItemListeners(listElementButton, globalObj);
+        $(".global-object-list").append(listElementButton);
     },
 
     setupLibraryItemListeners: function(listElementButton, globalObj) {
@@ -110,6 +112,10 @@ GameCreator.UI = {
 
         globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
         $("#dialogue-panel-edit").find("li:first-child").addClass("active");
+        GameCreator.UI.drawDialogueLibrary();
+        var previewImage = document.createElement('img');
+        previewImage.src = globalObj.getDefaultState().attributes.image.src;
+        $("#object-manager-library-preview").html(previewImage);
     },
     
     //General dialogue functions

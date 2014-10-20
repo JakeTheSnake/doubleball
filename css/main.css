@@ -191,10 +191,10 @@ p + img {
   margin-top: -5px;
 }
 
-img {
+/*img {
   border: 2px solid #505050;
   margin-bottom: 20px;
-}
+}*/
 
 label {
   display: inline-block;
@@ -794,6 +794,13 @@ input {
   background: url('../images/library_preview_grid.gif');
 }
 
+.library-preview > img {
+  width: 90px;
+  height: 90px;
+  padding-left: 80px;
+  padding-top: 20px;
+}
+
 .library-explorer {
   overflow-x: hidden;
   overflow-y: scroll;
@@ -980,6 +987,14 @@ input {
   cursor: not-allowed;
   color: #808080;
   background-color: #505050;
+}
+
+/**
+ * Button: Active
+ */
+
+.btn-active {
+  border: 1px solid #ffff00;
 }
 
 /*

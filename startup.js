@@ -94,6 +94,10 @@ window.onload = function () {
          
         $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
         $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue)
+        $("#toolbar-top button").on('click', function() {
+            $("#toolbar-top button").removeClass('btn-active');
+            $(this).addClass('btn-active');
+        })
         $("#run-game-button").on("click", GameCreator.playGame)
         $("#edit-game-button").on("click", GameCreator.editActiveScene)
         $("#direct-game-button").on("click", GameCreator.directActiveScene)
