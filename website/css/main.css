@@ -1,0 +1,727 @@
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+
+/*
+ * What follows is the result of much research on cross-browser styling.
+ * Credit left inline and big thanks to Nicolas Gallagher, Jonathan Neal,
+ * Kroc Camen, and the H5BP dev community and team.
+ */
+
+/* ==========================================================================
+   Base styles: opinionated defaults
+   ========================================================================== */
+
+html,
+button,
+input,
+select,
+textarea {
+    color: #222;
+}
+
+html {
+    font-size: 1em;
+    line-height: 1.4;
+}
+
+/*
+ * Remove text-shadow in selection highlight: h5bp.com/i
+ * These selection rule sets have to be separate.
+ * Customize the background color to match your design.
+ */
+
+::-moz-selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+}
+
+/*
+ * Remove the gap between images, videos, audio and canvas and the bottom of
+ * their containers: h5bp.com/i/440
+ */
+
+audio,
+canvas,
+img,
+video {
+    vertical-align: middle;
+}
+
+/*
+ * Remove default fieldset styles.
+ */
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/*
+ * Allow only vertical resizing of textareas.
+ */
+
+textarea {
+    resize: vertical;
+}
+
+/* ==========================================================================
+   Browse Happy prompt
+   ========================================================================== */
+
+.browsehappy {
+    margin: 0.2em 0;
+    background: #ccc;
+    color: #000;
+    padding: 0.2em 0;
+}
+
+/* ====================================================================================================================================================
+   Custom resets
+   ==================================================================================================================================================== */
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+menu, ol, ul, button, input, label {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+ol, ul, li {
+  list-style: none;
+}
+
+h1, h2, h3, p {
+  padding: 0;
+  margin: 0;
+}
+
+button:focus {
+    outline: 0;
+}
+
+.btn {
+    border-radius: 0;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+a:last-child, button:last-child, img:last-child, p:last-child {
+  margin-bottom: 0;
+}
+
+/* ====================================================================================================================================================
+   Custom base layout, classes and conditions
+   ==================================================================================================================================================== */
+
+h1, h2, h3 {
+  color: #FFE373;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  background-repeat: repeat-x;
+  background-position: left bottom;
+  margin-bottom: 5px;
+}
+
+h1 {
+  font-size: 1.6em;
+  padding-bottom: 1px;
+  
+}
+
+h2 {
+  font-size: 1.4em;
+  padding-bottom: 2px;
+}
+
+h3 {
+  font-size: 1.2em;
+  padding-bottom: 3px;
+}
+
+h1 + p,
+h2 + p,
+h3 + p {
+  margin-top: -4px;
+}
+
+p, span {
+  padding: 0;
+  margin-bottom: 20px;
+  color: #F5F5F5;
+  font-size: 12px;
+  font-family: 'Droid Serif', sans-serif;
+  line-height: 150%;
+}
+
+p + p {
+  margin-top: -9px;
+}
+
+p + img {
+  margin-top: -5px;
+}
+
+img {
+  border: 0;
+  outline: 0;
+}
+
+label {
+  display: inline-block;
+  color: #F5F5F5;
+  font-size: 12px;
+  font-family: 'Droid Sans', sans-serif;
+  margin-bottom: 3px;
+}
+
+input {
+  display: block;
+  color: #1E1E1E;
+  font-size: 12px;
+  font-family: 'Droid Sans', sans-serif;
+  border: 1px solid #A1A6AE;
+  margin-left: 1px;
+  height: 22px;
+  padding: 2px 0 0 6px;
+  width: 163px;
+}
+
+/* ==========================================================================
+   Container, rows and columns
+   ========================================================================== */
+
+#container-fluid {
+  margin: 0 auto 0 auto;
+  padding: 0;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+#container {
+  width: 1366px;
+  margin: 0 auto 0 auto;
+}
+
+.gray {
+  background-color: #282828;
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+header {
+  background-color: #323232;
+  vertical-align: middle;
+  padding: 0;
+  margin: 0;
+  height: 60px;
+}
+/* ==========================================================================
+   Nav
+   ========================================================================== */
+
+nav {
+  margin: 0 auto 0 auto;
+  width: 1366px;
+}
+
+#nav-main {
+  margin-top: 20px;
+  float: left;
+}
+
+#nav-main li {
+  display: inline-block;
+  margin-right: 30px;
+}
+
+#nav-user {
+  display: block;
+  float: right;
+}
+
+#nav-user a {
+  display: inline-block;
+  margin-top: 20px;
+  margin-right: 30px;
+}
+
+#nav-user button {
+  margin-top: 14px;
+  vertical-align: top;
+}
+
+#nav-user button a {
+  margin: 0;
+  padding: 0;
+}
+
+/* ==========================================================================
+   Content
+   ========================================================================== */
+
+#content {
+  min-height: 1px;
+  height: 100%;
+  width: 100%;
+  background-color: #ff0000;
+}
+
+#logo {
+  display: block;
+  background: url('../images/logo_arcadeforge.png');
+  margin: 50px auto 30px auto;
+  width: 375px;
+  height: 165px;
+}
+
+#btn-create {
+  display: block;
+  margin: 0 auto 0 auto;
+  text-align: center;
+}
+
+#login, #signup {
+  display: block;
+  background-color: #323232;
+  margin: 40px auto 0 auto;
+  padding: 20px;
+  width: 400px;
+}
+
+#login button:last-child, #signup button:last-child {
+  margin-top: 20px;
+}
+
+/* ==========================================================================
+   Environment
+   ========================================================================== */
+
+#environment {
+  position: absolute;
+  top: 60px;
+  left: 0;
+  background: url('../images/environment_ground.gif') 5px 2px;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#environment-base {
+  background: url('../images/environment_base.gif') top center;
+  height: 527px;
+}
+
+/* ==========================================================================
+   Lists
+   ========================================================================== */
+
+#lists {
+  position: absolute;
+  top: 520px;
+}
+
+#lists h1 {
+  color: #000;
+  font-weight: bold;
+  font-family: 'Droid Sans', sans-serif;
+}
+
+#lists div {
+  display: block;
+  width: 260px;
+  margin-right: 30px;
+  float: left;
+}
+
+#lists ul {
+  background-color: #000;
+  margin: 0;
+  padding: 15px 20px 30px 20px;
+}
+
+#lists li {
+  display: block;
+}
+
+/* ====================================================================================================================================================
+   Custom button classes
+   ==================================================================================================================================================== */
+
+.btn {
+  background-color: #505050;
+  border: 0;
+  border-radius: 0;
+  color: #fff;
+  cursor: pointer;
+  margin-right: 2px;
+  margin-bottom: 0;
+  width: 86px;
+  height: 34px;
+  font-size: 0.9em;
+  font-family: 'Droid Sans', sans-serif;
+  font-weight: 400;
+  text-align: center;
+  text-shadow: 1px 1px rgba(0,0,0,0.2);
+  white-space: nowrap;
+  vertical-align: middle;
+  padding: 8px 0;
+
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.btn-lg {
+  font-size: 1.1em;
+  width: 160px;
+  height: 50px;
+}
+
+.btn.disabled,
+.btn[disabled] {
+  pointer-events: none;
+  cursor: not-allowed;
+  color: #808080;
+  background-color: #505050;
+}
+
+/*
+ * Button: Success
+ */
+
+.btn-success {
+  background-color: #239D58;
+}
+
+.btn-success:hover {
+  background-color: #27AE60;
+}
+
+.btn-success:active {
+  background-color: #1C8047;
+}
+
+/*
+ * Button: Edit
+ */
+
+.btn-edit {
+  background-color: #E5A52E;
+} 
+
+.btn-edit:hover {
+  background-color: #F5B031;
+}
+
+.btn-edit:active {
+  background-color: #C78F28;
+}
+
+/*
+ * Button: Warning
+ */
+
+.btn-warning {
+  background-color: #CE5144;
+}
+
+.btn-warning:hover {
+  background-color: #DE5849;
+}
+
+.btn-warning:active {
+  background-color: #B0463A;
+}
+
+/* ====================================================================================================================================================
+   Custom icon classes
+   ==================================================================================================================================================== */
+
+@font-face {
+  font-family: 'icons';
+  src: url('../font/icons.eot?99267613');
+  src: url('../font/icons.eot?99267613#iefix') format('embedded-opentype'),
+       url('../font/icons.woff?99267613') format('woff'),
+       url('../font/icons.ttf?99267613') format('truetype'),
+       url('../font/icons.svg?99267613#icons') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+ 
+[class^="icon-"]:before, [class*=" icon-"]:before {
+  font-family: "icons";
+  font-style: normal;
+  font-weight: normal;
+  speak: none;
+  color: #FFFFFF;
+  display: inline-block;
+  text-decoration: inherit;
+  width: 1em;
+  text-align: center;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1em;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+ 
+.icon-down-open:before { content: '\e800'; font-size: 60%; margin-right: 7px; }
+.icon-cancel:before { content: '\e801'; } /* '' */
+.icon-right-open:before { content: '\e802'; font-size: 60%; margin-right: 6px; }
+.icon-down-dir:before { content: '\e803'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-right-dir:before { content: '\e804'; font-size: 110%; margin-right: 6px; } /* '' */
+.icon-plus:before { content: '\e805'; font-size: 80%; margin-right: 9px; } /* '' */
+.icon-minus:before { content: '\e806'; } /* '' */
+.icon-cog:before { content: '\e807'; } /* '' */
+.icon-menu:before { content: '\e808'; } /* '' */
+.icon-up-dir:before { content: '\e809'; } /* '' */
+.icon-left-dir:before { content: '\e80a'; } /* '' */
+.icon-left-open:before { content: '\e80b';  font-size: 60%; } /* '' */
+.icon-up-open:before { content: '\e80c';  font-size: 60%; } /* '' */
+.icon-angle-left:before { content: '\e80d'; } /* '' */
+.icon-angle-right:before { content: '\e80e'; } /* '' */
+.icon-angle-up:before { content: '\e80f'; } /* '' */
+.icon-angle-down:before { content: '\e810'; } /* '' */
+.icon-eye:before { content: '\e811'; } /* '' */
+.icon-eye-off:before { content: '\e812'; } /* '' */
+.icon-ok:before { content: '\e813'; } /* '' */
+.icon-help:before { content: '\e814'; } /* '' */
+.icon-info:before { content: '\e815'; } /* '' */
+.icon-attention-alt:before { content: '\e816'; } /* '' */
+.icon-codeopen:before { content: '\e817';  font-size: 100%; margin-right: 13px; } /* '' */
+
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+
+/*
+ * Image replacement
+ */
+
+.ir {
+    background-color: transparent;
+    border: 0;
+    overflow: hidden;
+    /* IE 6/7 fallback */
+    *text-indent: -9999px;
+}
+
+.ir:before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 150%;
+}
+
+/*
+ * Float element
+ */
+
+.pull-right {
+  float: right;
+}
+
+/*
+ * Hide from both screenreaders and browsers: h5bp.com/u
+ */
+
+.hidden {
+    display: none !important;
+    visibility: hidden;
+}
+
+/*
+ * Hide only visually, but have it available for screenreaders: h5bp.com/v
+ */
+
+.visuallyhidden {
+    border: 0;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+/*
+ * Extends the .visuallyhidden class to allow the element to be focusable
+ * when navigated to via the keyboard: h5bp.com/p
+ */
+
+.visuallyhidden.focusable:active,
+.visuallyhidden.focusable:focus {
+    clip: auto;
+    height: auto;
+    margin: 0;
+    overflow: visible;
+    position: static;
+    width: auto;
+}
+
+/*
+ * Hide visually and from screenreaders, but maintain layout
+ */
+
+.invisible {
+    visibility: hidden;
+}
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: " "; /* 1 */
+    display: table; /* 2 */
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+/*
+ * For IE 6/7 only
+ * Include this rule to trigger hasLayout and contain floats.
+ */
+
+.clearfix {
+    *zoom: 1;
+}
+
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+
+@media only screen and (min-width: 35em) {
+    /* Style adjustments for viewports that meet the condition */
+}
+
+@media print,
+       (-o-min-device-pixel-ratio: 5/4),
+       (-webkit-min-device-pixel-ratio: 1.25),
+       (min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid required HTTP connection: h5bp.com/r
+   ========================================================================== */
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important; /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]:after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]:after {
+        content: " (" attr(title) ")";
+    }
+
+    /*
+     * Don't show links for images, or javascript/internal links
+     */
+
+    .ir a:after,
+    a[href^="javascript:"]:after,
+    a[href^="#"]:after {
+        content: "";
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group; /* h5bp.com/t */
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    @page {
+        margin: 0.5cm;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
