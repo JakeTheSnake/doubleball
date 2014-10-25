@@ -66,7 +66,7 @@ GameCreator.commonObjectControllers = {
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
                     GameCreator.UI.setupConditionsColumn(collisionItem.caSets, GameCreator.helpers.getCollisionActions(globalObject), globalObject);
-                    $('#dialogue-panel-actions').empty();
+                    $('#dialogue-panel-actions').trigger('clearColumn');
                     $("#dialogue-panel-conditions").trigger('redrawList');
                 });
 

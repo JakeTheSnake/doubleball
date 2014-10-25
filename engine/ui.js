@@ -282,6 +282,10 @@ GameCreator.UI = {
 
             $("#dialogue-panel-add-list").empty();
         });
+        actionsColumn.on('clearColumn', function() {
+            actionsColumn.parent().find('button').remove();
+            actionsColumn.empty();
+        });
     },
 
     populateSelectConditionList: function(activeCASetVM) {
