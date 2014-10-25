@@ -369,8 +369,7 @@ GameCreator.UI = {
                 $("#save-new-global-object-button").click(function() {
                     var objectName = $("#add-global-object-name-input").val();
                     globalObject.objectName = objectName;
-                    GameCreator.globalObjects[objectName] = globalObject;
-                    GameCreator.UI.createLibraryItem(globalObject);
+                    GameCreator.addTempGlobalObjectToGame(globalObject);
                     GameCreator.UI.closeDialogue();
                 });
             }.bind(listItem, i));

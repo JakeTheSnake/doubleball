@@ -36,6 +36,13 @@
             return globalObj;
         },
 
+        addTempGlobalObjectToGame: function(globalObj) {
+            GameCreator.globalIdCounter += 1;
+            globalObj.id = GameCreator.globalIdCounter;
+            GameCreator.UI.createLibraryItem(globalObj);
+            GameCreator.globalObjects[globalObj.objectName] = globalObj;
+        },
+
         directActiveScene: function() {
             GameCreator.directScene(GameCreator.getActiveScene());
         },
