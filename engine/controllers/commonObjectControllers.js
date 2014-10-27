@@ -154,7 +154,8 @@ GameCreator.commonObjectControllers = {
                     $('#object-property-' + allAttributes[index] + '-container input').attr('disabled', 'true');
                 } else {
                     $('#object-property-' + allAttributes[index] + '-container input').removeAttr('disabled');
-                    state.attributes[allAttributes[index]] = globalObj.getDefaultState().attributes[allAttributes[index]];    
+                    state.attributes[allAttributes[index]] = globalObj.getDefaultState().attributes[allAttributes[index]];
+                    GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[globalObj.objectType].objectAttributes, 'state-properties-content');
                 }
                 $('#object-property-' + allAttributes[index] + '-container').toggleClass('fade-disable');
                 $(this).toggleClass('active');
