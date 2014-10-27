@@ -324,10 +324,10 @@
 
         changeState: function(runtimeObj, params) {
             var selectedObjectId = params.objectId;
-            if (selectedObjectId !== 'this') {
+            if (selectedObjectId && selectedObjectId !== 'this') {
                 runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
             }
-            runtimeObj.setState(parseInt(params.stateId, 10));
+            runtimeObj.setState(Number(params.objectState));
         },
         
         getClickedObject: function(x, y) {
