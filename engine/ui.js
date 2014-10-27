@@ -26,6 +26,10 @@ GameCreator.UI = {
     },
 
     setupLibraryItemListeners: function(listElementButton, globalObj) {
+        //Width and height are ranges, get the largest possible value from range.
+        var height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
+        var width = globalObj.getDefaultState().attributes.width.slice(-1)[0];
+
         $(listElementButton).on("click", function(e){
             GameCreator.UI.openEditGlobalObjectDialogue(globalObj);
         });
@@ -33,19 +37,20 @@ GameCreator.UI = {
             var image = new Image();
             image.src = $(this).attr("data-imgsrc");
             $(image).css("position", "absolute");
-            $(image).css("top", e.pageY-45);
-            $(image).css("left", e.pageX-45);
+            $(image).css("top", e.pageY - (height/2));
+            $(image).css("left", e.pageX - (width/2));
             $(image).css("display", "none");
-            $(image).css("width", "90px");
+            $(image).css("width", width + "px");
+            $(image).css("height", height + "px");
+
             $("body").append(image);
             var initialX = e.pageX;
             var initialY = e.pageY;
-            var aspectRatio = globalObj.getDefaultState().attributes.width / globalObj.getDefaultState().attributes.height;
             $(window).on("mousemove.dragGlobalMenuItem", function(e){
                 if (Math.abs(initialX - e.pageX) > 3 || Math.abs(initialY - e.pageY) > 3){
                     $(image).css("display", "block"); 
-                    $(image).css("top", e.pageY - 45 / aspectRatio);
-                    $(image).css("left", e.pageX - 45);
+                    $(image).css("top", e.pageY - (height/2));
+                    $(image).css("left", e.pageX - (width/2));
                 }
             });
 
