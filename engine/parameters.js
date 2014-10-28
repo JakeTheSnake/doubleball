@@ -64,6 +64,19 @@ GameCreator.NumberParameter.prototype.getValuePresenter = function() {
     return element;
 };
 
+GameCreator.RangeParameter = function(itemVM, paramName, mandatory) {
+    this.name = paramName;
+    this.itemVM = itemVM;
+    this.mandatory = mandatory;
+    this.element = this.getValuePresenter();
+};
+
+GameCreator.RangeParameter.prototype.getValuePresenter = function() {
+    var element = document.createElement('td');
+    element.setAttribute('data-inputtype', 'rangeInput');
+    return element;
+};
+
 GameCreator.DestroyEffectParameter = function(itemVM, paramName, mandatory) {
     this.name = paramName;
     this.itemVM = itemVM;
@@ -224,6 +237,7 @@ var labelFunction = function() {
 GameCreator.GlobalObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.ShootableObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.NumberParameter.prototype.getLabel = labelFunction;
+GameCreator.RangeParameter.prototype.getLabel = labelFunction;
 GameCreator.DestroyEffectParameter.prototype.getLabel = labelFunction;
 GameCreator.DirectionParameter.prototype.getLabel = labelFunction;
 GameCreator.SwitchSceneParameter.prototype.getLabel = labelFunction;

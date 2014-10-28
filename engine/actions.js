@@ -105,16 +105,16 @@
                           timing: {at: true, every: true, after: true},
                         }),
           Create:   new GameCreator.Action({    
-                          action: function(params) {GameCreator.createRuntimeObject(params, {}); },
+                          action: function(params) {GameCreator.createRuntimeObject(GameCreator.helpers.findGlobalObjectById(Number(params.objectToCreate)), {x: params.x, y: params.y}); },
                           params: {"objectToCreate": 
                                     {param: GameCreator.GlobalObjectParameter,
                                     mandatory: true},
                                    "x": 
-                                   {param: GameCreator.NumberParameter,
+                                   {param: GameCreator.RangeParameter,
                                     mandatory: false,
                                     defaultValue: 0},
                                    "y": 
-                                   {param: GameCreator.NumberParameter,
+                                   {param: GameCreator.RangeParameter,
                                     mandatory: false,
                                     defaultValue: 0}
                                   },
