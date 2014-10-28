@@ -211,10 +211,10 @@
                 img = new Image();
                 img.src = globalObj.states[i].attributes.image;
                 globalObj.states[i].attributes.image = img;
-                img.onload = function() {
+                img.onload = function(img) {
                     $(img).data('loaded', true);
                     GameCreator.render();
-                };
+                }.bind(this, img);
             }
         },
 
