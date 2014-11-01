@@ -229,7 +229,7 @@
             names = Object.keys(objects);
             for (j = 0; j < names.length; j += 1) {
                 name = names[j];
-                oldObject = objects[name];
+                oldObject = $.extend(true, {}, objects[name]);
                 newObject = {};
                 for (i = 0; i < propsToCopy.length; i += 1) {
                     attribute = propsToCopy[i];
@@ -245,9 +245,10 @@
                 scene = GameCreator.scenes[i];
                 newScene = new GameCreator.Scene(scene.id);
                 for (n = 0; n < scene.objects.length; n += 1) {
-                    oldObject = scene.objects[n];
+                    oldObject = $.extend(true, {}, scene.objects[n]);
                     newObject = {};
                     newObject.attributes = oldObject.attributes;
+                    delete newObject.attributes.image;
                     
                     //Need to save the name of the global object parent rather than the reference so it can be JSONified.
                     newObject.parent = oldObject.parent.objectName;
