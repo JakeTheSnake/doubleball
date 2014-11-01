@@ -63,6 +63,17 @@ window.onload = function () {
         var globalTextCounter = GameCreator.addGlobalObject({objectName: "textCounter"}, "CounterObjectText");
         var globalImageCounter = GameCreator.addGlobalObject({image: blackBallImage, width: [50], height: [50], objectName: "imageCounter"}, "CounterObjectImage");
         //GameCreator.loadScene(GameCreator.scenes[0]);
+
+        var borderKeys = Object.keys(GameCreator.borderObjects);
+
+        for (var i = 0; i < borderKeys.length; i += 1 ) {
+            var borderObj = GameCreator.borderObjects[borderKeys[i]];
+            borderObj.getDefaultState = function() {
+                return {attributes: this.attributes};
+            };
+            borderObj.states = [];
+            GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
+        }
         
         GameCreator.editScene(GameCreator.scenes[0]);
         

@@ -59,13 +59,12 @@ GameCreator.commonObjectControllers = {
             withColumn.empty();
             globalObj.onCollideSets.forEach(function(collisionItem) {
                 var collisionListItem = $(document.createElement('li'));
-                var globalObject = GameCreator.helpers.findGlobalObjectById(collisionItem.id);
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
                 withColumn.append(collisionListItem);
                 collisionListItem.on('click', function() {
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
-                    GameCreator.UI.setupConditionsColumn(collisionItem.caSets, GameCreator.helpers.getCollisionActions(globalObject), globalObject);
+                    GameCreator.UI.setupConditionsColumn(collisionItem.caSets, GameCreator.helpers.getCollisionActions(globalObj), globalObj);
                     $('#dialogue-panel-actions').trigger('clearColumn');
                     $("#dialogue-panel-conditions").trigger('redrawList');
                 });

@@ -77,6 +77,7 @@
 
     GameCreator.BaseObject.prototype.runOnClickActions = function() {
         var i, currentSet;
+        var globalObj = this.parent;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && globalObj.onClickSets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet(globalObj);

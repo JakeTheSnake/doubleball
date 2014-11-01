@@ -454,12 +454,6 @@
         },
     };
 
-    var borderKeys = Object.keys(GameCreator.borderObjects);
-
-    for (var i = 0; i < borderKeys.length; i += 1 ) {
-        GameCreator.borderObjects[borderKeys[i]].getDefaultState = function() {
-            return {attributes: this.attributes};
-        };
-    }
+    
 
 }());

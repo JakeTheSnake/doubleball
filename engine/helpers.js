@@ -12,34 +12,41 @@
         var objMidY = y + height / 2;
         var baseMidX = base.attributes.x + base.attributes.width / 2;
         var baseMidY = base.attributes.y + base.attributes.height / 2;
-        var baseEdgeTL = {x: base.attributes.x, y: base.attributes.y};
-        var baseEdgeTR = {x: base.attributes.x + baseWidth, y: base.attributes.y};
-        var baseEdgeBL = {x: base.attributes.x + baseHeight, y: base.attributes.y};
-        var baseEdgeBR = {x: base.attributes.x + baseWidth, y: base.attributes.y + baseHeight};
+        var baseEdgeTLX = base.attributes.x;
+        var baseEdgeTLY = base.attributes.y;
+
+        var baseEdgeTRX = base.attributes.x + baseWidth;
+        var baseEdgeTRY = base.attributes.y;
+
+        var baseEdgeBLX = base.attributes.x + baseHeight;
+        var baseEdgeBLY = base.attributes.y;
+
+        var baseEdgeBRX = base.attributes.x + baseWidth;
+        var baseEdgeBRY = base.attributes.y + baseHeight;
         //Top left quadrant
         if (objMidX - baseMidX <= 0 && objMidY - baseMidY <= 0) {
-            if (objMidX - baseEdgeTL.x > objMidY - baseEdgeTL.y) {
+            if (objMidX - baseEdgeTLX > objMidY - baseEdgeTLY) {
                 return 1;
             }
             return 4;
         }
         //Top right quadrant
         else if (objMidX - baseMidX >= 0 && objMidY - baseMidY <= 0) {
-            if (objMidX - baseEdgeTR.x < baseEdgeTR.y - objMidY) {
+            if (objMidX - baseEdgeTRX < baseEdgeTRY - objMidY) {
                 return 1;
             }
             return 2;
         }
         //Bottom right quadrant
         else if (objMidX - baseMidX >= 0 && objMidY - baseMidY >= 0) {
-            if (objMidX - baseEdgeBR.x < objMidY - baseEdgeBR.y) {
+            if (objMidX - baseEdgeBRX < objMidY - baseEdgeBRY) {
                 return 3;
             }
             return 2;
         }
         //Bottom left quadrant
         else if (objMidX - baseMidX <= 0 && objMidY - baseMidY >= 0) {
-            if (baseEdgeBL.x - objMidX < objMidY - baseEdgeBL.y) {
+            if (baseEdgeBLX - objMidX < objMidY - baseEdgeBLY) {
                 return 3;
             }
             return 4;
