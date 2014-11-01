@@ -28,7 +28,7 @@
                 currentSet = new GameCreator.ConditionActionSet(globalObj);
                 globalObj.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been destroyed!", this.image.src),
+                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been destroyed!", this.attributes.image.src),
                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
@@ -60,7 +60,7 @@
                 currentSet = new GameCreator.ConditionActionSet(globalObj);
                 globalObj.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been created!", this.image.src),
+                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been created!", this.attributes.image.src),
                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
@@ -83,7 +83,7 @@
                 currentSet = new GameCreator.ConditionActionSet(globalObj);
                 globalObj.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + globalObj.objectName, this.image.src),
+                    GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + globalObj.objectName, this.attributes.image.src),
                      new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
@@ -126,7 +126,7 @@
     };
 
     GameCreator.BaseObject.prototype.draw = function(context, obj) {
-        var image = obj.image;
+        var image = obj.attributes.image;
         if ($(image).data('loaded')) {
             if (Array.isArray(obj.attributes.width) || Array.isArray(obj.attributes.height)) {
                 var maxHeight, minHeight, maxWidth, minWidth;
