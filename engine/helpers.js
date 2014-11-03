@@ -72,7 +72,7 @@
             object.parent.onCollideSets.push(newSetsItem);
             var titleString = "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'";
             GameCreator.UI.openEditActionsWindow(
-                GameCreator.htmlStrings.collisionEventInformationWindow(titleString, object.image.src, targetObject.image.src),
+                GameCreator.htmlStrings.collisionEventInformationWindow(titleString, object.attributes.image.src, targetObject.attributes.image.src),
                 new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType), object.parent), object.parent.objectName
             );
         }
@@ -292,7 +292,7 @@
         var found = false;
         var i;
         for (i = 0; i < array.length; i += 1) {
-            if (array[i].instanceId === id) {
+            if (array[i].attributes.instanceId === id) {
                 found = true;
                 break;
             }
