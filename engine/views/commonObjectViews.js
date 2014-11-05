@@ -98,19 +98,6 @@ GameCreator.commonObjectViews = {
         return result;
     },
 
-    getCollisionsContent: function(collisionObjects) {
-        var result = '<div id="edit-collision-actions-object-menu-container"><div id="edit-collision-actions-object-menu">';
-        result += '<button id="add-new-collision-button" class="icon-plus btn btn-success">Add whatever?</button>';
-
-        for(var i = 0; i < collisionObjects.length; i++) {
-            result += GameCreator.htmlStrings.collisionMenuElement(collisionObjects[i]);
-        }
-        
-        result += '</div> \
-                   </div><div id="edit-collision-actions-object-content"></div>';
-        return result;
-    },
-
     getCountersContent: function() {
         var result = '';
         var keys = Object.keys(this.parentCounters);

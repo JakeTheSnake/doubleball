@@ -234,7 +234,8 @@ GameCreator.UI = {
         $("#dialogue-panel-conditions").trigger('redrawList');
     },
 
-    setupConditionsColumn: function(caSets, selectableActions, globalObj) {
+    setupConditionsColumn: function (caSets, selectableActions, globalObj) {
+        var conditionsColumn = $("#dialogue-panel-conditions");
         var caSetVMs = [];
         for (var i = 0; i < caSets.length; i++) {
             caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions, globalObj));
@@ -247,14 +248,13 @@ GameCreator.UI = {
             caSet = new GameCreator.ConditionActionSet(globalObj);
             caSets.push(caSet);
             caSetVMs.push(new GameCreator.CASetVM(caSet, selectableActions, globalObj));
-            $("#dialogue-panel-conditions").trigger('redrawList');
+            conditionsColumn.trigger('redrawList');
         });
 
-        $("#dialogue-panel-conditions").parent().find('button').remove();
-        $("#dialogue-panel-conditions").parent().append(addCaSetButton);
-        $("#dialogue-panel-conditions").on('redrawList', function(evt, activeCASetVM) {
+        conditionsColumn.parent().find('button').remove();
+        conditionsColumn.parent().append(addCaSetButton);
+        conditionsColumn.on('redrawList', function (evt, activeCASetVM) {
             var isActive;
-            var conditionsColumn = $("#dialogue-panel-conditions");
             conditionsColumn.html('');
 
             for (i = 0; i < caSetVMs.length; i+=1) {
@@ -263,6 +263,10 @@ GameCreator.UI = {
             }
 
             $("#dialogue-panel-add-list").empty();
+        });
+        conditionsColumn.on('clearColumn', function () {
+            conditionsColumn.parent().find('button').remove();
+            conditionsColumn.empty();
         });
     },
 

@@ -78,6 +78,8 @@ GameCreator.commonObjectControllers = {
                     var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet(globalObj)]};
                     globalObj.onCollideSets.push(collisionItem);
                     withColumn.trigger('redrawList');
+                    $('#dialogue-panel-actions').trigger('clearColumn');
+                    $("#dialogue-panel-conditions").trigger('clearColumn');
                     $("#dialogue-panel-add-list").empty();
                 });
             });
