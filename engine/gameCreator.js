@@ -315,7 +315,7 @@
             } else {
                 counterCarrier = runtimeObj;
             }
-            if (params.counterType === 'set') {
+            if (params.type === 'set') {
                 counterCarrier.counters[counterName].setValue(params.value);
             } else {
                 counterCarrier.counters[counterName].changeValue(params.value);

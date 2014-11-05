@@ -55,7 +55,7 @@ GameCreator.htmlStrings = {
     },
 
     counterTypeInput: function(attrName, value) {
-        return GameCreator.htmlStrings.singleSelector({'Change to': 'change', 'Set to': 'set'}, attrName, value);
+        return GameCreator.htmlStrings.singleSelector({'Add': 'change', 'Set to': 'set'}, attrName, value);
     },
 
     sceneInput: function(attrName, value) {
