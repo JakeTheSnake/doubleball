@@ -387,7 +387,11 @@ GameCreator.UI = {
     setupSceneObjectForm: function(sceneObject) {
         var container = $('#side-properties-form-container');
         container.html(sceneObject.parent.getSceneObjectForm());
+        container.append(GameCreator.htmlStrings.sceneObjectDeleteButton());
         GameCreator.helpers.populateSidePropertiesForm(sceneObject, sceneObject.update.bind(sceneObject));
+        $('#delete-sceneobject-button').on('click', function() {
+            sceneObject.remove();
+        });
     },
 
     setupValuePresenter: function(container, attributes, attrName, obj, onChangeCallback) {

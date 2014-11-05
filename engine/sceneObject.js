@@ -80,6 +80,12 @@
         var activeScene = GameCreator.getActiveScene();
         activeScene.objects.splice(activeScene.objects.indexOf(this), 1);
         GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(this), 1);
+        if (GameCreator.selectedObject === this) {
+            GameCreator.selectedObject = null;
+            GameCreator.drawSelectionLine();
+            GameCreator.hideRoute();
+            GameCreator.setupScenePropertiesForm();
+        }
         GameCreator.render();
     };
 

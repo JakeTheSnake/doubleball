@@ -341,6 +341,11 @@ GameCreator.htmlStrings = {
     </div> \
 </div>'
         return result;
-},
+    },
+    sceneObjectDeleteButton: function() {
+        return '<div class="panel-paragraph properties-group"> \
+            <button class="btn btn-warning" id="delete-sceneobject-button">Delete</button> \
+        </div>'
+    }
 
 };
