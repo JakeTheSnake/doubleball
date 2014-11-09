@@ -5,6 +5,7 @@
         this.displayWidth = 0;
         this.displayHeight = 0;
         this.counters = {};
+        this.collidingWith = [];
 
         this.attributes = {
             x: 0,
@@ -91,6 +92,7 @@
 
     GameCreator.SceneObject.prototype.reset = function() {
         GameCreator.resetCounters(this, this.parent.parentCounters);
+        this.collidingWith = [];
     };
 
     GameCreator.SceneObject.prototype.setCounterParent = function() {

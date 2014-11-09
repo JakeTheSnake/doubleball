@@ -63,6 +63,7 @@
                 currentSet = caSets[j];
                 if (currentSet.checkConditions(object)) {
                     currentSet.runActions(object, {collisionObject: targetObject});
+                    object.collidingWith.push(targetObject.attributes.instanceId);
                 }
             }
         }
@@ -88,23 +89,38 @@
         var y = object.attributes.y;
         var width = object.attributes.width;
         var height = object.attributes.height;
-        var i, j, runtimeObjectsItem, collisionObject, targetObject, collisionItem;
+        var i, j, runtimeObjectsItem, collisionObject, targetObject, collisionItem, targetObjectIndex, colliding;
 
-        if (x < 1) {
+        targetObjectIndex = object.collidingWith.indexOf('borderL')
+        if (x <= 0 && targetObjectIndex === -1) {
             collisionObject = GameCreator.borderObjects.borderL;
             GameCreator.helpers.doCollision(object, collisionObject);
+        } else if (x > 0 && targetObjectIndex !== -1) {
+            object.collidingWith.splice(targetObjectIndex, 1);
         }
-        if (x + width > GameCreator.width - 1) {
+
+        targetObjectIndex = object.collidingWith.indexOf('borderR')
+        if (x + width >= GameCreator.width && targetObjectIndex === -1) {
             collisionObject = GameCreator.borderObjects.borderR;
             GameCreator.helpers.doCollision(object, collisionObject);
+        } else if (x + width < GameCreator.width && targetObjectIndex !== -1) {
+            object.collidingWith.splice(targetObjectIndex, 1);
         }
-        if (y < 1) {
+
+        targetObjectIndex = object.collidingWith.indexOf('borderT')
+        if (y <= 0 && targetObjectIndex === -1) {
             collisionObject = GameCreator.borderObjects.borderT;
             GameCreator.helpers.doCollision(object, collisionObject);
+        } else if (y > 0 && targetObjectIndex !== -1) {
+            object.collidingWith.splice(targetObjectIndex, 1);
         }
-        if (y + height > GameCreator.height - 1) {
+
+        targetObjectIndex = object.collidingWith.indexOf('borderB')
+        if (y + height >= GameCreator.height && targetObjectIndex === -1) {
             collisionObject = GameCreator.borderObjects.borderB;
             GameCreator.helpers.doCollision(object, collisionObject);
+        } else if (y + height < GameCreator.height && targetObjectIndex !== -1) {
+            object.collidingWith.splice(targetObjectIndex, 1);
         }
 
         if (GameCreator.state === 'directing') {
@@ -112,8 +128,12 @@
                 runtimeObjectsItem = GameCreator.collidableObjects[j];
                 for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                     targetObject = runtimeObjectsItem.runtimeObjects[i];
-                    if (GameCreator.helpers.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
+                    targetObjectIndex = object.collidingWith.indexOf(targetObject.attributes.instanceId);
+                    colliding = GameCreator.helpers.checkObjectCollision(object, targetObject);
+                    if (colliding && targetObjectIndex === -1) {
                         GameCreator.helpers.doCollision(object, targetObject);
+                    } else if (!colliding && targetObjectIndex !== -1) {
+                        object.collidingWith.splice(targetObjectIndex, 1);
                     }
                 }
             }
@@ -124,8 +144,12 @@
                 if (GameCreator.helpers.caSetsHaveActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                         targetObject = runtimeObjectsItem.runtimeObjects[i];
-                        if (GameCreator.helpers.checkObjectCollision(object, targetObject) && !GameCreator.paused) {
+                        targetObjectIndex = object.collidingWith.indexOf(targetObject.attributes.instanceId);
+                        colliding = GameCreator.helpers.checkObjectCollision(object, targetObject);
+                        if (colliding && targetObjectIndex === -1) {
                             GameCreator.helpers.doCollision(object, targetObject);
+                        } else if (!colliding && targetObjectIndex !== -1) {
+                            object.collidingWith.splice(targetObjectIndex, 1);
                         }
                     }
                 }

@@ -124,7 +124,9 @@
             for (j = 0; j < GameCreator.collidableObjects.length; j += 1) {
                 runtimeObjects = GameCreator.collidableObjects[j].runtimeObjects;
                 for (i = 0; i < runtimeObjects.length; i += 1) {
-                    GameCreator.helpers.checkCollisions(runtimeObjects[i]);
+                    if(!GameCreator.paused) {
+                        GameCreator.helpers.checkCollisions(runtimeObjects[i]);
+                    }
                 }
             }
         },
@@ -405,6 +407,7 @@
                     y: -500, 
                     height: GCHeight + 1000, 
                     width: 500,
+                    instanceId: 'borderL',
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()),
                 },
                 image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderLeft.png"; return img; }()),
@@ -419,6 +422,7 @@
                     y: -500, 
                     height: GCHeight + 1000, 
                     width: 500, 
+                    instanceId: 'borderR',
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()),
                 },
                 image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderRight.png"; return img; }()),
@@ -432,7 +436,8 @@
                     x: -500, 
                     y: -500, 
                     height: 500, 
-                    width: GCWidth + 1000, 
+                    width: GCWidth + 1000,
+                    instanceId: 'borderT',
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()),
                 },
                 image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderTop.png"; return img; }()),
@@ -446,7 +451,8 @@
                     x: -500, 
                     y: GCHeight, 
                     height: 500, 
-                    width: GCWidth + 1000, 
+                    width: GCWidth + 1000,
+                    instanceId: 'borderB',
                     image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()),
                 },
                 image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "assets/borderBottom.png"; return img; }()),
