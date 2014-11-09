@@ -77,10 +77,12 @@
             var activeScene;
             if (id !== undefined) {
                 activeScene = GameCreator.getActiveScene();
-                for (i = 0; i < activeScene.objects.length; i += 1) {
-                    sceneObj = activeScene.objects[i];
-                    if (sceneObj.attributes.instanceId === id) {
-                        return sceneObj;
+                if (activeScene) {
+                    for (i = 0; i < activeScene.objects.length; i += 1) {
+                        sceneObj = activeScene.objects[i];
+                        if (sceneObj.attributes.instanceId === id) {
+                            return sceneObj;
+                        }
                     }
                 }
             }
