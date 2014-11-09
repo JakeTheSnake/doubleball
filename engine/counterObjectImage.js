@@ -22,9 +22,6 @@ GameCreator.CounterObjectImage = function(args) {
 
 GameCreator.CounterObjectImage.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
-GameCreator.CounterObjectImage.objectSceneAttributes = $.extend({}, GameCreator.CounterObjectImage.objectAttributes);
-delete GameCreator.CounterObjectImage.objectSceneAttributes["image"];
-
 GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var counterCarrier = GameCreator.getSceneObjectById(obj.counterObject);
@@ -39,7 +36,6 @@ GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
     }
     var currentAttributes = obj.parent.getDefaultState().attributes;
     if ($(currentAttributes.image).data('loaded')) {
-        //Draw 3 semitransparent icons if in edit mode. 
         if (GameCreator.state === 'editing') {
             value = 1;
             context.globalAlpha = 0.5;

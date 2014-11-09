@@ -41,9 +41,6 @@
         "maxSpeed": GameCreator.htmlStrings.rangeInput
     });
 
-    GameCreator.PlatformObject.objectSceneAttributes = $.extend({}, GameCreator.PlatformObject.objectAttributes);
-    delete GameCreator.PlatformObject.objectSceneAttributes["image"];
-
     GameCreator.PlatformObject.prototype = Object.create(GameCreator.BaseObject.prototype);
 
     GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.PlatformObject.prototype);

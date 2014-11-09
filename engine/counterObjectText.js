@@ -30,8 +30,6 @@ GameCreator.CounterObjectText.objectAttributes = {
                         "size": GameCreator.htmlStrings.numberInput
                      };
 
-GameCreator.CounterObjectText.objectSceneAttributes = $.extend({}, GameCreator.CounterObjectText.objectAttributes);
-
 GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var value = 0;

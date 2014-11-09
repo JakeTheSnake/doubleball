@@ -39,9 +39,6 @@
         "minX": GameCreator.htmlStrings.numberInput
     });
 
-    GameCreator.MouseObject.objectSceneAttributes = $.extend({}, GameCreator.MouseObject.objectAttributes);
-    delete GameCreator.MouseObject.objectSceneAttributes["image"];
-
     GameCreator.MouseObject.prototype = Object.create(GameCreator.BaseObject.prototype);
     GameCreator.addObjFunctions.keyObjectFunctions(GameCreator.MouseObject.prototype);
 
