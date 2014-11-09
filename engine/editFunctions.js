@@ -201,20 +201,24 @@
 
         dereferenceImage: function(globalObj) {
             for(var i = 0; i < globalObj.states.length; i += 1) {
-                globalObj.states[i].attributes.image = globalObj.states[i].attributes.image.src;
+                if (globalObj.states[i].attributes.image) {
+                    globalObj.states[i].attributes.image = globalObj.states[i].attributes.image.src;
+                }
             }
         },
 
         referenceImage: function(globalObj) {
             var i, img;
             for(i = 0; i < globalObj.states.length; i += 1) {
-                img = new Image();
-                img.src = globalObj.states[i].attributes.image;
-                globalObj.states[i].attributes.image = img;
-                img.onload = function(img) {
-                    $(img).data('loaded', true);
-                    GameCreator.render();
-                }.bind(this, img);
+                if (globalObj.states[i].attributes.image) {
+                    img = new Image();
+                    img.src = globalObj.states[i].attributes.image;
+                    globalObj.states[i].attributes.image = img;
+                    img.onload = function(img) {
+                        $(img).data('loaded', true);
+                        GameCreator.render();
+                    }.bind(this, img);
+                }
             }
         },
 
