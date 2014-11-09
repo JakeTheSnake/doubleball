@@ -59,11 +59,17 @@ GameCreator.htmlStrings = {
     },
 
     sceneObjectCounterInput: function(attrName, value, globalObj, dependancy) {
-        var counters = {};
+        var counterNames, counters = {};
         var sceneObject = GameCreator.getSceneObjectById(dependancy);
-        var counterNames = sceneObject ? Object.keys(sceneObject.counters) : [];
-        for (var i = 0; i < counterNames.length; i += 1) {
-            counters[counterNames[i]] = counterNames[i];
+        if (sceneObject) {
+            if(sceneObject.parent.attributes && sceneObject.parent.attributes.unique) {
+                counterNames = Object.keys(sceneObject.parent.counters);
+            } else {
+                counterNames = Object.keys(sceneObject.counters);
+            }
+            for (var i = 0; i < counterNames.length; i += 1) {
+                counters[counterNames[i]] = counterNames[i];
+            }
         }
         return GameCreator.htmlStrings.singleSelector(counters, attrName, value);
     },

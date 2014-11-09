@@ -118,7 +118,7 @@
             activeScene = GameCreator.getActiveScene();
             for (i = 0; i < activeScene.objects.length; i += 1) {
                 sceneObj = activeScene.objects[i];
-                if(Object.keys(sceneObj.counters).length) {
+                if(Object.keys(sceneObj.counters).length || (sceneObj.parent.attributes && sceneObj.parent.attributes.unique && Object.keys(sceneObj.parent.counters))) {
                     result[sceneObj.attributes.instanceId] = sceneObj.attributes.instanceId;
                 }
             }

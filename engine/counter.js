@@ -57,11 +57,11 @@
             //Check if change triggers any actions
             if (change > 0) {
                 for (i = 0; i < this.parentCounter.onIncrease.length; i += 1) {
-                    this.parentCounter.onIncrease[i].runAction(this.parentObject);
+                    this.parentCounter.onIncrease[i].runActions(this.parentObject);
                 }
             } else if (change < 0) {
                 for (i = 0; i < this.parentCounter.onDecrease.length; i += 1) {
-                    this.parentCounter.onDecrease[i].runAction(this.parentObject);
+                    this.parentCounter.onDecrease[i].runActions(this.parentObject);
                 }
             }
             this.checkEvents();
@@ -73,11 +73,11 @@
 
             if (value > this.value) {
                 for (i = 0; i < this.parentCounter.onIncrease.length; i += 1) {
-                    this.parentCounter.onIncrease[i].runAction(this.parentObject);
+                    this.parentCounter.onIncrease[i].runActions(this.parentObject);
                 }
             } else if (value < this.value) {
                 for (i = 0; i < this.parentCounter.onDecrease.length; i += 1) {
-                    this.parentCounter.onDecrease[i].runAction(this.parentObject);
+                    this.parentCounter.onDecrease[i].runActions(this.parentObject);
                 }
             }
             this.value = value;
@@ -97,7 +97,7 @@
                     if (parseInt(value, 10) === this.value && !this.atValueStates[value]) {
                         callbacks = this.parentCounter.atValue[value];
                         for (i = 0; i < callbacks.length; i += 1) {
-                            callbacks[i].runAction(this.parentObject);
+                            callbacks[i].runActions(this.parentObject);
                         }
                         this.atValueStates[value] = true;
                     } else if (parseInt(value, 10) !== this.value) {
