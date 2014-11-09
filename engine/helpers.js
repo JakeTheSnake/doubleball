@@ -228,20 +228,20 @@
 
     GameCreator.helpers.getValue = function(input) {
         var i, range, value;
-        if (input.attr("data-type") === "string" && input.val().length !== 0) {
-            return input.val().replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        } else if (input.attr("data-type") === "number" && input.val().length !== 0) {
+        if (input.attr("data-type") === "string") {
+            return input.val() ? input.val().replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
+        } else if (input.attr("data-type") === "number") {
             return GameCreator.helpers.parseNumber(input.val());           
-        } else if (input.attr("data-type") === "image" && input.val().length !== 0) {
+        } else if (input.attr("data-type") === "image") {
             return GameCreator.helpers.parseImage(input.val());
-        } else if (input.attr("data-type") === "bool" && input.val().length !== 0) {
+        } else if (input.attr("data-type") === "bool") {
             return GameCreator.helpers.parseBool(input.val());
-        } else if (input.attr("data-type") === "range" && input.val().length !== 0) {
+        } else if (input.attr("data-type") === "range") {
             return GameCreator.helpers.parseRange(input.val());
-        } else if (input.attr("data-type") === "checkbox" && input.val().length !== 0) {
+        } else if (input.attr("data-type") === "checkbox") {
             return input.is(":checked");
         } else {
-            return input.val().replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            return input.val() ? input.val().replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
         }
     };
 

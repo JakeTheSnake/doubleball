@@ -434,7 +434,7 @@ GameCreator.UI = {
         onClickFunc = function(evt) {
             if (!inputOpen) {
                 inputOpen = true;
-                container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName], obj));
+                container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName], obj, attributes[$(container).data('dependancy')]));
                 input = container.find('input, select');
                 if (input[0].nodeName === 'INPUT') {
                     paramLen = (attributes[attrName] || '').toString().length;

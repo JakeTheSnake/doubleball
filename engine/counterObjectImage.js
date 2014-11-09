@@ -24,14 +24,14 @@ GameCreator.CounterObjectImage.objectAttributes = GameCreator.helpers.getStandar
 
 GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
-    var counterCarrier = GameCreator.getSceneObjectById(obj.counterObject);
+    var counterCarrier = GameCreator.getSceneObjectById(obj.attributes.counterCarrier);
     var i, renderWidth, renderHeight;
     var value = 0;
     if (counterCarrier) {
         if (counterCarrier.parent.attributes.unique && counterCarrier.parent.counters[obj.counterName]) {
-            value = counterCarrier.parent.counters[obj.counterName].value;
-        } else if (counterCarrier.counters[obj.counterName]) {
-            value = counterCarrier.counters[obj.counterName].value;
+            value = counterCarrier.parent.counters[obj.attributes.counterName].value;
+        } else if (counterCarrier.counters[obj.attributes.counterName]) {
+            value = counterCarrier.counters[obj.attributes.counterName].value;
         }
     }
     var currentAttributes = obj.parent.getDefaultState().attributes;
@@ -65,5 +65,6 @@ GameCreator.CounterObjectImage.prototype.onGameStarted = function() {};
 GameCreator.CounterObjectImage.prototype.onCreate = function() {};
 
 GameCreator.CounterObjectImage.prototype.instantiateSceneObject = function(sceneObject, args) {
-
+    sceneObject.attributes.counterCarrier = '';
+    sceneObject.attributes.counterName = '';
 };

@@ -33,13 +33,13 @@ GameCreator.CounterObjectText.objectAttributes = {
 GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var value = 0;
-    var sceneObject = GameCreator.getSceneObjectById(obj.counterObject);
+    var sceneObject = GameCreator.getSceneObjectById(obj.attributes.counterCarrier);
     var i;
     if (sceneObject) {
-        if (sceneObject.parent.attributes.unique && sceneObject.parent.counters[obj.counterName]) {
-            value = sceneObject.parent.counters[obj.counterName].value;
-        } else if (sceneObject.counters[obj.counterName]) {
-            value = sceneObject.counters[obj.counterName].value;
+        if (sceneObject.parent.attributes.unique && sceneObject.parent.counters[obj.attributes.counterName]) {
+            value = sceneObject.parent.counters[obj.attributes.counterName].value;
+        } else if (sceneObject.counters[obj.attributes.counterName]) {
+            value = sceneObject.counters[obj.attributes.counterName].value;
         }
     }
     context.font = obj.attributes.size + "px " + obj.attributes.font;
@@ -61,4 +61,6 @@ GameCreator.CounterObjectText.prototype.instantiateSceneObject = function(sceneO
     sceneObject.attributes.font = state.attributes.font;
     sceneObject.attributes.color = state.attributes.color;
     sceneObject.attributes.size = state.attributes.size;
+    sceneObject.attributes.counterCarrier = '';
+    sceneObject.attributes.counterName = '';
 };

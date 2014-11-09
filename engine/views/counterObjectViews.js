@@ -102,6 +102,20 @@ var result = ' \
             </tr> \
         </table> \
     </div> \
+    <div class="properties-value"> \
+        <label>Counter</label> \
+        <span class="glyphicon icon-position"></span> \
+        <table> \
+            <tr> \
+                <td>Object:</td> \
+                <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
+            </tr> \
+            <tr> \
+                <td>Counter:</td> \
+                <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
+            </tr> \
+        </table> \
+    </div> \
 </div>'
 return result;
 };
@@ -140,6 +154,22 @@ var result = ' \
             <tr> \
                 <td>H:</td> \
                 <td id="side-property-height" data-inputtype="rangeInput"></td> \
+            </tr> \
+        </table> \
+    </div> \
+</div> \
+<div class="panel-paragraph properties-group"> \
+    <div class="properties-value"> \
+        <label>Counter</label> \
+        <span class="glyphicon icon-position"></span> \
+        <table> \
+            <tr> \
+                <td>Obj:</td> \
+                <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
+            </tr> \
+            <tr> \
+                <td>Ctr:</td> \
+                <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
             </tr> \
         </table> \
     </div> \

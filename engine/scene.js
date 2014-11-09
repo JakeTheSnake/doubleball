@@ -113,6 +113,18 @@
             return result;
         },
 
+        getUniqueIDsWithCountersInActiveScene: function() {
+            var i, sceneObj, activeScene, result = {};
+            activeScene = GameCreator.getActiveScene();
+            for (i = 0; i < activeScene.objects.length; i += 1) {
+                sceneObj = activeScene.objects[i];
+                if(Object.keys(sceneObj.counters).length) {
+                    result[sceneObj.attributes.instanceId] = sceneObj.attributes.instanceId;
+                }
+            }
+            return result;
+        },
+
         selectScene: function(params) {
             GameCreator.activeSceneId = Number(params.scene);
             GameCreator.switchScene(GameCreator.getSceneById(GameCreator.activeSceneId));

@@ -1,6 +1,6 @@
 GameCreator.htmlStrings = {
     singleSelector: function(collection, attrName, selectedValue) {
-        var result = '<select class="selectorField" data-type="text"';
+        var result = '<select class="selectorField" data-type="string"';
         if (attrName) {
         	result += ' data-attrName="' + attrName + '">'
         } else {
@@ -22,10 +22,14 @@ GameCreator.htmlStrings = {
     globalObjectInput: function(attrName, value) {
         return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getGlobalObjectIds(), attrName, value);
     },
-
     sceneObjectInput: function(attrName, value) {
         var ids = GameCreator.getUniqueIDsInActiveScene();
         ids['this'] = 'this';
+        return GameCreator.htmlStrings.singleSelector(ids, attrName, value);
+    },
+
+    counterCarrierInput: function(attrName, value) {
+        var ids = GameCreator.getUniqueIDsWithCountersInActiveScene();
         return GameCreator.htmlStrings.singleSelector(ids, attrName, value);
     },
 
@@ -52,6 +56,16 @@ GameCreator.htmlStrings = {
             counters[counterNames[i]] = counterNames[i];
         }
         return GameCreator.htmlStrings.singleSelector(counters, attrName, value)
+    },
+
+    sceneObjectCounterInput: function(attrName, value, globalObj, dependancy) {
+        var counters = {};
+        var sceneObject = GameCreator.getSceneObjectById(dependancy);
+        var counterNames = sceneObject ? Object.keys(sceneObject.counters) : [];
+        for (var i = 0; i < counterNames.length; i += 1) {
+            counters[counterNames[i]] = counterNames[i];
+        }
+        return GameCreator.htmlStrings.singleSelector(counters, attrName, value);
     },
 
     counterTypeInput: function(attrName, value) {
@@ -292,10 +306,6 @@ GameCreator.htmlStrings = {
 	addSceneTab: function() {
         return '<li id="add-scene-tab">+</li>';
 	},
-
-    sceneObjectForm: function(sceneObject) {
- 
-    },
 
     getColumn: function(title, id) {
         var result = "";
