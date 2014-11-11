@@ -107,6 +107,7 @@
         sceneObject.attributes.maxY = args.maxY !== undefined ? args.maxY : state.attributes.maxY;
         sceneObject.attributes.minX = args.minX !== undefined ? args.minX : state.attributes.minX;
         sceneObject.attributes.minY = args.minY !== undefined ? args.minY : state.attributes.minY;
+        sceneObject.keyCooldown = {space: false};
     };
 
     GameCreator.MouseObject.prototype.shoot = function(staticParameters) {
@@ -116,23 +117,23 @@
         switch (staticParameters.projectileDirection) {
         case "Default":
         case "Up":
-            x = this.x + this.width / 2;
-            y = this.y;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y;
             speedY = -projectileSpeed;
             break;
         case "Down":
-            x = this.x + this.width / 2;
-            y = this.y + this.height;
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height;
             speedY = projectileSpeed;
             break;
         case "Left":
-            x = this.x;
-            y = this.y + this.height / 2;
+            x = this.attributes.x;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = -projectileSpeed;
             break;
         case "Right":
-            x = this.x + this.width;
-            y = this.y + this.height / 2;
+            x = this.attributes.x + this.attributes.width;
+            y = this.attributes.y + this.attributes.height / 2;
             speedX = projectileSpeed;
             break;
         default:
@@ -141,9 +142,9 @@
                 // We did not find the target, return without shooting anything.
                 return;
             }
-            x = this.x + this.width / 2;
-            y = this.y + this.height / 2;
-            unitVector = GameCreator.helpers.calcUnitVector(target.x - (this.x + this.width / 2), target.y - (this.y + this.height / 2));
+            x = this.attributes.x + this.attributes.width / 2;
+            y = this.attributes.y + this.attributes.height / 2;
+            unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - (this.attributes.x + this.attributes.width / 2), target.attributes.y - (this.attributes.y + this.attributes.height / 2));
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
             break;
