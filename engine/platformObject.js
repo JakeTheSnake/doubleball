@@ -147,30 +147,32 @@
         var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var target, unitVector;
+        var objectToShoot = GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot));
+        var objectToShootAttributes = objectToShoot.getDefaultState().attributes;
         switch (staticParameters.projectileDirection) {
         case "Default":
-            x = this.attributes.x + (this.facingLeft ? 0 : this.attributes.width);
+            x = this.attributes.x + (this.facingLeft ? -objectToShootAttributes.width : this.attributes.width);
             y = this.attributes.y;
             speedX = this.facingLeft ? -projectileSpeed : projectileSpeed;
             break;
         case "Up":
-            x = this.attributes.x + this.attributes.width / 2;
-            y = this.attributes.y;
+            x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
+            y = this.attributes.y - objectToShootAttributes.height;
             speedY = -projectileSpeed;
             break;
         case "Down":
-            x = this.attributes.x + this.attributes.width / 2;
+            x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
             y = this.attributes.y + this.attributes.height;
             speedY = projectileSpeed;
             break;
         case "Left":
-            x = this.attributes.x;
-            y = this.attributes.y + this.attributes.height / 2;
+            x = this.attributes.x - objectToShoot.width;
+            y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
             speedX = -projectileSpeed;
             break;
         case "Right":
             x = this.attributes.x + this.attributes.width;
-            y = this.attributes.y + this.attributes.height / 2;
+            y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
             speedX = projectileSpeed;
             break;
         default:
@@ -185,7 +187,7 @@
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }
-        GameCreator.createRuntimeObject(GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot)), {x: x, y: y, speedX: speedX, speedY: speedY});
+        GameCreator.createRuntimeObject(objectToShoot, {x: x, y: y, speedX: speedX, speedY: speedY});
     };
 }());
 
