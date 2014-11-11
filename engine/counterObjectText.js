@@ -61,6 +61,6 @@ GameCreator.CounterObjectText.prototype.instantiateSceneObject = function(sceneO
     sceneObject.attributes.font = state.attributes.font;
     sceneObject.attributes.color = state.attributes.color;
     sceneObject.attributes.size = state.attributes.size;
-    sceneObject.attributes.counterCarrier = '';
-    sceneObject.attributes.counterName = '';
+    sceneObject.attributes.counterCarrier = args.counterCarrier || '';
+    sceneObject.attributes.counterName = args.counterName || '';
 };

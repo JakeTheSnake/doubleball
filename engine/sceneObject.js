@@ -67,7 +67,7 @@
         this.attributes.image = args.image !== undefined ? args.image : state.attributes.image;
         
         this.objectName = args.objectName !== undefined ? args.objectName : globalObj.objectName;
-        this.attributes.instanceId = this.objectName + GameCreator.getUniqueId();
+        this.attributes.instanceId = args.instanceId ? args.instanceId : this.objectName + GameCreator.getUniqueId();
 
         globalObj.instantiateSceneObject(this, args);
 
