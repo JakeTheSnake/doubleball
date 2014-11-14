@@ -49,7 +49,7 @@
 
     GameCreator.PlatformObject.prototype.calculateSpeed = function() {
         //Should only be able to affect movement if there is something beneath object.
-        if (this.parent.keyUpPressed && this.objectBeneath) {
+        if (this.parent.keyUpPressed && this.objectsBeneath.length > 0) {
             this.attributes.speedY = -600;
         }
         if (this.parent.keyRightPressed) {
@@ -58,7 +58,7 @@
         } else if (this.parent.keyLeftPressed) {
             this.facingLeft = true;
             this.attributes.accX = -this.attributes.acceleration;
-        } else if (this.objectBeneath) {
+        } else if (this.objectsBeneath.length > 0) {
             this.attributes.accX = 0;
             Math.abs(this.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.9;
         } else {
@@ -68,7 +68,9 @@
         if ((this.attributes.accX > 0 && this.attributes.speedX < this.attributes.maxSpeed) || (this.attributes.accX < 0 && this.attributes.speedX > -this.attributes.maxSpeed)) {
             this.attributes.speedX += this.attributes.accX;
         }
-        this.attributes.speedY += this.attributes.accY;
+        if (this.objectsBeneath.length === 0) {
+            this.attributes.speedY += this.attributes.accY;
+        }
     };
 
     GameCreator.PlatformObject.prototype.onGameStarted = function() {
@@ -134,7 +136,7 @@
         sceneObject.attributes.speedX = args.speedX || [0];
         sceneObject.attributes.speedY = args.speedY || [0];
 
-        sceneObject.objectBeneath = false;
+        sceneObject.objectsBeneath = [];
         sceneObject.attributes.acceleration = args.acceleration !== undefined ? args.acceleration : state.attributes.acceleration;
 
         sceneObject.attributes.accY = args.accY !== undefined ? args.accY : state.attributes.accY;

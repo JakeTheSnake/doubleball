@@ -31,4 +31,3 @@ POSSIBLES:
 Alla args bör skickas in som objekt så att ordningen kvittar och man ser tydligare vad man skickar.
 Vad händer om ett objekt kolliderar med två andra objekt?
 Split sceneObject into different types based on global type?
-Add some "Frame reset function"? (reset objectBeneath here)

@@ -126,6 +126,8 @@
             GameCreator.invalidate(this);
         }
         this.attributes.x += this.attributes.speedX * modifier;
-        this.attributes.y += this.attributes.speedY * modifier;
+        if (this.objectsBeneath.length === 0) {
+            this.attributes.y += this.attributes.speedY * modifier;
+        }
     };
 }());
