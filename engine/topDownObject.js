@@ -97,51 +97,7 @@
     };
 
     GameCreator.TopDownObject.prototype.onGameStarted = function() {
-        var that = this;
-        $(document).on("keydown.gameKeyListener", function(e) {
-            switch (e.which) {
-            case 32:
-                that.keyPressed.space = true;
-                break;
-            case 37:
-                that.keyLeftPressed = true;
-                break;
-            case 38:
-                that.keyUpPressed = true;
-                break;
-            case 39:
-                that.keyRightPressed = true;
-                break;
-            case 40:
-                that.keyDownPressed = true;
-                break;
-            default:
-                return;
-            }
-            e.preventDefault();
-        });
-        $(document).on("keyup.gameKeyListener", function(e) {
-            switch (e.which) {
-            case 32:
-                that.keyPressed.space = false;
-                break;
-            case 37:
-                that.keyLeftPressed = false;
-                break;
-            case 38:
-                that.keyUpPressed = false;
-                break;
-            case 39:
-                that.keyRightPressed = false;
-                break;
-            case 40:
-                that.keyDownPressed = false;
-                break;
-            default:
-                return;
-            }
-            e.preventDefault();
-        });
+        this.initializeKeyListeners();
     };
 
     GameCreator.TopDownObject.prototype.instantiateSceneObject = function(sceneObject, args) {

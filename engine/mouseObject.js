@@ -73,32 +73,7 @@
             that.latestMouseX = evt.pageX;
             that.latestMouseY = evt.pageY;
         });
-        $(document).on("mousedown.gameKeyListener", function(e) {
-            switch (e.which) {
-            case 1:
-                that.keyPressed.leftMouse = true;
-                break;
-            case 3:
-                that.keyPressed.rightMouse = true;
-                break;
-            default:
-                return;
-            }
-            e.preventDefault();
-        });
-        $(document).on("mouseup.gameKeyListener", function(e) {
-            switch (e.which) {
-            case 1:
-                that.keyPressed.leftMouse = false;
-                break;
-            case 3:
-                that.keyPressed.rightMouse = false;
-                break;
-            default:
-                return;
-            }
-            e.preventDefault();
-        });
+        this.initializeKeyListeners();
     };
 
     GameCreator.MouseObject.prototype.instantiateSceneObject = function(sceneObject, args) {
