@@ -282,7 +282,7 @@ GameCreator.UI = {
             actionsColumn.parent().append(addActionButton);
             
             for (i = 0; i < activeCASetVM.actionVMs.length; i+=1) {
-                actionsColumn.append(activeCASetVM.actionVMs[i].getPresentation());
+                actionsColumn.append(activeCASetVM.actionVMs[i].getPresentation(activeCASetVM));
             }
             
             $(addActionButton).on('click', function() {

@@ -179,7 +179,7 @@ GameCreator.ActionItemVM = function(model, globalObj) {
 };
 
 
-GameCreator.ActionItemVM.prototype.getPresentation = function() {
+GameCreator.ActionItemVM.prototype.getPresentation = function(CASetVM) {
     var result = document.createElement('li');
         result.className = 'condition-parameters';
     var title = document.createElement('span');
@@ -189,6 +189,32 @@ GameCreator.ActionItemVM.prototype.getPresentation = function() {
     $(title).append(this.model.name);
 
     $(result).append(title);
+
+    var deleteButton = document.createElement('span');
+    
+    $(deleteButton).html('X');  //TODO: Should be switched to an icon, style in css.
+    $(deleteButton).css('cursor', 'pointer') ;
+    $(deleteButton).css('color', 'red');
+    $(deleteButton).css('float', 'right');
+    $(deleteButton).css('margin-right', '15px');
+    $(deleteButton).css('font-weight', 'bold');
+
+    $(title).append(deleteButton);
+
+    $(deleteButton).on('click', function(){
+        //Remove action from model and from viewmodel.
+        var actionsArray = CASetVM.caSet.actions;
+        var index = actionsArray.indexOf(actionItemVM.model);
+        if (index !== -1) {
+            actionsArray.splice(index, 1);
+        }
+        actionsArray = CASetVM.actionVMs;
+        index = actionsArray.indexOf(actionItemVM);
+        if (index !== -1) {
+            actionsArray.splice(index, 1);
+        }
+        $("#dialogue-panel-actions").trigger('redrawList', CASetVM);
+    });
 
     var paramList = document.createElement('table');
     this.addParameterPresentations(paramList);
