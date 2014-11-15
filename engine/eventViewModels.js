@@ -145,7 +145,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function() {
         var paramValuePresenter = this.parameters[i].element;
         $(paramItemRow).append(paramValuePresenter);
         var observerParam = GameCreator.conditions[this.model.name].params[this.parameters[i].name].observer;
-        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
+        this.parameters[i].setupValuePresenter(paramValuePresenter, this.model.parameters, 
             this.parameters[i].name, this.globalObj,
             this.updateParameter.bind(this, observerParam));
         $(paramList).append(paramItemRow);
@@ -211,7 +211,7 @@ GameCreator.ActionItemVM.prototype.addParameterPresentations = function(containe
         $(paramItem).append(paramValuePresenter);
         
         var observerParam = GameCreator.actions[this.model.name].params[this.parameters[i].name].observer;
-        GameCreator.UI.setupValuePresenter(paramValuePresenter, this.model.parameters, 
+        this.parameters[i].setupValuePresenter(paramValuePresenter, this.model.parameters, 
             this.parameters[i].name, this.globalObj,
             this.updateParameter.bind(this, observerParam));
         $(container).append(paramItem);
@@ -223,7 +223,7 @@ GameCreator.ActionItemVM.prototype.getParameters = function() {
     return Object.keys(this.model.parameters).collect(function(paramName) {
         var currentParam = caSetItemVM.model.getParameter(paramName);
         if (currentParam) {
-            return new currentParam.param(caSetItemVM, paramName, currentParam.mandatory);
+            return new currentParam.param(caSetItemVM, paramName, currentParam.mandatory, caSetItemVM.model);
         }
     });
 }

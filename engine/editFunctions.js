@@ -8,7 +8,8 @@
             Up: "Up",
             Down: "Down",
             Left: "Left",
-            Right: "Right"
+            Right: "Right",
+            Towards: "Towards"
         },
 
         objectTypeGroups: {

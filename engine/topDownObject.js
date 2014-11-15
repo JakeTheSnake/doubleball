@@ -166,7 +166,7 @@
         var objectToShoot = GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot));
         var objectToShootAttributes = objectToShoot.getDefaultState().attributes;;
         switch (staticParameters.projectileDirection) {
-        case "Default":
+        case 'Default':
             switch (facing) {
             case 1:
                 x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
@@ -214,28 +214,28 @@
                 break;
             }
             break;
-        case "Up":
+        case 'Up':
             x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
             y = this.attributes.y - objectToShootAttributes.height;
             speedY = -projectileSpeed;
             break;
-        case "Down":
+        case 'Down':
             x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
             y = this.attributes.y + this.attributes.height;
             speedY = projectileSpeed;
             break;
-        case "Left":
+        case 'Left':
             x = this.attributes.x - objectToShootAttributes.width;
             y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
             speedX = -projectileSpeed;
             break;
-        case "Right":
+        case 'Right':
             x = this.attributes.x + this.attributes.width;
             y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
             speedX = projectileSpeed;
             break;
-        default:
-            target = GameCreator.getRuntimeObject(staticParameters.projectileDirection);
+        case 'Towards':
+            target = GameCreator.getRuntimeObject(staticParameters.target);
             if (!target) {
                 // We did not find the target, return without shooting anything.
                 return;
@@ -245,6 +245,7 @@
             unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x, target.attributes.y - this.attributes.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
+            break;
         }
         GameCreator.createRuntimeObject(objectToShoot, {x: x, y: y, speedX: speedX, speedY: speedY});
     };

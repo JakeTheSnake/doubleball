@@ -20,7 +20,7 @@ var updateParameter = function(sceneObjectId, observer) {
     var defaultValue = this.itemVM.template.params[this.name].defaultValue;
     this.itemVM.model.parameters[this.name] = defaultValue;
 
-    GameCreator.UI.setupValuePresenter(paramValuePresenter, this.itemVM.model.parameters,
+    this.setupValuePresenter(paramValuePresenter, this.itemVM.model.parameters,
         this.name, globalObj,
         this.itemVM.updateParameter.bind(this.itemVM, observer));
 }
@@ -87,19 +87,6 @@ GameCreator.DestroyEffectParameter = function(itemVM, paramName, mandatory) {
 GameCreator.DestroyEffectParameter.prototype.getValuePresenter = function() {
     var element = document.createElement('td');
     element.setAttribute('data-inputtype', 'destroyEffectInput');
-    return element;
-};
-
-GameCreator.DirectionParameter = function(itemVM, paramName, mandatory) {
-    this.name = paramName;
-    this.itemVM = itemVM;
-    this.mandatory = mandatory;
-    this.element = this.getValuePresenter();
-};
-
-GameCreator.DirectionParameter.prototype.getValuePresenter = function() {
-    var element = document.createElement('td');
-    element.setAttribute('data-inputtype', 'directionInput');
     return element;
 };
 
@@ -172,6 +159,67 @@ GameCreator.SwitchSceneParameter.prototype.getValuePresenter = function() {
     return element;
 };
 
+GameCreator.DirectionParameter = function(itemVM, paramName, mandatory, runtimeAction) {
+    this.name = paramName;
+    this.itemVM = itemVM;
+    this.mandatory = mandatory;
+    this.runtimeAction = runtimeAction;
+    this.element = this.getValuePresenter();
+};
+
+GameCreator.DirectionParameter.prototype.getValuePresenter = function() {
+    var element = document.createElement('td');
+    return element;
+};
+
+GameCreator.DirectionParameter.prototype.setupValuePresenter = function(container) {
+    var parent = container;
+    var presentation = document.createElement('span');
+    var prettyName = GameCreator.helpers.getPrettyName(this.runtimeAction.parameters.projectileDirection);
+    var param = this;
+    $(presentation).html(prettyName + ' ' + (this.runtimeAction.parameters.projectileDirection === "Towards" ? this.runtimeAction.parameters.target : ''));
+    
+    var onClickFunc = function() {
+        $(parent).html(GameCreator.htmlStrings.singleSelector(
+            GameCreator.directions,
+            '', param.runtimeAction.parameters.projectileDirection)
+        );
+        var directionSelect = $(parent).find('select')[0];
+        $(directionSelect).focus();
+        var targetSelect = GameCreator.htmlStrings.sceneObjectInput('target', param.runtimeAction.parameters.target);
+        $(parent).append(targetSelect);
+        var input = $(parent).find('[data-attrname="target"]');
+        $(input).hide();
+        $(directionSelect).change(function() {
+            if ($(this).val() === 'Towards') {
+                $(input).css('display', 'block');
+            } else {
+                $(input).hide();
+            }
+        });
+
+        $(directionSelect).trigger('change');
+
+        $(parent).off('focusout').on('focusout', function() {
+            setTimeout(function() {
+                if ($(parent).find(':focus').length === 0) {
+                    param.runtimeAction.parameters.projectileDirection = $(directionSelect).val();
+                    param.runtimeAction.parameters.target = $($(parent).find('[data-attrname="target"]')[0]).val();
+                    var presentation = document.createElement('span');
+                    prettyName = GameCreator.helpers.getPrettyName(param.runtimeAction.parameters.projectileDirection);
+                    $(presentation).html(prettyName + ' ' + (param.runtimeAction.parameters.projectileDirection === "Towards" ? param.runtimeAction.parameters.target : ''));
+                    $(presentation).click(onClickFunc);
+                    $(parent).html(presentation);
+                }
+            }, 0);
+        });
+    };
+
+    $(presentation).click(onClickFunc);
+
+    $(parent).html(presentation);
+};
+
 GameCreator.TimingParameter = function(runtimeAction) {
     this.runtimeAction = runtimeAction;
     this.name = 'Timing';
@@ -184,7 +232,7 @@ GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) 
     var prettyName = GameCreator.helpers.getPrettyName(this.runtimeAction.timing.type);
     var param = this;
 
-    $(presentation).html(prettyName + ' ' + (this.runtimeAction.timing.time || ''));
+    $(presentation).html(prettyName + ' ' + (param.runtimeAction.timing.type !== 'now' ? this.runtimeAction.timing.time : ''));
     
     var onClickFunc = function() {
         $(parent).html(GameCreator.htmlStrings.singleSelector(
@@ -214,7 +262,7 @@ GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) 
                     param.runtimeAction.timing.time = Number($($(parent).find('input')[0]).val());
                     var presentation = document.createElement('span');
                     prettyName = GameCreator.helpers.getPrettyName(param.runtimeAction.timing.type);
-                    $(presentation).html(prettyName + ' ' + (param.runtimeAction.timing.time || ''));
+                    $(presentation).html(prettyName + ' ' + (param.runtimeAction.timing.type !== 'now' ? param.runtimeAction.timing.time : ''));
                     $(presentation).click(onClickFunc);
                     $(parent).html(presentation);
                 }
@@ -246,5 +294,17 @@ GameCreator.CounterParameter.prototype.getLabel = labelFunction;
 GameCreator.CounterChangeTypeParameter.prototype.getLabel = labelFunction;
 GameCreator.TimingParameter.prototype.getLabel = labelFunction;
 GameCreator.SceneObjectParameter.prototype.getLabel = labelFunction;
+
+//Set objects that do not have their own setupValuePresenter to use the default
+GameCreator.GlobalObjectParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.ShootableObjectParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.NumberParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.RangeParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.DestroyEffectParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.SwitchSceneParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.StateParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.CounterParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.CounterChangeTypeParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.SceneObjectParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 
 })();
