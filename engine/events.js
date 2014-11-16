@@ -53,9 +53,9 @@ GameCreator.conditions = {
     isInState: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
             if (params.objId === 'this') {
-                return runtimeObj.currentState === params.state;
+                return runtimeObj.currentState === Number(params.state);
             } else {
-                return GameCreator.getRuntimeObject(params.objId).currentState === params.state;
+                return GameCreator.getRuntimeObject(params.objId).currentState === Number(params.state);
             }
         },
         params: {

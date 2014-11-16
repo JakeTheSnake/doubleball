@@ -8,7 +8,7 @@
 var updateParameter = function(sceneObjectId, observer) {
     var globalObj;
     if (sceneObjectId === 'this') {
-        globalObj = GameCreator.helpers.findGlobalObjectById(this.itemVM.globalObj);
+        globalObj = this.itemVM.globalObj;
     } else {
         globalObj = GameCreator.getSceneObjectById(sceneObjectId).parent;
     }
