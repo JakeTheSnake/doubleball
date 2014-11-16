@@ -99,13 +99,19 @@
     };
 
     GameCreator.BaseObject.prototype.removeFromGame = function() {
+        var collidableObjectsCollection = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, this.parent.id);
         GameCreator.invalidate(this);
-        GameCreator.helpers.removeObjectFromArrayById(
-            GameCreator.helpers.getObjectById(GameCreator.collidableObjects, this.parent.id).runtimeObjects,
+        GameCreator.helpers.removeObjectFromArrayByInstanceId(
+            collidableObjectsCollection.runtimeObjects,
             this.attributes.instanceId);
-        GameCreator.helpers.removeObjectFromArrayById(GameCreator.movableObjects, this.attributes.instanceId);
-        GameCreator.helpers.removeObjectFromArrayById(GameCreator.renderableObjects, this.attributes.instanceId);
-        GameCreator.helpers.removeObjectFromArrayById(GameCreator.eventableObjects, this.attributes.instanceId);
+        if (collidableObjectsCollection.runtimeObjects.length === 0) {
+            GameCreator.helpers.removeObjectFromArrayById(
+                GameCreator.collidableObjects,
+                this.parent.id);
+        }
+        GameCreator.helpers.removeObjectFromArrayByInstanceId(GameCreator.movableObjects, this.attributes.instanceId);
+        GameCreator.helpers.removeObjectFromArrayByInstanceId(GameCreator.renderableObjects, this.attributes.instanceId);
+        GameCreator.helpers.removeObjectFromArrayByInstanceId(GameCreator.eventableObjects, this.attributes.instanceId);
         var index = GameCreator.objectsToDestroy.indexOf(this);
         if (index !== -1) {
             GameCreator.objectsToDestroy.splice(index, 1);

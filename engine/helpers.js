@@ -334,11 +334,25 @@
         }
     };
 
-    GameCreator.helpers.removeObjectFromArrayById = function(array, id) {
+    GameCreator.helpers.removeObjectFromArrayByInstanceId = function(array, id) {
         var found = false;
         var i;
         for (i = 0; i < array.length; i += 1) {
             if (array[i].attributes.instanceId === id) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            array.splice(i, 1);
+        }
+    };
+
+    GameCreator.helpers.removeObjectFromArrayById = function(array, id) {
+        var found = false;
+        var i;
+        for (i = 0; i < array.length; i += 1) {
+            if (array[i].id === id) {
                 found = true;
                 break;
             }

@@ -31,9 +31,9 @@ GameCreator.conditions = {
     objectExists: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
             var item = GameCreator.helpers.
-                getObjectById(GameCreator.collidableObjects, params.objId);
+                getObjectById(GameCreator.collidableObjects, Number(params.objId));
             if (item) {
-                return params.count === item.runtimeObjects.length;
+                return item.runtimeObjects.length >= params.count;
             }
             return false;
         },
