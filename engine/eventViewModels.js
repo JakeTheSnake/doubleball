@@ -193,11 +193,7 @@ GameCreator.ActionItemVM.prototype.getPresentation = function(CASetVM) {
     var deleteButton = document.createElement('span');
     
     $(deleteButton).html('X');  //TODO: Should be switched to an icon, style in css.
-    $(deleteButton).css('cursor', 'pointer') ;
-    $(deleteButton).css('color', 'red');
-    $(deleteButton).css('float', 'right');
-    $(deleteButton).css('margin-right', '15px');
-    $(deleteButton).css('font-weight', 'bold');
+    $(deleteButton).addClass('remove-item-button');
 
     $(title).append(deleteButton);
 
