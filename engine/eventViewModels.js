@@ -81,7 +81,7 @@ GameCreator.CASetVM.prototype.appendConditions = function(conditionsList) {
         $(conditionsList).append('<div class="condition-parameters"><span>Always</span></div>');
     } else {
         for (i = 0; i < this.conditionVMs.length; i+=1) {
-            $(conditionsList).append(this.conditionVMs[i].getPresentation());
+            $(conditionsList).append(this.conditionVMs[i].getPresentation(this));
         }
     }
 }
@@ -130,13 +130,37 @@ GameCreator.ConditionItemVM = function(model, globalObj) {
     this.template = GameCreator.conditions[this.model.name];
 };
 
-GameCreator.ConditionItemVM.prototype.getPresentation = function() {
+GameCreator.ConditionItemVM.prototype.getPresentation = function(CASetVM) {
     var result = document.createElement('div');
         result.className = 'condition-parameters';
     var title = document.createElement('span');
+    var conditionItemVM = this;
     $(title).addClass('icon-down-dir');
     $(title).append(this.model.name);
+
+    var deleteButton = document.createElement('span');
+    
+    $(deleteButton).html('X');  //TODO: Should be switched to an icon, style in css.
+    $(deleteButton).addClass('remove-item-button');
+
+    $(title).append(deleteButton);
+
     $(result).append(title);
+
+    $(deleteButton).on('click', function(){
+        //Remove conditions from model and from viewmodel.
+        var conditionsArray = CASetVM.caSet.conditions;
+        var index = conditionsArray.indexOf(conditionItemVM.model);
+        if (index !== -1) {
+            conditionsArray.splice(index, 1);
+        }
+        conditionsArray = CASetVM.conditionVMs;
+        index = conditionsArray.indexOf(conditionItemVM);
+        if (index !== -1) {
+            conditionsArray.splice(index, 1);
+        }
+        $("#dialogue-panel-conditions").trigger('redrawList', CASetVM);
+    });
 
     var paramList = document.createElement('table');
     for (var i = 0; i < this.parameters.length; i+=1) {
