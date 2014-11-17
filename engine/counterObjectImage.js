@@ -65,6 +65,6 @@ GameCreator.CounterObjectImage.prototype.onGameStarted = function() {};
 GameCreator.CounterObjectImage.prototype.onCreate = function() {};
 
 GameCreator.CounterObjectImage.prototype.instantiateSceneObject = function(sceneObject, args) {
-    sceneObject.attributes.counterCarrier = '';
-    sceneObject.attributes.counterName = '';
+    sceneObject.attributes.counterCarrier = args.counterCarrier || '';
+    sceneObject.attributes.counterName = args.counterName || '';
 };
