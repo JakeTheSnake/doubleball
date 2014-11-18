@@ -209,18 +209,22 @@
         },
 
         referenceImage: function(globalObj) {
-            var i, img;
+            var i;
             for(i = 0; i < globalObj.states.length; i += 1) {
                 if (globalObj.states[i].attributes.image) {
-                    img = new Image();
-                    img.src = globalObj.states[i].attributes.image;
-                    globalObj.states[i].attributes.image = img;
-                    img.onload = function(img) {
-                        $(img).data('loaded', true);
-                        GameCreator.render();
-                    }.bind(this, img);
+                    globalObj.states[i].attributes.image = GameCreator.createImageElement(globalObj.states[i].attributes.image);
                 }
             }
+        },
+
+        createImageElement: function(src) {
+            var img = new Image();
+            img.src = src;
+            img.onload = function(img) {
+                $(img).data('loaded', true);
+                GameCreator.render();
+            }.bind(this, img);
+            return img;
         },
 
         saveState: function() {
@@ -260,6 +264,8 @@
                     //Same for counters
                     newScene.addSceneObject(newObject);
                 }
+                newScene.attributes.bgImage = scene.attributes.bgImage ? scene.attributes.bgImage.src : null;
+                newScene.attributes.bgColor = scene.attributes.bgColor
                 results.scenes.push(newScene);
             }
             results.idCounter = GameCreator.idCounter;
@@ -327,6 +333,9 @@
                     newObject = savedScene.objects[n];
                     GameCreator.createSceneObject(GameCreator.globalObjects[newObject.parent], newScene, newObject.attributes);
                 }
+
+                newScene.attributes.bgImage = savedScene.attributes.bgImage ? GameCreator.createImageElement(savedScene.attributes.bgImage) : null;
+                newScene.attributes.bgColor = savedScene.attributes.bgColor
                 GameCreator.scenes.push(newScene);
             }
             GameCreator.idCounter = parsedSave.idCounter;
