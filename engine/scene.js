@@ -143,6 +143,7 @@
         switchScene: function(scene) {
             var i, obj;
             GameCreator.reset();
+            GameCreator.activeSceneId = scene.id;
             scene.reset();
             scene.drawBackground();
             for (i = 0; i < scene.objects.length; i += 1) {

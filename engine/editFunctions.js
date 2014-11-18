@@ -348,8 +348,35 @@
         },
 
         restoreParentCounter: function(parentCounter) {
-            var newParentCounter = new GameCreator.Counter();
+            var keys, newParentCounter = new GameCreator.Counter();
             $.extend(newParentCounter, parentCounter);
+            keys = Object.keys(newParentCounter.aboveValue)
+            keys.forEach(function(key){
+                newParentCounter.aboveValue[key] = newParentCounter.aboveValue[key].map(function(caSet){
+                    return GameCreator.restoreCaSet(caSet);
+                });
+            });
+
+            keys = Object.keys(newParentCounter.belowValue)
+            keys.forEach(function(key){
+                newParentCounter.belowValue[key] = newParentCounter.belowValue[key].map(function(caSet){
+                    return GameCreator.restoreCaSet(caSet);
+                });
+            });
+
+            keys = Object.keys(newParentCounter.atValue)
+            keys.forEach(function(key){
+                newParentCounter.atValue[key] = newParentCounter.atValue[key].map(function(caSet){
+                    return GameCreator.restoreCaSet(caSet);
+                });
+            });
+
+            newParentCounter.onIncrease = newParentCounter.onIncrease.map(function(caSet){
+                return GameCreator.restoreCaSet(caSet);
+            });
+            newParentCounter.onDecrease = newParentCounter.onDecrease.map(function(caSet){
+                return GameCreator.restoreCaSet(caSet);
+            });
             return newParentCounter;
         },
 

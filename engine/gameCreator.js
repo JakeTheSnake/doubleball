@@ -15,7 +15,7 @@
 
         //Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
         scenes: [],
-        activeScene: 0,
+        activeSceneId: 0,
 
         //The runtime arrays contain the current state of the game.
         collidableObjects: [],
