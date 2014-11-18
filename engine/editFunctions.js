@@ -306,6 +306,13 @@
                     });
                 }
 
+                if (newObject.parentCounters) {
+                    var keys = Object.keys(newObject.parentCounters);
+                    keys.forEach(function(key){
+                        newObject.parentCounters[key] = GameCreator.restoreParentCounter(newObject.parentCounters[key]);
+                    });
+                }
+
                 GameCreator.globalObjects[newObject.objectName] = newObject;
                 GameCreator.referenceImage(newObject);
 
@@ -329,7 +336,7 @@
         },
 
         restoreCaSet: function(caSet) {
-            var newCaSet = new GameCreator.ConditionActionSet({});
+            var newCaSet = new GameCreator.ConditionActionSet();
             $.extend(newCaSet, caSet);
             newCaSet.actions = newCaSet.actions.map(function(action){
                 return $.extend(new GameCreator.RuntimeAction(), action);
@@ -338,6 +345,12 @@
                 return $.extend(new GameCreator.RuntimeCondition(), action);
             });
             return newCaSet;
+        },
+
+        restoreParentCounter: function(parentCounter) {
+            var newParentCounter = new GameCreator.Counter();
+            $.extend(newParentCounter, parentCounter);
+            return newParentCounter;
         },
 
         saveFormInputToObject: function(formId, obj) {
