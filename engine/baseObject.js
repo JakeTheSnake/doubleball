@@ -124,10 +124,23 @@
     GameCreator.BaseObject.prototype.checkEvents = function() {};
 
     GameCreator.BaseObject.prototype.move = function(modifier) {
-        if (this.attributes.speedX !== 0 || this.attributes.speedY !== 0) {
-            GameCreator.invalidate(this);
-            this.attributes.x += this.attributes.speedX * modifier;
-            this.attributes.y += this.attributes.speedY * modifier;
+        if (this.attributes.speedX > 0) {
+            if (this.objectsRight.length === 0) {
+                this.attributes.x += this.attributes.speedX * modifier;
+            }
+        } else {
+            if (this.objectsLeft.length === 0) {
+                this.attributes.x += this.attributes.speedX * modifier;
+            }
+        }
+        if (this.attributes.speedY > 0) {
+            if (this.objectsBeneath.length === 0) {
+                this.attributes.y += this.attributes.speedY * modifier;
+            }
+        } else {
+            if (this.objectsAbove.length === 0) {
+                this.attributes.y += this.attributes.speedY * modifier;
+            }
         }
     };
 

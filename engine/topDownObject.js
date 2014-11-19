@@ -61,35 +61,35 @@
         if (this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 1;
             this.attributes.speedX = 0;
-            this.attributes.speedY = -maxSpeed;
+            if (this.objectsAbove.length === 0) this.attributes.speedY = -maxSpeed;
         } else if (this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 2;
-            this.attributes.speedX = angularMaxSpeed;
-            this.attributes.speedY = -angularMaxSpeed;
+            if (this.objectsRight.length === 0) this.attributes.speedX = angularMaxSpeed;
+            if (this.objectsAbove.length === 0) this.attributes.speedY = -angularMaxSpeed;
         } else if (!this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 3;
-            this.attributes.speedX = maxSpeed;
+            if (this.objectsRight.length === 0) this.attributes.speedX = maxSpeed;
             this.attributes.speedY = 0;
         } else if (!this.parent.keyUpPressed && this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 4;
-            this.attributes.speedX = angularMaxSpeed;
-            this.attributes.speedY = angularMaxSpeed;
+            if (this.objectsRight.length === 0) this.attributes.speedX = angularMaxSpeed;
+            if (this.objectsBeneath.length === 0) this.attributes.speedY = angularMaxSpeed;
         } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
             this.facing = 5;
             this.attributes.speedX = 0;
-            this.attributes.speedY = maxSpeed;
+            if (this.objectsBeneath.length === 0) this.attributes.speedY = maxSpeed;
         } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && this.parent.keyLeftPressed) {
             this.facing = 6;
-            this.attributes.speedX = -angularMaxSpeed;
-            this.attributes.speedY = angularMaxSpeed;
+            if (this.objectsLeft.length === 0) this.attributes.speedX = -angularMaxSpeed;
+            if (this.objectsBeneath.length === 0) this.attributes.speedY = angularMaxSpeed;
         } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
             this.facing = 7;
-            this.attributes.speedX = -maxSpeed;
+            if (this.objectsLeft.length === 0) this.attributes.speedX = -maxSpeed;
             this.attributes.speedY = 0;
         } else if (this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
             this.facing = 8;
-            this.attributes.speedX = -angularMaxSpeed;
-            this.attributes.speedY = -angularMaxSpeed;
+            if (this.objectsLeft.length === 0) this.attributes.speedX = -angularMaxSpeed;
+            if (this.objectsAbove.length === 0) this.attributes.speedY = -angularMaxSpeed;
         } else {
             Math.abs(this.attributes.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.9;
             Math.abs(this.attributes.speedY) < 0.1 ? this.attributes.speedY = 0 : this.attributes.speedY *= 0.9;

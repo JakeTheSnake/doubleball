@@ -169,20 +169,23 @@
                 quadrant = GameCreator.helpers.determineQuadrant(obj, this);
                 if (this.attributes.speedY > 0 && quadrant === 1) {
                     this.attributes.speedY = 0;
-                    this.attributes.y = obj.attributes.y - this.attributes.height;
+                    this.attributes.y = obj.attributes.y - this.attributes.height + 0.1;
                     this.objectsBeneath.push(obj.attributes.instanceId);
                 }
                 if (this.attributes.speedX < 0 && quadrant === 2) {
                     this.attributes.speedX = 0;
-                    this.attributes.x = obj.attributes.x + obj.attributes.width + 1;
+                    this.attributes.x = obj.attributes.x + obj.attributes.width - 0.1;
+                    this.objectsLeft.push(obj.attributes.instanceId);
                 }
                 if (this.attributes.speedY < 0 && quadrant === 3) {
                     this.attributes.speedY = 0;
-                    this.attributes.y = obj.attributes.y + obj.attributes.height + 1;
+                    this.attributes.y = obj.attributes.y + obj.attributes.height - 0.1;
+                    this.objectsAbove.push(obj.attributes.instanceId);
                 }
                 if (this.attributes.speedX > 0 && quadrant === 4) {
                     this.attributes.speedX = 0;
-                    this.attributes.x = obj.attributes.x - this.attributes.width - 1;
+                    this.attributes.x = obj.attributes.x - this.attributes.width + 0.1;
+                    this.objectsRight.push(obj.attributes.instanceId);
                 }
             }
         };

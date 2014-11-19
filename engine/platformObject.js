@@ -54,10 +54,14 @@
         }
         if (this.parent.keyRightPressed) {
             this.facingLeft = false;
-            this.attributes.accX = this.attributes.acceleration;
+            if (this.objectsRight.length === 0) {
+                this.attributes.accX = this.attributes.acceleration;
+            }
         } else if (this.parent.keyLeftPressed) {
             this.facingLeft = true;
-            this.attributes.accX = -this.attributes.acceleration;
+            if (this.objectsLeft.length === 0) {
+                this.attributes.accX = -this.attributes.acceleration;
+            }
         } else if (this.objectsBeneath.length > 0) {
             this.attributes.accX = 0;
             Math.abs(this.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.9;
@@ -66,10 +70,16 @@
         }
         //Add acceleration only if object is moving below max movement speed in that direction.
         if ((this.attributes.accX > 0 && this.attributes.speedX < this.attributes.maxSpeed) || (this.attributes.accX < 0 && this.attributes.speedX > -this.attributes.maxSpeed)) {
-            this.attributes.speedX += this.attributes.accX;
+            if (this.attributes.accX > 0) {
+                if (this.objectsRight.length === 0) this.attributes.speedX += this.attributes.accX;
+            } else {
+                if (this.objectsLeft.length === 0) this.attributes.speedX += this.attributes.accX;
+            }
         }
-        if (this.objectsBeneath.length === 0) {
-            this.attributes.speedY += this.attributes.accY;
+        if (this.attributes.accY > 0) {
+            if (this.objectsBeneath.length === 0) this.attributes.speedY += this.attributes.accY;
+        } else {
+            if (this.objectsAbove.length === 0) this.attributes.speedY += this.attributes.accY;
         }
     };
 
@@ -98,6 +108,10 @@
         sceneObject.attributes.speedY = args.speedY || [0];
 
         sceneObject.objectsBeneath = [];
+        sceneObject.objectsAbove = [];
+        sceneObject.objectsLeft = [];
+        sceneObject.objectsRight = [];
+
         sceneObject.attributes.acceleration = args.acceleration !== undefined ? args.acceleration : state.attributes.acceleration;
 
         sceneObject.attributes.accY = args.accY !== undefined ? args.accY : state.attributes.accY;

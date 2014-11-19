@@ -55,8 +55,16 @@
     };
 
     GameCreator.FreeObject.prototype.calculateSpeed = function() {
-        this.attributes.speedY += this.attributes.accY;
-        this.attributes.speedX += this.attributes.accX;
+        if (this.attributes.accX > 0) {
+            if (this.objectsRight.length === 0) this.attributes.speedX += this.attributes.accX;
+        } else {
+            if (this.objectsLeft.length === 0) this.attributes.speedX += this.attributes.accX;
+        }
+        if (this.attributes.accY > 0) {
+            if (this.objectsBeneath.length === 0) this.attributes.speedY += this.attributes.accY;
+        } else {
+            if (this.objectsAbove.length === 0) this.attributes.speedY += this.attributes.accY;
+        }
     };
 
     GameCreator.FreeObject.prototype.shoot = function(staticParameters) {
@@ -118,16 +126,5 @@
         sceneObject.attributes.accY = args.accY !== undefined ? args.accY : state.attributes.accY;
         sceneObject.attributes.speedX = args.speedX !== undefined ? args.speedX : state.attributes.speedX;
         sceneObject.attributes.speedY = args.speedY !== undefined ? args.speedY : state.attributes.speedY;
-    };
-
-    GameCreator.FreeObject.prototype.move = function(modifier) {
-        var targetX, targetY, preDiffX, preDiffY, unitVector, postDiffX, postDiffY, nextIndexOffset;
-        if (this.attributes.speedX !== 0 || this.attributes.speedY !== 0) {
-            GameCreator.invalidate(this);
-        }
-        this.attributes.x += this.attributes.speedX * modifier;
-        if (this.objectsBeneath.length === 0) {
-            this.attributes.y += this.attributes.speedY * modifier;
-        }
     };
 }());
