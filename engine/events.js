@@ -74,15 +74,25 @@ GameCreator.conditions = {
     }),
 
     counterEquals: new GameCreator.Condition({
-        evaluate: function(runtimeObj, params) {
+        evaluate: function (runtimeObj, params) {
+            var counterCarrier;
             if (params.objId === 'this') {
-                return runtimeObj.counters[params.counter].value === params.value;
+                counterCarrier = runtimeObj;
             } else {
                 var sceneObject = GameCreator.getRuntimeObject(params.objId);
                 if (sceneObject) {
-                    return sceneObject.counters[params.counter].value === params.value;
+                    counterCarrier = sceneObject;
                 }
                 return false;
+            }
+            if (params.comparator === 'equals') {
+                return counterCarrier.counters[params.counter].value === params.value;
+            }
+            if (params.comparator === 'greaterThan') {
+                return counterCarrier.counters[params.counter].value >= params.value;
+            }
+            if (params.comparator === 'lessThan') {
+                return counterCarrier.counters[params.counter].value <= params.value;
             }
         },
         params: {
@@ -95,6 +105,11 @@ GameCreator.conditions = {
             counter: {
                 param: GameCreator.CounterParameter,
                 mandatory: true,
+            },
+            comparator: {
+                param: GameCreator.ComparatorParameter,
+                mandatory: true,
+                defaultValue: 'Equals'
             },
             value: {
                 param: GameCreator.NumberParameter,

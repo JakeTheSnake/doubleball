@@ -38,6 +38,19 @@ GameCreator.GlobalObjectParameter.prototype.getValuePresenter = function() {
     return element;
 };
 
+GameCreator.ComparatorParameter = function (itemVM, paramName, mandatory) {
+    this.name = paramName;
+    this.itemVM = itemVM;
+    this.mandatory = mandatory;
+    this.element = this.getValuePresenter();
+};
+
+GameCreator.ComparatorParameter.prototype.getValuePresenter = function() {
+    var element = document.createElement('td');
+    element.setAttribute('data-inputtype', 'comparatorInput');
+    return element;
+};
+
 GameCreator.ShootableObjectParameter = function(itemVM, paramName, mandatory) {
     this.name = paramName;
     this.itemVM = itemVM;
@@ -294,6 +307,7 @@ GameCreator.CounterParameter.prototype.getLabel = labelFunction;
 GameCreator.CounterChangeTypeParameter.prototype.getLabel = labelFunction;
 GameCreator.TimingParameter.prototype.getLabel = labelFunction;
 GameCreator.SceneObjectParameter.prototype.getLabel = labelFunction;
+GameCreator.ComparatorParameter.prototype.getLabel = labelFunction;
 
 //Set objects that do not have their own setupValuePresenter to use the default
 GameCreator.GlobalObjectParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
@@ -306,5 +320,6 @@ GameCreator.StateParameter.prototype.setupValuePresenter = GameCreator.UI.setupV
 GameCreator.CounterParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 GameCreator.CounterChangeTypeParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 GameCreator.SceneObjectParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
+GameCreator.ComparatorParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 
 })();

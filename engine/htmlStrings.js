@@ -49,6 +49,11 @@ GameCreator.htmlStrings = {
         return GameCreator.htmlStrings.singleSelector(selectableStates, attrName, value);
     },
 
+    comparatorInput: function(attrName, value) {
+        var selectableComparators = { 'Equals': 'equals', 'Greater than': 'greaterThan', 'Less than': 'lessThan'};
+        return GameCreator.htmlStrings.singleSelector(selectableComparators, attrName, value);
+    },
+
     counterInput: function(attrName, value, globalObj) {
         var counters = {};
         var counterNames = Object.keys(globalObj.parentCounters);
