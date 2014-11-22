@@ -234,11 +234,11 @@ GameCreator.UI = {
         $("#dialogue-panel-conditions").trigger('redrawList');
     },
 
-    setupConditionsColumn: function (caSets, selectableActions, globalObj) {
+    setupConditionsColumn: function (caSets, selectableConditions, globalObj) {
         var conditionsColumn = $("#dialogue-panel-conditions");
         var caSetVMs = [];
         for (var i = 0; i < caSets.length; i++) {
-            caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableActions, globalObj));
+            caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableConditions, globalObj));
         }
 
         var addCaSetButton = $(document.createElement('button'));
@@ -247,7 +247,7 @@ GameCreator.UI = {
         $(addCaSetButton).on('click', function() {
             caSet = new GameCreator.ConditionActionSet(globalObj);
             caSets.push(caSet);
-            caSetVMs.push(new GameCreator.CASetVM(caSet, selectableActions, globalObj));
+            caSetVMs.push(new GameCreator.CASetVM(caSet, selectableConditions, globalObj));
             conditionsColumn.trigger('redrawList');
         });
 
@@ -256,6 +256,11 @@ GameCreator.UI = {
         conditionsColumn.on('redrawList', function (evt, activeCASetVM) {
             var isActive;
             conditionsColumn.html('');
+
+            if (!activeCASetVM && caSetVMs.length) {
+                activeCASetVM = caSetVMs[0];
+                $("#dialogue-panel-actions").trigger('redrawList', activeCASetVM);
+            }
 
             for (i = 0; i < caSetVMs.length; i+=1) {
                 isActive = activeCASetVM === caSetVMs[i];
