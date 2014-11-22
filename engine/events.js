@@ -30,10 +30,16 @@ GameCreator.Condition = function(args) {
 GameCreator.conditions = {
     objectExists: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
-            var item = GameCreator.helpers.
-                getObjectById(GameCreator.collidableObjects, Number(params.objId));
-            if (item) {
-                return item.runtimeObjects.length >= params.count;
+            var item = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, Number(params.objId));
+            var itemCount = item ? item.runtimeObjects.length : 0;
+            if (params.comparator === 'equals') {
+                return itemCount === params.count;
+            }
+            if (params.comparator === 'greaterThan') {
+                return itemCount >= params.count;
+            }
+            if (params.comparator === 'lessThan') {
+                return itemCount <= params.count;
             }
             return false;
         },
@@ -41,6 +47,11 @@ GameCreator.conditions = {
             objId: {
                 param: GameCreator.GlobalObjectParameter,
                 mandatory: true,
+            },
+            comparator: {
+                param: GameCreator.ComparatorParameter,
+                mandatory: true,
+                defaultValue: 'Equals'
             },
             count: {
                 param: GameCreator.NumberParameter,
