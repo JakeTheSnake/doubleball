@@ -161,7 +161,7 @@
                                  }
                              },
                         name: "SwitchState",
-                        timing: {at: true, every: false, after: true},
+                        timing: {at: true, every: true, after: true},
                       }),
           Restart: new GameCreator.Action({
                         action: GameCreator.restartGame,
