@@ -21,6 +21,7 @@ GameCreator.commonObjectViews = {
 
     addCounterObjectViews: function(object) {
         object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
+        object.getStatePropertiesContent = GameCreator.commonObjectViews.getStatePropertiesContent;
         object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
         object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
         object.getEditWindow = GameCreator.commonObjectViews.getEditWindow;

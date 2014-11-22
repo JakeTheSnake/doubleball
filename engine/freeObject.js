@@ -96,7 +96,7 @@
             speedY = projectileSpeed;
             break;
         case 'Left':
-            x = this.attributes.x - objectToShoot.width;
+            x = this.attributes.x - objectToShootAttributes.width;
             y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
             speedX = -projectileSpeed;
             break;
@@ -113,7 +113,7 @@
             }
             x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
             y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
-            unitVector = GameCreator.helpers.calcUnitVector(target.x - this.attributes.x, target.y - this.attributes.y);
+            unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x, target.attributes.y - this.attributes.y);
             speedX = unitVector.x * projectileSpeed;
             speedY = unitVector.y * projectileSpeed;
         }
