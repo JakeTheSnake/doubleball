@@ -319,8 +319,10 @@
             }
             if (params.type === 'set') {
                 counterCarrier.counters[counterName].setValue(params.value);
-            } else {
+            } else if (params.type === 'add') {
                 counterCarrier.counters[counterName].changeValue(params.value);
+            } else {
+                counterCarrier.counters[counterName].changeValue(-params.value);
             }
         },
 

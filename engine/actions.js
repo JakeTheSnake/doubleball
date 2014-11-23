@@ -141,7 +141,7 @@
                           {
                               param: GameCreator.CounterChangeTypeParameter,
                               mandatory: false,
-                              defaultValue: 'change',
+                              defaultValue: 'add',
                           },
                           "value":
                           {
