@@ -54,7 +54,10 @@
 
         render: function (forceRender) {
             var i, obj;
-            GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            if (GameCreator.uiContext) {
+                GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+                GameCreator.drawSelectionLine();
+            }
             GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             for (i = 0; i < GameCreator.renderableObjects.length; i += 1) {
                 obj = GameCreator.renderableObjects[i];
@@ -65,7 +68,6 @@
                 obj.parent.draw(this.mainContext, obj);
             }
             GameCreator.drawEffects(this.mainContext);
-            GameCreator.drawSelectionLine();
         },
 
         drawEffects: function(context) {
@@ -86,7 +88,9 @@
             GameCreator.updateEffects(deltaTime);
             GameCreator.cleanupDestroyedObjects();
             GameCreator.callOnCreateForNewObjects();
-            GameCreator.debug.calculateDebugInfo(deltaTime);
+            if (GameCreator.debug) {
+                GameCreator.debug.calculateDebugInfo(deltaTime);
+            }
         },
 
         runBufferedActions: function() {
@@ -195,7 +199,9 @@
         },
 
         reset: function() {
-            GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            if (GameCreator.uiContext) {
+                GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            }
             GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             GameCreator.timerHandler.clear();
@@ -398,6 +404,138 @@
                 }
             });
         },
+
+        restoreState: function(savedJson) {
+            var i, n, parsedSave, name, oldObject, newObject, newScene, savedScene;
+            GameCreator.scenes = [];
+            GameCreator.globalObjects = {};
+            $(".global-object-list").empty();
+            GameCreator.renderableObjects = [];
+            //Load globalObjects
+            parsedSave = JSON.parse(savedJson);
+            var globalObjects = Object.keys(parsedSave.globalObjects);
+            globalObjects.forEach(function(objName) {
+                oldObject = parsedSave.globalObjects[objName];
+
+                newObject = new GameCreator[oldObject.objectType]({});
+        
+                $.extend(newObject, oldObject);
+
+                if (newObject.onClickSets) {
+                    newObject.onClickSets = newObject.onClickSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                }
+                if (newObject.onCreateSets) {
+                    newObject.onCreateSets = newObject.onCreateSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                }
+                if (newObject.onDestroySets) {
+                    newObject.onDestroySets = newObject.onDestroySets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                }
+                if (newObject.onCollideSets) {
+                    newObject.onCollideSets.forEach(function(collideArray){
+                        collideArray.caSets = collideArray.caSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                    });
+                }
+                if (newObject.onKeySets) {
+                    var keys = Object.keys(newObject.onKeySets);
+                    keys.forEach(function(key){
+                        newObject.onKeySets[key] = newObject.onKeySets[key].map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                    });
+                }
+
+                if (newObject.parentCounters) {
+                    var keys = Object.keys(newObject.parentCounters);
+                    keys.forEach(function(key){
+                        newObject.parentCounters[key] = GameCreator.restoreParentCounter(newObject.parentCounters[key]);
+                    });
+                }
+
+                GameCreator.globalObjects[newObject.objectName] = newObject;
+                GameCreator.referenceImage(newObject);
+
+            });
+            
+            //Load scenes
+            for (i = 0; i < parsedSave.scenes.length; i += 1) {
+                savedScene = parsedSave.scenes[i];
+                newScene = new GameCreator.Scene(savedScene.id);
+                for (n = 0; n < savedScene.objects.length; n += 1) {
+                    newObject = savedScene.objects[n];
+                    GameCreator.createSceneObject(GameCreator.globalObjects[newObject.parent], newScene, newObject.attributes);
+                }
+
+                newScene.attributes.bgImage = savedScene.attributes.bgImage ? GameCreator.createImageElement(savedScene.attributes.bgImage) : null;
+                newScene.attributes.bgColor = savedScene.attributes.bgColor
+                GameCreator.scenes.push(newScene);
+            }
+            GameCreator.idCounter = parsedSave.idCounter;
+            GameCreator.globalIdCounter = parsedSave.globalIdCounter;
+            GameCreator.uniqueSceneId = parsedSave.uniqueSceneId;
+        },
+
+        restoreCaSet: function(caSet) {
+            var newCaSet = new GameCreator.ConditionActionSet();
+            $.extend(newCaSet, caSet);
+            newCaSet.actions = newCaSet.actions.map(function(action){
+                return $.extend(new GameCreator.RuntimeAction(), action);
+            });
+            newCaSet.conditions = newCaSet.conditions.map(function(action){
+                return $.extend(new GameCreator.RuntimeCondition(), action);
+            });
+            return newCaSet;
+        },
+
+        restoreParentCounter: function(parentCounter) {
+            var keys, newParentCounter = new GameCreator.Counter();
+            $.extend(newParentCounter, parentCounter);
+            keys = Object.keys(newParentCounter.aboveValue)
+            keys.forEach(function(key){
+                newParentCounter.aboveValue[key] = newParentCounter.aboveValue[key].map(function(caSet){
+                    return GameCreator.restoreCaSet(caSet);
+                });
+            });
+
+            keys = Object.keys(newParentCounter.belowValue)
+            keys.forEach(function(key){
+                newParentCounter.belowValue[key] = newParentCounter.belowValue[key].map(function(caSet){
+                    return GameCreator.restoreCaSet(caSet);
+                });
+            });
+
+            keys = Object.keys(newParentCounter.atValue)
+            keys.forEach(function(key){
+                newParentCounter.atValue[key] = newParentCounter.atValue[key].map(function(caSet){
+                    return GameCreator.restoreCaSet(caSet);
+                });
+            });
+
+            newParentCounter.onIncrease = newParentCounter.onIncrease.map(function(caSet){
+                return GameCreator.restoreCaSet(caSet);
+            });
+            newParentCounter.onDecrease = newParentCounter.onDecrease.map(function(caSet){
+                return GameCreator.restoreCaSet(caSet);
+            });
+            return newParentCounter;
+        },
+
+        referenceImage: function(globalObj) {
+            var i;
+            for(i = 0; i < globalObj.states.length; i += 1) {
+                if (globalObj.states[i].attributes.image) {
+                    globalObj.states[i].attributes.image = GameCreator.createImageElement(globalObj.states[i].attributes.image);
+                }
+            }
+        },
+
+        createImageElement: function(src) {
+            var img = new Image();
+            img.src = src;
+            img.onload = function(img) {
+                $(img).data('loaded', true);
+                GameCreator.render();
+            }.bind(this, img);
+            return img;
+        },
+
         borderObjects: {
             borderL: {
                 objectName: "borderL", 

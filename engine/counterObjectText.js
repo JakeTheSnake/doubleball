@@ -1,7 +1,10 @@
 GameCreator.CounterObjectText = function(args) {
     GameCreator.addObjFunctions.commonObjectFunctions(this);
-    GameCreator.commonObjectControllers.addCounterObjectControllers(this);
-    GameCreator.commonObjectViews.addCounterObjectViews(this);
+
+    if (GameCreator.state !== 'playing') {
+        GameCreator.commonObjectControllers.addCounterObjectControllers(this);
+        GameCreator.commonObjectViews.addCounterObjectViews(this);
+    }
 
     this.states = [{
         name: "Default",
