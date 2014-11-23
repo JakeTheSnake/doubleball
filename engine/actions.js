@@ -170,22 +170,35 @@
                         runnableFunction: function() {return true; }
                       }),
           SwitchScene: new GameCreator.Action({
-                                action: function(params){GameCreator.selectScene(params); },
-                                params: {"scene":
-                                            {param: GameCreator.SwitchSceneParameter,
-                                             mandatory: true,
-                                            }
-                                     },
-                                name: "SwitchScene",
-                                timing: {at: true, every: true, after: true},
-                              runnableFunction: function() {return true;}
-                            })
+                        action: function(params){GameCreator.selectScene(params); },
+                        params: {"scene":
+                                    {param: GameCreator.SwitchSceneParameter,
+                                        mandatory: true,
+                                    }
+                                },
+                        name: "SwitchScene",
+                        timing: {at: true, every: true, after: true},
+                        runnableFunction: function() {return true;}
+                      }),
+        Move: new GameCreator.Action({
+            action: function (params) { this.parent.setPosition.call(this, params); },
+            params: {
+                'type': { param: GameCreator.MovementTypeParameter, mandatory: true },
+                'x': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 },
+                'y': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 }
+            },
+            name: "Move",
+            timing: { at: true, every: true, after: true },
+            runnableFunction: function () { return true; }
+        })
+
     };
 
     GameCreator.actionGroups = {
         collisionActions: {
             Bounce: GameCreator.actions.Bounce,
             Stop: GameCreator.actions.Stop,
+            Move: GameCreator.actions.Move,
             Destroy: GameCreator.actions.Destroy,
             Shoot: GameCreator.actions.Shoot,
             Create: GameCreator.actions.Create,
@@ -207,6 +220,7 @@
 
         nonCollisionActions: {
             Stop: GameCreator.actions.Stop,
+            Move: GameCreator.actions.Move,
             Destroy: GameCreator.actions.Destroy,
             Shoot: GameCreator.actions.Shoot,
             Create: GameCreator.actions.Create,

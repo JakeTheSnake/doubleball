@@ -531,7 +531,7 @@
             objId: 'Object',
             counterObject: 'Counter',
             change: 'Add',
-            set: 'Set to',
+            set: 'Set to'
         }
         return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName.charAt(0).toUpperCase() + databaseName.slice(1);
     };

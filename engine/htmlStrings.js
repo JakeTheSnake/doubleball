@@ -83,6 +83,10 @@ GameCreator.htmlStrings = {
         return GameCreator.htmlStrings.singleSelector({'Add': 'add', 'Reduce': 'reduce', 'Set to': 'set'}, attrName, value);
     },
 
+    movementTypeInput: function(attrName, value) {
+        return GameCreator.htmlStrings.singleSelector({'Move': 'move', 'Set position': 'setPosition'}, attrName, value);
+    },
+
     sceneInput: function(attrName, value) {
         return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getSelectableScenes(), attrName, value);
     },
