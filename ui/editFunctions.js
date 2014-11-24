@@ -59,6 +59,14 @@
             GameCreator.gameLoop();
         },
 
+        editGame: function() {
+            var keys = Object.keys(GameCreator.globalObjects);
+            keys.forEach(function(objectName) {
+                GameCreator.UI.createLibraryItem(GameCreator.globalObjects[objectName]);
+            });
+            GameCreator.editScene(GameCreator.scenes[0]);
+        },
+
         drawSelectionLine: function() {
             GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             if (GameCreator.selectedObject) {

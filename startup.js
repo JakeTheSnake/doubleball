@@ -75,7 +75,7 @@ window.onload = function () {
             GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
         }
         
-        GameCreator.editScene(GameCreator.scenes[0]);
+        GameCreator.editGame();
         
         //Mass create objects for test!
         //for(var i = 0; i < 5 ; ++i)
