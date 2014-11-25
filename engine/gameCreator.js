@@ -409,7 +409,6 @@
             var i, n, parsedSave, name, oldObject, newObject, newScene, savedScene;
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
-            $(".global-object-list").empty();
             GameCreator.renderableObjects = [];
             //Load globalObjects
             parsedSave = JSON.parse(savedJson);

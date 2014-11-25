@@ -60,6 +60,7 @@
         },
 
         editGame: function() {
+            $(".global-object-list").empty();
             var keys = Object.keys(GameCreator.globalObjects);
             keys.forEach(function(objectName) {
                 GameCreator.UI.createLibraryItem(GameCreator.globalObjects[objectName]);
