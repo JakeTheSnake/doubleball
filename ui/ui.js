@@ -453,6 +453,7 @@ GameCreator.UI = {
                     });
                 }
                 input.focus();
+                input.select();
                 input.keypress(function(event){
                     var keycode = (event.keyCode ? event.keyCode : event.which);
                     if(keycode + '' === '13'){

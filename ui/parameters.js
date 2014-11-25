@@ -271,6 +271,9 @@ GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) 
         $(parent).append(timingValue);
         var input = $(parent).find('input');
         $(input).hide();
+        $(input).focus(function(){
+            this.select();
+        })
         $(timingTypeSelect).change(function() {
             if ($(this).val() !== 'now') {
                 $(input).show();
