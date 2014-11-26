@@ -423,7 +423,7 @@ GameCreator.UI = {
                     onChangeCallback(value);
                 }
             } catch (err) {
-                $(display).addClass('properties-validation-flash'); // ANIMATION
+                $(display).addClass('properties-validation-flash');
                 setTimeout(function() { $(display).removeClass('properties-validation-flash'); }, 700);
                 GameCreator.UI.createValidationBox(container, err);
             }

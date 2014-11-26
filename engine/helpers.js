@@ -451,6 +451,13 @@
     GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {
         var i;
         var attributes = sideObject.attributes;
+        if (sideObject.parent) {
+            $('#side-property-instanceOf').html(sideObject.parent.objectName);
+        }
+        //The instanceId should not be editable for now, so only display it.
+        if (sideObject.attributes.instanceId) {
+            $('#side-property-instanceId-title').html(sideObject.attributes.instanceId)
+        }
         for (i = 0; i < Object.keys(attributes).length; i += 1) {
             var attributeName = Object.keys(attributes)[i];
             GameCreator.UI.setupValuePresenter($("#side-property-" + attributeName), attributes, attributeName, sideObject, onChangeCallback);

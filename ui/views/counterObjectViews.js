@@ -58,8 +58,8 @@
 GameCreator.CounterObjectText.prototype.getSceneObjectForm = function() {
 var result = ' \
 <div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-instanceId" data-inputtype="stringInput"></h1> \
-    <p></p> \
+    <h1 id="side-property-instanceId-title"></h1> \
+    <span>Instance of <span id="side-property-instanceOf"></span></span> \
 </div> \
 <div class="panel-paragraph properties-group border-bottom"> \
     <div class="properties-value"> \
@@ -123,8 +123,8 @@ return result;
 GameCreator.CounterObjectImage.prototype.getSceneObjectForm = function() {
 var result = ' \
 <div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-instanceId" data-inputtype="stringInput"></h1> \
-    <p></p> \
+    <h1 id="side-property-instanceId-title"></h1> \
+    <span>Instance of <span id="side-property-instanceOf"></span></span> \
 </div> \
 <div class="panel-paragraph properties-group border-bottom"> \
     <div class="properties-value"> \
