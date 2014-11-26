@@ -43,14 +43,18 @@ GameCreator.UI = {
         $(listElementButton).on("click", function(e){
             $('#edit-global-object-button').removeClass('disabled');
             GameCreator.selectedLibraryObject = globalObj;
-            $('#library-preview').html(globalObj.getDefaultState().attributes.image);
+            var previewImage = document.createElement('img');
+            previewImage.src = globalObj.getDefaultState().attributes.image.src;
+            $('#library-preview').html(previewImage);
             $('.library-global-object-button').removeClass('active');
             $(listElementButton).addClass('active');
         });
 
         $(".global-object-list").on('recalculateActiveObject', function(){
             if (GameCreator.selectedLibraryObject === globalObj) {
-                $('#library-preview').html(globalObj.getDefaultState().attributes.image);
+                var previewImage = document.createElement('img');
+                previewImage.src = globalObj.getDefaultState().attributes.image.src;
+                $('#library-preview').html(previewImage);
                 $('.library-global-object-button').removeClass('active');
                 $(listElementButton).addClass('active');
             }
