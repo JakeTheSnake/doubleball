@@ -104,7 +104,10 @@ window.onload = function () {
         // UI
          
         $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
-        $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue)
+        $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue);
+        $("#edit-global-object-button").on("click", function(){
+            GameCreator.UI.openEditGlobalObjectDialogue(GameCreator.selectedLibraryObject);
+        });
         $("#toolbar-top button").on('click', function() {
             $("#toolbar-top button").removeClass('btn-active');
             $(this).addClass('btn-active');

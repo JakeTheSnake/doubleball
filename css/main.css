@@ -841,8 +841,6 @@ input {
 
 .global-object-list > li.active {
   background-color: #CCE7D7;
-  pointer-events: none;
-  cursor: not-allowed;
 }
 
 

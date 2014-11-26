@@ -12,7 +12,13 @@ GameCreator.UI = {
         for (i = 0; i < keys.length; i += 1) {
             globalObj = GameCreator.globalObjects[keys[i]];
             listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
+
+            if(GameCreator.selectedLibraryObject === globalObj) {
+                $(listElementButton).addClass('active');
+            }
+
             $(listElementButton).on("click", function(iGlobalObject) {
+                GameCreator.selectedLibraryObject = iGlobalObject;
                 GameCreator.UI.openEditGlobalObjectDialogue(iGlobalObject);
             }.bind(this, globalObj));
             $("#dialogue-window .global-object-list").append(listElementButton);
@@ -30,9 +36,26 @@ GameCreator.UI = {
         var height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
         var width = globalObj.getDefaultState().attributes.width.slice(-1)[0];
 
-        $(listElementButton).on("click", function(e){
+        $(listElementButton).on("dblclick", function(e){
             GameCreator.UI.openEditGlobalObjectDialogue(globalObj);
         });
+
+        $(listElementButton).on("click", function(e){
+            $('#edit-global-object-button').removeClass('disabled');
+            GameCreator.selectedLibraryObject = globalObj;
+            $('#library-preview').html(globalObj.getDefaultState().attributes.image);
+            $('.library-global-object-button').removeClass('active');
+            $(listElementButton).addClass('active');
+        });
+
+        $(".global-object-list").on('recalculateActiveObject', function(){
+            if (GameCreator.selectedLibraryObject === globalObj) {
+                $('#library-preview').html(globalObj.getDefaultState().attributes.image);
+                $('.library-global-object-button').removeClass('active');
+                $(listElementButton).addClass('active');
+            }
+        });
+
         $(listElementButton).on("mousedown", function(e){
             var image = new Image();
             image.src = $(this).attr("data-imgsrc");
@@ -137,6 +160,7 @@ GameCreator.UI = {
         $("#dialogue-window").hide();
         $(".arrow_box").hide();
         $("#dialogue-overlay").hide();
+        $(".global-object-list").trigger('recalculateActiveObject');
     },
 
     showDebugInformation: function(info){
