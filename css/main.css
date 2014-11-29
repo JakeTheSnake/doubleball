@@ -987,6 +987,10 @@ input {
   background-color: #505050;
 }
 
+.btn-wide {
+  width: 155px;
+}
+
 /**
  * Button: Active
  */

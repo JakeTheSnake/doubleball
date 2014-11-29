@@ -206,6 +206,13 @@ GameCreator.htmlStrings = {
         return html;
     },
 
+    sceneStartedEventInformationWindow: function(title) {
+        var html = '<div id="event-information-window">';
+        html += '<div>' + title + '</div>';
+        html += '</div>';
+        return html;
+    },
+
     collisionEventInformationWindow: function(title, image1Src, image2Src) {
         var html = '<div id="event-information-window">';
         html += '<div class="panel-heading"> \
@@ -363,6 +370,9 @@ GameCreator.htmlStrings = {
             </tr> \
         </table> \
     </div> \
+</div> \
+<div class="panel-paragraph properties-group"> \
+        <button class="btn btn-success btn-wide" id="setup-scene-actions">Scene Started Actions</button> \
 </div>'
         return result;
     },

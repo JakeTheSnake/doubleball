@@ -238,6 +238,12 @@
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
             SwitchState: GameCreator.actions.SwitchState,
+        },
+
+        sceneStartedActions: {
+            Create: GameCreator.actions.Create,
+            Restart: GameCreator.actions.Restart,
+            SwitchScene: GameCreator.actions.SwitchScene
         }
     };
 }());

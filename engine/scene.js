@@ -10,6 +10,7 @@
             bgColor: "white",
             bgImage: null
         }
+        this.onCreateSet = new GameCreator.ConditionActionSet();
     };
 
     GameCreator.Scene.prototype.drawBackground = function() {
@@ -170,6 +171,7 @@
                     runtimeObj.parent.runOnClickActions.call(runtimeObj);
                 }
             });
+            GameCreator.getActiveScene().onCreateSet.runActions();
         }
     });
 }());

@@ -204,10 +204,22 @@
                 GameCreator.render(true);
                 GameCreator.getActiveScene().drawBackground();
             };
+
             setTimeout(function() {
+                var choosableActions, caSet, activeScene;
                 $('#side-properties-form-container').html(GameCreator.htmlStrings.getScenePropertiesForm());
                 GameCreator.helpers.populateSidePropertiesForm(GameCreator.getActiveScene(), onChangeCallback);
                 GameCreator.getActiveScene().drawBackground();
+                $('#setup-scene-actions').click(function(){
+                    choosableActions = GameCreator.actionGroups.sceneStartedActions;
+                    activeScene = GameCreator.getActiveScene();
+                    var titleString = "Scene Started Actions for " + activeScene.attributes.name;
+                    GameCreator.UI.openEditActionsWindow(
+                        GameCreator.htmlStrings.sceneStartedEventInformationWindow(titleString),
+                        new GameCreator.CASetVM(activeScene.onCreateSet, choosableActions, undefined), 
+                        activeScene.attributes.name
+                    );
+                });
             }, 0);
         },
 
@@ -258,7 +270,9 @@
                     newScene.addSceneObject(newObject);
                 }
                 newScene.attributes.bgImage = scene.attributes.bgImage ? scene.attributes.bgImage.src : null;
-                newScene.attributes.bgColor = scene.attributes.bgColor
+                newScene.attributes.bgColor = scene.attributes.bgColor;
+                newScene.attributes.name = scene.attributes.name;
+                newScene.onCreateSet = scene.onCreateSet;
                 results.scenes.push(newScene);
             }
             results.idCounter = GameCreator.idCounter;

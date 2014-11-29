@@ -106,8 +106,8 @@ GameCreator.UI = {
         GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
         GameCreator.UI.setupActionsColumn();
         GameCreator.UI.populateSelectActionList(caSetVM);
+        $("#dialogue-panel-actions").trigger('redrawList', caSetVM);
         //GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
-        
         $("#dialogue-overlay").one("click", function() {
             GameCreator.resumeGame();
         });
@@ -119,7 +119,6 @@ GameCreator.UI = {
         GameCreator.UI.openDialogue(700, 570, GameCreator.htmlStrings.addGlobalObjectWindow());
         GameCreator.UI.populateSelectObjectTypeGroupList();
     },
-
 
     setupAddObjectForm: function(objectType) {
         $("#add-global-object-window-content").html(GameCreator.htmlStrings.addGlobalObjectForm(objectType));

@@ -463,7 +463,9 @@
                 }
 
                 newScene.attributes.bgImage = savedScene.attributes.bgImage ? GameCreator.createImageElement(savedScene.attributes.bgImage) : null;
-                newScene.attributes.bgColor = savedScene.attributes.bgColor
+                newScene.attributes.bgColor = savedScene.attributes.bgColor;
+                newScene.attributes.name = savedScene.attributes.name;
+                newScene.onCreateSet = GameCreator.restoreCaSet(savedScene.onCreateSet);
                 GameCreator.scenes.push(newScene);
             }
             GameCreator.idCounter = parsedSave.idCounter;
