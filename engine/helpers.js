@@ -418,7 +418,7 @@
         return segments.join(" ");
     };
 
-    GameCreator.helpers.populateGlobalObjectPropertiesForm = function(attributes, attrToInputMap, containerId) {
+    GameCreator.helpers.populateGlobalObjectPropertiesForm = function(attributes, attrToInputMap, containerId, globalObj) {
         var i, keys = attributes ? Object.keys(attributes) : [];
 
         for (i = 0; i < keys.length; i += 1) {
@@ -432,7 +432,15 @@
         }
         $('#' + containerId + ' input').on('change', function() {
             try {
-                GameCreator.saveInputValueToObject($(this), attributes);    
+                GameCreator.saveInputValueToObject($(this), attributes);
+                //If unique is set, need to reset counters.
+                if ($(this).data('attrname') === 'unique') {
+                    GameCreator.getActiveScene().objects.forEach(function(sceneObj){
+                        if(sceneObj.parent === globalObj) {
+                            GameCreator.resetCounters(sceneObj, sceneObj.parent.parentCounters);
+                        }
+                    });
+                }
             } catch (err) {}
         });
         $('#' + containerId + ' input').blur(function() {
@@ -445,7 +453,6 @@
                 GameCreator.UI.createValidationBox($(this), err);
             }
         });
-        
     };
 
     GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {
