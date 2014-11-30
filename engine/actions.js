@@ -155,11 +155,20 @@
                       }),
           SwitchState:  new GameCreator.Action({
                           action: function(params) {GameCreator.changeState(this, params); },
-                          params: {"objectState":
-                                    {param: GameCreator.StateParameter,
-                                     mandatory: true
-                                 }
-                             },
+                          params: {
+                            'objectId':
+                            {
+                                param: GameCreator.SceneObjectParameter,
+                                mandatory: true,
+                                defaultValue: 'this',
+                                observer: 'objectState'
+                            },
+                            "objectState":
+                            {
+                                param: GameCreator.StateParameter,
+                                mandatory: true
+                            }
+                          },
                         name: "SwitchState",
                         timing: {at: true, every: true, after: true},
                       }),

@@ -335,7 +335,7 @@
         changeState: function(runtimeObj, params) {
             var selectedObjectId = params.objectId;
             if (selectedObjectId && selectedObjectId !== 'this') {
-                runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
+                runtimeObj = GameCreator.getRuntimeObject(selectedObjectId);
             }
             runtimeObj.setState(Number(params.objectState));
         },
