@@ -114,7 +114,7 @@
                     if (this.value > parseInt(value, 10) && !this.aboveValueStates[value]) {
                         callbacks = this.parentCounter.aboveValue[value];
                         for (i = 0; i < callbacks.length; i += 1) {
-                            callbacks[i].runAction(this.parentObject);
+                            callbacks[i].runActions(this.parentObject);
                         }
                         this.aboveValueStates[value] = true;
                     } else if (this.value <= parseInt(value, 10)) {
@@ -131,7 +131,7 @@
                     if (this.value < parseInt(value, 10) && !this.belowValueStates[value]) {
                         callbacks = this.parentCounter.belowValue[value];
                         for (i = 0; i < callbacks.length; i += 1) {
-                            callbacks[i].runAction(this.parentObject);
+                            callbacks[i].runActions(this.parentObject);
                         }
                         this.belowValueStates[value] = true;
                     } else if (this.value >= parseInt(value, 10)) {
