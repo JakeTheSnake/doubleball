@@ -11,9 +11,9 @@
         }
     };
 
-    GameCreator.Action.prototype.runnable = function() {return !this.isDestroyed; };
-
-    
+    GameCreator.Action.prototype.runnable = function() {
+      return !this.isDestroyed; 
+    };  
 
     GameCreator.RuntimeAction = function(name, parameters, timing) {
         this.name = name;
@@ -27,6 +27,25 @@
 
     GameCreator.RuntimeAction.prototype.getParameter = function(name) {
         return GameCreator.actions[this.name].params[name];
+    }
+
+    GameCreator.RuntimeAction.prototype.hasRequiredParameters = function(parameters) {
+      var i, requiredParameters = {}, keys;
+      keys = Object.keys(parameters);
+      for(i = 0; i < keys.length; i += 1) {
+        if (parameters[keys[i]].mandatory) {
+          requiredParameters[keys[i]] = true;
+        }
+      }
+      keys = Object.keys(this.parameters);
+      for(i = 0; i < keys.length; i += 1) {
+        if (requiredParameters[keys[i]] ) {
+          if (this.parameters[keys[i]] === null || this.parameters[keys[i]] === undefined){
+            return false;
+          }
+        }
+      }
+      return true;
     }
 
     GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimeParameters) {
@@ -45,7 +64,7 @@
         } else if (this.timing.type === "every") {
             timerFunction = GameCreator.timerHandler.registerInterval;
         } else {
-            if (GameCreator.actions[this.name].runnable.call(runtimeObj)) {
+            if (GameCreator.actions[this.name].runnable.call(runtimeObj) && this.hasRequiredParameters(GameCreator.actions[this.name].params)) {
               GameCreator.actions[this.name].action.call(runtimeObj, combinedParameters);
             }
             return;
