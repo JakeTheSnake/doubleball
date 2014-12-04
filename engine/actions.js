@@ -184,6 +184,7 @@
                           },
                         name: "SwitchState",
                         timing: {at: true, every: true, after: true},
+                        runnableFunction: function() {return true; }
                       }),
           Restart: new GameCreator.Action({
                         action: GameCreator.restartGame,
@@ -265,7 +266,8 @@
         sceneStartedActions: {
             Create: GameCreator.actions.Create,
             Restart: GameCreator.actions.Restart,
-            SwitchScene: GameCreator.actions.SwitchScene
+            SwitchScene: GameCreator.actions.SwitchScene,
+            SwitchState: GameCreator.actions.SwitchState
         }
     };
 }());
