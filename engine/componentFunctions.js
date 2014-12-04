@@ -83,6 +83,17 @@
             }
         };
 
+        object.resetKeys = function() {
+            this.keyLeftPressed = false;
+            this.keyRightPressed = false;
+            this.keyUpPressed = false;
+            this.keyDownPressed = false;
+            var keys = Object.keys(this.keyPressed);
+            keys.forEach(function(key) {
+                this.keyPressed[key] = false;
+            }.bind(this));
+        };
+
         object.initializeKeyListeners = function() {
             var that = this;
             $(document).on("keydown.gameKeyListener", function(e) {

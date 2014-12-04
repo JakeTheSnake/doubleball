@@ -23,7 +23,7 @@
 
     GameCreator.RuntimeAction.prototype.getAllParameters = function() {
         return GameCreator.actions[this.name].params;
-    }
+    };
 
     GameCreator.RuntimeAction.prototype.getParameter = function(name) {
         return GameCreator.actions[this.name].params[name];

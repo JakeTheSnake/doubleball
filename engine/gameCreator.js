@@ -217,6 +217,12 @@
             $(document).off("mouseup.gameKeyListener");
             $(GameCreator.mainCanvas).off(".runningScene");
             $(GameCreator.mainCanvas).css("cursor", "default");
+            var globalObjects = Object.keys(GameCreator.globalObjects);
+            globalObjects.forEach(function(objectName) {
+                if(GameCreator.globalObjects[objectName].resetKeys) { 
+                    GameCreator.globalObjects[objectName].resetKeys();
+                }
+            });
         },
         pauseGame: function() {
             var objectName, obj, keyName;
