@@ -22,7 +22,8 @@
             },
             gameObjectTypes: {
                 'Free Object': 'FreeObject',
-                'Route Object': 'RouteObject'
+                'Route Object': 'RouteObject',
+                'Text Object': 'TextObject'
             },
             counterObjectTypes: {
                 'Text Counter': 'CounterObjectText',

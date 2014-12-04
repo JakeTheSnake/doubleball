@@ -6,6 +6,12 @@ GameCreator.commonObjectControllers = {
         object.setupEditStateForm = GameCreator.commonObjectControllers.setupEditStateForm;
     },
 
+    addTextObjectControllers: function(object) {
+        object.setupPropertiesForm = GameCreator.commonObjectControllers.setupPropertiesForm;
+        object.setupStatesColumn = GameCreator.commonObjectControllers.setupStatesColumn;
+        object.setupEditStateForm = GameCreator.commonObjectControllers.setupEditStateForm;
+    },
+
     addCommonObjectControllers: function(object) {
         object.setupOnClickActionsForm = GameCreator.commonObjectControllers.setupOnClickActionsForm;
         object.setupOnDestroyActionsForm = GameCreator.commonObjectControllers.setupOnDestroyActionsForm;

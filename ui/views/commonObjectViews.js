@@ -27,6 +27,14 @@ GameCreator.commonObjectViews = {
         object.getEditWindow = GameCreator.commonObjectViews.getEditWindow;
     },
 
+    addTextObjectViews: function(object) {
+        object.getPropertiesContent = GameCreator.commonObjectViews.getPropertiesContent;
+        object.getStatePropertiesContent = GameCreator.commonObjectViews.getStatePropertiesContent;
+        object.getStatesContent = GameCreator.commonObjectViews.getStatesContent;
+        object.getAddGlobalObjectPropertiesContent = GameCreator.commonObjectViews.getAddGlobalObjectPropertiesContent;
+        object.getEditWindow = GameCreator.commonObjectViews.getEditWindow;
+    },
+
     /******************************
      * COMMON OBJECT VIEWS *
      ******************************/
