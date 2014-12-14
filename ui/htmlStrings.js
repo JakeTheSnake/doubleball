@@ -328,6 +328,17 @@ GameCreator.htmlStrings = {
         return '<li id="add-scene-tab">+</li>';
 	},
 
+    imageUploadControls: function() {
+        return ' \
+        <div style="display:inline-block"> \
+            <span class="clear-image-input-button remove-item-button" style="float: none;">X</span> \
+            <button class="upload-image-button"> \
+                Upload Image \
+            </button> \
+            <input class="hidden-file-input" type="file" style="display: none;" accept="image/*"> \
+        </div>'
+    },
+
     getColumn: function(title, id) {
         var result = "";
         var i;

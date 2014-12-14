@@ -301,7 +301,8 @@
 
     GameCreator.helpers.parseImage = function(imgSrc) {
         var image = new Image();
-        if (!(/(jpg|png|gif)$/.test(imgSrc))) throw '"' + imgSrc + '" is not a valid image URL';
+        //TODO: Disabled this check. Need to allow empty image i think. Show some kind of "?" image as default then.
+        //if (!(/(jpg|png|gif)$/.test(imgSrc))) throw '"' + imgSrc + '" is not a valid image URL';
         image.src = imgSrc;
         image.onload = function() {
             $(image).data('loaded', true);
@@ -416,6 +417,33 @@
             segments[i] = segments[i].charAt(0).toUpperCase() + segments[i].slice(1);
         }
         return segments.join(" ");
+    };
+
+    GameCreator.helpers.populateImageUploadControls = function() {
+        $('#global-object-image-upload-controls').html(GameCreator.htmlStrings.imageUploadControls());
+
+        $('#global-object-image-upload-controls .upload-image-button').click(function() {
+            $('#global-object-image-upload-controls .hidden-file-input').trigger('click');
+        });
+
+        $('#global-object-image-upload-controls .hidden-file-input').on('change', function(evt){
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+
+            if(file.size > 500000) alert('File too large.');
+
+            reader.onload = function() {
+                $('#object-property-image-container input').val(reader.result);
+                $('#object-property-image-container input').trigger('blur');
+            }
+
+            reader.readAsDataURL(file);
+        });
+
+        $('#global-object-image-upload-controls .clear-image-input-button').click(function(){
+            $('#object-property-image-container input').val('');
+            $('#object-property-image-container input').trigger('blur');
+        });
     };
 
     GameCreator.helpers.populateGlobalObjectPropertiesForm = function(attributes, attrToInputMap, containerId, globalObj) {

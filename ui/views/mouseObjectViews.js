@@ -27,6 +27,7 @@ GameCreator.MouseObject.prototype.getPropertiesForm = function(stateId) {
     <div class="form-group"> \
         <div id="object-property-image-container" class="form-item"> \
         </div> \
+        <div id="global-object-image-upload-controls"></div> \
     </div> \
 </div>';
     return result;
