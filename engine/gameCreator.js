@@ -410,10 +410,7 @@
             this.idCounter += 1;
             return this.idCounter;
         },
-        playGame: function() {
-            GameCreator.UI.hideEditModeTools();
-            GameCreator.playScene(GameCreator.scenes[0]);
-        },
+
         resetGlobalCounters: function() {
             Object.keys(GameCreator.globalObjects).forEach(function(key) {
                 if (GameCreator.globalObjects[key].counters) {
@@ -424,12 +421,16 @@
             });
         },
 
+        playGame: function() {
+            GameCreator.playScene(GameCreator.scenes[0]);
+        },
+
         restoreState: function(savedGame) {
             var i, n, name, oldObject, newObject, newScene, savedScene;
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
             GameCreator.renderableObjects = [];
-            
+
             //Load globalObjects
             var globalObjects = Object.keys(savedGame.globalObjects);
             globalObjects.forEach(function(objName) {

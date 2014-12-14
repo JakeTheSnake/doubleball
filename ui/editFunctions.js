@@ -62,6 +62,11 @@
             GameCreator.gameLoop();
         },
 
+        playGameEditing: function() {
+            GameCreator.UI.hideEditModeTools();
+            GameCreator.playScene(GameCreator.scenes[0]);
+        },
+
         editGame: function() {
             $(".global-object-list").empty();
             var keys = Object.keys(GameCreator.globalObjects);

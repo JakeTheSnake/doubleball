@@ -1,4 +1,14 @@
 GameCreator.UI = {    
+
+    initializeUI: function() {
+        var i;
+        var globalObjectNames = Object.keys(GameCreator.globalObjects);
+        globalObjectNames.forEach(function(globalObjName) {
+            GameCreator.UI.createLibraryItem(GameCreator.globalObjects[globalObjName]);
+        });
+        GameCreator.UI.drawSceneTabs();
+    },
+
     saveNewGlobalObject: function(objectType) {
         var obj, args = {};
         GameCreator.saveFormInputToObject("add-global-object-window-content", args);
@@ -24,7 +34,7 @@ GameCreator.UI = {
             $("#dialogue-window .global-object-list").append(listElementButton);
         }
     },
-    
+   
     createLibraryItem: function(globalObj) {
         var listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
         this.setupLibraryItemListeners(listElementButton, globalObj);

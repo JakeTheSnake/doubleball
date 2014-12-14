@@ -35,8 +35,24 @@ $(document).ready(function() {
         $("#toolbar-top button").removeClass('btn-active');
         $(this).addClass('btn-active');
     });
-    $("#run-game-button").on("click", GameCreator.playGame);
+    $("#run-game-button").on("click", GameCreator.playGameEditing);
     $("#edit-game-button").on("click", GameCreator.editActiveScene);
     $("#direct-game-button").on("click", GameCreator.directActiveScene);
+    $("#save-game-button").click(function() {
+        $.ajax({
+            type: "POST",
+            url: "savegame",
+            data: {game: {data: GameCreator.saveState()}}
+        }).done(function(reply) {
+            console.log(reply);
+        });
+    });
+
+    if (gon && gon.game != null) {
+        GameCreator.restoreState(gon.game);
+        GameCreator.UI.initializeUI();
+    }
+
+    GameCreator.editScene(GameCreator.scenes[0]);
 });
     
