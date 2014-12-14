@@ -38,7 +38,20 @@
         idCounter: 0, // Counter used for scene objects' instance IDs
         globalIdCounter: 0, // Counter used for global objects ID
 
-        gameLoop: function () {
+        initialize: function() {
+            var borderKeys = Object.keys(GameCreator.borderObjects);
+
+            for (var i = 0; i < borderKeys.length; i += 1 ) {
+                var borderObj = GameCreator.borderObjects[borderKeys[i]];
+                borderObj.getDefaultState = function() {
+                    return {attributes: this.attributes};
+                };
+                borderObj.states = [];
+                GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
+            }   
+        },
+
+        gameLoop: function() {
             var now = Date.now();
             var delta = now - GameCreator.then;
 
@@ -411,16 +424,16 @@
             });
         },
 
-        restoreState: function(savedJson) {
-            var i, n, parsedSave, name, oldObject, newObject, newScene, savedScene;
+        restoreState: function(savedGame) {
+            var i, n, name, oldObject, newObject, newScene, savedScene;
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
             GameCreator.renderableObjects = [];
+            
             //Load globalObjects
-            parsedSave = JSON.parse(savedJson);
-            var globalObjects = Object.keys(parsedSave.globalObjects);
+            var globalObjects = Object.keys(savedGame.globalObjects);
             globalObjects.forEach(function(objName) {
-                oldObject = parsedSave.globalObjects[objName];
+                oldObject = savedGame.globalObjects[objName];
 
                 newObject = new GameCreator[oldObject.objectType]({});
         
@@ -460,8 +473,8 @@
             });
             
             //Load scenes
-            for (i = 0; i < parsedSave.scenes.length; i += 1) {
-                savedScene = parsedSave.scenes[i];
+            for (i = 0; i < savedGame.scenes.length; i += 1) {
+                savedScene = savedGame.scenes[i];
                 newScene = new GameCreator.Scene(savedScene.id);
                 for (n = 0; n < savedScene.objects.length; n += 1) {
                     newObject = savedScene.objects[n];
@@ -474,9 +487,9 @@
                 newScene.onCreateSet = GameCreator.restoreCaSet(savedScene.onCreateSet);
                 GameCreator.scenes.push(newScene);
             }
-            GameCreator.idCounter = parsedSave.idCounter;
-            GameCreator.globalIdCounter = parsedSave.globalIdCounter;
-            GameCreator.uniqueSceneId = parsedSave.uniqueSceneId;
+            GameCreator.idCounter = savedGame.idCounter;
+            GameCreator.globalIdCounter = savedGame.globalIdCounter;
+            GameCreator.uniqueSceneId = savedGame.uniqueSceneId;
         },
 
         restoreCaSet: function(caSet) {
