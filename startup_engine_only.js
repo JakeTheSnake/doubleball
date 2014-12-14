@@ -18,7 +18,7 @@ $(document).ready(function() {
     GameCreator.state = 'playing';
 
     GameCreator.initialize();
-    if (gon && gon.game != null) {
+    if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
     }
 

@@ -31,10 +31,12 @@ $(document).ready(function() {
     $("#edit-global-object-button").on("click", function(){
         GameCreator.UI.openEditGlobalObjectDialogue(GameCreator.selectedLibraryObject);
     });
+    
     $("#toolbar-top button").on('click', function() {
         $("#toolbar-top button").removeClass('btn-active');
         $(this).addClass('btn-active');
     });
+
     $("#run-game-button").on("click", GameCreator.playGameEditing);
     $("#edit-game-button").on("click", GameCreator.editActiveScene);
     $("#direct-game-button").on("click", GameCreator.directActiveScene);
@@ -48,7 +50,7 @@ $(document).ready(function() {
         });
     });
 
-    if (gon && gon.game != null) {
+    if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
         GameCreator.UI.initializeUI();
     }
