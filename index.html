@@ -18,15 +18,26 @@
         <div class="container-fluid">
 
             <!-- Toolbar top -->
-            <div id="toolbar-top" class="row border-bottom">
-                <a href="http://arcadeforge.com/" target="_self" id="logo"></a>
-                <button type="button" id="run-game-button" class="btn btn-success btn-lg">Run Game</button>
-                <button type="button" id="edit-game-button" class="btn btn-success btn-lg">Edit Game</button>
-                <button type="button" id="direct-game-button" class="btn btn-success btn-lg">Direct Game</button>
+            <div id="toolbar-top" class="border-bottom">
+                <a href="index.html" class="navbar-logo">
+                    <img src="images/logo_arcadeforge_navbar.png">
+                </a>
+                <div id="edit-mode" class="btn-group">
+                    <div id="edit-mode-buttons">
+                        <input type="radio" id="edit-game-button" name="edit-mode" data-name="EDIT GAME" checked="checked" />
+                        <label for="edit-game-button"></label>
+                        <input type="radio" id="direct-game-button" data-name="DIRECT GAME"name="edit-mode" />
+                        <label for="direct-game-button"></label>
+                        <input type="radio" id="run-game-button" data-name="RUN GAME" name="edit-mode" />
+                        <label for="run-game-button"></label>
+                    </div>
+                    <span id="edit-mode-label"></span>
+                </div>
+                <button id="logout-button" type="button" class="btn btn-warning">Logout</button>
             </div>
 
             <!-- Toolbar bottom -->
-            <div id="toolbar-bottom" class="row">
+            <div id="toolbar-bottom">
 
                 <!-- Column Left -->
                 <div class="col left border-right">
@@ -36,11 +47,11 @@
                 <div class="col middle">
 
                     <!-- Scenes -->
-                    <div id="toolbar-scenes" class="row border-bottom">
+                    <div id="toolbar-scenes" class="border-bottom">
                     </div>
 
                     <!-- Canvas -->
-                    <div id="canvas-container" class="row" oncontextmenu="return false;">
+                    <div id="canvas-container" oncontextmenu="return false;">
                     </div>
                 </div>
 

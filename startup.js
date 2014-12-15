@@ -36,6 +36,22 @@ $(document).ready(function() {
         $("#toolbar-top button").removeClass('btn-active');
         $(this).addClass('btn-active');
     });
+ 
+    var selectedGameMode = "EDIT GAME";
+    $("#edit-mode-label").html(selectedGameMode);
+
+    $("#edit-mode-buttons input").on("click", function() {
+        selectedGameMode = $(this).data("name");
+        $("#edit-mode-label").html(selectedGameMode);
+    });
+
+    $("#edit-mode-buttons input").on("mouseover", function() {
+        $("#edit-mode-label").html($(this).data("name"));
+    });
+
+    $("#edit-mode-buttons input").on("mouseout", function() {
+        $("#edit-mode-label").html(selectedGameMode);
+    });
 
     $("#run-game-button").on("click", GameCreator.playGameEditing);
     $("#edit-game-button").on("click", GameCreator.editActiveScene);
