@@ -35,65 +35,48 @@
 
 GameCreator.TextObject.prototype.getSceneObjectForm = function() {
 var result = ' \
-<div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-instanceId-title"></h1> \
-    <span>Instance of <span id="side-property-instanceOf"></span></span> \
-</div> \
-<div class="panel-paragraph properties-group border-bottom"> \
-    <div class="properties-value"> \
-        <label>Position</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-x" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Y:</td> \
-                <td id="side-property-y" data-inputtype="numberInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-    <div class="properties-value"> \
-        <label>Font</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>Name:</td> \
-                <td id="side-property-font" data-inputtype="stringInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div> \
-<div class="panel-paragraph properties-group"> \
-    <div class="properties-value"> \
-        <label>Style</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>Size:</td> \
-                <td id="side-property-size" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Color:</td> \
-                <td id="side-property-color" data-inputtype="stringInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div> \
-<div class="panel-paragraph properties-group"> \
-    <div class="properties-value"> \
-        <label>Text</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>Text:</td> \
-                <td id="side-property-text" data-inputtype="stringInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div>'
+    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Position</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Position X:</td> \
+                        <td id="side-property-x" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position Y:</td> \
+                        <td id="side-property-y" data-inputtype="numberInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Appearance</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Text:</td> \
+                        <td id="side-property-text" data-inputtype="stringInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Font:</td> \
+                        <td id="side-property-font" data-inputtype="stringInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Font Size:</td> \
+                        <td id="side-property-size" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Color:</td> \
+                        <td id="side-property-color" data-inputtype="stringInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+    </ul>'
+
     return result;
-    };
+};
 
 }());

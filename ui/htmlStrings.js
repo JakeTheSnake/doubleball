@@ -198,12 +198,18 @@ GameCreator.htmlStrings = {
     defaultEventInformationWindow: function(title, imageSrc) {
         var html = '<div id="event-information-window">';
         html += '<div class="panel-heading"> \
-                 <span class="panel-title">Default event</span> \
+                 <span class="panel-title">' + title + '</span> \
                  </div>';
-        html += '<div>' + title + '</div>';
-        html += '<img src="' + imageSrc + '"/>';
-        html += '</div>';
+
+        html += '<div class="panel-body"> \
+                 <div class="image-preview image-preview-large"> \
+                 <img src="' + imageSrc + '" /> \
+                 </div> \
+                 </div> \
+                 </div>';
+                 
         return html;
+        
     },
 
     sceneStartedEventInformationWindow: function(title) {
@@ -216,16 +222,15 @@ GameCreator.htmlStrings = {
     collisionEventInformationWindow: function(title, image1Src, image2Src) {
         var html = '<div id="event-information-window">';
         html += '<div class="panel-heading"> \
-                 <span class="panel-title">Collision event</span> \
+                 <span class="panel-title">' + title + '</span> \
                  </div>';
 
-        html += '<div id="" class="panel-body"> \
-                 <span>' + title + '</span> \
+        html += '<div class="panel-body"> \
                  <div class="image-preview"> \
-                 <img src="' + image1Src + '" height="110px" /> \
+                 <img src="' + image1Src + '" /> \
                  </div> \
                  <div class="image-preview"> \
-                 <img src="' + image2Src + '" height="110px" /> \
+                 <img src="' + image2Src + '" /> \
                  </div> \
                  </div> \
                  </div>';
@@ -355,36 +360,33 @@ GameCreator.htmlStrings = {
     },
 
     getScenePropertiesForm: function() {
+
         var result = ' \
-<div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-name" data-inputtype="stringInput"></h1> \
-    <p></p> \
-</div> \
-<div class="panel-paragraph properties-group border-bottom"> \
-    <div class="properties-value"> \
-        <label>Background Color</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td id="side-property-bgColor" data-inputtype="stringInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div>\
-<div class="panel-paragraph properties-group border-bottom"> \
-    <div class="properties-value"> \
-        <label>Background Image</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td id="side-property-bgImage" data-inputtype="imageInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div> \
-<div class="panel-paragraph properties-group"> \
-        <button class="btn btn-success btn-wide" id="setup-scene-actions">Scene Started Actions</button> \
-</div>'
+        <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
+            <li class="condition-parameters"> \
+                <span class="icon-down-dir">Scene</span> \
+                <table> \
+                    <tbody> \
+                        <tr> \
+                            <td>Name:</td> \
+                            <td id="side-property-name" data-inputtype="stringInput"></td> \
+                        </tr> \
+                        <tr> \
+                            <td>Background Color:</td> \
+                            <td id="side-property-bgColor" data-inputtype="stringInput"></td> \
+                        </tr> \
+                        <tr> \
+                            <td>Background Image:</td> \
+                            <td id="side-property-bgImage" data-inputtype="imageInput"></td> \
+                        </tr> \
+                    </tbody> \
+                </table> \
+            </li> \
+        </ul> \
+        <div class="panel-paragraph properties-group"> \
+            <button class="btn btn-success btn-wide" id="setup-scene-actions">Scene Started Actions</button> \
+        </div>'
+
         return result;
     },
     sceneObjectDeleteButton: function() {

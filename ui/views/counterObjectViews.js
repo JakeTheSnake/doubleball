@@ -58,124 +58,105 @@
 
 GameCreator.CounterObjectText.prototype.getSceneObjectForm = function() {
 var result = ' \
-<div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-instanceId-title"></h1> \
-    <span>Instance of <span id="side-property-instanceOf"></span></span> \
-</div> \
-<div class="panel-paragraph properties-group border-bottom"> \
-    <div class="properties-value"> \
-        <label>Position</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-x" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Y:</td> \
-                <td id="side-property-y" data-inputtype="numberInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-    <div class="properties-value"> \
-        <label>Font</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>Name:</td> \
-                <td id="side-property-font" data-inputtype="stringInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div> \
-<div class="panel-paragraph properties-group"> \
-    <div class="properties-value"> \
-        <label>Style</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>Size:</td> \
-                <td id="side-property-size" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Color:</td> \
-                <td id="side-property-color" data-inputtype="stringInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-    <div class="properties-value"> \
-        <label>Counter</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>Object:</td> \
-                <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Counter:</td> \
-                <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div>'
-return result;
+    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Position</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Position X:</td> \
+                        <td id="side-property-x" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position Y:</td> \
+                        <td id="side-property-y" data-inputtype="numberInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Appearance</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Font:</td> \
+                        <td id="side-property-font" data-inputtype="stringInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Font Size:</td> \
+                        <td id="side-property-size" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Color:</td> \
+                        <td id="side-property-color" data-inputtype="stringInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Target</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Object:</td> \
+                        <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Counter:</td> \
+                        <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput"  data-dependancy="counterCarrier"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+    </ul>'
+
+    return result;
 };
 
 GameCreator.CounterObjectImage.prototype.getSceneObjectForm = function() {
 var result = ' \
-<div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-instanceId-title"></h1> \
-    <span>Instance of <span id="side-property-instanceOf"></span></span> \
-</div> \
-<div class="panel-paragraph properties-group border-bottom"> \
-    <div class="properties-value"> \
-        <label>Position</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-x" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Y:</td> \
-                <td id="side-property-y" data-inputtype="numberInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-    <div class="properties-value"> \
-        <label>Size</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>W:</td> \
-                <td id="side-property-width" data-inputtype="rangeInput"></td> \
-            </tr> \
-        </table> \
-        <table> \
-            <tr> \
-                <td>H:</td> \
-                <td id="side-property-height" data-inputtype="rangeInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div> \
-<div class="panel-paragraph properties-group"> \
-    <div class="properties-value"> \
-        <label>Counter</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>Obj:</td> \
-                <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Ctr:</td> \
-                <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div>'
-return result;
+    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Size and Position</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Width:</td> \
+                        <td id="side-property-width" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Height:</td> \
+                        <td id="side-property-height" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position X:</td> \
+                        <td id="side-property-x" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position Y:</td> \
+                        <td id="side-property-y" data-inputtype="numberInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Target</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Object:</td> \
+                        <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Counter:</td> \
+                        <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+    </ul>'
+
+    return result;
 };
 
 }());

@@ -28,55 +28,47 @@
         return result;
     };
 
-    GameCreator.RouteObject.prototype.getSceneObjectForm = function() {
+GameCreator.RouteObject.prototype.getSceneObjectForm = function() {
+
 var result = ' \
-<div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-instanceId-title"></h1> \
-    <span>Instance of <span id="side-property-instanceOf"></span></span> \
-</div> \
-<div class="panel-paragraph properties-group border-bottom"> \
-    <div class="properties-value"> \
-        <label>Position</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-x" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Y:</td> \
-                <td id="side-property-y" data-inputtype="numberInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-    <div class="properties-value"> \
-        <label>Size</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>W:</td> \
-                <td id="side-property-width" data-inputtype="rangeInput"></td> \
-            </tr> \
-            <tr> \
-                <td>H:</td> \
-                <td id="side-property-height" data-inputtype="rangeInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div> \
-<div class="panel-paragraph properties-group"> \
-    <div class="properties-value"> \
-        <label>Speed</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-speed" data-inputtype="rangeInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div>'
-return result;
+    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Size and Position</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Width:</td> \
+                        <td id="side-property-width" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Height:</td> \
+                        <td id="side-property-height" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position X:</td> \
+                        <td id="side-property-x" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position Y:</td> \
+                        <td id="side-property-y" data-inputtype="numberInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Speed</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Speed:</td> \
+                        <td id="side-property-speed" data-inputtype="numberInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+    </ul>'
+
+    return result;
 };
 
 

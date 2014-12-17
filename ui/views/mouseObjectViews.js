@@ -35,69 +35,54 @@ GameCreator.MouseObject.prototype.getPropertiesForm = function(stateId) {
 
 GameCreator.MouseObject.prototype.getSceneObjectForm = function() {
 var result = ' \
-<div class="panel-paragraph border-bottom"> \
-    <h1 id="side-property-instanceId-title"></h1> \
-    <span>Instance of <span id="side-property-instanceOf"></span></span> \
-</div> \
-<div class="panel-paragraph properties-group border-bottom"> \
-    <div class="properties-value"> \
-        <label>Position</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-x" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Y:</td> \
-                <td id="side-property-y" data-inputtype="numberInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-    <div class="properties-value"> \
-        <label>Size</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>W:</td> \
-                <td id="side-property-width" data-inputtype="rangeInput"></td> \
-            </tr> \
-            <tr> \
-                <td>H:</td> \
-                <td id="side-property-height" data-inputtype="rangeInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div> \
-<div class="panel-paragraph properties-group"> \
-    <div class="properties-value"> \
-        <label>Boundary Max</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-maxX" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Y:</td> \
-                <td id="side-property-maxY" data-inputtype="numberInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-    <div class="properties-value"> \
-        <label>Boundary Min</label> \
-        <span class="glyphicon icon-position"></span> \
-        <table> \
-            <tr> \
-                <td>X:</td> \
-                <td id="side-property-minX" data-inputtype="numberInput"></td> \
-            </tr> \
-            <tr> \
-                <td>Y:</td> \
-                <td id="side-property-minY" data-inputtype="numberInput"></td> \
-            </tr> \
-        </table> \
-    </div> \
-</div>'
-return result;
+    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Size and Position</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Width:</td> \
+                        <td id="side-property-width" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Height:</td> \
+                        <td id="side-property-height" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position X:</td> \
+                        <td id="side-property-x" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Position Y:</td> \
+                        <td id="side-property-y" data-inputtype="numberInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+        <li class="condition-parameters"> \
+            <span class="icon-down-dir">Boundaries</span> \
+            <table> \
+                <tbody> \
+                    <tr> \
+                        <td>Min X:</td> \
+                        <td id="side-property-minX" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Min Y:</td> \
+                        <td id="side-property-minY" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Max X:</td> \
+                        <td id="side-property-maxX" data-inputtype="numberInput"></td> \
+                    </tr> \
+                    <tr> \
+                        <td>Max Y:</td> \
+                        <td id="side-property-maxY" data-inputtype="numberInput"></td> \
+                    </tr> \
+                </tbody> \
+            </table> \
+        </li> \
+    </ul>'
+
+    return result;
 };
