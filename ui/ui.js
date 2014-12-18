@@ -500,7 +500,7 @@ GameCreator.UI = {
             }
         }
 
-        container.parent().off('click').on('click', onClickFunc);
+        container.off('click').on('click', onClickFunc);
     },
 
     createValidationBox: function(target, message) {

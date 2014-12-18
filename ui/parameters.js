@@ -241,7 +241,7 @@ GameCreator.DirectionParameter.prototype.setupValuePresenter = function(containe
         });
     };
 
-    $(presentation).click(onClickFunc);
+    $(parent).click(onClickFunc);
 
     $(parent).html(presentation);
 };
@@ -253,7 +253,7 @@ GameCreator.TimingParameter = function(runtimeAction) {
 
 GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) {
 
-    var timingTypeSelect;
+    var timingTypeSelect, inputOpen = false;;
     var parent = document.createElement('td');
     var presentation = document.createElement('span');
     var prettyName = GameCreator.helpers.getPrettyName(this.runtimeAction.timing.type);
@@ -264,6 +264,7 @@ GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) 
     var closeInput = function() {
         setTimeout(function() {
             if ($(parent).find(':focus').length === 0) {
+                inputOpen = false;
                 param.runtimeAction.timing.type = $(timingTypeSelect).val();
                 param.runtimeAction.timing.time = Number($($(parent).find('input')[0]).val());
                 var presentation = document.createElement('span');
@@ -275,44 +276,47 @@ GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) 
         }, 0);
     };
 
-    var onClickFunc = function() {
-        $(parent).html(GameCreator.htmlStrings.singleSelector(
-            GameCreator.helpers.getSelectableTimings(param.runtimeAction.name),
-            '', param.runtimeAction.timing.type)
-        );
-        timingTypeSelect = $(parent).find('select')[0];
-        $(timingTypeSelect).focus();
-        var timingValue = GameCreator.htmlStrings.numberInput('', param.runtimeAction.timing.time);
-        $(parent).append(timingValue);
-        var input = $(parent).find('input');
-        $(input).hide();
-        $(input).focus(function(){
-            this.select();
-        })
+    var onClickFunc = function(evt) {
+        if (!inputOpen) {
+            inputOpen = true;
+            $(parent).html(GameCreator.htmlStrings.singleSelector(
+                GameCreator.helpers.getSelectableTimings(param.runtimeAction.name),
+                '', param.runtimeAction.timing.type)
+            );
+            timingTypeSelect = $(parent).find('select')[0];
+            $(timingTypeSelect).focus();
+            var timingValue = GameCreator.htmlStrings.numberInput('', param.runtimeAction.timing.time);
+            $(parent).append(timingValue);
+            var input = $(parent).find('input');
+            $(input).hide();
+            $(input).focus(function(){
+                this.select();
+            })
 
-        $(input).keypress(function(event){
-            var keycode = (event.keyCode ? event.keyCode : event.which);
-            if(keycode + '' === '13'){
-                this.blur();
-            }
-        });
+            $(input).keypress(function(event){
+                var keycode = (event.keyCode ? event.keyCode : event.which);
+                if(keycode + '' === '13'){
+                    this.blur();
+                }
+            });
 
-        $(timingTypeSelect).change(function() {
-            if ($(this).val() !== 'now') {
-                $(input).show();
-            } else {
-                $(input).hide();
-            }
-        });
+            $(timingTypeSelect).change(function() {
+                if ($(this).val() !== 'now') {
+                    $(input).show();
+                } else {
+                    $(input).hide();
+                }
+            });
 
-        $(timingTypeSelect).trigger('change');
+            $(timingTypeSelect).trigger('change');
 
-        $(parent).off('focusout').on('focusout', function() {
-            closeInput();
-        });
+            $(parent).off('focusout').on('focusout', function() {
+                closeInput();
+            });
+        }
     };
 
-    $(presentation).click(onClickFunc);
+    $(parent).off('click').on('click', onClickFunc);
 
     $(parent).html(presentation);
 
