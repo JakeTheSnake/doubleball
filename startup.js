@@ -105,6 +105,6 @@ $(document).ready(function() {
         GameCreator.UI.initializeUI();
     }
 
-    GameCreator.editScene(GameCreator.scenes[0]);
+    setTimeout(GameCreator.editScene.bind(GameCreator, GameCreator.scenes[0]), 0);
 });
     

@@ -1,5 +1,3 @@
-debugCounter = 0;
-
 $(document).ready(function() {
     GameCreator.bgCanvas = document.createElement("canvas");
     GameCreator.bgCanvas.id = "bg-canvas"
@@ -18,11 +16,12 @@ $(document).ready(function() {
     GameCreator.state = 'playing';
 
     GameCreator.initialize();
+
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
     }
 
-    GameCreator.playGame();
+    setTimeout(GameCreator.playGame, 0)
     
 });
     
