@@ -36,11 +36,17 @@
 
     GameCreator.addObjFunctions.keyObjectAttributes = function(object) {
         object.keyPressed = {
+            shift: false,
+            ctrl: false,
+            alt: false,
             space: false,
             leftMouse: false,
             rightMouse: false
         };
         object.onKeySets = {
+            shift: [],
+            ctrl: [],
+            alt: [],
             space: [],
             leftMouse: [],
             rightMouse: []
@@ -98,18 +104,31 @@
             var that = this;
             $(document).on("keydown.gameKeyListener", function(e) {
                 switch (e.which) {
+                case 16:
+                    that.keyPressed.shift = true;
+                    break;
+                case 17:
+                    that.keyPressed.ctrl = true;
+                    break;
+                case 18:
+                    that.keyPressed.alt = true;
+                    break;
                 case 32:
                     that.keyPressed.space = true;
                     break;
+                case 65:
                 case 37:
                     that.keyLeftPressed = true;
                     break;
+                case 87:
                 case 38:
                     that.keyUpPressed = true;
                     break;
+                case 68:
                 case 39:
                     that.keyRightPressed = true;
                     break;
+                case 83:
                 case 40:
                     that.keyDownPressed = true;
                     break;
@@ -120,18 +139,31 @@
             });
             $(document).on("keyup.gameKeyListener", function(e) {
                 switch (e.which) {
+                case 16:
+                    that.keyPressed.shift = false;
+                    break;
+                case 17:
+                    that.keyPressed.ctrl = false;
+                    break;
+                case 18:
+                    that.keyPressed.alt = false;
+                    break;
                 case 32:
                     that.keyPressed.space = false;
                     break;
+                case 65:
                 case 37:
                     that.keyLeftPressed = false;
                     break;
+                case 87:
                 case 38:
                     that.keyUpPressed = false;
                     break;
+                case 68:
                 case 39:
                     that.keyRightPressed = false;
                     break;
+                case 83:
                 case 40:
                     that.keyDownPressed = false;
                     break;
