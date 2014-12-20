@@ -45,11 +45,12 @@ $(document).ready(function() {
         $("#edit-mode-label").html(selectedGameMode);
     });
 
-    $("#edit-mode-buttons input").on("mouseover", function() {
-        $("#edit-mode-label").html($(this).data("name"));
+    $("#edit-mode-buttons label").on("mouseover", function() {
+        var inputId = $(this).attr("for");
+        $("#edit-mode-label").html($("#" + inputId).data("name"));
     });
 
-    $("#edit-mode-buttons input").on("mouseout", function() {
+    $("#edit-mode-buttons label").on("mouseout", function() {
         $("#edit-mode-label").html(selectedGameMode);
     });
 
@@ -62,29 +63,30 @@ $(document).ready(function() {
             url: "savegame",
             data: {game: {data: GameCreator.saveState()}}
         }).done(function(reply) {
-            console.log(reply);
         });
     });
 
-    var publishedLabel = "PRIVATE";
+    var publishedLabel = gon.published ? "PUBLISHED" : "PRIVATE";
     $("#published-label").html(publishedLabel);
 
     $("#published-buttons input").on("click", function() {
         publishedLabel = $(this).data("name");
         $("#published-label").html(publishedLabel);
+
     });
 
-    $("#published-buttons input").on("mouseover", function() {
-        $("#published-label").html($(this).data("name"));
+    $("#published-buttons label").on("mouseover", function() {
+        var inputId = $(this).attr("for");
+        $("#published-label").html($("#" + inputId).data("name"));
     });
 
-    $("#published-buttons input").on("mouseout", function() {
+    $("#published-buttons label").on("mouseout", function() {
         $("#published-label").html(publishedLabel);
     });
 
     var published = gon.published;
 
-    $("#unpublish-button").prop('checked', !published);
+    $("#private-button").prop('checked', !published);
     $("#publish-button").prop('checked', published);
 
     $("#published-buttons input").change(function() {
