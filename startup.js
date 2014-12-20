@@ -66,6 +66,38 @@ $(document).ready(function() {
         });
     });
 
+    var publishedLabel = "PRIVATE";
+    $("#published-label").html(publishedLabel);
+
+    $("#published-buttons input").on("click", function() {
+        publishedLabel = $(this).data("name");
+        $("#published-label").html(publishedLabel);
+    });
+
+    $("#published-buttons input").on("mouseover", function() {
+        $("#published-label").html($(this).data("name"));
+    });
+
+    $("#published-buttons input").on("mouseout", function() {
+        $("#published-label").html(publishedLabel);
+    });
+
+    var published = gon.published;
+
+    $("#unpublish-button").prop('checked', !published);
+    $("#publish-button").prop('checked', published);
+
+    $("#published-buttons input").change(function() {
+        if ($(this).prop('checked')) {
+            $.ajax({
+                type: "POST",
+                url: "publish"
+            }).done(function(reply) {
+                console.log(reply);
+            });
+        }
+    });
+
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
         GameCreator.UI.initializeUI();
