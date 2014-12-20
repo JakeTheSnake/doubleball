@@ -335,12 +335,10 @@ GameCreator.htmlStrings = {
 
     imageUploadControls: function() {
         return ' \
-        <div style="display:inline-block"> \
-            <span class="clear-image-input-button remove-item-button" style="float: none;">X</span> \
-            <button class="upload-image-button"> \
-                Upload Image \
-            </button> \
-            <input class="hidden-file-input" type="file" style="display: none;" accept="image/*"> \
+        <div> \
+            <button class="btn btn-normal btn-success upload-image-button">Upload Image</button> \
+            <button class="btn btn-normal btn-warning clear-image-input-button">Remove Image</button> \
+            <input class="visuallyhidden hidden-file-input" type="file" accept="image/*"> \
         </div>'
     },
 

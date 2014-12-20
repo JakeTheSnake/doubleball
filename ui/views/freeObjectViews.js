@@ -4,6 +4,7 @@ GameCreator.FreeObject.prototype.getEvents = function() {
 
 GameCreator.FreeObject.prototype.getPropertiesForm = function() {
     var result = ' \
+<div class="panel-paragraph"> \
 <div class="form-group"> \
     <div id="object-property-width-container" class="form-item"> \
     </div> \
@@ -21,6 +22,7 @@ GameCreator.FreeObject.prototype.getPropertiesForm = function() {
     </div> \
     <div id="object-property-accY-container" class="form-item"> \
     </div> \
+</div> \
 </div> \
 <div class="panel-paragraph"> \
     <h2>Set default graphic</h2> \

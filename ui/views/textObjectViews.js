@@ -16,14 +16,16 @@
 
     GameCreator.TextObject.prototype.getPropertiesForm = function() {
     var result = ' \
-<div class="form-group"> \
-    <div id="object-property-font-container" class="form-item"> \
+<div class="panel-paragraph"> \
+    <div class="form-group"> \
+        <div id="object-property-font-container" class="form-item"> \
+        </div> \
+        <div id="object-property-size-container" class="form-item"> \
+        </div> \
     </div> \
-    <div id="object-property-size-container" class="form-item"> \
-    </div> \
-</div> \
-<div class="form-group"> \
-    <div id="object-property-color-container" class="form-item"> \
+    <div class="form-group"> \
+        <div id="object-property-color-container" class="form-item"> \
+        </div> \
     </div> \
 </div> \
 <div class="form-group"> \
