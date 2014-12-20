@@ -417,6 +417,7 @@ GameCreator.UI = {
                 var globalObject = new GameCreator[objectTypeGroup[keys[index]]]({});
                 $("#add-global-object-form-content").html(globalObject.getAddGlobalObjectPropertiesContent('Properties for ' + GameCreator.helpers.labelize(globalObject.objectType)));
                 GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObject.getDefaultState().attributes, GameCreator[globalObject.objectType].objectAttributes, 'add-global-object-form-content');
+                GameCreator.helpers.populateImageUploadControls();
                 $("#save-new-global-object-button").click(function() {
                     var objectName = $("#add-global-object-name-input").val();
                     globalObject.objectName = objectName;
