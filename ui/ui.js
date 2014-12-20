@@ -116,6 +116,7 @@ GameCreator.UI = {
         GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
         GameCreator.UI.setupActionsColumn();
         GameCreator.UI.populateSelectActionList(caSetVM);
+        $("#dialogue-window > .right").addClass("slide-in-from-right");
         $("#dialogue-panel-actions").trigger('redrawList', caSetVM);
         //GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
         $("#dialogue-overlay").one("click", function() {
@@ -166,6 +167,7 @@ GameCreator.UI = {
         height = height || 570;
         $("#dialogue-window").css("width", width).css("height", height).css("left", ($(window).width() / 2 - width / 2)).show();
         $("#dialogue-window").html(content);
+        $("#dialogue-window > .bottom").addClass("slide-in-from-bottom");
         $("#dialogue-overlay").show();
     },
     
@@ -249,6 +251,8 @@ GameCreator.UI = {
     hideEditModeTools: function() {
         $(".routeNodeContainer").remove();
         $('#toolbar-scenes').hide();
+        $("#toolbar-bottom > .col.right").hide();
+
     },
 
     setupEditEventColumns: function(caSets, columnParentContainer, selectableActions, globalObj) {

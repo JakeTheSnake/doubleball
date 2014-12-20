@@ -212,9 +212,8 @@ GameCreator.htmlStrings = {
         
     },
 
-    sceneStartedEventInformationWindow: function(title) {
+    sceneStartedEventInformationWindow: function() {
         var html = '<div id="event-information-window">';
-        html += '<div>' + title + '</div>';
         html += '</div>';
         return html;
     },

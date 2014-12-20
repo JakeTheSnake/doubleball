@@ -200,6 +200,7 @@
                 }
             });
 
+            $("#toolbar-bottom > .col.right").show();
             GameCreator.UI.setupSceneTabs();
             GameCreator.render(false);
         },
@@ -219,9 +220,8 @@
                 $('#setup-scene-actions').click(function(){
                     choosableActions = GameCreator.actionGroups.sceneStartedActions;
                     activeScene = GameCreator.getActiveScene();
-                    var titleString = "Scene Started Actions for " + activeScene.attributes.name;
                     GameCreator.UI.openEditActionsWindow(
-                        GameCreator.htmlStrings.sceneStartedEventInformationWindow(titleString),
+                        GameCreator.htmlStrings.sceneStartedEventInformationWindow(),
                         new GameCreator.CASetVM(activeScene.onCreateSet, choosableActions, undefined), 
                         activeScene.attributes.name
                     );
