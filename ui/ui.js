@@ -259,9 +259,9 @@ GameCreator.UI = {
             caSets.push(caSet);
         }
 
-        var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
-        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
+        var html = $('#dialogue-panel-conditions').length ? '' : GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
+        html += $('#dialogue-panel-actions').length ? '' :  GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        html += $('#dialogue-panel-add-list').length ? '' : GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
         
         columnParentContainer.html(html);
 

@@ -234,7 +234,7 @@ GameCreator.commonObjectViews = {
         var selectableKeys = this.keyPressed;
         for (var keyName in selectableKeys) {
             if (selectableKeys.hasOwnProperty(keyName) && this.onKeySets[keyName].length === 0) {
-                result += '<div class="addKeyObjectElement" data-keyName="' + keyName + '" style="float:left;cursor:pointer;"><span>' + keyName + '</span></div>';
+                result += '<li class="addKeyObjectElement" data-keyName="' + keyName + '"><span>' + keyName + '</span></div>';
             }
         }
         return result;

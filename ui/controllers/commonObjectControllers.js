@@ -249,7 +249,11 @@ GameCreator.commonObjectControllers = {
      * PLAYER OBJECT CONTROLLERS  *
      *****************************/
     setupKeyEventsForm: function(container) {
-        container.html(GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys"));
+        html = GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys");
+        html += GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
+        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
+        container.html(html);
         $("#dialogue-panel-keys").html(this.getKeysContent());
         $("#dialogue-panel-keys").parent().append('<div id="dialogue-keys-content"></div>');
         $("#dialogue-panel-keys").parent().append('<button id="add-new-key-button" class="icon-plus btn btn-success">Add</button>');
@@ -266,7 +270,7 @@ GameCreator.commonObjectControllers = {
             GameCreator.UI.setupEditEventColumns(onKeyEventSets, $(keyEventContent), selectableActions, globalObj);
         });
         $("#add-new-key-button").on("click", function(){
-            $("#dialogue-keys-content").html(globalObj.getKeySelector());
+            $("#dialogue-panel-add-list").html(globalObj.getKeySelector());
             $(".addKeyObjectElement").one("click", function() {
                 globalObj.onKeySets[$(this).data("keyname")].push(new GameCreator.ConditionActionSet(globalObj));
                 globalObj.setupKeyEventsForm(container);
