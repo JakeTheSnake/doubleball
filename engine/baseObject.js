@@ -101,13 +101,15 @@
     GameCreator.BaseObject.prototype.removeFromGame = function() {
         var collidableObjectsCollection = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, this.parent.id);
         GameCreator.invalidate(this);
-        GameCreator.helpers.removeObjectFromArrayByInstanceId(
-            collidableObjectsCollection.runtimeObjects,
-            this.attributes.instanceId);
-        if (collidableObjectsCollection.runtimeObjects.length === 0) {
-            GameCreator.helpers.removeObjectFromArrayById(
-                GameCreator.collidableObjects,
-                this.parent.id);
+        if (collidableObjectsCollection) {
+            GameCreator.helpers.removeObjectFromArrayByInstanceId(
+                collidableObjectsCollection.runtimeObjects,
+                this.attributes.instanceId);
+            if (collidableObjectsCollection.runtimeObjects.length === 0) {
+                GameCreator.helpers.removeObjectFromArrayById(
+                    GameCreator.collidableObjects,
+                    this.parent.id);
+            }
         }
         GameCreator.helpers.removeObjectFromArrayByInstanceId(GameCreator.movableObjects, this.attributes.instanceId);
         GameCreator.helpers.removeObjectFromArrayByInstanceId(GameCreator.renderableObjects, this.attributes.instanceId);
