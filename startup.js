@@ -63,6 +63,12 @@ $(document).ready(function() {
             url: "savegame",
             data: {game: {data: GameCreator.saveState()}}
         }).done(function(reply) {
+            $("#save-message").html("Game was successfully saved!");
+            setTimeout(function() {
+                $("#save-message").empty();
+                var currentDate = new Date();
+                $("#save-message").html("Game was last saved " + currentDate.getHours() + ":" + currentDate.getMinutes());
+            }, 3000);
         });
     });
 
