@@ -200,45 +200,50 @@ GameCreator.DirectionParameter.prototype.getValuePresenter = function() {
 
 GameCreator.DirectionParameter.prototype.setupValuePresenter = function(container) {
     var parent = container;
+    var inputOpen = false;
     var presentation = document.createElement('span');
     var prettyName = GameCreator.helpers.getPrettyName(this.runtimeAction.parameters.projectileDirection);
     var param = this;
     $(presentation).html(prettyName + ' ' + (this.runtimeAction.parameters.projectileDirection === "Towards" ? this.runtimeAction.parameters.target : ''));
     
     var onClickFunc = function() {
-        $(parent).html(GameCreator.htmlStrings.singleSelector(
-            GameCreator.directions,
-            '', param.runtimeAction.parameters.projectileDirection)
-        );
-        var directionSelect = $(parent).find('select')[0];
-        $(directionSelect).focus();
-        var targetSelect = GameCreator.htmlStrings.sceneObjectInput('target', param.runtimeAction.parameters.target);
-        $(parent).append(targetSelect);
-        var input = $(parent).find('[data-attrname="target"]');
-        $(input).hide();
-        $(directionSelect).change(function() {
-            if ($(this).val() === 'Towards') {
-                $(input).css('display', 'block');
-            } else {
-                $(input).hide();
-            }
-        });
-
-        $(directionSelect).trigger('change');
-
-        $(parent).off('focusout').on('focusout', function() {
-            setTimeout(function() {
-                if ($(parent).find(':focus').length === 0) {
-                    param.runtimeAction.parameters.projectileDirection = $(directionSelect).val();
-                    param.runtimeAction.parameters.target = $($(parent).find('[data-attrname="target"]')[0]).val();
-                    var presentation = document.createElement('span');
-                    prettyName = GameCreator.helpers.getPrettyName(param.runtimeAction.parameters.projectileDirection);
-                    $(presentation).html(prettyName + ' ' + (param.runtimeAction.parameters.projectileDirection === "Towards" ? param.runtimeAction.parameters.target : ''));
-                    $(presentation).click(onClickFunc);
-                    $(parent).html(presentation);
+        if (!inputOpen) {
+            inputOpen = true;
+            $(parent).html(GameCreator.htmlStrings.singleSelector(
+                GameCreator.directions,
+                '', param.runtimeAction.parameters.projectileDirection)
+            );
+            var directionSelect = $(parent).find('select')[0];
+            $(directionSelect).focus();
+            var targetSelect = GameCreator.htmlStrings.sceneObjectInput('target', param.runtimeAction.parameters.target);
+            $(parent).append(targetSelect);
+            var input = $(parent).find('[data-attrname="target"]');
+            $(input).hide();
+            $(directionSelect).change(function() {
+                if ($(this).val() === 'Towards') {
+                    $(input).css('display', 'block');
+                } else {
+                    $(input).hide();
                 }
-            }, 0);
-        });
+            });
+
+            $(directionSelect).trigger('change');
+
+            $(parent).off('focusout').on('focusout', function() {
+                setTimeout(function() {
+                    if ($(parent).find(':focus').length === 0) {
+                        inputOpen = false;
+                        param.runtimeAction.parameters.projectileDirection = $(directionSelect).val();
+                        param.runtimeAction.parameters.target = $($(parent).find('[data-attrname="target"]')[0]).val();
+                        var presentation = document.createElement('span');
+                        prettyName = GameCreator.helpers.getPrettyName(param.runtimeAction.parameters.projectileDirection);
+                        $(presentation).html(prettyName + ' ' + (param.runtimeAction.parameters.projectileDirection === "Towards" ? param.runtimeAction.parameters.target : ''));
+                        $(presentation).click(onClickFunc);
+                        $(parent).html(presentation);
+                    }
+                }, 0);
+            });
+        }
     };
 
     $(parent).click(onClickFunc);
@@ -252,8 +257,7 @@ GameCreator.TimingParameter = function(runtimeAction) {
 };
 
 GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) {
-
-    var timingTypeSelect, inputOpen = false;;
+    var timingTypeSelect, inputOpen = false;
     var parent = document.createElement('td');
     var presentation = document.createElement('span');
     var prettyName = GameCreator.helpers.getPrettyName(this.runtimeAction.timing.type);

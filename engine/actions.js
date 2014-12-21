@@ -33,7 +33,7 @@
       var i, keys;
       keys = Object.keys(this.parameters);
       for(i = 0; i < keys.length; i += 1) {
-        if (parameters[keys[i]].mandatory) {
+        if (parameters[keys[i]] && parameters[keys[i]].mandatory) {
           if (this.parameters[keys[i]] === null || this.parameters[keys[i]] === undefined){
             return false;
           }

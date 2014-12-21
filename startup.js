@@ -66,39 +66,41 @@ $(document).ready(function() {
         });
     });
 
-    var publishedLabel = gon.published ? "PUBLISHED" : "PRIVATE";
-    $("#published-label").html(publishedLabel);
-
-    $("#published-buttons input").on("click", function() {
-        publishedLabel = $(this).data("name");
+    if (window.gon) {
+        var publishedLabel = gon.published ? "PUBLISHED" : "PRIVATE";
         $("#published-label").html(publishedLabel);
 
-    });
+        $("#published-buttons input").on("click", function() {
+            publishedLabel = $(this).data("name");
+            $("#published-label").html(publishedLabel);
 
-    $("#published-buttons label").on("mouseover", function() {
-        var inputId = $(this).attr("for");
-        $("#published-label").html($("#" + inputId).data("name"));
-    });
+        });
 
-    $("#published-buttons label").on("mouseout", function() {
-        $("#published-label").html(publishedLabel);
-    });
+        $("#published-buttons label").on("mouseover", function() {
+            var inputId = $(this).attr("for");
+            $("#published-label").html($("#" + inputId).data("name"));
+        });
 
-    var published = gon.published;
+        $("#published-buttons label").on("mouseout", function() {
+            $("#published-label").html(publishedLabel);
+        });
+    
+        var published = gon.published;
 
-    $("#private-button").prop('checked', !published);
-    $("#publish-button").prop('checked', published);
+        $("#private-button").prop('checked', !published);
+        $("#publish-button").prop('checked', published);
 
-    $("#published-buttons input").change(function() {
-        if ($(this).prop('checked')) {
-            $.ajax({
-                type: "POST",
-                url: "publish"
-            }).done(function(reply) {
-                console.log(reply);
-            });
-        }
-    });
+        $("#published-buttons input").change(function() {
+            if ($(this).prop('checked')) {
+                $.ajax({
+                    type: "POST",
+                    url: "publish"
+                }).done(function(reply) {
+                    console.log(reply);
+                });
+            }
+        });
+    }
 
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
