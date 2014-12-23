@@ -29,7 +29,7 @@ GameCreator.UI = {
 
             $(listElementButton).on("click", function(iGlobalObject) {
                 GameCreator.selectedLibraryObject = iGlobalObject;
-                GameCreator.UI.openEditGlobalObjectDialogue(iGlobalObject);
+                GameCreator.UI.populateOpenDialogue(iGlobalObject);
             }.bind(this, globalObj));
             $("#dialogue-window .global-object-list").append(listElementButton);
         }
@@ -150,8 +150,11 @@ GameCreator.UI = {
             $(this).addClass("active");
         });
 
-        $('#object-manager-object-name').html(globalObj.objectName);
+        GameCreator.UI.populateOpenDialogue(globalObj);
+    },
 
+    populateOpenDialogue: function(globalObj) {
+        $('#object-manager-object-name').html(globalObj.objectName);
         globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
         $("#dialogue-panel-edit").find("li:first-child").addClass("active");
         GameCreator.UI.drawDialogueLibrary();
