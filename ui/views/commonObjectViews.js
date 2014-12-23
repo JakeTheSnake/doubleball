@@ -43,6 +43,7 @@ GameCreator.commonObjectViews = {
         var result = "";
 
         result += '<div class="dialogue bottom"> \
+                   <div class="close-dialogue-button arrow-down"></div> \
                    <!-- Panel: Object manager --> \
                    <div id="object-manager" class="panel panel-dialogue"> \
                    <div class="panel-heading "> \

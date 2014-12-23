@@ -172,6 +172,9 @@ GameCreator.UI = {
         $("#dialogue-window").html(content);
         $("#dialogue-window > .bottom").addClass("slide-in-from-bottom");
         $("#dialogue-overlay").show();
+        $(".close-dialogue-button").one('click', function(){
+            GameCreator.UI.closeDialogue();
+        });
     },
     
     closeDialogue: function() {
