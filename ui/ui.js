@@ -144,12 +144,6 @@ GameCreator.UI = {
     openEditGlobalObjectDialogue: function(globalObj) {
         GameCreator.UI.openDialogue(900, 570, globalObj.getEditWindow());
 
-        $("#dialogue-panel-edit").find("li").on("click", function() {
-            globalObj[$(this).data("uifunction")]($("#dialogue-edit-content"));
-            $(this).parent().find("li").removeClass("active");
-            $(this).addClass("active");
-        });
-
         GameCreator.UI.populateOpenDialogue(globalObj);
     },
 
@@ -158,6 +152,13 @@ GameCreator.UI = {
         globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
         $("#dialogue-panel-edit").find("li").removeClass("active");
         $("#dialogue-panel-edit").find("li:first-child").addClass("active");
+
+        $("#dialogue-panel-edit").on('click', 'li', function() {
+            globalObj[$(this).data("uifunction")]($("#dialogue-edit-content"));
+            $(this).parent().find("li").removeClass("active");
+            $(this).addClass("active");
+        });
+
         GameCreator.UI.drawDialogueLibrary();
         var previewImage = document.createElement('img');
         previewImage.src = globalObj.getDefaultState().attributes.image.src;
