@@ -278,7 +278,7 @@ GameCreator.htmlStrings = {
 
     selectGlobalObjectPresentation: function(globalObjectId) {
         var globalObject = GameCreator.helpers.findGlobalObjectById(globalObjectId);
-        return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>'
+        return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>';
     },
 
     createNameSelectionForm: function(placeholder, id, saveCallback) {

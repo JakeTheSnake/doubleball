@@ -138,10 +138,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function(CASetVM) {
     $(title).addClass('icon-down-dir');
     $(title).append(this.model.name);
 
-    var deleteButton = document.createElement('span');
-    
-    $(deleteButton).html('X');  //TODO: Should be switched to an icon, style in css.
-    $(deleteButton).addClass('remove-item-button');
+    var deleteButton = GameCreator.UI.deleteButtonElement();
 
     $(title).append(deleteButton);
 
@@ -214,10 +211,7 @@ GameCreator.ActionItemVM.prototype.getPresentation = function(CASetVM) {
 
     $(result).append(title);
 
-    var deleteButton = document.createElement('span');
-    
-    $(deleteButton).html('X');  //TODO: Should be switched to an icon, style in css.
-    $(deleteButton).addClass('remove-item-button');
+    var deleteButton = GameCreator.UI.deleteButtonElement();
 
     $(title).append(deleteButton);
 

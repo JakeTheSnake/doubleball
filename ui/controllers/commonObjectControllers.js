@@ -67,6 +67,25 @@ GameCreator.commonObjectControllers = {
             globalObj.onCollideSets.forEach(function(collisionItem) {
                 var collisionListItem = $(document.createElement('li'));
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
+
+                var deleteButton = GameCreator.UI.deleteButtonElement();
+
+                $(deleteButton).on('click', function() {
+                    var index = globalObj.onCollideSets.indexOf(collisionItem);
+                    if (index !== -1) {
+                        globalObj.onCollideSets.splice(index, 1);
+                    }
+
+                    if($(collisionListItem).hasClass('active')) {
+                        $('#dialogue-panel-actions').trigger('clearColumn');
+                        $("#dialogue-panel-conditions").trigger('clearColumn');
+                    }
+
+                    $(collisionListItem).remove();
+                });
+
+                collisionListItem.append(deleteButton);
+
                 withColumn.append(collisionListItem);
                 collisionListItem.on('click', function() {
                     $(this).parent().find('.active').removeClass('active');

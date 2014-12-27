@@ -452,6 +452,15 @@ GameCreator.UI = {
         });
     },
 
+    deleteButtonElement: function() {
+        var deleteButton = document.createElement('span');
+    
+        $(deleteButton).html('X');
+        $(deleteButton).addClass('remove-item-button');
+
+        return deleteButton;
+    },
+
     setupValuePresenter: function(container, attributes, attrName, obj, onChangeCallback) {
         var input, select, paramLen, onClickFunc, closeInput, inputOpen = false;
         container = $(container);
