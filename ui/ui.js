@@ -156,6 +156,7 @@ GameCreator.UI = {
     populateOpenDialogue: function(globalObj) {
         $('#object-manager-object-name').html(globalObj.objectName);
         globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
+        $("#dialogue-panel-edit").find("li").removeClass("active");
         $("#dialogue-panel-edit").find("li:first-child").addClass("active");
         GameCreator.UI.drawDialogueLibrary();
         var previewImage = document.createElement('img');
