@@ -157,7 +157,7 @@ GameCreator.htmlStrings = {
     },
 
     stateMenuElement: function(id, name) {
-        return '<li class="defaultMenuElement headingNormalBlack" data-id="' + id + '"><span>' + name + '</span></li>';
+        return '<li class="defaultMenuElement headingNormalBlack" data-id="' + id + '"><span>' + name + '</span><span class="remove-item-button">X</span></li>';
     },
 
     counterEventMenuElement: function(value, type) {

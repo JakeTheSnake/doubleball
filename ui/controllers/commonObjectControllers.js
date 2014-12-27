@@ -149,10 +149,18 @@ GameCreator.commonObjectControllers = {
             $("#dialogue-panel-states").append(GameCreator.htmlStrings.createNameSelectionForm('State name', 'create-state-form', saveCallback));
         });
         container.find(".defaultMenuElement").on("click", function() {
-            var state = $(this).data("id");
+            var state = $(this).data('id');
             container.find(".defaultMenuElement").removeClass('active');
             $(this).addClass("active");
             globalObj.setupEditStateForm(state);
+        });
+        $("#dialogue-panel-states .remove-item-button").on('click', function(evt) {
+            var stateId = $(this).parent().data('id');
+            GameCreator.helpers.removeObjectFromArrayById(globalObj.states, stateId);
+            if($(this).parent().hasClass('active')) {
+                $('#dialogue-state-content').html('');
+            }
+            $(this).parent().remove();
         });
     },
 
