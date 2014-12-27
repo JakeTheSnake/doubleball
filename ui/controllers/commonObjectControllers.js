@@ -268,16 +268,16 @@ GameCreator.commonObjectControllers = {
      * PLAYER OBJECT CONTROLLERS  *
      *****************************/
     setupKeyEventsForm: function(container) {
-        html = GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys");
-        html += GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
-        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
+        var html = GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys");
         container.html(html);
         $("#dialogue-panel-keys").html(this.getKeysContent());
-        $("#dialogue-panel-keys").parent().append('<div id="dialogue-keys-content"></div>');
         $("#dialogue-panel-keys").parent().append('<button id="add-new-key-button" class="icon-plus btn btn-success">Add</button>');
         var keyEventContent = document.createElement('div');
+        var eventHtml = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
+        eventHtml += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
+        eventHtml += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
         $('#dialogue-events-content').append(keyEventContent);
+        $(keyEventContent).html(eventHtml);
         var globalObj = this;
         container.find(".defaultMenuElement").on("click", function(){
             var keyName = $(this).data("name");
@@ -294,6 +294,15 @@ GameCreator.commonObjectControllers = {
                 globalObj.onKeySets[$(this).data("keyname")].push(new GameCreator.ConditionActionSet(globalObj));
                 globalObj.setupKeyEventsForm(container);
             });
+        });
+        $("#dialogue-panel-keys .remove-item-button").on('click', function(evt) {
+            var keyName = $(this).parent().data('name');
+            globalObj.onKeySets[keyName] = [];
+            if($(this).parent().hasClass('active')) {
+                $('#dialogue-panel-actions').trigger('clearColumn');
+                $("#dialogue-panel-conditions").trigger('clearColumn');
+            }
+            $(this).parent().remove();
         });
     },
 }

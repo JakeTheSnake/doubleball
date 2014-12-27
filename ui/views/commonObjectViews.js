@@ -245,7 +245,7 @@ GameCreator.commonObjectViews = {
         var result = '';
         for (var keyName in this.onKeySets) {
             if (this.onKeySets[keyName].length > 0) {
-                result += GameCreator.htmlStrings.defaultMenuElement(keyName);
+                result += GameCreator.htmlStrings.keyMenuElement(keyName);
             }
         }
         return result;
