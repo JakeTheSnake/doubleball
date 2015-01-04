@@ -1,4 +1,4 @@
-GameCreator.CounterObjectText = function(args) {
+GameCreator.CounterDisplayText = function(args) {
     GameCreator.addObjFunctions.commonObjectFunctions(this);
 
     if (GameCreator.state !== 'playing') {
@@ -24,16 +24,16 @@ GameCreator.CounterObjectText = function(args) {
     this.isClickable =  false;
     
     this.isRenderable = true;
-    this.objectType = "CounterObjectText";
+    this.objectType = "CounterDisplayText";
 };
 
-GameCreator.CounterObjectText.objectAttributes = {
+GameCreator.CounterDisplayText.objectAttributes = {
                         "font": GameCreator.htmlStrings.stringInput, 
                         "color": GameCreator.htmlStrings.stringInput,
                         "size": GameCreator.htmlStrings.numberInput
                      };
 
-GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
+GameCreator.CounterDisplayText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var value = 0;
     var sceneObject = GameCreator.getSceneObjectById(obj.attributes.counterCarrier);
@@ -50,16 +50,16 @@ GameCreator.CounterObjectText.prototype.draw = function(context, obj) {
     context.fillText(value, obj.attributes.x, obj.attributes.y + obj.attributes.size);
 };
 
-GameCreator.CounterObjectText.prototype.initialize = function() {
+GameCreator.CounterDisplayText.prototype.initialize = function() {
     this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
     this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
 };
 
-GameCreator.CounterObjectText.prototype.onGameStarted = function() {};
+GameCreator.CounterDisplayText.prototype.onGameStarted = function() {};
 
-GameCreator.CounterObjectText.prototype.onCreate = function() {};
+GameCreator.CounterDisplayText.prototype.onCreate = function() {};
 
-GameCreator.CounterObjectText.prototype.instantiateSceneObject = function(sceneObject, args) {
+GameCreator.CounterDisplayText.prototype.instantiateSceneObject = function(sceneObject, args) {
     var state = sceneObject.parent.getDefaultState();
     sceneObject.attributes.font = state.attributes.font;
     sceneObject.attributes.color = state.attributes.color;

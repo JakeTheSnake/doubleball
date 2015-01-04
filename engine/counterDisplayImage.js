@@ -1,4 +1,4 @@
-GameCreator.CounterObjectImage = function(args) {
+GameCreator.CounterDisplayImage = function(args) {
     GameCreator.addObjFunctions.commonObjectFunctions(this);
     
     if (GameCreator.state !== 'playing') {
@@ -20,12 +20,12 @@ GameCreator.CounterObjectImage = function(args) {
     this.isClickable =  false;
     
     this.isRenderable = true;
-    this.objectType = "CounterObjectImage";
+    this.objectType = "CounterDisplayImage";
 };
 
-GameCreator.CounterObjectImage.objectAttributes = GameCreator.helpers.getStandardAttributes();
+GameCreator.CounterDisplayImage.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
-GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
+GameCreator.CounterDisplayImage.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var counterCarrier = GameCreator.getSceneObjectById(obj.attributes.counterCarrier);
     var i, renderWidth, renderHeight;
@@ -58,16 +58,16 @@ GameCreator.CounterObjectImage.prototype.draw = function(context, obj) {
     }
 };
 
-GameCreator.CounterObjectImage.prototype.initialize = function() {
+GameCreator.CounterDisplayImage.prototype.initialize = function() {
     this.attributes.width = GameCreator.helpers.getRandomFromRange(this.attributes.width);
     this.attributes.height = GameCreator.helpers.getRandomFromRange(this.attributes.height);
 };
 
-GameCreator.CounterObjectImage.prototype.onGameStarted = function() {};
+GameCreator.CounterDisplayImage.prototype.onGameStarted = function() {};
 
-GameCreator.CounterObjectImage.prototype.onCreate = function() {};
+GameCreator.CounterDisplayImage.prototype.onCreate = function() {};
 
-GameCreator.CounterObjectImage.prototype.instantiateSceneObject = function(sceneObject, args) {
+GameCreator.CounterDisplayImage.prototype.instantiateSceneObject = function(sceneObject, args) {
     sceneObject.attributes.counterCarrier = args.counterCarrier || '';
     sceneObject.attributes.counterName = args.counterName || '';
 };

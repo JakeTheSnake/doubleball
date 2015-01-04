@@ -400,7 +400,7 @@ GameCreator.UI = {
         var objectGroups = [
             {text: 'Player Objects', value: 'playerObjectTypes'}, 
             {text: 'Game Objects', value: 'gameObjectTypes'},
-            {text: 'Counters', value: 'counterObjectTypes'} 
+            {text: 'Counter Displays', value: 'counterDisplayTypes'} 
         ];
         objectGroups.forEach(function(group){
             listItem = document.createElement('li');
@@ -409,6 +409,7 @@ GameCreator.UI = {
                 $("#add-global-object-form-content").empty();
                 column.find('.active').removeClass('active');
                 $(this).addClass('active');
+                $('#add-global-object-form-content').html(GameCreator.htmlStrings.objectTypeGroupDescription(group.value));
                 GameCreator.UI.populateSelectObjectTypeList(GameCreator.objectTypeGroups[group.value]);
             });
             column.append(listItem);

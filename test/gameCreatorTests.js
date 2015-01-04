@@ -30,7 +30,7 @@ test("Create Runtime Player Object", function() {
 });
 
 test("Create Runtime Counter Object", function() {
-    var redBall = createGlobalObject("CounterObjectText");
+    var redBall = createGlobalObject("CounterDisplayText");
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     deepEqual(GameCreator.renderableObjects.length, 1, "Added to renderableObjects");
     deepEqual(GameCreator.movableObjects.length, 0, "Added to movableObjects");

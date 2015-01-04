@@ -396,6 +396,36 @@ GameCreator.htmlStrings = {
         return '<div class="panel-paragraph properties-group"> \
             <button class="btn btn-warning" id="delete-sceneobject-button">Delete</button> \
         </div>'
-    }
-
+    },
+    objectTypeGroupDescription: function(objectTypeGroup) {
+        if (objectTypeGroup === 'playerObjectTypes') return GameCreator.htmlStrings.playerObjectDescription();
+        if (objectTypeGroup === 'gameObjectTypes') return GameCreator.htmlStrings.gameObjectDescription();
+        if (objectTypeGroup === 'counterDisplayTypes') return GameCreator.htmlStrings.counterDisplayDescription();
+    },
+    getDescriptionColumn: function(title, content) {
+        var result = '\
+        <div class="col border-right object-manager-column-large"> \
+            <div class="panel-heading"> \
+                <span class="panel-title">' + title + '</span> \
+            </div> \
+            <div class="panel-body"> \
+                <div class="panel-paragraph"> \
+                    <div> \
+                        ' + content + ' \
+                    </div>\
+                </div>\
+            </div>\
+        </div>';
+        return result;
+    },
+    playerObjectDescription: function() {
+        return GameCreator.htmlStrings.getDescriptionColumn('Player Objects', '<div class="global-object-description">Player objects are objects controlled by the player.</div>');
+    },
+    gameObjectDescription: function() {
+        return GameCreator.htmlStrings.getDescriptionColumn('Game Objects', '<div class="global-object-description">Game objects are static objects or objects controlled by the computer.</div>');
+    },
+    counterDisplayDescription: function() {
+        return GameCreator.htmlStrings.getDescriptionColumn('Counter Displays', '<div class="global-object-description">Counter displays are objects that display the value of a single counter. \
+            Every counter belongs to an object and the display can be connected to a counter once it exists in a scene.</div>');
+    },
 };

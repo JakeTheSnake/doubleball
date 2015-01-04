@@ -571,7 +571,7 @@
             projectileDirection: 'Direction',
             objectState: 'State',
             objId: 'Object',
-            counterObject: 'Counter',
+            counterDisplay: 'Counter',
             change: 'Add',
             set: 'Set to'
         }

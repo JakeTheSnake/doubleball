@@ -1,7 +1,7 @@
 (function() {
     "use strict";
 
-    var counterObjectPrototypeFunctions = {
+    var counterDisplayPrototypeFunctions = {
         getNonStatePropertiesForm: function() {
                 return  '';
         },
@@ -18,10 +18,10 @@
     };
 
 
-    $.extend(GameCreator.CounterObjectText.prototype, counterObjectPrototypeFunctions);
-    $.extend(GameCreator.CounterObjectImage.prototype, counterObjectPrototypeFunctions);
+    $.extend(GameCreator.CounterDisplayText.prototype, counterDisplayPrototypeFunctions);
+    $.extend(GameCreator.CounterDisplayImage.prototype, counterDisplayPrototypeFunctions);
 
-    GameCreator.CounterObjectText.prototype.getPropertiesForm = function() {
+    GameCreator.CounterDisplayText.prototype.getPropertiesForm = function() {
     var result = ' \
 <div class="panel-paragraph"> \
 <div class="form-group"> \
@@ -39,7 +39,7 @@
     return result;
     };
 
-    GameCreator.CounterObjectImage.prototype.getPropertiesForm = function() {
+    GameCreator.CounterDisplayImage.prototype.getPropertiesForm = function() {
     var result = ' \
 <div class="panel-paragraph"> \
 <div class="form-group"> \
@@ -60,7 +60,7 @@
     return result;
 };
 
-GameCreator.CounterObjectText.prototype.getSceneObjectForm = function() {
+GameCreator.CounterDisplayText.prototype.getSceneObjectForm = function() {
 var result = ' \
     <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
         <li class="condition-parameters"> \
@@ -98,7 +98,7 @@ var result = ' \
             </table> \
         </li> \
         <li class="condition-parameters"> \
-            <span class="icon-down-dir">Target</span> \
+            <span class="icon-down-dir">Source Counter<span class="tooltip-icon" title="Select the object and belonging counter\nwhich holds the value you want to display.">?</span></span> \
             <table> \
                 <tbody> \
                     <tr> \
@@ -117,7 +117,7 @@ var result = ' \
     return result;
 };
 
-GameCreator.CounterObjectImage.prototype.getSceneObjectForm = function() {
+GameCreator.CounterDisplayImage.prototype.getSceneObjectForm = function() {
 var result = ' \
     <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
         <li class="condition-parameters"> \
@@ -144,7 +144,7 @@ var result = ' \
             </table> \
         </li> \
         <li class="condition-parameters"> \
-            <span class="icon-down-dir">Target</span> \
+            <span class="icon-down-dir">Source Counter<span class="tooltip-icon" title="Select the object and belonging counter\nwhich holds the value you want to display.">?</span></span> \
             <table> \
                 <tbody> \
                     <tr> \

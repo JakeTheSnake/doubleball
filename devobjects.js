@@ -33,7 +33,7 @@ $(document).ready(function() {
     
     var globalTopDownPlayer = GameCreator.addGlobalObject({image: zerglingImage, x:[1,100], y:[1,100], objectName: "topdown_zerg", width: [80], height: [80]}, "TopDownObject")
     
-    var globalTextCounter = GameCreator.addGlobalObject({objectName: "textCounter"}, "CounterObjectText");
-    var globalImageCounter = GameCreator.addGlobalObject({image: blackBallImage, width: [50], height: [50], objectName: "imageCounter"}, "CounterObjectImage");
+    var globalTextCounter = GameCreator.addGlobalObject({objectName: "textCounter"}, "CounterDisplayText");
+    var globalImageCounter = GameCreator.addGlobalObject({image: blackBallImage, width: [50], height: [50], objectName: "imageCounter"}, "CounterDisplayImage");
 });
     

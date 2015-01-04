@@ -25,9 +25,9 @@
                 'Route Object': 'RouteObject',
                 'Text Object': 'TextObject'
             },
-            counterObjectTypes: {
-                'Text Counter': 'CounterObjectText',
-                'Image Counter': 'CounterObjectImage'
+            counterDisplayTypes: {
+                'Text Display': 'CounterDisplayText',
+                'Image Display': 'CounterDisplayImage'
             },
         },
 
