@@ -171,10 +171,10 @@ test("Change State", function() {
     state.attributes.speedY = 20;
     runtimeObject.setState(state.id);
     deepEqual(runtimeObject.currentState, state.id);
-    deepEqual(runtimeObject.width, 100);
-    deepEqual(runtimeObject.height, 200);
-    deepEqual(runtimeObject.speedX, 10);
-    deepEqual(runtimeObject.speedY, 20);
+    deepEqual(runtimeObject.attributes.width, 100);
+    deepEqual(runtimeObject.attributes.height, 200);
+    deepEqual(runtimeObject.attributes.speedX, 10);
+    deepEqual(runtimeObject.attributes.speedY, 20);
 });
 
 })();

@@ -32,16 +32,14 @@ GameCreator.conditions = {
         evaluate: function(runtimeObj, params) {
             var item = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, Number(params.objId));
             var itemCount = item ? item.runtimeObjects.length : 0;
-            if (params.comparator === 'equals') {
-                return itemCount === params.count;
-            }
+
             if (params.comparator === 'greaterThan') {
                 return itemCount >= params.count;
             }
             if (params.comparator === 'lessThan') {
                 return itemCount <= params.count;
             }
-            return false;
+            return itemCount === params.count;
         },
         params: {
             objId: {
@@ -51,7 +49,7 @@ GameCreator.conditions = {
             comparator: {
                 param: GameCreator.ComparatorParameter,
                 mandatory: true,
-                defaultValue: 'Equals'
+                defaultValue: 'equals'
             },
             count: {
                 param: GameCreator.NumberParameter,
@@ -96,15 +94,14 @@ GameCreator.conditions = {
                 }
                 return false;
             }
-            if (params.comparator === 'equals') {
-                return counterCarrier.counters[params.counter].value === params.value;
-            }
+
             if (params.comparator === 'greaterThan') {
                 return counterCarrier.counters[params.counter].value >= params.value;
             }
             if (params.comparator === 'lessThan') {
                 return counterCarrier.counters[params.counter].value <= params.value;
             }
+            return counterCarrier.counters[params.counter].value === params.value;
         },
         params: {
             objId: {
@@ -120,7 +117,7 @@ GameCreator.conditions = {
             comparator: {
                 param: GameCreator.ComparatorParameter,
                 mandatory: true,
-                defaultValue: 'Equals'
+                defaultValue: 'equals'
             },
             value: {
                 param: GameCreator.NumberParameter,

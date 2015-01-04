@@ -115,7 +115,7 @@ test("Destroy Action Test", function() {
 });
 
 test("Create Action Test", function() {
-    setupCollisionEventForNewObject("Create", {objectToCreate: "red_ball", x: 50, y: 60});
+    setupCollisionEventForNewObject("Create", {objectToCreate: redBall.id, x: 50, y: 60});
 
     GameCreator.checkCollisions();
 
@@ -139,7 +139,7 @@ test("Shoot Action Test", function() {
 test("Counter Action Test", function() {
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     
-    var runtimeObj = setupCollisionEventForNewObject("Counter", {objId: 'this', counter: "testCounter", counterType: "Set", value: 5});
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {objId: 'this', counter: "testCounter", type: "set", value: 5});
     var counter = runtimeObj.counters["testCounter"];
 
     GameCreator.checkCollisions();
@@ -159,7 +159,7 @@ test("SwitchScene Action Test", function() {
 });
 
 test("SwitchState Action Test", function() {
-    var runtimeObj = setupCollisionEventForNewObject("SwitchState", {objectId: "this", stateId: 1});
+    var runtimeObj = setupCollisionEventForNewObject("SwitchState", {objectId: "this", objectState: 1});
     runtimeObj.parent.createState('TestState', {});
 
     GameCreator.checkCollisions();

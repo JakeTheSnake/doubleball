@@ -331,6 +331,7 @@ GameCreator.UI = {
             actionsColumn.empty();
             var addActionButton = document.createElement('button');
             $(addActionButton).addClass('icon-plus btn btn-success');
+            $(addActionButton).attr('id', 'add-action-button');
             $(addActionButton).html('Add action');
 
             actionsColumn.parent().append(addActionButton);

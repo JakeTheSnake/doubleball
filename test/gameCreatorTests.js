@@ -51,7 +51,7 @@ test("Destroy Active Object", function() {
     deepEqual(GameCreator.movableObjects.length, 0, "Removed from movableObjects");
     deepEqual(GameCreator.eventableObjects.length, 0, "Removed from eventableObjects");
     var redBallCollidables = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, redBall.id);
-    deepEqual(redBallCollidables.runtimeObjects.length, 0, "Removed from collidableObjects");
+    deepEqual(redBallCollidables, undefined, "Removed from collidableObjects");
 });
 
 })();

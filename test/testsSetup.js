@@ -34,6 +34,7 @@ QUnit.testStart = function() {
     var newScene = new GameCreator.Scene();
     GameCreator.scenes.push(newScene);
     GameCreator.activeSceneId = newScene.id;
+    GameCreator.paused = false;
 };
 
 function createGlobalObject(type, args) {

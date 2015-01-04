@@ -36,14 +36,18 @@ function commonCounterTests() {
 
     test("Test OnIncrease counter event", function() {
         var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: "changed"}, {type: "now"});
-        counter.parentCounter.onIncrease.push(runtimeAction);
+        var caSet = new GameCreator.ConditionActionSet();
+        caSet.actions.push(runtimeAction);
+        counter.parentCounter.onIncrease.push(caSet);
         counter.changeValue(1);
         deepEqual(testString, "changed", "OnIncrease Action");
     });
 
     test("Test OnDecrease counter event", function() {
         var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: "changed"}, {type: "now"});
-        counter.parentCounter.onDecrease.push(runtimeAction);
+        var caSet = new GameCreator.ConditionActionSet();
+        caSet.actions.push(runtimeAction);
+        counter.parentCounter.onDecrease.push(caSet);
         counter.changeValue(-1);
         deepEqual(testString, "changed", "OnDecrease action");
     });

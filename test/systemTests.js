@@ -47,14 +47,11 @@ module("System Test - Direct Mode", {
   }
 });
 
-function selectAction(actionName) {
-    $("#action-selector").val(actionName);
-    $("#action-selector").trigger("change");   
+function addAction(actionName) {
+    $("#add-action-button").trigger('click');
+    $('#dialogue-panel-add-list li:contains("' + actionName + '")').trigger('click');
 }
 
-function addSelectedAction() {
-    $("#select-action-add-action").trigger("click");
-}
 
 test("Add action through keypress", function() {
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {x: 70, y: 70, speed: 300});
@@ -66,8 +63,7 @@ test("Add action through keypress", function() {
 
     deepEqual($("#select-action-window").length, 1, "Action Window popped up");
 
-    selectAction("testAction");
-    addSelectedAction();
+    addAction("testAction");
 
     deepEqual(runtimeObj.parent.onKeySets.space.length, 1, "Event was added");
     deepEqual(runtimeObj.parent.onKeySets.space[0].actions.length, 1, "Action was added");
@@ -86,8 +82,7 @@ test("Add action through object creation", function() {
 
     deepEqual($("#select-action-window").length, 1, "Action Window popped up");
 
-    selectAction("testAction");
-    addSelectedAction();
+    addAction("testAction");
 
     deepEqual(runtimeObj.parent.onCreateSets.length, 1, "Event was added");
     deepEqual(runtimeObj.parent.onCreateSets[0].actions.length, 1, "Action was added");
@@ -105,8 +100,7 @@ test("Add action through object destruction", function() {
 
     deepEqual($("#select-action-window").length, 1, "Action Window popped up");
 
-    selectAction("testAction");
-    addSelectedAction();
+    addAction("testAction");
 
     deepEqual(runtimeObj.parent.onDestroySets.length, 1, "Event was added");
     deepEqual(runtimeObj.parent.onDestroySets[0].actions.length, 1, "Action was added");
