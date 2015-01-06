@@ -55,12 +55,21 @@
         this.attributes.x = this.parent.latestMouseX - offset.left;
         this.attributes.y = this.parent.latestMouseY - offset.top;
         if (this.attributes.x + this.attributes.width > this.attributes.maxX) {
-            this.attributes.x = this.attributes.maxX - this.attributes.width;
+            //This check is needed to prevent "flip-flopping" when the mousemove area is smaller than the object.
+            if(this.attributes.maxX - this.attributes.minX >= this.attributes.width) {
+                this.attributes.x = this.attributes.maxX - this.attributes.width;
+            } else {
+                this.attributes.x = this.attributes.maxX;
+            }
         } else if (this.attributes.x < this.attributes.minX) {
             this.attributes.x = this.attributes.minX;
         }
         if (this.attributes.y + this.attributes.height > this.attributes.maxY) {
-            this.attributes.y = this.attributes.maxY - this.attributes.height;
+            if(this.attributes.maxY - this.attributes.minY >= this.attributes.height) {
+                this.attributes.y = this.attributes.maxY - this.attributes.height;
+            } else {
+                this.attributes.y = this.attributes.maxY;
+            }
         } else if (this.attributes.y < this.attributes.minY) {
             this.attributes.y = this.attributes.minY;
         }
