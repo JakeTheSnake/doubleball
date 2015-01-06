@@ -400,5 +400,13 @@
             }
             return result;
         },
+
+        renameGlobalObject: function(oldName, newName) {
+            if (oldName !== newName) {
+                GameCreator.globalObjects[newName] = GameCreator.globalObjects[oldName];
+                delete GameCreator.globalObjects[oldName];
+                GameCreator.globalObjects[newName].objectName = newName;
+            }
+        },
     });
 }());

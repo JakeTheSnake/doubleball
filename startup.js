@@ -28,8 +28,12 @@ $(document).ready(function() {
 
     $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
     $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue);
-    $("#edit-global-object-button").on("click", function(){
+    $("#edit-global-object-button").on("click", function() {
         GameCreator.UI.openEditGlobalObjectDialogue(GameCreator.selectedLibraryObject);
+    });
+
+    $("#rename-global-object-button").on("click", function() {
+        GameCreator.UI.renameGlobalObject(GameCreator.selectedLibraryObject);
     });
     
     $("#toolbar-top button").on('click', function() {

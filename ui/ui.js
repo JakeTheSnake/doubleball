@@ -1,16 +1,20 @@
 GameCreator.UI = {    
 
     initializeUI: function() {
-        var i;
-        var globalObjectNames = Object.keys(GameCreator.globalObjects);
-        globalObjectNames.forEach(function(globalObjName) {
-            GameCreator.UI.createLibraryItem(GameCreator.globalObjects[globalObjName]);
-        });
+        GameCreator.UI.redrawLibrary();
         GameCreator.UI.drawSceneTabs();
     },
 
+    redrawLibrary: function() {
+        var globalObjectNames = Object.keys(GameCreator.globalObjects);
+        $(".global-object-list").empty();
+        globalObjectNames.forEach(function(globalObjName) {
+            GameCreator.UI.createLibraryItem(GameCreator.globalObjects[globalObjName]);
+        });
+    },
+
     saveNewGlobalObject: function(objectType) {
-        var obj, args = {};
+        var args = {};
         GameCreator.saveFormInputToObject("add-global-object-window-content", args);
         GameCreator.addGlobalObject(args, objectType);
     },
@@ -41,6 +45,31 @@ GameCreator.UI = {
         $(".global-object-list").append(listElementButton);
     },
 
+    renameGlobalObject: function(globalObj) {
+        var textField = document.createElement('input');
+        var replacementListItem = document.createElement('li');
+
+        var selectedListItem = $('#library li:contains("' + globalObj.objectName + '")');
+        $(textField).attr('type', 'text');
+        $(textField).attr('value', globalObj.objectName);
+        
+        var finishedAction = function(event) {
+            if (event.which === 13) {
+                GameCreator.renameGlobalObject(globalObj.objectName, $(this).val());
+                GameCreator.UI.redrawLibrary();
+            } else if (event.which === 27) {
+                GameCreator.UI.redrawLibrary();
+            }
+        };
+        $(textField).keyup(finishedAction);
+        $(textField).keypress(finishedAction);
+        $(textField).blur(GameCreator.UI.redrawLibrary);
+
+        $(replacementListItem).append(textField);
+        selectedListItem.replaceWith(replacementListItem);
+        textField.select();
+    },
+
     setupLibraryItemListeners: function(listElementButton, globalObj) {
         //Width and height are ranges, get the largest possible value from range.
         var height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
@@ -52,6 +81,7 @@ GameCreator.UI = {
 
         $(listElementButton).on("click", function(e){
             $('#edit-global-object-button').removeClass('disabled');
+            $('#rename-global-object-button').removeClass('disabled');
             GameCreator.selectedLibraryObject = globalObj;
             var previewImage = document.createElement('img');
             previewImage.src = globalObj.getDefaultState().attributes.image.src;
@@ -326,6 +356,7 @@ GameCreator.UI = {
 
     setupActionsColumn: function() {
         var actionsColumn = $("#dialogue-panel-actions");
+        var i;
         actionsColumn.on('redrawList', function(evt, activeCASetVM) {
             actionsColumn.parent().find('button').remove();
             actionsColumn.empty();

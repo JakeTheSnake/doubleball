@@ -105,7 +105,7 @@
         var y = object.attributes.y;
         var width = object.attributes.width;
         var height = object.attributes.height;
-        var i, j, runtimeObjectsItem, collisionObject, targetObject, collisionItem, targetObjectIndex, colliding;
+        var i, j, runtimeObjectsItem, targetObject, collisionItem, colliding;
 
         var borderObjects = Object.keys(GameCreator.borderObjects);
 
