@@ -123,17 +123,10 @@
                 }
             }
             $(window).on("mousemove.editScene", function(e) {
-                var mouseX, mouseY, offsetTop, offsetLeft;
+                var mouseX, mouseY;
                 if (GameCreator.draggedNode) {
-                    mouseX = e.pageX;
-                    mouseY = e.pageY;
-                    offsetTop = $("#main-canvas").offset().top;
-                    offsetLeft = $("#main-canvas").offset().left;
-
-                    if (mouseX < offsetLeft) mouseX = offsetLeft;
-                    if (mouseY < offsetTop) mouseY = offsetTop;
-                    if (mouseX > offsetLeft + GameCreator.width) mouseX = offsetLeft + GameCreator.width;
-                    if (mouseY > offsetTop + GameCreator.height) mouseY = offsetTop + GameCreator.height;
+                    mouseX = GameCreator.helpers.getValidXCoordinate(e.pageX);
+                    mouseY = GameCreator.helpers.getValidYCoordinate(e.pageY);
 
                     $(GameCreator.draggedNode).parent().css("top", mouseY);
                     $(GameCreator.draggedNode).parent().css("left", mouseX);
@@ -141,9 +134,12 @@
                 }
             });
             $(window).on("mouseup.editScene", function(e) {
+                var mouseX, mouseY;
                 if (GameCreator.draggedNode) {
-                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].x = e.pageX - $("#main-canvas").offset().left;
-                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].y = e.pageY - $("#main-canvas").offset().top;
+                    mouseX = GameCreator.helpers.getValidXCoordinate(e.pageX);
+                    mouseY = GameCreator.helpers.getValidYCoordinate(e.pageY);
+                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].x = mouseX - $("#main-canvas").offset().left;
+                    GameCreator.selectedObject.route[$(GameCreator.draggedNode).attr("data-index")].y = mouseY - $("#main-canvas").offset().top;
                     GameCreator.draggedNode = undefined;
                     GameCreator.drawRoute(GameCreator.selectedObject.route);
                     return false;
@@ -159,6 +155,7 @@
                     }
                     dragFunc = GameCreator.hoveredObject.getDragFunction(mouseLeft, mouseTop);
                     GameCreator.selectedObject = GameCreator.hoveredObject;
+                    $('.route-node-container').addClass('dragging');
                     GameCreator.UI.editSceneObject();
                 } else {
                     dragFunc = null;
@@ -174,6 +171,7 @@
                     GameCreator.hoveredObject.cleanupSize();
                     GameCreator.hoveredObject = undefined;
                 }
+                $('.route-node-container').removeClass('dragging');
                 dragFunc = null;
                 GameCreator.helpers.setMouseCursor(dragFunc);
             });
@@ -322,7 +320,7 @@
         },
 
         hideRoute: function() {
-            $(".routeNodeContainer").remove();
+            $(".route-node-container").remove();
         },
 
         drawRoute: function(route) {
@@ -332,17 +330,17 @@
                 node = route[i];
                 GameCreator.setupRouteNode(node, i);
             }
-            $(".routeNode").on("mousedown", function() {
+            $(".route-node").on("mousedown", function() {
                 GameCreator.draggedNode = this;
                 return false;
             });
-            $(".routeNodeActions .add-node-button").on("click", function() {
+            $(".route-node-actions .add-node-button").on("click", function() {
                 GameCreator.selectedObject.insertNode($(this).data('index'));
             });
-            $(".routeNodeActions .remove-node-button").on("click", function() {
+            $(".route-node-actions .remove-node-button").on("click", function() {
                 GameCreator.selectedObject.removeNode($(this).data('index'));
             });
-            $(".routeNodeActions .toggle-bounce-node-button").on("click", function() {
+            $(".route-node-actions .toggle-bounce-node-button").on("click", function() {
                 GameCreator.selectedObject.toggleBounceNode($(this).data('index'));
             });
         },

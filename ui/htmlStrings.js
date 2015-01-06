@@ -185,11 +185,12 @@ GameCreator.htmlStrings = {
     },
 
     routeNode: function(node, index) {
-        var result = '<div class="routeNodeContainer" style="position:absolute; top:' + (node.y + $("#main-canvas").offset().top) + 'px;left:' + (node.x + $("#main-canvas").offset().left) + 'px;"><div class="routeNode" data-index="' + index + '"> \
-            <span class="routeNodeLabel">' + (index + 1) + '</span></div> \
-            <div class="routeNodeActions"><a class="add-node-button" data-index="' + index + '">+</a>';
+        var result = '<div class="route-node-container" style="position:absolute; top:' + (node.y + $("#main-canvas").offset().top) + 'px;left:' + (node.x + $("#main-canvas").offset().left) + 'px;"><div class="route-node" data-index="' + index + '"> \
+            <span class="route-node-arrow"></span> \
+            <span class="route-node-label">' + (index + 1) + '</span></div> \
+            <div class="route-node-actions"><div class="add-node-button btn-success" data-index="' + index + '">+</div>';
         if (index != 0) {    
-            result += '<div class="remove-node-button" data-index="' + index + '">X</div>';
+            result += '<div class="remove-node-button btn-warning" data-index="' + index + '">X</div>';
         }
         if(node.bounceNode) {
             result += '<div class="toggle-bounce-node-button" data-index="' + index + '">Turn</div>';

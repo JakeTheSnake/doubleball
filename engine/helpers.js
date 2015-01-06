@@ -625,6 +625,22 @@
         }
     };
 
+    GameCreator.helpers.getValidXCoordinate = function(x) {
+        var offsetLeft = $("#main-canvas").offset().left;
+
+        if (x < offsetLeft) x = offsetLeft;
+        if (x > offsetLeft + GameCreator.width) x = offsetLeft + GameCreator.width;
+        return x;
+    }
+
+    GameCreator.helpers.getValidYCoordinate = function(y) {
+        var offsetTop = $("#main-canvas").offset().top;
+
+        if (y < offsetTop) y = offsetTop;
+        if (y > offsetTop + GameCreator.height) y = offsetTop + GameCreator.height;
+        return y;
+    }
+
     Array.prototype.collect = function(collectFunc) {
         var result = [];
         for (var i = 0; i < this.length; i++) {
@@ -635,9 +651,4 @@
         }
         return result;
     };
-
-
-
-
-
 }());

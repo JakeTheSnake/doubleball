@@ -257,7 +257,7 @@ GameCreator.UI = {
     },
 
     hideEditModeTools: function() {
-        $(".routeNodeContainer").remove();
+        $(".route-node-container").remove();
         $('#toolbar-scenes').hide();
         $("#toolbar-bottom > .col.right").hide();
 
