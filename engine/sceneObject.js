@@ -82,6 +82,18 @@
         GameCreator.resetCounters(this, this.parent.parentCounters);
     };
 
+    GameCreator.SceneObject.prototype.alreadyCollidesWith = function(objectName) {
+        return this.collidingWith.indexOf(objectName) !== -1;
+    }
+
+    GameCreator.SceneObject.prototype.removeFromCollidingList = function(objectName) {
+        var objectIndex = this.collidingWith.indexOf(objectName);
+        if (objectIndex) {
+            var removedObject = this.collidingWith.splice(objectIndex, 1);
+            GameCreator.helpers.updateObjectCollisionArrays(this, removedObject);
+        }
+    }  
+
     GameCreator.SceneObject.prototype.remove = function() {
         var activeScene = GameCreator.getActiveScene();
         activeScene.objects.splice(activeScene.objects.indexOf(this), 1);
