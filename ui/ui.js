@@ -54,16 +54,18 @@ GameCreator.UI = {
         $(textField).attr('value', globalObj.objectName);
         
         var finishedAction = function(event) {
-            if (event.which === 13) {
+            if (event.which === 13 || event.type === 'blur') {
                 GameCreator.renameGlobalObject(globalObj.objectName, $(this).val());
                 GameCreator.UI.redrawLibrary();
+                $(".global-object-list").trigger('recalculateActiveObject');
             } else if (event.which === 27) {
                 GameCreator.UI.redrawLibrary();
+                $(".global-object-list").trigger('recalculateActiveObject');
             }
         };
         $(textField).keyup(finishedAction);
         $(textField).keypress(finishedAction);
-        $(textField).blur(GameCreator.UI.redrawLibrary);
+        $(textField).blur(finishedAction);
 
         $(replacementListItem).append(textField);
         selectedListItem.replaceWith(replacementListItem);
@@ -119,6 +121,7 @@ GameCreator.UI = {
                     $(image).css("top", e.pageY - (height/2));
                     $(image).css("left", e.pageX - (width/2));
                 }
+                return false;
             });
 
             $(window).one("mouseup.dragGlobalMenuItem", function(e){
@@ -134,8 +137,6 @@ GameCreator.UI = {
                 $(image).remove();
                 $(window).off("mousemove.dragGlobalMenuItem");
             });
-
-            return false;
         });
     },
  
