@@ -49,7 +49,7 @@ GameCreator.UI = {
         var textField = document.createElement('input');
         var replacementListItem = document.createElement('li');
 
-        var selectedListItem = $('#library li:contains("' + globalObj.objectName + '")');
+        var selectedListItem = $('#global-object-library li.active');
         $(textField).attr('type', 'text');
         $(textField).attr('value', globalObj.objectName);
         
