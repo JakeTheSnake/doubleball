@@ -129,8 +129,12 @@
         },
 
         selectScene: function(params) {
-            GameCreator.activeSceneId = Number(params.scene);
-            GameCreator.switchScene(GameCreator.getSceneById(GameCreator.activeSceneId));
+            var sceneId = Number(params.scene);
+            var scene = GameCreator.getSceneById(sceneId);
+            if(scene) {
+                GameCreator.activeSceneId = sceneId;
+                GameCreator.switchScene(GameCreator.getSceneById(GameCreator.activeSceneId));
+            }
         },
 
         playScene: function(scene) {

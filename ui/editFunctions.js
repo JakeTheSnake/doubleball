@@ -211,18 +211,27 @@
             };
 
             setTimeout(function() {
-                var choosableActions, caSet, activeScene;
+                var choosableActions, caSet;
+                var activeScene = GameCreator.getActiveScene();
                 $('#side-properties-form-container').html(GameCreator.htmlStrings.getScenePropertiesForm());
                 GameCreator.helpers.populateSidePropertiesForm(GameCreator.getActiveScene(), onChangeCallback);
                 GameCreator.getActiveScene().drawBackground();
                 $('#setup-scene-actions').click(function(){
                     choosableActions = GameCreator.actionGroups.sceneStartedActions;
-                    activeScene = GameCreator.getActiveScene();
                     GameCreator.UI.openEditActionsWindow(
                         GameCreator.htmlStrings.sceneStartedEventInformationWindow(),
                         new GameCreator.CASetVM(activeScene.onCreateSet, choosableActions, undefined), 
                         activeScene.attributes.name
                     );
+                });
+                $(document).off('GameCreator.sceneAdded').on('GameCreator.sceneAdded', function(){
+                    $('#delete-scene-button').removeClass('disabled');
+                });
+                if(GameCreator.scenes.length === 1) {
+                    $('#delete-scene-button').addClass('disabled');
+                }
+                $('#delete-scene-button').click(function(){
+                    GameCreator.removeScene(activeScene);
                 });
             }, 0);
         },
@@ -363,6 +372,16 @@
         addScene: function() {
             GameCreator.scenes.push(new GameCreator.Scene());
             GameCreator.UI.setupSceneTabs();
+            $(document).trigger('GameCreator.sceneAdded');
+        },
+
+        removeScene: function(scene) {
+            var index = GameCreator.scenes.indexOf(scene);
+            GameCreator.scenes.splice(index, 1);
+            GameCreator.UI.setupSceneTabs();
+
+            GameCreator.activeSceneId = GameCreator.scenes[index] ? GameCreator.scenes[index].id : GameCreator.scenes[GameCreator.scenes.length - 1].id;
+            GameCreator.editActiveScene();
         },
 
         getCountersForGlobalObj: function(globalObjName) {

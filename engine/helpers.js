@@ -506,6 +506,7 @@
     };
 
     GameCreator.helpers.getPresentationForInputValue = function(value, type, obj) {
+        var scene;
         if (value !== undefined && value !== null && value !== '') {
             switch (type) {
                 case "rangeInput":
@@ -524,7 +525,8 @@
                 case "counterTypeInput":
                     return GameCreator.helpers.getPrettyName(value);
                 case "sceneInput":
-                    return GameCreator.getSceneById(Number(value)).attributes.name;
+                    scene = GameCreator.getSceneById(Number(value));
+                    return scene ? scene.attributes.name : '*Scene removed*';
                 case "imageInput":
                     return '<img src="' + value.src + '" width="40" height="40"/>';
                 default:

@@ -389,6 +389,7 @@ GameCreator.htmlStrings = {
         </ul> \
         <div class="panel-paragraph properties-group"> \
             <button class="btn btn-success btn-wide" id="setup-scene-actions">Scene Started Actions</button> \
+            <button class="btn btn-warning btn-wide" id="delete-scene-button">Delete Scene</button> \
         </div>'
 
         return result;
