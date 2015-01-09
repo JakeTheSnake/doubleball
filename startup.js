@@ -76,6 +76,14 @@ $(document).ready(function() {
         });
     });
 
+    $("#library-tabs li").on('click', function() {
+        var id = $(this).data('panelid');
+        $('.object-library-panel').hide();
+        $('#' + id).show();
+        $(this).parent().find('li').removeClass('active');
+        $(this).addClass('active');
+    })
+
     if (window.gon) {
         var publishedLabel = gon.published ? "PUBLISHED" : "PRIVATE";
         $("#published-label").html(publishedLabel);

@@ -68,11 +68,17 @@
                         </div>
                     </div>
 
-                    <!-- Panel: Library -->
-                    <div id="global-object-library" class="panel">
-                        <div class="panel-heading">
-                            <span class="panel-title">Library</span>
+                    <!-- Panel: Libraries -->
+                    <div class="panel-heading">
+                            <span class="panel-title">Objects</span>
                         </div>
+                    <div id="library-tabs">
+                        <ul class="nav-tabs">
+                            <li id="global-objects-tab" class="tab active" data-panelid="global-object-library">Global Objects</li>
+                            <li id="scene-objects-tab" class="tab" data-panelid="scene-object-library">Scene Objects</li>
+                        </ul>
+                    </div>
+                    <div id="global-object-library" class="object-library-panel">
                         <div id="library-preview" class="library-preview panel-paragraph"></div>
                         <div id="library-explorer" class="library-explorer">
                             <ul class="global-object-list">
@@ -84,6 +90,14 @@
                             <button id="rename-global-object-button" type="button" class="btn btn-edit disabled">Rename</button>
                         </div>
                     </div>
+
+                    <div id="scene-object-library" class="object-library-panel">
+                        <div id="library-explorer" class="library-explorer">
+                            <ul class="scene-object-list">
+                            </ul>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
