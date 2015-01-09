@@ -160,6 +160,7 @@
                     GameCreator.selectedObject = null;
                     GameCreator.drawSelectionLine();
                     GameCreator.hideRoute();
+                    $('.library-scene-object-button').removeClass('active');
                     GameCreator.setupScenePropertiesForm();
                 }
                 GameCreator.render(false);
