@@ -66,6 +66,7 @@
                 GameCreator.renderableObjects.push(sceneObj);
                 GameCreator.render(false);
             }
+            $(document).trigger('GameCreator.addedSceneObject');
             return sceneObj;
         },
 

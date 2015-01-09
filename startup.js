@@ -84,6 +84,10 @@ $(document).ready(function() {
         $(this).addClass('active');
     })
 
+    $(document).on('GameCreator.addedSceneObject GameCreator.removedSceneObject', function(){
+        GameCreator.UI.drawSceneObjectLibrary();
+    });
+
     if (window.gon) {
         var publishedLabel = gon.published ? "PUBLISHED" : "PRIVATE";
         $("#published-label").html(publishedLabel);

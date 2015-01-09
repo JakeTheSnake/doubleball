@@ -105,6 +105,7 @@
             GameCreator.setupScenePropertiesForm();
         }
         GameCreator.render();
+        $(document).trigger('GameCreator.removedSceneObject');
     };
 
     GameCreator.SceneObject.prototype.reset = function() {

@@ -111,6 +111,7 @@
             GameCreator.reset();
             scene.reset();
             GameCreator.setupScenePropertiesForm();
+            GameCreator.UI.drawSceneObjectLibrary();
             scene.drawBackground();
             GameCreator.state = 'editing';
             //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
@@ -150,13 +151,10 @@
                 mouseTop = e.pageY - $("#main-canvas").offset().top;
                 GameCreator.hoveredObject = GameCreator.getClickedObjectEditing(mouseLeft, mouseTop);
                 if (GameCreator.hoveredObject) {
-                    if (GameCreator.hoveredObject.route) {
-                        GameCreator.drawRoute(GameCreator.hoveredObject.route);
-                    }
                     dragFunc = GameCreator.hoveredObject.getDragFunction(mouseLeft, mouseTop);
                     GameCreator.selectedObject = GameCreator.hoveredObject;
-                    $('.route-node-container').addClass('dragging');
                     GameCreator.UI.editSceneObject();
+                    $('.route-node-container').addClass('dragging');
                 } else {
                     dragFunc = null;
                     GameCreator.selectedObject = null;

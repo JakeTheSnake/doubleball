@@ -3,6 +3,7 @@ GameCreator.UI = {
     initializeUI: function() {
         GameCreator.UI.redrawLibrary();
         GameCreator.UI.drawSceneTabs();
+        GameCreator.UI.drawSceneObjectLibrary();
     },
 
     redrawLibrary: function() {
@@ -41,7 +42,7 @@ GameCreator.UI = {
    
     createLibraryItem: function(globalObj) {
         var listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
-        this.setupLibraryItemListeners(listElementButton, globalObj);
+        this.setupGlobalLibraryItemListeners(listElementButton, globalObj);
         $(".global-object-list").append(listElementButton);
     },
 
@@ -72,7 +73,27 @@ GameCreator.UI = {
         textField.select();
     },
 
-    setupLibraryItemListeners: function(listElementButton, globalObj) {
+    drawSceneObjectLibrary: function() {
+        var scene = GameCreator.getActiveScene();
+        var sceneObjectList = $('#scene-object-list')
+        sceneObjectList.empty();
+        scene.objects.forEach(function(sceneObject){
+            var sceneObjectListItem = GameCreator.htmlStrings.sceneObjectLibraryItem(sceneObject);
+            sceneObjectList.append(sceneObjectListItem);
+            GameCreator.UI.setupSceneLibraryItemListeners(sceneObjectListItem, sceneObject);
+        });
+    },
+
+    setupSceneLibraryItemListeners: function(listElementButton, sceneObject) {
+        $(listElementButton).on("click", function(e){
+            $('.library-scene-object-button').removeClass('active');
+            $(listElementButton).addClass('active');
+            GameCreator.selectedObject = sceneObject;
+            GameCreator.UI.editSceneObject();        
+        });
+    },
+
+    setupGlobalLibraryItemListeners: function(listElementButton, globalObj) {
         //Width and height are ranges, get the largest possible value from range.
         var height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
         var width = globalObj.getDefaultState().attributes.width.slice(-1)[0];
@@ -275,7 +296,11 @@ GameCreator.UI = {
     },
     
     editSceneObject: function() {
-        var objectType = GameCreator.selectedObject.parent.objectType;
+        GameCreator.hideRoute();
+        if (GameCreator.selectedObject.route) {
+            GameCreator.drawRoute(GameCreator.selectedObject.route);
+        }
+        GameCreator.drawSelectionLine();
 
         GameCreator.UI.setupSceneObjectForm(GameCreator.selectedObject);
     },

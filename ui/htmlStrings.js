@@ -184,6 +184,13 @@ GameCreator.htmlStrings = {
         return libraryItem;
     },
 
+    sceneObjectLibraryItem: function(object) {
+        var libraryItem = document.createElement("li");
+        $(libraryItem).append(object.attributes.instanceId);
+        $(libraryItem).addClass("library-scene-object-button");
+        return libraryItem;
+    },
+
     routeNode: function(node, index) {
         var result = '<div class="route-node-container" style="position:absolute; top:' + (node.y + $("#main-canvas").offset().top) + 'px;left:' + (node.x + $("#main-canvas").offset().left) + 'px;"><div class="route-node" data-index="' + index + '"> \
             <span class="route-node-arrow"></span> \
