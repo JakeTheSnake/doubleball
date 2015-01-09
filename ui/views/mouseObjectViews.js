@@ -44,11 +44,11 @@ var result = ' \
                 <tbody> \
                     <tr> \
                         <td>Width:</td> \
-                        <td id="side-property-width" data-inputtype="numberInput"></td> \
+                        <td id="side-property-width" data-inputtype="rangeInput"></td> \
                     </tr> \
                     <tr> \
                         <td>Height:</td> \
-                        <td id="side-property-height" data-inputtype="numberInput"></td> \
+                        <td id="side-property-height" data-inputtype="rangeInput"></td> \
                     </tr> \
                     <tr> \
                         <td>Position X:</td> \
