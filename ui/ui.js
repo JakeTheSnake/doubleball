@@ -56,7 +56,11 @@ GameCreator.UI = {
         
         var finishedAction = function(event) {
             if (event.which === 13 || event.type === 'blur') {
-                GameCreator.renameGlobalObject(globalObj.objectName, $(this).val());
+                try {
+                    GameCreator.renameGlobalObject(globalObj.objectName, $(this).val());
+                } catch (e) {
+                    GameCreator.UI.createValidationBox($(this), e);
+                }
                 GameCreator.UI.redrawLibrary();
                 $(".global-object-list").trigger('recalculateActiveObject');
             } else if (event.which === 27) {

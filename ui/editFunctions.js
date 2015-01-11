@@ -421,6 +421,9 @@
 
         renameGlobalObject: function(oldName, newName) {
             if (oldName !== newName) {
+                if (GameCreator.globalObjects[newName] !== undefined) {
+                    throw "Name '" + newName + "'  already exists";
+                }
                 GameCreator.globalObjects[newName] = GameCreator.globalObjects[oldName];
                 delete GameCreator.globalObjects[oldName];
                 GameCreator.globalObjects[newName].objectName = newName;
