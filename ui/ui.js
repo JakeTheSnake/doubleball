@@ -79,13 +79,15 @@ GameCreator.UI = {
 
     drawSceneObjectLibrary: function() {
         var scene = GameCreator.getActiveScene();
-        var sceneObjectList = $('#scene-object-list')
-        sceneObjectList.empty();
-        scene.objects.forEach(function(sceneObject){
-            var sceneObjectListItem = GameCreator.htmlStrings.sceneObjectLibraryItem(sceneObject);
-            sceneObjectList.append(sceneObjectListItem);
-            GameCreator.UI.setupSceneLibraryItemListeners(sceneObjectListItem, sceneObject);
-        });
+        if (scene) {
+            var sceneObjectList = $('#scene-object-list')
+            sceneObjectList.empty();
+            scene.objects.forEach(function(sceneObject){
+                var sceneObjectListItem = GameCreator.htmlStrings.sceneObjectLibraryItem(sceneObject);
+                sceneObjectList.append(sceneObjectListItem);
+                GameCreator.UI.setupSceneLibraryItemListeners(sceneObjectListItem, sceneObject);
+            });
+        }
     },
 
     setupSceneLibraryItemListeners: function(listElementButton, sceneObject) {
