@@ -14,7 +14,7 @@ GameCreator.borderObjects = {
         },
         image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderLeft.png' %>"; return img; }()),
         collidesWith: function(object) {
-            return object.attributes.x <= 0 && !object.alreadyCollidesWith(this.objectName);
+            return object.attributes.x <= 0;
         }
     },
     borderR: {
