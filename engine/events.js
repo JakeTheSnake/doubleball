@@ -34,10 +34,10 @@ GameCreator.conditions = {
             var itemCount = item ? item.runtimeObjects.length : 0;
 
             if (params.comparator === 'greaterThan') {
-                return itemCount >= params.count;
+                return itemCount > params.count;
             }
             if (params.comparator === 'lessThan') {
-                return itemCount <= params.count;
+                return itemCount < params.count;
             }
             return itemCount === params.count;
         },
