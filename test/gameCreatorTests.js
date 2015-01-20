@@ -54,4 +54,27 @@ test("Destroy Active Object", function() {
     deepEqual(redBallCollidables, undefined, "Removed from collidableObjects");
 });
 
+test("Collision test", function() {
+    var redBall = createGlobalObject("FreeObject");
+    var runtimeObj = GameCreator.createRuntimeObject(redBall, {x: -5, y: 200});
+    var testValue = 0;
+    GameCreator.actions["testAction"] = new GameCreator.Action({
+                                                action: function(params) {testValue += params.value;},
+                                                runnable: function() {return true;}
+                                            });
+    var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
+    var collideEvent = new GameCreator.ConditionActionSet(redBall);
+    collideEvent.actions.push(runtimeAction);
+    redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
+
+    GameCreator.checkCollisions();
+
+    deepEqual(testValue, 1, "Action should run as a result of the collision.");
+    ok(runtimeObj.alreadyCollidesWith(GameCreator.borderObjects.borderL.objectName), "Object already collides with border");
+
+    GameCreator.checkCollisions();
+
+    deepEqual(testValue, 1, "Action should not run twice for the same collision.");
+});
+
 })();

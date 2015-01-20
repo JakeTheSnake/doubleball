@@ -50,7 +50,7 @@ GameCreator.borderObjects = {
         },
         image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderTop.png' %>"; return img; }()),
         collidesWith: function(object) {
-            return object.attributes.y <= 0 && !object.alreadyCollidesWith(this.objectName);
+            return object.attributes.y <= 0;
         }
     },
     borderB: {
