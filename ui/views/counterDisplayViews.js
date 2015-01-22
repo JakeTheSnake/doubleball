@@ -1,166 +1,178 @@
 (function() {
-    "use strict";
+  "use strict";
 
-    var counterDisplayPrototypeFunctions = {
-        getNonStatePropertiesForm: function() {
-                return  '';
-        },
+  var counterDisplayPrototypeFunctions = {
+    getNonStatePropertiesForm: function() {
+      return  '';
+    },
 
-        getEvents: function() {
-                return  '';
-        },
+    getEvents: function() {
+      return  '';
+    },
 
-        getTabs: function() {
-            return '<li data-uifunction="setupPropertiesForm"><i class="icon-codeopen" /><span>Properties</span></li> \
-            <li data-uifunction="setupStatesColumn"><i class="icon-codeopen" /><span>States</span></li>'
-        },
+    getTabs: function() {
+      var result = ' \
+      <a class="btn tab" data-uifunction="setupPropertiesForm">Properties</a> \
+      <a class="btn tab" data-uifunction="setupStatesColumn">States</a>';
 
-    };
+      return result;
+    },
+  };
 
+  $.extend(GameCreator.CounterDisplayText.prototype, counterDisplayPrototypeFunctions);
+  $.extend(GameCreator.CounterDisplayImage.prototype, counterDisplayPrototypeFunctions);
 
-    $.extend(GameCreator.CounterDisplayText.prototype, counterDisplayPrototypeFunctions);
-    $.extend(GameCreator.CounterDisplayImage.prototype, counterDisplayPrototypeFunctions);
-
-    GameCreator.CounterDisplayText.prototype.getPropertiesForm = function() {
+  GameCreator.CounterDisplayText.prototype.getPropertiesForm = function() {
     var result = ' \
-<div class="panel-paragraph"> \
-<div class="form-group"> \
-    <div id="object-property-font-container" class="form-item"> \
-    </div> \
-    <div id="object-property-size-container" class="form-item"> \
-    </div> \
-</div> \
-<div class="form-group"> \
-    <div id="object-property-color-container" class="form-item"> \
-    </div> \
-    </div> \
-</div>';
-
-    return result;
-    };
-
-    GameCreator.CounterDisplayImage.prototype.getPropertiesForm = function() {
-    var result = ' \
-<div class="panel-paragraph"> \
-<div class="form-group"> \
-    <div id="object-property-width-container" class="form-item"> \
-    </div> \
-    <div id="object-property-height-container" class="form-item"> \
-    </div> \
-</div> \
-</div> \
-<div class="panel-paragraph"> \
-    <h2>Set default graphic</h2> \
-    <div class="form-group"> \
-        <div id="object-property-image-container" class="form-item"> \
+    <article> \
+      <fieldset class="sequenced"> \
+        <div id="object-property-font-container"> \
         </div> \
-        <div id="global-object-image-upload-controls"></div> \
-    </div> \
-</div>';
-    return result;
-};
-
-GameCreator.CounterDisplayText.prototype.getSceneObjectForm = function() {
-var result = ' \
-    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Position</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Position X:</td> \
-                        <td id="side-property-x" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Position Y:</td> \
-                        <td id="side-property-y" data-inputtype="numberInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Appearance</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Font:</td> \
-                        <td id="side-property-font" data-inputtype="stringInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Font Size:</td> \
-                        <td id="side-property-size" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Color:</td> \
-                        <td id="side-property-color" data-inputtype="stringInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Source Counter<span class="tooltip-icon" title="Select the object and belonging counter\nwhich holds the value you want to display.">?</span></span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Object:</td> \
-                        <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Counter:</td> \
-                        <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput"  data-dependancy="counterCarrier"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-    </ul>'
+        <div id="object-property-size-container"> \
+        </div> \
+      </fieldset> \
+      <fieldset class="sequenced"> \
+        <div id="object-property-color-container"> \
+        </div> \
+      </fieldset>';
 
     return result;
-};
+  };
 
-GameCreator.CounterDisplayImage.prototype.getSceneObjectForm = function() {
-var result = ' \
-    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Size and Position</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Width:</td> \
-                        <td id="side-property-width" data-inputtype="rangeInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Height:</td> \
-                        <td id="side-property-height" data-inputtype="rangeInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Position X:</td> \
-                        <td id="side-property-x" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Position Y:</td> \
-                        <td id="side-property-y" data-inputtype="numberInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Source Counter<span class="tooltip-icon" title="Select the object and belonging counter\nwhich holds the value you want to display.">?</span></span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Object:</td> \
-                        <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Counter:</td> \
-                        <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-    </ul>'
+  GameCreator.CounterDisplayImage.prototype.getPropertiesForm = function() {
+    var result = ' \
+    <article> \
+      <fieldset class="sequenced"> \
+        <div id="object-property-width-container"> \
+        </div> \
+        <div id="object-property-height-container"> \
+        </div> \
+      </fieldset> \
+    </article> \
+    <article> \
+      <h2>Set default graphic</h2> \
+      <fieldset id="image-upload-controls"> \
+        <div id="object-property-image-container"> \
+        </div> \
+      </fieldset> \
+      <div id="global-object-image-upload-controls"> \
+      </div>';
 
     return result;
-};
+  };
 
+  GameCreator.CounterDisplayText.prototype.getSceneObjectForm = function() {
+    var result = ' \
+    <ul class="parameters"> \
+      <li> \
+        <div class="parameter"> \
+          <div class="parameter-header"> \
+            <span>Position</span> \
+          </div> \
+          <table> \
+            <tr> \
+              <td><label>Position X:</label></td> \
+              <td id="side-property-x" data-inputtype="numberInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Position Y:</label></td> \
+              <td id="side-property-y" data-inputtype="numberInput"></td> \
+            </tr> \
+          </table> \
+        </div> \
+      </li> \
+      <li> \
+        <div class="parameter"> \
+          <div class="parameter-header"> \
+            <span>Appearance</span> \
+          </div> \
+          <table> \
+            <tr> \
+              <td><label>Font:</label></td> \
+              <td id="side-property-font" data-inputtype="stringInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Font Size:</label></td> \
+              <td id="side-property-size" data-inputtype="numberInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Color:</label></td> \
+              <td id="side-property-color" data-inputtype="stringInput"></td> \
+            </tr> \
+          </table> \
+        </div> \
+      </li> \
+      <li> \
+        <div class="parameter"> \
+          <div class="parameter-header"> \
+            <span>Source Counter</span> \
+            <a class="btn edit" title="Select the object and belonging counter\nwhich holds the value you want to display.">?</a> \
+          </div> \
+          <table> \
+            <tr> \
+              <td><label>Object:</label></td> \
+              <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Counter:</label></td> \
+              <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
+            </tr> \
+          </table> \
+        </div> \
+      </li> \
+    </ul>';
+
+    return result;
+  };
+
+  GameCreator.CounterDisplayImage.prototype.getSceneObjectForm = function() {
+    var result = ' \
+    <ul class="parameters"> \
+      <li> \
+        <div class="parameter"> \
+          <div class="parameter-header"> \
+            <span>Size and Position</span> \
+          </div> \
+          <table> \
+            <tr> \
+              <td><label>Width X:</label></td> \
+              <td id="side-property-width" data-inputtype="rangeInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Height Y:</label></td> \
+              <td id="side-property-height" data-inputtype="rangeInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Position X:</label></td> \
+              <td id="side-property-x" data-inputtype="numberInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Position Y:</label></td> \
+              <td id="side-property-y" data-inputtype="numberInput"></td> \
+            </tr> \
+          </table> \
+        </div> \
+      </li> \
+      <li> \
+        <div class="parameter"> \
+          <div class="parameter-header"> \
+            <span>Source Counter</span> \
+            <a class="btn edit" title="Select the object and belonging counter\nwhich holds the value you want to display.">?</a> \
+          </div> \
+          <table> \
+            <tr> \
+              <td><label>Object:</label></td> \
+              <td id="side-property-counterCarrier" data-inputtype="counterCarrierInput"></td> \
+            </tr> \
+            <tr> \
+              <td><label>Counter:</label></td> \
+              <td id="side-property-counterName" data-inputtype="sceneObjectCounterInput" data-dependancy="counterCarrier"></td> \
+            </tr> \
+          </table> \
+        </div> \
+      </li> \
+    </ul>';
+
+    return result;
+  };
 }());

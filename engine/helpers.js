@@ -424,8 +424,8 @@
             var attributeName = keys[i];
             if (attrToInputMap[attributeName]) {
                 $("#object-property-" + attributeName + "-container").html(
-                    GameCreator.htmlStrings.inputLabel(GameCreator.helpers.labelize(attributeName)) +
-                    attrToInputMap[attributeName](attributeName, attributes[attributeName])
+                    attrToInputMap[attributeName](attributeName, attributes[attributeName]) + 
+                    GameCreator.htmlStrings.inputLabel(GameCreator.helpers.labelize(attributeName))
                 );
             }
         }

@@ -1,90 +1,95 @@
-GameCreator.MouseObject.prototype.getEvents = function(){
-	return  '<li data-uifunction="setupKeyEventsForm"><i class="icon-codeopen" /><span>On Keypress</span></li>';
+GameCreator.MouseObject.prototype.getEvents = function() {
+  return '<a class="btn tab" data-uifunction="setupKeyEventsForm">On Keypress</a>';
 };
 
 GameCreator.MouseObject.prototype.getPropertiesForm = function(stateId) {
-    var result = ' \
-<div class="panel-paragraph"> \
-    <div class="form-group"> \
-        <div id="object-property-width-container" class="form-item"> \
-        </div> \
-        <div id="object-property-height-container" class="form-item"> \
-        </div> \
-    </div> \
-    <div class="form-group"> \
-        <div id="object-property-minX-container" class="form-item"> \
-        </div> \
-        <div id="object-property-minY-container" class="form-item"> \
-        </div> \
-    </div>\
-    <div class="form-group"> \
-        <div id="object-property-maxX-container" class="form-item"> \
-        </div> \
-        <div id="object-property-maxY-container" class="form-item"> \
-        </div> \
-    </div> \
-</div> \
-<div class="panel-paragraph"> \
+  var result = ' \
+  <article> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-width-container"> \
+      </div> \
+      <div id="object-property-height-container"> \
+      </div> \
+    </fieldset> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-minX-container"> \
+      </div> \
+      <div id="object-property-minY-container"> \
+      </div> \
+    </fieldset> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-maxX-container"> \
+      </div> \
+      <div id="object-property-maxY-container"> \
+      </div> \
+    </fieldset> \
+  </article> \
+  <article> \
     <h2>Set default graphic</h2> \
-    <div class="form-group"> \
-        <div id="object-property-image-container" class="form-item"> \
-        </div> \
-        <div id="global-object-image-upload-controls"></div> \
-    </div> \
-</div>';
-    return result;
+    <fieldset id="image-upload-controls"> \
+      <div id="object-property-image-container"> \
+      </div> \
+    </fieldset> \
+    <div id="global-object-image-upload-controls"> \
+    </div>';
+
+  return result;
 };
 
 GameCreator.MouseObject.prototype.getSceneObjectForm = function() {
-var result = ' \
-    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Size and Position</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Width:</td> \
-                        <td id="side-property-width" data-inputtype="rangeInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Height:</td> \
-                        <td id="side-property-height" data-inputtype="rangeInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Position X:</td> \
-                        <td id="side-property-x" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Position Y:</td> \
-                        <td id="side-property-y" data-inputtype="numberInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Boundaries</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Min X:</td> \
-                        <td id="side-property-minX" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Min Y:</td> \
-                        <td id="side-property-minY" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Max X:</td> \
-                        <td id="side-property-maxX" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Max Y:</td> \
-                        <td id="side-property-maxY" data-inputtype="numberInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-    </ul>'
+  var result = ' \
+  <ul class="parameters"> \
+    <li> \
+      <div class="parameter"> \
+        <div class="parameter-header"> \
+          <span>Size and Position</span> \
+        </div> \
+        <table> \
+          <tr> \
+            <td><label>Width:</label></td> \
+            <td id="side-property-width" data-inputtype="rangeInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Height:</label></td> \
+            <td id="side-property-height" data-inputtype="rangeInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Position X:</label></td> \
+            <td id="side-property-x" data-inputtype="numberInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Position Y:</label></td> \
+            <td id="side-property-y" data-inputtype="numberInput"></td> \
+          </tr> \
+        </table> \
+      </div> \
+    </li> \
+    <li> \
+      <div class="parameter"> \
+        <div class="parameter-header"> \
+          <span>Boundaries</span> \
+        </div> \
+        <table> \
+          <tr> \
+            <td><label>Min X:</label></td> \
+            <td id="side-property-minX" data-inputtype="numberInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Min Y:</label></td> \
+            <td id="side-property-minY" data-inputtype="numberInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Max X:</label></td> \
+            <td id="side-property-maxX" data-inputtype="numberInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Max Y:</label></td> \
+            <td id="side-property-maxY" data-inputtype="numberInput"></td> \
+          </tr> \
+        </table> \
+      </div> \
+    </li> \
+  </ul>';
 
-    return result;
+  return result;
 };

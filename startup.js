@@ -76,11 +76,11 @@ $(document).ready(function() {
         });
     });
 
-    $("#library-tabs li").on('click', function() {
+    $("#library-tabs a").on('click', function() {
         var id = $(this).data('panelid');
         $('.object-library-panel').hide();
         $('#' + id).show();
-        $(this).parent().find('li').removeClass('active');
+        $(this).parent().find('a').removeClass('active');
         $(this).addClass('active');
     })
 

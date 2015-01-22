@@ -61,7 +61,7 @@ GameCreator.commonObjectControllers = {
         GameCreator.UI.setupActionsColumn();
 
         var withColumn = $('#dialogue-panel-with');
-        withColumn.parent().append('<button id="add-new-collision-button" class="icon-plus btn btn-success">Add</button>');
+        withColumn.parent().append('<a id="add-new-collision-button" class="btn tab success wide">Add</a>');
         withColumn.on('redrawList', function(evt) {
             withColumn.empty();
             globalObj.onCollideSets.forEach(function(collisionItem) {
@@ -135,9 +135,9 @@ GameCreator.commonObjectControllers = {
 
     setupStatesColumn: function(container, selectedState) {
         container.html(GameCreator.htmlStrings.getColumn("States", "dialogue-panel-states"));
-        container.append('<div id="dialogue-state-content" class="content"></div>');
+        container.append('<div id="dialogue-state-content"></div>');
         $("#dialogue-panel-states").html(this.getStatesContent());
-        $("#dialogue-panel-states").parent().append('<button id="add-new-state-button" class="icon-plus btn btn-success">Add</button>');
+        $("#dialogue-panel-states").parent().append('<a id="add-new-state-button" class="btn tab success wide">Add</a>');
         var globalObj = this;
         $("#add-new-state-button").on("click", function() {
             $("#create-state-form").remove();
@@ -175,7 +175,8 @@ GameCreator.commonObjectControllers = {
         var propertiesColumn = $('#dialogue-panel-state-properties');
         var allAttributes = Object.keys(globalObj.getDefaultState().attributes);
         for (var i = 0; i < allAttributes.length; i += 1) {
-            var listItem = document.createElement('li');
+            var listItem = document.createElement('a');
+            $(listItem).addClass("btn tab");
             if (state.attributes[allAttributes[i]] !== undefined) {
                 $(listItem).addClass('active');
             } else {
@@ -205,18 +206,18 @@ GameCreator.commonObjectControllers = {
         var html = this.getEventsContent();
         container.html(html);
 
-        $("#dialogue-panel-events").find("li").on("click", function() {
+        $("#dialogue-panel-events").find("a").on("click", function() {
             globalObj[$(this).data("uifunction")]($("#dialogue-events-content"));
-            $(this).parent().find("li").removeClass("active");
+            $(this).parent().find("a").removeClass("active");
             $(this).addClass("active");
         });
     },
 
     setupCountersForm: function(container) {
         container.html(GameCreator.htmlStrings.getColumn("Counters", "dialogue-panel-counters"));
-        container.append('<div id="dialogue-counter-content" class="content"></div>');
+        container.append('<div id="dialogue-counter-content"></div>');
         $("#dialogue-panel-counters").html(this.getCountersContent());
-        $("#dialogue-panel-counters").parent().append('<button id="add-new-counter-button" class="icon-plus btn btn-success">Add</button>');
+        $("#dialogue-panel-counters").parent().append('<a id="add-new-counter-button" class="btn tab success wide">Add</button>');
         var globalObj = this;
         $("#add-new-counter-button").on("click", function() {
             $("#create-counter-form").remove();
@@ -245,7 +246,6 @@ GameCreator.commonObjectControllers = {
         var container = $('#dialogue-counter-content');
         container.html(GameCreator.htmlStrings.getColumn('Events', "dialogue-panel-counter-events"));
         var counterEventContent = document.createElement('div');
-        $(counterEventContent).addClass('content');
         container.append(counterEventContent);
         $('#dialogue-panel-counter-events').html(this.getCounterEventsContent(counterName));
         var globalObj = this;
@@ -279,7 +279,7 @@ GameCreator.commonObjectControllers = {
         var html = GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys");
         container.html(html);
         $("#dialogue-panel-keys").html(this.getKeysContent());
-        $("#dialogue-panel-keys").parent().append('<button id="add-new-key-button" class="icon-plus btn btn-success">Add</button>');
+        $("#dialogue-panel-keys").parent().append('<a id="add-new-key-button" class="btn tab success wide">Add</a>');
         var keyEventContent = document.createElement('div');
         var eventHtml = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
         eventHtml += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');

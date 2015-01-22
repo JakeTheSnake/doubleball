@@ -208,12 +208,12 @@ GameCreator.UI = {
     populateOpenDialogue: function(globalObj) {
         $('#object-manager-object-name').html(globalObj.objectName);
         globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
-        $("#dialogue-panel-edit").find("li").removeClass("active");
-        $("#dialogue-panel-edit").find("li:first-child").addClass("active");
+        $("#dialogue-panel-edit").find("a").removeClass("active");
+        $("#dialogue-panel-edit").find("a:first-child").addClass("active");
 
-        $("#dialogue-panel-edit").on('click', 'li', function() {
+        $("#dialogue-panel-edit").on('click', 'a', function() {
             globalObj[$(this).data("uifunction")]($("#dialogue-edit-content"));
-            $(this).parent().find("li").removeClass("active");
+            $(this).parent().find("a").removeClass("active");
             $(this).addClass("active");
         });
 
@@ -228,7 +228,7 @@ GameCreator.UI = {
     openDialogue: function(width, height, content) {
         width = width || 900;
         height = height || 570;
-        $("#dialogue-window").css("width", width).css("height", height).css("left", ($(window).width() / 2 - width / 2)).show();
+        $("#dialogue-window").show();
         $("#dialogue-window").html(content);
         $("#dialogue-window > .bottom").addClass("slide-in-from-bottom");
         $("#dialogue-overlay").show();
@@ -250,20 +250,20 @@ GameCreator.UI = {
 
     setupSceneTabs: function() {
         GameCreator.UI.drawSceneTabs();
-        $('#toolbar-scenes').off('click');
-        $('#toolbar-scenes').on('click', '.nav-tabs > li:not(#add-scene-tab)', function() {
+        $('#scenes').off('click');
+        $('#scenes').on('click', '.btn-group > a:not(#add-scene-tab)', function() {
             GameCreator.activeSceneId = parseInt($(this).data('sceneid'));
             GameCreator.editActiveScene();
         });
 
         var draggedSceneId;
-        $('#toolbar-scenes').off('dragstart');
-        $('#toolbar-scenes').off('dragover');
-        $('#toolbar-scenes').off('drop');
-        $('#toolbar-scenes').off('dragleave');
-        $('#toolbar-scenes').on('dragstart', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+        $('#scenes').off('dragstart');
+        $('#scenes').off('dragover');
+        $('#scenes').off('drop');
+        $('#scenes').off('dragleave');
+        $('#scenes').on('dragstart', '.btn-group > a:not(#add-scene-tab)', function(e) {
             draggedSceneId = parseInt($(this).data('sceneid'));
-            $('#toolbar-scenes').one('drop', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+            $('#scenes').one('drop', '.btn-group > a:not(#add-scene-tab)', function(e) {
                 e.preventDefault();
                 var droppedSceneId = parseInt($(this).data('sceneid'));
                 if (draggedSceneId !== droppedSceneId) {
@@ -272,16 +272,16 @@ GameCreator.UI = {
             });
         });
 
-        $('#toolbar-scenes').on('dragleave', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+        $('#scenes').on('dragleave', '.btn-group > a:not(#add-scene-tab)', function(e) {
             $(this).removeClass('scene-swap-highlight');
         });
 
-        $('#toolbar-scenes').on('dragover', '.nav-tabs > li:not(#add-scene-tab)', function(e) {
+        $('#scenes').on('dragover', '.btn-group > a:not(#add-scene-tab)', function(e) {
             $(this).addClass('scene-swap-highlight');
             e.preventDefault();
         });
 
-        $('#toolbar-scenes').one('click', '#add-scene-tab', function() {
+        $('#scenes').one('click', '#add-scene-tab', function() {
             GameCreator.addScene();
         });
     },
@@ -289,16 +289,16 @@ GameCreator.UI = {
     drawSceneTabs: function() {
         var result = '';
 
-        $('#toolbar-scenes').show();
+        $('#scenes').show();
 
-        result += '<ul class="nav nav-tabs" role="tablist">';
+        result += '<div class="btn-group sequenced">';
         for(var i = 0; i < GameCreator.scenes.length; i++) {
             result += GameCreator.htmlStrings.sceneTab(GameCreator.scenes[i], GameCreator.activeSceneId === GameCreator.scenes[i].id);
         };
         result += GameCreator.htmlStrings.addSceneTab();
-        result += '</ul>';
+        result += '</div>';
 
-        $('#toolbar-scenes').html(result);
+        $('#scenes').html(result);
     },
     
     editSceneObject: function() {
@@ -320,7 +320,7 @@ GameCreator.UI = {
 
     hideEditModeTools: function() {
         $(".route-node-container").remove();
-        $('#toolbar-scenes').hide();
+        $('#scenes').hide();
         $("#toolbar-bottom > .col.right").hide();
 
     },
@@ -443,7 +443,9 @@ GameCreator.UI = {
         column.html('');
 
         for (i = 0; i < keys.length; i++) {
-            var listItem = document.createElement('li');
+            var listItem = document.createElement('a');
+            listItem.href = "#";
+            $(listItem).addClass('btn tab');
             var actionName = keys[i];
 
             $(listItem).data('action', actionName);
@@ -466,7 +468,9 @@ GameCreator.UI = {
             {text: 'Counter Displays', value: 'counterDisplayTypes'} 
         ];
         objectGroups.forEach(function(group){
-            listItem = document.createElement('li');
+            listItem = document.createElement('a');
+            listItem.href = "#";
+            $(listItem).addClass('btn tab');
             $(listItem).append(group.text);
             $(listItem).on('click', function() {
                 $("#add-global-object-form-content").empty();
@@ -485,8 +489,9 @@ GameCreator.UI = {
 
         column.html('');
         for (i = 0; i < keys.length; i++) {
-            var listItem = document.createElement('li');
-
+            var listItem = document.createElement('a');
+            listItem.href = "#";
+            $(listItem).addClass('btn tab');
             $(listItem).append(keys[i]);
             $(listItem).on('click', function(index) {
                 column.find('.active').removeClass('active');

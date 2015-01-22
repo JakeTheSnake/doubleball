@@ -1,93 +1,86 @@
 GameCreator.PlatformObject.prototype.getEvents = function() {
-	return  '<li data-uifunction="setupOnClickActionsForm"><i class="icon-codeopen" /><span>On Click</span></li> \
-			 <li data-uifunction="setupKeyEventsForm"><i class="icon-codeopen" /><span>On Keypress</span></li>';
+  return '<a class="btn tab" data-uifunction="setupOnClickActionsForm">On Click</a> \
+          <a class="btn tab" data-uifunction="setupKeyEventsForm">On Keypress</a>';
 };
 
 GameCreator.PlatformObject.prototype.getPropertiesForm = function() {
-    var result = ' \
-<div class="panel-paragraph"> \
-    <div class="form-group"> \
-        <div id="object-property-width-container" class="form-item"> \
-        </div> \
-        <div id="object-property-height-container" class="form-item"> \
-        </div> \
-    </div> \
-    <div class="form-group"> \
-        <div id="object-property-maxSpeed-container" class="form-item"> \
-        </div> \
-        <div id="object-property-acceleration-container" class="form-item"> \
-        </div> \
-    </div>\
-    <div class="form-group"> \
-        <div id="object-property-accY-container" class="form-item"> \
-        </div> \
-    </div> \
-</div> \
-<div class="panel-paragraph"> \
+  var result = ' \
+  <article> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-width-container"> \
+      </div> \
+      <div id="object-property-height-container"> \
+      </div> \
+    </fieldset> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-maxSpeed-container"> \
+      </div> \
+      <div id="object-property-acceleration-container"> \
+      </div> \
+    </fieldset> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-accY-container"> \
+      </div> \
+    </fieldset> \
+  </article> \
+  <article> \
     <h2>Set default graphic</h2> \
-    <div class="form-group"> \
-        <div id="object-property-image-container" class="form-item"> \
-        </div> \
-        <div id="global-object-image-upload-controls"></div> \
-    </div> \
-</div>';
-    return result;
+    <fieldset id="image-upload-controls"> \
+      <div id="object-property-image-container"> \
+      </div> \
+    </fieldset> \
+    <div id="global-object-image-upload-controls"> \
+    </div>';
+
+  return result;
 };
 
 GameCreator.PlatformObject.prototype.getSceneObjectForm = function() {
-var result = ' \
-    <ul class="nav nav-stacked nav-tabs nav-tabs-success form-container"> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Size and Position</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Width:</td> \
-                        <td id="side-property-width" data-inputtype="rangeInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Height:</td> \
-                        <td id="side-property-height" data-inputtype="rangeInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Position X:</td> \
-                        <td id="side-property-x" data-inputtype="numberInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Position Y:</td> \
-                        <td id="side-property-y" data-inputtype="numberInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Speed and Acceleration</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Speed Limit:</td> \
-                        <td id="side-property-maxSpeed" data-inputtype="rangeInput"></td> \
-                    </tr> \
-                    <tr> \
-                        <td>Acceleration:</td> \
-                        <td id="side-property-acceleration" data-inputtype="numberInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-        <li class="condition-parameters"> \
-            <span class="icon-down-dir">Physics</span> \
-            <table> \
-                <tbody> \
-                    <tr> \
-                        <td>Gravity:</td> \
-                        <td id="side-property-accY" data-inputtype="numberInput"></td> \
-                    </tr> \
-                </tbody> \
-            </table> \
-        </li> \
-    </ul>'
+  var result = ' \
+  <ul class="parameters"> \
+    <li> \
+      <div class="parameter"> \
+        <div class="parameter-header"> \
+          <span>Size and Position</span> \
+        </div> \
+        <table> \
+          <tr> \
+            <td><label>Width:</label></td> \
+            <td id="side-property-width" data-inputtype="rangeInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Height:</label></td> \
+            <td id="side-property-height" data-inputtype="rangeInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Position X:</label></td> \
+            <td id="side-property-x" data-inputtype="numberInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Position Y:</label></td> \
+            <td id="side-property-y" data-inputtype="numberInput"></td> \
+          </tr> \
+        </table> \
+      </div> \
+    </li> \
+    <li> \
+      <div class="parameter"> \
+        <div class="parameter-header"> \
+          <span>Speed and Acceleration</span> \
+        </div> \
+        <table> \
+          <tr> \
+            <td><label>Speed Limit:</label></td> \
+            <td id="side-property-maxSpeed" data-inputtype="rangeInput"></td> \
+          </tr> \
+          <tr> \
+            <td><label>Acceleration:</label></td> \
+            <td id="side-property-acceleration" data-inputtype="numberInput"></td> \
+          </tr> \
+        </table> \
+      </div> \
+    </li> \
+  </ul>';
 
-    return result;
+  return result;
 };
-
