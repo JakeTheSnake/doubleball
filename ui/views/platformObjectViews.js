@@ -7,26 +7,26 @@ GameCreator.PlatformObject.prototype.getPropertiesForm = function() {
   var result = ' \
   <article> \
     <fieldset class="sequenced"> \
-      <div id="object-property-width-container"> \
+      <div id="object-property-width-container" class="input-container"> \
       </div> \
-      <div id="object-property-height-container"> \
-      </div> \
-    </fieldset> \
-    <fieldset class="sequenced"> \
-      <div id="object-property-maxSpeed-container"> \
-      </div> \
-      <div id="object-property-acceleration-container"> \
+      <div id="object-property-height-container" class="input-container"> \
       </div> \
     </fieldset> \
     <fieldset class="sequenced"> \
-      <div id="object-property-accY-container"> \
+      <div id="object-property-maxSpeed-container" class="input-container"> \
+      </div> \
+      <div id="object-property-acceleration-container" class="input-container"> \
+      </div> \
+    </fieldset> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-accY-container" class="input-container"> \
       </div> \
     </fieldset> \
   </article> \
   <article> \
     <h2>Set default graphic</h2> \
     <fieldset id="image-upload-controls"> \
-      <div id="object-property-image-container"> \
+      <div id="object-property-image-container" class="input-container"> \
       </div> \
     </fieldset> \
     <div id="global-object-image-upload-controls"> \

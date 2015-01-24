@@ -156,8 +156,8 @@ GameCreator.commonObjectViews = {
     <div class="panel-body"> \
     <div id="state-properties-content"> \
     <fieldset> \
-    <div id="object-property-name-container"> \
-    <input type="text" id="add-global-object-name-input" /> \
+    <div id="object-property-name-container" class="input-container"> \
+    <input type="text" id="add-global-object-name-input"/> \
     <label>Object name</label> \
     </div> \
     </fieldset> \
@@ -202,7 +202,7 @@ GameCreator.commonObjectViews = {
   getNonStatePropertiesForm: function() {
     var result = ' \
     <fieldset> \
-    <div id="object-property-unique-container"> \
+    <div id="object-property-unique-container" class="checkbox-container clearfix"> \
     </div> \
     </fieldset>';
 

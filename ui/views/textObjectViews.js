@@ -18,17 +18,17 @@
     var result = ' \
     <article> \
     <fieldset class="sequenced"> \
-      <div id="object-property-font-container"> \
+      <div id="object-property-font-container" class="input-container"> \
       </div> \
-      <div id="object-property-size-container"> \
-      </div> \
-    </fieldset> \
-    <fieldset class="sequenced"> \
-      <div id="object-property-color-container"> \
+      <div id="object-property-size-container" class="input-container"> \
       </div> \
     </fieldset> \
     <fieldset class="sequenced"> \
-      <div id="object-property-text-container"> \
+      <div id="object-property-color-container" class="input-container"> \
+      </div> \
+    </fieldset> \
+    <fieldset class="sequenced"> \
+      <div id="object-property-text-container" class="input-container"> \
       </div> \
     </fieldset>';
 

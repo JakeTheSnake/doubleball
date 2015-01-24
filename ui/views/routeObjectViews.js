@@ -9,20 +9,20 @@
     var result = ' \
     <article> \
     <fieldset class="sequenced"> \
-      <div id="object-property-width-container"> \
+      <div id="object-property-width-container" class="input-container"> \
       </div> \
-      <div id="object-property-height-container"> \
+      <div id="object-property-height-container" class="input-container"> \
       </div> \
     </fieldset> \
     <fieldset class="sequenced"> \
-      <div id="object-property-speed-container"> \
+      <div id="object-property-speed-container" class="input-container"> \
       </div> \
     </fieldset> \
   </article> \
   <article> \
     <h2>Set default graphic</h2> \
     <fieldset id="image-upload-controls"> \
-      <div id="object-property-image-container"> \
+      <div id="object-property-image-container" class="input-container"> \
       </div> \
     </fieldset> \
     <div id="global-object-image-upload-controls"> \
