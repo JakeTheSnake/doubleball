@@ -297,6 +297,7 @@ GameCreator.htmlStrings = {
     <div class="panel-group sequenced clearfix"> \
     <div class="panel-header"> \
     <span>Add global object</span> \
+    <a id="close-dialogue-button" class="btn warning">x</a> \
     </div>';
 
     result += GameCreator.htmlStrings.getColumn('Type of object', 'dialogue-panel-object-type-group');

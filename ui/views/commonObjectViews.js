@@ -46,6 +46,7 @@ GameCreator.commonObjectViews = {
     <div class="panel-group sequenced clearfix"> \
     <div class="panel-header"> \
     <span>Object Manager</span> \
+    <a id="close-dialogue-button" class="btn warning">x</a> \
     </div> \
     <div class="panel"> \
     <div class="panel-header"> \
