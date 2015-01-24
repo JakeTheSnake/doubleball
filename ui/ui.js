@@ -335,7 +335,7 @@ GameCreator.UI = {
 
         var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
         html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list', 'div');
+        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
         
         columnParentContainer.html(html);
 
@@ -367,6 +367,9 @@ GameCreator.UI = {
         conditionsColumn.on('redrawList', function (evt, activeCASetVM) {
             var isActive;
             conditionsColumn.html('');
+            var conditionsUL = $(document.createElement('ul'));
+            conditionsUL.addClass('parameter-groups');
+            conditionsColumn.append(conditionsUL);
 
             if (!activeCASetVM && caSetVMs.length) {
                 activeCASetVM = caSetVMs[0];
@@ -375,7 +378,7 @@ GameCreator.UI = {
 
             for (i = 0; i < caSetVMs.length; i+=1) {
                 isActive = activeCASetVM === caSetVMs[i];
-                conditionsColumn.append(caSetVMs[i].getPresentation(isActive));
+                conditionsUL.append(caSetVMs[i].getPresentation(isActive));
             }
 
             $("#dialogue-panel-add-list").empty();
@@ -397,10 +400,14 @@ GameCreator.UI = {
             $(addActionButton).attr('id', 'add-action-button');
             $(addActionButton).html('Add action');
 
+            var actionsUL = $(document.createElement('ul'));
+            actionsUL.addClass('parameter-groups');
+            actionsColumn.append(actionsUL);
+
             actionsColumn.parent().append(addActionButton);
             
             for (i = 0; i < activeCASetVM.actionVMs.length; i+=1) {
-                actionsColumn.append(activeCASetVM.actionVMs[i].getPresentation(activeCASetVM));
+                actionsUL.append(activeCASetVM.actionVMs[i].getPresentation(activeCASetVM));
             }
             
             $(addActionButton).on('click', function() {

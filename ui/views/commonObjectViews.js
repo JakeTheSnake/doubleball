@@ -225,7 +225,7 @@ GameCreator.commonObjectViews = {
     result += ' \
     </div> \
     </div> \
-    <div id="dialogue-events-content" class="panel"> \
+    <div id="dialogue-events-content"> \
     </div>';
 
     return result;

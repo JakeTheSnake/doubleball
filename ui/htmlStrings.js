@@ -406,16 +406,15 @@ GameCreator.htmlStrings = {
     return result;
   },
 
-  getColumn: function(title, id, containerTag) {
+  getColumn: function(title, id) {
     var i;
-    containerTag = containerTag || 'ul';
     var result = ' \
     <div class="panel"> \
     <div class="panel-header"> \
     <span>' + title + '</span> \
     </div> \
-    <' + containerTag + ' id="' + id + '" class="parameter-groups"> \
-    </' + containerTag + '> \
+    <div id="' + id + '"> \
+    </div> \
     </div>';
 
     return result;
