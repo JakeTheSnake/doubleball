@@ -413,7 +413,7 @@ GameCreator.htmlStrings = {
     <div class="panel-header"> \
     <span>' + title + '</span> \
     </div> \
-    <div id="' + id + '"> \
+    <div id="' + id + '" class="btn-group wide"> \
     </div> \
     </div>';
 
