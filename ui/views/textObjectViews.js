@@ -37,7 +37,7 @@
 
   GameCreator.TextObject.prototype.getSceneObjectForm = function() {
     var result = ' \
-    <ul class="parameters"> \
+    <ul class="parameter-groups"> \
       <li> \
         <div class="parameter"> \
           <div class="parameter-header"> \

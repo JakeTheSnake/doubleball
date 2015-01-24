@@ -329,7 +329,7 @@ GameCreator.TimingParameter.prototype.setupValuePresenter = function(container) 
 };
 
 var labelFunction = function() {
-    return '<td>' + GameCreator.helpers.getPrettyName(this.name) + ':</td>';
+    return '<td><label>' + GameCreator.helpers.getPrettyName(this.name) + ':</label></td>';
 };
 
 GameCreator.GlobalObjectParameter.prototype.getLabel = labelFunction;

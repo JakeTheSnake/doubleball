@@ -406,15 +406,16 @@ GameCreator.htmlStrings = {
     return result;
   },
 
-  getColumn: function(title, id) {
+  getColumn: function(title, id, containerTag) {
     var i;
+    containerTag = containerTag || 'ul';
     var result = ' \
     <div class="panel"> \
     <div class="panel-header"> \
     <span>' + title + '</span> \
     </div> \
-    <div id="' + id + '" class="btn-group wide"> \
-    </div> \
+    <' + containerTag + ' id="' + id + '" class="parameter-groups"> \
+    </' + containerTag + '> \
     </div>';
 
     return result;
@@ -423,7 +424,7 @@ GameCreator.htmlStrings = {
   getScenePropertiesForm: function() {
     var result = ' \
     <div class="panel-paragraph"> \
-    <ul class="parameters"> \
+    <ul class="parameter-groups"> \
     <li> \
     <div class="parameter"> \
     <div class="parameter-header"> \

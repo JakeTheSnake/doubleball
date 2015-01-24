@@ -42,17 +42,13 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
 
     if (active) {
         $(listItem).addClass('active');
-        
-        conditionsList = document.createElement('div');
-        conditionsList.className = 'conditions-group';
 
-        this.appendActiveTitle(conditionsList);
-        this.appendConditions(conditionsList);    
-        this.appendAddConditionButton(conditionsList);
+        this.appendTitle(listItem);
+        this.appendConditions(listItem);    
+        this.appendAddConditionButton(listItem);
         
-        $(listItem).append(conditionsList);
     } else {
-        this.appendInactiveTitle(listItem);
+        this.appendTitle(listItem);
         
         $(listItem).on('click', function() {
             $("#dialogue-panel-actions").trigger('redrawList', this);
@@ -64,8 +60,8 @@ GameCreator.CASetVM.prototype.getPresentation = function(active) {
 }
 
 GameCreator.CASetVM.prototype.appendAddConditionButton = function(conditionsList) {
-    var addConditionButton = document.createElement('button');
-    $(addConditionButton).addClass('icon-plus btn btn-success');
+    var addConditionButton = document.createElement('a');
+    $(addConditionButton).addClass('btn edit wide');
     $(addConditionButton).html('Add condition');
 
     $(addConditionButton).on('click', function() {
@@ -78,7 +74,7 @@ GameCreator.CASetVM.prototype.appendConditions = function(conditionsList) {
     var i;
 
     if (this.conditionVMs.length == 0) {
-        $(conditionsList).append('<div class="condition-parameters"><span>Always</span></div>');
+        $(conditionsList).append('<div class="parameter-group"><div class="parameter-group-title"><span>Always</span></div></div>');
     } else {
         for (i = 0; i < this.conditionVMs.length; i+=1) {
             $(conditionsList).append(this.conditionVMs[i].getPresentation(this));
@@ -86,27 +82,7 @@ GameCreator.CASetVM.prototype.appendConditions = function(conditionsList) {
     }
 }
 
-GameCreator.CASetVM.prototype.appendInactiveTitle = function(caSetList) {
-    var title = this.createTitle();
-
-    $(title).addClass('icon-right-open');
-
-    $(caSetList).append(title);
-}
-
-GameCreator.CASetVM.prototype.appendActiveTitle = function(conditionsList) {
-    var title = this.createTitle();
-    
-    $(title).addClass('icon-down-open');
-
-    $(title).on('click', function(){
-        $("#dialogue-panel-conditions").trigger('redrawList', null);
-        $("#dialogue-panel-actions").empty();
-    });
-    $(conditionsList).append(title);
-}
-
-GameCreator.CASetVM.prototype.createTitle = function() {
+GameCreator.CASetVM.prototype.appendTitle = function(caSetList) {
     var names = [];
     var title = document.createElement('span');
     
@@ -119,7 +95,7 @@ GameCreator.CASetVM.prototype.createTitle = function() {
         $(title).append(names.join(' & '));
     }
 
-    return title;
+    $(caSetList).append(title);
 }
 
 
@@ -132,11 +108,14 @@ GameCreator.ConditionItemVM = function(model, globalObj) {
 
 GameCreator.ConditionItemVM.prototype.getPresentation = function(CASetVM) {
     var result = document.createElement('div');
-        result.className = 'condition-parameters';
-    var title = document.createElement('span');
+        result.className = 'parameter-group';
+    var title = document.createElement('div');
+    $(title).addClass('parameter-group-title');
+    var titleSpan = document.createElement('span');
     var conditionItemVM = this;
-    $(title).addClass('icon-down-dir');
-    $(title).append(this.model.name);
+    $(titleSpan).append(this.model.name);
+    $(title).append(titleSpan);
+
 
     var deleteButton = GameCreator.UI.deleteButtonElement();
 
@@ -202,13 +181,15 @@ GameCreator.ActionItemVM = function(model, globalObj) {
 
 GameCreator.ActionItemVM.prototype.getPresentation = function(CASetVM) {
     var result = document.createElement('li');
-        result.className = 'condition-parameters';
-    var title = document.createElement('span');
-    $(title).addClass('icon-down-dir');
+        result.className = 'parameter-group';
+    var title = document.createElement('div');
+    var titleSpan = document.createElement('span');
+    $(title).addClass('parameter-group-title');
+    $(title).append(titleSpan);
+
+    $(titleSpan).append(this.model.name);
     var actionItemVM = this;
     
-    $(title).append(this.model.name);
-
     $(result).append(title);
 
     var deleteButton = GameCreator.UI.deleteButtonElement();

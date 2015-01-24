@@ -335,7 +335,7 @@ GameCreator.UI = {
 
         var html = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
         html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
+        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list', 'div');
         
         columnParentContainer.html(html);
 
@@ -352,8 +352,8 @@ GameCreator.UI = {
             caSetVMs.push(new GameCreator.CASetVM(caSets[i], selectableConditions, globalObj));
         }
 
-        var addCaSetButton = $(document.createElement('button'));
-        $(addCaSetButton).addClass('icon-plus btn btn-success');
+        var addCaSetButton = $(document.createElement('a'));
+        $(addCaSetButton).addClass('btn success wide');
         $(addCaSetButton).html('Create group');
         $(addCaSetButton).on('click', function() {
             caSet = new GameCreator.ConditionActionSet(globalObj);
@@ -362,7 +362,7 @@ GameCreator.UI = {
             conditionsColumn.trigger('redrawList');
         });
 
-        conditionsColumn.parent().find('button').remove();
+        conditionsColumn.parent().find('a').remove();
         conditionsColumn.parent().append(addCaSetButton);
         conditionsColumn.on('redrawList', function (evt, activeCASetVM) {
             var isActive;
@@ -381,7 +381,7 @@ GameCreator.UI = {
             $("#dialogue-panel-add-list").empty();
         });
         conditionsColumn.on('clearColumn', function () {
-            conditionsColumn.parent().find('button').remove();
+            conditionsColumn.parent().find('a').remove();
             conditionsColumn.empty();
         });
     },
@@ -390,10 +390,10 @@ GameCreator.UI = {
         var actionsColumn = $("#dialogue-panel-actions");
         var i;
         actionsColumn.on('redrawList', function(evt, activeCASetVM) {
-            actionsColumn.parent().find('button').remove();
+            actionsColumn.parent().find('a.success').remove(); // Remove add action-button
             actionsColumn.empty();
-            var addActionButton = document.createElement('button');
-            $(addActionButton).addClass('icon-plus btn btn-success');
+            var addActionButton = document.createElement('a');
+            $(addActionButton).addClass('btn success wide');
             $(addActionButton).attr('id', 'add-action-button');
             $(addActionButton).html('Add action');
 
@@ -410,7 +410,7 @@ GameCreator.UI = {
             $("#dialogue-panel-add-list").empty();
         });
         actionsColumn.on('clearColumn', function() {
-            actionsColumn.parent().find('button').remove();
+            actionsColumn.parent().find('a.success').remove();// Remove add action-button
             actionsColumn.empty();
         });
     },
@@ -422,10 +422,11 @@ GameCreator.UI = {
         column.html('');
 
         for (i = 0; i < Object.keys(GameCreator.conditions).length; i++) {
-            var listItem = document.createElement('li');
+            var listItem = document.createElement('a');
             var conditionName = Object.keys(GameCreator.conditions)[i];
 
             $(listItem).data('condition', conditionName);
+            $(listItem).addClass('btn tab');
             $(listItem).append(GameCreator.helpers.labelize(conditionName));
             $(listItem).on('click', function() {
                 activeCASetVM.addCondition($(this).data('condition'));
@@ -524,10 +525,10 @@ GameCreator.UI = {
     },
 
     deleteButtonElement: function() {
-        var deleteButton = document.createElement('span');
+        var deleteButton = document.createElement('a');
     
         $(deleteButton).html('X');
-        $(deleteButton).addClass('remove-item-button');
+        $(deleteButton).addClass('btn warning');
 
         return deleteButton;
     },
