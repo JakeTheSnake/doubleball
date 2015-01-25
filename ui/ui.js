@@ -189,14 +189,7 @@ GameCreator.UI = {
         GameCreator.UI.populateSelectObjectTypeGroupList();
     },
 
-    setupAddObjectForm: function(objectType) {
-        $("#add-global-object-window-content").html(GameCreator.htmlStrings.addGlobalObjectForm(objectType));
-        $("#add-global-object-window-content .saveButton").on("click", function() {
-            GameCreator.UI.saveNewGlobalObject(objectType);
-            GameCreator.UI.closeDialogue();
-        });
-    },
-    
+   
     //Edit global object functions
     
     openEditGlobalObjectDialogue: function(globalObj) {
@@ -221,6 +214,30 @@ GameCreator.UI = {
         var previewImage = document.createElement('img');
         previewImage.src = globalObj.getDefaultState().attributes.image.src;
         $("#object-manager-library-preview").html(previewImage);
+
+        GameCreator.UI.loadInputStyle();
+    },
+
+    loadInputStyle: function() {
+        $("#dialogue-window .input-container input[type=text]").each(function() {
+            var textInput = $(this);
+            textInput.on('focus', function() {
+                $(this).parent().addClass('input-container-active');
+                $(this).removeAttr('placeholder');
+            });
+
+            textInput.on('blur', function() {
+                if ($(this).val().length == 0) {
+                    $(this).parent().removeClass('input-container-active');
+                    $(this).attr('placeholder', textInput.parent().find('label').html());
+                }
+            });
+
+            if (textInput.val().length != 0) {
+                $(this).parent().addClass('input-container-active');
+                $(this).removeAttr('placeholder');
+            }
+        })
     },
     
     //General dialogue functions
@@ -514,6 +531,7 @@ GameCreator.UI = {
                     GameCreator.addTempGlobalObjectToGame(globalObject);
                     GameCreator.UI.closeDialogue();
                 });
+                GameCreator.UI.loadInputStyle();
             }.bind(listItem, i));
 
             column.append(listItem);
