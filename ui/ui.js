@@ -323,7 +323,7 @@ GameCreator.UI = {
         if (GameCreator.selectedObject.route) {
             GameCreator.drawRoute(GameCreator.selectedObject.route);
         }
-        GameCreator.drawSelectionLine();
+        GameCreator.drawObjectSelectedUI();
 
         GameCreator.UI.setupSceneObjectForm(GameCreator.selectedObject);
     },
@@ -333,6 +333,10 @@ GameCreator.UI = {
         $("#side-property-height span").html(sceneObj.attributes.height);
         $("#side-property-x span").html(sceneObj.attributes.x);
         $("#side-property-y span").html(sceneObj.attributes.y);
+        $("#side-property-maxX span").html(sceneObj.attributes.maxX);
+        $("#side-property-maxY span").html(sceneObj.attributes.maxY);
+        $("#side-property-minX span").html(sceneObj.attributes.minX);
+        $("#side-property-minY span").html(sceneObj.attributes.minY);
     },
 
     hideEditModeTools: function() {
@@ -490,7 +494,7 @@ GameCreator.UI = {
         var objectGroups = [
             {text: 'Player Objects', value: 'playerObjectTypes'}, 
             {text: 'Game Objects', value: 'gameObjectTypes'},
-            {text: 'Counter Displays', value: 'counterDisplayTypes'} 
+            {text: 'Counter Displays', value: 'counterDisplayTypes'}
         ];
         objectGroups.forEach(function(group){
             listItem = document.createElement('a');

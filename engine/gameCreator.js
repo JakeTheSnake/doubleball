@@ -17,6 +17,8 @@
         scenes: [],
         activeSceneId: 0,
 
+        sounds: {}, //All sounds within the current game
+
         //The runtime arrays contain the current state of the game.
         collidableObjects: [],
         movableObjects: [],
@@ -69,7 +71,7 @@
             var i, obj;
             if (GameCreator.uiContext) {
                 GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
-                GameCreator.drawSelectionLine();
+                GameCreator.drawObjectSelectedUI();
             }
             GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             for (i = 0; i < GameCreator.renderableObjects.length; i += 1) {

@@ -100,7 +100,7 @@
         GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(this), 1);
         if (GameCreator.selectedObject === this) {
             GameCreator.selectedObject = null;
-            GameCreator.drawSelectionLine();
+            GameCreator.drawObjectSelectedUI();
             GameCreator.hideRoute();
             GameCreator.setupScenePropertiesForm();
         }
@@ -154,6 +154,24 @@
                 return this.resizeS;
             } else {
                 return this.moveObject;
+            }
+        } else {
+            if (Math.abs(this.attributes.minX - x) <= border && Math.abs(this.attributes.minY - y) <= border) {
+                return this.resizeMouseAreaNW;
+            } else if (Math.abs(this.attributes.maxX - x) <= border && Math.abs(this.attributes.minY - y) <= border) {
+                return this.resizeMouseAreaNE;
+            } else if (Math.abs(this.attributes.minX - x) <= border && Math.abs(this.attributes.maxY - y) <= border) {
+                return this.resizeMouseAreaSW;
+            } else if (Math.abs(this.attributes.maxY - y) <= border && Math.abs(this.attributes.maxX - x) <= border) {
+                return this.resizeMouseAreaSE;
+            } else if (Math.abs(this.attributes.minX - x) <= border) {
+                return this.resizeMouseAreaW;
+            } else if (Math.abs(this.attributes.maxX - x) <= border) {
+                return this.resizeMouseAreaE;
+            } else if (Math.abs(this.attributes.minY - y) <= border) {
+                return this.resizeMouseAreaN;
+            } else if (Math.abs(this.attributes.maxY - y) <= border) {
+                return this.resizeMouseAreaS;
             }
         }
         return null;
@@ -254,6 +272,62 @@
     GameCreator.SceneObject.prototype.resizeS = function(x, y) {
         var diffY = y - this.attributes.y;
         this.resizeObject(null, diffY);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaNW = function(x, y) {
+        if (x > this.attributes.maxX) x = this.attributes.maxX;
+        if (y > this.attributes.maxY) y = this.attributes.maxY;
+        this.attributes.minX = x;
+        this.attributes.minY = y;
+        GameCreator.UI.updateSceneObjectForm(this);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaNE = function(x, y) {
+        if (x < this.attributes.minX) x = this.attributes.minX;
+        if (y > this.attributes.maxY) y = this.attributes.maxY;
+        this.attributes.maxX = x;
+        this.attributes.minY = y;
+        GameCreator.UI.updateSceneObjectForm(this);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaSE = function(x, y) {
+        if (x < this.attributes.minX) x = this.attributes.minX;
+        if (y < this.attributes.minY) y = this.attributes.minY;
+        this.attributes.maxX = x;
+        this.attributes.maxY = y;
+        GameCreator.UI.updateSceneObjectForm(this);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaSW = function(x, y) {
+        if (x > this.attributes.maxX) x = this.attributes.maxX;
+        if (y < this.attributes.minY) y = this.attributes.minY;
+        this.attributes.minX = x;
+        this.attributes.maxY = y;
+        GameCreator.UI.updateSceneObjectForm(this);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaW = function(x, y) {
+        if (x > this.attributes.maxX) x = this.attributes.maxX;
+        this.attributes.minX = x;
+        GameCreator.UI.updateSceneObjectForm(this);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaE = function(x, y) {
+        if (x < this.attributes.minX) x = this.attributes.minX;
+        this.attributes.maxX = x;
+        GameCreator.UI.updateSceneObjectForm(this);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaN = function(x, y) {
+        if (y > this.attributes.maxY) y = this.attributes.maxY;
+        this.attributes.minY = y;
+        GameCreator.UI.updateSceneObjectForm(this);
+    };
+
+    GameCreator.SceneObject.prototype.resizeMouseAreaS = function(x, y) {
+        if (y < this.attributes.minY) y = this.attributes.minY;
+        this.attributes.maxY = y;
+        GameCreator.UI.updateSceneObjectForm(this);
     };
 
     GameCreator.SceneObject.prototype.moveObject = function(x, y) {

@@ -76,6 +76,11 @@
             GameCreator.editScene(GameCreator.scenes[0]);
         },
 
+        drawObjectSelectedUI: function() {
+            GameCreator.drawSelectionLine();
+            GameCreator.drawMouseMovementArea();
+        },
+
         drawSelectionLine: function() {
             GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
             if (GameCreator.selectedObject) {
@@ -87,6 +92,24 @@
                 GameCreator.uiContext.lineTo(selobj.attributes.x+2, selobj.attributes.y-2 + selobj.displayHeight);
                 GameCreator.uiContext.closePath();
                 GameCreator.uiContext.stroke();
+            }
+        },
+
+        drawMouseMovementArea: function() {
+            if(GameCreator.selectedObject && GameCreator.selectedObject.parent.objectType === 'MouseObject') {
+                var selobj = GameCreator.selectedObject;
+                var context = GameCreator.uiContext;
+                context.beginPath();
+                context.setLineDash([5]);
+                context.strokeStyle = '#f00'
+                context.moveTo(selobj.attributes.minX+2, selobj.attributes.minY+2);
+                context.lineTo(selobj.attributes.maxX-2, selobj.attributes.minY+2);
+                context.lineTo(selobj.attributes.maxX-2, selobj.attributes.maxY-2);
+                context.lineTo(selobj.attributes.minX+2, selobj.attributes.maxY-2);
+                context.closePath();
+                context.stroke();
+                context.setLineDash([0]);
+                context.strokeStyle = '#000'
             }
         },
 
@@ -149,19 +172,25 @@
             $(GameCreator.mainCanvas).on("mousedown.editScene", function(e) {
                 mouseLeft = e.pageX - $("#main-canvas").offset().left;
                 mouseTop = e.pageY - $("#main-canvas").offset().top;
-                GameCreator.hoveredObject = GameCreator.getClickedObjectEditing(mouseLeft, mouseTop);
-                if (GameCreator.hoveredObject) {
+                GameCreator.hoveredObject = GameCreator.getObjectAtCoordinates(mouseLeft, mouseTop);
+                if (GameCreator.selectedObject && !GameCreator.hoveredObject) {
+                    dragFunc = GameCreator.selectedObject.getDragFunction(mouseLeft, mouseTop);
+                    if (dragFunc) {
+                        $('.route-node-container').addClass('dragging');
+                    } else {
+                        dragFunc = null;
+                        GameCreator.selectedObject = null;
+                        GameCreator.drawSelectionLine();
+                        GameCreator.hideRoute();
+                        $('.library-scene-object-button').removeClass('active');
+                        GameCreator.setupScenePropertiesForm();
+                    }
+                }
+                else if (GameCreator.hoveredObject) {
                     dragFunc = GameCreator.hoveredObject.getDragFunction(mouseLeft, mouseTop);
                     GameCreator.selectedObject = GameCreator.hoveredObject;
                     GameCreator.UI.editSceneObject();
                     $('.route-node-container').addClass('dragging');
-                } else {
-                    dragFunc = null;
-                    GameCreator.selectedObject = null;
-                    GameCreator.drawSelectionLine();
-                    GameCreator.hideRoute();
-                    $('.library-scene-object-button').removeClass('active');
-                    GameCreator.setupScenePropertiesForm();
                 }
                 GameCreator.render(false);
             });
@@ -179,12 +208,9 @@
                 mouseTop = e.pageY - $("#main-canvas").offset().top;
 
                 if (GameCreator.selectedObject) {
-                    var hoveredObject = GameCreator.getClickedObjectEditing(mouseLeft, mouseTop);
-                    if (hoveredObject) {
-                        GameCreator.helpers.setMouseCursor(hoveredObject.getDragFunction(mouseLeft, mouseTop));
-                    } else {
-                        GameCreator.helpers.setMouseCursor(null);
-                    }
+
+                    GameCreator.helpers.setMouseCursor(GameCreator.selectedObject.getDragFunction(mouseLeft, mouseTop));
+
                     GameCreator.invalidate(GameCreator.selectedObject);
                     if (dragFunc) {
                         GameCreator.helpers.setMouseCursor(dragFunc);
@@ -357,7 +383,7 @@
             $("body").append(GameCreator.htmlStrings.routeNode(node, i));
         },
 
-        getClickedObjectEditing: function(x, y) {
+        getObjectAtCoordinates: function(x, y) {
             var i, obj;
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {
                 obj = GameCreator.renderableObjects[i];

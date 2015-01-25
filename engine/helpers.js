@@ -481,18 +481,26 @@
         switch (dragFunc) {
             case GameCreator.SceneObject.prototype.resizeNW:
             case GameCreator.SceneObject.prototype.resizeSE:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaNW:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaSE:
                 cursor = "nw-resize"
                 break;
             case GameCreator.SceneObject.prototype.resizeNE:
             case GameCreator.SceneObject.prototype.resizeSW:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaNE:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaSW:
                 cursor = "ne-resize"
                 break;
             case GameCreator.SceneObject.prototype.resizeW:
             case GameCreator.SceneObject.prototype.resizeE:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaW:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaE:
                 cursor = "w-resize";
                 break;
             case GameCreator.SceneObject.prototype.resizeN:
             case GameCreator.SceneObject.prototype.resizeS:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaN:
+            case GameCreator.SceneObject.prototype.resizeMouseAreaS:
                 cursor = "n-resize";
                 break;
             case GameCreator.SceneObject.prototype.moveObject:

@@ -41,12 +41,12 @@ test("Add Object to scene", function() {
 });
 
 test("Get Clicked Object in edit mode", function() {
-    var sceneObject = GameCreator.getClickedObjectEditing(6, 7);
+    var sceneObject = GameCreator.getObjectAtCoordinates(6, 7);
     ok(sceneObject, "Got scene object");
 });
 
 test("Delete selected scene object", function() {
-    var sceneObject = GameCreator.getClickedObjectEditing(6, 7);
+    var sceneObject = GameCreator.getObjectAtCoordinates(6, 7);
     GameCreator.selectedObject = sceneObject;
 
     deepEqual(GameCreator.scenes[0].objects.length, 1, "Scene object was added to scene.");
