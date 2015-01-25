@@ -194,7 +194,7 @@
                 }
                 GameCreator.render(false);
             });
-            $(GameCreator.mainCanvas).on("mouseup.editScene", function(e) {
+            $(window).on("mouseup.editScene", function(e) {
                 if (GameCreator.hoveredObject) {
                     GameCreator.hoveredObject.cleanupSize();
                     GameCreator.hoveredObject = undefined;
