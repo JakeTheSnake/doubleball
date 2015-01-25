@@ -7,104 +7,115 @@
         <meta name="description" content="">
         <title>Arcadeforge</title>
         <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
-        <link rel="stylesheet" href="../../stylesheets/normalize.css.erb">
-        <link rel="stylesheet" href="../../stylesheets/editor/editor.css.erb">
+        <link rel="stylesheet" href="../../stylesheets/resets/normalize.css">
+        <link rel="stylesheet" href="../../stylesheets/resets/reset.css">
+        <link rel="stylesheet" href="../../stylesheets/application/application.css.erb">
+        <link rel="stylesheet" href="../../stylesheets/application/dev.css">
+        <link rel="stylesheet" href="../../stylesheets/application/environment.css.erb">
+        <link rel="stylesheet" href="../../stylesheets/application/sections.css">
+        <link rel="stylesheet" href="../../stylesheets/editor/editor.css">
+        <link rel="stylesheet" href="../../stylesheets/editor/dev.css">
+        <link rel="stylesheet" href="../../stylesheets/editor/dialogue.css">
+        <link rel="stylesheet" href="../../stylesheets/editor/object-manager.css">
+        <link rel="stylesheet" href="../../stylesheets/editor/parameters.css">
+        <link rel="stylesheet" href="../../stylesheets/editor/temp.css.erb">
+        <link rel="stylesheet" href="../../stylesheets/generic/generic.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/buttons.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/elements.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/forms.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/helpers.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/layout.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/panels.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/tabs.css">
+        <link rel="stylesheet" href="../../stylesheets/foundation/typography.css">
+        <link rel="stylesheet" href="../../stylesheets/game.css">
     </head>
     <body>
-
-        <div id="dialogue-overlay"></div>
-
-        <!-- Container -->
-        <div class="container-fluid">
-
-            <!-- Toolbar top -->
-            <div id="toolbar-top" class="border-bottom">
-                <a href="index.html" class="navbar-logo">
-                    <img src="images/logo_arcadeforge_navbar.png">
-                </a>
-                <button id="save-button" type="button" class="btn"></button>
+        <div class="container">
+            <header class="border-bottom">
+                <!-- START: Needs to be re-written -->
+                <a id="save-game-button" class="toolbar-icon toolbar-icon-save"></a>
                 <div id="edit-mode" class="btn-group">
-                    <div id="edit-mode-buttons">
-                        <input type="radio" id="edit-game-button" name="edit-mode" data-name="EDIT GAME" checked="checked" />
-                        <label for="edit-game-button"></label>
-                        <input type="radio" id="direct-game-button" data-name="DIRECT GAME"name="edit-mode" />
-                        <label for="direct-game-button"></label>
-                        <input type="radio" id="run-game-button" data-name="RUN GAME" name="edit-mode" />
-                        <label for="run-game-button"></label>
-                    </div>
-                    <span id="edit-mode-label"></span>
+                  <div id="edit-mode-buttons">
+                    <input type="radio" id="edit-game-button" name="edit-mode" data-name="EDIT GAME" checked="checked" />
+                    <label for="edit-game-button"></label>
+                    <input type="radio" id="direct-game-button" data-name="DIRECT GAME"name="edit-mode" />
+                    <label for="direct-game-button"></label>
+                    <input type="radio" id="run-game-button" data-name="RUN GAME" name="edit-mode" />
+                    <label for="run-game-button"></label>
+                  </div>
+                  <span id="edit-mode-label"></span>
                 </div>
-                <button id="logout-button" type="button" class="btn btn-warning">Logout</button>
-            </div>
-
-            <!-- Toolbar bottom -->
-            <div id="toolbar-bottom">
-
-                <!-- Column Left -->
-                <div class="col left border-right">
+                <div id="published-container" class="btn-group">
+                  <div id="published-buttons">
+                    <input type="radio" id="private-button" name="publish-group" data-name="PRIVATE">
+                    <label class="i-private-button" for="private-button"></label>
+                    <input type="radio" id="publish-button" name="publish-group" data-name="PUBLISHED">
+                    <label class="i-publish-button" for="publish-button"></label>
+                  </div>
+                  <span id="published-label">PRIVATE</span>
                 </div>
+                <!-- END: Needs to be re-written -->
+            </header>
+                  <main>
 
-                <!-- Column middle -->
-                <div class="col middle">
+  <!-- Column: Left -->
+  <div class="col left border-right">
+  </div>
 
-                    <!-- Scenes -->
-                    <div id="toolbar-scenes" class="border-bottom">
-                    </div>
+  <!-- Column: Right -->
+  <div class="col right border-left">
 
-                    <!-- Canvas -->
-                    <div id="canvas-container" oncontextmenu="return false;">
-                    </div>
-                </div>
+    <!-- Panel: Propertise -->
+    <div id="properties" class="panel wide">
+      <div class="panel-header">
+        <span>Properties</span>
+      </div>
+      <div id="side-properties-form-container">
+      </div>
+    </div>
 
-                <!-- Column right -->
-                <div class="col right border-left">
-                    <!-- Panel: Properties -->
-                    <div id ="properties" class="panel border-bottom">
-                        <div class="panel-heading">
-                            <span class="panel-title">Properties</span>
-                        </div>
-                        <div id="side-properties-form-container" class="panel-body">
-                            
-                        </div>
-                    </div>
-
-                    <!-- Panel: Libraries -->
-                    <div class="panel-heading">
-                        <span class="panel-title">Objects</span>
-                    </div>
-                    <div id="library-tabs">
-                        <ul class="nav-tabs">
-                            <li id="global-objects-tab" class="tab active" data-panelid="global-object-library">Global Objects</li>
-                            <li id="scene-objects-tab" class="tab" data-panelid="scene-object-library">Scene Objects</li>
-                        </ul>
-                    </div>
-                    <div id="global-object-library" class="object-library-panel">
-                        <div id="library-preview" class="library-preview panel-paragraph"></div>
-                        <div class="library-explorer">
-                            <ul class="global-object-list">
-                            </ul>
-                        </div>
-                        <div id="library-menu" class="library-menu">
-                            <button id="add-global-object-button" type="button" class="btn btn-success">Add</button>
-                            <button id="edit-global-object-button" type="button" class="btn btn-edit disabled">Edit</button>
-                            <button id="rename-global-object-button" type="button" class="btn btn-edit disabled">Rename</button>
-                        </div>
-                    </div>
-
-                    <div id="scene-object-library" class="object-library-panel">
-                        <div class="library-explorer">
-                            <ul id="scene-object-list">
-                            </ul>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
+    <!-- Panel: Library -->
+    <div id="library" class="panel wide">
+      <div class="panel-header">
+        <span>Objects</span>
+      </div>
+      <div id="library-tabs" class="library-tabs">
+        <div class="btn-group sequenced">
+          <a href="#" class="btn tab active" data-panelid="global-object-library">Global objects</a>
+          <a href="#" class="btn tab" data-panelid="scene-object-library">Scene objects</a>
         </div>
+      </div>
+      <div id="global-object-library" class="object-library-panel">
+        <div id="library-preview" class="library-preview">
+        </div>
+        <div class="library-explorer">
+          <ul class="global-object-list">
+          </ul>
+        </div>
+        <div id="library-menu">
+          <div class="btn-group sequenced">
+            <a href="#" id="add-global-object-button" class="btn success">Add</a>
+            <a href="#" id="edit-global-object-button" class="btn edit">Edit</a>
+            <a href="#" id="rename-global-object-button" class="btn warning">Rename</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <!-- Column: Middle -->
+  <div class="col middle">
+    <div id="scenes" class="border-bottom">
+    </div>
+    <div id="canvas-container" oncontextmenu="return false;">
+    </div>
+  </div>
+</main>
+            </div>
         <!-- Dialogue -->
-        <div id="dialogue-window">
-        </div>
+        <div id="dialogue-overlay"></div>
+        <div id="dialogue-window"></div>
 
         <!-- Jquery -->
         <script type="text/javascript" src="libs/jquery-1.9.1.js"></script>
@@ -147,6 +158,5 @@
         <script src="ui/views/commonObjectViews.js"></script>
         <script src="ui/views/textObjectViews.js"></script>
         <script src="ui/controllers/commonObjectControllers.js"></script>
-
     </body>
 </html>
