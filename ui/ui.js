@@ -236,6 +236,9 @@ GameCreator.UI = {
             if (textInput.val().length != 0) {
                 $(this).parent().addClass('input-container-active');
                 $(this).removeAttr('placeholder');
+            } else {
+                $(this).parent().removeClass('input-container-active');
+                $(this).attr('placeholder', textInput.parent().find('label').html());
             }
         })
     },
