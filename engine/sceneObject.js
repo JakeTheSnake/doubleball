@@ -89,7 +89,7 @@
     GameCreator.SceneObject.prototype.removeFromCollidingList = function(objectName) {
         var objectIndex = this.collidingWith.indexOf(objectName);
         if (objectIndex !== -1) {
-            var removedObject = this.collidingWith.splice(objectIndex, 1);
+            var removedObject = this.collidingWith.splice(objectIndex, 1)[0];
             GameCreator.helpers.updateObjectCollisionArrays(this, removedObject);
         }
     }  

@@ -128,7 +128,7 @@
                     if (colliding && !object.alreadyCollidesWith(targetObject.attributes.instanceId)) {
                         GameCreator.helpers.doCollision(object, targetObject);
                     } else if (!colliding) {
-                        object.removeFromCollidingList(targetObject);
+                        object.removeFromCollidingList(targetObject.attributes.instanceId);
                     }
                 }
             }
