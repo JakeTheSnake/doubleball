@@ -129,21 +129,21 @@ GameCreator.commonObjectViews = {
     return result;
   },
 
-  getStatePropertiesContent: function(title) {
+  getStatePropertiesContent: function(title, id) {
     var result = ' \
     <div class="panel large"> \
     <div class="panel-header"> \
     <span>' + title + '</span> \
     </div> \
     <div class="panel-body"> \
-    <div id="state-properties-content"> \
-    </div>';
+    <div id="state-properties-content">';
 
     result += this.getPropertiesForm();
     result += ' \
     </article> \
+    <a class="btn warning grow delete-state-button" data-id="' + id + '">Delete state</a> \
     </div> \
-    </div>';
+    </div></div>';
 
     return result;
   },

@@ -166,7 +166,7 @@ GameCreator.commonObjectControllers = {
 
     setupEditStateForm: function(stateId) {
         var state = this.getState(stateId);
-        $('#dialogue-state-content').html(this.getStatePropertiesContent('State: ' + state.name));
+        $('#dialogue-state-content').html(this.getStatePropertiesContent('State: ' + state.name, stateId));
         $('#dialogue-state-content').append(GameCreator.htmlStrings.getColumn("Properties", "dialogue-panel-state-properties"));
         GameCreator.helpers.populateGlobalObjectPropertiesForm(this.getDefaultState().attributes, GameCreator[this.objectType].objectAttributes, 'state-properties-content');
         GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[this.objectType].objectAttributes, 'state-properties-content');
@@ -199,6 +199,13 @@ GameCreator.commonObjectControllers = {
             }.bind(listItem, i));
             propertiesColumn.append(listItem);
         }
+
+        $('#state-properties-content .delete-state-button').on('click', function(evt) {
+            var stateId = $(this).data('id');
+            GameCreator.helpers.removeObjectFromArrayById(globalObj.states, stateId);
+            $('#dialogue-panel-states a[data-id="' + stateId + '"]').remove();
+            $('#dialogue-state-content').empty();
+        });
     },
 
     setupEventsForm: function(container) {

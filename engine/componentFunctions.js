@@ -253,7 +253,7 @@
     };
 
     GameCreator.commonObjectFunctions.createState = function(name, attributes) {
-        var newStateId = this.states.length;
+        var newStateId = GameCreator.getUniqueId();
         var newStateName = name || "state" + newStateId;
         var newState = {
             name: newStateName,

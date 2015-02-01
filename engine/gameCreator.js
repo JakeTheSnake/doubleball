@@ -37,7 +37,7 @@
         selectedObject: undefined, //The currently selected scene object.
         hoveredObject: undefined,
         draggedNode: undefined,
-        idCounter: 0, // Counter used for scene objects' instance IDs
+        idCounter: 0, // Counter used for various unique ids.
         globalIdCounter: 0, // Counter used for global objects ID
 
         initialize: function() {
