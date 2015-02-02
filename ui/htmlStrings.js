@@ -227,7 +227,7 @@ GameCreator.htmlStrings = {
   defaultEventInformationWindow: function(title, imageSrc) {
     var result = ' \
     <div id="event-information-window"> \
-    <div class="panel-heading"> \
+    <div class="panel-header"> \
     <span class="panel-title">' + title + '</span> \
     </div>';
 
@@ -253,7 +253,7 @@ GameCreator.htmlStrings = {
   collisionEventInformationWindow: function(title, image1Src, image2Src) {
     var result = ' \
     <div id="event-information-window"> \
-    <div class="panel-heading"> \
+    <div class="panel-header"> \
     <span class="panel-title">' + title + '</span> \
     </div>';
 
@@ -274,16 +274,13 @@ GameCreator.htmlStrings = {
   editActionsWindow: function(infoWindowHtml, objName) {
     var result = ' \
     <div class="dialogue right"> \
-    <div class="close-dialogue-button arrow-right"></div> \
-    <div id="select-action-window" class="panel panel-dialogue"> \
-    <div class="panel-heading "> \
-    <span class="panel-title">Set Action Manager: ' + objName + '</span> \
-    </div>';
-
+    <div id="select-action-window" class="panel panel-dialogue">'
     result += infoWindowHtml;
+    result += '<div class="panel-group sequenced clearfix">'
     result += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
     result += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
     result += ' \
+    </div> \
     </div> \
     </div>';
 
