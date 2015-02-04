@@ -74,7 +74,7 @@ GameCreator.CASetVM.prototype.appendConditions = function(conditionsList) {
     var i;
 
     if (this.conditionVMs.length == 0) {
-        $(conditionsList).append('<div class="parameter-group"><div class="parameter-group-title"><span>Always</span></div></div>');
+        $(conditionsList).append('<div class="parameter-group"><div class="parameter-header"><span>Always</span></div></div>');
     } else {
         for (i = 0; i < this.conditionVMs.length; i+=1) {
             $(conditionsList).append(this.conditionVMs[i].getPresentation(this));
@@ -110,7 +110,7 @@ GameCreator.ConditionItemVM.prototype.getPresentation = function(CASetVM) {
     var result = document.createElement('div');
         result.className = 'parameter-group';
     var title = document.createElement('div');
-    $(title).addClass('parameter-group-title');
+    $(title).addClass('parameter-header');
     var titleSpan = document.createElement('span');
     var conditionItemVM = this;
     $(titleSpan).append(this.model.name);
@@ -184,7 +184,7 @@ GameCreator.ActionItemVM.prototype.getPresentation = function(CASetVM) {
         result.className = 'parameter-group';
     var title = document.createElement('div');
     var titleSpan = document.createElement('span');
-    $(title).addClass('parameter-group-title');
+    $(title).addClass('parameter-header');
     $(title).append(titleSpan);
 
     $(titleSpan).append(this.model.name);
