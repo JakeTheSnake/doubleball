@@ -21,10 +21,8 @@
   </article> \
   <article> \
     <h2>Set default graphic</h2> \
-    <fieldset id="image-upload-controls"> \
-      <div id="object-property-image-container" class="input-container"> \
-      </div> \
-    </fieldset> \
+    <div id="object-property-image-container" class="input-container hidden"> \
+    </div> \
     <div id="global-object-image-upload-controls"> \
     </div>';
 

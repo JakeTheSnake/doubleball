@@ -392,7 +392,37 @@ GameCreator.htmlStrings = {
     return '<a id="add-scene-tab" class="btn tab small">+</a>';
   },
 
-  imageUploadControls: function() {
+  imageSelectControls: function() {
+    return  '<img class="uploaded-image-preview"></img> \
+            <a class="btn success grow upload-image-button">Set Image</a>'
+  },
+
+  imageSelectContent: function() {
+    return ' \
+    <div id="image-select-tab-row"> \
+      <div class="image-select-tab active" data-content-id="image-select-library-content">Select Image</div> \
+      <div class="image-select-tab" data-content-id="image-select-upload-content">Upload Image</div> \
+      <div class="image-select-tab" data-content-id="image-select-url-content">Set Image Url</div> \
+    </div> \
+    <div id="image-select-library-content" class="image-select-content"> \
+      LIBRARY \
+    </div> \
+    <div id="image-select-upload-content" class="image-select-content"> \
+      <img src="" class="popup-uploaded-image-preview"></img> \
+      <input class="hidden hidden-file-input" type="file" accept="image/*"> \
+      <a class="btn success grow upload-image-button">Upload Image</a> \
+      <a class="btn success grow save-selected-image-button">Save</a> \
+    </div> \
+    <div id="image-select-url-content" class="image-select-content"> \
+      <img src="" class="popup-uploaded-image-preview"></img> \
+      <input id="image-select-set-url-input" type="text"></input> \
+      <a id="image-select-update-preview-button" class="btn success grow">Update Preview</a> \
+      <a class="btn success grow save-selected-image-button">Save</a> \
+    </div> \
+    <input id="image-select-popup-result" type="text" class="hidden"></input>'
+  },
+
+  /* imageSelectControls: function() {
     var result = ' \
     <div class="btn-group sequenced"> \
     <a class="btn success grow upload-image-button">Upload Image</a> \
@@ -401,7 +431,7 @@ GameCreator.htmlStrings = {
     <input class="visuallyhidden hidden-file-input" type="file" accept="image/*">';
 
     return result;
-  },
+  }, */
 
   getColumn: function(title, id) {
     var i;

@@ -42,7 +42,7 @@ GameCreator.commonObjectControllers = {
 
         GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObjAttributes, GameCreator[this.objectType].objectAttributes, 'object-properties-content');
         GameCreator.helpers.populateGlobalObjectPropertiesForm(this.attributes, GameCreator[this.objectType].objectNonStateAttributes, 'object-non-state-properties-content', globalObj);
-        GameCreator.helpers.populateImageUploadControls();
+        GameCreator.UI.populateImageSelectControls($('#global-object-image-upload-controls'), $('#object-property-image-container input'));
     },
         
     setupCollisionsForm: function(container) {

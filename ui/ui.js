@@ -446,6 +446,78 @@ GameCreator.UI = {
         });
     },
 
+    populateImageSelectControls: function(container, input) {
+        container.html(GameCreator.htmlStrings.imageSelectControls());
+        
+        $('.upload-image-button').click(function(){
+            GameCreator.UI.openImageSelectPopup(input);
+        })
+    },
+
+    openImageSelectPopup: function(input) {
+        var container = $('#image-select-popup');
+        container.html(GameCreator.htmlStrings.imageSelectContent());
+        container.show();
+        $("#image-select-overlay").show();
+
+        //Setup tabs
+        $("#image-select-popup .image-select-tab").on('click', function(){
+            $('.image-select-tab').removeClass('active');
+            $(this).addClass('active');
+            var contentContainerId = $(this).data('content-id');
+            $('.image-select-content').hide();
+            $('#' + contentContainerId).show();
+        });
+
+        //Setup image library
+
+        
+
+        //Setup file upload
+        container.find('.upload-image-button').click(function() {
+            container.find('.hidden-file-input').trigger('click');
+        });
+
+        container.find('.hidden-file-input').on('change', function(evt){
+            var file = evt.target.files[0];
+            var reader = new FileReader();
+
+            if(file.size > 500000) alert('File too large.');
+
+            reader.onload = function() {
+                var dataUrl = reader.result;
+                $('#image-select-popup-result').val(dataUrl);
+                $('.popup-uploaded-image-preview').attr('src', dataUrl);
+            }
+
+            reader.readAsDataURL(file);
+        });
+
+        //Setup set URL
+        $('#image-select-update-preview-button').click(function(){
+            var dataUrl = $('#image-select-set-url-input').val();
+            $('#image-select-popup-result').val(dataUrl);
+            $('.popup-uploaded-image-preview').attr('src', dataUrl);
+        });
+
+        $("#image-select-overlay").one('click', function(){
+            GameCreator.UI.closeImageSelectPopup(container);
+        });
+
+        $('.save-selected-image-button').click(function(){
+            var dataUrl = $('#image-select-popup-result').val()
+            input.val(dataUrl);
+            input.trigger('blur');
+            $('.uploaded-image-preview').attr('src', dataUrl);
+            GameCreator.UI.closeImageSelectPopup(container);
+        });
+    },
+
+    closeImageSelectPopup: function(container) {
+        container.hide();
+        $("#image-select-overlay").hide();
+    },
+
     populateSelectConditionList: function(activeCASetVM) {
         var i;
         var column = $("#dialogue-panel-add-list");
@@ -531,7 +603,7 @@ GameCreator.UI = {
                 var globalObject = new GameCreator[objectTypeGroup[keys[index]]]({});
                 $("#add-global-object-form-content").html(globalObject.getAddGlobalObjectPropertiesContent('Properties for ' + GameCreator.helpers.labelize(globalObject.objectType)));
                 GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObject.getDefaultState().attributes, GameCreator[globalObject.objectType].objectAttributes, 'add-global-object-form-content');
-                GameCreator.helpers.populateImageUploadControls();
+                GameCreator.UI.populateImageSelectControls($('#global-object-image-upload-controls'), $('#object-property-image-container input'));
                 $("#save-new-global-object-button").click(function() {
                     var objectName = $("#add-global-object-name-input").val();
                     globalObject.objectName = objectName;

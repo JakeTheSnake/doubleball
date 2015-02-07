@@ -390,33 +390,6 @@
         return segments.join(" ");
     };
 
-    GameCreator.helpers.populateImageUploadControls = function() {
-        $('#global-object-image-upload-controls').html(GameCreator.htmlStrings.imageUploadControls());
-
-        $('#global-object-image-upload-controls .upload-image-button').click(function() {
-            $('#global-object-image-upload-controls .hidden-file-input').trigger('click');
-        });
-
-        $('#global-object-image-upload-controls .hidden-file-input').on('change', function(evt){
-            var file = evt.target.files[0];
-            var reader = new FileReader();
-
-            if(file.size > 500000) alert('File too large.');
-
-            reader.onload = function() {
-                $('#object-property-image-container input').val(reader.result);
-                $('#object-property-image-container input').trigger('blur');
-            }
-
-            reader.readAsDataURL(file);
-        });
-
-        $('#global-object-image-upload-controls .clear-image-input-button').click(function(){
-            $('#object-property-image-container input').val('');
-            $('#object-property-image-container input').trigger('blur');
-        });
-    };
-
     GameCreator.helpers.populateGlobalObjectPropertiesForm = function(attributes, attrToInputMap, containerId, globalObj) {
         var i, keys = attributes ? Object.keys(attributes) : [];
 
