@@ -460,6 +460,8 @@ GameCreator.UI = {
         container.show();
         $("#image-select-overlay").show();
 
+        $('#image-select-library-content').show();
+
         //Setup tabs
         $("#image-select-popup .image-select-tab").on('click', function(){
             $('.image-select-tab').removeClass('active');
@@ -470,8 +472,19 @@ GameCreator.UI = {
         });
 
         //Setup image library
+        $('#image-select-library-images').html(GameCreator.htmlStrings.populateImageSelectionLibraryCategory(Object.keys(GameCreator.imageLibrary)[0]));
 
-        
+        $('.image-select-library-category').click(function(){
+            $('.image-select-library-category').removeClass('active');
+            $(this).addClass('active');
+            $('#image-select-library-images').html(GameCreator.htmlStrings.populateImageSelectionLibraryCategory($(this).data('category')))
+        });
+
+        $('#image-select-popup').on('click', '.image-select-library-image', function(){
+            $('#image-select-popup-result').val($(this).find('img').attr('src'));
+            GameCreator.UI.saveSelectedImageInPopup(input);
+            GameCreator.UI.closeImageSelectPopup(container);
+        });
 
         //Setup file upload
         container.find('.upload-image-button').click(function() {
@@ -504,13 +517,18 @@ GameCreator.UI = {
             GameCreator.UI.closeImageSelectPopup(container);
         });
 
+        //Setup save buttons
         $('.save-selected-image-button').click(function(){
-            var dataUrl = $('#image-select-popup-result').val()
-            input.val(dataUrl);
-            input.trigger('blur');
-            $('.uploaded-image-preview').attr('src', dataUrl);
+            GameCreator.UI.saveSelectedImageInPopup(input);
             GameCreator.UI.closeImageSelectPopup(container);
         });
+    },
+
+    saveSelectedImageInPopup: function(input) {
+        var dataUrl = $('#image-select-popup-result').val()
+        input.val(dataUrl);
+        input.trigger('blur');
+        $('.uploaded-image-preview').attr('src', dataUrl);
     },
 
     closeImageSelectPopup: function(container) {

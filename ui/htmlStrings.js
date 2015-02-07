@@ -405,7 +405,7 @@ GameCreator.htmlStrings = {
       <div class="image-select-tab" data-content-id="image-select-url-content">Set Image Url</div> \
     </div> \
     <div id="image-select-library-content" class="image-select-content"> \
-      LIBRARY \
+      ' + GameCreator.htmlStrings.imageSelectLibraryContent() + ' \
     </div> \
     <div id="image-select-upload-content" class="image-select-content"> \
       <img src="" class="popup-uploaded-image-preview"></img> \
@@ -422,16 +422,26 @@ GameCreator.htmlStrings = {
     <input id="image-select-popup-result" type="text" class="hidden"></input>'
   },
 
-  /* imageSelectControls: function() {
-    var result = ' \
-    <div class="btn-group sequenced"> \
-    <a class="btn success grow upload-image-button">Upload Image</a> \
-    <a class="btn warning grow clear-image-input-button">Remove Image</a> \
-    </div> \
-    <input class="visuallyhidden hidden-file-input" type="file" accept="image/*">';
-
+  imageSelectLibraryContent: function() {
+    var result = '<div id="image-select-library-categories">';
+    var categories = Object.keys(GameCreator.imageLibrary);
+    var first = true;
+    categories.forEach(function(category){
+      result += '<div class="image-select-library-category ' + (first ? 'active' : '') + '" data-category="' + category + '">' + GameCreator.helpers.labelize(category) + '</div>';
+      first = false;
+    })
+    result += '</div>';
+    result += '<div id="image-select-library-images"></div>'
     return result;
-  }, */
+  },
+
+  populateImageSelectionLibraryCategory: function(category) {
+    var result = '';
+    GameCreator.imageLibrary[category].forEach(function(image){
+      result += '<div class="image-select-library-image"><img src="' + image.url + '"></img></div>';
+    });
+    return result;
+  },
 
   getColumn: function(title, id) {
     var i;
