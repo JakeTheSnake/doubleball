@@ -178,7 +178,7 @@ GameCreator.commonObjectControllers = {
             var listItem = document.createElement('a');
             $(listItem).addClass("btn tab");
             if (state.attributes[allAttributes[i]] !== undefined) {
-                $(listItem).addClass('active');
+                $(listItem).addClass('active-toggleable');
             } else {
                 $('#object-property-' + allAttributes[i] + '-container').addClass('fade-disable');
                 $('#object-property-' + allAttributes[i] + '-container input').attr('disabled', 'true');
@@ -194,7 +194,7 @@ GameCreator.commonObjectControllers = {
                     GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[globalObj.objectType].objectAttributes, 'state-properties-content');
                 }
                 $('#object-property-' + allAttributes[index] + '-container').toggleClass('fade-disable');
-                $(this).toggleClass('active');
+                $(this).toggleClass('active-toggleable');
                 
             }.bind(listItem, i));
             propertiesColumn.append(listItem);
