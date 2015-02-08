@@ -80,7 +80,7 @@ GameCreator.UI = {
     drawSceneObjectLibrary: function() {
         var scene = GameCreator.getActiveScene();
         if (scene) {
-            var sceneObjectList = $('#scene-object-list')
+            var sceneObjectList = $('.scene-object-list')
             sceneObjectList.empty();
             scene.objects.forEach(function(sceneObject){
                 var sceneObjectListItem = GameCreator.htmlStrings.sceneObjectLibraryItem(sceneObject);
