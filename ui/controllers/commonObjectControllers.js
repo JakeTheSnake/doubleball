@@ -43,6 +43,7 @@ GameCreator.commonObjectControllers = {
         GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObjAttributes, GameCreator[this.objectType].objectAttributes, 'object-properties-content');
         GameCreator.helpers.populateGlobalObjectPropertiesForm(this.attributes, GameCreator[this.objectType].objectNonStateAttributes, 'object-non-state-properties-content', globalObj);
         GameCreator.UI.populateImageSelectControls($('#global-object-image-upload-controls'), $('#object-property-image-container input'));
+        GameCreator.UI.loadInputStyle();
     },
         
     setupCollisionsForm: function(container) {
@@ -209,6 +210,8 @@ GameCreator.commonObjectControllers = {
             $('#dialogue-panel-states a[data-id="' + stateId + '"]').remove();
             $('#dialogue-state-content').empty();
         });
+
+        GameCreator.UI.loadInputStyle();
     },
 
     setupEventsForm: function(container) {
@@ -244,7 +247,7 @@ GameCreator.commonObjectControllers = {
             var cancelCallback = function() {
                 $("#create-counter-form").remove();
             };
-            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createNameSelectionForm('Counter name', 'create-counter-form', saveCallback));
+            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createNameSelectionForm('Counter name', 'create-counter-form', saveCallback, cancelCallback));
             
         });
         container.find(".defaultMenuElement").on("click", function() {
