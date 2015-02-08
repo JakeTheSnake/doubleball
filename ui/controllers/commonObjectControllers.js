@@ -146,7 +146,10 @@ GameCreator.commonObjectControllers = {
                 globalObj.createState(stateName);
                 globalObj.setupStatesColumn(container);
             };
-            $("#dialogue-panel-states").append(GameCreator.htmlStrings.createNameSelectionForm('State name', 'create-state-form', saveCallback));
+            var cancelCallback = function() {
+                $("#create-state-form").remove();
+            };
+            $("#dialogue-panel-states").append(GameCreator.htmlStrings.createNameSelectionForm('State name', 'create-state-form', saveCallback, cancelCallback));
         });
         container.find(".defaultMenuElement").on("click", function() {
             var state = $(this).data('id');
@@ -237,6 +240,9 @@ GameCreator.commonObjectControllers = {
                     }
                 });
                 globalObj.setupCountersForm(container);
+            };
+            var cancelCallback = function() {
+                $("#create-counter-form").remove();
             };
             $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createNameSelectionForm('Counter name', 'create-counter-form', saveCallback));
             

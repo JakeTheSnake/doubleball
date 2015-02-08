@@ -330,7 +330,7 @@ GameCreator.htmlStrings = {
     return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>';
   },
 
-  createNameSelectionForm: function(placeholder, id, saveCallback) {
+  createNameSelectionForm: function(placeholder, id, saveCallback, cancelCallback) {
     var result = document.createElement('div');
     $(result).attr('id', id);
 
@@ -352,9 +352,7 @@ GameCreator.htmlStrings = {
 
     var cancelButton = document.createElement('a');
     $(cancelButton).addClass('btn warning');
-    $(cancelButton).click(function() {
-        $(this).parent().remove();
-    });
+    $(cancelButton).click(cancelCallback);
     $(cancelButton).html('Cancel');
     $(btnGroup).append(cancelButton);
 
