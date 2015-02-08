@@ -449,6 +449,8 @@ GameCreator.UI = {
     populateImageSelectControls: function(container, input) {
         container.html(GameCreator.htmlStrings.imageSelectControls());
         
+        $('.selected-image-preview').attr('src', input.val());
+
         $('.upload-image-button').click(function(){
             GameCreator.UI.openImageSelectPopup(input);
         })
@@ -500,7 +502,7 @@ GameCreator.UI = {
             reader.onload = function() {
                 var dataUrl = reader.result;
                 $('#image-select-popup-result').val(dataUrl);
-                $('.popup-uploaded-image-preview').attr('src', dataUrl);
+                $('.popup-selected-image-preview').attr('src', dataUrl);
             }
 
             reader.readAsDataURL(file);
@@ -510,7 +512,7 @@ GameCreator.UI = {
         $('#image-select-update-preview-button').click(function(){
             var dataUrl = $('#image-select-set-url-input').val();
             $('#image-select-popup-result').val(dataUrl);
-            $('.popup-uploaded-image-preview').attr('src', dataUrl);
+            $('.popup-selected-image-preview').attr('src', dataUrl);
         });
 
         $("#image-select-overlay").one('click', function(){
@@ -528,7 +530,7 @@ GameCreator.UI = {
         var dataUrl = $('#image-select-popup-result').val()
         input.val(dataUrl);
         input.trigger('blur');
-        $('.uploaded-image-preview').attr('src', dataUrl);
+        $('.selected-image-preview').attr('src', dataUrl);
     },
 
     closeImageSelectPopup: function(container) {

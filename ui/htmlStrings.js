@@ -393,7 +393,7 @@ GameCreator.htmlStrings = {
   },
 
   imageSelectControls: function() {
-    return  '<img class="uploaded-image-preview"></img> \
+    return  '<img class="selected-image-preview"></img> \
             <a class="btn success grow upload-image-button">Set Image</a>'
   },
 
@@ -408,13 +408,13 @@ GameCreator.htmlStrings = {
       ' + GameCreator.htmlStrings.imageSelectLibraryContent() + ' \
     </div> \
     <div id="image-select-upload-content" class="image-select-content"> \
-      <img src="" class="popup-uploaded-image-preview"></img> \
+      <img src="" class="popup-selected-image-preview"></img> \
       <input class="hidden hidden-file-input" type="file" accept="image/*"> \
       <a class="btn success grow upload-image-button">Upload Image</a> \
       <a class="btn success grow save-selected-image-button">Save</a> \
     </div> \
     <div id="image-select-url-content" class="image-select-content"> \
-      <img src="" class="popup-uploaded-image-preview"></img> \
+      <img src="" class="popup-selected-image-preview"></img> \
       <input id="image-select-set-url-input" type="text"></input> \
       <a id="image-select-update-preview-button" class="btn success grow">Update Preview</a> \
       <a class="btn success grow save-selected-image-button">Save</a> \
