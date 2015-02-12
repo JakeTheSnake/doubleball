@@ -482,7 +482,7 @@ GameCreator.UI = {
             $('#image-select-library-images').html(GameCreator.htmlStrings.populateImageSelectionLibraryCategory($(this).data('category')))
         });
 
-        $('#image-select-popup').on('click', '.image-select-library-image', function(){
+        $('#image-select-popup').off('click').on('click', '.image-select-library-image', function(){
             $('#image-select-popup-result').val($(this).find('img').attr('src'));
             GameCreator.UI.saveSelectedImageInPopup(input);
             GameCreator.UI.closeImageSelectPopup(container);

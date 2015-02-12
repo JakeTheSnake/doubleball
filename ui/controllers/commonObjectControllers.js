@@ -174,6 +174,7 @@ GameCreator.commonObjectControllers = {
         $('#dialogue-state-content').append(GameCreator.htmlStrings.getColumn("Properties", "dialogue-panel-state-properties"));
         GameCreator.helpers.populateGlobalObjectPropertiesForm(this.getDefaultState().attributes, GameCreator[this.objectType].objectAttributes, 'state-properties-content');
         GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[this.objectType].objectAttributes, 'state-properties-content');
+        GameCreator.UI.populateImageSelectControls($('#global-object-image-upload-controls'), $('#object-property-image-container input'));
 
         var globalObj = this;
         var propertiesColumn = $('#dialogue-panel-state-properties');
@@ -186,14 +187,24 @@ GameCreator.commonObjectControllers = {
             } else {
                 $('#object-property-' + allAttributes[i] + '-container').addClass('fade-disable');
                 $('#object-property-' + allAttributes[i] + '-container input').attr('disabled', 'true');
+                if(allAttributes[i] === 'image') {
+                        $('#global-object-image-upload-controls').addClass('fade-disable');
+                    }
             }
             $(listItem).html(GameCreator.helpers.labelize(allAttributes[i]));
             $(listItem).click(function(index) {
                 if (state.attributes[allAttributes[index]] !== undefined) {
                     delete state.attributes[allAttributes[index]];
                     $('#object-property-' + allAttributes[index] + '-container input').attr('disabled', 'true');
+                    if(allAttributes[index] === 'image') {
+                        $('#global-object-image-upload-controls').addClass('fade-disable');
+                        $('#global-object-image-upload-controls .selected-image-preview').attr('src', globalObj.getDefaultState().attributes[allAttributes[index]].src);
+                    }
                 } else {
                     $('#object-property-' + allAttributes[index] + '-container input').removeAttr('disabled');
+                    if(allAttributes[index] === 'image') {
+                        $('#global-object-image-upload-controls').removeClass('fade-disable');
+                    }
                     state.attributes[allAttributes[index]] = globalObj.getDefaultState().attributes[allAttributes[index]];
                     GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[globalObj.objectType].objectAttributes, 'state-properties-content');
                 }
