@@ -201,20 +201,22 @@ GameCreator.htmlStrings = {
 
   routeNode: function(node, index) {
     var result = ' \
-    <div class="route-node-container" style="position:absolute; top:' + (node.y + $("#main-canvas").offset().top) + 'px;left:' + (node.x + $("#main-canvas").offset().left) + 'px;"><div class="route-node" data-index="' + index + '"> \
+    <div class="route-node-container" style="position:absolute; top:' + (node.y + $("#main-canvas").offset().top) + 'px;left:' + (node.x + $("#main-canvas").offset().left) + 'px;"> \
+    <div class="route-node" data-index="' + index + '"> \
     <span class="route-node-arrow"></span> \
     <span class="route-node-label">' + (index + 1) + '</span> \
     </div> \
-    <div class="route-node-actions"> \
-    <div class="add-node-button btn-success" data-index="' + index + '">+</div>';
+    <div class="btn-group sequenced route-node-actions"> \
+    <a class="btn success grow add-node-button" data-index="' + index + '">+</a>';
 
     if (index != 0) {
-      result += '<div class="remove-node-button btn-warning" data-index="' + index + '">X</div>';
+      result += '<a class="btn warning grow remove-node-button" data-index="' + index + '">x</a>';
     }
+
     if(node.bounceNode) {
-      result += '<div class="toggle-bounce-node-button" data-index="' + index + '">Turn</div>';
+      result += '<a class="btn toggle-bounce-node-button" data-index="' + index + '">Turn</a>';
     } else {
-      result += '<div class="toggle-bounce-node-button" data-index="' + index + '">Continue</div>';
+      result += '<a class="btn toggle-bounce-node-button" data-index="' + index + '">Continue</a>';
     }
 
     result += ' \
@@ -226,15 +228,17 @@ GameCreator.htmlStrings = {
 
   defaultEventInformationWindow: function(title, imageSrc) {
     var result = ' \
-    <div id="event-information-window"> \
+    <div class="panel wide"> \
     <div class="panel-header"> \
     <span class="panel-title">' + title + '</span> \
     </div>';
 
     result += ' \
     <div class="panel-body"> \
+    <div id="event-information-window"> \
     <div class="image-preview image-preview-large"> \
     <img src="' + imageSrc + '" /> \
+    </div> \
     </div> \
     </div> \
     </div>';
@@ -252,18 +256,20 @@ GameCreator.htmlStrings = {
 
   collisionEventInformationWindow: function(title, image1Src, image2Src) {
     var result = ' \
-    <div id="event-information-window"> \
+    <div class="panel wide"> \
     <div class="panel-header"> \
     <span class="panel-title">' + title + '</span> \
     </div>';
 
     result += ' \
     <div class="panel-body"> \
+    <div id="event-information-window"> \
     <div class="image-preview"> \
     <img src="' + image1Src + '" /> \
     </div> \
     <div class="image-preview"> \
     <img src="' + image2Src + '" /> \
+    </div> \
     </div> \
     </div> \
     </div>';
@@ -274,7 +280,7 @@ GameCreator.htmlStrings = {
   editActionsWindow: function(infoWindowHtml, objName) {
     var result = ' \
     <div class="dialogue right"> \
-    <div id="select-action-window" class="panel panel-dialogue">'
+    <div id="select-action-window">'
     result += infoWindowHtml;
     result += '<div class="panel-group sequenced clearfix">'
     result += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
@@ -300,7 +306,7 @@ GameCreator.htmlStrings = {
     result += GameCreator.htmlStrings.getColumn('Type of object', 'dialogue-panel-object-type-group');
     result += GameCreator.htmlStrings.getColumn('Object', 'dialogue-panel-object-type');
     result += ' \
-    <div id="add-global-object-form-content" class="panel large"> \
+    <div id="add-global-object-form-content" class="panel tall large"> \
     </div> \
     </div> \
     </div>';
@@ -318,7 +324,7 @@ GameCreator.htmlStrings = {
       if (selectableObjects.hasOwnProperty(objName) && 
       !GameCreator.helpers.getObjectById(object.onCollideSets, objId) && 
       selectableObjects[objName].isCollidable) {
-        result += '<li data-objectname="' + objName + '">' + GameCreator.htmlStrings.selectGlobalObjectPresentation(objId) + '</li>';
+        result += '<a data-objectname="' + objName + '" class="btn tab">' + GameCreator.htmlStrings.selectGlobalObjectPresentation(objId) + '</a>';
       }
     }
 
@@ -444,7 +450,7 @@ GameCreator.htmlStrings = {
   getColumn: function(title, id) {
     var i;
     var result = ' \
-    <div class="panel"> \
+    <div class="panel tall"> \
     <div class="panel-header"> \
     <span>' + title + '</span> \
     </div> \

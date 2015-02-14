@@ -420,7 +420,7 @@ GameCreator.UI = {
             actionsColumn.parent().find('a.success').remove(); // Remove add action-button
             actionsColumn.empty();
             var addActionButton = document.createElement('a');
-            $(addActionButton).addClass('btn success wide');
+            $(addActionButton).addClass('btn tab success wide');
             $(addActionButton).attr('id', 'add-action-button');
             $(addActionButton).html('Add action');
 
