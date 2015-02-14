@@ -48,7 +48,7 @@ GameCreator.commonObjectViews = {
     <span>Object Manager</span> \
     <a id="close-dialogue-button" class="btn warning">x</a> \
     </div> \
-    <div class="panel"> \
+    <div class="panel tall"> \
     <div class="panel-header"> \
     <span>Edit</span> \
     </div>\
@@ -131,7 +131,7 @@ GameCreator.commonObjectViews = {
 
   getStatePropertiesContent: function(title, id) {
     var result = ' \
-    <div class="panel large"> \
+    <div class="panel tall large"> \
     <div class="panel-header"> \
     <span>' + title + '</span> \
     </div> \
@@ -150,7 +150,7 @@ GameCreator.commonObjectViews = {
 
   getAddGlobalObjectPropertiesContent: function(title) {
     var result = ' \
-    <div class="panel large"> \
+    <div class="panel tall large"> \
     <div class="panel-header"> \
     <span>' + title + '</span> \
     </div> \
@@ -178,7 +178,7 @@ GameCreator.commonObjectViews = {
 
   getPropertiesContent: function() {
     var result = ' \
-    <div class="panel large"> \
+    <div class="panel tall large"> \
     <div class="panel-header"> \
     <span>Properties</span> \
     </div> \
@@ -212,7 +212,7 @@ GameCreator.commonObjectViews = {
 
   getEventsContent: function() {
     var result = ' \
-    <div class="panel"> \
+    <div class="panel tall"> \
     <div class="panel-header"> \
     <span>Events</span> \
     </div> \
