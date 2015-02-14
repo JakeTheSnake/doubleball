@@ -39,6 +39,11 @@
     return result;
   };
 
+  GameCreator.CounterDisplayImage.prototype.getDescription = function() {
+    return "This object displays a counter value as symbols. To attach a counter,\
+    drag the created object to the scene and select it, and edit the Scene Object Properties.";
+  };
+
   GameCreator.CounterDisplayImage.prototype.getPropertiesForm = function() {
     var result = ' \
     <article> \
@@ -57,6 +62,12 @@
       </div>';
 
     return result;
+  };
+
+
+  GameCreator.CounterDisplayText.prototype.getDescription = function() {
+    return "This object displays a counter value as a number. To attach a counter,\
+    drag the created object to the scene and select it, and edit the Scene Object Properties.";
   };
 
   GameCreator.CounterDisplayText.prototype.getSceneObjectForm = function() {

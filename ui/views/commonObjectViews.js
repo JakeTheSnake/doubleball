@@ -156,6 +156,9 @@ GameCreator.commonObjectViews = {
     </div> \
     <div class="panel-body"> \
     <div id="state-properties-content"> \
+    <div class="global-object-description"> \
+    <span>' + this.getDescription() + '</span> \
+    </div> \
     <fieldset> \
     <div id="object-property-name-container" class="input-container"> \
     <input type="text" id="add-global-object-name-input"/> \
@@ -217,9 +220,9 @@ GameCreator.commonObjectViews = {
     <span>Events</span> \
     </div> \
     <div id="dialogue-panel-events" class="btn-group wide"> \
-    <a class="btn tab" data-uifunction="setupOnCreateActionsForm">On Create</a> \
-    <a class="btn tab" data-uifunction="setupCollisionsForm">On Collide</a> \
-    <a class="btn tab" data-uifunction="setupOnDestroyActionsForm">On Destroy</a>';
+    <a class="btn tab" data-uifunction="setupOnCreateActionsForm" title="Actions that will be run when\n this object is created.">On Create</a> \
+    <a class="btn tab" data-uifunction="setupCollisionsForm" title="Actions that will be run when this\n object collides with another object.">On Collide</a> \
+    <a class="btn tab" data-uifunction="setupOnDestroyActionsForm" title="Actions that will be run just\n before this object is destroyed.">On Destroy</a>';
 
     result += this.getEvents();
     result += ' \

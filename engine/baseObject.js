@@ -60,7 +60,7 @@
                 currentSet = new GameCreator.ConditionActionSet(globalObj);
                 globalObj.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been created!", this.attributes.image.src),
+                    GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been created!", this.getCurrentState().attributes.image.src),
                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
@@ -83,7 +83,7 @@
                 currentSet = new GameCreator.ConditionActionSet(globalObj);
                 globalObj.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
-                    GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + globalObj.objectName, this.attributes.image.src),
+                    GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + globalObj.objectName, this.getCurrentState().attributes.image.src),
                      new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});

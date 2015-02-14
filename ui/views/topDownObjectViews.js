@@ -1,6 +1,11 @@
 GameCreator.TopDownObject.prototype.getEvents = function() {
-  return '<a class="btn tab" data-uifunction="setupOnClickActionsForm">On Click</a> \
-          <a class="btn tab" data-uifunction="setupKeyEventsForm">On Keypress</a>';
+  return '<a class="btn tab" data-uifunction="setupOnClickActionsForm" title="Actions that will be run when the player\n clicks this object.">On Click</a> \
+          <a class="btn tab" data-uifunction="setupKeyEventsForm" title="Actions that will be run on this object\n when the player presses a certain key.">On Keypress</a>';
+};
+
+GameCreator.TopDownObject.prototype.getDescription = function() {
+  return "A Top Down Object is a player controlled object that can move\
+    freely in eight directions. It is steered with the arrow keys.";
 };
 
 GameCreator.TopDownObject.prototype.getPropertiesForm = function() {

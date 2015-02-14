@@ -2,7 +2,12 @@
   "use strict";
   
   GameCreator.RouteObject.prototype.getEvents = function() {
-    return '<a class="btn tab" data-uifunction="setupOnClickActionsForm">On Click</a>';
+    return '<a class="btn tab" data-uifunction="setupOnClickActionsForm" title="Actions that will be run when the player\n clicks this object.">On Click</a>';
+  };
+
+  GameCreator.RouteObject.prototype.getDescription = function() {
+    return "A Route Object is an object that moves along a set of nodes in the game.\
+    You can choose to set each node as a turning node (object turns around when it reaches this point).";
   };
 
   GameCreator.RouteObject.prototype.getPropertiesForm = function() {

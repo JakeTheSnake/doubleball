@@ -2,6 +2,11 @@ GameCreator.MouseObject.prototype.getEvents = function() {
   return '<a class="btn tab" data-uifunction="setupKeyEventsForm">On Keypress</a>';
 };
 
+GameCreator.MouseObject.prototype.getDescription = function() {
+  return "A Mouse Object is a player controlled object that follows the mouse\
+    cursor. Can be used just to create a custom cursor, like a crosshair.";
+};
+
 GameCreator.MouseObject.prototype.getPropertiesForm = function(stateId) {
   var result = ' \
   <article> \

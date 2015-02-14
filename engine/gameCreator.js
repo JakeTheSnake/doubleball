@@ -1,8 +1,8 @@
 /*global GameCreator, $, Image, window, requestAnimationFrame, document*/
 (function() {
     "use strict";
-    var GCHeight = 768;
-    var GCWidth = 1024;
+    var GCWidth = 1000;
+    var GCHeight = 650;
 
     window.GameCreator = {
         height: GCHeight,

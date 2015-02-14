@@ -3,15 +3,19 @@
 
   GameCreator.TextObject.prototype.getNonStatePropertiesForm = function() {
     return '';
-  },
+  };
 
   GameCreator.TextObject.prototype.getEvents = function() {
     return '';
-  },
+  };
 
   GameCreator.TextObject.prototype.getTabs = function() {
     return '<a class="btn tab" data-uifunction="setupPropertiesForm">Properties</a> \
             <a class="btn tab" data-uifunction="setupStatesColumn">States</a>'
+  };
+
+  GameCreator.TextObject.prototype.getDescription = function() {
+    return "A Text Object shows a text on the screen. It cannot interact with other objects.";
   };
 
   GameCreator.TextObject.prototype.getPropertiesForm = function() {

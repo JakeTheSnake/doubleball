@@ -1,6 +1,11 @@
 GameCreator.PlatformObject.prototype.getEvents = function() {
-  return '<a class="btn tab" data-uifunction="setupOnClickActionsForm">On Click</a> \
-          <a class="btn tab" data-uifunction="setupKeyEventsForm">On Keypress</a>';
+  return '<a class="btn tab" data-uifunction="setupOnClickActionsForm" title="Actions that will be run when the player\n clicks this object.">On Click</a> \
+          <a class="btn tab" data-uifunction="setupKeyEventsForm" title="Actions that will be run on this object\n when a player presses a certain key.">On Keypress</a>';
+};
+
+GameCreator.PlatformObject.prototype.getDescription = function() {
+  return "A Platform Object is a player controlled object that can fall down, jump,\
+    as well as move left and right. It is steered with the arrow keys.";
 };
 
 GameCreator.PlatformObject.prototype.getPropertiesForm = function() {

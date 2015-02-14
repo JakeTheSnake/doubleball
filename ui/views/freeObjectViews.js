@@ -1,5 +1,9 @@
 GameCreator.FreeObject.prototype.getEvents = function() {
-	return '<a class="btn tab" data-uifunction="setupOnClickActionsForm">On Click</a>';
+	return '<a class="btn tab" data-uifunction="setupOnClickActionsForm" title="Actions that will be run when the user clicks this object.">On Click</a>';
+};
+
+GameCreator.FreeObject.prototype.getDescription = function() {
+  return "A Free Object can be any static or freely moving game object. For example, walls, projectiles and enemies.";
 };
 
 GameCreator.FreeObject.prototype.getPropertiesForm = function() {
