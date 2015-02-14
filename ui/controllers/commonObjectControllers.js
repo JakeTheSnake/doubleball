@@ -207,6 +207,7 @@ GameCreator.commonObjectControllers = {
                     }
                     state.attributes[allAttributes[index]] = globalObj.getDefaultState().attributes[allAttributes[index]];
                     GameCreator.helpers.populateGlobalObjectPropertiesForm(state.attributes, GameCreator[globalObj.objectType].objectAttributes, 'state-properties-content');
+                    GameCreator.UI.populateImageSelectControls($('#global-object-image-upload-controls'), $('#object-property-image-container input'));
                 }
                 $('#object-property-' + allAttributes[index] + '-container').toggleClass('fade-disable');
                 $(this).toggleClass('active-toggleable');
