@@ -16,6 +16,8 @@ QUnit.begin = function() {
     GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
     GameCreator.uiCanvas.width = GameCreator.width;
     GameCreator.uiCanvas.height = GameCreator.height;
+    
+    GameCreator.initialize();
 };
     
 QUnit.testStart = function() {

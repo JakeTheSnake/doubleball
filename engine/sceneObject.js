@@ -69,7 +69,6 @@
 
         this.attributes.width = args.width !== undefined ? args.width.slice(0) : state.attributes.width.slice(0);
         this.attributes.height = args.height !== undefined ? args.height.slice(0) : state.attributes.height.slice(0);
-        this.attributes.image = args.image !== undefined ? args.image : state.attributes.image;
         
         this.objectName = args.objectName !== undefined ? args.objectName : globalObj.objectName;
         this.attributes.instanceId = args.instanceId ? args.instanceId : this.objectName + GameCreator.getUniqueId();
@@ -179,13 +178,15 @@
 
     GameCreator.SceneObject.prototype.setState = function(stateId) {
         var state = this.parent.getState(stateId);
-        var attrKeys = Object.keys(state.attributes);
-        var i, stateAttribute;
-        for (i = 0; i < attrKeys.length; i += 1) {
-            stateAttribute = state.attributes[attrKeys[i]];
-            this.attributes[attrKeys[i]] = Array.isArray(stateAttribute) ? GameCreator.helpers.getRandomFromRange(stateAttribute) : stateAttribute;
+        if (state !== undefined) {
+            var attrKeys = Object.keys(state.attributes);
+            var i, stateAttribute;
+            for (i = 0; i < attrKeys.length; i += 1) {
+                stateAttribute = state.attributes[attrKeys[i]];
+                this.attributes[attrKeys[i]] = Array.isArray(stateAttribute) ? GameCreator.helpers.getRandomFromRange(stateAttribute) : stateAttribute;
+            }
+            this.currentState = stateId;    
         }
-        this.currentState = stateId;
     }
 
     GameCreator.SceneObject.prototype.resizeObject = function(diffX, diffY) {

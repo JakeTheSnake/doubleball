@@ -68,7 +68,7 @@
                             keySets.push(new GameCreator.ConditionActionSet(globalObj));
                             actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
                             GameCreator.UI.openEditActionsWindow(
-                                GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + globalObj.objectName, this.attributes.image.src),
+                                GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + globalObj.objectName, this.getCurrentState().attributes.image.src),
                                  new GameCreator.CASetVM(keySets[0], GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
                                 );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
@@ -253,7 +253,10 @@
     };
 
     GameCreator.commonObjectFunctions.createState = function(name, attributes) {
-        var newStateId = GameCreator.getUniqueId();
+        var newStateId = 0;
+        while (this.getState(newStateId) != undefined) {
+            newStateId++;
+        }
         var newStateName = name || "state" + newStateId;
         var newState = {
             name: newStateName,

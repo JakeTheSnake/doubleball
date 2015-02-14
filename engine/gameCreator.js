@@ -45,7 +45,11 @@
 
             for (var i = 0; i < borderKeys.length; i += 1 ) {
                 var borderObj = GameCreator.borderObjects[borderKeys[i]];
+                GameCreator.addObjFunctions.commonObjectFunctions(borderObj);
                 borderObj.getDefaultState = function() {
+                    return {attributes: this.attributes};
+                };
+                borderObj.getCurrentState = function() {
                     return {attributes: this.attributes};
                 };
                 borderObj.states = [];
