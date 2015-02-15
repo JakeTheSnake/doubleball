@@ -66,8 +66,8 @@ GameCreator.commonObjectControllers = {
         withColumn.on('redrawList', function(evt) {
             withColumn.empty();
             globalObj.onCollideSets.forEach(function(collisionItem) {
-                var collisionListItem = $(document.createElement('a'));
-                collisionListItem.addClass("btn tab");
+                var collisionListItem = $(document.createElement('div'));
+                collisionListItem.addClass("btn tab collision-with-item");
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
 
                 var deleteButton = GameCreator.UI.deleteButtonElement();
