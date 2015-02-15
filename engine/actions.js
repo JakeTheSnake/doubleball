@@ -203,17 +203,23 @@
                         timing: {at: true, every: true, after: true},
                         runnableFunction: function() {return true;}
                       }),
-        Move: new GameCreator.Action({
-            action: function (params) { this.parent.setPosition.call(this, params); },
-            params: {
-                'type': { param: GameCreator.MovementTypeParameter, mandatory: true },
-                'x': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 },
-                'y': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 }
-            },
-            name: "Move",
-            timing: { at: true, every: true, after: true },
-            runnableFunction: function () { return true; }
-        })
+          NextScene: new GameCreator.Action({
+                        action: GameCreator.nextScene,
+                        name: "NextScene",
+                        timing: {at: true, every: true, after: true},
+                        runnableFunction: function() {return true;}
+                      }),
+          Move: new GameCreator.Action({
+              action: function (params) { this.parent.setPosition.call(this, params); },
+              params: {
+                  'type': { param: GameCreator.MovementTypeParameter, mandatory: true },
+                  'x': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 },
+                  'y': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 }
+              },
+              name: "Move",
+              timing: { at: true, every: true, after: true },
+              runnableFunction: function () { return true; }
+          })
 
     };
 
@@ -228,6 +234,7 @@
             Counter: GameCreator.actions.Counter,
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
+            NextScene: GameCreator.actions.NextScene,
             SwitchState: GameCreator.actions.SwitchState,
         },
 
@@ -238,6 +245,7 @@
             Counter: GameCreator.actions.Counter,
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
+            NextScene: GameCreator.actions.NextScene,
             SwitchState: GameCreator.actions.SwitchState,
         },
 
@@ -250,6 +258,7 @@
             Counter: GameCreator.actions.Counter,
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
+            NextScene: GameCreator.actions.NextScene,
             SwitchState: GameCreator.actions.SwitchState,
         },
 
@@ -260,6 +269,7 @@
             Counter: GameCreator.actions.Counter,
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
+            NextScene: GameCreator.actions.NextScene,
             SwitchState: GameCreator.actions.SwitchState,
         },
 
@@ -267,6 +277,7 @@
             Create: GameCreator.actions.Create,
             Restart: GameCreator.actions.Restart,
             SwitchScene: GameCreator.actions.SwitchScene,
+            NextScene: GameCreator.actions.NextScene,
             SwitchState: GameCreator.actions.SwitchState
         }
     };

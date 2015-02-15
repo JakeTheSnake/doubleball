@@ -94,9 +94,9 @@
         insertSceneAfter: function(sceneIdToBeMoved, insertAfterSceneId) {
             var i;
 
-            var sceneToBeMovedIndex = GameCreator.helpers.getIndexOfObjectWithId(sceneIdToBeMoved);
+            var sceneToBeMovedIndex = GameCreator.helpers.getIndexOfSceneWithId(sceneIdToBeMoved);
             var tempScene = GameCreator.scenes.splice(sceneToBeMovedIndex, 1)[0];
-            var insertAfterSceneIndex = GameCreator.helpers.getIndexOfObjectWithId(insertAfterSceneId);
+            var insertAfterSceneIndex = GameCreator.helpers.getIndexOfSceneWithId(insertAfterSceneId);
             GameCreator.scenes.splice(insertAfterSceneIndex+1, 0, tempScene);
 
             GameCreator.UI.drawSceneTabs();
@@ -136,6 +136,12 @@
                 GameCreator.activeSceneId = sceneId;
                 GameCreator.switchScene(GameCreator.getSceneById(GameCreator.activeSceneId));
             }
+        },
+
+        nextScene: function() {
+            var currentIndex = GameCreator.helpers.getIndexOfSceneWithId(GameCreator.activeSceneId);
+            var nextIndex = (currentIndex + 1) % GameCreator.scenes.length;
+            GameCreator.switchScene(GameCreator.scenes[nextIndex]);
         },
 
         playScene: function(scene) {

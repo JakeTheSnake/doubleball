@@ -167,6 +167,24 @@ test("SwitchState Action Test", function() {
     deepEqual(runtimeObj.currentState, 1);
 });
 
+test("NextScene Action Test", function() {
+    var sceneOne = new GameCreator.Scene();
+    var sceneTwo = new GameCreator.Scene();
+    GameCreator.scenes.push(sceneOne);
+    GameCreator.scenes.push(sceneTwo);
+    
+    GameCreator.switchScene(sceneOne);
+    deepEqual(GameCreator.activeSceneId, sceneOne.id, "First scene should be active from start.");
+
+    var runtimeObj = setupCollisionEventForNewObject("NextScene");
+    GameCreator.checkCollisions();
+
+    deepEqual(GameCreator.activeSceneId, sceneTwo.id, "Second scene should be active after action.");
+});
+
+
+
+
 var newEvent;
 
 module("ActionTriggers", {

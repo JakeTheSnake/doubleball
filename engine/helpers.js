@@ -572,7 +572,7 @@
         return selectableTimings;
     };
 
-    GameCreator.helpers.getIndexOfObjectWithId = function(targetId) {
+    GameCreator.helpers.getIndexOfSceneWithId = function(targetId) {
         var i;
         for (i = 0; i < GameCreator.scenes.length; i++) {
             if (GameCreator.scenes[i].id === targetId) return i;
