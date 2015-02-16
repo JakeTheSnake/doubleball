@@ -120,7 +120,7 @@
         if (this.route.length === 0) {
             return;
         }
-        if (this.speed !== 0) {
+        if (this.attributes.speed !== 0) {
             GameCreator.invalidate(this);
         }
         targetX = this.route[this.targetNode].x;

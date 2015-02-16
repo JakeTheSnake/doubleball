@@ -96,12 +96,12 @@ GameCreator.conditions = {
             }
 
             if (params.comparator === 'greaterThan') {
-                return counterCarrier.counters[params.counter].value >= params.value;
+                return counterCarrier.counters[params.counter].value >= Number(params.value);
             }
             if (params.comparator === 'lessThan') {
-                return counterCarrier.counters[params.counter].value <= params.value;
+                return counterCarrier.counters[params.counter].value <= Number(params.value);
             }
-            return counterCarrier.counters[params.counter].value === params.value;
+            return counterCarrier.counters[params.counter].value === Number(params.value);
         },
         params: {
             objId: {
@@ -124,6 +124,36 @@ GameCreator.conditions = {
                 mandatory: false,
                 defaultValue: 0
             }
+        }
+    }),
+
+    currentScene: new GameCreator.Condition({
+        evaluate: function (runtimeObj, params) {
+            var currentSceneIndex = GameCreator.helpers.getIndexOfSceneWithId(GameCreator.activeSceneId);
+            var targetSceneIndex = GameCreator.helpers.getIndexOfSceneWithId(Number(params.scene));
+
+            if (currentSceneIndex !== undefined && targetSceneIndex !== undefined) {
+                if (params.comparator === 'greaterThan') {
+                    return currentSceneIndex > targetSceneIndex;
+                }
+                if (params.comparator === 'lessThan') {
+                    return currentSceneIndex < targetSceneIndex;
+                }
+                return currentSceneIndex === targetSceneIndex;
+            }
+
+            return false;
+        },
+        params: {
+            comparator: {
+                param: GameCreator.ComparatorParameter,
+                mandatory: true,
+                defaultValue: 'equals'
+            },
+            scene: {
+                param: GameCreator.SwitchSceneParameter,
+                mandatory: true,
+            },
         }
     }),
 

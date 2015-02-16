@@ -71,7 +71,8 @@ $(document).ready(function() {
             setTimeout(function() {
                 $("#save-message").empty();
                 var currentDate = new Date();
-                $("#save-message").html("Game was last saved " + currentDate.getHours() + ":" + currentDate.getMinutes());
+                var minutes = currentDate.getMinutes() < 9 ? "0" + currentDate.getMinutes() : currentDate.getMinutes();
+                $("#save-message").html("Game was last saved " + currentDate.getHours() + ":" + minutes);
             }, 3000);
         });
     });

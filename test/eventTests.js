@@ -75,4 +75,30 @@ test('Collision condition', function() {
     ok(!caSet.checkConditions(runtimeObj1), 'Objects should no longer collide');
 });
 
+test('Current Scene condition', function() {
+    var sceneOne = new GameCreator.Scene();
+    var sceneTwo = new GameCreator.Scene();
+    GameCreator.scenes.push(sceneOne);
+    GameCreator.scenes.push(sceneTwo);
+    GameCreator.switchScene(sceneOne);
+
+    var caSet = new GameCreator.ConditionActionSet();
+    caSet.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: sceneTwo.id, comparator: 'equals'}));
+    ok(!caSet.checkConditions(), 'Condition should not pass because we are on a different scene');
+    GameCreator.switchScene(sceneTwo);
+    ok(caSet.checkConditions(), 'Condition should pass after scene switch.');
+
+    caSet.conditions.length = 0;
+    caSet.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: sceneTwo.id, comparator: 'lessThan'}));
+    ok(!caSet.checkConditions(), 'Condition should not pass because we are on the same scene');
+    GameCreator.switchScene(sceneOne);
+    ok(caSet.checkConditions(), 'Condition should pass after scene switch.');
+
+    caSet.conditions.length = 0;
+    caSet.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: sceneOne.id, comparator: 'greaterThan'}));
+    ok(!caSet.checkConditions(), 'Condition should not pass because we are on the same scene');
+    GameCreator.switchScene(sceneTwo);
+    ok(caSet.checkConditions(), 'Condition should pass after scene switch.');
+    });
+
 })();

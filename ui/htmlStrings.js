@@ -1,6 +1,7 @@
 GameCreator.htmlStrings = {
-  singleSelector: function(collection, attrName, selectedValue) {
-      var result = '<select class="selectorField" data-type="string"';
+  singleSelector: function(collection, attrName, selectedValue, dataType) {
+      dataType = dataType || 'string';
+      var result = '<select class="selectorField" data-type="' + dataType +'"';
       if (attrName) {
       	result += ' data-attrName="' + attrName + '">'
       } else {
@@ -88,7 +89,7 @@ GameCreator.htmlStrings = {
   },
 
   sceneInput: function(attrName, value) {
-      return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getSelectableScenes(), attrName, value);
+      return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getSelectableScenes(), attrName, value, 'number');
   },
 
   stringInput: function(attrName, value) {
@@ -479,12 +480,10 @@ GameCreator.htmlStrings = {
     <td><label>Background Color:</label></td> \
     <td id="side-property-bgColor" data-inputtype="stringInput"></td> \
     </tr> \
-    <!-- \
     <tr> \
     <td><label>Background Image:</label></td> \
     <td id="side-property-bgImage" data-inputtype="imageInput"></td> \
     </tr> \
-    --> \
     </table> \
     </div> \
     </li> \
