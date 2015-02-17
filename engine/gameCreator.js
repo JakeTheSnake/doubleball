@@ -484,8 +484,9 @@
                 savedScene = savedGame.scenes[i];
                 newScene = new GameCreator.Scene(savedScene.id);
                 for (n = 0; n < savedScene.objects.length; n += 1) {
-                    newObject = savedScene.objects[n];
-                    GameCreator.createSceneObject(GameCreator.globalObjects[newObject.parent], newScene, newObject.attributes);
+                    var loadedObject = savedScene.objects[n];
+                    newObject = GameCreator.createSceneObject(GameCreator.globalObjects[loadedObject.parent], newScene, loadedObject.attributes);
+                    newObject.route = loadedObject.route;
                 }
 
                 newScene.attributes.bgImage = savedScene.attributes.bgImage ? GameCreator.createImageElement(savedScene.attributes.bgImage) : null;

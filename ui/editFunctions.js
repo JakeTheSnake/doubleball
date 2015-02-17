@@ -300,6 +300,7 @@
                     oldObject = $.extend(true, {}, scene.objects[n]);
                     newObject = {};
                     newObject.attributes = oldObject.attributes;
+                    newObject.route = oldObject.route;
                     delete newObject.attributes.image;
                     
                     //Need to save the name of the global object parent rather than the reference so it can be JSONified.
