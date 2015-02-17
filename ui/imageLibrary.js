@@ -21,5 +21,12 @@
     		{name: 'House', url: 'http://i.imgur.com/O7KmiTE.png'},
     		{name: 'Pyramid', url: 'http://i.imgur.com/9g7q0B3.png'},
     	],
+        shapes: [
+            {name: 'Green Block', url: 'http://i.imgur.com/v6Ktf1G.png'},
+            {name: 'Yellow Block', url: 'http://i.imgur.com/Lad3ub6.png'},
+            {name: 'Blue Block', url: 'http://i.imgur.com/56TkGli.png'},
+            {name: 'Red Block', url: 'http://i.imgur.com/IhcyZyN.png'},
+            {name: 'Purple Block', url: 'http://i.imgur.com/y2j6c0S.png'},
+        ],
     }
 }());
