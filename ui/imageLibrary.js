@@ -28,5 +28,12 @@
             {name: 'Red Block', url: 'http://i.imgur.com/IhcyZyN.png'},
             {name: 'Purple Block', url: 'http://i.imgur.com/y2j6c0S.png'},
         ],
+        characters: [
+            {name: 'Beige Spaceman', url: 'http://i.imgur.com/xUSGMUP.png'},
+            {name: 'Green Spaceman', url: 'http://i.imgur.com/UWQ0an9.png'},
+            {name: 'Blue Spaceman', url: 'http://i.imgur.com/1h9dbmh.png'},
+            {name: 'Purple Spaceman', url: 'http://i.imgur.com/runrBby.png'},
+            {name: 'Red Spaceman', url: 'http://i.imgur.com/AUALR8I.png'},
+        ],
     }
 }());
