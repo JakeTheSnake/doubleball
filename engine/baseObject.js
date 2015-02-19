@@ -157,7 +157,7 @@
     };
 
     GameCreator.BaseObject.prototype.draw = function(context, obj) {
-        var image = obj.getCurrentState().attributes.image;
+        var image = obj.getCurrentState().attributes.image || obj.parent.getDefaultState().attributes.image;
         if ($(image).data('loaded')) {
             if (Array.isArray(obj.attributes.width) || Array.isArray(obj.attributes.height)) {
                 var maxHeight, minHeight, maxWidth, minWidth;
