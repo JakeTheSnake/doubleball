@@ -309,8 +309,6 @@ GameCreator.UI = {
     drawSceneTabs: function() {
         var result = '';
 
-        $('#scenes').show();
-
         result += '<div class="btn-group sequenced">';
         for(var i = 0; i < GameCreator.scenes.length; i++) {
             result += GameCreator.htmlStrings.sceneTab(GameCreator.scenes[i], GameCreator.activeSceneId === GameCreator.scenes[i].id);
@@ -345,8 +343,14 @@ GameCreator.UI = {
     hideEditModeTools: function() {
         $(".route-node-container").remove();
         $('#scenes').hide();
-        $("#toolbar-bottom > .col.right").hide();
+        $("#edit-mode-tools").hide();
+        $("#save-game-button").addClass('disabled');
+    },
 
+    showEditModeTools: function() {
+        $('#scenes').show();
+        $("#edit-mode-tools").show();
+        $("#save-game-button").removeClass('disabled');
     },
 
     setupEditEventColumns: function(caSets, columnParentContainer, selectableActions, globalObj) {

@@ -137,6 +137,8 @@
             GameCreator.UI.drawSceneObjectLibrary();
             scene.drawBackground();
             GameCreator.state = 'editing';
+            GameCreator.UI.showEditModeTools();
+
             //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the
             //renderableObjects array and not copies. This is because we want to change the properties on the actual scene objects when editing.
             for (i = 0; i < scene.objects.length; i += 1) {
