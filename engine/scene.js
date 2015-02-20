@@ -145,11 +145,15 @@
         },
 
         playScene: function(scene) {
+            GameCreator.resetScene(scene);
+            GameCreator.state = 'playing';
+            GameCreator.gameLoop();
+        },
+
+        resetScene: function(scene) {
             GameCreator.switchScene(scene);
             GameCreator.resetGlobalCounters();
             GameCreator.then = Date.now();
-            GameCreator.state = 'playing';
-            GameCreator.gameLoop();
         },
 
         switchScene: function(scene) {

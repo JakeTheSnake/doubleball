@@ -52,13 +52,9 @@
         },
 
         directScene: function(scene) {
-            GameCreator.switchScene(scene);
-            GameCreator.resetGlobalCounters();
-            GameCreator.then = Date.now();
+            GameCreator.resetScene(scene);
             GameCreator.UI.hideEditModeTools();
             GameCreator.state = 'directing';
-            
-
             GameCreator.gameLoop();
         },
 

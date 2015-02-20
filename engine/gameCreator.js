@@ -280,9 +280,9 @@
         },
         restartGame: function() {
             if (GameCreator.state === 'directing') {
-                GameCreator.directScene(GameCreator.scenes[0]);
+                GameCreator.resetScene(GameCreator.scenes[0]);
             } else if (GameCreator.state === 'playing') {
-                GameCreator.playScene(GameCreator.scenes[0]);
+                GameCreator.resetScene(GameCreator.scenes[0]);
             }
         },
         resumeGame: function() {
