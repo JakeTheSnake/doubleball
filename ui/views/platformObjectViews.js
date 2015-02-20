@@ -80,6 +80,10 @@ GameCreator.PlatformObject.prototype.getSceneObjectForm = function() {
             <td><label>Acceleration:</label></td> \
             <td id="side-property-acceleration" data-inputtype="numberInput"></td> \
           </tr> \
+          <tr> \
+            <td><label>Gravity:</label></td> \
+            <td id="side-property-accY" data-inputtype="numberInput"></td> \
+          </tr> \
         </table> \
       </div> \
     </li> \
