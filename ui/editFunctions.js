@@ -115,6 +115,7 @@
 
         stopEditing: function() {
             $(GameCreator.mainCanvas).off(".editScene");
+            $(window).off(".editScene");
             GameCreator.selectedObject = null;
         },
 
