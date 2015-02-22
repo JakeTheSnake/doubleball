@@ -100,10 +100,6 @@ GameCreator.UI = {
     },
 
     setupGlobalLibraryItemListeners: function(listElementButton, globalObj) {
-        //Width and height are ranges, get the largest possible value from range.
-        var height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
-        var width = globalObj.getDefaultState().attributes.width.slice(-1)[0];
-
         $(listElementButton).on("dblclick", function(e){
             GameCreator.UI.openEditGlobalObjectDialogue(globalObj);
         });
@@ -130,42 +126,47 @@ GameCreator.UI = {
         });
 
         $(listElementButton).on("mousedown", function(e){
-            var image = new Image();
-            height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
-            width = globalObj.getDefaultState().attributes.width.slice(-1)[0];
-            image.src = globalObj.getDefaultState().attributes.image.src;
-            $(image).css("position", "absolute");
-            $(image).css("top", e.pageY - (height/2));
-            $(image).css("left", e.pageX - (width/2));
-            $(image).css("display", "none");
-            $(image).css("width", width + "px");
-            $(image).css("height", height + "px");
+            GameCreator.UI.dragGlobalObjectToScene(e, globalObj);
+        });
+    },
 
-            $("body").append(image);
-            var initialX = e.pageX;
-            var initialY = e.pageY;
-            $(window).on("mousemove.dragGlobalMenuItem", function(e){
-                if (Math.abs(initialX - e.pageX) > 3 || Math.abs(initialY - e.pageY) > 3){
-                    $(image).css("display", "block"); 
-                    $(image).css("top", e.pageY - (height/2));
-                    $(image).css("left", e.pageX - (width/2));
-                }
-                return false;
-            });
+    dragGlobalObjectToScene: function(e, globalObj) {
+        var image = new Image();
+        //Width and height are ranges, get the largest possible value from range.
+        var height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
+        var width = globalObj.getDefaultState().attributes.width.slice(-1)[0];
+        image.src = globalObj.getDefaultState().attributes.image.src;
+        $(image).css("position", "absolute");
+        $(image).css("top", e.pageY - (height/2));
+        $(image).css("left", e.pageX - (width/2));
+        $(image).css("display", "none");
+        $(image).css("width", width + "px");
+        $(image).css("height", height + "px");
 
-            $(window).one("mouseup.dragGlobalMenuItem", function(e){
-                var x = e.pageX;
-                var y = e.pageY;
-                var offsetX = $("#main-canvas").offset().left;
-                var offsetY = $("#main-canvas").offset().top;
-                if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
-                    var args = {x: x - offsetX - globalObj.getDefaultState().attributes.width[0] / 2, 
-                                y: y - offsetY - globalObj.getDefaultState().attributes.height[0] / 2};
-                    var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.getActiveScene(), args);
-                }
-                $(image).remove();
-                $(window).off("mousemove.dragGlobalMenuItem");
-            });
+        $("body").append(image);
+        var initialX = e.pageX;
+        var initialY = e.pageY;
+        $(window).on("mousemove.dragGlobalMenuItem", function(e){
+            if (Math.abs(initialX - e.pageX) > 3 || Math.abs(initialY - e.pageY) > 3){
+                $(image).css("display", "block"); 
+                $(image).css("top", e.pageY - (height/2));
+                $(image).css("left", e.pageX - (width/2));
+            }
+            return false;
+        });
+
+        $(window).one("mouseup.dragGlobalMenuItem", function(e){
+            var x = e.pageX;
+            var y = e.pageY;
+            var offsetX = $("#main-canvas").offset().left;
+            var offsetY = $("#main-canvas").offset().top;
+            if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
+                var args = {x: x - offsetX - globalObj.getDefaultState().attributes.width[0] / 2, 
+                            y: y - offsetY - globalObj.getDefaultState().attributes.height[0] / 2};
+                var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.getActiveScene(), args);
+            }
+            $(image).remove();
+            $(window).off("mousemove.dragGlobalMenuItem");
         });
     },
  

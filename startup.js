@@ -58,6 +58,10 @@ $(document).ready(function() {
         $("#edit-mode-label").html(selectedGameMode);
     });
 
+    $('#library-preview').on('mousedown', 'img', function(e) {
+        GameCreator.UI.dragGlobalObjectToScene(e, GameCreator.selectedLibraryObject);
+    });
+
     $("#run-game-button").on("click", GameCreator.playGameEditing);
     $("#edit-game-button").on("click", GameCreator.editActiveScene);
     $("#direct-game-button").on("click", GameCreator.directActiveScene);
