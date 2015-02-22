@@ -55,9 +55,9 @@
 
     GameCreator.TextObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.parent.getDefaultState();
-        sceneObject.attributes.font = state.attributes.font;
-        sceneObject.attributes.color = state.attributes.color;
-        sceneObject.attributes.size = state.attributes.size;
-        sceneObject.attributes.text = state.attributes.text;
+        sceneObject.attributes.font = args.font || state.attributes.font;
+        sceneObject.attributes.color = args.color || state.attributes.color;
+        sceneObject.attributes.size = args.size != undefined ? args.size : state.attributes.size;
+        sceneObject.attributes.text = args.text != undefined ? args.text : state.attributes.text;
     };
 }());
