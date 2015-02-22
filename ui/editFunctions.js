@@ -243,7 +243,7 @@
                 GameCreator.getActiveScene().drawBackground();
                 $('#setup-scene-actions').click(function(){
                     choosableActions = GameCreator.actionGroups.sceneStartedActions;
-                    GameCreator.UI.openEditActionsWindow(
+                    GameCreator.UI.openSelectActionsDialogue(
                         GameCreator.htmlStrings.sceneStartedEventInformationWindow(),
                         new GameCreator.CASetVM(activeScene.onCreateSet, choosableActions, undefined), 
                         activeScene.attributes.name

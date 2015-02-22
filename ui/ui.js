@@ -174,15 +174,19 @@ GameCreator.UI = {
         //Only select actions if GameCreator isn't already paused for action selection.
         GameCreator.pauseGame();
         
+        GameCreator.UI.openSelectActionsDialogue(infoWindowHtml, caSetVM, objName);
+
+        $("#dialogue-overlay").one("click", function() {
+            GameCreator.resumeGame();
+        });
+    },
+
+    openSelectActionsDialogue: function(infoWindowHtml, caSetVM, objName) {
         GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
         GameCreator.UI.setupActionsColumn();
         GameCreator.UI.populateSelectActionList(caSetVM);
         $("#dialogue-window > .right").addClass("slide-in-from-right");
         $("#dialogue-panel-actions").trigger('redrawList', caSetVM);
-        //GameCreator.UI.setupEditActionsContent(text, choosableActions, existingActions, thisName);
-        $("#dialogue-overlay").one("click", function() {
-            GameCreator.resumeGame();
-        });
     },
     
     //Add global object functions
