@@ -54,8 +54,9 @@
         directScene: function(scene) {
             GameCreator.resetScene(scene);
             GameCreator.UI.hideEditModeTools();
+            var startNewGameLoop = GameCreator.state !== 'directing' && GameCreator.state !== 'playing';
             GameCreator.state = 'directing';
-            GameCreator.gameLoop();
+            if (startNewGameLoop) GameCreator.gameLoop();
         },
 
         playGameEditing: function() {
