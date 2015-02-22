@@ -326,6 +326,9 @@ GameCreator.UI = {
         }
         GameCreator.drawObjectSelectedUI();
 
+        $('#scene-object-library li').removeClass('active');
+        $('#scene-object-library li[data-instanceId="' + GameCreator.selectedObject.attributes.instanceId + '"]').addClass('active');
+
         GameCreator.UI.setupSceneObjectForm(GameCreator.selectedObject);
     },
 

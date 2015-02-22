@@ -196,6 +196,7 @@ GameCreator.htmlStrings = {
     var libraryItem = document.createElement("li");
     $(libraryItem).append(object.attributes.instanceId);
     $(libraryItem).addClass("library-scene-object-button");
+    $(libraryItem).attr('data-instanceId', object.attributes.instanceId)
 
     return libraryItem;
   },
