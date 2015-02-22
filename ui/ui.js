@@ -131,7 +131,9 @@ GameCreator.UI = {
 
         $(listElementButton).on("mousedown", function(e){
             var image = new Image();
-            image.src = $(this).attr("data-imgsrc");
+            height = globalObj.getDefaultState().attributes.height.slice(-1)[0];
+            width = globalObj.getDefaultState().attributes.width.slice(-1)[0];
+            image.src = globalObj.getDefaultState().attributes.image.src;
             $(image).css("position", "absolute");
             $(image).css("top", e.pageY - (height/2));
             $(image).css("left", e.pageX - (width/2));

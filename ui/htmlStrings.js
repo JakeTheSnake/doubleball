@@ -187,7 +187,6 @@ GameCreator.htmlStrings = {
     var libraryItem = document.createElement("li");
     $(libraryItem).append(object.objectName);
     $(libraryItem).addClass("library-global-object-button");
-    $(libraryItem).attr("data-imgsrc", object.getDefaultState().attributes.image.src);
 
     return libraryItem;
   },
