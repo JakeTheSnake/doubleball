@@ -60,8 +60,10 @@
         } else {
             if (GameCreator.actions[this.name].runnable.call(runtimeObj) && this.hasRequiredParameters(GameCreator.actions[this.name].params)) {
               GameCreator.actions[this.name].action.call(runtimeObj, combinedParameters);
+              return true;
+            } else {
+              return false;
             }
-            return;
         }
 
         (function(thisAction, thisRuntimeObj, combinedParameters) {

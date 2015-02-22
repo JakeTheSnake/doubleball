@@ -182,7 +182,42 @@ test("NextScene Action Test", function() {
     deepEqual(GameCreator.activeSceneId, sceneTwo.id, "Second scene should be active after action.");
 });
 
+module("ErrorActions", {
+    setup: function() {
+        platformZealot = GameCreator.addGlobalObject({objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
+        runtimeObject = GameCreator.createRuntimeObject(platformZealot, {x: 50, y: 60, speedX: -500, speedY: 50});
+    },
+    teardown: function() {
 
+    }
+});
+
+test("Bounce Action", function() {
+    var bounceAction = new GameCreator.RuntimeAction("Bounce", {collisionObject: undefined});
+    var error;
+    try {
+        bounceAction.runAction(runtimeObject);
+    } catch (e) {
+        error = e;
+    }
+    deepEqual(error, GameCreator.errors.BounceActionNoCollisionObject, "No Collision Object-error should be thrown");
+});
+
+test("Stop Action", function() {
+    var bounceAction = new GameCreator.RuntimeAction("Stop", {collisionObject: undefined});
+    var error;
+    try {
+        bounceAction.runAction(runtimeObject);
+    } catch (e) {
+        error = e;
+    }
+    deepEqual(error, GameCreator.errors.StopActionNoCollisionObject, "No Collision Object-error should be thrown");
+});
+
+test("Shoot Action", function() {
+    var shootAction = new GameCreator.RuntimeAction("Shoot", {objectToShoot: undefined, projectileSpeed: undefined});
+    ok(shootAction.runAction(runtimeObject) === false, "Action should not be run because of lacking required param");
+});
 
 
 var newEvent;

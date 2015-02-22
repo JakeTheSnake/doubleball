@@ -13,6 +13,9 @@
 
     GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
         object.bounce = function(params) {
+            if (!params.collisionObject) {
+                throw GameCreator.errors.BounceActionNoCollisionObject;
+            }
             switch (GameCreator.helpers.determineQuadrant(params.collisionObject, this)) {
             case 1:
                 this.attributes.speedY = -Math.abs(this.attributes.speedY);
@@ -209,6 +212,9 @@
                 this.attributes.speedX = 0;
             } else {
                 obj = params.collisionObject;
+                if (!obj) {
+                    throw GameCreator.errors.StopActionNoCollisionObject;
+                }
                 quadrant = GameCreator.helpers.determineQuadrant(obj, this);
                 if (this.attributes.speedY > 0 && quadrant === 1) {
                     this.attributes.speedY = 0;

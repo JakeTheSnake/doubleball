@@ -115,12 +115,14 @@
 
     GameCreator.TopDownObject.prototype.shoot = function(staticParameters) {
         var x = 0, y = 0, speedX = 0, speedY = 0;
+        var objectToShoot = GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot));
+        staticParameters.projectileSpeed = staticParameters.projectileSpeed || GameCreator.actions.Shoot.params.projectileSpeed.defaultValue;
         var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
         var angularSpeed = GameCreator.helpers.calcAngularSpeed(projectileSpeed);
         var facing = this.facing;
         var target, unitVector;
-        var objectToShoot = GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot));
-        var objectToShootAttributes = objectToShoot.getDefaultState().attributes;;
+        
+        var objectToShootAttributes = objectToShoot.getDefaultState().attributes;
         switch (staticParameters.projectileDirection) {
         case 'Default':
             switch (facing) {
