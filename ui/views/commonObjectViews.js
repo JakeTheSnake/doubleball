@@ -49,6 +49,17 @@ GameCreator.commonObjectViews = {
     <a id="close-dialogue-button" class="btn warning">x</a> \
     </div> \
     <div class="panel tall"> \
+      <div class="panel-header"> \
+        <span>Library</span> \
+      </div>\
+      <div id="object-manager-library-preview" class="library-preview"> \
+      </div> \
+      <div class="library-explorer"> \
+        <ul class="global-object-list"> \
+        </ul> \
+      </div> \
+    </div> \
+    <div class="panel tall"> \
     <div class="panel-header"> \
     <span>Edit</span> \
     </div>\
