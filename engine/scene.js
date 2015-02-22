@@ -167,7 +167,6 @@
                 obj = $.extend({}, scene.objects[i]);
                 obj.attributes = $.extend({}, scene.objects[i].attributes);
                 GameCreator.addToRuntime(obj);
-                obj.parent.onGameStarted();
                 obj.setCounterParent();
             }
 

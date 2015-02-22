@@ -286,12 +286,14 @@
             }
         },
         resumeGame: function() {
-            var i, activeScene;
             GameCreator.paused = false;
-            activeScene = GameCreator.getActiveScene();
-            for (i = 0; i < activeScene.objects.length; i += 1) {
-                activeScene.objects[i].parent.onGameStarted();
-            }
+            Object.keys(GameCreator.globalObjects).forEach(function(objectName){
+                GameCreator.globalObjects[objectName].onGameStarted();
+            });
+
+            GameCreator.renderableObjects.forEach(function(runtimeObject){
+                runtimeObject.parent.objectEnteredGame();
+            });
         },
         createRuntimeObject: function(globalObj, args) {
             var runtimeObj = new GameCreator.SceneObject();
@@ -303,6 +305,7 @@
             runtimeObj.instantiate(globalObj, args);
             runtimeObj.reset();
             GameCreator.addToRuntime(runtimeObj);
+            globalObj.objectEnteredGame();
             return runtimeObj;
         },
 

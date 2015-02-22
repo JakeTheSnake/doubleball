@@ -123,6 +123,8 @@
 
     GameCreator.BaseObject.prototype.onGameStarted = function() {};
 
+    GameCreator.BaseObject.prototype.objectEnteredGame = function() {};
+
     GameCreator.BaseObject.prototype.checkEvents = function() {};
 
     GameCreator.BaseObject.prototype.move = function(modifier) {

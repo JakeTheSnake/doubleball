@@ -76,13 +76,16 @@
     };
 
     GameCreator.MouseObject.prototype.onGameStarted = function() {
-        $(GameCreator.mainCanvas).css("cursor", "none");
-        var that = this;
+        var me = this;
         $(document).on("mousemove.gameKeyListener", function(evt) {
-            that.latestMouseX = evt.pageX;
-            that.latestMouseY = evt.pageY;
+            me.latestMouseX = evt.pageX;
+            me.latestMouseY = evt.pageY;
         });
         this.initializeKeyListeners();
+    };
+
+    GameCreator.MouseObject.prototype.objectEnteredGame = function() {
+        $(GameCreator.mainCanvas).css("cursor", "none");
     };
 
     GameCreator.MouseObject.prototype.instantiateSceneObject = function(sceneObject, args) {
