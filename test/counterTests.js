@@ -21,17 +21,17 @@ function commonCounterTests() {
 
     test("Decrease counter by one", function() {
         counter.changeValue(-1);
-        assertCounter(-1, "Counter value increased");
+        assertCounter(-1, "Counter value decreased");
     });
 
     test("Set positive counter value", function() {
         counter.setValue(1337);
-        assertCounter(1337, "Counter value increased");
+        assertCounter(1337, "Counter value set to positive value");
     });
 
     test("Set negative counter value", function() {
         counter.setValue(-1337);
-        assertCounter(-1337, "Counter value increased");
+        assertCounter(-1337, "Counter value set to negative value");
     });
 
     test("Test OnIncrease counter event", function() {
