@@ -152,6 +152,7 @@
         },
 
         resetScene: function(scene) {
+            GameCreator.resetGlobalObjects();
             GameCreator.switchScene(scene);
             GameCreator.resetGlobalCounters();
             GameCreator.then = Date.now();
@@ -168,6 +169,7 @@
                 obj.attributes = $.extend({}, scene.objects[i].attributes);
                 GameCreator.addToRuntime(obj);
                 obj.setCounterParent();
+                obj.setState(obj.getCurrentState().id);
             }
 
             GameCreator.resumeGame();

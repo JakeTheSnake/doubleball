@@ -343,6 +343,7 @@
         };
         globalObj.parentCounters = {};
         globalObj.counters = {};
+        globalObj.currentState = 0;
         globalObj.onDestroySets = [];
         globalObj.onCreateSets = [];
         globalObj.states = [{

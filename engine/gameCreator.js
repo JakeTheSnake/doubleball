@@ -430,6 +430,13 @@
             });
         },
 
+        resetGlobalObjects: function() {
+            var objectNames = Object.keys(GameCreator.globalObjects);
+            objectNames.forEach(function(objectName){
+                GameCreator.globalObjects[objectName].currentState = 0;
+            })
+        },
+
         playGame: function() {
             GameCreator.playScene(GameCreator.scenes[0]);
         },

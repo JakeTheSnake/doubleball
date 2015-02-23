@@ -146,6 +146,9 @@
                     GameCreator.render(true);
                 }
             }
+
+            GameCreator.resetGlobalObjects();
+
             $(window).on("mousemove.editScene", function(e) {
                 var mouseX, mouseY;
                 if (GameCreator.draggedNode) {
