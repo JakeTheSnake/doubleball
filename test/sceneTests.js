@@ -21,7 +21,7 @@ test("State value reset to default when scene changed", function() {
 	GameCreator.scenes[0].objects[0].setState(1);
     var params = {scene: GameCreator.scenes[1].id};
     GameCreator.selectScene(params);
-    deepEqual(GameCreator.scenes[1].objects[0].currentState, 0, 'State reset to default on scene switch');
+    deepEqual(GameCreator.scenes[1].objects[0].getCurrentState().id, 0, 'State reset to default on scene switch');
 });
 
 test("State value preserved between scenes for unique object", function() {
@@ -30,7 +30,7 @@ test("State value preserved between scenes for unique object", function() {
 	GameCreator.scenes[0].objects[0].setState(1);
     var params = {scene: GameCreator.scenes[1].id}
     GameCreator.selectScene(params);
-    deepEqual(GameCreator.scenes[1].objects[0].currentState, 1, 'State did not change on scene switch for unique object');
+    deepEqual(GameCreator.scenes[1].objects[0].getCurrentState().id, 1, 'State did not change on scene switch for unique object');
 });
 
 })();
