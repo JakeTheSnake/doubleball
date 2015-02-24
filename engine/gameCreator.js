@@ -342,21 +342,25 @@
         changeCounter: function(runtimeObj, params) {
             var selectedObjectId = params.objId;
             var counterName = params.counter;
-            var counterCarrier;
-            if (selectedObjectId !== 'this') {
-                runtimeObj = GameCreator.getSceneObjectById(selectedObjectId);
-            }
-            if (runtimeObj.parent.attributes.unique) {
-                counterCarrier = runtimeObj.parent;
+            var counterCarrier, runtimeObjects;
+            if (selectedObjectId && selectedObjectId !== 'this') {
+                runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));
             } else {
-                counterCarrier = runtimeObj;
+                runtimeObjects = [runtimeObj];
             }
-            if (params.type === 'set') {
-                counterCarrier.counters[counterName].setValue(params.value);
-            } else if (params.type === 'add') {
-                counterCarrier.counters[counterName].changeValue(params.value);
-            } else {
-                counterCarrier.counters[counterName].changeValue(-params.value);
+            for (var i = 0; i < runtimeObjects.length; i += 1) {
+                if (runtimeObjects[i].parent.attributes.unique) {
+                    counterCarrier = runtimeObjects[i].parent;
+                } else {
+                    counterCarrier = runtimeObjects[i];
+                }
+                if (params.type === 'set') {
+                    counterCarrier.counters[counterName].setValue(params.value);
+                } else if (params.type === 'add') {
+                    counterCarrier.counters[counterName].changeValue(params.value);
+                } else {
+                    counterCarrier.counters[counterName].changeValue(-params.value);
+                }
             }
         },
 

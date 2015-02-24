@@ -142,7 +142,7 @@
                         params: {
                           "objId":
                           {
-                              param: GameCreator.SceneObjectParameter,
+                              param: GameCreator.GlobalObjectParameter,
                               mandatory: false,
                               defaultValue: 'this',
                               observer: 'counter'
