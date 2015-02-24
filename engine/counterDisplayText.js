@@ -59,6 +59,8 @@ GameCreator.CounterDisplayText.prototype.onGameStarted = function() {};
 
 GameCreator.CounterDisplayText.prototype.onCreate = function() {};
 
+GameCreator.CounterDisplayText.prototype.objectEnteredGame = function() {};
+
 GameCreator.CounterDisplayText.prototype.instantiateSceneObject = function(sceneObject, args) {
     var state = sceneObject.parent.getDefaultState();
     sceneObject.attributes.font = state.attributes.font;

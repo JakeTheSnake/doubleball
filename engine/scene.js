@@ -169,7 +169,9 @@
                 obj.attributes = $.extend({}, scene.objects[i].attributes);
                 GameCreator.addToRuntime(obj);
                 obj.setCounterParent();
-                obj.setState(obj.getCurrentState().id);
+                if (obj.parent.attributes !== undefined && obj.parent.attributes.unique) {
+                    obj.setState(obj.getCurrentState().id);
+                }
             }
 
             GameCreator.resumeGame();

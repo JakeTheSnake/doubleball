@@ -15,6 +15,10 @@
             attributes: {}
         }];
 
+        this.attributes = {
+            unique: args.unique != undefined ? args.unique : false
+        };
+
         this.getDefaultState().attributes.width = [100]; //TODO: Handle width and height of textOjects?
         this.getDefaultState().attributes.height = [50];
         this.getDefaultState().attributes.font = args.font || 'Arial';
@@ -52,6 +56,8 @@
     GameCreator.TextObject.prototype.onGameStarted = function() {};
 
     GameCreator.TextObject.prototype.onCreate = function() {};
+
+    GameCreator.TextObject.prototype.objectEnteredGame = function() {};
 
     GameCreator.TextObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.parent.getDefaultState();

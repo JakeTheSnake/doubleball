@@ -61,7 +61,7 @@
     GameCreator.SceneObject.prototype.instantiate = function(globalObj, args) {
         this.invalidated = true;
         this.parent = globalObj;
-        if (this.parent.attributes.unique) {
+        if (this.parent.attributes !== undefined && this.parent.attributes.unique) {
             this.parent.currentState = args.currentState || 0;
         } else {
             this.currentState = args.currentState || 0;
@@ -130,7 +130,7 @@
     };
 
     GameCreator.SceneObject.prototype.getCurrentState = function() {
-        if (this.parent.attributes.unique) {
+        if (this.parent.attributes !== undefined && this.parent.attributes.unique) {
             return GameCreator.helpers.getObjectById(this.parent.states, this.parent.currentState);
         }
         return GameCreator.helpers.getObjectById(this.parent.states, this.currentState);
@@ -192,7 +192,7 @@
                 stateAttribute = state.attributes[attrKeys[i]];
                 this.attributes[attrKeys[i]] = Array.isArray(stateAttribute) ? GameCreator.helpers.getRandomFromRange(stateAttribute) : stateAttribute;
             }
-            if(this.parent.attributes.unique) {
+            if(this.parent.attributes !== undefined && this.parent.attributes.unique) {
                 this.parent.currentState = stateId;    
             } else {
                 this.currentState = stateId;    
