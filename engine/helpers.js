@@ -228,7 +228,7 @@
         return object;
     };
 
-    GameCreator.helpers.findGlobalObjectById = function(id) {
+    GameCreator.helpers.getGlobalObjectById = function(id) {
         var objects = Object.keys(GameCreator.globalObjects);
         var i;
         for (i = 0; i < objects.length; i += 1) {
@@ -501,7 +501,10 @@
                     }
                 case "globalObjectInput":
                 case "shootableObjectInput":
-                    return GameCreator.helpers.findGlobalObjectById(Number(value)).objectName;
+                    if (value === 'this') {
+                        return value;
+                    }
+                    return GameCreator.helpers.getGlobalObjectById(Number(value)).objectName;
                 case "stateInput":
                     return GameCreator.helpers.getObjectById(obj.states, Number(value)).name;
                 case "counterTypeInput":
@@ -595,6 +598,17 @@
         if (y > offsetTop + GameCreator.height) y = offsetTop + GameCreator.height;
         return y;
     }
+
+    GameCreator.helpers.getActiveInstancesOfGlobalObject = function(objectId) {
+        var i, activeObjects = GameCreator.renderableObjects;
+        var result = [];
+        for (i = 0; i < activeObjects.length; i += 1) {
+            if (activeObjects[i].parent.id === objectId) {
+                result.push(activeObjects[i]);
+            }
+        }
+        return result;
+    },
 
     Array.prototype.collect = function(collectFunc) {
         var result = [];

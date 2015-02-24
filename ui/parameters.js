@@ -5,12 +5,12 @@
 "use strict";
 
 
-var updateParameter = function(sceneObjectId, observer) {
+var updateParameter = function(globalObjectId, observer) {
     var globalObj;
-    if (sceneObjectId === 'this') {
+    if (globalObjectId === 'this') {
         globalObj = this.itemVM.globalObj;
     } else {
-        globalObj = GameCreator.getSceneObjectById(sceneObjectId).parent;
+        globalObj = GameCreator.helpers.getGlobalObjectById(Number(globalObjectId));
     }
 
     var paramValuePresenter = this.getValuePresenter();

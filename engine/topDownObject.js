@@ -115,7 +115,7 @@
 
     GameCreator.TopDownObject.prototype.shoot = function(staticParameters) {
         var x = 0, y = 0, speedX = 0, speedY = 0;
-        var objectToShoot = GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot));
+        var objectToShoot = GameCreator.helpers.getGlobalObjectById(Number(staticParameters.objectToShoot));
         staticParameters.projectileSpeed = staticParameters.projectileSpeed || GameCreator.actions.Shoot.params.projectileSpeed.defaultValue;
         var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
         var angularSpeed = GameCreator.helpers.calcAngularSpeed(projectileSpeed);

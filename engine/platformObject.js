@@ -124,7 +124,7 @@
         var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var target, unitVector;
-        var objectToShoot = GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot));
+        var objectToShoot = GameCreator.helpers.getGlobalObjectById(Number(staticParameters.objectToShoot));
         var objectToShootAttributes = objectToShoot.getDefaultState().attributes;
         switch (staticParameters.projectileDirection) {
         case 'Default':

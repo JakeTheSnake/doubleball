@@ -361,11 +361,15 @@
         },
 
         changeState: function(runtimeObj, params) {
-            var selectedObjectId = params.objectId;
+            var i, selectedObjectId = params.objectId;
             if (selectedObjectId && selectedObjectId !== 'this') {
-                runtimeObj = GameCreator.getRuntimeObject(selectedObjectId);
+                var runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));
+                for (i = 0; i < runtimeObjects.length; i += 1) {
+                    runtimeObjects[i].setState(Number(params.objectState));
+                }
+            } else {
+                runtimeObj.setState(Number(params.objectState));
             }
-            runtimeObj.setState(Number(params.objectState));
         },
         
         getClickedObject: function(x, y) {

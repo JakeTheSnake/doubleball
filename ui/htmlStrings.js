@@ -21,7 +21,9 @@ GameCreator.htmlStrings = {
   },
 
   globalObjectInput: function(attrName, value) {
-      return GameCreator.htmlStrings.singleSelector(GameCreator.helpers.getGlobalObjectIds(), attrName, value);
+      var ids = GameCreator.helpers.getGlobalObjectIds();
+      ids['this'] = 'this';
+      return GameCreator.htmlStrings.singleSelector(ids, attrName, value);
   },
   sceneObjectInput: function(attrName, value) {
       var ids = GameCreator.getUniqueIDsInActiveScene();
@@ -333,7 +335,7 @@ GameCreator.htmlStrings = {
   },
 
   selectGlobalObjectPresentation: function(globalObjectId) {
-    var globalObject = GameCreator.helpers.findGlobalObjectById(globalObjectId);
+    var globalObject = GameCreator.helpers.getGlobalObjectById(globalObjectId);
     return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>';
   },
 

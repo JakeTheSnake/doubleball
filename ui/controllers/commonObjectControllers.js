@@ -50,7 +50,7 @@ GameCreator.commonObjectControllers = {
         var collisionObjects = [];
         var globalObj = this;
         for(var i = 0; i < this.onCollideSets.length; i++) {
-            collisionObjects.push(GameCreator.helpers.findGlobalObjectById(this.onCollideSets[i].id));
+            collisionObjects.push(GameCreator.helpers.getGlobalObjectById(this.onCollideSets[i].id));
         }
 
         var html = GameCreator.htmlStrings.getColumn('With', 'dialogue-panel-with');

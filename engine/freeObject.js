@@ -72,7 +72,7 @@
         var unitVector = GameCreator.helpers.calcUnitVector(this.attributes.speedX, this.attributes.speedY);
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var target;
-        var objectToShoot = GameCreator.helpers.findGlobalObjectById(Number(staticParameters.objectToShoot));
+        var objectToShoot = GameCreator.helpers.getGlobalObjectById(Number(staticParameters.objectToShoot));
         var objectToShootAttributes = objectToShoot.getDefaultState().attributes;
         switch (staticParameters.projectileDirection) {
         case 'Default':
