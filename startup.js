@@ -71,13 +71,20 @@ $(document).ready(function() {
             url: "savegame",
             data: {game: {data: GameCreator.saveState()}}
         }).done(function(reply) {
-            $("#save-message").html("Game was successfully saved!");
-            setTimeout(function() {
-                $("#save-message").empty();
-                var currentDate = new Date();
-                var minutes = currentDate.getMinutes() < 9 ? "0" + currentDate.getMinutes() : currentDate.getMinutes();
-                $("#save-message").html("Game was last saved " + currentDate.getHours() + ":" + minutes);
-            }, 3000);
+            if (reply === "ok") {
+                $("#save-message").html("Game was successfully saved!");
+                setTimeout(function() {
+                    $("#save-message").empty();
+                    var currentDate = new Date();
+                    var minutes = currentDate.getMinutes() < 9 ? "0" + currentDate.getMinutes() : currentDate.getMinutes();
+                    $("#save-message").html("Game was last saved " + currentDate.getHours() + ":" + minutes);
+                }, 3000);
+            } else {
+                $("#save-message").html("Game failed to save! (It might be too large)");
+                setTimeout(function() {
+                    $("#save-message").empty();
+                }, 3000);
+            }
         });
     });
 
