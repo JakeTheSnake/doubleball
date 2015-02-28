@@ -131,19 +131,6 @@ GameCreator.CounterChangeTypeParameter.prototype.getValuePresenter = function() 
     return element;
 };
 
-GameCreator.SceneObjectParameter = function(itemVM, paramName, mandatory) {
-    this.name = paramName;
-    this.itemVM = itemVM;
-    this.mandatory = mandatory;
-    this.element = this.getValuePresenter();
-};
-
-GameCreator.SceneObjectParameter.prototype.getValuePresenter = function() {
-    var element = document.createElement('td');
-    element.setAttribute('data-inputtype', 'sceneObjectInput');
-    return element;
-};
-
 GameCreator.StateParameter = function(itemVM, paramName, mandatory) {
     this.name = paramName;
     this.itemVM = itemVM;
@@ -343,7 +330,6 @@ GameCreator.StateParameter.prototype.getLabel = labelFunction;
 GameCreator.CounterParameter.prototype.getLabel = labelFunction;
 GameCreator.CounterChangeTypeParameter.prototype.getLabel = labelFunction;
 GameCreator.TimingParameter.prototype.getLabel = labelFunction;
-GameCreator.SceneObjectParameter.prototype.getLabel = labelFunction;
 GameCreator.ComparatorParameter.prototype.getLabel = labelFunction;
 GameCreator.MovementTypeParameter.prototype.getLabel = labelFunction;
 
@@ -357,7 +343,6 @@ GameCreator.SwitchSceneParameter.prototype.setupValuePresenter = GameCreator.UI.
 GameCreator.StateParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 GameCreator.CounterParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 GameCreator.CounterChangeTypeParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
-GameCreator.SceneObjectParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 GameCreator.ComparatorParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 GameCreator.MovementTypeParameter.prototype.setupValuePresenter = GameCreator.UI.setupValuePresenter;
 

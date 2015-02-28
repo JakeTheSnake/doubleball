@@ -506,7 +506,7 @@
                     }
                     return GameCreator.helpers.getGlobalObjectById(Number(value)).objectName;
                 case "stateInput":
-                    if (attributes.objectId !== 'this') {
+                    if (attributes.objectId && attributes.objectId !== 'this') {
                         obj = GameCreator.helpers.getGlobalObjectById(Number(attributes.objectId));
                     }
                     return GameCreator.helpers.getObjectById(obj.states, Number(value)).name;

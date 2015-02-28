@@ -61,19 +61,9 @@ GameCreator.conditions = {
 
     isInState: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
-            if (params.objId === 'this') {
-                return runtimeObj.currentState === Number(params.state);
-            } else {
-                return GameCreator.getRuntimeObject(params.objId).currentState === Number(params.state);
-            }
+            return runtimeObj.currentState === Number(params.state);
         },
         params: {
-            objId: {
-                param: GameCreator.SceneObjectParameter,
-                mandatory: false,
-                defaultValue: 'this',
-                observer: 'state'
-            },
             state: {
                 param: GameCreator.StateParameter,
                 mandatory: false,
@@ -85,14 +75,10 @@ GameCreator.conditions = {
     counterEquals: new GameCreator.Condition({
         evaluate: function (runtimeObj, params) {
             var counterCarrier;
-            if (params.objId === 'this') {
-                counterCarrier = runtimeObj;
+            if (runtimeObj.parent.attributes.unique) {
+                counterCarrier = runtimeObj.parent;
             } else {
-                var sceneObject = GameCreator.getRuntimeObject(params.objId);
-                if (sceneObject) {
-                    counterCarrier = sceneObject;
-                }
-                return false;
+                counterCarrier = runtimeObj;
             }
 
             if (params.comparator === 'greaterThan') {
@@ -104,12 +90,6 @@ GameCreator.conditions = {
             return counterCarrier.counters[params.counter].value === Number(params.value);
         },
         params: {
-            objId: {
-                param: GameCreator.SceneObjectParameter,
-                mandatory: false,
-                defaulValue: 'this',
-                observer: 'counter'
-            },
             counter: {
                 param: GameCreator.CounterParameter,
                 mandatory: true,
@@ -159,19 +139,22 @@ GameCreator.conditions = {
 
     collidesWith: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
+            var sceneObjects;
             if (params.objId === 'this') {
                 return true;
             } else {
-                var sceneObject = GameCreator.getRuntimeObject(params.objId);
-                if (sceneObject) {
-                    return GameCreator.helpers.checkObjectCollision(runtimeObj, sceneObject);
+                sceneObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(params.objId));
+                for(i = 0; i < sceneObjects.length; i += 1) {
+                    if (GameCreator.helpers.checkObjectCollision(runtimeObj, sceneObjects[i])) {
+                        return true;
+                    }
                 }
             }
             return false;
         },
         params: {
             objId: {
-                param: GameCreator.SceneObjectParameter,
+                param: GameCreator.GlobalObjectParameter,
                 mandatory: true
             },
         }
