@@ -397,7 +397,7 @@
             if (attrToInputMap[attributeName]) {
                 $("#object-property-" + attributeName + "-container").html(
                     attrToInputMap[attributeName](attributeName, attributes[attributeName]) + 
-                    GameCreator.htmlStrings.inputLabel(GameCreator.helpers.labelize(attributeName))
+                    GameCreator.htmlStrings.inputLabel(GameCreator.helpers.getPrettyName(attributeName))
                 );
             }
         }
@@ -532,9 +532,10 @@
             objId: 'Object',
             counterDisplay: 'Counter',
             change: 'Add',
-            set: 'Set to'
+            set: 'Set to',
+            accY: 'Gravity'
         }
-        return prettyNames[databaseName] ? prettyNames[databaseName] : databaseName.charAt(0).toUpperCase() + databaseName.slice(1);
+        return prettyNames[databaseName] ? prettyNames[databaseName] : GameCreator.helpers.labelize(databaseName);
     };
 
     GameCreator.helpers.getShootableObjectIds = function(){
