@@ -20,9 +20,11 @@ GameCreator.htmlStrings = {
       return '<input type="text" class="numberField" data-type="number" data-attrName="' + attrName + '" value="' + (value === undefined ? '' : value) + '"/>'
   },
 
-  globalObjectInput: function(attrName, value) {
+  globalObjectInput: function(attrName, value, globalObj) {
       var ids = GameCreator.helpers.getGlobalObjectIds();
-      ids['this'] = 'this';
+      if (globalObj) {
+        ids['this'] = 'this';
+      }
       return GameCreator.htmlStrings.singleSelector(ids, attrName, value);
   },
   sceneObjectInput: function(attrName, value) {
