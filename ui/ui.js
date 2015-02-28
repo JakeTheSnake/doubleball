@@ -676,7 +676,7 @@ GameCreator.UI = {
         container = $(container);
         var display = document.createElement('span');
         var inputType = container.data('inputtype');
-        $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType, obj));
+        $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes, attrName, inputType, obj));
         container.html(display);
 
         closeInput = function(input) {
@@ -695,7 +695,7 @@ GameCreator.UI = {
                 setTimeout(function() { $(display).removeClass('properties-validation-flash'); }, 700);
                 GameCreator.UI.createValidationBox(container, err);
             }
-            $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes[attrName], inputType, obj));
+            $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes, attrName, inputType, obj));
             container.html(display);
             container.parent().off('click').on('click', onClickFunc);
             if (obj instanceof GameCreator.SceneObject) {

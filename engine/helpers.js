@@ -487,8 +487,8 @@
         $(GameCreator.mainCanvas).css("cursor", cursor);
     };
 
-    GameCreator.helpers.getPresentationForInputValue = function(value, type, obj) {
-        var scene;
+    GameCreator.helpers.getPresentationForInputValue = function(attributes, attrName, type, obj) {
+        var scene, value = attributes[attrName];
         if (value !== undefined && value !== null && value !== '') {
             switch (type) {
                 case "rangeInput":
@@ -506,6 +506,9 @@
                     }
                     return GameCreator.helpers.getGlobalObjectById(Number(value)).objectName;
                 case "stateInput":
+                    if (attributes.objectId !== 'this') {
+                        obj = GameCreator.helpers.getGlobalObjectById(Number(attributes.objectId));
+                    }
                     return GameCreator.helpers.getObjectById(obj.states, Number(value)).name;
                 case "counterTypeInput":
                     return GameCreator.helpers.getPrettyName(value);
