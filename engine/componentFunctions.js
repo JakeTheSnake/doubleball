@@ -76,16 +76,15 @@
                                 );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {
-                            for (j = 0; j < keySets.length; j++) {
-                                if (keySets[j].checkConditions(this)) {
-                                    keySets[j].runActions(this);
-                                    this.keyCooldown[key] = true;
+                            var conditionPassedCallback = function(){
+                                this.keyCooldown[key] = true;
                                     
-                                    setTimeout(function(cooldowns, cooldown) {
-                                        cooldowns[cooldown] = false; 
-                                    }.bind(this, this.keyCooldown, key), 300);
-                                }
-                            }
+                                setTimeout(function(cooldowns, cooldown) {
+                                    cooldowns[cooldown] = false; 
+                                }.bind(this, this.keyCooldown, key), 300);
+                            }.bind(this)
+
+                            GameCreator.helpers.runEventActions(keySets, this, conditionPassedCallback);
                         }
                     }
                 }

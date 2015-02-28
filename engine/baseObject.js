@@ -21,8 +21,7 @@
     };
 
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
-        var i, currentSet;
-        var globalObj = this.parent;
+        var currentSet, globalObj = this.parent;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && globalObj.onDestroySets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet(globalObj);
@@ -33,12 +32,7 @@
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                for (i = 0; i < globalObj.onDestroySets.length; i++) {
-                    currentSet = globalObj.onDestroySets[i];
-                    if (currentSet.checkConditions(this)) {
-                        currentSet.runActions(this);
-                    }
-                }
+                GameCreator.helpers.runEventActions(globalObj.onDestroySets, this);
             }
         }
     };
@@ -65,12 +59,7 @@
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                for (i = 0; i < globalObj.onCreateSets.length; i++) {
-                    currentSet = globalObj.onCreateSets[i];
-                    if (currentSet.checkConditions(this)) {
-                        currentSet.runActions(this);
-                    }
-                }
+                GameCreator.helpers.runEventActions(globalObj.onCreateSets, this);
             }
         }
     };
@@ -88,12 +77,7 @@
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                for (i = 0; i < globalObj.onClickSets.length; i++) {
-                    currentSet = globalObj.onClickSets[i];
-                    if (currentSet.checkConditions(this)) {
-                        currentSet.runActions(this);
-                    }
-                }
+                GameCreator.helpers.runEventActions(globalObj.onClickSets, this);
             }                  
         }
     };

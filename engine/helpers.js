@@ -59,13 +59,11 @@
         var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
         if (caSets !== undefined) {
-            for (j = 0; j < caSets.length; j += 1) {
-                currentSet = caSets[j];
-                if (currentSet.checkConditions(object)) {
-                    currentSet.runActions(object, {collisionObject: targetObject});
-                    object.collidingWith.push(targetObject.attributes.instanceId);
-                }
-            }
+            var conditionPassedCallback = function(){
+                object.collidingWith.push(targetObject.attributes.instanceId);
+            };
+
+            GameCreator.helpers.runEventActions(caSets, object, conditionPassedCallback, {collisionObject: targetObject});
         }
         else if (GameCreator.state !== 'playing') {
             choosableActions = GameCreator.helpers.getCollisionActions(object.parent.objectType);
@@ -592,7 +590,7 @@
         if (x < offsetLeft) x = offsetLeft;
         if (x > offsetLeft + GameCreator.width) x = offsetLeft + GameCreator.width;
         return x;
-    }
+    };
 
     GameCreator.helpers.getValidYCoordinate = function(y) {
         var offsetTop = $("#main-canvas").offset().top;
@@ -600,7 +598,7 @@
         if (y < offsetTop) y = offsetTop;
         if (y > offsetTop + GameCreator.height) y = offsetTop + GameCreator.height;
         return y;
-    }
+    };
 
     GameCreator.helpers.getActiveInstancesOfGlobalObject = function(objectId) {
         var i, activeObjects = GameCreator.renderableObjects;
@@ -611,7 +609,23 @@
             }
         }
         return result;
-    },
+    };
+
+    GameCreator.helpers.runEventActions = function(eventCaSets, runtimeObj, passedCallback, runtimeParameters) {
+        var currentSet, i, passingSets = [];
+        for (i = 0; i < eventCaSets.length; i++) {
+            currentSet = eventCaSets[i];
+            if (currentSet.checkConditions(runtimeObj)) {
+                passingSets.push(currentSet);
+                if (passedCallback) {
+                    passedCallback();
+                }
+            }
+        }
+        for(i = 0; i < passingSets.length; i += 1) {
+            passingSets[i].runActions(runtimeObj, runtimeParameters);
+        }
+    };
 
     Array.prototype.collect = function(collectFunc) {
         var result = [];

@@ -182,6 +182,30 @@ test("NextScene Action Test", function() {
     deepEqual(GameCreator.activeSceneId, sceneTwo.id, "Second scene should be active after action.");
 });
 
+
+test("Multiple CASets With Changing Conditions Test", function(){
+    var sceneTwo = new GameCreator.Scene();
+    var sceneThree = new GameCreator.Scene();
+    GameCreator.scenes.push(sceneTwo);
+    GameCreator.scenes.push(sceneThree);
+
+    var caSet1 = new GameCreator.ConditionActionSet(redBall);
+    caSet1.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: 1, comparator: 'equals'}));
+    caSet1.actions.push(new GameCreator.RuntimeAction("SwitchScene", {scene: sceneTwo.id}, 'now'));
+
+    var caSet2 = new GameCreator.ConditionActionSet(redBall);
+    caSet2.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: sceneTwo.id, comparator: 'equals'}));
+    caSet2.actions.push(new GameCreator.RuntimeAction("SwitchScene", {scene: sceneThree.id}, 'now'));
+
+    redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [caSet1, caSet2]});
+    GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
+
+    GameCreator.checkCollisions();
+
+    deepEqual(GameCreator.activeSceneId, sceneTwo.id);
+});
+
+
 module("ErrorActions", {
     setup: function() {
         platformZealot = GameCreator.addGlobalObject({objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");

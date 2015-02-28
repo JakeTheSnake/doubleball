@@ -99,6 +99,6 @@ test('Current Scene condition', function() {
     ok(!caSet.checkConditions(), 'Condition should not pass because we are on the same scene');
     GameCreator.switchScene(sceneTwo);
     ok(caSet.checkConditions(), 'Condition should pass after scene switch.');
-    });
+});
 
 })();
