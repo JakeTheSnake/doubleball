@@ -126,5 +126,6 @@ GameCreator.version = {
                 throw 'Parent of object "' + objId + '" could not be found.';
             }
         }
+        return null;
     }
 }
