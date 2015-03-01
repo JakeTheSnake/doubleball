@@ -451,6 +451,7 @@
 
         restoreState: function(savedGame) {
             var i, n, name, oldObject, newObject, newScene, savedScene;
+            GameCreator.version.convert(savedGame);
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
             GameCreator.renderableObjects = [];

@@ -211,14 +211,14 @@
                         timing: {at: true, every: true, after: true},
                         runnableFunction: function() {return true;}
                       }),
-          Move: new GameCreator.Action({
+          Teleport: new GameCreator.Action({
               action: function (params) { this.parent.setPosition.call(this, params); },
               params: {
                   'type': { param: GameCreator.MovementTypeParameter, mandatory: true },
                   'x': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 },
                   'y': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 }
               },
-              name: "Move",
+              name: "Teleport",
               timing: { at: true, every: true, after: true },
               runnableFunction: function () { return true; }
           })
