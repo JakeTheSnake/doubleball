@@ -17,26 +17,27 @@ GameCreator.version = {
         var actions = GameCreator.version.collectObject(game, 'actions');
         var conditions = GameCreator.version.collectObject(game, 'conditions');
         var nextObj, action;
-        var isMoveConverted = false;
-        var isSwitchStateConverted = false;
-        var isCounterConverted = false;
-        var isIsInStateConverted = false;
+        var wasMoveConverted = false;
+        var wasSwitchStateConverted = false;
+        var wasCounterConverted = false;
+        var wasIsInStateConverted = false;
+        var wasCounterEqualsConverted = false;
 
-        while (!(nextObj = actions.next()).done) {
-            var action = nextObj.value;
+        for (var i = 0; i < actions.length; i += 1) {
+            var action = actions[i];
             if (action.name === 'Move') {
                 action.name = 'Teleport';
-                isMoveConverted = true;
+                wasMoveConverted = true;
             }
             if (action.name === "Counter") {
                 try {
                     var parentId = GameCreator.version.getParentId(action.parameters.objId, game);
                     if (parentId !== null) {
                         action.parameters.objId = parentId;
-                        isCounterConverted = true;
+                        wasCounterConverted = true;
                     }
                 } catch (e) {
-                    GameCreator.version.changeMessages.push('Error: Counter action targetting object: "' + actions.parameters.objId + '" could not be found.');
+                    GameCreator.version.changeMessages.push('Error: Counter action targeting object: "' + actions.parameters.objId + '" could not be found.');
                 }
                 
             }
@@ -45,53 +46,72 @@ GameCreator.version = {
                     var parentId = GameCreator.version.getParentId(action.parameters.objectId, game);
                     if (parentId !== null) {
                         action.parameters.objectId = parentId;
-                        isSwitchStateConverted = true;
+                        wasSwitchStateConverted = true;
                     }
                 } catch (e) {
-                    GameCreator.version.changeMessages.push('Error: Counter action targetting object: "' + actions.parameters.objectId + '" could not be found.');
+                    GameCreator.version.changeMessages.push('Error: Switch State action targeting object: "' + actions.parameters.objectId + '" could not be found.');
                 }
             }
         }
 
-        while (!(nextObj = conditions.next()).done) {
-            var condition = nextObj.value;
+        for (var i = 0; i < conditions.length; i += 1) {
+            var condition = conditions[i];
             if (condition.name === "isInState") {
-                isIsInStateConverted = true;
+                wasIsInStateConverted = true;
                 delete condition.parameters.objId;
+            }
+            if (condition.name === "counterEquals") {
+                wasCounterEqualsConverted = true;
+                delete condition.parameters.objId;
+            }
+            if (condition.name === "collidesWith") {
+                try {
+                    var parentId = GameCreator.version.getParentId(condition.parameters.objId, game);
+                    if (parentId !== null) {
+                        condition.parameters.objId = parentId;
+                        wasCollidesWithConverted = true;
+                    }
+                } catch (e) {
+                    GameCreator.version.changeMessages.push('Error: Collides With condition targeting object: "' + condition.parameters.objId + '" could not be found.');
+                }
             }
         }
 
-        if (isMoveConverted) {
+        if (wasMoveConverted) {
             GameCreator.version.changeMessages.push('Your "Move"-actions have been renamed to "Teleport"');
         }
-        if (isCounterConverted) {
+        if (wasCounterConverted) {
             GameCreator.version.changeMessages.push('Your "Counter"-actions now target a Global Object instead of a Scene Object.');
         }
-        if (isSwitchStateConverted) {
+        if (wasSwitchStateConverted) {
             GameCreator.version.changeMessages.push('Your "Switch State"-actions now target a Global Object instead of a Scene Object.');
         }
-        if (isIsInStateConverted) {
+        if (wasIsInStateConverted) {
             GameCreator.version.changeMessages.push('Your "Is In State"-conditions now always targets "this".');   
+        }
+        if (wasCounterEqualsConverted) {
+            GameCreator.version.changeMessages.push('Your "Counter Equals"-conditions now always targets "this".');   
+        }
+        if (wasCollidesWithConverted) {
+            GameCreator.version.changeMessages.push('Your "Collides With"-conditions now always targets "this".');   
         }
     },
 
-    collectObject: function*(object, targetName) {
+    collectObject: function(object, targetName) {
         var i, prop;
         var properties = Object.keys(object);
+        var result = [];
         for (i = 0; i < properties.length; i += 1) {
             prop = properties[i];
             if (prop === targetName) {
                 for (var j = 0; j < object[prop].length; j += 1) {
-                    yield object[prop][j];
+                    result.push(object[prop][j]);
                 }
             } else if (object[prop] instanceof Object && prop !== 'attributes' && prop !== 'states') {
-                var recursiveGen = GameCreator.version.collectObject(object[prop], targetName);
-                var nextObj;
-                while (!(nextObj = recursiveGen.next()).done) {
-                    yield nextObj.value;
-                }
+                result = result.concat(GameCreator.version.collectObject(object[prop], targetName));
             }
         }
+        return result;
     },
 
     findGlobalObjectById: function(game, id) {
