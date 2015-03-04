@@ -7,7 +7,7 @@ GameCreator.effects.FadeOut = function(runtimeObj) {
     this.y = runtimeObj.attributes.y;
     this.width = runtimeObj.attributes.width;
     this.height = runtimeObj.attributes.height;
-    this.image = runtimeObj.getCurrentState().attributes.image;
+    this.image = runtimeObj.getCurrentImage();
     this.fadeOutTime = 200;
     this.currentAlpha = 1;
 }
@@ -48,7 +48,12 @@ GameCreator.effects.Shrink.prototype.update = function(deltaTime) {
 
 GameCreator.effects.Shrink.prototype.draw = function(context) {
     if (this.width >= 0 && this.height >= 0) {
-        context.drawImage(this.runtimeObj.getCurrentState().attributes.image, this.x, this.y, this.width, this.height);
+        try {
+            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+        } catch (e) {
+            console.log(this.runtimeObj);
+        }
+        
         return true;
     }
     return false;
@@ -70,7 +75,7 @@ GameCreator.effects.RiseAndFade.prototype.update = function(deltaTime) {
 GameCreator.effects.RiseAndFade.prototype.draw = function(context) {
     if (this.currentAlpha >= 0) {
         context.globalAlpha = this.currentAlpha;
-        context.drawImage(this.runtimeObj.getCurrentState().attributes.image, this.runtimeObj.attributes.x, this.y, this.runtimeObj.attributes.width, this.runtimeObj.attributes.height);
+        context.drawImage(this.runtimeObj.getCurrentImage(), this.runtimeObj.attributes.x, this.y, this.runtimeObj.attributes.width, this.runtimeObj.attributes.height);
         context.globalAlpha = 1.0;
         return true;
     }

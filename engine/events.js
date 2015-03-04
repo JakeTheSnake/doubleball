@@ -143,15 +143,10 @@ GameCreator.conditions = {
 
     collidesWith: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
-            var sceneObjects;
-            if (params.objId === 'this') {
-                return true;
-            } else {
-                sceneObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(params.objId));
-                for(i = 0; i < sceneObjects.length; i += 1) {
-                    if (GameCreator.helpers.checkObjectCollision(runtimeObj, sceneObjects[i])) {
-                        return true;
-                    }
+            var sceneObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(params.objId));
+            for(i = 0; i < sceneObjects.length; i += 1) {
+                if (GameCreator.helpers.checkObjectCollision(runtimeObj, sceneObjects[i])) {
+                    return true;
                 }
             }
             return false;

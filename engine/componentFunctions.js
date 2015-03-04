@@ -71,7 +71,7 @@
                             keySets.push(new GameCreator.ConditionActionSet(globalObj));
                             actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
                             GameCreator.UI.openEditActionsWindow(
-                                GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + globalObj.objectName, this.getCurrentState().attributes.image.src),
+                                GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + globalObj.objectName, this.getCurrentImage().src),
                                  new GameCreator.CASetVM(keySets[0], GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
                                 );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    

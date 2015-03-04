@@ -33,7 +33,7 @@ test("State condition on this", function() {
     var redBall = createGlobalObject();
     var newState = redBall.createState('UltimateState');
     var caSet = new GameCreator.ConditionActionSet();
-    caSet.addCondition(new GameCreator.RuntimeCondition("isInState", {objId: 'this', state: newState.id}));
+    caSet.addCondition(new GameCreator.RuntimeCondition("isInState", {state: newState.id}));
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     ok(!caSet.checkConditions(runtimeObj), 'Object should be in default state');
     runtimeObj.setState(newState.id);
@@ -45,7 +45,7 @@ test("State condition on instanceId", function() {
     var newState = redBall.createState('Over9000');
     var caSet = new GameCreator.ConditionActionSet();
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
-    caSet.addCondition(new GameCreator.RuntimeCondition("isInState", {objId: runtimeObj.attributes.instanceId, state: newState.id}));
+    caSet.addCondition(new GameCreator.RuntimeCondition("isInState", {state: newState.id}));
     ok(!caSet.checkConditions(runtimeObj), 'Object should be in default state');
     runtimeObj.setState(newState.id);
     ok(caSet.checkConditions(runtimeObj), 'Object should be in new state');
@@ -55,7 +55,7 @@ test("Counter condition", function() {
     var redBall = createGlobalObject();
     redBall.parentCounters['counter'] = new GameCreator.Counter();
     var caSet = new GameCreator.ConditionActionSet();
-    caSet.addCondition(new GameCreator.RuntimeCondition("counterEquals", {objId: 'this', counter: 'counter', value: 1}));
+    caSet.addCondition(new GameCreator.RuntimeCondition("counterEquals", {counter: 'counter', value: 1}));
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {});
     runtimeObj.counters['counter'].value = 0;
     ok(!caSet.checkConditions(runtimeObj), 'Condition should fail because counter does not equal 1');
@@ -68,7 +68,7 @@ test('Collision condition', function() {
     var runtimeObj1 = GameCreator.createRuntimeObject(redBall, {x: 100, y: 200});
     var runtimeObj2 = GameCreator.createRuntimeObject(redBall, {x: 100, y: 200});
     var caSet = new GameCreator.ConditionActionSet();
-    caSet.addCondition(new GameCreator.RuntimeCondition('collidesWith', {objId: runtimeObj2.attributes.instanceId}));
+    caSet.addCondition(new GameCreator.RuntimeCondition('collidesWith', {objId: redBall.id}));
     ok(caSet.checkConditions(runtimeObj1), 'Objects should collide');
     runtimeObj2.attributes.x = 500;
     runtimeObj2.attributes.y = 500;

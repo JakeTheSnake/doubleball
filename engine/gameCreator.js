@@ -52,6 +52,9 @@
                 borderObj.getCurrentState = function() {
                     return {attributes: this.attributes};
                 };
+                borderObj.getCurrentImage = function() {
+                    return this.attributes.image;
+                };
                 borderObj.states = [];
                 GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
             }   
@@ -517,6 +520,7 @@
             GameCreator.idCounter = savedGame.idCounter;
             GameCreator.globalIdCounter = savedGame.globalIdCounter;
             GameCreator.uniqueSceneId = savedGame.uniqueSceneId;
+            GameCreator.activeSceneId = GameCreator.scenes[0].id;
         },
 
         restoreCaSet: function(caSet) {

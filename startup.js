@@ -20,10 +20,6 @@ $(document).ready(function() {
     GameCreator.uiCanvas.height = GameCreator.height;
     $("#canvas-container").append(GameCreator.uiCanvas);
     
-    var startupScene = new GameCreator.Scene()
-    GameCreator.scenes.push(startupScene);
-    GameCreator.activeSceneId = startupScene.id;
-    
     GameCreator.initialize();
 
     $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
@@ -139,6 +135,10 @@ $(document).ready(function() {
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
         GameCreator.UI.initializeUI();
+    } else {
+        var startupScene = new GameCreator.Scene()
+        GameCreator.scenes.push(startupScene);
+        GameCreator.activeSceneId = startupScene.id;
     }
 
     setTimeout(GameCreator.editScene.bind(GameCreator, GameCreator.scenes[0]), 0);

@@ -22,6 +22,7 @@ GameCreator.version = {
         var wasCounterConverted = false;
         var wasIsInStateConverted = false;
         var wasCounterEqualsConverted = false;
+        var wasCollidesWithConverted = false;
 
         for (var i = 0; i < actions.length; i += 1) {
             var action = actions[i];

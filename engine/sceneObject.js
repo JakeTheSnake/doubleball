@@ -134,7 +134,15 @@
             return GameCreator.helpers.getObjectById(this.parent.states, this.parent.currentState);
         }
         return GameCreator.helpers.getObjectById(this.parent.states, this.currentState);
-    }
+    };
+
+    GameCreator.SceneObject.prototype.getCurrentImage = function() {
+        var image = this.getCurrentState().attributes.image;
+        if (image === undefined) {
+            image = this.parent.getDefaultState().attributes.image;
+        }
+        return image;
+    };
 
     GameCreator.SceneObject.prototype.getDragFunction = function(x, y) {
         var border = 8;
