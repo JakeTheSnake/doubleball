@@ -320,8 +320,11 @@
             results.idCounter = GameCreator.idCounter;
             results.globalIdCounter = GameCreator.globalIdCounter;
             results.uniqueSceneId = GameCreator.uniqueSceneId;
-            results.version = GameCreator.version.currentVersion;
-            console.log(results);
+            results.version = {
+                major: GameCreator.version.major,
+                minor: GameCreator.version.minor,
+                patch: GameCreator.version.patch
+            };
             return JSON.stringify(results);
         },
 

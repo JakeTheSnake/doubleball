@@ -1,11 +1,18 @@
 GameCreator.version = {
-    currentVersion: "0.0.1",
+    major: 0, // Incremented on model changes that are not fully or not at all backwards-compatible even with conversion
+    minor: 1, // Incremented on model changes that are fully backwards-compatible after conversion
+    patch: 0, // Incremented on model changes that are backwards-compatible without the need of conversion.
+
     changeMessages: [],
 
     convert: function(game) {
         if (game.version === undefined) {
-            GameCreator.version.convertTo001(game);
-            game.version = "0.0.1";
+            GameCreator.version.convertTo010(game);
+            game.version = {
+                major: 0,
+                minor: 1,
+                patch: 0
+            };
         }
 
         for (var i = 0; i < GameCreator.version.changeMessages.length; i += 1) {
@@ -13,7 +20,7 @@ GameCreator.version = {
         }
     },
 
-    convertTo001: function(game) {
+    convertTo010: function(game) {
         var actions = GameCreator.version.collectObject(game, 'actions');
         var conditions = GameCreator.version.collectObject(game, 'conditions');
         var nextObj, action;
@@ -38,7 +45,7 @@ GameCreator.version = {
                         wasCounterConverted = true;
                     }
                 } catch (e) {
-                    GameCreator.version.changeMessages.push('Error: Counter action targeting object: "' + actions.parameters.objId + '" could not be found.');
+                    GameCreator.version.changeMessages.push('Error: Counter action targeting missing object: "' + action.parameters.objId + '".');
                 }
                 
             }
@@ -50,7 +57,7 @@ GameCreator.version = {
                         wasSwitchStateConverted = true;
                     }
                 } catch (e) {
-                    GameCreator.version.changeMessages.push('Error: Switch State action targeting object: "' + actions.parameters.objectId + '" could not be found.');
+                    GameCreator.version.changeMessages.push('Error: Switch State action targeting missing object: "' + action.parameters.objectId + '".');
                 }
             }
         }
