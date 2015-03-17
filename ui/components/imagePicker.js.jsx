@@ -64,36 +64,34 @@ var ImagePickerTab = React.createClass({
 
 var ImagePickerUpload = React.createClass({
     handleUpload: function() {
-        var formData = new FormData(document.forms.namedItem('new_image'));
+        var formData = new FormData(document.forms.namedItem('upload_image_form'));
         var oReq = new XMLHttpRequest();
+        var component = this;
         oReq.open("POST", "/images/upload_image", true);
         oReq.onload = function() {
             if (oReq.status == 200) {
                 console.log(this.responseText);
-                this.props.setResult(this.responseText);
+                component.props.setResult(this.responseText);
             } else {
-                console.log('Error, coudl not upload image.');
+                console.log("Error, could not upload image.");
             }
         };
 
         oReq.send(formData);
     },
     render: function() {
-        var request = new XMLHttpRequest();
-        request.open("GET", "/images/upload_image_form", true);
-        request.onload = function() {
-            if (request.status === 200) {
-                $('#form-container').html(this.responseText);
-            } else {
-                console.log('Error, could not load form.')
-            }
-        };
-        request.send();
         return (
             <div className='image-select-content'>
-                <div id='preview-image'></div>
-                <div id='form-container'></div>
-                <a className="btn success grow upload-image-button" onClick={this.handleUpload}>{'Upload Image'}</a>
+                <form acceptCharset='UTF-8' encType='multipart/form-data' id='upload_image_form' method='post'>
+                    <div style={{display: 'none'}}>
+                        <input name='utf8' type='hidden' value='✓'/>
+                        <input name='authenticity_token' type='hidden' value={gon.auth_key}/>
+                    </div>
+                    <fieldset>
+                        <input id='image_url' name='image[url]' type='file'/>
+                    </fieldset>
+                </form>
+                <a className='btn success grow upload-image-button' onClick={this.handleUpload}>{"Upload Image"}</a>
             </div>
 
         );
@@ -161,14 +159,7 @@ var ImagePickerCollection = React.createClass({
         request.onload = function(event) {
             if (request.status === 200) {
                 var response = JSON.parse(this.responseText);
-                var images = [];
-                for (var i = 0; i < response.images.length; i++) {
-                    images.push(
-                        <div key={'image'+i} className='image-select-library-image' onClick={component.selectImage.bind(component, response.images[i].url)}>
-                            <img src={response.images[i].url} width='50' height='50'/>
-                        </div>
-                    );
-                }
+                var images = response.images;
                 if (component.isMounted()) {
                     component.setState({images: images});
                 }
@@ -182,8 +173,37 @@ var ImagePickerCollection = React.createClass({
     selectImage: function(url) {
         this.props.setResult(url);
     },
+    destroyImage: function(imgNumber) {
+        var component = this;
+        var formData = new FormData();
+        formData.append("authenticity_token", gon.auth_key);
+        formData.append("image[id]", this.state.images[imgNumber].id);
+        var oReq = new XMLHttpRequest();
+        oReq.multipart = false;
+        oReq.open("POST", "/images/destroy_image", true);
+        oReq.onload = function() {
+            if (this.responseText === 'OK') {
+                images = component.state.images.slice();
+                images.splice(imgNumber, 1);
+                component.setState({images: images});
+            } else {
+                console.log("Error, could not destroy image.");
+            }
+        };
+        oReq.send(formData);
+    },
     render: function() {
-        return <div>{this.state.images}</div>;
+        var imageButtons = [];
+        for (var i = 0; i < this.state.images.length; i += 1) {
+            var image = this.state.images[i];
+            imageButtons.push(
+                <div key={'image'+i} className='image-select-library-image'>
+                    <img src={image.url} width='50' height='50' onClick={this.selectImage.bind(this, image.url)}/>
+                    <a onClick={this.destroyImage.bind(this, i)}>X</a>
+                </div>
+            );
+        }
+        return <div>{imageButtons}</div>;
     }
 });
 
