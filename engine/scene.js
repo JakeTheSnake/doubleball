@@ -146,7 +146,7 @@
 
         playScene: function(scene) {
             GameCreator.resetScene(scene);
-            var startNewGameLoop = GameCreator.state !== 'directing' && GameCreator.state !== 'playing';
+            var startNewGameLoop = GameCreator.engineOnly || (GameCreator.state !== 'directing' && GameCreator.state !== 'playing');
             GameCreator.state = 'playing';
             if (startNewGameLoop) GameCreator.gameLoop();
         },

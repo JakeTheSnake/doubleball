@@ -14,6 +14,7 @@ $(document).ready(function() {
     $("#canvas-container").append(GameCreator.mainCanvas);
    
     GameCreator.state = 'playing';
+    GameCreator.engineOnly = true;
 
     GameCreator.initialize();
 
