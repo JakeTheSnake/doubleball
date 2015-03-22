@@ -117,18 +117,18 @@ $(document).ready(function() {
     
         var published = gon.published;
 
-        $("#private-button").prop('checked', !published);
-        $("#publish-button").prop('checked', published);
+        $("#private-button").prop('checked', published === 0);
+        $("#unlist-button").prop('checked', published === 1);
+        $("#publish-button").prop('checked', published === 2);
 
         $("#published-buttons input").change(function() {
-            if ($(this).prop('checked')) {
-                $.ajax({
-                    type: "POST",
-                    url: "publish"
-                }).done(function(reply) {
-                    console.log(reply);
-                });
-            }
+            var formData = new FormData(document.forms.namedItem('published_form'));
+            formData.append('authenticity_token', gon.auth_key);
+            var oReq = new XMLHttpRequest();
+            oReq.open("POST", "publish", true);
+            
+
+            oReq.send(formData);
         });
     }
 

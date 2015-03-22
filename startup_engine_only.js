@@ -19,9 +19,9 @@ $(document).ready(function() {
 
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
+        setTimeout(GameCreator.playGame, 0)
     }
 
-    setTimeout(GameCreator.playGame, 0)
     
 });
     
