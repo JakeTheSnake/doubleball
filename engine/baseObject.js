@@ -133,12 +133,12 @@
     };
 
     GameCreator.BaseObject.prototype.setPosition = function(parameters) {
-        if (parameters.type === 'setPosition') {
+        if (parameters.type === 'absolute') {
             this.attributes.x = GameCreator.helpers.getRandomFromRange(parameters.x);
             this.attributes.y = GameCreator.helpers.getRandomFromRange(parameters.y);
-        } else {
-            this.attributes.x = this.attributes.x += GameCreator.helpers.getRandomFromRange(parameters.x);
-            this.attributes.y = this.attributes.y += GameCreator.helpers.getRandomFromRange(parameters.y);
+        } else if (parameters.type === 'relative') {
+            this.attributes.x += GameCreator.helpers.getRandomFromRange(parameters.x);
+            this.attributes.y += GameCreator.helpers.getRandomFromRange(parameters.y);
         }
     };
 

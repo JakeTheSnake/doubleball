@@ -229,7 +229,7 @@
         collisionActions: {
             Bounce: GameCreator.actions.Bounce,
             Stop: GameCreator.actions.Stop,
-            Move: GameCreator.actions.Move,
+            Teleport: GameCreator.actions.Teleport,
             Destroy: GameCreator.actions.Destroy,
             Shoot: GameCreator.actions.Shoot,
             Create: GameCreator.actions.Create,
@@ -253,7 +253,7 @@
 
         nonCollisionActions: {
             Stop: GameCreator.actions.Stop,
-            Move: GameCreator.actions.Move,
+            Teleport: GameCreator.actions.Teleport,
             Destroy: GameCreator.actions.Destroy,
             Shoot: GameCreator.actions.Shoot,
             Create: GameCreator.actions.Create,

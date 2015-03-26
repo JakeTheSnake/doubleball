@@ -89,7 +89,7 @@ GameCreator.htmlStrings = {
   },
 
   movementTypeInput: function(attrName, value) {
-      return GameCreator.htmlStrings.singleSelector({'Move': 'move', 'Set position': 'setPosition'}, attrName, value);
+      return GameCreator.htmlStrings.singleSelector({'Relative': 'relative', 'Absolute': 'absolute'}, attrName, value);
   },
 
   sceneInput: function(attrName, value) {
