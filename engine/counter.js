@@ -57,13 +57,9 @@
 
             //Check if change triggers any actions
             if (change > 0) {
-                for (i = 0; i < this.parentCounter.onIncrease.length; i += 1) {
-                    this.parentCounter.onIncrease[i].runActions(this.parentObject);
-                }
+                GameCreator.helpers.runEventActions(this.parentCounter.onIncrease, this.parentObject);
             } else if (change < 0) {
-                for (i = 0; i < this.parentCounter.onDecrease.length; i += 1) {
-                    this.parentCounter.onDecrease[i].runActions(this.parentObject);
-                }
+                GameCreator.helpers.runEventActions(this.parentCounter.onDecrease, this.parentObject);
             }
             this.checkEvents();
         },
@@ -73,13 +69,9 @@
             var value = GameCreator.helpers.getRandomFromRange(inValue);
 
             if (value > this.value) {
-                for (i = 0; i < this.parentCounter.onIncrease.length; i += 1) {
-                    this.parentCounter.onIncrease[i].runActions(this.parentObject);
-                }
+                GameCreator.helpers.runEventActions(this.parentCounter.onIncrease, this.parentObject);
             } else if (value < this.value) {
-                for (i = 0; i < this.parentCounter.onDecrease.length; i += 1) {
-                    this.parentCounter.onDecrease[i].runActions(this.parentObject);
-                }
+                GameCreator.helpers.runEventActions(this.parentCounter.onDecrease, this.parentObject);
             }
             this.value = value;
             this.checkEvents();
@@ -92,14 +84,12 @@
         },
 
         checkAtValue: function() {
-            var callbacks, value, i;
+            var caSets, value, i;
             for (value in this.parentCounter.atValue) {
                 if (this.parentCounter.atValue.hasOwnProperty(value)) {
                     if (parseInt(value, 10) === this.value && !this.atValueStates[value]) {
-                        callbacks = this.parentCounter.atValue[value];
-                        for (i = 0; i < callbacks.length; i += 1) {
-                            callbacks[i].runActions(this.parentObject);
-                        }
+                        caSets = this.parentCounter.atValue[value];
+                        GameCreator.helpers.runEventActions(caSets, this.parentObject);
                         this.atValueStates[value] = true;
                     } else if (parseInt(value, 10) !== this.value) {
                         this.atValueStates[value] = false;
@@ -109,14 +99,12 @@
         },
 
         checkAboveValue: function() {
-            var callbacks, value, i;
+            var caSets, value, i;
             for (value in this.parentCounter.aboveValue) {
                 if (this.parentCounter.aboveValue.hasOwnProperty(value)) {
                     if (this.value > parseInt(value, 10) && !this.aboveValueStates[value]) {
-                        callbacks = this.parentCounter.aboveValue[value];
-                        for (i = 0; i < callbacks.length; i += 1) {
-                            callbacks[i].runActions(this.parentObject);
-                        }
+                        caSets = this.parentCounter.aboveValue[value];
+                        GameCreator.helpers.runEventActions(caSets, this.parentObject);
                         this.aboveValueStates[value] = true;
                     } else if (this.value <= parseInt(value, 10)) {
                         this.aboveValueStates[value] = false;
@@ -126,14 +114,12 @@
         },
 
         checkBelowValue: function() {
-            var callbacks, value, i;
+            var caSets, value, i;
             for (value in this.parentCounter.belowValue) {
                 if (this.parentCounter.belowValue.hasOwnProperty(value)) {
                     if (this.value < parseInt(value, 10) && !this.belowValueStates[value]) {
-                        callbacks = this.parentCounter.belowValue[value];
-                        for (i = 0; i < callbacks.length; i += 1) {
-                            callbacks[i].runActions(this.parentObject);
-                        }
+                        caSets = this.parentCounter.belowValue[value];
+                        GameCreator.helpers.runEventActions(caSets, this.parentObject);
                         this.belowValueStates[value] = true;
                     } else if (this.value >= parseInt(value, 10)) {
                         this.belowValueStates[value] = false;
