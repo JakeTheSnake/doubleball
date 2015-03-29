@@ -612,6 +612,10 @@ GameCreator.UI = {
     setupValuePresenter: function(container, attributes, attrName, obj, onChangeCallback) {
         var input, select, paramLen, onClickFunc, closeInput, inputOpen = false;
         container = $(container);
+        //If the template does not specify that this value should be shown, return.
+        if (!container.length) {
+            return;
+        }
         var display = document.createElement('span');
         var inputType = container.data('inputtype');
         $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes, attrName, inputType, obj));

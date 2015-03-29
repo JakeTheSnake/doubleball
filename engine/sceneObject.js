@@ -53,10 +53,21 @@
     };
 
     GameCreator.SceneObject.prototype.update = function() {
-        this.displayWidth = parseInt(this.attributes.width[this.attributes.width.length - 1], 10);
-        this.displayHeight = parseInt(this.attributes.height[this.attributes.height.length - 1], 10);
+        this.setDisplayValues();
+
+        //If this is an instance of a unique object, the global object and all instances should be mirrored from this.
+        if (this.parent.attributes.unique) {
+            GameCreator.helpers.mirrorAttributesToParent(this, this.parent);
+            GameCreator.helpers.mirrorAttributesToInstances(this.parent);
+        }
+
         GameCreator.invalidate(this);
     };
+
+    GameCreator.SceneObject.prototype.setDisplayValues = function() {
+        this.displayWidth = parseInt(this.attributes.width[this.attributes.width.length - 1], 10);
+        this.displayHeight = parseInt(this.attributes.height[this.attributes.height.length - 1], 10);
+    }
 
     GameCreator.SceneObject.prototype.instantiate = function(globalObj, args) {
         this.invalidated = true;
@@ -217,8 +228,7 @@
         }
         this.attributes.width[this.attributes.width.length-1] = diffX ? diffX : this.attributes.width[this.attributes.width.length-1];
         this.attributes.height[this.attributes.height.length-1] = diffY ? diffY : this.attributes.height[this.attributes.height.length-1];
-        this.displayWidth = this.attributes.width[this.attributes.width.length - 1];
-        this.displayHeight = this.attributes.height[this.attributes.height.length - 1];
+        this.update();
         GameCreator.UI.updateSceneObjectForm(this);
     };
 

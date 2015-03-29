@@ -404,13 +404,29 @@
         $('#' + containerId + ' input').on('change', function() {
             try {
                 GameCreator.saveInputValueToObject($(this), attributes);
-                //If unique is set, need to reset counters.
+                //If global object is unique, mirror change to instances
+                if (globalObj.attributes.unique) {
+                    var instances = GameCreator.helpers.getAllInstancesOfObject(globalObj);
+                    for (var i = 0; i < instances.length; i += 1) {
+                        instances[i].attributes[$(this).data('attrname')] = attributes[$(this).data('attrname')];
+                        instances[i].setDisplayValues();
+                        GameCreator.render();
+                    }
+                }
+
+                //If unique is set, need to reset counters and mirror all current properties to instances.
                 if ($(this).data('attrname') === 'unique') {
                     GameCreator.getActiveScene().objects.forEach(function(sceneObj){
                         if(sceneObj.parent === globalObj) {
                             GameCreator.resetCounters(sceneObj, sceneObj.parent.parentCounters);
                         }
                     });
+                    if (attributes.unique) {
+                        var instances = GameCreator.helpers.getAllInstancesOfObject(globalObj);
+                        for (var i = 0; i < instances.length; i += 1) {
+                            GameCreator.helpers.mirrorAttributesToInstances(globalObj);
+                        }
+                    }
                 }
             } catch (err) {}
         });
@@ -426,16 +442,37 @@
         });
     };
 
+    GameCreator.helpers.mirrorAttributesToParent = function(sceneObject, globalObject) {
+        var i;
+        var parentAttrs = globalObject.getDefaultState().attributes;
+        var parentAttrNames = Object.keys(parentAttrs);
+        for(i = 0; i < parentAttrNames.length; i += 1) {
+            if (sceneObject.attributes[parentAttrNames[i]] !== undefined) {
+                //Set default state properties
+                parentAttrs[parentAttrNames[i]] = sceneObject.attributes[parentAttrNames[i]];
+            }
+        }
+    };
+
+    GameCreator.helpers.mirrorAttributesToInstances = function(globalObject) {
+        var i, j;
+        var parentAttrs = globalObject.getDefaultState().attributes;
+        var parentAttrNames = Object.keys(parentAttrs);
+        var sceneObjectInstances = GameCreator.helpers.getAllInstancesOfObject(globalObject);
+        for(i = 0; i < parentAttrNames.length; i += 1) {
+            if (sceneObjectInstances[0] && sceneObjectInstances[0].attributes[parentAttrNames[i]] !== undefined) {
+                for (j = 0; j < sceneObjectInstances.length; j += 1) {
+                    sceneObjectInstances[j].attributes[parentAttrNames[i]] = globalObject.getDefaultState().attributes[parentAttrNames[i]];
+                    sceneObjectInstances[j].setDisplayValues();
+                    GameCreator.render();
+                }
+            }
+        }
+    }
+
     GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {
         var i;
         var attributes = sideObject.attributes;
-        if (sideObject.parent) {
-            $('#side-property-instanceOf').html(sideObject.parent.objectName);
-        }
-        //The instanceId should not be editable for now, so only display it.
-        if (sideObject.attributes.instanceId) {
-            $('#side-property-instanceId-title').html(sideObject.attributes.instanceId)
-        }
         for (i = 0; i < Object.keys(attributes).length; i += 1) {
             var attributeName = Object.keys(attributes)[i];
             GameCreator.UI.setupValuePresenter($("#side-property-" + attributeName), attributes, attributeName, sideObject, onChangeCallback);
@@ -626,6 +663,19 @@
         for(i = 0; i < passingSets.length; i += 1) {
             passingSets[i].runActions(runtimeObj, runtimeParameters);
         }
+    };
+
+    GameCreator.helpers.getAllInstancesOfObject = function(globalObject) {
+        var i, j;
+        var result = [];
+        for (i = 0; i < GameCreator.scenes.length; i += 1) {
+            for (j = 0; j < GameCreator.scenes[i].objects.length; j += 1) {
+                if (GameCreator.scenes[i].objects[j].parent.id === globalObject.id) {
+                    result.push(GameCreator.scenes[i].objects[j]);
+                }
+            }
+        }
+        return result;
     };
 
     Array.prototype.collect = function(collectFunc) {

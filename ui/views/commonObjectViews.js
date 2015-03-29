@@ -219,6 +219,11 @@ GameCreator.commonObjectViews = {
     <fieldset> \
     <div id="object-property-unique-container" class="checkbox-container clearfix"> \
     </div> \
+    <a class="btn" title=" \
+    Making an object Unique has the following effects:\n \
+    -All instances of this share the same counter values\n \
+    -Keeps state and counter values between scene changes\n \
+    -All instances of this share the same properties (width, height etc)">?</a> \
     </fieldset>';
 
     return result;

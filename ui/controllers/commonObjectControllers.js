@@ -40,7 +40,7 @@ GameCreator.commonObjectControllers = {
         container.html(html);
         var globalObjAttributes = this.getDefaultState().attributes;
 
-        GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObjAttributes, GameCreator[this.objectType].objectAttributes, 'object-properties-content');
+        GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObjAttributes, GameCreator[this.objectType].objectAttributes, 'object-properties-content', globalObj);
         GameCreator.helpers.populateGlobalObjectPropertiesForm(this.attributes, GameCreator[this.objectType].objectNonStateAttributes, 'object-non-state-properties-content', globalObj);
         GameCreator.UI.populateImageSelectControls($('#global-object-image-upload-controls'), $('#object-property-image-container input'));
         GameCreator.UI.loadInputStyle();
