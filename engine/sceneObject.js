@@ -205,7 +205,7 @@
     GameCreator.SceneObject.prototype.setState = function(stateId) {
         var state = this.parent.getState(stateId);
         if (state !== undefined) {
-            var attrKeys = Object.keys(state.attributes);
+            var attrKeys = Object.keys(state.attributes);   
             var i, stateAttribute;
             for (i = 0; i < attrKeys.length; i += 1) {
                 stateAttribute = state.attributes[attrKeys[i]];
@@ -229,7 +229,6 @@
         this.attributes.width[this.attributes.width.length-1] = diffX ? diffX : this.attributes.width[this.attributes.width.length-1];
         this.attributes.height[this.attributes.height.length-1] = diffY ? diffY : this.attributes.height[this.attributes.height.length-1];
         this.update();
-        GameCreator.UI.updateSceneObjectForm(this);
     };
 
     GameCreator.SceneObject.prototype.cleanupSize = function() {

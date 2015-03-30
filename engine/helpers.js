@@ -448,8 +448,12 @@
         var parentAttrNames = Object.keys(parentAttrs);
         for(i = 0; i < parentAttrNames.length; i += 1) {
             if (sceneObject.attributes[parentAttrNames[i]] !== undefined) {
-                //Set default state properties
-                parentAttrs[parentAttrNames[i]] = sceneObject.attributes[parentAttrNames[i]];
+                //Set default state properties of global object
+                if (sceneObject.attributes[parentAttrNames[i]].constructor === Array) {
+                    parentAttrs[parentAttrNames[i]] = sceneObject.attributes[parentAttrNames[i]].slice();
+                } else {
+                    parentAttrs[parentAttrNames[i]] = sceneObject.attributes[parentAttrNames[i]];
+                }
             }
         }
     };
@@ -462,12 +466,16 @@
         for(i = 0; i < parentAttrNames.length; i += 1) {
             if (sceneObjectInstances[0] && sceneObjectInstances[0].attributes[parentAttrNames[i]] !== undefined) {
                 for (j = 0; j < sceneObjectInstances.length; j += 1) {
-                    sceneObjectInstances[j].attributes[parentAttrNames[i]] = globalObject.getDefaultState().attributes[parentAttrNames[i]];
+                    if (globalObject.getDefaultState().attributes[parentAttrNames[i]].constructor === Array) {
+                        sceneObjectInstances[j].attributes[parentAttrNames[i]] = globalObject.getDefaultState().attributes[parentAttrNames[i]].slice();
+                    } else {
+                        sceneObjectInstances[j].attributes[parentAttrNames[i]] = globalObject.getDefaultState().attributes[parentAttrNames[i]];
+                    }
                     sceneObjectInstances[j].setDisplayValues();
-                    GameCreator.render();
                 }
             }
         }
+        GameCreator.render();
     }
 
     GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {
