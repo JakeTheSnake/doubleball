@@ -59,11 +59,8 @@
         var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
         if (caSets !== undefined) {
-            var conditionPassedCallback = function(){
-                object.collidingWith.push(targetObject.attributes.instanceId);
-            };
-
-            GameCreator.helpers.runEventActions(caSets, object, conditionPassedCallback, {collisionObject: targetObject});
+            GameCreator.helpers.runEventActions(caSets, object, undefined, {collisionObject: targetObject});
+            object.collidingWith.push(targetObject.attributes.instanceId);
         }
         else if (GameCreator.state !== 'playing') {
             choosableActions = GameCreator.helpers.getCollisionActions(object.parent.objectType);

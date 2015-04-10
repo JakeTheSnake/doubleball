@@ -156,7 +156,37 @@ GameCreator.conditions = {
                 param: GameCreator.GlobalObjectParameter,
                 mandatory: true
             },
-        }
+        },
+    }),
+
+    randomCondition: new GameCreator.Condition({
+        evaluate: function(runtimeObj, params) {
+            var randomInt = Math.ceil(Math.random() * params.maxRandomValue);
+            if (params.comparator === 'greaterThan') {
+                return randomInt > params.value;
+            }
+            if (params.comparator === 'lessThan') {
+                return randomInt < params.value;
+            }
+            return randomInt === params.value;
+        },
+        params: {
+            comparator: {
+                param: GameCreator.ComparatorParameter,
+                mandatory: true,
+                defaultValue: 'equals'
+            },
+            value: {
+                param: GameCreator.NumberParameter,
+                mandatory: false,
+                defaultValue: 1
+            },
+            maxRandomValue: {
+                param: GameCreator.NumberParameter,
+                mandatory: false,
+                defaultValue: 1
+            }
+        },
     })
 
 
