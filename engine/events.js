@@ -43,15 +43,18 @@ GameCreator.conditions = {
         },
         params: {
             objId: {
+                component: GlobalObjectParam,
                 param: GameCreator.GlobalObjectParameter,
                 mandatory: true,
             },
             comparator: {
+                component: ComparatorParam,
                 param: GameCreator.ComparatorParameter,
                 mandatory: true,
                 defaultValue: 'equals'
             },
             count: {
+                component: NumberParam,
                 param: GameCreator.NumberParameter,
                 mandatory: false,
                 defaultValue: 1
