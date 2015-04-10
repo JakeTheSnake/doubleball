@@ -56,7 +56,7 @@
         this.setDisplayValues();
 
         //If this is an instance of a unique object, the global object and all instances should be mirrored from this.
-        if (this.parent.attributes.unique) {
+        if (this.parent.attributes && this.parent.attributes.unique) {
             GameCreator.helpers.mirrorAttributesToParent(this, this.parent);
             GameCreator.helpers.mirrorAttributesToInstances(this.parent);
         }
