@@ -13,7 +13,7 @@ var Column = React.createClass({
     }
 });
 
-var CounterColumn = React.createClass({
+var CountersEditor = React.createClass({
     getInitialState: function() {
         return {
             activeCounter: null,
@@ -30,10 +30,6 @@ var CounterColumn = React.createClass({
     selectCASet: function(caSet) {
         this.setState({activeCASet: caSet});
     },
-    newCounter: function(name) {
-        this.props.counters[name] = new GameCreator.Counter();
-        this.setState({activeCounter: name});
-    },
     render: function() {
         var counterButtons = [];
         var counterNames = Object.keys(this.props.counters);
@@ -48,14 +44,14 @@ var CounterColumn = React.createClass({
 
         var caEditor;
         if (this.state.activeEvent) {
-            caEditor = <EventEditor event={this.state.activeEvent}/>;
+            caEditor = <EventEditor caSets={this.state.activeEvent}/>;
         }
 
         return (
             <div>
                 <Column title={this.props.title}>
                     {counterButtons}
-                    <AddCounterForm onCreate={this.newCounter}/>
+                    <AddCounterForm onCreate={this.props.onAddCounter}/>
                 </Column>
                 {eventColumn}
                 {caEditor}
@@ -73,20 +69,25 @@ var EventEditor = React.createClass({
     selectWhenGroup: function(index) {
         this.setState({activeWhenGroup: index});
     },
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps !== this.props) {
+            this.setState(this.getInitialState());    
+        }
+    },
     render: function() {
         var whenGroups = [];
-        for (var i = 0; i < this.props.event.length; i += 1) {
+        for (var i = 0; i < this.props.caSets.length; i += 1) {
             whenGroups.push(
-                <WhenGroupItem key={i} whenGroup={this.props.event[i]} selectWhenGroup={this.selectWhenGroup.bind(this, i)} active={i === this.state.activeWhenGroup}/>
+                <WhenGroupItem key={i} whenGroup={this.props.caSets[i]} onSelectWhenGroup={this.selectWhenGroup.bind(this, i)} active={i === this.state.activeWhenGroup}/>
             );
         }
         var actionColumn;
         var whenGroupIndex = this.state.activeWhenGroup;
         if (whenGroupIndex !== null) {
             var actions = [];
-            for (var i = 0; i < this.props.event[whenGroupIndex].actions.length; i += 1) {
+            for (var i = 0; i < this.props.caSets[whenGroupIndex].actions.length; i += 1) {
                 actions.push(
-                    <ActionItem key={i} action={this.props.event[whenGroupIndex].actions[i]} />
+                    <ActionItem key={i} action={this.props.caSets[whenGroupIndex].actions[i]} />
                 );
             }
             actionColumn = <Column title="Do">{actions}</Column>
@@ -115,10 +116,10 @@ var WhenGroupItem = React.createClass({
             for (i = 0; i < this.props.whenGroup.conditions.length; i+=1) {
                 names.push(this.props.whenGroup.conditions[i].name);
             }
-            title = names.join(' & '));
+            title = names.join(' & ');
         }
         return title;
-    }
+    },
     render: function() {
         var title = this.getWhenGroupTitle();
         if (this.props.active) {
@@ -137,7 +138,7 @@ var WhenGroupItem = React.createClass({
             )
         } else {
             return (
-                <li>
+                <li onClick={this.props.onSelectWhenGroup}>
                     <span>{title}</span>
                 </li>
             )
@@ -147,15 +148,17 @@ var WhenGroupItem = React.createClass({
 
 var ConditionItem = React.createClass({
     render: function() {
-        var params = [];
+        /*var params = [];
         var paramNames = Object.keys(this.props.condition.getAllParameters());
         for (var i = 0; i < paramNames.length; i += 1) {
             var paramComponent = this.props.condition.getParameter(paramNames[i]).component;
             params.push(
                 <paramComponent key={paramNames[i]} parentCondition={this} parameter={this.props.condition.params[paramNames[i]]} />
             );
-        }
+        }*/
         return (
+            <div></div>
+            /*
             <div className="parameter-header">
                 <span>{this.props.condition.name}</span>
                 <a className="btn warning">X</a>
@@ -175,7 +178,7 @@ var ConditionItem = React.createClass({
                         <td data-inputtype="sceneInput"><span>Scene 1</span></td>
                     </tr>
                 </tbody>
-            </table>
+            </table>*/
         )
     }
 })
@@ -204,6 +207,10 @@ var CounterEventColumn = React.createClass({
         this.setState({activeEvent: this.props.counter.onDecrease});
         this.props.selectEvent(this.props.counter.onDecrease);
     },
+    onAddCustomEvent: function(eventType, eventValue) {
+        this.props.counter[eventType][eventValue] = new GameCreator.ConditionActionSet();
+        this.forceUpdate();
+    },
     renderCustomEventButtons: function(eventType) {
         var eventTypes = Object.keys(this.props.counter[eventType]);
         var eventButtons = [];
@@ -223,10 +230,53 @@ var CounterEventColumn = React.createClass({
                     <ColumnButton text="On Increase" onSelect={this.selectOnIncrease} active={this.state.activeEvent === this.props.counter.onIncrease} />
                     <ColumnButton text="On Decrease" onSelect={this.selectOnDecrease} active={this.state.activeEvent === this.props.counter.onDecrease} />
                     {customEvents}
+                    <AddCounterEventForm onCreate={this.onAddCustomEvent}/>
             </Column>
         )
     }
-})
+});
+
+var AddCounterEventForm = React.createClass({
+    getInitialState: function() {
+        return {
+            formOpen: false
+        };
+    },
+    openForm: function() {
+        this.setState({formOpen: true});
+    },
+    closeForm: function() {
+        this.setState({formOpen: false});
+    },
+    saveEvent: function() {
+        var eventType = $('#counter-event-type').val();
+        var eventValue = $('#counter-event-value').val();
+        if (eventValue !== undefined && eventValue !== '') {
+            this.props.onCreate(eventType, eventValue);
+        }
+        this.closeForm();
+    },
+    render: function() {
+        if (this.state.formOpen) {
+            return (
+                <div>
+                    <select id='counter-event-type' className="selectorField" data-type="string">
+                        <option value="atValue">Equals</option>
+                        <option value="aboveValue">Larger Than</option>
+                        <option value="belowValue">Smaller Than</option>
+                    </select>
+                    <input id='counter-event-value' type='text' placeholder='Value'/>
+                    <div className="btn-group sequenced">
+                        <a className="btn success" onClick={this.saveEvent}>Save</a>
+                        <a className="btn warning" onClick={this.closeForm}>Cancel</a>
+                    </div>
+                </div>
+            )
+        } else {
+            return <a className="btn tab success wide" onClick={this.openForm}>Add</a>
+        }
+    }
+});
 
 var AddCounterForm = React.createClass({
     getInitialState: function() {
@@ -262,7 +312,7 @@ var AddCounterForm = React.createClass({
             return <a className="btn tab success wide" onClick={this.openForm}>Add</a>
         }
     }
-})
+});
 
 var ColumnButton = React.createClass({
     select: function(ev) {

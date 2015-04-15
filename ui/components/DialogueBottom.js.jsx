@@ -13,3 +13,17 @@ var DialogueBottom = React.createClass({
         );
     }
 });
+
+var GlobalCounterDialogueBottom = React.createClass({
+    addNewCounter: function(name) {
+        GameCreator.globalCounters[name] = new GameCreator.Counter();
+        this.forceUpdate();
+    },
+    render: function() {
+        return (
+            <DialogueBottom title="Global Counters">
+                <CountersEditor counters={GameCreator.globalCounters} onAddCounter={this.addNewCounter} title="Counters"/>
+            </DialogueBottom>
+        );
+    }
+});

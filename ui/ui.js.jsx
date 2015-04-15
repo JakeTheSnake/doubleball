@@ -272,9 +272,7 @@ GameCreator.UI = {
 
         GameCreator.globalCounters = {Kek: kekc, Kraks: new GameCreator.Counter()};
         React.render(
-            <DialogueBottom title="Global Counters">
-                <CounterColumn counters={GameCreator.globalCounters} title="Counters"/>
-            </DialogueBottom>
+            <GlobalCounterDialogueBottom/>
         , document.getElementById('dialogue-window'));
         GameCreator.UI.openDialogue(700, 570, null);
     },
