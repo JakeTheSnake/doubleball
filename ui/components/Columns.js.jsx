@@ -74,6 +74,10 @@ var EventEditor = React.createClass({
             this.setState(this.getInitialState());    
         }
     },
+    addCaSet: function() {
+        this.props.caSets.push(new GameCreator.ConditionActionSet());
+        this.forceUpdate();
+    },
     render: function() {
         var whenGroups = [];
         for (var i = 0; i < this.props.caSets.length; i += 1) {
@@ -99,6 +103,7 @@ var EventEditor = React.createClass({
                     <ul className="parameter-groups">
                         {whenGroups}
                     </ul>
+                    <a className="btn success wide" onClick={this.addCaSet}>Create group</a>
                 </Column>
                 {actionColumn}
             </div>
@@ -208,7 +213,7 @@ var CounterEventColumn = React.createClass({
         this.props.selectEvent(this.props.counter.onDecrease);
     },
     onAddCustomEvent: function(eventType, eventValue) {
-        this.props.counter[eventType][eventValue] = new GameCreator.ConditionActionSet();
+        this.props.counter[eventType][eventValue] = [new GameCreator.ConditionActionSet()];
         this.forceUpdate();
     },
     renderCustomEventButtons: function(eventType) {
