@@ -21,11 +21,16 @@ var CountersEditor = React.createClass({
             activeCASet: null
         };
     },
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps !== this.props) {
+            this.setState(this.getInitialState());    
+        }
+    },
     selectCounter: function(name) {
-        this.setState({activeCounter: name});
+        this.setState({activeCounter: name, activeEvent: null, activeCASet: null});
     },
     selectEvent: function(event) {
-        this.setState({activeEvent: event});
+        this.setState({activeEvent: event, activeCASet: null});
     },
     selectCASet: function(caSet) {
         this.setState({activeCASet: caSet});
@@ -63,16 +68,16 @@ var CountersEditor = React.createClass({
 var EventEditor = React.createClass({
     getInitialState: function() {
         return {
-            activeWhenGroup: null
+            activeWhenGroup: 0
         };
-    },
-    selectWhenGroup: function(index) {
-        this.setState({activeWhenGroup: index});
     },
     componentWillReceiveProps: function(nextProps) {
         if (nextProps !== this.props) {
             this.setState(this.getInitialState());    
         }
+    },
+    selectWhenGroup: function(index) {
+        this.setState({activeWhenGroup: index});
     },
     addCaSet: function() {
         this.props.caSets.push(new GameCreator.ConditionActionSet());
@@ -132,6 +137,7 @@ var WhenGroupItem = React.createClass({
             for (var i = 0; i < this.props.whenGroup.conditions.length; i += 1) {
                 conditions.push(<ConditionItem key={i} condition={this.props.whenGroup.conditions[i]}/>);
             }
+            if (!conditions.length) conditions.push(<div className="parameter-header"><span>Always</span></div>);
             return (
                 <li className='active'>
                     <span>{title}</span>
@@ -153,21 +159,19 @@ var WhenGroupItem = React.createClass({
 
 var ConditionItem = React.createClass({
     render: function() {
-        /*var params = [];
+        var params = [];
         var paramNames = Object.keys(this.props.condition.getAllParameters());
         for (var i = 0; i < paramNames.length; i += 1) {
-            var paramComponent = this.props.condition.getParameter(paramNames[i]).component;
+            var ParamComponent = this.props.condition.getParameter(paramNames[i]).component;
             params.push(
-                <paramComponent key={paramNames[i]} parentCondition={this} parameter={this.props.condition.params[paramNames[i]]} />
+                <ParamComponent key={paramNames[i]} parentCondition={this} parameter={this.props.condition.parameters[paramNames[i]]} />
             );
-        }*/
+        }
         return (
-            <div></div>
-            /*
             <div className="parameter-header">
                 <span>{this.props.condition.name}</span>
                 <a className="btn warning">X</a>
-            </div>
+            </div>/*
             <table>
                 <tbody>
                     <tr>
@@ -199,6 +203,11 @@ var CounterEventColumn = React.createClass({
         return {
             activeEvent: null
         };
+    },
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.counterName !== this.props.counterName) {
+            this.setState(this.getInitialState());    
+        }
     },
     selectCustomEvent: function(eventType, eventName) {
         this.setState({activeEvent: this.props.counter[eventType][eventName]});
