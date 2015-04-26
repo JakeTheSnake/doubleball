@@ -164,30 +164,21 @@ var ConditionItem = React.createClass({
         for (var i = 0; i < paramNames.length; i += 1) {
             var ParamComponent = this.props.condition.getParameter(paramNames[i]).component;
             params.push(
-                <ParamComponent key={paramNames[i]} parentCondition={this} parameter={this.props.condition.parameters[paramNames[i]]} />
+                <ParamComponent key={paramNames[i]} parentCondition={this.props.condition} parameter={this.props.condition.parameters[paramNames[i]]} />
             );
         }
         return (
-            <div className="parameter-header">
-                <span>{this.props.condition.name}</span>
-                <a className="btn warning">X</a>
-            </div>/*
-            <table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <label>Comparator :</label>
-                        </td>
-                        <td data-inputtype="comparatorInput"><span>greaterThan</span></td>
-                        </tr>
-                    <tr>
-                        <td>
-                            <label>Scene :</label>
-                        </td>
-                        <td data-inputtype="sceneInput"><span>Scene 1</span></td>
-                    </tr>
-                </tbody>
-            </table>*/
+            <div>
+                <div className="parameter-header">
+                    <span>{this.props.condition.name}</span>
+                    <a className="btn warning">X</a>
+                </div>
+                <table>
+                    <tbody>
+                        {params}
+                    </tbody>
+                </table>
+            </div>
         )
     }
 })
