@@ -137,7 +137,9 @@ var WhenGroupItem = React.createClass({
             for (var i = 0; i < this.props.whenGroup.conditions.length; i += 1) {
                 conditions.push(<ConditionItem key={i} condition={this.props.whenGroup.conditions[i]}/>);
             }
-            if (!conditions.length) conditions.push(<div className="parameter-header"><span>Always</span></div>);
+            if (!conditions.length) {
+                conditions.push(<div className="parameter-header"><span>Always</span></div>);
+            }
             return (
                 <li className='active'>
                     <span>{title}</span>
@@ -158,13 +160,16 @@ var WhenGroupItem = React.createClass({
 });
 
 var ConditionItem = React.createClass({
+    onUpdate: function(paramName, value) {
+        this.props.condition.parameters[paramName] = value;
+    },
     render: function() {
         var params = [];
         var paramNames = Object.keys(this.props.condition.getAllParameters());
         for (var i = 0; i < paramNames.length; i += 1) {
             var ParamComponent = this.props.condition.getParameter(paramNames[i]).component;
             params.push(
-                <ParamComponent key={paramNames[i]} parentCondition={this.props.condition} parameter={this.props.condition.parameters[paramNames[i]]} />
+                <ParamComponent key={i} value={this.props.condition.parameters[paramNames[i]]} onUpdate={this.onUpdate} name={paramNames[i]}/>
             );
         }
         return (

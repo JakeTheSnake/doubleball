@@ -226,7 +226,8 @@
         return object;
     };
 
-    GameCreator.helpers.getGlobalObjectById = function(id) {
+    GameCreator.helpers.getGlobalObjectById = function(argId) {
+        var id = Number(argId);
         var objects = Object.keys(GameCreator.globalObjects);
         var i;
         for (i = 0; i < objects.length; i += 1) {
