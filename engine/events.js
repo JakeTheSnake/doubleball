@@ -167,7 +167,15 @@ GameCreator.conditions = {
 
 GameCreator.RuntimeCondition = function(name, params) {
     this.name = name;
-    this.parameters = params;
+    if (params !== undefined) {
+        this.parameters = params;
+    } else {
+        var paramNames = Object.keys(GameCreator.conditions[name].params);
+        this.parameters = {};
+        for (i = 0; i < paramNames.length; i+=1) {
+            this.parameters[paramNames[i]] = GameCreator.conditions[name].params[paramNames[i]].defaultValue;
+        }
+    }
 }
 
 GameCreator.RuntimeCondition.prototype.evaluate = function(runtimeObj) {

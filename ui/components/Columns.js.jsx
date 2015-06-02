@@ -49,7 +49,7 @@ var CountersEditor = React.createClass({
 
         var caEditor;
         if (this.state.activeEvent) {
-            caEditor = <EventEditor caSets={this.state.activeEvent}/>;
+            caEditor = <EventEditor caSets={this.state.activeEvent} eventType='counter'/>;
         }
 
         return (
@@ -65,9 +65,62 @@ var CountersEditor = React.createClass({
     }
 });
 
+var CounterEventColumn = React.createClass({
+    getInitialState: function() {
+        return {
+            activeEvent: null
+        };
+    },
+    componentWillReceiveProps: function(nextProps) {
+        if (nextProps.counterName !== this.props.counterName) {
+            this.setState(this.getInitialState());    
+        }
+    },
+    selectCustomEvent: function(eventType, eventName) {
+        this.setState({activeEvent: this.props.counter[eventType][eventName]});
+        this.props.selectEvent(this.props.counter[eventType][eventName]);
+    },
+    selectOnIncrease: function() {
+        this.setState({activeEvent: this.props.counter.onIncrease});
+        this.props.selectEvent(this.props.counter.onIncrease);
+    },
+    selectOnDecrease: function() {
+        this.setState({activeEvent: this.props.counter.onDecrease});
+        this.props.selectEvent(this.props.counter.onDecrease);
+    },
+    onAddCustomEvent: function(eventType, eventValue) {
+        this.props.counter[eventType][eventValue] = [new GameCreator.ConditionActionSet()];
+        this.forceUpdate();
+    },
+    renderCustomEventButtons: function(eventType) {
+        var eventTypes = Object.keys(this.props.counter[eventType]);
+        var eventButtons = [];
+        for (var i = 0; i < eventTypes.length; i += 1) {
+            eventButtons.push(<ColumnButton key={i} text={eventType + ": " + eventTypes[i]} onSelect={this.selectCustomEvent.bind(this, eventType, eventTypes[i])} active={this.props.counter[eventType][eventTypes[i]] === this.state.activeEvent}/>)
+        }
+        return eventButtons;
+    },
+    render: function() {
+        var customEvents = [];
+        customEvents = customEvents.concat(this.renderCustomEventButtons('atValue')).
+            concat(this.renderCustomEventButtons('belowValue')).
+            concat(this.renderCustomEventButtons('aboveValue'));
+
+        return (
+            <Column title={this.props.counterName + ' Events'}>
+                    <ColumnButton text="On Increase" onSelect={this.selectOnIncrease} active={this.state.activeEvent === this.props.counter.onIncrease} />
+                    <ColumnButton text="On Decrease" onSelect={this.selectOnDecrease} active={this.state.activeEvent === this.props.counter.onDecrease} />
+                    {customEvents}
+                    <AddCounterEventForm onCreate={this.onAddCustomEvent}/>
+            </Column>
+        )
+    }
+});
+
 var EventEditor = React.createClass({
     getInitialState: function() {
         return {
+            selectableItems: [],
             activeWhenGroup: 0
         };
     },
@@ -83,23 +136,52 @@ var EventEditor = React.createClass({
         this.props.caSets.push(new GameCreator.ConditionActionSet());
         this.forceUpdate();
     },
+    onItemSelect: function(itemName) {
+        this.state.itemSelectCallback(itemName);
+        this.setState({
+            selectableItems: [],
+            itemSelectCallback: null
+        });
+    },
+    onAddCondition: function(callback) {
+        this.setState({
+            selectableItems: Object.keys(GameCreator.conditions),
+            itemSelectCallback: callback
+        });
+    },
+    onAddAction: function(callback) {
+        var selectableActionNames = Object.keys(GameCreator.helpers.getSelectableActions(this.props.eventType));
+        this.setState({
+            selectableItems: selectableActionNames,
+            itemSelectCallback: callback
+        });
+    },
     render: function() {
         var whenGroups = [];
         for (var i = 0; i < this.props.caSets.length; i += 1) {
             whenGroups.push(
-                <WhenGroupItem key={i} whenGroup={this.props.caSets[i]} onSelectWhenGroup={this.selectWhenGroup.bind(this, i)} active={i === this.state.activeWhenGroup}/>
+                <WhenGroupItem key={i} onAddCondition={this.onAddCondition} whenGroup={this.props.caSets[i]} onSelectWhenGroup={this.selectWhenGroup.bind(this, i)} active={i === this.state.activeWhenGroup}/>
             );
         }
         var actionColumn;
+        var addNewItemColumn;
         var whenGroupIndex = this.state.activeWhenGroup;
         if (whenGroupIndex !== null) {
             var actions = [];
             for (var i = 0; i < this.props.caSets[whenGroupIndex].actions.length; i += 1) {
                 actions.push(
-                    <ActionItem key={i} action={this.props.caSets[whenGroupIndex].actions[i]} />
+                    <ActionItem key={i} onAddAction={this.onAddAction} action={this.props.caSets[whenGroupIndex].actions[i]} />
                 );
             }
             actionColumn = <Column title="Do">{actions}</Column>
+        }
+
+        if (this.state.selectableItems.length !== 0) {
+            var columnButtons = [];
+            for (var i = 0; i < this.state.selectableItems.length; i += 1) {
+                columnButtons.push(<ColumnButton key={i} onSelect={this.onItemSelect} text={this.state.selectableItems[i]}/>);
+            }
+            addNewItemColumn = <Column title="Select Item">{columnButtons}</Column>;
         }
 
         return (
@@ -111,6 +193,7 @@ var EventEditor = React.createClass({
                     <a className="btn success wide" onClick={this.addCaSet}>Create group</a>
                 </Column>
                 {actionColumn}
+                {addNewItemColumn}
             </div>
         );
     }
@@ -130,6 +213,13 @@ var WhenGroupItem = React.createClass({
         }
         return title;
     },
+    addCondition: function(conditionName) {
+        this.props.whenGroup.conditions.push(new GameCreator.RuntimeCondition(conditionName));
+        this.forceUpdate();
+    },
+    onAddCondition: function() {
+        this.props.onAddCondition(this.addCondition);
+    },
     render: function() {
         var title = this.getWhenGroupTitle();
         if (this.props.active) {
@@ -146,7 +236,7 @@ var WhenGroupItem = React.createClass({
                     <div className="parameter-group">
                         {conditions}
                     </div>
-                    <a className="btn edit wide">Add condition</a>
+                    <a className="btn edit wide" onClick={this.onAddCondition}>Add condition</a>
                 </li>
             )
         } else {
@@ -191,58 +281,6 @@ var ConditionItem = React.createClass({
 var ActionItem = React.createClass({
     render: function() {
         return <div>{this.props.action.name}</div>;
-    }
-});
-
-var CounterEventColumn = React.createClass({
-    getInitialState: function() {
-        return {
-            activeEvent: null
-        };
-    },
-    componentWillReceiveProps: function(nextProps) {
-        if (nextProps.counterName !== this.props.counterName) {
-            this.setState(this.getInitialState());    
-        }
-    },
-    selectCustomEvent: function(eventType, eventName) {
-        this.setState({activeEvent: this.props.counter[eventType][eventName]});
-        this.props.selectEvent(this.props.counter[eventType][eventName]);
-    },
-    selectOnIncrease: function() {
-        this.setState({activeEvent: this.props.counter.onIncrease});
-        this.props.selectEvent(this.props.counter.onIncrease);
-    },
-    selectOnDecrease: function() {
-        this.setState({activeEvent: this.props.counter.onDecrease});
-        this.props.selectEvent(this.props.counter.onDecrease);
-    },
-    onAddCustomEvent: function(eventType, eventValue) {
-        this.props.counter[eventType][eventValue] = [new GameCreator.ConditionActionSet()];
-        this.forceUpdate();
-    },
-    renderCustomEventButtons: function(eventType) {
-        var eventTypes = Object.keys(this.props.counter[eventType]);
-        var eventButtons = [];
-        for (var i = 0; i < eventTypes.length; i += 1) {
-            eventButtons.push(<ColumnButton text={eventType + ": " + eventTypes[i]} onSelect={this.selectCustomEvent.bind(this, eventType, eventTypes[i])} active={this.props.counter[eventType][eventTypes[i]] === this.state.activeEvent}/>)
-        }
-        return eventButtons;
-    },
-    render: function() {
-        var customEvents = [];
-        customEvents = customEvents.concat(this.renderCustomEventButtons('atValue')).
-            concat(this.renderCustomEventButtons('belowValue')).
-            concat(this.renderCustomEventButtons('aboveValue'));
-
-        return (
-            <Column title={this.props.counterName + ' Events'}>
-                    <ColumnButton text="On Increase" onSelect={this.selectOnIncrease} active={this.state.activeEvent === this.props.counter.onIncrease} />
-                    <ColumnButton text="On Decrease" onSelect={this.selectOnDecrease} active={this.state.activeEvent === this.props.counter.onDecrease} />
-                    {customEvents}
-                    <AddCounterEventForm onCreate={this.onAddCustomEvent}/>
-            </Column>
-        )
     }
 });
 
@@ -334,7 +372,7 @@ var ColumnButton = React.createClass({
         var classes = 'btn tab';
         if (this.props.active) classes += ' active';
         return (
-            <a className={classes} onClick={this.select}>{this.props.text}</a>
+            <a className={classes} onClick={this.select}>{GameCreator.helpers.labelize(this.props.text)}</a>
         );
     }
 })

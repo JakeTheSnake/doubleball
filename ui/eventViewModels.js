@@ -15,12 +15,9 @@ GameCreator.CASetVM = function(caSet, selectableActions, globalObj) {
 }
 
 GameCreator.CASetVM.prototype.addCondition = function(conditionName) {
-    var params = {}, i;
-    var paramNames = Object.keys(GameCreator.conditions[conditionName].params);
-    for (i = 0; i < paramNames.length; i+=1) {
-        params[paramNames[i]] = GameCreator.conditions[conditionName].params[paramNames[i]].defaultValue;
-    }
-    var runtimeCondition = new GameCreator.RuntimeCondition(conditionName, params);
+    var i;
+    
+    var runtimeCondition = new GameCreator.RuntimeCondition(conditionName);
     this.caSet.conditions.push(runtimeCondition);
     this.conditionVMs.push(new GameCreator.ConditionItemVM(runtimeCondition, this.globalObj));
 };

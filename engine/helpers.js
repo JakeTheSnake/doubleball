@@ -382,8 +382,16 @@
         }
     };
 
+    GameCreator.helpers.getSelectableActions = function(eventType, objectType) {
+        if (eventType === 'collision') {
+            return GameCreator.helpers.getCollisionActions(objectType);
+        } else {
+            return GameCreator.helpers.getNonCollisionActions(objectType);
+        }
+    };
+
     GameCreator.helpers.labelize = function(name) {
-        var segments = name.match(/([A-Z]?[a-z]*)/g);
+        var segments = name.match(/([A-Z0-9]?[a-z0-9]*)/g);
         for (var i = 0; i < segments.length; i++) {
             segments[i] = segments[i].charAt(0).toUpperCase() + segments[i].slice(1);
         }
@@ -579,7 +587,7 @@
             counterDisplay: 'Counter',
             change: 'Add',
             set: 'Set to',
-            accY: 'Gravity'
+            accY: 'Gravity',
         }
         return prettyNames[databaseName] ? prettyNames[databaseName] : GameCreator.helpers.labelize(databaseName);
     };
