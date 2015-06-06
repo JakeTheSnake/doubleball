@@ -18,7 +18,7 @@
     GameCreator.RuntimeAction = function(name, parameters, timing) {
         this.name = name;
         this.parameters = parameters || {};
-        this.timing = timing || {type: 'now'};;
+        this.timing = timing || {type: 'now'};
     };
 
     GameCreator.RuntimeAction.prototype.getAllParameters = function() {

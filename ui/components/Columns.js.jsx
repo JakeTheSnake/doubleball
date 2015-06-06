@@ -121,7 +121,7 @@ var EventEditor = React.createClass({
     getInitialState: function() {
         return {
             selectableItems: [],
-            activeWhenGroup: 0
+            activeCaSetIndex: 0
         };
     },
     componentWillReceiveProps: function(nextProps) {
@@ -130,50 +130,60 @@ var EventEditor = React.createClass({
         }
     },
     selectWhenGroup: function(index) {
-        this.setState({activeWhenGroup: index});
+        this.setState({activeCaSetIndex: index});
     },
     addCaSet: function() {
         this.props.caSets.push(new GameCreator.ConditionActionSet());
         this.forceUpdate();
     },
     onItemSelect: function(itemName) {
-        this.state.itemSelectCallback(itemName);
+        var activeCaSet = this.props.caSets[this.state.activeCaSetIndex];
+        if (this.state.selectableItemsType === 'conditions') {
+            activeCaSet.conditions.push(new GameCreator.RuntimeCondition(itemName));
+        } else if (this.state.selectableItemsType === 'actions') {
+            activeCaSet.actions.push(new GameCreator.RuntimeAction(itemName));
+        }
         this.setState({
             selectableItems: [],
-            itemSelectCallback: null
         });
     },
-    onAddCondition: function(callback) {
+    onAddCondition: function() {
         this.setState({
             selectableItems: Object.keys(GameCreator.conditions),
-            itemSelectCallback: callback
+            selectableItemsType: 'conditions'
         });
     },
-    onAddAction: function(callback) {
+    onAddAction: function() {
         var selectableActionNames = Object.keys(GameCreator.helpers.getSelectableActions(this.props.eventType));
         this.setState({
             selectableItems: selectableActionNames,
-            itemSelectCallback: callback
+            selectableItemsType: 'actions'
         });
     },
     render: function() {
         var whenGroups = [];
         for (var i = 0; i < this.props.caSets.length; i += 1) {
             whenGroups.push(
-                <WhenGroupItem key={i} onAddCondition={this.onAddCondition} whenGroup={this.props.caSets[i]} onSelectWhenGroup={this.selectWhenGroup.bind(this, i)} active={i === this.state.activeWhenGroup}/>
+                <WhenGroupItem key={i} onAddCondition={this.onAddCondition} whenGroup={this.props.caSets[i]} onSelectWhenGroup={this.selectWhenGroup.bind(this, i)} active={i === this.state.activeCaSetIndex}/>
             );
         }
         var actionColumn;
         var addNewItemColumn;
-        var whenGroupIndex = this.state.activeWhenGroup;
+        var whenGroupIndex = this.state.activeCaSetIndex;
         if (whenGroupIndex !== null) {
             var actions = [];
             for (var i = 0; i < this.props.caSets[whenGroupIndex].actions.length; i += 1) {
                 actions.push(
-                    <ActionItem key={i} onAddAction={this.onAddAction} action={this.props.caSets[whenGroupIndex].actions[i]} />
+                    <ActionItem key={i} action={this.props.caSets[whenGroupIndex].actions[i]} />
                 );
             }
-            actionColumn = <Column title="Do">{actions}</Column>
+            actionColumn = 
+                <Column title="Do">
+                    <ul className="parameter-groups">   
+                        {actions}
+                    </ul>
+                    <a className="btn tab success wide" onClick={this.onAddAction}>Add Action</a>
+                </Column>
         }
 
         if (this.state.selectableItems.length !== 0) {
@@ -190,7 +200,7 @@ var EventEditor = React.createClass({
                     <ul className="parameter-groups">
                         {whenGroups}
                     </ul>
-                    <a className="btn success wide" onClick={this.addCaSet}>Create group</a>
+                    <a className="btn tab success wide" onClick={this.addCaSet}>Create group</a>
                 </Column>
                 {actionColumn}
                 {addNewItemColumn}
@@ -213,13 +223,6 @@ var WhenGroupItem = React.createClass({
         }
         return title;
     },
-    addCondition: function(conditionName) {
-        this.props.whenGroup.conditions.push(new GameCreator.RuntimeCondition(conditionName));
-        this.forceUpdate();
-    },
-    onAddCondition: function() {
-        this.props.onAddCondition(this.addCondition);
-    },
     render: function() {
         var title = this.getWhenGroupTitle();
         if (this.props.active) {
@@ -236,7 +239,7 @@ var WhenGroupItem = React.createClass({
                     <div className="parameter-group">
                         {conditions}
                     </div>
-                    <a className="btn edit wide" onClick={this.onAddCondition}>Add condition</a>
+                    <a className="btn edit wide" onClick={this.props.onAddCondition}>Add condition</a>
                 </li>
             )
         } else {
@@ -276,11 +279,38 @@ var ConditionItem = React.createClass({
             </div>
         )
     }
-})
+});
 
 var ActionItem = React.createClass({
+    onUpdate: function(paramName, value) {
+        this.props.action.parameters[paramName] = value;
+    },
+    onUpdateTiming: function(value) {
+        this.props.action.timing = value;
+    },
     render: function() {
-        return <div>{this.props.action.name}</div>;
+        var params = [];
+        var paramNames = Object.keys(this.props.action.getAllParameters());
+        for (var i = 0; i < paramNames.length; i += 1) {
+            var ParamComponent = this.props.action.getParameter(paramNames[i]).component;
+            params.push(
+                <ParamComponent key={i} value={this.props.action.parameters[paramNames[i]]} onUpdate={this.onUpdate} name={paramNames[i]}/>
+            );
+        }
+        params.push(<TimingParam selectableTimings={GameCreator.actions[this.props.action.name].timing} timing={this.props.action.timing} onUpdate={this.onUpdateTiming}/>)
+        return (
+            <li className="parameter-group">
+                <div className="parameter-header">
+                    <span>{this.props.action.name}</span>
+                    <a className="btn warning">X</a>
+                </div>
+                <table>
+                    <tbody>
+                        {params}
+                    </tbody>
+                </table>
+            </li>
+        )
     }
 });
 
