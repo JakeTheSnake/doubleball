@@ -133,11 +133,13 @@ GameCreator.conditions = {
         },
         params: {
             comparator: {
+                component: ComparatorParam,
                 param: GameCreator.ComparatorParameter,
                 mandatory: true,
                 defaultValue: 'equals'
             },
             scene: {
+                component: SceneParam,
                 param: GameCreator.SwitchSceneParameter,
                 mandatory: true,
             },
@@ -190,3 +192,11 @@ GameCreator.RuntimeCondition.prototype.getParameter = function(name) {
     return GameCreator.conditions[this.name].params[name];
 }
 
+GameCreator.conditionGroups = {
+    globalCounterConditions: {
+        objectExists: GameCreator.conditions.objectExists,
+        currentScene: GameCreator.conditions.currentScene
+    },
+
+    objectConditions: GameCreator.conditions
+}

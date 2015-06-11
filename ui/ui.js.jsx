@@ -1,5 +1,16 @@
 GameCreator.UI = {    
-
+    state: {
+        selectedGlobalItem: null,
+        selectedItemType: null
+    },
+    setSelectedGlobalObject: function(globalObj) {
+        GameCreator.UI.state.selectedGlobalItem = globalObj;
+        GameCreator.UI.state.selectedItemType = 'globalObject';
+    },
+    setSelectedGlobalCounter: function(globalCounter) {
+        GameCreator.UI.state.selectedGlobalItem = globalCounter;
+        GameCreator.UI.state.selectedItemType = 'globalCounter';
+    },
     initializeUI: function() {
         $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
         $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue);
@@ -113,7 +124,7 @@ GameCreator.UI = {
    
     createLibraryItem: function(globalObj) {
         var listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
-        this.setupGlobalLibraryItemListeners(listElementButton, globalObj);
+        GameCreator.UI.setupGlobalLibraryItemListeners(listElementButton, globalObj);
         $(".global-object-list").append(listElementButton);
     },
 
@@ -184,15 +195,12 @@ GameCreator.UI = {
             $('#library-preview').html(previewImage);
             $('.library-global-object-button').removeClass('active');
             $(listElementButton).addClass('active');
+            GameCreator.UI.setSelectedGlobalObject(globalObj);
         });
 
         $(".global-object-list").on('recalculateActiveObject', function(){
             if (GameCreator.selectedLibraryObject === globalObj) {
-                var previewImage = document.createElement('img');
-                previewImage.src = globalObj.getDefaultState().attributes.image.src;
-                $('#library-preview').html(previewImage);
-                $('.library-global-object-button').removeClass('active');
-                $(listElementButton).addClass('active');
+                $(listElementButton).trigger('click');
             }
         });
 

@@ -16,13 +16,18 @@ var DialogueBottom = React.createClass({
 
 var GlobalCounterDialogueBottom = React.createClass({
     addNewCounter: function(name) {
-        GameCreator.globalCounters[name] = new GameCreator.Counter();
-        this.forceUpdate();
+        if (GameCreator.globalCounters[name] === undefined) {
+            GameCreator.globalCounters[name] = new GameCreator.Counter();    
+            this.forceUpdate();
+        }
+    },
+    onSelectCounter: function(counterName) {
+        GameCreator.UI.setSelectedGlobalCounter(GameCreator.globalCounters[counterName]);
     },
     render: function() {
         return (
             <DialogueBottom title="Global Counters">
-                <CountersEditor counters={GameCreator.globalCounters} onAddCounter={this.addNewCounter} title="Counters"/>
+                <CountersEditor counters={GameCreator.globalCounters} onSelectCounter={this.onSelectCounter} onAddCounter={this.addNewCounter} title="Counters"/>
             </DialogueBottom>
         );
     }

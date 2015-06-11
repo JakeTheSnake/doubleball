@@ -28,6 +28,9 @@ var CountersEditor = React.createClass({
     },
     selectCounter: function(name) {
         this.setState({activeCounter: name, activeEvent: null, activeCASet: null});
+        if (this.props.onSelectCounter) {
+            this.props.onSelectCounter(name);
+        }
     },
     selectEvent: function(event) {
         this.setState({activeEvent: event, activeCASet: null});
@@ -149,7 +152,7 @@ var EventEditor = React.createClass({
     },
     onAddCondition: function() {
         this.setState({
-            selectableItems: Object.keys(GameCreator.conditions),
+            selectableItems: Object.keys(GameCreator.helpers.getSelectableConditions()),
             selectableItemsType: 'conditions'
         });
     },
@@ -159,6 +162,11 @@ var EventEditor = React.createClass({
             selectableItems: selectableActionNames,
             selectableItemsType: 'actions'
         });
+    },
+    removeAction: function(actionIndex) {
+        var whenGroupIndex = this.state.activeCaSetIndex;
+        this.props.caSets[whenGroupIndex].actions.splice(actionIndex, 1);
+        this.forceUpdate();
     },
     render: function() {
         var whenGroups = [];
@@ -174,7 +182,7 @@ var EventEditor = React.createClass({
             var actions = [];
             for (var i = 0; i < this.props.caSets[whenGroupIndex].actions.length; i += 1) {
                 actions.push(
-                    <ActionItem key={i} action={this.props.caSets[whenGroupIndex].actions[i]} />
+                    <ActionItem key={i} onRemove={this.removeAction.bind(this, i)} action={this.props.caSets[whenGroupIndex].actions[i]} />
                 );
             }
             actionColumn = 
@@ -223,12 +231,16 @@ var WhenGroupItem = React.createClass({
         }
         return title;
     },
+    removeCondition: function(conditionIndex) {
+        this.props.whenGroup.conditions.splice(conditionIndex, 1);
+        this.forceUpdate();
+    },
     render: function() {
         var title = this.getWhenGroupTitle();
         if (this.props.active) {
             var conditions = [];
             for (var i = 0; i < this.props.whenGroup.conditions.length; i += 1) {
-                conditions.push(<ConditionItem key={i} condition={this.props.whenGroup.conditions[i]}/>);
+                conditions.push(<ConditionItem key={i} onRemove={this.removeCondition.bind(this, i)} condition={this.props.whenGroup.conditions[i]}/>);
             }
             if (!conditions.length) {
                 conditions.push(<div className="parameter-header"><span>Always</span></div>);
@@ -269,7 +281,7 @@ var ConditionItem = React.createClass({
             <div>
                 <div className="parameter-header">
                     <span>{this.props.condition.name}</span>
-                    <a className="btn warning">X</a>
+                    <a className="btn warning" onClick={this.props.onRemove}>X</a>
                 </div>
                 <table>
                     <tbody>
@@ -291,18 +303,19 @@ var ActionItem = React.createClass({
     render: function() {
         var params = [];
         var paramNames = Object.keys(this.props.action.getAllParameters());
-        for (var i = 0; i < paramNames.length; i += 1) {
+        var i;
+        for (i = 0; i < paramNames.length; i += 1) {
             var ParamComponent = this.props.action.getParameter(paramNames[i]).component;
             params.push(
                 <ParamComponent key={i} value={this.props.action.parameters[paramNames[i]]} onUpdate={this.onUpdate} name={paramNames[i]}/>
             );
         }
-        params.push(<TimingParam selectableTimings={GameCreator.actions[this.props.action.name].timing} timing={this.props.action.timing} onUpdate={this.onUpdateTiming}/>)
+        params.push(<TimingParam key={i+1} selectableTimings={GameCreator.actions[this.props.action.name].timing} timing={this.props.action.timing} onUpdate={this.onUpdateTiming}/>)
         return (
             <li className="parameter-group">
                 <div className="parameter-header">
                     <span>{this.props.action.name}</span>
-                    <a className="btn warning">X</a>
+                    <a className="btn warning" onClick={this.props.onRemove}>X</a>
                 </div>
                 <table>
                     <tbody>
@@ -405,4 +418,4 @@ var ColumnButton = React.createClass({
             <a className={classes} onClick={this.select}>{GameCreator.helpers.labelize(this.props.text)}</a>
         );
     }
-})
+});

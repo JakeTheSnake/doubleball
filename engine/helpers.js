@@ -382,6 +382,14 @@
         }
     };
 
+    GameCreator.helpers.getSelectableConditions = function() {
+        if (GameCreator.UI.state.selectedItemType === 'globalObject') {
+            return GameCreator.conditionGroups.objectConditions;
+        } else if (GameCreator.UI.state.selectedItemType === 'globalCounter') {
+            return GameCreator.conditionGroups.globalCounterConditions;
+        }
+    };
+
     GameCreator.helpers.getSelectableActions = function(eventType, objectType) {
         if (eventType === 'collision') {
             return GameCreator.helpers.getCollisionActions(objectType);

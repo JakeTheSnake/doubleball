@@ -162,3 +162,19 @@ var TimingParam = React.createClass({
                 </tr>;
     }
 });
+
+var SceneParam = React.createClass({
+    getValuePresentation: function(value) {
+        if (value === undefined) {
+            return "<Edit>";
+        }
+
+        return GameCreator.scenes[GameCreator.helpers.getIndexOfSceneWithId(Number(value))].attributes.name;    
+    },
+    render: function() {
+        var scenes = GameCreator.helpers.getSelectableScenes();
+        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+                value={this.props.value} onUpdate={this.props.onUpdate} collection={scenes}
+                label='Scene'/>;
+    }
+});
