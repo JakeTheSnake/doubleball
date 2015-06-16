@@ -2,7 +2,7 @@ var CommonParamFunctions = {
     getInitialState: function() {
         return {
             selected: false,
-            value: this.props.value
+            value: this.props.value,
         };
     },
     select: function() {
@@ -10,9 +10,19 @@ var CommonParamFunctions = {
     },
     saveValue: function() {
         var node = this.getDOMNode();
-        var value = $(node).find('select, input').val();
-        this.setState({selected: false, value: value});
-        this.props.onUpdate(this.props.name, value);
+        var input = $(node).find('select, input');
+        var value;
+
+        try {
+            value = GameCreator.helpers.getValue(input);
+            this.props.onUpdate(this.props.name, value);
+            this.setState({value: value});
+        } catch (err) {
+            GameCreator.UI.createValidationBox(input, err);
+        }
+
+        this.setState({selected: false});
+
     },
     componentDidUpdate: function() {
         var node = this.getDOMNode();
@@ -75,6 +85,25 @@ var ComparatorParam = React.createClass({
     }
 });
 
+var SceneParam = React.createClass({
+    getValuePresentation: function(id) {
+        if (id === undefined) {
+            return '<Edit>';
+        } else {
+            return GameCreator.helpers.getObjectById(GameCreator.scenes, Number(id)).attributes.name;    
+        }
+    },
+    onUpdate: function(name, value) {
+        this.props.onUpdate(name, Number(value));
+    },
+    render: function() {
+        var scenes = GameCreator.helpers.getSelectableScenes();
+        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+                value={this.props.value} onUpdate={this.onUpdate} collection={scenes}
+                label='Scene'/>;
+    }
+});
+
 var NumberParam = React.createClass({
     mixins: [CommonParamFunctions],
     render: function() {
@@ -85,7 +114,52 @@ var NumberParam = React.createClass({
             html = <span>{this.state.value}</span>;
         }
         return  <tr>
-                    <td><label>Count:</label></td>
+                    <td><label>{GameCreator.helpers.labelize(this.props.name) + ':'}</label></td>
+                    <td onClick={this.select}>{html}</td>
+                </tr>;
+    }
+});
+
+var RangeParam = React.createClass({
+    mixins: [CommonParamFunctions],
+    getInitialState: function() {
+        
+    },
+    convertValueToString: function() {
+        var valueString = '',
+            value = this.state.value;
+
+        if (Array.isArray(value)) {
+            if (value.length === 1) {
+                valueString = value[0];
+            }
+            else {
+                valueString = value[0] + ":" + value[1];
+            }
+        } else {
+            valueString = value;
+        }
+        return valueString;
+    },
+    getValuePresentation: function() {
+        var value = this.state.value;
+        if (value.length === 1) {
+            return value[0];
+        } else if (value.length === 2) {
+            return (value[0] + " to " + value[1]);
+        } else {
+            return value;
+        }
+    },
+    render: function() {
+        var html;
+        if (this.state.selected) {
+            html = <input type="text" className="rangeField" data-type="range" defaultValue={this.convertValueToString()} onBlur={this.saveValue}/>;
+        } else {
+            html = <span>{this.getValuePresentation()}</span>;
+        }
+        return  <tr>
+                    <td><label>{GameCreator.helpers.labelize(this.props.name) + ':'}</label></td>
                     <td onClick={this.select}>{html}</td>
                 </tr>;
     }
@@ -160,21 +234,5 @@ var TimingParam = React.createClass({
                     <td><label>Timing:</label></td>
                     <td onClick={this.select}>{html}</td>
                 </tr>;
-    }
-});
-
-var SceneParam = React.createClass({
-    getValuePresentation: function(value) {
-        if (value === undefined) {
-            return "<Edit>";
-        }
-
-        return GameCreator.scenes[GameCreator.helpers.getIndexOfSceneWithId(Number(value))].attributes.name;    
-    },
-    render: function() {
-        var scenes = GameCreator.helpers.getSelectableScenes();
-        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
-                value={this.props.value} onUpdate={this.props.onUpdate} collection={scenes}
-                label='Scene'/>;
     }
 });

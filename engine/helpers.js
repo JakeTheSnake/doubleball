@@ -391,10 +391,14 @@
     };
 
     GameCreator.helpers.getSelectableActions = function(eventType, objectType) {
-        if (eventType === 'collision') {
-            return GameCreator.helpers.getCollisionActions(objectType);
-        } else {
-            return GameCreator.helpers.getNonCollisionActions(objectType);
+        if (GameCreator.UI.state.selectedItemType === 'globalObject') {
+            if (eventType === 'collision') {
+                return GameCreator.helpers.getCollisionActions(objectType);
+            } else {
+                return GameCreator.helpers.getNonCollisionActions(objectType);
+            }
+        } else if (GameCreator.UI.state.selectedItemType === 'globalCounter') {
+            return GameCreator.actionGroups.nonObjectActions;
         }
     };
 

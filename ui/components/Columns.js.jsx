@@ -124,7 +124,8 @@ var EventEditor = React.createClass({
     getInitialState: function() {
         return {
             selectableItems: [],
-            activeCaSetIndex: 0
+            activeCaSetIndex: 0,
+            selectableItemsType: null
         };
     },
     componentWillReceiveProps: function(nextProps) {
@@ -134,6 +135,7 @@ var EventEditor = React.createClass({
     },
     selectWhenGroup: function(index) {
         this.setState({activeCaSetIndex: index});
+        this.clearSelectableItems();
     },
     addCaSet: function() {
         this.props.caSets.push(new GameCreator.ConditionActionSet());
@@ -146,8 +148,12 @@ var EventEditor = React.createClass({
         } else if (this.state.selectableItemsType === 'actions') {
             activeCaSet.actions.push(new GameCreator.RuntimeAction(itemName));
         }
+        this.clearSelectableItems();
+    },
+    clearSelectableItems: function(){
         this.setState({
             selectableItems: [],
+            selectableItemsType: null
         });
     },
     onAddCondition: function() {

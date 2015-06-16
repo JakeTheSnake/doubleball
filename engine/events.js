@@ -1,3 +1,7 @@
+/*global GameCreator, $*/
+(function() {
+"use strict";
+
 GameCreator.ConditionActionSet = function() {
     this.conditions = [];
     this.actions = [];
@@ -168,6 +172,7 @@ GameCreator.conditions = {
 }
 
 GameCreator.RuntimeCondition = function(name, params) {
+    var i;
     this.name = name;
     if (params !== undefined) {
         this.parameters = params;
@@ -200,3 +205,5 @@ GameCreator.conditionGroups = {
 
     objectConditions: GameCreator.conditions
 }
+
+}());

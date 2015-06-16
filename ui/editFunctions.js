@@ -245,7 +245,7 @@
                 GameCreator.helpers.populateSidePropertiesForm(GameCreator.getActiveScene(), onChangeCallback);
                 GameCreator.getActiveScene().drawBackground();
                 $('#setup-scene-actions').click(function(){
-                    choosableActions = GameCreator.actionGroups.sceneStartedActions;
+                    choosableActions = GameCreator.actionGroups.nonObjectActions;
                     GameCreator.UI.openSelectActionsDialogue(
                         GameCreator.htmlStrings.sceneStartedEventInformationWindow(),
                         new GameCreator.CASetVM(activeScene.onCreateSet, choosableActions, undefined), 
