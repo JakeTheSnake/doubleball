@@ -52,6 +52,16 @@ GameCreator.RuntimeAction.prototype.hasRequiredParameters = function(parameters)
   return true;
 }
 
+GameCreator.RuntimeAction.prototype.hasObservers = function(paramName) {
+    var paramNames = Object.keys(this.getAllParameters());
+    for (var i = 0; i < paramNames.length; i += 1) {
+        if (this.getParameter(paramNames[i]).observes !== paramName) {
+            return true;
+        }
+    }
+    return false;
+};
+
 GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimeParameters) {
     var timerFunction, combinedParameters = {};
 
@@ -187,13 +197,16 @@ GameCreator.actions = {
                         'objectId':
                         {
                             param: GameCreator.GlobalObjectParameter,
+                            component: GlobalObjectParam,
                             mandatory: true,
                             defaultValue: 'this',
                             observer: 'objectState'
                         },
-                        "objectState":
+                        'objectState':
                         {
                             param: GameCreator.StateParameter,
+                            component: StateParam,
+                            observes: 'objectId',
                             mandatory: true
                         }
                       },

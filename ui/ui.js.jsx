@@ -268,20 +268,11 @@ GameCreator.UI = {
         $("#dialogue-panel-actions").trigger('redrawList', caSetVM);
     },
 
-    openGlobalCountersDialogue: function() {
-        var kekc = new GameCreator.Counter();
-        var keke = new GameCreator.ConditionActionSet();
-        var keke2 = new GameCreator.ConditionActionSet();
-        var keke3 = new GameCreator.ConditionActionSet();
-        keke.conditions.push(new GameCreator.RuntimeCondition('objectExists', {objId: 1, comparator: 'equals', count: 1}));
-        keke2.conditions.push(new GameCreator.RuntimeCondition('objectExists', {objId: 2, comparator: 'greaterThan', count: 2}));
-        keke3.conditions.push(new GameCreator.RuntimeCondition('objectExists', {objId: 3, comparator: 'equals', count: 3}));
-        kekc.atValue['0'] = [keke, keke2, keke3];
-
-        GameCreator.globalCounters = {Kek: kekc, Kraks: new GameCreator.Counter()};
+    openGlobalCountersDialogue: function() {       
         React.render(
-            <GlobalCounterDialogueBottom/>
-        , document.getElementById('dialogue-window'));
+            <GlobalCounterDialogueBottom/>,
+            document.getElementById('dialogue-window')
+        );
         GameCreator.UI.openDialogue(700, 570, null);
     },
     

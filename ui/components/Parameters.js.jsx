@@ -24,6 +24,11 @@ var CommonParamFunctions = {
         this.setState({selected: false});
 
     },
+    componentWillReceiveProps: function(nextProps) {
+        this.setState({
+            value: nextProps.value
+        });
+    },
     componentDidUpdate: function() {
         var node = this.getDOMNode();
         $(node).find('select, input').focus();
@@ -56,9 +61,12 @@ var DropdownParam = React.createClass({
 
 var GlobalObjectParam = React.createClass({
     getValuePresentation: function(id) {
-        if (id === undefined) {
+        if (id === undefined || (id === 'this' && GameCreator.UI.state.selectedItemType !== 'globalObject')) {
             return '<Edit>';
         } else {
+            if (id === 'this') {
+                return GameCreator.UI.state.selectedGlobalItem.objectName;
+            }
             return GameCreator.helpers.getGlobalObjectById(id).objectName;    
         }
     },
@@ -66,10 +74,50 @@ var GlobalObjectParam = React.createClass({
         this.props.onUpdate(name, Number(value));
     },
     render: function() {
-        var globalObjects = GameCreator.helpers.getGlobalObjectIds();
+        var globalObjects = GameCreator.helpers.getGlobalObjectIds(GameCreator.UI.state.selectedItemType === 'globalObject');
         return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
                 value={this.props.value} onUpdate={this.onUpdate} collection={globalObjects}
                 label='Object'/>;
+    }
+});
+
+var StateParam = React.createClass({
+    getValuePresentation: function(id) {
+        if (id === undefined) {
+            return '<Edit>';
+        } else {
+            var selectableStates = this.getSelectableStates();
+            var stateNames = Object.keys(selectableStates);
+            for (var i = 0; i < stateNames.length; i += 1) {
+                if (selectableStates[stateNames[i]] === Number(id)) {
+                    return stateNames[i];
+                }
+            } 
+        }
+    },
+    getSelectableStates: function() {
+        var globalObj = GameCreator.helpers.getGlobalObjectById(this.props.observedValue);
+        var selectableStates = {};
+        if (globalObj !== undefined) {
+            globalObj.states.forEach(function(state) {
+              selectableStates[state.name] = state.id;
+            });
+        }
+        return selectableStates;
+    },
+    componentWillReceiveProps: function(nextProps) {
+        if (this.props.observedValue !== nextProps.observedValue) {
+            this.props.onUpdate(this.props.name, undefined);
+        }
+    },
+    onUpdate: function(name, value) {
+        this.props.onUpdate(name, Number(value));
+    },
+    render: function() {
+        var selectableStates = this.getSelectableStates();
+        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+                value={this.props.value} onUpdate={this.onUpdate} collection={selectableStates}
+                label='State'/>;
     }
 });
 

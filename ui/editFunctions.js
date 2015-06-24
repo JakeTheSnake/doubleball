@@ -272,15 +272,12 @@
             }
         },
 
-
-        saveState: function() {
-            var results = {globalObjects: {}, scenes: [], idCounter: 0};
-            //TODO: Put this array somewhere more "configy"
-            //Save global objects
+        saveGlobalObjects: function() {
+            var savedGlobalObjects = {};
             var propsToCopy = ['attributes', 'id', 'objectName', 'objectType', 'onClickSets',
                 'onCollideSets', 'onCreateSets', 'onDestroySets', 'onKeySets', 'parentCounters', 'states'];
             var objects = GameCreator.globalObjects;
-            var name, names, oldObject, newObject, i, j, attribute, scene, newScene, n;
+            var name, names, oldObject, newObject, i, j, attribute;
             names = Object.keys(objects);
             for (j = 0; j < names.length; j += 1) {
                 name = names[j];
@@ -293,13 +290,18 @@
                     }
                 }
                 GameCreator.dereferenceImage(newObject);
-                results.globalObjects[newObject.objectName] = newObject;
+                savedGlobalObjects[newObject.objectName] = newObject;
             }
-            //Save scenes
-            for (i = 0; i < GameCreator.scenes.length; i += 1) {
+            return savedGlobalObjects;
+        },
+
+        saveScenes: function() {
+            var savedScenes = [];
+            var scene, newScene, newObject, oldObject;
+            for (var i = 0; i < GameCreator.scenes.length; i += 1) {
                 scene = GameCreator.scenes[i];
                 newScene = new GameCreator.Scene(scene.id);
-                for (n = 0; n < scene.objects.length; n += 1) {
+                for (var n = 0; n < scene.objects.length; n += 1) {
                     oldObject = $.extend(true, {}, scene.objects[n]);
                     newObject = {};
                     newObject.attributes = oldObject.attributes;
@@ -315,8 +317,18 @@
                 newScene.attributes.bgColor = scene.attributes.bgColor;
                 newScene.attributes.name = scene.attributes.name;
                 newScene.onCreateSet = scene.onCreateSet;
-                results.scenes.push(newScene);
+                savedScenes.push(newScene);
             }
+            return savedScenes;
+        },
+
+
+        saveState: function() {
+            var results = {globalObjects: {}, scenes: [], idCounter: 0, globalCounters: {}};
+
+            results.globalObjects = GameCreator.saveGlobalObjects();
+            results.scenes = GameCreator.saveScenes();
+            results.globalCounters = GameCreator.globalCounters;
             results.idCounter = GameCreator.idCounter;
             results.globalIdCounter = GameCreator.globalIdCounter;
             results.uniqueSceneId = GameCreator.uniqueSceneId;
