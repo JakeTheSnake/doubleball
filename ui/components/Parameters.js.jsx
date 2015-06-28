@@ -66,15 +66,20 @@ var GlobalObjectParam = React.createClass({
         } else {
             if (id === 'this') {
                 return GameCreator.UI.state.selectedGlobalItem.objectName;
+            } else if (id === 'globalCounters'){
+                return 'Global';
             }
-            return GameCreator.helpers.getGlobalObjectById(id).objectName;    
+            return GameCreator.helpers.getGlobalObjectById(Number(id)).objectName;    
         }
     },
     onUpdate: function(name, value) {
-        this.props.onUpdate(name, Number(value));
+        this.props.onUpdate(name, value);
     },
     render: function() {
         var globalObjects = GameCreator.helpers.getGlobalObjectIds(GameCreator.UI.state.selectedItemType === 'globalObject');
+        if(this.props.addGlobalCountersOption) {
+            globalObjects.Global = 'globalCounters';
+        }
         return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
                 value={this.props.value} onUpdate={this.onUpdate} collection={globalObjects}
                 label='Object'/>;
@@ -96,7 +101,7 @@ var StateParam = React.createClass({
         }
     },
     getSelectableStates: function() {
-        var globalObj = GameCreator.helpers.getGlobalObjectById(this.props.observedValue);
+        var globalObj = GameCreator.helpers.getGlobalObjectById(Number(this.props.observedValue));
         var selectableStates = {};
         if (globalObj !== undefined) {
             globalObj.states.forEach(function(state) {
@@ -284,3 +289,56 @@ var TimingParam = React.createClass({
                 </tr>;
     }
 });
+
+var CounterCarrierParam = React.createClass({
+    render: function(){ 
+        return <GlobalObjectParam addGlobalCountersOption={true} name={this.props.name} value={this.props.value} onUpdate={this.props.onUpdate}/>;
+    }
+});
+
+var CounterParam = React.createClass({
+    getValuePresentation: function(name) {
+        if (name === undefined) {
+            return '<Edit>';
+        } else {
+            return name;
+        }
+    },
+    getSelectableCounters: function() {
+        var counters, selectableCounters = {}, counterNames;
+        if(this.props.observedValue === 'globalCounters') {
+            counters = GameCreator.globalCounters;
+        } else if(this.props.observedValue === 'this'){
+            counters = GameCreator.UI.state.selectedGlobalItem.parentCounters;
+        } else {
+            counters = GameCreator.helpers.getGlobalObjectById(Number(this.props.observedValue));
+            counters = counters !== undefined ? counters.parentCounters : {};
+        }
+
+        counterNames = Object.keys(counters);
+        counterNames.forEach(function(name) {
+          selectableCounters[name] = name;
+        });
+        return selectableCounters;
+    },
+    componentWillReceiveProps: function(nextProps) {
+        if (this.props.observedValue !== nextProps.observedValue) {
+            this.props.onUpdate(this.props.name, undefined);
+        }
+    },
+    render: function() {
+        var selectableCounters = this.getSelectableCounters();
+        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableCounters}
+                label='Counter'/>;
+    }
+});
+
+var CounterTypeParam = React.createClass({
+    render: function(){
+        var selectableTypes = {'Add': 'add', 'Reduce': 'reduce', 'Set': 'set'};
+        return <DropdownParam getValuePresentation={GameCreator.helpers.labelize} name={this.props.name} 
+                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableTypes}
+                label='Operation'/>;
+    }
+})

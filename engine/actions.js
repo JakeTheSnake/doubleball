@@ -167,25 +167,29 @@ GameCreator.actions = {
                       {
                           param: GameCreator.GlobalObjectParameter,
                           mandatory: false,
-                          defaultValue: 'this',
-                          observer: 'counter'
+                          observer: 'counter',
+                          component: CounterCarrierParam
                       },
                       "counter":
                       {
                           param: GameCreator.CounterParameter,
                           mandatory: true,
+                          component: CounterParam,
+                          observes: 'objId'
                       },
                       "type":
                       {
                           param: GameCreator.CounterChangeTypeParameter,
                           mandatory: false,
                           defaultValue: 'add',
+                          component: CounterTypeParam
                       },
                       "value":
                       {
                           param: GameCreator.NumberParameter,
                           mandatory: false,
                           defaultValue: 1,
+                          component: NumberParam
                       },
                     },
                     name: "Counter",
@@ -199,7 +203,6 @@ GameCreator.actions = {
                             param: GameCreator.GlobalObjectParameter,
                             component: GlobalObjectParam,
                             mandatory: true,
-                            defaultValue: 'this',
                             observer: 'objectState'
                         },
                         'objectState':
@@ -307,7 +310,8 @@ GameCreator.actionGroups = {
         Restart: GameCreator.actions.Restart,
         SwitchScene: GameCreator.actions.SwitchScene,
         NextScene: GameCreator.actions.NextScene,
-        SwitchState: GameCreator.actions.SwitchState
+        SwitchState: GameCreator.actions.SwitchState,
+        Counter: GameCreator.actions.Counter,
     }
 };
 
