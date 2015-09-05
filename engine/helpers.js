@@ -67,7 +67,7 @@
         }
         else if (GameCreator.state !== 'playing') {
             choosableActions = GameCreator.helpers.getCollisionActions(object.parent.objectType);
-            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object.parent)]};
+            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet()]};
             object.parent.onCollideSets.push(newSetsItem);
             var titleString = "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'";
             GameCreator.UI.openEditActionsWindow(
@@ -354,6 +354,23 @@
                 height: args.height != undefined ? args.height : [50],
             }
         }];
+    };
+
+    GameCreator.helpers.getCollidableObjectNames = function(globalObj) {
+        var result = [];
+        var selectableObjects = {};
+        var objName, objId;
+        $.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
+        for (objName in selectableObjects) {
+            objId = GameCreator.helpers.findGlobalObjectByName(objName).id;
+            if (selectableObjects.hasOwnProperty(objName) && 
+                !GameCreator.helpers.getObjectById(globalObj.onCollideSets, objId) && 
+                selectableObjects[objName].isCollidable) {
+                    result.push(objName);
+            }
+        }
+
+        return result;
     };
 
     GameCreator.helpers.getStandardAttributes = function() {

@@ -299,7 +299,7 @@ GameCreator.UI = {
         $("#dialogue-panel-edit").find("a:first-child").addClass("active");
 
         $("#dialogue-panel-edit").on('click', 'a', function() {
-            globalObj[$(this).data("uifunction")]($("#dialogue-edit-content"));
+            globalObj[$(this).data("uifunction")](document.getElementById('dialogue-edit-content'));
             $(this).parent().find("a").removeClass("active");
             $(this).addClass("active");
         });
@@ -454,7 +454,7 @@ GameCreator.UI = {
         var caSet;
 
         if (caSets.length === 0) {
-            caSet = new GameCreator.ConditionActionSet(globalObj);
+            caSet = new GameCreator.ConditionActionSet();
             caSets.push(caSet);
         }
 
@@ -481,7 +481,7 @@ GameCreator.UI = {
         $(addCaSetButton).addClass('btn success wide');
         $(addCaSetButton).html('Create group');
         $(addCaSetButton).on('click', function() {
-            caSet = new GameCreator.ConditionActionSet(globalObj);
+            caSet = new GameCreator.ConditionActionSet();
             caSets.push(caSet);
             caSetVMs.push(new GameCreator.CASetVM(caSet, selectableConditions, globalObj));
             conditionsColumn.trigger('redrawList');

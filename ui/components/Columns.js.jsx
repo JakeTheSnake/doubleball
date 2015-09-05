@@ -218,6 +218,13 @@ var EventItemSelector = React.createClass({
                 callback: callback
             });
         }.bind(this));
+
+        $(window).on("GC.hideItemSelector", function(e) {
+            this.setState({
+                selectableItems: [],
+                callback: undefined
+            });
+        }.bind(this));
     },
 
     onItemSelect: function(itemName){
@@ -257,7 +264,7 @@ var WhenGroupItem = React.createClass({
             title = "Always";
         } else {
             var names = [];
-            for (i = 0; i < this.props.whenGroup.conditions.length; i+=1) {
+            for (var i = 0; i < this.props.whenGroup.conditions.length; i+=1) {
                 names.push(this.props.whenGroup.conditions[i].name);
             }
             title = names.join(' & ');

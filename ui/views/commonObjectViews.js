@@ -254,19 +254,6 @@ GameCreator.commonObjectViews = {
    Common player object views
    ========================================================================== */
 
-  getKeySelector: function() {
-    var selectableKeys = this.keyPressed;
-    var result = '';
-
-    for (var keyName in selectableKeys) {
-      if (selectableKeys.hasOwnProperty(keyName) && this.onKeySets[keyName].length === 0) {
-        result += '<li class="addKeyObjectElement" data-keyName="' + keyName + '"><span>' + keyName + '</span></div>';
-      }
-    }
-
-    return result;
-  },
-
   getKeysContent: function() {
     var result = '';
 

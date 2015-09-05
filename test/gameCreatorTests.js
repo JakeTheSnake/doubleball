@@ -63,7 +63,7 @@ test("Collision test", function() {
                                                 runnable: function() {return true;}
                                             });
     var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
-    var collideEvent = new GameCreator.ConditionActionSet(redBall);
+    var collideEvent = new GameCreator.ConditionActionSet();
     collideEvent.actions.push(runtimeAction);
     redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
 

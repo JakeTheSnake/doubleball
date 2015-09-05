@@ -319,23 +319,6 @@ GameCreator.htmlStrings = {
     return result;
   },
   
-  collisionObjectSelector: function(object) {
-    var result = '';
-    var selectableObjects = {};
-    var objName, objId;
-    $.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
-    for (objName in selectableObjects) {
-      objId = GameCreator.helpers.findGlobalObjectByName(objName).id;
-      if (selectableObjects.hasOwnProperty(objName) && 
-      !GameCreator.helpers.getObjectById(object.onCollideSets, objId) && 
-      selectableObjects[objName].isCollidable) {
-        result += '<a data-objectname="' + objName + '" class="btn tab">' + GameCreator.htmlStrings.selectGlobalObjectPresentation(objId) + '</a>';
-      }
-    }
-
-    return result;
-  },
-
   selectGlobalObjectPresentation: function(globalObjectId) {
     var globalObject = GameCreator.helpers.getGlobalObjectById(globalObjectId);
     return '<img width="25" height="25" src="' + globalObject.getDefaultState().attributes.image.src + '"/><span>' + globalObject.objectName + '</span>';

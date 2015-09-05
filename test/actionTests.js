@@ -82,7 +82,7 @@ function setupCollisionEventForNewObject(action, parameters) {
     var parameters = parameters || {};
     var timing = {type: "now"};
     var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
-    var collideEvent = new GameCreator.ConditionActionSet(redBall);
+    var collideEvent = new GameCreator.ConditionActionSet();
     collideEvent.actions.push(bounceAction);
     redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
     return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
@@ -189,11 +189,11 @@ test("Multiple CASets With Changing Conditions Test", function(){
     GameCreator.scenes.push(sceneTwo);
     GameCreator.scenes.push(sceneThree);
 
-    var caSet1 = new GameCreator.ConditionActionSet(redBall);
+    var caSet1 = new GameCreator.ConditionActionSet();
     caSet1.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: 1, comparator: 'equals'}));
     caSet1.actions.push(new GameCreator.RuntimeAction("SwitchScene", {scene: sceneTwo.id}, 'now'));
 
-    var caSet2 = new GameCreator.ConditionActionSet(redBall);
+    var caSet2 = new GameCreator.ConditionActionSet();
     caSet2.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: sceneTwo.id, comparator: 'equals'}));
     caSet2.actions.push(new GameCreator.RuntimeAction("SwitchScene", {scene: sceneThree.id}, 'now'));
 
