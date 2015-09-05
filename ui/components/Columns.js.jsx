@@ -63,6 +63,7 @@ var CountersEditor = React.createClass({
                 </Column>
                 {eventColumn}
                 {caEditor}
+                <EventItemSelector/>
             </div>
         );
     }
@@ -123,7 +124,6 @@ var CounterEventColumn = React.createClass({
 var EventEditor = React.createClass({
     getInitialState: function() {
         return {
-            selectableItems: [],
             activeCaSetIndex: 0,
             selectableItemsType: null
         };
@@ -141,33 +141,22 @@ var EventEditor = React.createClass({
         this.props.caSets.push(new GameCreator.ConditionActionSet());
         this.forceUpdate();
     },
-    onItemSelect: function(itemName) {
+    onConditionSelected: function(itemName) {
         var activeCaSet = this.props.caSets[this.state.activeCaSetIndex];
-        if (this.state.selectableItemsType === 'conditions') {
-            activeCaSet.conditions.push(new GameCreator.RuntimeCondition(itemName));
-        } else if (this.state.selectableItemsType === 'actions') {
-            activeCaSet.actions.push(new GameCreator.RuntimeAction(itemName));
-        }
-        this.clearSelectableItems();
-    },
-    clearSelectableItems: function(){
-        this.setState({
-            selectableItems: [],
-            selectableItemsType: null
-        });
+        activeCaSet.conditions.push(new GameCreator.RuntimeCondition(itemName));
+        this.forceUpdate();
     },
     onAddCondition: function() {
-        this.setState({
-            selectableItems: Object.keys(GameCreator.helpers.getSelectableConditions()),
-            selectableItemsType: 'conditions'
-        });
+        $(window).trigger("GC.showItemSelector", [Object.keys(GameCreator.helpers.getSelectableConditions()), this.onConditionSelected]);
+    },
+    onActionSelected: function(itemName) {
+        var activeCaSet = this.props.caSets[this.state.activeCaSetIndex];
+        activeCaSet.actions.push(new GameCreator.RuntimeAction(itemName));
+        this.forceUpdate();
     },
     onAddAction: function() {
         var selectableActionNames = Object.keys(GameCreator.helpers.getSelectableActions(this.props.eventType));
-        this.setState({
-            selectableItems: selectableActionNames,
-            selectableItemsType: 'actions'
-        });
+        $(window).trigger("GC.showItemSelector", [selectableActionNames, this.onActionSelected]);
     },
     removeAction: function(actionIndex) {
         var whenGroupIndex = this.state.activeCaSetIndex;
@@ -182,7 +171,6 @@ var EventEditor = React.createClass({
             );
         }
         var actionColumn;
-        var addNewItemColumn;
         var whenGroupIndex = this.state.activeCaSetIndex;
         if (whenGroupIndex !== null) {
             var actions = [];
@@ -200,6 +188,52 @@ var EventEditor = React.createClass({
                 </Column>
         }
 
+        return (
+            <div>
+                <Column title="When">
+                    <ul className="parameter-groups">
+                        {whenGroups}
+                    </ul>
+                    <a className="btn tab success wide" onClick={this.addCaSet}>Create group</a>
+                </Column>
+                {actionColumn}
+            </div>
+        );
+    }
+});
+
+var EventItemSelector = React.createClass({
+    
+    getInitialState: function(){
+        return {
+                selectableItems: [],
+                callback: undefined
+            }
+    },
+
+    componentDidMount: function() {
+        $(window).on("GC.showItemSelector", function(e, selectableItems, callback) {
+            this.setState({
+                selectableItems: selectableItems,
+                callback: callback
+            });
+        }.bind(this));
+    },
+
+    onItemSelect: function(itemName){
+        this.state.callback(itemName);
+        this.clearSelectableItems();
+    },
+
+    clearSelectableItems: function(){
+        this.setState({
+            selectableItems: [],
+            callback: undefined
+        });
+    },
+
+    render: function() {
+        var addNewItemColumn;
         if (this.state.selectableItems.length !== 0) {
             var columnButtons = [];
             for (var i = 0; i < this.state.selectableItems.length; i += 1) {
@@ -210,13 +244,6 @@ var EventEditor = React.createClass({
 
         return (
             <div>
-                <Column title="When">
-                    <ul className="parameter-groups">
-                        {whenGroups}
-                    </ul>
-                    <a className="btn tab success wide" onClick={this.addCaSet}>Create group</a>
-                </Column>
-                {actionColumn}
                 {addNewItemColumn}
             </div>
         );
