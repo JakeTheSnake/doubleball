@@ -135,7 +135,6 @@ var EventEditor = React.createClass({
     },
     selectWhenGroup: function(index) {
         this.setState({activeCaSetIndex: index});
-        this.clearSelectableItems();
     },
     addCaSet: function() {
         this.props.caSets.push(new GameCreator.ConditionActionSet());

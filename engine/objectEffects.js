@@ -1,6 +1,6 @@
 GameCreator.effects = {};
 
-GameCreator.effects.destroyEffects = {'None': '', 'FadeOut': 'FadeOut', 'Shrink': 'Shrink', 'RiseAndFade': 'RiseAndFade'};
+GameCreator.effects.destroyEffects = {'None': 'none', 'FadeOut': 'FadeOut', 'Shrink': 'Shrink', 'RiseAndFade': 'RiseAndFade'};
 
 GameCreator.effects.FadeOut = function(runtimeObj) {
     this.x = runtimeObj.attributes.x;

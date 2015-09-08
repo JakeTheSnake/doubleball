@@ -38,6 +38,19 @@ var CommonParamFunctions = {
 
 var DropdownParam = React.createClass({
     mixins: [CommonParamFunctions],
+    getValuePresentation: function(value) {
+        if (this.props.getValuePresentation) {
+            return this.props.getValuePresentation(value);
+        } else {
+            var keys = Object.keys(this.props.collection);
+            for (var i = 0; i < keys.length; i += 1) {
+                if (String(this.props.collection[keys[i]]) === String(value)) {
+                    return keys[i];
+                }
+            }
+        }
+        return "<Edit>";
+    },
     render: function() {
         var html;
 
@@ -50,7 +63,7 @@ var DropdownParam = React.createClass({
             }
             html = <select className="selectorField" onBlur={this.saveValue} onChange={this.saveValue} value={this.state.value}>{options}</select>;
         } else {
-            html = <span>{this.props.getValuePresentation(this.state.value)}</span>;
+            html = <span>{this.getValuePresentation(this.state.value)}</span>;
         }
         return  <tr>
                     <td><label>{this.props.label + ':'}</label></td>
@@ -127,31 +140,62 @@ var StateParam = React.createClass({
 });
 
 var ComparatorParam = React.createClass({
-    getValuePresentation: function(value) {
-        return GameCreator.helpers.labelize(value);
-    },
     render: function() {
         var selectableComparators = { 'Equals': 'equals', 'Greater than': 'greaterThan', 'Less than': 'lessThan'};
-        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+        return <DropdownParam name={this.props.name} 
                 value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableComparators}
                 label='Comparator'/>;
     }
 });
 
-var SceneParam = React.createClass({
-    getValuePresentation: function(id) {
-        if (id === undefined) {
-            return '<Edit>';
-        } else {
-            return GameCreator.helpers.getObjectById(GameCreator.scenes, Number(id)).attributes.name;    
-        }
+var ShootableObjectParam = React.createClass({
+    onUpdate: function(name, value) {
+        this.props.onUpdate(name, Number(value));
     },
+    render: function() {
+        var selectables = GameCreator.helpers.getShootableObjectIds();
+        return <DropdownParam name={this.props.name} 
+                value={this.props.value} onUpdate={this.onUpdate} collection={selectables}
+                label='Object'/>;
+    }
+});
+
+var DirectionParam = React.createClass({
+    render: function() {
+        var selectables = GameCreator.directions;
+        return <DropdownParam name={this.props.name} 
+                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
+                label='Direction'/>;
+    }
+});
+
+
+
+var MovementTypeParam = React.createClass({
+    render: function() {
+        var selectables = {'Relative': 'relative', 'Absolute': 'absolute'};
+        return <DropdownParam name={this.props.name} 
+                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
+                label='Type'/>;
+    }
+});
+
+var DestroyEffectParam = React.createClass({
+    render: function() {
+        var selectables = GameCreator.effects.destroyEffects;
+        return <DropdownParam name={this.props.name} 
+                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
+                label='Effect'/>;
+    }
+});
+
+var SceneParam = React.createClass({
     onUpdate: function(name, value) {
         this.props.onUpdate(name, Number(value));
     },
     render: function() {
         var scenes = GameCreator.helpers.getSelectableScenes();
-        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+        return <DropdownParam name={this.props.name} 
                 value={this.props.value} onUpdate={this.onUpdate} collection={scenes}
                 label='Scene'/>;
     }
@@ -222,7 +266,7 @@ var TimingParam = React.createClass({
     getInitialState: function() {
         return {
             type: this.props.timing.type,
-            value: this.props.timing.value || 0,
+            time: this.props.timing.time || 0,
             selected: false
         }
     },
@@ -248,15 +292,15 @@ var TimingParam = React.createClass({
     saveValue: function() {
         var node = this.getDOMNode();
         var type = $(node).find('select').val();
-        var value = $(node).find('input').val();
-        this.props.onUpdate({type: type, value: value});
-        this.setState({selected: false, type: type, value: value});
+        var time = Number($(node).find('input').val());
+        this.props.onUpdate({type: type, time: time});
+        this.setState({selected: false, type: type, time: time});
         $(document).off('click.timingParamFocusout');
     },
     getDisplayText: function() {
         var result = GameCreator.helpers.labelize(this.state.type);
         if (this.state.type !== 'now') {
-            result += ' ' + this.state.value;
+            result += ' ' + this.state.time;
         }
         return result;
     },
@@ -276,7 +320,7 @@ var TimingParam = React.createClass({
             }
             typeSelection = <select className="selectorField" onChange={this.timingSelected} value={this.state.type}>{options}</select>;
             if (this.state.type !== 'now') {
-                valueInput = <input type="text" className="numberField" data-type="number" defaultValue={this.state.value}/>
+                valueInput = <input type="text" className="numberField" data-type="number" defaultValue={this.state.time}/>
             }
             html = [typeSelection, valueInput];
 
@@ -297,13 +341,6 @@ var CounterCarrierParam = React.createClass({
 });
 
 var CounterParam = React.createClass({
-    getValuePresentation: function(name) {
-        if (name === undefined) {
-            return '<Edit>';
-        } else {
-            return name;
-        }
-    },
     getSelectableCounters: function() {
         var counters, selectableCounters = {}, counterNames;
         if(this.props.observedValue === 'globalCounters') {
@@ -328,7 +365,7 @@ var CounterParam = React.createClass({
     },
     render: function() {
         var selectableCounters = this.getSelectableCounters();
-        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+        return <DropdownParam name={this.props.name} 
                 value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableCounters}
                 label='Counter'/>;
     }
@@ -337,7 +374,7 @@ var CounterParam = React.createClass({
 var CounterTypeParam = React.createClass({
     render: function(){
         var selectableTypes = {'Add': 'add', 'Reduce': 'reduce', 'Set': 'set'};
-        return <DropdownParam getValuePresentation={GameCreator.helpers.labelize} name={this.props.name} 
+        return <DropdownParam name={this.props.name} 
                 value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableTypes}
                 label='Operation'/>;
     }

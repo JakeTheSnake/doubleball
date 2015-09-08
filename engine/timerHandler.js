@@ -32,7 +32,7 @@
             var time, i;
             for (time in interval) {
                 if (interval.hasOwnProperty(time)) {
-                    if (gameTime % parseInt(time, 10) <= 100) {
+                    if (gameTime % Number(time) <= 100) {
                         for (i = 0; i < interval[time].length; i += 1) {
                             if (!interval[time][i]()) {
                                 interval[time].splice(i, 1);
@@ -52,7 +52,7 @@
             var time, i;
             for (time in fixed) {
                 if (fixed.hasOwnProperty(time)) {
-                    if (parseInt(time, 10) + 100 > gameTime && gameTime >= parseInt(time, 10)) {
+                    if (gameTime >= Number(time)) {
                         for (i = 0; i < fixed[time].length; i += 1) {
                             fixed[time][i]();
                         }

@@ -114,9 +114,12 @@ GameCreator.actions = {
       Destroy: new GameCreator.Action({   
                       action: function(params) {this.parent.destroy.call(this, params); },
                       params: {"effect":
-                                {param: GameCreator.DestroyEffectParameter,
-                                 mandatory: false,
-                                 defaultValue: null}
+                                {
+                                    param: GameCreator.DestroyEffectParameter,
+                                    component: DestroyEffectParam,
+                                    mandatory: false,
+                                    defaultValue: 'none'
+                                }
                              },
                       name: "Destroy",
                       timing: {at: true, every: false, after: true},
@@ -124,17 +127,25 @@ GameCreator.actions = {
       Shoot:   new GameCreator.Action({    
                       action: function(params) {this.parent.shoot.call(this, params); },
                       params: {"objectToShoot":
-                                {param: GameCreator.ShootableObjectParameter,
-                                 mandatory: true
+                                {
+                                    param: GameCreator.ShootableObjectParameter,
+                                    component: ShootableObjectParam,
+                                    mandatory: true
                                  },
                                 "projectileSpeed":
-                                 {param: GameCreator.NumberParameter,
-                                  mandatory: false,
-                                  defaultValue: 500},
+                                 {
+                                    param: GameCreator.RangeParameter,
+                                    component: RangeParam,
+                                    mandatory: false,
+                                    defaultValue: 500
+                                 },
                                 "projectileDirection":
-                                 {param: GameCreator.DirectionParameter,
-                                  mandatory: false,
-                                  defaultValue: "Default"}
+                                 {
+                                     param: GameCreator.DirectionParameter,
+                                     component: DirectionParam,
+                                     mandatory: false,
+                                     defaultValue: "Default"
+                                 }
                              },
                       name: "Shoot",
                       timing: {at: true, every: true, after: true},
@@ -244,9 +255,27 @@ GameCreator.actions = {
       Teleport: new GameCreator.Action({
           action: function (params) { this.parent.setPosition.call(this, params); },
           params: {
-              'type': { param: GameCreator.MovementTypeParameter, mandatory: true },
-              'x': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 },
-              'y': { param: GameCreator.RangeParameter, mandatory: false, defaultValue: 0 }
+              'type': 
+              { 
+                  param: GameCreator.MovementTypeParameter,
+                  component: MovementTypeParam,
+                  defaultValue: 'absolute',
+                  mandatory: true 
+              },
+              'x': 
+              { 
+                  param: GameCreator.RangeParameter,
+                  component: RangeParam,
+                  mandatory: false,
+                  defaultValue: 0
+              },
+              'y':
+              {
+                  param: GameCreator.RangeParameter,
+                  component: RangeParam,
+                  mandatory: false,
+                  defaultValue: 0
+              }
           },
           name: "Teleport",
           timing: { at: true, every: true, after: true },

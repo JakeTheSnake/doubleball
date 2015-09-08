@@ -10,7 +10,7 @@
          */
     GameCreator.BaseObject.prototype.destroy = function(params) {
         GameCreator.objectsToDestroy.push(this);
-        if (params && Object.keys(GameCreator.effects.destroyEffects).indexOf(params.effect) != -1) {
+        if (params && GameCreator.effects.hasOwnProperty(params.effect)) {
             GameCreator.currentEffects.push(new GameCreator.effects[params.effect](this));
         }
         this.parent.onDestroy.call(this);
