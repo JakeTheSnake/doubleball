@@ -74,7 +74,7 @@ var DropdownParam = React.createClass({
 
 var GlobalObjectParam = React.createClass({
     getValuePresentation: function(id) {
-        if (id === undefined || (id === 'this' && GameCreator.UI.state.selectedItemType !== 'globalObject')) {
+        if (id === undefined || id === "" || (id === 'this' && GameCreator.UI.state.selectedItemType !== 'globalObject')) {
             return '<Edit>';
         } else {
             if (id === 'this') {

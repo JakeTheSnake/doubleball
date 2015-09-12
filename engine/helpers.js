@@ -72,7 +72,7 @@
             var titleString = "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'";
             GameCreator.UI.openEditActionsWindow(
                 GameCreator.htmlStrings.collisionEventInformationWindow(titleString, object.getCurrentImage().src, targetObject.getCurrentImage().src),
-                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType), object.parent), object.parent.objectName
+                newSetsItem.caSets[0], 'collision', object.parent.objectName
             );
         }
     };
@@ -408,16 +408,14 @@
     };
 
     GameCreator.helpers.getSelectableActions = function(eventType, objectType) {
-        if (GameCreator.UI.state.selectedItemType === 'globalObject') {
-            if (eventType === 'collision') {
-                return GameCreator.helpers.getCollisionActions(objectType);
-            } else {
-                return GameCreator.helpers.getNonCollisionActions(objectType);
-            }
-        } else if (GameCreator.UI.state.selectedItemType === 'globalCounter') {
+        if (eventType === 'collision') {
+            return GameCreator.helpers.getCollisionActions(objectType);
+        } else if (eventType === 'globalcounter' || eventType === 'scenestart') {
             return GameCreator.actionGroups.nonObjectActions;
+        } else {
+            return GameCreator.helpers.getNonCollisionActions(objectType);
         }
-    };
+    }
 
     GameCreator.helpers.labelize = function(name) {
         var segments = name.match(/([A-Z0-9]?[a-z0-9]*)/g);

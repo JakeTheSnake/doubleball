@@ -249,23 +249,22 @@ GameCreator.UI = {
         });
     },
  
-    openEditActionsWindow: function(infoWindowHtml, caSetVM, objName) {  
+    openEditActionsWindow: function(infoWindowHtml, caSet, eventType, objName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         GameCreator.pauseGame();
         
-        GameCreator.UI.openSelectActionsDialogue(infoWindowHtml, caSetVM, objName);
+        GameCreator.UI.openSelectActionsDialogue(infoWindowHtml, caSet, eventType, objName);
 
         $("#dialogue-overlay").one("click", function() {
             GameCreator.resumeGame();
         });
     },
 
-    openSelectActionsDialogue: function(infoWindowHtml, caSetVM, objName) {
+    openSelectActionsDialogue: function(infoWindowHtml, caSet, eventType, objName) {
         GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
-        GameCreator.UI.setupActionsColumn();
-        GameCreator.UI.populateSelectActionList(caSetVM);
+        React.render(<ActionColumn actions={caSet.actions} eventType={eventType}/>, document.getElementById('dialogue-right-action-column'));
+        React.render(<EventItemSelector/>, document.getElementById('dialogue-right-select-column'));
         $("#dialogue-window > .right").addClass("slide-in-from-right");
-        $("#dialogue-panel-actions").trigger('redrawList', caSetVM);
     },
 
     openGlobalCountersDialogue: function() {       

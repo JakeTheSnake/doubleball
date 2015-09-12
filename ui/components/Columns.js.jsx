@@ -52,7 +52,7 @@ var CountersEditor = React.createClass({
 
         var caEditor;
         if (this.state.activeEvent) {
-            caEditor = <EventEditor caSets={this.state.activeEvent} eventType='counter'/>;
+            caEditor = <EventEditor caSets={this.state.activeEvent} eventType={this.props.eventType}/>;
         }
 
         return (
@@ -148,43 +148,19 @@ var EventEditor = React.createClass({
     onAddCondition: function() {
         $(window).trigger("GC.showItemSelector", [Object.keys(GameCreator.helpers.getSelectableConditions()), this.onConditionSelected]);
     },
-    onActionSelected: function(itemName) {
-        var activeCaSet = this.props.caSets[this.state.activeCaSetIndex];
-        activeCaSet.actions.push(new GameCreator.RuntimeAction(itemName));
-        this.forceUpdate();
-    },
-    onAddAction: function() {
-        var selectableActionNames = Object.keys(GameCreator.helpers.getSelectableActions(this.props.eventType));
-        $(window).trigger("GC.showItemSelector", [selectableActionNames, this.onActionSelected]);
-    },
-    removeAction: function(actionIndex) {
-        var whenGroupIndex = this.state.activeCaSetIndex;
-        this.props.caSets[whenGroupIndex].actions.splice(actionIndex, 1);
-        this.forceUpdate();
-    },
+    
     render: function() {
         var whenGroups = [];
+        var actions = [];
+
         for (var i = 0; i < this.props.caSets.length; i += 1) {
             whenGroups.push(
                 <WhenGroupItem key={i} onAddCondition={this.onAddCondition} whenGroup={this.props.caSets[i]} onSelectWhenGroup={this.selectWhenGroup.bind(this, i)} active={i === this.state.activeCaSetIndex}/>
             );
         }
-        var actionColumn;
         var whenGroupIndex = this.state.activeCaSetIndex;
         if (whenGroupIndex !== null) {
-            var actions = [];
-            for (var i = 0; i < this.props.caSets[whenGroupIndex].actions.length; i += 1) {
-                actions.push(
-                    <ActionItem key={i} onRemove={this.removeAction.bind(this, i)} action={this.props.caSets[whenGroupIndex].actions[i]} />
-                );
-            }
-            actionColumn = 
-                <Column title="Do">
-                    <ul className="parameter-groups">   
-                        {actions}
-                    </ul>
-                    <a className="btn tab success wide" onClick={this.onAddAction}>Add Action</a>
-                </Column>
+            actions = this.props.caSets[whenGroupIndex].actions;             
         }
 
         return (
@@ -195,9 +171,40 @@ var EventEditor = React.createClass({
                     </ul>
                     <a className="btn tab success wide" onClick={this.addCaSet}>Create group</a>
                 </Column>
-                {actionColumn}
+                <ActionColumn actions={actions} eventType={this.props.eventType}/>       
             </div>
         );
+    }
+});
+
+var ActionColumn = React.createClass({
+    onAddActionButtonClick: function() {
+        var selectableActionNames = Object.keys(GameCreator.helpers.getSelectableActions(this.props.eventType));
+        $(window).trigger("GC.showItemSelector", [selectableActionNames, this.onActionSelected]);
+    },
+    onActionSelected: function(itemName) {
+        this.props.actions.push(new GameCreator.RuntimeAction(itemName));
+        this.forceUpdate();
+    },
+    removeAction: function(actionIndex) {
+        this.props.actions.splice(actionIndex, 1);
+        this.forceUpdate();
+    },
+    render: function() {
+        var actions = [];
+        for (var i = 0; i < this.props.actions.length; i += 1) {
+            actions.push(
+                <ActionItem key={i} onRemove={this.removeAction.bind(this, i)} action={this.props.actions[i]} />
+            );
+        }
+        return (
+            <Column title="Do">
+                <ul className="parameter-groups">   
+                    {actions}
+                </ul>
+                <a className="btn tab success wide" onClick={this.onAddActionButtonClick}>Add Action</a>
+            </Column>
+        )
     }
 });
 
@@ -226,20 +233,25 @@ var EventItemSelector = React.createClass({
         }.bind(this));
     },
 
-    onItemSelect: function(itemName){
+    onItemSelect: function(itemName) {
         this.state.callback(itemName);
         this.clearSelectableItems();
     },
 
-    clearSelectableItems: function(){
+    clearSelectableItems: function() {
         this.setState({
             selectableItems: [],
             callback: undefined
         });
     },
 
+    componentWillUnmount: function() {
+        $(window).off('GC.showItemSelector');
+        $(window).off('GC.hideItemSelector');
+    },
+
     render: function() {
-        var addNewItemColumn;
+        var addNewItemColumn = <div></div>;
         if (this.state.selectableItems.length !== 0) {
             var columnButtons = [];
             for (var i = 0; i < this.state.selectableItems.length; i += 1) {
@@ -248,11 +260,7 @@ var EventItemSelector = React.createClass({
             addNewItemColumn = <Column title="Select Item">{columnButtons}</Column>;
         }
 
-        return (
-            <div>
-                {addNewItemColumn}
-            </div>
-        );
+        return addNewItemColumn;
     }
 });
 

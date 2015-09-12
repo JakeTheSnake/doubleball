@@ -28,7 +28,7 @@
                 globalObj.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been destroyed!", this.getCurrentImage().src),
-                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
+                    currentSet, 'destroy', globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -55,7 +55,7 @@
                 globalObj.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been created!", this.getCurrentImage().src),
-                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
+                    currentSet, 'create', globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -73,7 +73,7 @@
                 globalObj.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + globalObj.objectName, this.getCurrentImage().src),
-                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
+                     currentSet, 'click', globalObj.objectName
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {

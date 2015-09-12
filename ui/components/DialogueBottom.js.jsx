@@ -27,7 +27,7 @@ var GlobalCounterDialogueBottom = React.createClass({
     render: function() {
         return (
             <DialogueBottom title="Global Counters">
-                <CountersEditor counters={GameCreator.globalCounters} onSelectCounter={this.onSelectCounter} onAddCounter={this.addNewCounter} title="Counters"/>
+                <CountersEditor counters={GameCreator.globalCounters} onSelectCounter={this.onSelectCounter} onAddCounter={this.addNewCounter} eventType="globalcounter" title="Counters"/>
             </DialogueBottom>
         );
     }

@@ -239,16 +239,15 @@
             };
 
             setTimeout(function() {
-                var choosableActions, caSet;
+                var caSet;
                 var activeScene = GameCreator.getActiveScene();
                 $('#side-properties-form-container').html(GameCreator.htmlStrings.getScenePropertiesForm());
                 GameCreator.helpers.populateSidePropertiesForm(GameCreator.getActiveScene(), onChangeCallback);
                 GameCreator.getActiveScene().drawBackground();
-                $('#setup-scene-actions').click(function(){
-                    choosableActions = GameCreator.actionGroups.nonObjectActions;
+                $('#setup-scene-actions').click(function() {
                     GameCreator.UI.openSelectActionsDialogue(
                         GameCreator.htmlStrings.sceneStartedEventInformationWindow(),
-                        new GameCreator.CASetVM(activeScene.onCreateSet, choosableActions, undefined), 
+                        activeScene.onCreateSet, 'scenestart', 
                         activeScene.attributes.name
                     );
                 });

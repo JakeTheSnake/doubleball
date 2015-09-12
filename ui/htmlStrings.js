@@ -282,15 +282,14 @@ GameCreator.htmlStrings = {
     return result;
   },
 
-  editActionsWindow: function(infoWindowHtml, objName) {
+  editActionsWindow: function(infoWindowHtml) {
     var result = ' \
     <div class="dialogue right"> \
     <div id="select-action-window">'
     result += infoWindowHtml;
-    result += '<div class="panel-group sequenced clearfix">'
-    result += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-    result += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
-    result += ' \
+    result += '<div class="panel-group sequenced clearfix">\
+    <div id="dialogue-right-action-column" class="panel tall"></div>\
+    <div id="dialogue-right-select-column" class="panel tall"></div>\
     </div> \
     </div> \
     </div>';
