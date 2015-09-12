@@ -150,8 +150,8 @@
     };
 
     GameCreator.Counter = function() {
-        this.onIncrease = [];
-        this.onDecrease = [];
+        this.onIncrease = [new GameCreator.ConditionActionSet()];
+        this.onDecrease = [new GameCreator.ConditionActionSet()];
         this.atValue = {};
         this.aboveValue = {};
         this.belowValue = {};

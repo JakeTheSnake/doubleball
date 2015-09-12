@@ -1,3 +1,7 @@
+/*global GameCreator, $*/
+(function() {
+"use strict";
+
 GameCreator.ConditionActionSet = function() {
     this.conditions = [];
     this.actions = [];
@@ -43,15 +47,18 @@ GameCreator.conditions = {
         },
         params: {
             objId: {
+                component: GlobalObjectParam,
                 param: GameCreator.GlobalObjectParameter,
                 mandatory: true,
             },
             comparator: {
+                component: ComparatorParam,
                 param: GameCreator.ComparatorParameter,
                 mandatory: true,
                 defaultValue: 'equals'
             },
             count: {
+                component: NumberParam,
                 param: GameCreator.NumberParameter,
                 mandatory: false,
                 defaultValue: 1
@@ -130,11 +137,13 @@ GameCreator.conditions = {
         },
         params: {
             comparator: {
+                component: ComparatorParam,
                 param: GameCreator.ComparatorParameter,
                 mandatory: true,
                 defaultValue: 'equals'
             },
             scene: {
+                component: SceneParam,
                 param: GameCreator.SwitchSceneParameter,
                 mandatory: true,
             },
@@ -193,8 +202,17 @@ GameCreator.conditions = {
 }
 
 GameCreator.RuntimeCondition = function(name, params) {
+    var i;
     this.name = name;
-    this.parameters = params;
+    if (params !== undefined) {
+        this.parameters = params;
+    } else {
+        var paramNames = Object.keys(GameCreator.conditions[name].params);
+        this.parameters = {};
+        for (i = 0; i < paramNames.length; i+=1) {
+            this.parameters[paramNames[i]] = GameCreator.conditions[name].params[paramNames[i]].defaultValue;
+        }
+    }
 }
 
 GameCreator.RuntimeCondition.prototype.evaluate = function(runtimeObj) {
@@ -209,3 +227,13 @@ GameCreator.RuntimeCondition.prototype.getParameter = function(name) {
     return GameCreator.conditions[this.name].params[name];
 }
 
+GameCreator.conditionGroups = {
+    globalCounterConditions: {
+        objectExists: GameCreator.conditions.objectExists,
+        currentScene: GameCreator.conditions.currentScene
+    },
+
+    objectConditions: GameCreator.conditions
+}
+
+}());

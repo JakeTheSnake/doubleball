@@ -12,6 +12,7 @@
         then: undefined, // The time before last frame
 
         globalObjects: {}, //Contains key value pairs where key is the (unique)name of the object.
+        globalCounters: {},
 
         //Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
         scenes: [],
@@ -346,23 +347,32 @@
             var selectedObjectId = params.objId;
             var counterName = params.counter;
             var counterCarrier, runtimeObjects;
-            if (selectedObjectId && selectedObjectId !== 'this') {
-                runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));
-            } else {
-                runtimeObjects = [runtimeObj];
-            }
-            for (var i = 0; i < runtimeObjects.length; i += 1) {
-                if (runtimeObjects[i].parent.attributes.unique) {
-                    counterCarrier = runtimeObjects[i].parent;
-                } else {
-                    counterCarrier = runtimeObjects[i];
-                }
+
+            var changeValue = function(counter) {
                 if (params.type === 'set') {
-                    counterCarrier.counters[counterName].setValue(params.value);
+                    counter.setValue(params.value);
                 } else if (params.type === 'add') {
-                    counterCarrier.counters[counterName].changeValue(params.value);
+                    counter.changeValue(params.value);
                 } else {
-                    counterCarrier.counters[counterName].changeValue(-params.value);
+                    counter.changeValue(-params.value);
+                }
+            };
+
+            if (selectedObjectId === 'globalCounters') {
+                changeValue(GameCreator.globalCounters[counterName]);
+            } else {
+                if (selectedObjectId && selectedObjectId !== 'this') {
+                    runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));
+                } else {
+                    runtimeObjects = [runtimeObj];
+                }
+                for (var i = 0; i < runtimeObjects.length; i += 1) {
+                    if (runtimeObjects[i].parent.attributes.unique) {
+                        counterCarrier = runtimeObjects[i].parent;
+                    } else {
+                        counterCarrier = runtimeObjects[i];
+                    }
+                    changeValue(counterCarrier.counters[counterName]);
                 }
             }
         },
@@ -517,20 +527,32 @@
                 newScene.onCreateSet = GameCreator.restoreCaSet(savedScene.onCreateSet);
                 GameCreator.scenes.push(newScene);
             }
+
+            GameCreator.globalCounters = GameCreator.restoreGlobalCounters(savedGame.globalCounters);
+
             GameCreator.idCounter = savedGame.idCounter;
             GameCreator.globalIdCounter = savedGame.globalIdCounter;
             GameCreator.uniqueSceneId = savedGame.uniqueSceneId;
             GameCreator.activeSceneId = GameCreator.scenes[0].id;
         },
 
+        restoreGlobalCounters: function(savedGlobalCounters) {
+            var restoredGlobalCounters = {};
+            var globalCounterNames = Object.keys(savedGlobalCounters || {});
+            globalCounterNames.forEach(function(globalCounterName) {
+                restoredGlobalCounters[globalCounterName] = GameCreator.restoreParentCounter(savedGlobalCounters[globalCounterName]);
+            });
+            return restoredGlobalCounters;
+        },
+
         restoreCaSet: function(caSet) {
             var newCaSet = new GameCreator.ConditionActionSet();
             $.extend(newCaSet, caSet);
-            newCaSet.actions = newCaSet.actions.map(function(action){
-                return $.extend(new GameCreator.RuntimeAction(), action);
+            newCaSet.actions = newCaSet.actions.map(function(action) {
+                return new GameCreator.RuntimeAction(action.name, action.parameters, action.timing);
             });
-            newCaSet.conditions = newCaSet.conditions.map(function(action){
-                return $.extend(new GameCreator.RuntimeCondition(), action);
+            newCaSet.conditions = newCaSet.conditions.map(function(condition) {
+                return new GameCreator.RuntimeCondition(condition.name, condition.parameters);
             });
             return newCaSet;
         },

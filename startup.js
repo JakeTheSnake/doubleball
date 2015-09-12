@@ -22,20 +22,7 @@ $(document).ready(function() {
     
     GameCreator.initialize();
 
-    $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
-    $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue);
-    $("#edit-global-object-button").on("click", function() {
-        GameCreator.UI.openEditGlobalObjectDialogue(GameCreator.selectedLibraryObject);
-    });
-
-    $("#rename-global-object-button").on("click", function() {
-        GameCreator.UI.renameGlobalObject(GameCreator.selectedLibraryObject);
-    });
     
-    $("#toolbar-top button").on('click', function() {
-        $("#toolbar-top button").removeClass('btn-active');
-        $(this).addClass('btn-active');
-    });
  
     var selectedGameMode = "EDIT GAME";
     $("#edit-mode-label").html(selectedGameMode);
@@ -54,9 +41,6 @@ $(document).ready(function() {
         $("#edit-mode-label").html(selectedGameMode);
     });
 
-    $('#library-preview').on('mousedown', 'img', function(e) {
-        GameCreator.UI.dragGlobalObjectToScene(e, GameCreator.selectedLibraryObject);
-    });
 
     $("#run-game-button").on("click", GameCreator.playGameEditing);
     $("#edit-game-button").on("click", GameCreator.editActiveScene);
@@ -84,62 +68,15 @@ $(document).ready(function() {
         });
     });
 
-    $("#library-tabs a").on('click', function() {
-        var id = $(this).data('panelid');
-        $('.object-library-panel').hide();
-        $('#' + id).show();
-        $(this).parent().find('a').removeClass('active');
-        $(this).addClass('active');
-    })
-
-    $(document).on('GameCreator.addedSceneObject GameCreator.removedSceneObject', function(){
-        GameCreator.UI.drawSceneObjectLibrary();
-    });
-
-    if (window.gon) {
-        var publishedLabel = gon.published ? "PUBLISHED" : "PRIVATE";
-        $("#published-label").html(publishedLabel);
-
-        $("#published-buttons input").on("click", function() {
-            publishedLabel = $(this).data("name");
-            $("#published-label").html(publishedLabel);
-
-        });
-
-        $("#published-buttons label").on("mouseover", function() {
-            var inputId = $(this).attr("for");
-            $("#published-label").html($("#" + inputId).data("name"));
-        });
-
-        $("#published-buttons label").on("mouseout", function() {
-            $("#published-label").html(publishedLabel);
-        });
-    
-        var published = gon.published;
-
-        $("#private-button").prop('checked', published === 0);
-        $("#unlist-button").prop('checked', published === 1);
-        $("#publish-button").prop('checked', published === 2);
-
-        $("#published-buttons input").change(function() {
-            var formData = new FormData(document.forms.namedItem('published_form'));
-            formData.append('authenticity_token', gon.auth_key);
-            var oReq = new XMLHttpRequest();
-            oReq.open("POST", "publish", true);
-            
-
-            oReq.send(formData);
-        });
-    }
 
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
-        GameCreator.UI.initializeUI();
     } else {
         var startupScene = new GameCreator.Scene()
         GameCreator.scenes.push(startupScene);
         GameCreator.activeSceneId = startupScene.id;
     }
+    GameCreator.UI.initializeUI();
 
     setTimeout(GameCreator.editScene.bind(GameCreator, GameCreator.scenes[0]), 0);
 });

@@ -10,7 +10,7 @@
          */
     GameCreator.BaseObject.prototype.destroy = function(params) {
         GameCreator.objectsToDestroy.push(this);
-        if (params && Object.keys(GameCreator.effects.destroyEffects).indexOf(params.effect) != -1) {
+        if (params && GameCreator.effects.hasOwnProperty(params.effect)) {
             GameCreator.currentEffects.push(new GameCreator.effects[params.effect](this));
         }
         this.parent.onDestroy.call(this);
@@ -24,11 +24,11 @@
         var currentSet, globalObj = this.parent;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && globalObj.onDestroySets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet(globalObj);
+                currentSet = new GameCreator.ConditionActionSet();
                 globalObj.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been destroyed!", this.getCurrentImage().src),
-                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
+                    currentSet, 'destroy', globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -51,11 +51,11 @@
         var globalObj = this.parent;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && globalObj.onCreateSets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet(globalObj);
+                currentSet = new GameCreator.ConditionActionSet();
                 globalObj.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been created!", this.getCurrentImage().src),
-                    new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
+                    currentSet, 'create', globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
@@ -69,11 +69,11 @@
         var globalObj = this.parent;
         if (!GameCreator.paused) {
             if (GameCreator.state === 'directing' && globalObj.onClickSets.length === 0) {
-                currentSet = new GameCreator.ConditionActionSet(globalObj);
+                currentSet = new GameCreator.ConditionActionSet();
                 globalObj.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + globalObj.objectName, this.getCurrentImage().src),
-                     new GameCreator.CASetVM(currentSet, GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
+                     currentSet, 'click', globalObj.objectName
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {

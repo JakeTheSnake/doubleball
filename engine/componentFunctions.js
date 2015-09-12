@@ -46,14 +46,17 @@
             leftMouse: false,
             rightMouse: false
         };
+
         object.onKeySets = {
             shift: [],
             ctrl: [],
             alt: [],
             space: [],
             leftMouse: [],
-            rightMouse: []
+            rightMouse: [],
         };
+
+        object.selectableKeys = Object.keys(object.keyPressed);
     };
 
     GameCreator.addObjFunctions.keyObjectFunctions = function(object) {
@@ -68,11 +71,11 @@
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
                         if (GameCreator.state === 'directing' && keySets.length === 0) {
-                            keySets.push(new GameCreator.ConditionActionSet(globalObj));
+                            keySets.push(new GameCreator.ConditionActionSet());
                             actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + globalObj.objectName, this.getCurrentImage().src),
-                                 new GameCreator.CASetVM(keySets[0], GameCreator.helpers.getNonCollisionActions(globalObj.objectType), globalObj), globalObj.objectName
+                                 keySets[0], 'key', globalObj.objectName
                                 );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {

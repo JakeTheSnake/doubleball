@@ -1,9 +1,91 @@
 GameCreator.UI = {    
-
+    state: {
+        selectedGlobalItem: null,
+        selectedItemType: null
+    },
+    setSelectedGlobalObject: function(globalObj) {
+        GameCreator.UI.state.selectedGlobalItem = globalObj;
+        GameCreator.UI.state.selectedItemType = 'globalObject';
+    },
+    setSelectedGlobalCounter: function(globalCounter) {
+        GameCreator.UI.state.selectedGlobalItem = globalCounter;
+        GameCreator.UI.state.selectedItemType = 'globalCounter';
+    },
     initializeUI: function() {
+        $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
+        $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue);
+        $("#edit-global-object-button").on("click", function() {
+            GameCreator.UI.openEditGlobalObjectDialogue(GameCreator.selectedLibraryObject);
+        });
+
+        $("#rename-global-object-button").on("click", function() {
+            GameCreator.UI.renameGlobalObject(GameCreator.selectedLibraryObject);
+        });
+        
+        $("#toolbar-top button").on('click', function() {
+            $("#toolbar-top button").removeClass('btn-active');
+            $(this).addClass('btn-active');
+        });
+
+        $('#library-preview').on('mousedown', 'img', function(e) {
+            GameCreator.UI.dragGlobalObjectToScene(e, GameCreator.selectedLibraryObject);
+        });
+
+        $("#library-tabs a").on('click', function() {
+            var id = $(this).data('panelid');
+            $('.object-library-panel').hide();
+            $('#' + id).show();
+            $(this).parent().find('a').removeClass('active');
+            $(this).addClass('active');
+        });
+
+        $('#toolbar-global-counters').click(GameCreator.UI.openGlobalCountersDialogue);
+
+        $(document).on('GameCreator.addedSceneObject GameCreator.removedSceneObject', function(){
+            GameCreator.UI.drawSceneObjectLibrary();
+        });
+        GameCreator.UI.setupPublishButtons();
         GameCreator.UI.redrawLibrary();
         GameCreator.UI.drawSceneTabs();
         GameCreator.UI.drawSceneObjectLibrary();
+    },
+
+    setupPublishButtons: function() {
+        if (window.gon) {
+            var publishedLabel = gon.published ? "PUBLISHED" : "PRIVATE";
+            $("#published-label").html(publishedLabel);
+
+            $("#published-buttons input").on("click", function() {
+                publishedLabel = $(this).data("name");
+                $("#published-label").html(publishedLabel);
+
+            });
+
+            $("#published-buttons label").on("mouseover", function() {
+                var inputId = $(this).attr("for");
+                $("#published-label").html($("#" + inputId).data("name"));
+            });
+
+            $("#published-buttons label").on("mouseout", function() {
+                $("#published-label").html(publishedLabel);
+            });
+        
+            var published = gon.published;
+
+            $("#private-button").prop('checked', published === 0);
+            $("#unlist-button").prop('checked', published === 1);
+            $("#publish-button").prop('checked', published === 2);
+
+            $("#published-buttons input").change(function() {
+                var formData = new FormData(document.forms.namedItem('published_form'));
+                formData.append('authenticity_token', gon.auth_key);
+                var oReq = new XMLHttpRequest();
+                oReq.open("POST", "publish", true);
+                
+
+                oReq.send(formData);
+            });
+        }
     },
 
     redrawLibrary: function() {
@@ -42,7 +124,7 @@ GameCreator.UI = {
    
     createLibraryItem: function(globalObj) {
         var listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
-        this.setupGlobalLibraryItemListeners(listElementButton, globalObj);
+        GameCreator.UI.setupGlobalLibraryItemListeners(listElementButton, globalObj);
         $(".global-object-list").append(listElementButton);
     },
 
@@ -113,15 +195,12 @@ GameCreator.UI = {
             $('#library-preview').html(previewImage);
             $('.library-global-object-button').removeClass('active');
             $(listElementButton).addClass('active');
+            GameCreator.UI.setSelectedGlobalObject(globalObj);
         });
 
         $(".global-object-list").on('recalculateActiveObject', function(){
             if (GameCreator.selectedLibraryObject === globalObj) {
-                var previewImage = document.createElement('img');
-                previewImage.src = globalObj.getDefaultState().attributes.image.src;
-                $('#library-preview').html(previewImage);
-                $('.library-global-object-button').removeClass('active');
-                $(listElementButton).addClass('active');
+                $(listElementButton).trigger('click');
             }
         });
 
@@ -170,23 +249,30 @@ GameCreator.UI = {
         });
     },
  
-    openEditActionsWindow: function(infoWindowHtml, caSetVM, objName) {  
+    openEditActionsWindow: function(infoWindowHtml, caSet, eventType, objName) {  
         //Only select actions if GameCreator isn't already paused for action selection.
         GameCreator.pauseGame();
         
-        GameCreator.UI.openSelectActionsDialogue(infoWindowHtml, caSetVM, objName);
+        GameCreator.UI.openSelectActionsDialogue(infoWindowHtml, caSet, eventType, objName);
 
         $("#dialogue-overlay").one("click", function() {
             GameCreator.resumeGame();
         });
     },
 
-    openSelectActionsDialogue: function(infoWindowHtml, caSetVM, objName) {
+    openSelectActionsDialogue: function(infoWindowHtml, caSet, eventType, objName) {
         GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
-        GameCreator.UI.setupActionsColumn();
-        GameCreator.UI.populateSelectActionList(caSetVM);
+        React.render(<ActionColumn actions={caSet.actions} eventType={eventType}/>, document.getElementById('dialogue-right-action-column'));
+        React.render(<EventItemSelector/>, document.getElementById('dialogue-right-select-column'));
         $("#dialogue-window > .right").addClass("slide-in-from-right");
-        $("#dialogue-panel-actions").trigger('redrawList', caSetVM);
+    },
+
+    openGlobalCountersDialogue: function() {       
+        React.render(
+            <GlobalCounterDialogueBottom/>,
+            document.getElementById('dialogue-window')
+        );
+        GameCreator.UI.openDialogue(700, 570, null);
     },
     
     //Add global object functions
@@ -212,7 +298,7 @@ GameCreator.UI = {
         $("#dialogue-panel-edit").find("a:first-child").addClass("active");
 
         $("#dialogue-panel-edit").on('click', 'a', function() {
-            globalObj[$(this).data("uifunction")]($("#dialogue-edit-content"));
+            globalObj[$(this).data("uifunction")](document.getElementById('dialogue-edit-content'));
             $(this).parent().find("a").removeClass("active");
             $(this).addClass("active");
         });
@@ -256,7 +342,7 @@ GameCreator.UI = {
         width = width || 900;
         height = height || 570;
         $("#dialogue-window").show();
-        $("#dialogue-window").html(content);
+        if (content) $("#dialogue-window").html(content);
         $("#dialogue-window > .bottom").addClass("slide-in-from-bottom");
         $("#dialogue-overlay").show();
         $("#close-dialogue-button").one('click', function(){
@@ -367,7 +453,7 @@ GameCreator.UI = {
         var caSet;
 
         if (caSets.length === 0) {
-            caSet = new GameCreator.ConditionActionSet(globalObj);
+            caSet = new GameCreator.ConditionActionSet();
             caSets.push(caSet);
         }
 
@@ -394,7 +480,7 @@ GameCreator.UI = {
         $(addCaSetButton).addClass('btn success wide');
         $(addCaSetButton).html('Create group');
         $(addCaSetButton).on('click', function() {
-            caSet = new GameCreator.ConditionActionSet(globalObj);
+            caSet = new GameCreator.ConditionActionSet();
             caSets.push(caSet);
             caSetVMs.push(new GameCreator.CASetVM(caSet, selectableConditions, globalObj));
             conditionsColumn.trigger('redrawList');
@@ -692,4 +778,5 @@ GameCreator.UI = {
         setTimeout(fade, 5000);
         $(messageBox).click(fade);
     },
+
 }

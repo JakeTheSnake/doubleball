@@ -64,12 +64,12 @@
         }
         else if (GameCreator.state !== 'playing') {
             choosableActions = GameCreator.helpers.getCollisionActions(object.parent.objectType);
-            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet(object.parent)]};
+            newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet()]};
             object.parent.onCollideSets.push(newSetsItem);
             var titleString = "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'";
             GameCreator.UI.openEditActionsWindow(
                 GameCreator.htmlStrings.collisionEventInformationWindow(titleString, object.getCurrentImage().src, targetObject.getCurrentImage().src),
-                new GameCreator.CASetVM(newSetsItem.caSets[0], GameCreator.helpers.getCollisionActions(object.parent.objectType), object.parent), object.parent.objectName
+                newSetsItem.caSets[0], 'collision', object.parent.objectName
             );
         }
     };
@@ -223,7 +223,8 @@
         return object;
     };
 
-    GameCreator.helpers.getGlobalObjectById = function(id) {
+    GameCreator.helpers.getGlobalObjectById = function(argId) {
+        var id = Number(argId);
         var objects = Object.keys(GameCreator.globalObjects);
         var i;
         for (i = 0; i < objects.length; i += 1) {
@@ -352,6 +353,23 @@
         }];
     };
 
+    GameCreator.helpers.getCollidableObjectNames = function(globalObj) {
+        var result = [];
+        var selectableObjects = {};
+        var objName, objId;
+        $.extend(selectableObjects, GameCreator.globalObjects, GameCreator.borderObjects);
+        for (objName in selectableObjects) {
+            objId = GameCreator.helpers.findGlobalObjectByName(objName).id;
+            if (selectableObjects.hasOwnProperty(objName) && 
+                !GameCreator.helpers.getObjectById(globalObj.onCollideSets, objId) && 
+                selectableObjects[objName].isCollidable) {
+                    result.push(objName);
+            }
+        }
+
+        return result;
+    };
+
     GameCreator.helpers.getStandardAttributes = function() {
         return {"image": GameCreator.htmlStrings.imageInput,
           "width": GameCreator.htmlStrings.rangeInput,
@@ -378,8 +396,26 @@
         }
     };
 
+    GameCreator.helpers.getSelectableConditions = function() {
+        if (GameCreator.UI.state.selectedItemType === 'globalObject') {
+            return GameCreator.conditionGroups.objectConditions;
+        } else if (GameCreator.UI.state.selectedItemType === 'globalCounter') {
+            return GameCreator.conditionGroups.globalCounterConditions;
+        }
+    };
+
+    GameCreator.helpers.getSelectableActions = function(eventType, objectType) {
+        if (eventType === 'collision') {
+            return GameCreator.helpers.getCollisionActions(objectType);
+        } else if (eventType === 'globalcounter' || eventType === 'scenestart') {
+            return GameCreator.actionGroups.nonObjectActions;
+        } else {
+            return GameCreator.helpers.getNonCollisionActions(objectType);
+        }
+    }
+
     GameCreator.helpers.labelize = function(name) {
-        var segments = name.match(/([A-Z]?[a-z]*)/g);
+        var segments = name.match(/([A-Z0-9]?[a-z0-9]*)/g);
         for (var i = 0; i < segments.length; i++) {
             segments[i] = segments[i].charAt(0).toUpperCase() + segments[i].slice(1);
         }
@@ -575,7 +611,7 @@
             counterDisplay: 'Counter',
             change: 'Add',
             set: 'Set to',
-            accY: 'Gravity'
+            accY: 'Gravity',
         }
         return prettyNames[databaseName] ? prettyNames[databaseName] : GameCreator.helpers.labelize(databaseName);
     };
@@ -599,11 +635,14 @@
         return result;
     };
 
-    GameCreator.helpers.getGlobalObjectIds = function() {
+    GameCreator.helpers.getGlobalObjectIds = function(includeThis) {
         var i, result = {};
         var objectNames = Object.keys(GameCreator.globalObjects);
         for(i = 0; i < objectNames.length; i += 1) {
             result[objectNames[i]] = GameCreator.globalObjects[objectNames[i]].id;
+        }
+        if (includeThis) {
+            result.this = 'this';
         }
         return result;
     };

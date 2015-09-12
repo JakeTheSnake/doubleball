@@ -30,6 +30,11 @@ GameCreator.commonObjectControllers = {
         object.setupKeyEventsForm = GameCreator.commonObjectControllers.setupKeyEventsForm;
     },
 
+    setupCaSet: function(caSets) {
+        if (caSets.length === 0) {
+            caSets.push(new GameCreator.ConditionActionSet());
+        }
+    },
 
     /******************************
      * COMMON OBJECT CONTROLLERS  *
@@ -37,7 +42,7 @@ GameCreator.commonObjectControllers = {
     setupPropertiesForm: function(container) {
         var globalObj = this;
         var html = this.getPropertiesContent();
-        container.html(html);
+        $(container).html(html);
         var globalObjAttributes = this.getDefaultState().attributes;
 
         GameCreator.helpers.populateGlobalObjectPropertiesForm(globalObjAttributes, GameCreator[this.objectType].objectAttributes, 'object-properties-content', globalObj);
@@ -47,19 +52,19 @@ GameCreator.commonObjectControllers = {
     },
         
     setupCollisionsForm: function(container) {
-        var collisionObjects = [];
         var globalObj = this;
-        for(var i = 0; i < this.onCollideSets.length; i++) {
-            collisionObjects.push(GameCreator.helpers.getGlobalObjectById(this.onCollideSets[i].id));
-        }
 
         var html = GameCreator.htmlStrings.getColumn('With', 'dialogue-panel-with');
-        html += GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
-        html += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        html += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
-        container.html(html);
+        $(container).html(html);
+        var eventEditorContainer = document.createElement('div');
+        var eventItemSelectContainer = document.createElement('div');
+        $(container).append(eventEditorContainer);
+        $(container).append(eventItemSelectContainer);
 
-        GameCreator.UI.setupActionsColumn();
+        React.render(
+            <EventItemSelector/>,
+            eventItemSelectContainer
+        );
 
         var withColumn = $('#dialogue-panel-with');
         withColumn.parent().append('<a id="add-new-collision-button" class="btn tab success wide">Add</a>');
@@ -71,45 +76,46 @@ GameCreator.commonObjectControllers = {
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
 
                 var deleteButton = GameCreator.UI.deleteButtonElement();
+                
 
                 $(deleteButton).on('click', function() {
                     var index = globalObj.onCollideSets.indexOf(collisionItem);
                     if (index !== -1) {
                         globalObj.onCollideSets.splice(index, 1);
                     }
-
-                    if($(collisionListItem).hasClass('active')) {
-                        $('#dialogue-panel-actions').trigger('clearColumn');
-                        $("#dialogue-panel-conditions").trigger('clearColumn');
+                    if ($(this).parent().hasClass('active')) {
+                        $(eventEditorContainer).empty();
+                        $(document).trigger('GC.hideItemSelector');
                     }
-
                     $(collisionListItem).remove();
                 });
 
                 collisionListItem.append(deleteButton);
-
                 withColumn.append(collisionListItem);
+
                 collisionListItem.on('click', function() {
+                    var index = globalObj.onCollideSets.indexOf(collisionItem);
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
-                    GameCreator.UI.setupConditionsColumn(collisionItem.caSets, GameCreator.helpers.getCollisionActions(globalObj), globalObj);
-                    $('#dialogue-panel-actions').trigger('clearColumn');
-                    $("#dialogue-panel-conditions").trigger('redrawList');
+                    React.render(
+                        <EventEditor caSets={globalObj.onCollideSets[index].caSets} eventType='destroy' />,
+                        eventEditorContainer
+                    );
+                    $(document).trigger('GC.hideItemSelector');
                 });
 
+                $(eventEditorContainer).empty();
             });
 
             $("#add-new-collision-button").on("click", function() {
-                $("#dialogue-panel-add-list").html(GameCreator.htmlStrings.collisionObjectSelector(globalObj));
-                $("#dialogue-panel-add-list a").one("click", function() {
-                    var targetId = GameCreator.helpers.findGlobalObjectByName($(this).data("objectname")).id;
-                    var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet(globalObj)]};
+                var callback = function(itemName) {
+                    var targetId = GameCreator.helpers.findGlobalObjectByName(itemName).id;
+                    var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet()]};
                     globalObj.onCollideSets.push(collisionItem);
                     withColumn.trigger('redrawList');
-                    $('#dialogue-panel-actions').trigger('clearColumn');
-                    $("#dialogue-panel-conditions").trigger('clearColumn');
-                    $("#dialogue-panel-add-list").empty();
-                });
+                };
+
+                $(document).trigger('GC.showItemSelector', [GameCreator.helpers.getCollidableObjectNames(globalObj), callback]);
             });
         });
         
@@ -117,27 +123,46 @@ GameCreator.commonObjectControllers = {
 
     },
 
+
+
     setupOnDestroyActionsForm: function(container) {
-        var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
-        
-        GameCreator.UI.setupEditEventColumns(this.onDestroySets, container, selectableActions, this);
+        GameCreator.commonObjectControllers.setupCaSet(this.onDestroySets);
+        React.render(
+            (<div>
+                <EventEditor caSets={this.onDestroySets} eventType='destroy' />
+                <EventItemSelector/>
+            </div>),
+            container
+        );
     },
 
     setupOnCreateActionsForm: function(container) {
-        var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
-        
-        GameCreator.UI.setupEditEventColumns(this.onCreateSets, container, selectableActions, this);  
+        GameCreator.commonObjectControllers.setupCaSet(this.onCreateSets);
+        React.render(
+            (<div>
+                <EventEditor caSets={this.onCreateSets} eventType='create' />
+                <EventItemSelector/>
+            </div>),
+            container
+        );
     },
 
     setupOnClickActionsForm: function(container) {
         var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
-        
-        GameCreator.UI.setupEditEventColumns(this.onClickSets, container, selectableActions, this);    
+        GameCreator.commonObjectControllers.setupCaSet(this.onClickSets);
+        React.render(
+            (<div>
+                <EventEditor caSets={this.onClickSets} eventType='click' />
+                <EventItemSelector/>
+            </div>),
+            container
+        );
     },
 
     setupStatesColumn: function(container, selectedState) {
-        container.html(GameCreator.htmlStrings.getColumn("States", "dialogue-panel-states"));
-        container.append('<div id="dialogue-state-content"></div>');
+        $(container).html(GameCreator.htmlStrings.getColumn("States", "dialogue-panel-states"));
+        $(container).append('<div id="dialogue-state-content"></div>');
+
         $("#dialogue-panel-states").html(this.getStatesContent());
         $("#dialogue-panel-states").parent().append('<a id="add-new-state-button" class="btn tab success wide">Add</a>');
         var globalObj = this;
@@ -153,9 +178,9 @@ GameCreator.commonObjectControllers = {
             };
             $("#dialogue-panel-states").append(GameCreator.htmlStrings.createNameSelectionForm('State name', 'create-state-form', saveCallback, cancelCallback));
         });
-        container.find(".defaultMenuElement").on("click", function() {
+        $(container).find(".defaultMenuElement").on("click", function() {
             var state = $(this).data('id');
-            container.find(".defaultMenuElement").removeClass('active');
+            $(container).find(".defaultMenuElement").removeClass('active');
             $(this).addClass("active");
             globalObj.setupEditStateForm(state);
         });
@@ -163,7 +188,7 @@ GameCreator.commonObjectControllers = {
             var stateId = $(this).parent().data('id');
             GameCreator.helpers.removeObjectFromArrayById(globalObj.states, stateId);
             if($(this).parent().hasClass('active')) {
-                $('#dialogue-state-content').html('');
+                $('#dialogue-state-content').empty();
             }
             $(this).parent().remove();
         });
@@ -230,45 +255,36 @@ GameCreator.commonObjectControllers = {
     setupEventsForm: function(container) {
         var globalObj = this;
         var html = this.getEventsContent();
-        container.html(html);
+        $(container).html(html);
 
         $("#dialogue-panel-events").find("a").on("click", function() {
-            globalObj[$(this).data("uifunction")]($("#dialogue-events-content"));
+            globalObj[$(this).data("uifunction")](document.getElementById("dialogue-events-content"));
             $(this).parent().find("a").removeClass("active");
             $(this).addClass("active");
         });
     },
 
     setupCountersForm: function(container) {
-        container.html(GameCreator.htmlStrings.getColumn("Counters", "dialogue-panel-counters"));
-        container.append('<div id="dialogue-counter-content"></div>');
-        $("#dialogue-panel-counters").html(this.getCountersContent());
-        $("#dialogue-panel-counters").parent().append('<a id="add-new-counter-button" class="btn tab success wide">Add</button>');
         var globalObj = this;
-        $("#add-new-counter-button").on("click", function() {
-            $("#create-counter-form").remove();
-            var saveCallback = function() {
-                var counterName = $("#create-counter-form input").val();
-                globalObj.parentCounters[counterName] = new GameCreator.Counter();
-                GameCreator.getActiveScene().objects.forEach(function(sceneObj){
-                    if(sceneObj.parent === globalObj) {
-                        GameCreator.resetCounters(sceneObj, sceneObj.parent.parentCounters);
-                    }
-                });
-                globalObj.setupCountersForm(container);
-            };
-            var cancelCallback = function() {
-                $("#create-counter-form").remove();
-            };
-            $("#dialogue-panel-counters").append(GameCreator.htmlStrings.createNameSelectionForm('Counter name', 'create-counter-form', saveCallback, cancelCallback));
-            
-        });
-        container.find(".defaultMenuElement").on("click", function() {
-            var counterName = $(this).data("name");
-            container.find(".active").removeClass('active');
-            $(this).addClass("active");
-            globalObj.setupEditCounterEvents(counterName);
-        });
+
+        var renderCounterEditor = function() {
+            React.render(
+                <CountersEditor counters={globalObj.parentCounters} onAddCounter={addNewCounter} title="Counters"/>,
+                container
+            );
+        };
+
+        var addNewCounter = function(counterName) {
+            globalObj.parentCounters[counterName] = new GameCreator.Counter();
+            GameCreator.getActiveScene().objects.forEach(function(sceneObj){
+                if(sceneObj.parent === globalObj) {
+                    GameCreator.resetCounters(sceneObj, sceneObj.parent.parentCounters);
+                }
+            });
+            renderCounterEditor();
+        };
+        
+        renderCounterEditor();
     },
     
     setupEditCounterEvents: function(counterName) {
@@ -306,31 +322,37 @@ GameCreator.commonObjectControllers = {
      *****************************/
     setupKeyEventsForm: function(container) {
         var html = GameCreator.htmlStrings.getColumn("Keys", "dialogue-panel-keys");
-        container.html(html);
+        $(container).html(html);
         $("#dialogue-panel-keys").html(this.getKeysContent());
+        var eventEditorContainer = document.createElement('div');
+        var eventItemSelectContainer = document.createElement('div');
+        $(container).append(eventEditorContainer);
+        $(container).append(eventItemSelectContainer);
         $("#dialogue-panel-keys").parent().append('<a id="add-new-key-button" class="btn tab success wide">Add</a>');
-        var keyEventContent = document.createElement('div');
-        var eventHtml = GameCreator.htmlStrings.getColumn('When', 'dialogue-panel-conditions');
-        eventHtml += GameCreator.htmlStrings.getColumn('Do', 'dialogue-panel-actions');
-        eventHtml += GameCreator.htmlStrings.getColumn('Select Item', 'dialogue-panel-add-list');
-        $('#dialogue-events-content').append(keyEventContent);
-        $(keyEventContent).html(eventHtml);
         var globalObj = this;
-        container.find(".defaultMenuElement").on("click", function(){
+        React.render(
+            <EventItemSelector/>,
+            eventItemSelectContainer
+        );
+        $(container).find(".defaultMenuElement").on("click", function() {
             var keyName = $(this).data("name");
-            var onKeyEventSets = globalObj.onKeySets[keyName]
+            var keyCaSets = globalObj.onKeySets[keyName]
 
             $(this).parent().find('.defaultMenuElement').removeClass('active');
             $(this).addClass('active');
-            var selectableActions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
-            GameCreator.UI.setupEditEventColumns(onKeyEventSets, $(keyEventContent), selectableActions, globalObj);
+
+            React.render(
+                <EventEditor caSets={keyCaSets} eventType='key'/>,
+                eventEditorContainer
+            );
         });
         $("#add-new-key-button").on("click", function(){
-            $("#dialogue-panel-add-list").html(globalObj.getKeySelector());
-            $(".addKeyObjectElement").one("click", function() {
-                globalObj.onKeySets[$(this).data("keyname")].push(new GameCreator.ConditionActionSet(globalObj));
+            //$("#dialogue-panel-add-list").html(globalObj.getKeySelector());
+            var callback = function(itemName) {
+                globalObj.onKeySets[itemName].push(new GameCreator.ConditionActionSet());
                 globalObj.setupKeyEventsForm(container);
-            });
+            };
+            $(document).trigger("GC.showItemSelector", [globalObj.selectableKeys, callback]);
         });
         $("#dialogue-panel-keys .remove-item-button").on('click', function(evt) {
             var keyName = $(this).parent().data('name');
