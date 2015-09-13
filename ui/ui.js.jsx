@@ -40,6 +40,7 @@ GameCreator.UI = {
         });
 
         $('#toolbar-global-counters').click(GameCreator.UI.openGlobalCountersDialogue);
+        $('#toolbar-game-properties').click(GameCreator.UI.openGamePropertiesDialogue);
 
         $(document).on('GameCreator.addedSceneObject GameCreator.removedSceneObject', function(){
             GameCreator.UI.drawSceneObjectLibrary();
@@ -264,12 +265,21 @@ GameCreator.UI = {
         GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
         React.render(<ActionColumn actions={caSet.actions} eventType={eventType}/>, document.getElementById('dialogue-right-action-column'));
         React.render(<EventItemSelector/>, document.getElementById('dialogue-right-select-column'));
-        $("#dialogue-window > .right").addClass("slide-in-from-right");
     },
 
     openGlobalCountersDialogue: function() {       
         React.render(
             <GlobalCounterDialogueBottom/>,
+            document.getElementById('dialogue-window')
+        );
+        GameCreator.UI.openDialogue(700, 570, null);
+    },
+
+    openGamePropertiesDialogue: function() {       
+        React.render(
+            <DialogueLeft title="Game Properties">
+                <GamePropertiesForm properties={{width: GameCreator.width, height: GameCreator.height}}/>
+            </DialogueLeft>,
             document.getElementById('dialogue-window')
         );
         GameCreator.UI.openDialogue(700, 570, null);
@@ -344,14 +354,18 @@ GameCreator.UI = {
         $("#dialogue-window").show();
         if (content) $("#dialogue-window").html(content);
         $("#dialogue-window > .bottom").addClass("slide-in-from-bottom");
+        $("#dialogue-window > .left").addClass("slide-in-from-left");
+        $("#dialogue-window > .right").addClass("slide-in-from-right");
         $("#dialogue-overlay").show();
         $("#close-dialogue-button").one('click', function(){
             GameCreator.UI.closeDialogue();
         });
+        GameCreator.UI.loadInputStyle();
     },
     
     closeDialogue: function() {
         $("#dialogue-window").hide();
+        React.unmountComponentAtNode(document.getElementById('dialogue-window'));
         $(".arrow_box").hide();
         $("#dialogue-overlay").hide();
         $(".global-object-list").trigger('recalculateActiveObject');
@@ -440,12 +454,14 @@ GameCreator.UI = {
         $(".route-node-container").remove();
         $('#scenes').hide();
         $("#edit-mode-tools").hide();
+        $('#toolbar-left').hide();
         $("#save-game-button").addClass('disabled');
     },
 
     showEditModeTools: function() {
         $('#scenes').show();
         $("#edit-mode-tools").show();
+        $('#toolbar-left').show();
         $("#save-game-button").removeClass('disabled');
     },
 
@@ -777,6 +793,18 @@ GameCreator.UI = {
         var fade = function() { $(messageBox).fadeOut(200); };
         setTimeout(fade, 5000);
         $(messageBox).click(fade);
+    },
+
+    updateGameProperties: function(props) {
+        document.getElementById('main-canvas').width = props.width;
+        document.getElementById('main-canvas').height = props.height;
+        document.getElementById('bg-canvas').width = props.width;
+        document.getElementById('bg-canvas').height = props.height;
+        document.getElementById('ui-canvas').width = props.width;
+        document.getElementById('ui-canvas').height = props.height;
+        GameCreator.width = props.width;
+        GameCreator.height = props.height;
+        GameCreator.editActiveScene();
     },
 
 }

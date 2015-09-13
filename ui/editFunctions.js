@@ -336,6 +336,8 @@
                 minor: GameCreator.version.minor,
                 patch: GameCreator.version.patch
             };
+            results.width = GameCreator.width;
+            results.height = GameCreator.height;
             return JSON.stringify(results);
         },
 

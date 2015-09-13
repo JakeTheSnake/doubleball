@@ -1,7 +1,7 @@
 GameCreator.version = {
     major: 0, // Incremented on model changes that are not fully or not at all backwards-compatible even with conversion
     minor: 1, // Incremented on model changes that are fully backwards-compatible after conversion
-    patch: 0, // Incremented on model changes that are backwards-compatible without the need of conversion.
+    patch: 1, // Incremented on model changes that are backwards-compatible without the need of conversion.
 
     changeMessages: [],
 

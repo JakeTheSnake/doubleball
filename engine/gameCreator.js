@@ -5,8 +5,8 @@
     var GCHeight = 650;
 
     window.GameCreator = {
-        height: GCHeight,
-        width: GCWidth,
+        height: window.gon.game.height || GCHeight,
+        width: window.gon.game.width || GCWidth,
         paused: false,
         state: 'editing', //State can be editing, directing or playing. 
         then: undefined, // The time before last frame
@@ -58,7 +58,7 @@
                 };
                 borderObj.states = [];
                 GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
-            }   
+            }
         },
 
         gameLoop: function() {
@@ -468,6 +468,8 @@
             GameCreator.scenes = [];
             GameCreator.globalObjects = {};
             GameCreator.renderableObjects = [];
+            GameCreator.width = savedGame.width || GCWidth;
+            GameCreator.height = savedGame.height || GCHeight;
 
             //Load globalObjects
             var globalObjects = Object.keys(savedGame.globalObjects);
