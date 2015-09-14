@@ -75,7 +75,7 @@
                             actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
                             GameCreator.UI.openEditActionsWindow(
                                 GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + globalObj.objectName, this.getCurrentImage().src),
-                                 keySets[0], 'key', globalObj.objectName
+                                    keySets[0], 'key', globalObj.objectName
                                 );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {
@@ -89,6 +89,10 @@
 
                             GameCreator.helpers.runEventActions(keySets, this, conditionPassedCallback);
                         }
+                        if (globalObj.pendingRelease[key]) {
+                            globalObj.keyPressed[key] = false;
+                            globalObj.pendingRelease[key] = false;
+                        }
                     }
                 }
             }
@@ -99,9 +103,11 @@
             this.keyRightPressed = false;
             this.keyUpPressed = false;
             this.keyDownPressed = false;
+            this.pendingRelease = {};
             var keys = Object.keys(this.keyPressed);
             keys.forEach(function(key) {
                 this.keyPressed[key] = false;
+                this.pendingRelease[key] = false;
             }.bind(this));
         };
 
@@ -193,10 +199,10 @@
             $(document).on("mouseup.gameKeyListener", function(e) {
                 switch (e.which) {
                 case 1:
-                    that.keyPressed.leftMouse = false;
+                    that.pendingRelease.leftMouse = true;
                     break;
                 case 3:
-                    that.keyPressed.rightMouse = false;
+                    that.pendingRelease.rightMouse = true;
                     break;
                 default:
                     return;

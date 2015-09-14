@@ -5,8 +5,8 @@
     var GCHeight = 650;
 
     window.GameCreator = {
-        height: window.gon.game.height || GCHeight,
-        width: window.gon.game.width || GCWidth,
+        height: window.gon.game ? window.gon.game.height || GCHeight : GCHeight,
+        width: window.gon.game ? window.gon.game.width || GCWidth : GCWidth,
         paused: false,
         state: 'editing', //State can be editing, directing or playing. 
         then: undefined, // The time before last frame
