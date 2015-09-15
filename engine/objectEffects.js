@@ -49,9 +49,9 @@ GameCreator.effects.Shrink.prototype.update = function(deltaTime) {
 GameCreator.effects.Shrink.prototype.draw = function(context) {
     if (this.width >= 0 && this.height >= 0) {
         try {
-            context.drawImage(this.image, this.x, this.y, this.width, this.height);
+            context.drawImage(this.runtimeObj.getCurrentImage(), this.x, this.y, this.width, this.height);
         } catch (e) {
-            console.log(this.runtimeObj);
+            console.log("Could not draw image for object: " + this.runtimeObj);
         }
         
         return true;
