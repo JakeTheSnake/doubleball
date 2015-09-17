@@ -1,12 +1,7 @@
 /*global GameCreator, $, Image, window, requestAnimationFrame, document*/
 (function() {
     "use strict";
-    var GCWidth = 1000;
-    var GCHeight = 650;
-
     window.GameCreator = {
-        height: window.gon.game ? window.gon.game.height || GCHeight : GCHeight,
-        width: window.gon.game ? window.gon.game.width || GCWidth : GCWidth,
         paused: false,
         state: 'editing', //State can be editing, directing or playing. 
         then: undefined, // The time before last frame
@@ -43,6 +38,7 @@
 
         initialize: function() {
             var borderKeys = Object.keys(GameCreator.borderObjects);
+            GameCreator.initializeBorderObjects();
 
             for (var i = 0; i < borderKeys.length; i += 1 ) {
                 var borderObj = GameCreator.borderObjects[borderKeys[i]];
@@ -59,6 +55,15 @@
                 borderObj.states = [];
                 GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
             }
+        },
+
+        initializeBorderObjects: function() {
+            GameCreator.borderObjects.borderL.attributes.height = GameCreator.height + 1000;
+            GameCreator.borderObjects.borderR.attributes.x = GameCreator.width;
+            GameCreator.borderObjects.borderR.attributes.height = GameCreator.height + 1000;
+            GameCreator.borderObjects.borderT.attributes.width = GameCreator.width + 1000;
+            GameCreator.borderObjects.borderB.attributes.width = GameCreator.width + 1000;
+            GameCreator.borderObjects.borderB.attributes.y = GameCreator.height;
         },
 
         gameLoop: function() {

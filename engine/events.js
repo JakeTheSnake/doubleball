@@ -153,7 +153,7 @@ GameCreator.conditions = {
     collidesWith: new GameCreator.Condition({
         evaluate: function(runtimeObj, params) {
             var sceneObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(params.objId));
-            for(i = 0; i < sceneObjects.length; i += 1) {
+            for(var i = 0; i < sceneObjects.length; i += 1) {
                 if (GameCreator.helpers.checkObjectCollision(runtimeObj, sceneObjects[i])) {
                     return true;
                 }

@@ -2,7 +2,7 @@
 
 module("GameCreator Tests", {
   setup: function() {
-    
+    GameCreator.state = 'playing';    
   },
   teardown: function() {
 

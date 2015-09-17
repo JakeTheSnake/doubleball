@@ -1,4 +1,14 @@
 $(document).ready(function() {
+    var GCWidth = 1000;
+    var GCHeight = 650;
+    try {
+        GameCreator.height = window.gon.game.height;
+        GameCreator.width = window.gon.game.width ;
+    } catch (e) {
+        GameCreator.height = GCHeight;
+        GameCreator.width = GCWidth;
+    }
+
     GameCreator.bgCanvas = document.createElement("canvas");
     GameCreator.bgCanvas.id = "bg-canvas"
     GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");

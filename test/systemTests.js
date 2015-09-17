@@ -1,4 +1,5 @@
 (function() {
+var ReactTestUtils = React.addons.TestUtils;
 
 var redBall, actionWasRun, runtimeObj;
 
@@ -48,8 +49,8 @@ module("System Test - Direct Mode", {
 });
 
 function addAction(actionName) {
-    $("#add-action-button").trigger('click');
-    $('#dialogue-panel-add-list li:contains("' + actionName + '")').trigger('click');
+    ReactTestUtils.Simulate.click($("#dialogue-right-action-column a")[0]);
+    ReactTestUtils.Simulate.click($('#dialogue-right-select-column a:contains("' + GameCreator.helpers.labelize(actionName) + '")')[0]);
 }
 
 

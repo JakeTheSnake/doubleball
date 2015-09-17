@@ -70,6 +70,7 @@ test("Run timed Action every 1000 ms", function() {
 
 module("Real Action Tests", {
   setup: function() {
+    GameCreator.state = 'playing';
     var image = new Image();
     image.src = '../assets/red_ball.gif';
     redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
@@ -272,7 +273,8 @@ function assertActionRun() {
 
 test("Trigger action by key", function() {
     var key = "space";
-
+    platformZealot.resetKeys();
+    
     platformZealot.onKeySets[key] = [newEvent];
     platformZealot.keyPressed[key] = true;
 
