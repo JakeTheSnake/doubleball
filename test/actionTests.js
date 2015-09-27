@@ -273,10 +273,10 @@ function assertActionRun() {
 
 test("Trigger action by key", function() {
     var key = "space";
-    platformZealot.resetKeys();
+    GameCreator.resetKeys();
     
     platformZealot.onKeySets[key] = [newEvent];
-    platformZealot.keyPressed[key] = true;
+    GameCreator.keys.keyPressed[key] = true;
 
     runtimeObject.parent.checkEvents.call(runtimeObject);
 

@@ -765,5 +765,15 @@
         }
 
         throw new Error("Unable to copy obj! Its type isn't supported.");
-    }
+    };
+
+    GameCreator.helpers.getSelectableKeys = function(globalObj) {
+        var selectableKeys = Object.keys(GameCreator.keys.keyPressed);
+        selectableKeys = selectableKeys.filter(function(key) {
+            return globalObj.onKeySets[key].length === 0;
+        });
+        return selectableKeys;
+    };
+
+
 }());

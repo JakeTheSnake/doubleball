@@ -52,6 +52,7 @@
         },
 
         directScene: function(scene) {
+            GameCreator.initializeKeyListeners();
             GameCreator.resetScene(scene);
             GameCreator.UI.hideEditModeTools();
             var startNewGameLoop = GameCreator.state !== 'directing' && GameCreator.state !== 'playing';

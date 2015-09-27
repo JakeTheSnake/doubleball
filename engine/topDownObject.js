@@ -97,7 +97,6 @@
     };
 
     GameCreator.TopDownObject.prototype.onGameStarted = function() {
-        this.initializeKeyListeners();
     };
 
     GameCreator.TopDownObject.prototype.instantiateSceneObject = function(sceneObject, args) {

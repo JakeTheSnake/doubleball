@@ -352,7 +352,7 @@ GameCreator.commonObjectControllers = {
                 globalObj.onKeySets[itemName].push(new GameCreator.ConditionActionSet());
                 globalObj.setupKeyEventsForm(container);
             };
-            $(document).trigger("GC.showItemSelector", [globalObj.selectableKeys, callback]);
+            $(document).trigger("GC.showItemSelector", [GameCreator.helpers.getSelectableKeys(globalObj), callback]);
         });
         $("#dialogue-panel-keys .remove-item-button").on('click', function(evt) {
             var keyName = $(this).parent().data('name');

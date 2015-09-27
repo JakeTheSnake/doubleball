@@ -81,7 +81,6 @@
             me.latestMouseX = evt.pageX;
             me.latestMouseY = evt.pageY;
         });
-        this.initializeKeyListeners();
     };
 
     GameCreator.MouseObject.prototype.objectEnteredGame = function() {

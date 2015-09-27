@@ -84,7 +84,6 @@
     };
 
     GameCreator.PlatformObject.prototype.onGameStarted = function() {
-        this.initializeKeyListeners();
     };
 
     GameCreator.PlatformObject.prototype.initialize = function() {

@@ -38,15 +38,6 @@
     };
 
     GameCreator.addObjFunctions.keyObjectAttributes = function(object) {
-        object.keyPressed = {
-            shift: false,
-            ctrl: false,
-            alt: false,
-            space: false,
-            leftMouse: false,
-            rightMouse: false
-        };
-
         object.onKeySets = {
             shift: [],
             ctrl: [],
@@ -55,8 +46,6 @@
             leftMouse: [],
             rightMouse: [],
         };
-
-        object.selectableKeys = Object.keys(object.keyPressed);
     };
 
     GameCreator.addObjFunctions.keyObjectFunctions = function(object) {
@@ -64,9 +53,9 @@
             var j, key, isKeyPressed, keySets, actions;
             var globalObj = this.parent;
             //Loop over keyactions, see which are pressed and perform actions of those that are pressed.
-            for (key in globalObj.keyPressed) {
-                if (globalObj.keyPressed.hasOwnProperty(key)) {
-                    isKeyPressed = globalObj.keyPressed[key];
+            for (key in GameCreator.keys.keyPressed) {
+                if (GameCreator.keys.keyPressed.hasOwnProperty(key)) {
+                    isKeyPressed = GameCreator.keys.keyPressed[key];
                     keySets = globalObj.onKeySets[key];
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
@@ -89,127 +78,12 @@
 
                             GameCreator.helpers.runEventActions(keySets, this, conditionPassedCallback);
                         }
-                        if (globalObj.pendingRelease[key]) {
-                            globalObj.keyPressed[key] = false;
-                            globalObj.pendingRelease[key] = false;
-                        }
                     }
                 }
             }
         };
 
-        object.resetKeys = function() {
-            this.keyLeftPressed = false;
-            this.keyRightPressed = false;
-            this.keyUpPressed = false;
-            this.keyDownPressed = false;
-            this.pendingRelease = {};
-            var keys = Object.keys(this.keyPressed);
-            keys.forEach(function(key) {
-                this.keyPressed[key] = false;
-                this.pendingRelease[key] = false;
-            }.bind(this));
-        };
-
-        object.initializeKeyListeners = function() {
-            var that = this;
-            $(document).on("keydown.gameKeyListener", function(e) {
-                switch (e.which) {
-                case 16:
-                    that.keyPressed.shift = true;
-                    break;
-                case 17:
-                    that.keyPressed.ctrl = true;
-                    break;
-                case 18:
-                    that.keyPressed.alt = true;
-                    break;
-                case 32:
-                    that.keyPressed.space = true;
-                    break;
-                case 65:
-                case 37:
-                    that.keyLeftPressed = true;
-                    break;
-                case 87:
-                case 38:
-                    that.keyUpPressed = true;
-                    break;
-                case 68:
-                case 39:
-                    that.keyRightPressed = true;
-                    break;
-                case 83:
-                case 40:
-                    that.keyDownPressed = true;
-                    break;
-                default:
-                    return;
-                }
-                e.preventDefault();
-            });
-            $(document).on("keyup.gameKeyListener", function(e) {
-                switch (e.which) {
-                case 16:
-                    that.keyPressed.shift = false;
-                    break;
-                case 17:
-                    that.keyPressed.ctrl = false;
-                    break;
-                case 18:
-                    that.keyPressed.alt = false;
-                    break;
-                case 32:
-                    that.keyPressed.space = false;
-                    break;
-                case 65:
-                case 37:
-                    that.keyLeftPressed = false;
-                    break;
-                case 87:
-                case 38:
-                    that.keyUpPressed = false;
-                    break;
-                case 68:
-                case 39:
-                    that.keyRightPressed = false;
-                    break;
-                case 83:
-                case 40:
-                    that.keyDownPressed = false;
-                    break;
-                default:
-                    return;
-                }
-                e.preventDefault();
-            });
-            $(document).on("mousedown.gameKeyListener", function(e) {
-                switch (e.which) {
-                case 1:
-                    that.keyPressed.leftMouse = true;
-                    break;
-                case 3:
-                    that.keyPressed.rightMouse = true;
-                    break;
-                default:
-                    return;
-                }
-                e.preventDefault();
-            });
-            $(document).on("mouseup.gameKeyListener", function(e) {
-                switch (e.which) {
-                case 1:
-                    that.pendingRelease.leftMouse = true;
-                    break;
-                case 3:
-                    that.pendingRelease.rightMouse = true;
-                    break;
-                default:
-                    return;
-                }
-                e.preventDefault();
-            });
-        };
+        
     };
 
     GameCreator.addObjFunctions.stoppableObjectFunctions = function(object) {

@@ -58,7 +58,7 @@ test("Add action through keypress", function() {
     var runtimeObj = GameCreator.createRuntimeObject(redBall, {x: 70, y: 70, speed: 300});
     runtimeObj.parent.onCreateSets.push(new GameCreator.ConditionActionSet());
     $("#qunit-fixture").append('<div id="dialogue-window"></div>');
-    runtimeObj.parent.keyPressed.space = true;
+    GameCreator.keys.keyPressed.space = true;
 
     GameCreator.runFrame(10);
 
@@ -69,8 +69,11 @@ test("Add action through keypress", function() {
     deepEqual(runtimeObj.parent.onKeySets.space.length, 1, "Event was added");
     deepEqual(runtimeObj.parent.onKeySets.space[0].actions.length, 1, "Action was added");
 
-    runtimeObj.parent.keyPressed.space = false;
+    GameCreator.keys.pendingRelease.space = true;
     GameCreator.runFrame(10);
+
+    deepEqual(GameCreator.keys.keyPressed.space, false, "Key was released.");
+    deepEqual(GameCreator.keys.pendingRelease.space, false, "Pending release was reset");
 
     ok(actionWasRun, "Action was run");
 });
