@@ -110,6 +110,7 @@ test("Remove global object removes related actions and conditions.", function() 
     redBall.onClickSets.push(createCaSet());
     redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [createCaSet()]});
     redBall.onKeySets.shift.push(createCaSet());
+    GameCreator.scenes[0].onCreateSet = createCaSet();
 
     GameCreator.removeGlobalObject(blackBall.id);
 
@@ -123,6 +124,8 @@ test("Remove global object removes related actions and conditions.", function() 
     deepEqual(redBall.onCollideSets[0].caSets[0].conditions.length, 0, "onCollide-conditions should be removed.");
     deepEqual(redBall.onKeySets.shift[0].actions.length, 0, "onKey-actions should be removed.");
     deepEqual(redBall.onKeySets.shift[0].conditions.length, 0, "onKey-conditions should be removed.");
+    deepEqual(GameCreator.scenes[0].onCreateSet.actions.length, 0, "onSceneStarted-actions should be removed.");
+    deepEqual(GameCreator.scenes[0].onCreateSet.conditions.length, 0, "onSceneStarted-conditions should be removed.");
 
 });
 

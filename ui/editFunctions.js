@@ -489,6 +489,9 @@
                     }
                 }
             }
+            for (var i = 0; i < GameCreator.scenes.length; i += 1) {
+                GameCreator.scenes[i].onCreateSet.removeReferencesToGlobalObject(globalObjId);
+            }
             GameCreator.removeGlobalObjectFromScenes(globalObjId);
             var globalObj = GameCreator.helpers.getGlobalObjectById(globalObjId);
             delete GameCreator.globalObjects[globalObj.objectName];
