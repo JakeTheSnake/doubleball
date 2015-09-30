@@ -72,18 +72,15 @@ GameCreator.conditions = {
         params: {
             objId: {
                 component: GlobalObjectParam,
-                param: GameCreator.GlobalObjectParameter,
                 mandatory: true,
             },
             comparator: {
                 component: ComparatorParam,
-                param: GameCreator.ComparatorParameter,
                 mandatory: true,
                 defaultValue: 'equals'
             },
             count: {
                 component: NumberParam,
-                param: GameCreator.NumberParameter,
                 mandatory: false,
                 defaultValue: 1
             }
@@ -100,7 +97,6 @@ GameCreator.conditions = {
         },
         params: {
             state: {
-                param: GameCreator.StateParameter,
                 component: StateParam,
                 mandatory: false,
                 defaultValue: 0
@@ -127,16 +123,16 @@ GameCreator.conditions = {
         },
         params: {
             counter: {
-                param: GameCreator.CounterParameter,
+                component: CounterParam,
                 mandatory: true,
             },
             comparator: {
-                param: GameCreator.ComparatorParameter,
+                component: ComparatorParam,
                 mandatory: true,
                 defaultValue: 'equals'
             },
             value: {
-                param: GameCreator.NumberParameter,
+                component: NumberParam,
                 mandatory: false,
                 defaultValue: 0
             }
@@ -187,7 +183,7 @@ GameCreator.conditions = {
         },
         params: {
             objId: {
-                param: GameCreator.GlobalObjectParameter,
+                component: GlobalObjectParam,
                 mandatory: true
             },
         },
@@ -206,22 +202,35 @@ GameCreator.conditions = {
         },
         params: {
             comparator: {
-                param: GameCreator.ComparatorParameter,
+                component: ComparatorParam,
                 mandatory: true,
                 defaultValue: 'equals'
             },
             value: {
-                param: GameCreator.NumberParameter,
+                component: NumberParam,
                 mandatory: false,
                 defaultValue: 1
             },
             maxRandomValue: {
-                param: GameCreator.NumberParameter,
+                component: NumberParam,
                 mandatory: false,
                 defaultValue: 1
             }
         },
-    })
+    }),
+
+    timeElapsed: new GameCreator.Condition({
+        evaluate: function(runtimeObj, params) {
+            return GameCreator.timerHandler.gameTime >= params.time;
+        },
+        params: {
+            time: {
+                component: NumberParam,
+                mandatory: true,
+                defaultValue: 0
+            },
+        },
+    }),
 
 
 }
@@ -256,7 +265,8 @@ GameCreator.conditionGroups = {
     globalCounterConditions: {
         objectExists: GameCreator.conditions.objectExists,
         currentScene: GameCreator.conditions.currentScene,
-        randomCondition: GameCreator.conditions.randomCondition
+        randomCondition: GameCreator.conditions.randomCondition,
+        timeElapsed: GameCreator.conditions.timeElapsed
     },
 
     objectConditions: GameCreator.conditions

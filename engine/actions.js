@@ -115,7 +115,6 @@ GameCreator.actions = {
                       action: function(params) {this.parent.destroy.call(this, params); },
                       params: {"effect":
                                 {
-                                    param: GameCreator.DestroyEffectParameter,
                                     component: DestroyEffectParam,
                                     mandatory: false,
                                     defaultValue: 'none'
@@ -128,20 +127,17 @@ GameCreator.actions = {
                       action: function(params) {this.parent.shoot.call(this, params); },
                       params: {"objectToShoot":
                                 {
-                                    param: GameCreator.ShootableObjectParameter,
                                     component: ShootableObjectParam,
                                     mandatory: true
                                  },
                                 "projectileSpeed":
                                  {
-                                    param: GameCreator.RangeParameter,
                                     component: RangeParam,
                                     mandatory: false,
                                     defaultValue: 500
                                  },
                                 "projectileDirection":
                                  {
-                                     param: GameCreator.DirectionParameter,
                                      component: DirectionParam,
                                      mandatory: false,
                                      defaultValue: "Default"
@@ -153,16 +149,16 @@ GameCreator.actions = {
       Create:   new GameCreator.Action({    
                       action: function(params) {GameCreator.createRuntimeObject(GameCreator.helpers.getGlobalObjectById(Number(params.objectToCreate)), {x: params.x, y: params.y}); },
                       params: {"objectToCreate": 
-                                {param: GameCreator.GlobalObjectParameter,
+                                {
                                 mandatory: true,
                                 component: GlobalObjectParam},
                                "x": 
-                               {param: GameCreator.RangeParameter,
+                               {
                                 mandatory: false,
                                 defaultValue: 0,
                                 component: RangeParam},
                                "y": 
-                               {param: GameCreator.RangeParameter,
+                               {
                                 mandatory: false,
                                 defaultValue: 0,
                                 component: RangeParam}
@@ -176,28 +172,24 @@ GameCreator.actions = {
                     params: {
                       "objId":
                       {
-                          param: GameCreator.GlobalObjectParameter,
                           mandatory: false,
                           observer: 'counter',
                           component: CounterCarrierParam
                       },
                       "counter":
                       {
-                          param: GameCreator.CounterParameter,
                           mandatory: true,
                           component: CounterParam,
                           observes: 'objId'
                       },
                       "type":
                       {
-                          param: GameCreator.CounterChangeTypeParameter,
                           mandatory: false,
                           defaultValue: 'add',
                           component: CounterTypeParam
                       },
                       "value":
                       {
-                          param: GameCreator.NumberParameter,
                           mandatory: false,
                           defaultValue: 1,
                           component: NumberParam
@@ -211,14 +203,12 @@ GameCreator.actions = {
                       params: {
                         'objectId':
                         {
-                            param: GameCreator.GlobalObjectParameter,
                             component: GlobalObjectParam,
                             mandatory: true,
                             observer: 'objectState'
                         },
                         'objectState':
                         {
-                            param: GameCreator.StateParameter,
                             component: StateParam,
                             observes: 'objectId',
                             mandatory: true
@@ -237,7 +227,7 @@ GameCreator.actions = {
       SwitchScene: new GameCreator.Action({
                     action: function(params){GameCreator.selectScene(params); },
                     params: {"scene":
-                                {param: GameCreator.SwitchSceneParameter,
+                                {
                                     mandatory: true,
                                     component: SceneParam
                                 }
@@ -257,21 +247,18 @@ GameCreator.actions = {
           params: {
               'type': 
               { 
-                  param: GameCreator.MovementTypeParameter,
                   component: MovementTypeParam,
                   defaultValue: 'absolute',
                   mandatory: true 
               },
               'x': 
               { 
-                  param: GameCreator.RangeParameter,
                   component: RangeParam,
                   mandatory: false,
                   defaultValue: 0
               },
               'y':
               {
-                  param: GameCreator.RangeParameter,
                   component: RangeParam,
                   mandatory: false,
                   defaultValue: 0
