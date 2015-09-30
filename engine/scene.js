@@ -57,6 +57,15 @@
         }
     };
 
+    GameCreator.Scene.prototype.getObjectById = function(id) {
+        for (var i = 0; i < this.objects.length; i += 1) {
+            var sceneObj = this.objects[i];
+            if (sceneObj.attributes.instanceId === id) {
+                return sceneObj;
+            }
+        }
+    };
+
     $.extend(GameCreator, {
         createSceneObject: function (globalObj, scene, args) {
             var sceneObj = new GameCreator.SceneObject();
@@ -75,17 +84,11 @@
         },
 
         getSceneObjectById: function(id) {
-            var i, sceneObj;
             var activeScene;
             if (id !== undefined) {
                 activeScene = GameCreator.getActiveScene();
                 if (activeScene) {
-                    for (i = 0; i < activeScene.objects.length; i += 1) {
-                        sceneObj = activeScene.objects[i];
-                        if (sceneObj.attributes.instanceId === id) {
-                            return sceneObj;
-                        }
-                    }
+                    return activeScene.getObjectById(id);
                 }
             }
             return null;
@@ -192,6 +195,22 @@
                 }
             });
             GameCreator.getActiveScene().onCreateSet.runActions();
-        }
+        },
+
+        removeGlobalObjectFromScenes: function(globalObjId) {
+            for (var i = 0; i < GameCreator.scenes.length; i += 1) {
+                var sceneObjectsToRemove = [];
+                for (var j = 0; j < GameCreator.scenes[i].objects.length; j += 1) {
+                    var sceneObject = GameCreator.scenes[i].objects[j];
+                    if (sceneObject.parent.id === globalObjId) {
+                        sceneObjectsToRemove.push(sceneObject);
+                    }   
+                }
+                for (var j = 0; j < sceneObjectsToRemove.length; j += 1) {
+                    sceneObjectsToRemove[j].remove(GameCreator.scenes[i]);
+                }
+                sceneObjectsToRemove.length = 0;
+            }
+        },
     });
 }());

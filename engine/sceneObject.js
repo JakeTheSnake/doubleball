@@ -108,8 +108,8 @@
         }
     }  
 
-    GameCreator.SceneObject.prototype.remove = function() {
-        var activeScene = GameCreator.getActiveScene();
+    GameCreator.SceneObject.prototype.remove = function(scene) {
+        var activeScene = scene || GameCreator.getActiveScene();
         activeScene.objects.splice(activeScene.objects.indexOf(this), 1);
         GameCreator.renderableObjects.splice(GameCreator.renderableObjects.indexOf(this), 1);
         if (GameCreator.selectedObject === this) {

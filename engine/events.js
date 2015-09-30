@@ -26,6 +26,30 @@ GameCreator.ConditionActionSet.prototype.addCondition = function(condition) {
     this.conditions.push(condition);
 }
 
+GameCreator.ConditionActionSet.prototype.removeReferencesToGlobalObject = function(globalObjId) {
+    for (var i = 0; i < this.actions.length; i += 1) {
+        if (Number(this.actions[i].parameters.objId) === globalObjId) {
+            this.actions.splice(i, 1);
+            i -= 1;
+        } else if (Number(this.actions[i].parameters.objectId) === globalObjId) {
+            this.actions.splice(i, 1);
+            i -= 1;
+        } else if (Number(this.actions[i].parameters.objectToCreate) === globalObjId) {
+            this.actions.splice(i, 1);
+            i -= 1;
+        } else if (Number(this.actions[i].parameters.objectToShoot) === globalObjId) {
+            this.actions.splice(i, 1);
+            i -= 1;
+        }
+    }
+    for (var i = 0; i < this.conditions.length; i += 1) {
+        if (Number(this.conditions[i].parameters.objId) === globalObjId) {
+            this.conditions.splice(i, 1);
+            i -= 1;
+        }
+    }
+}
+
 GameCreator.Condition = function(args) {
     this.evaluate = args.evaluate;
     this.params = args.params;
@@ -230,7 +254,8 @@ GameCreator.RuntimeCondition.prototype.getParameter = function(name) {
 GameCreator.conditionGroups = {
     globalCounterConditions: {
         objectExists: GameCreator.conditions.objectExists,
-        currentScene: GameCreator.conditions.currentScene
+        currentScene: GameCreator.conditions.currentScene,
+        randomCondition: GameCreator.conditions.randomCondition
     },
 
     objectConditions: GameCreator.conditions

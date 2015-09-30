@@ -21,6 +21,10 @@ GameCreator.UI = {
         $("#rename-global-object-button").on("click", function() {
             GameCreator.UI.renameGlobalObject(GameCreator.selectedLibraryObject);
         });
+
+        $("#delete-global-object-button").on("click", function() {
+            GameCreator.UI.deleteGlobalObject(GameCreator.selectedLibraryObject);
+        });
         
         $("#toolbar-top button").on('click', function() {
             $("#toolbar-top button").removeClass('btn-active');
@@ -158,6 +162,13 @@ GameCreator.UI = {
         $(replacementListItem).append(textField);
         selectedListItem.replaceWith(replacementListItem);
         textField.select();
+    },
+
+    deleteGlobalObject: function(globalObj) {
+        if (confirm("Are you sure you want to delete " + globalObj.objectName + "? All references to this object will also be removed.")) {
+            GameCreator.removeGlobalObject(globalObj.id);
+            GameCreator.UI.redrawLibrary();
+        }
     },
 
     drawSceneObjectLibrary: function() {

@@ -477,5 +477,53 @@
                 GameCreator.globalObjects[newName].objectName = newName;
             }
         },
+
+        removeGlobalObject: function(globalObjId) {
+            GameCreator.removeCounterReferencesToGlobalObject(globalObjId);
+            GameCreator.removeReferencesToGlobalObject(GameCreator.globalObjects, globalObjId);
+            GameCreator.removeGlobalObjectFromScenes(globalObjId);
+            var globalObj = GameCreator.helpers.getGlobalObjectById(globalObjId);
+            delete GameCreator.globalObjects[globalObj.objectName];
+        },
+
+        removeCounterReferencesToGlobalObject: function(globalObjId) {
+            var globalObj = GameCreator.helpers.getGlobalObjectById(globalObjId);
+
+            for (var i = 0; i < GameCreator.scenes.length; i += 1) {
+                for (var j = 0; j < GameCreator.scenes[i].objects.length; j += 1) {
+                    var sceneObject = GameCreator.scenes[i].objects[j];
+                    var counterCarrier = GameCreator.scenes[i].getObjectById(sceneObject.attributes.counterCarrier);
+                    if (counterCarrier != null && counterCarrier.parent.id === globalObjId) {
+                        sceneObject.attributes.counterName = null;
+                        sceneObject.attributes.counterCarrier = null;
+                    }
+                }
+            }
+        },
+
+        removeReferencesToGlobalObject: function(currentObject, globalObjId) {
+            if (currentObject instanceof Image) {
+                return;
+            } else if (currentObject instanceof Array) {
+                for (var i = 0; i < currentObject.length; i += 1) {
+                    if (currentObject[i] instanceof GameCreator.ConditionActionSet) {
+                        currentObject[i].removeReferencesToGlobalObject(globalObjId);
+                    } else {
+                        GameCreator.removeReferencesToGlobalObject(currentObject[i], globalObjId);
+                    }
+                }
+            } else if (currentObject instanceof Object) {
+                var keys = Object.keys(currentObject);
+                for (var i = 0; i < keys.length; i += 1) {
+                    if (currentObject[keys[i]] instanceof GameCreator.ConditionActionSet) {
+                        currentObject[keys[i]].removeReferencesToGlobalObject(globalObjId);
+                    } else {
+                        GameCreator.removeReferencesToGlobalObject(currentObject[keys[i]], globalObjId);
+                    }
+
+                }
+
+            }
+        },
     });
 }());

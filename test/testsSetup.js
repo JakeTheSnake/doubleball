@@ -22,7 +22,7 @@ QUnit.begin = function() {
     
 QUnit.testStart = function() {
     GameCreator.reset();
-    GameCreator.globalObjects = [];
+    GameCreator.globalObjects = {};
     GameCreator.collidableObjects = [];
     GameCreator.movableObjects = [];
     GameCreator.renderableObjects = [];
