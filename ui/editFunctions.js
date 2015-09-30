@@ -480,7 +480,15 @@
 
         removeGlobalObject: function(globalObjId) {
             GameCreator.removeCounterReferencesToGlobalObject(globalObjId);
-            GameCreator.removeReferencesToGlobalObject(GameCreator.globalObjects, globalObjId);
+            var globalObjects = Object.keys(GameCreator.globalObjects);
+            for (var i = 0; i < globalObjects.length; i += 1) {
+                var globalObj = GameCreator.globalObjects[globalObjects[i]];
+                for (var prop in globalObj) {
+                    if (globalObj.hasOwnProperty(prop) && prop.includes("Sets")) {
+                        GameCreator.removeReferencesToGlobalObject(globalObj[prop], globalObjId);
+                    }
+                }
+            }
             GameCreator.removeGlobalObjectFromScenes(globalObjId);
             var globalObj = GameCreator.helpers.getGlobalObjectById(globalObjId);
             delete GameCreator.globalObjects[globalObj.objectName];

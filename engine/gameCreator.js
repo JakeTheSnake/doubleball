@@ -379,7 +379,7 @@
             var i, selectedObjectId = params.objectId;
             if (selectedObjectId && selectedObjectId !== 'this') {
                 var globalObj = GameCreator.helpers.getGlobalObjectById(selectedObjectId);
-                if (globalObj.attributes.unique) {
+                if (globalObj.attributes && globalObj.attributes.unique) {
                     globalObj.currentState = Number(params.objectState);
                 }
                 var runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));

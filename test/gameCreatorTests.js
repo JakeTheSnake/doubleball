@@ -90,7 +90,7 @@ test("Remove global object removes scene objects", function() {
     deepEqual(0, GameCreator.scenes[1].objects.length, "Objects from second scene should be removed");
 });
 
-test("Remove global object removes related actions.", function() {
+test("Remove global object removes related actions and conditions.", function() {
     var redBall = createGlobalObject("PlatformObject");
     var blackBall = createGlobalObject("FreeObject");
 
