@@ -17,11 +17,6 @@
         this.isRenderable = true;
         this.isEventable = true;
 
-        this.keyLeftPressed = false;
-        this.keyRightPressed = false;
-        this.keyUpPressed = false;
-        this.keyDownPressed = false;
-
         this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? 300 : args.maxSpeed;
         
         this.objectType = "TopDownObject";
@@ -58,35 +53,35 @@
         var maxSpeed = this.attributes.maxSpeed;
         var angularMaxSpeed = GameCreator.helpers.calcAngularSpeed(maxSpeed);
         //Should only be able to affect movement if there is something beneath object.
-        if (this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        if (GameCreator.keys.keyUpPressed && !GameCreator.keys.keyRightPressed && !GameCreator.keys.keyDownPressed && !GameCreator.keys.keyLeftPressed) {
             this.facing = 1;
             this.attributes.speedX = 0;
             if (this.objectsAbove.length === 0) this.attributes.speedY = -maxSpeed;
-        } else if (this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        } else if (GameCreator.keys.keyUpPressed && GameCreator.keys.keyRightPressed && !GameCreator.keys.keyDownPressed && !GameCreator.keys.keyLeftPressed) {
             this.facing = 2;
             if (this.objectsRight.length === 0) this.attributes.speedX = angularMaxSpeed;
             if (this.objectsAbove.length === 0) this.attributes.speedY = -angularMaxSpeed;
-        } else if (!this.parent.keyUpPressed && this.parent.keyRightPressed && !this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        } else if (!GameCreator.keys.keyUpPressed && GameCreator.keys.keyRightPressed && !GameCreator.keys.keyDownPressed && !GameCreator.keys.keyLeftPressed) {
             this.facing = 3;
             if (this.objectsRight.length === 0) this.attributes.speedX = maxSpeed;
             this.attributes.speedY = 0;
-        } else if (!this.parent.keyUpPressed && this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        } else if (!GameCreator.keys.keyUpPressed && GameCreator.keys.keyRightPressed && GameCreator.keys.keyDownPressed && !GameCreator.keys.keyLeftPressed) {
             this.facing = 4;
             if (this.objectsRight.length === 0) this.attributes.speedX = angularMaxSpeed;
             if (this.objectsBeneath.length === 0) this.attributes.speedY = angularMaxSpeed;
-        } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && !this.parent.keyLeftPressed) {
+        } else if (!GameCreator.keys.keyUpPressed && !GameCreator.keys.keyRightPressed && GameCreator.keys.keyDownPressed && !GameCreator.keys.keyLeftPressed) {
             this.facing = 5;
             this.attributes.speedX = 0;
             if (this.objectsBeneath.length === 0) this.attributes.speedY = maxSpeed;
-        } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && this.parent.keyDownPressed && this.parent.keyLeftPressed) {
+        } else if (!GameCreator.keys.keyUpPressed && !GameCreator.keys.keyRightPressed && GameCreator.keys.keyDownPressed && GameCreator.keys.keyLeftPressed) {
             this.facing = 6;
             if (this.objectsLeft.length === 0) this.attributes.speedX = -angularMaxSpeed;
             if (this.objectsBeneath.length === 0) this.attributes.speedY = angularMaxSpeed;
-        } else if (!this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
+        } else if (!GameCreator.keys.keyUpPressed && !GameCreator.keys.keyRightPressed && !GameCreator.keys.keyDownPressed && GameCreator.keys.keyLeftPressed) {
             this.facing = 7;
             if (this.objectsLeft.length === 0) this.attributes.speedX = -maxSpeed;
             this.attributes.speedY = 0;
-        } else if (this.parent.keyUpPressed && !this.parent.keyRightPressed && !this.parent.keyDownPressed && this.parent.keyLeftPressed) {
+        } else if (GameCreator.keys.keyUpPressed && !GameCreator.keys.keyRightPressed && !GameCreator.keys.keyDownPressed && GameCreator.keys.keyLeftPressed) {
             this.facing = 8;
             if (this.objectsLeft.length === 0) this.attributes.speedX = -angularMaxSpeed;
             if (this.objectsAbove.length === 0) this.attributes.speedY = -angularMaxSpeed;

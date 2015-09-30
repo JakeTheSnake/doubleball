@@ -266,12 +266,7 @@
             $(document).off("mouseup.gameKeyListener");
             $(GameCreator.mainCanvas).off(".runningScene");
             $(GameCreator.mainCanvas).css("cursor", "default");
-            var globalObjects = Object.keys(GameCreator.globalObjects);
-            globalObjects.forEach(function(objectName) {
-                if(GameCreator.globalObjects[objectName].resetKeys) { 
-                    GameCreator.globalObjects[objectName].resetKeys();
-                }
-            });
+            GameCreator.resetKeys();
         },
         pauseGame: function() {
             var objectName, obj, keyName;
@@ -283,30 +278,7 @@
             $(document).off("mouseup.gameKeyListener");
             $(GameCreator.mainCanvas).css("cursor", "default");
             //Set all keypresses to false here since we turn off keyUp.
-            for (objectName in GameCreator.globalObjects) {
-                if (GameCreator.globalObjects.hasOwnProperty(objectName)) {
-                    obj = GameCreator.globalObjects[objectName];
-                    if (obj.keyPressed) {
-                        for (keyName in obj.keyPressed) {
-                            if (obj.keyPressed.hasOwnProperty(keyName)) {
-                                obj.keyPressed[keyName] = false;
-                                if (obj.keyUpPressed) {
-                                    obj.keyUpPressed = false;
-                                }
-                                if (obj.keyDownPressed) {
-                                    obj.keyDownPressed = false;
-                                }
-                                if (obj.keyLeftPressed) {
-                                    obj.keyLeftPressed = false;
-                                }
-                                if (obj.keyRightPressed) {
-                                    obj.keyRightPressed = false;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            GameCreator.resetKeys();
         },
         restartGame: function() {
             if (GameCreator.state === 'directing') {
@@ -507,7 +479,8 @@
 
         initializeKeyListeners: function() {
             GameCreator.resetKeys();
-            $(GameCreator.mainCanvas).on("keydown.gameKeyListener", function(e) {
+            window.onkeydown = function(e) {
+                var key = e.keyCode || e.which;
                 switch (e.which) {
                     case 16:
                         GameCreator.keys.keyPressed.shift = true;
@@ -541,8 +514,9 @@
                         return;
                 }
                 e.preventDefault();
-            });
-            $(GameCreator.mainCanvas).on("keyup.gameKeyListener", function(e) {
+            };
+            window.onkeyup = function(e) {
+                var key = e.keyCode || e.which;
                 switch (e.which) {
                     case 16:
                         GameCreator.keys.keyPressed.shift = false;
@@ -558,25 +532,25 @@
                         break;
                     case 65:
                     case 37:
-                        GameCreator.keys.keyPressed.left = false;
+                        GameCreator.keys.keyLeftPressed = false;
                         break;
                     case 87:
                     case 38:
-                        GameCreator.keys.keyPressed.up = false;
+                        GameCreator.keys.keyUpPressed = false;
                         break;
                     case 68:
                     case 39:
-                        GameCreator.keys.keyPressed.right = false;
+                        GameCreator.keys.keyRightPressed = false;
                         break;
                     case 83:
                     case 40:
-                        GameCreator.keys.keyPressed.down = false;
+                        GameCreator.keys.keyDownPressed = false;
                         break;
                     default:
                         return;
                 }
                 e.preventDefault();
-            });
+            };
             $(GameCreator.mainCanvas).on("mousedown.gameKeyListener", function(e) {
                 switch (e.which) {
                     case 1:

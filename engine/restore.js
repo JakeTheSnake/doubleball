@@ -5,8 +5,8 @@ $.extend(GameCreator, {
         GameCreator.scenes = [];
         GameCreator.globalObjects = {};
         GameCreator.renderableObjects = [];
-        GameCreator.width = savedGame.width || GCWidth;
-        GameCreator.height = savedGame.height || GCHeight;
+        GameCreator.width = savedGame.width || GameCreator.width;
+        GameCreator.height = savedGame.height || GameCreator.height;
 
         //Load globalObjects
         var globalObjects = Object.keys(savedGame.globalObjects);

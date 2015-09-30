@@ -14,10 +14,6 @@
 
         GameCreator.helpers.setStandardProperties(this, args);
 
-        this.keyLeftPressed = false;
-        this.keyRightPressed = false;
-        this.keyUpPressed = false;
-
         this.getDefaultState().attributes.accY = (!args.accY && args.accY !== 0) ? [5] : args.accY;
         this.getDefaultState().attributes.acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
         this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
@@ -49,15 +45,15 @@
 
     GameCreator.PlatformObject.prototype.calculateSpeed = function() {
         //Should only be able to affect movement if there is something beneath object.
-        if (this.parent.keyUpPressed && this.objectsBeneath.length > 0) {
+        if (GameCreator.keys.keyUpPressed && this.objectsBeneath.length > 0) {
             this.attributes.speedY = -600;
         }
-        if (this.parent.keyRightPressed) {
+        if (GameCreator.keys.keyRightPressed) {
             this.facingLeft = false;
             if (this.objectsRight.length === 0) {
                 this.attributes.accX = this.attributes.acceleration;
             }
-        } else if (this.parent.keyLeftPressed) {
+        } else if (GameCreator.keys.keyLeftPressed) {
             this.facingLeft = true;
             if (this.objectsLeft.length === 0) {
                 this.attributes.accX = -this.attributes.acceleration;

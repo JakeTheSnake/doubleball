@@ -2,8 +2,8 @@ $(document).ready(function() {
     var GCWidth = 1000;
     var GCHeight = 650;
     try {
-        GameCreator.height = window.gon.game.height;
-        GameCreator.width = window.gon.game.width ;
+        GameCreator.height = window.gon.game.height || GCHeight;
+        GameCreator.width = window.gon.game.width || GCWidth;
     } catch (e) {
         GameCreator.height = GCHeight;
         GameCreator.width = GCWidth;

@@ -15,7 +15,7 @@ module("System Test: Play Mode - PlatformObject", {
 });
 
 test("Move left test", function() {
-    runtimeObj.parent.keyLeftPressed = true;
+    GameCreator.keys.keyLeftPressed = true;
 
     GameCreator.runFrame(10);
 
@@ -23,7 +23,7 @@ test("Move left test", function() {
 });
 
 test("Moved right test", function() {
-    runtimeObj.parent.keyRightPressed = true;
+    GameCreator.keys.keyRightPressed = true;
 
     GameCreator.runFrame(10);
 
