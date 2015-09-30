@@ -101,6 +101,7 @@ GameCreator.conditions = {
         params: {
             state: {
                 param: GameCreator.StateParameter,
+                component: StateParam,
                 mandatory: false,
                 defaultValue: 0
             }

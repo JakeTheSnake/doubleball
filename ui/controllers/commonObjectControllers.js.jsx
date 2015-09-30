@@ -16,7 +16,6 @@ GameCreator.commonObjectControllers = {
         object.setupOnClickActionsForm = GameCreator.commonObjectControllers.setupOnClickActionsForm;
         object.setupOnDestroyActionsForm = GameCreator.commonObjectControllers.setupOnDestroyActionsForm;
         object.setupOnCreateActionsForm = GameCreator.commonObjectControllers.setupOnCreateActionsForm;
-        object.setupEditCounterEvents = GameCreator.commonObjectControllers.setupEditCounterEvents;
         object.setupStatesColumn = GameCreator.commonObjectControllers.setupStatesColumn;
         object.setupEditStateForm = GameCreator.commonObjectControllers.setupEditStateForm;
         object.setupCountersForm = GameCreator.commonObjectControllers.setupCountersForm;
@@ -40,6 +39,7 @@ GameCreator.commonObjectControllers = {
      * COMMON OBJECT CONTROLLERS  *
      *****************************/
     setupPropertiesForm: function(container) {
+        React.unmountComponentAtNode(container);
         var globalObj = this;
         var html = this.getPropertiesContent();
         $(container).html(html);
@@ -160,6 +160,7 @@ GameCreator.commonObjectControllers = {
     },
 
     setupStatesColumn: function(container, selectedState) {
+        React.unmountComponentAtNode(container);
         $(container).html(GameCreator.htmlStrings.getColumn("States", "dialogue-panel-states"));
         $(container).append('<div id="dialogue-state-content"></div>');
 
@@ -253,6 +254,7 @@ GameCreator.commonObjectControllers = {
     },
 
     setupEventsForm: function(container) {
+        React.unmountComponentAtNode(container);
         var globalObj = this;
         var html = this.getEventsContent();
         $(container).html(html);
@@ -287,35 +289,6 @@ GameCreator.commonObjectControllers = {
         renderCounterEditor();
     },
     
-    setupEditCounterEvents: function(counterName) {
-        var container = $('#dialogue-counter-content');
-        container.html(GameCreator.htmlStrings.getColumn('Events', "dialogue-panel-counter-events"));
-        var counterEventContent = document.createElement('div');
-        container.append(counterEventContent);
-        $('#dialogue-panel-counter-events').html(this.getCounterEventsContent(counterName));
-        var globalObj = this;
-        $("#edit-counter-event-actions-content").html("");
-        $("#add-new-counter-event-button").on("click", function() {
-            $('#dialogue-panel-counter-events').append(GameCreator.htmlStrings.getCounterEventForm('dialogue-add-counter-event'));
-            $("#dialogue-panel-counter-events .saveButton").one("click", function() {
-                var eventType = GameCreator.helpers.getValue($('#dialogue-add-counter-event select'));
-                var eventValue = GameCreator.helpers.getValue($('#dialogue-add-counter-event input'));
-                globalObj.parentCounters[counterName][eventType][eventValue] = [];
-                globalObj.setupEditCounterEvents(counterName, container);
-            });
-        });
-        
-        container.find(".counterEventMenuElement").on("click", function() {
-            var eventType = $(this).data("type");
-            var eventValue = $(this).data("value");
-            $(this).parent().find('.counterEventMenuElement').removeClass('active');
-            $(this).addClass('active');
-            var onCounterEventSets = globalObj.parentCounters[counterName].getCounterEventSets(eventType, eventValue);
-            var selectableActions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);
-            GameCreator.UI.setupEditEventColumns(onCounterEventSets, $(counterEventContent), selectableActions, globalObj);
-        }); 
-    },
-
 
     /******************************
      * PLAYER OBJECT CONTROLLERS  *
