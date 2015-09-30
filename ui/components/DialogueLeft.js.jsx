@@ -22,7 +22,9 @@ var GamePropertiesForm = React.createClass({
 	},
 	
 	onChange: function(event) {
-		this.state.properties[event.target.dataset.prop] = event.target.value;
+    if (Number(event.target.value) && Number(event.target.value) > 0 && Number(event.target.value) < 1500) {
+		  this.state.properties[event.target.dataset.prop] = Number(event.target.value);
+    }
 	},
 
 	saveForm: function() {
