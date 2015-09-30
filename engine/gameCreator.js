@@ -406,11 +406,15 @@
         changeState: function(runtimeObj, params) {
             var i, selectedObjectId = params.objectId;
             if (selectedObjectId && selectedObjectId !== 'this') {
+                var globalObj = GameCreator.helpers.getGlobalObjectById(selectedObjectId);
+                if (globalObj.attributes.unique) {
+                    globalObj.currentState = Number(params.objectState);
+                }
                 var runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));
                 for (i = 0; i < runtimeObjects.length; i += 1) {
                     runtimeObjects[i].setState(Number(params.objectState));
                 }
-            } else {
+            } else if (selectedObjectId === 'this') {
                 runtimeObj.setState(Number(params.objectState));
             }
         },
