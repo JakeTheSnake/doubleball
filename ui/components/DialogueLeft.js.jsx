@@ -39,7 +39,7 @@ var GamePropertiesForm = React.createClass({
 						<label>Width</label>
 					</div>
 					<div className="input-container">
-						<input type="text" placeholder="Height" defaultValue={this.state.properties.height} />
+						<input type="text" placeholder="Height" defaultValue={this.state.properties.height} data-prop="height" onChange={this.onChange}/>
 						<label>Height</label>
 					</div>
 					<div className="btn-group sequenced">
