@@ -132,6 +132,7 @@
             var i, obj, dragFunc, mouseLeft, mouseTop;
             GameCreator.reset();
             scene.reset();
+            GameCreator.selectedObject = null;
             GameCreator.setupScenePropertiesForm();
             GameCreator.UI.drawSceneObjectLibrary();
             scene.drawBackground();
@@ -194,6 +195,7 @@
                     dragFunc = GameCreator.hoveredObject.getDragFunction(mouseLeft, mouseTop);
                     GameCreator.selectedObject = GameCreator.hoveredObject;
                     GameCreator.UI.editSceneObject();
+                    GameCreator.UI.setSelectedSceneObjectInLibrary();
                     $('.route-node-container').addClass('dragging');
                 }
                 GameCreator.render(false);

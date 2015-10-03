@@ -36,11 +36,7 @@ GameCreator.UI = {
         });
 
         $("#library-tabs a").on('click', function() {
-            var id = $(this).data('panelid');
-            $('.object-library-panel').hide();
-            $('#' + id).show();
-            $(this).parent().find('a').removeClass('active');
-            $(this).addClass('active');
+            GameCreator.UI.setObjectLibraryTab($(this));
         });
 
         $('#toolbar-global-counters').click(GameCreator.UI.openGlobalCountersDialogue);
@@ -184,12 +180,24 @@ GameCreator.UI = {
         }
     },
 
+    setObjectLibraryTab: function(tabElement) {
+        var id = $(tabElement).data('panelid');
+        $('.object-library-panel').hide();
+        $('#' + id).show();
+        $('#library-tabs a').removeClass('active');
+        $(tabElement).addClass('active');
+    },
+
+    setSelectedSceneObjectInLibrary: function() {
+        GameCreator.UI.setObjectLibraryTab(document.getElementById('scene-object-library-tab'));
+    },
+
     setupSceneLibraryItemListeners: function(listElementButton, sceneObject) {
         $(listElementButton).on("click", function(e){
             $('.library-scene-object-button').removeClass('active');
             $(listElementButton).addClass('active');
             GameCreator.selectedObject = sceneObject;
-            GameCreator.UI.editSceneObject();        
+            GameCreator.UI.editSceneObject();
         });
     },
 
@@ -202,9 +210,7 @@ GameCreator.UI = {
             $('#edit-global-object-button').removeClass('disabled');
             $('#rename-global-object-button').removeClass('disabled');
             GameCreator.selectedLibraryObject = globalObj;
-            var previewImage = document.createElement('img');
-            previewImage.src = globalObj.getDefaultState().attributes.image.src;
-            $('#library-preview').html(previewImage);
+            GameCreator.UI.setPreviewImage(globalObj.getDefaultState().attributes.image.src);
             $('.library-global-object-button').removeClass('active');
             $(listElementButton).addClass('active');
             GameCreator.UI.setSelectedGlobalObject(globalObj);
@@ -219,6 +225,12 @@ GameCreator.UI = {
         $(listElementButton).on("mousedown", function(e){
             GameCreator.UI.dragGlobalObjectToScene(e, globalObj);
         });
+    },
+
+    setPreviewImage: function(imgSrc) {
+        var previewImage = document.createElement('img');
+        previewImage.src = imgSrc;
+        $('.library-preview').html(previewImage);
     },
 
     dragGlobalObjectToScene: function(e, globalObj) {
