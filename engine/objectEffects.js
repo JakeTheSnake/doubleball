@@ -1,6 +1,12 @@
 GameCreator.effects = {};
 
-GameCreator.effects.destroyEffects = {'None': 'none', 'FadeOut': 'FadeOut', 'Shrink': 'Shrink', 'RiseAndFade': 'RiseAndFade'};
+GameCreator.effects.destroyEffects = {
+    'None': 'none',
+    'FadeOut': 'FadeOut',
+    'Shrink': 'Shrink',
+    'RiseAndFade': 'RiseAndFade',
+    'Explode': 'Explode'
+};
 
 GameCreator.effects.FadeOut = function(runtimeObj) {
     this.x = runtimeObj.attributes.x;
@@ -77,6 +83,33 @@ GameCreator.effects.RiseAndFade.prototype.draw = function(context) {
         context.globalAlpha = this.currentAlpha;
         context.drawImage(this.runtimeObj.getCurrentImage(), this.runtimeObj.attributes.x, this.y, this.runtimeObj.attributes.width, this.runtimeObj.attributes.height);
         context.globalAlpha = 1.0;
+        return true;
+    }
+    return false;
+}
+
+GameCreator.effects.Explode = function(runtimeObj) {
+    this.runtimeObj = runtimeObj;
+    this.fadeEffect = new GameCreator.effects.FadeOut(runtimeObj);
+    this.growthEffect = new GameCreator.effects.Shrink(runtimeObj);
+    this.growthEffect.shrinkTime = -200;
+}
+
+GameCreator.effects.Explode.prototype.update = function(deltaTime) {
+    this.fadeEffect.update(deltaTime);
+    this.growthEffect.update(deltaTime);
+}
+
+GameCreator.effects.Explode.prototype.draw = function(context) {
+    if (this.fadeEffect.currentAlpha >= 0) {
+        try {
+            context.globalAlpha = this.fadeEffect.currentAlpha;
+            context.drawImage(this.runtimeObj.getCurrentImage(), this.growthEffect.x, this.growthEffect.y, this.growthEffect.width, this.growthEffect.height);
+            context.globalAlpha = 1.0;
+        } catch (e) {
+            console.log("Could not draw image for object: " + this.runtimeObj);
+        }
+        
         return true;
     }
     return false;
