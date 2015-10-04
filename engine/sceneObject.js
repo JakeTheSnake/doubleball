@@ -86,7 +86,7 @@
         this.attributes.height = args.height !== undefined ? args.height.slice(0) : state.attributes.height.slice(0);
         
         this.objectName = args.objectName !== undefined ? args.objectName : globalObj.objectName;
-        this.attributes.instanceId = args.instanceId ? args.instanceId : this.objectName + GameCreator.getUniqueId();
+        this.attributes.instanceId = args.instanceId ? args.instanceId : GameCreator.getUniqueInstanceId(globalObj);
 
         globalObj.instantiateSceneObject(this, args);
 

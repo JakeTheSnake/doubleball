@@ -290,7 +290,7 @@ var WhenGroupItem = React.createClass({
                 conditions.push(<ConditionItem key={i} onRemove={this.removeCondition.bind(this, i)} condition={this.props.whenGroup.conditions[i]}/>);
             }
             if (!conditions.length) {
-                conditions.push(<div className="parameter-header"><span>Always</span></div>);
+                conditions.push(<div key={"Always"} className="parameter-header"><span>Always</span></div>);
             }
             return (
                 <li className='active'>

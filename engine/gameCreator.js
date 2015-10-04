@@ -43,7 +43,6 @@
         selectedObject: undefined, //The currently selected scene object.
         hoveredObject: undefined,
         draggedNode: undefined,
-        idCounter: 0, // Counter used for various unique ids.
         globalIdCounter: 0, // Counter used for global objects ID
 
         initialize: function() {
@@ -259,6 +258,7 @@
             this.renderableObjects = [];
             this.objectsToDestroy = [];
             this.eventableObjects = [];
+            this.currentEffects = [];
             $(document).off("keydown.gameKeyListener");
             $(document).off("keyup.gameKeyListener");
             $(document).off("mousemove.gameKeyListener");
@@ -340,6 +340,22 @@
             }
             return allGlobalObjects;
         },
+
+        getUniqueInstanceId: function(globalObj) {
+            var runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(globalObj.id);
+            var minimumId = 1;
+            var parentName = globalObj.objectName;
+            for (var i = 0; i < runtimeObjects.length; i += 1) {
+                if (runtimeObjects[i].attributes.instanceId.indexOf(parentName) === 0) {
+                    var instanceNo = Number(runtimeObjects[i].attributes.instanceId.substring(parentName.length));
+                    if (minimumId <= instanceNo) {
+                        minimumId = instanceNo + 1;
+                    }
+                }
+            }
+            return parentName + minimumId;
+        },
+
 
         changeCounter: function(runtimeObj, params) {
             var selectedObjectId = params.objId;
@@ -437,10 +453,6 @@
                     return collection[i];
                 }
             }
-        },
-        getUniqueId: function() {
-            this.idCounter += 1;
-            return this.idCounter;
         },
 
         resetGlobalCounters: function() {

@@ -69,7 +69,6 @@ $.extend(GameCreator, {
 
         GameCreator.globalCounters = GameCreator.restoreGlobalCounters(savedGame.globalCounters);
 
-        GameCreator.idCounter = savedGame.idCounter;
         GameCreator.globalIdCounter = savedGame.globalIdCounter;
         GameCreator.uniqueSceneId = savedGame.uniqueSceneId;
         GameCreator.activeSceneId = GameCreator.scenes[0].id;

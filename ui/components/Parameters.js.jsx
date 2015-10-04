@@ -312,15 +312,15 @@ var TimingParam = React.createClass({
             var collection = this.props.selectableTimings;
             var options = [];
             var names = Object.keys(collection);
-            options.push(<option value='now'>now</option>);
+            options.push(<option key={"now"} value='now'>now</option>);
             for(var i = 0; i < names.length; i += 1) {
                 if(collection[names[i]]) {
                     options.push(<option key={i} value={names[i]}>{names[i]}</option>);
                 }
             }
-            typeSelection = <select className="selectorField" onChange={this.timingSelected} value={this.state.type}>{options}</select>;
+            typeSelection = <select key="typeSelection" className="selectorField" onChange={this.timingSelected} value={this.state.type}>{options}</select>;
             if (this.state.type !== 'now') {
-                valueInput = <input type="text" className="numberField" data-type="number" defaultValue={this.state.time}/>
+                valueInput = <input key="numberInput" type="text" className="numberField" data-type="number" defaultValue={this.state.time}/>
             }
             html = [typeSelection, valueInput];
 

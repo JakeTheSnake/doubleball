@@ -326,12 +326,11 @@
 
 
         saveState: function() {
-            var results = {globalObjects: {}, scenes: [], idCounter: 0, globalCounters: {}};
+            var results = {globalObjects: {}, scenes: [], globalCounters: {}};
 
             results.globalObjects = GameCreator.saveGlobalObjects();
             results.scenes = GameCreator.saveScenes();
             results.globalCounters = GameCreator.globalCounters;
-            results.idCounter = GameCreator.idCounter;
             results.globalIdCounter = GameCreator.globalIdCounter;
             results.uniqueSceneId = GameCreator.uniqueSceneId;
             results.version = {
