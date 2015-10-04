@@ -32,6 +32,28 @@ $(document).ready(function() {
         GameCreator.restoreState(gon.game);
         setTimeout(GameCreator.playGame, 0)
     }
+    /*
+    var getQueryParam = function(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    };
+    if (window.gon && gon.game != null) {
+        GameCreator.restoreState(gon.game);
+        setTimeout(GameCreator.playGame, 0);
+        if (gon.gameId === 2 && ) {
+            var a = getQueryParam('a');
+            setTimeout(function() {
+                if (false) { // Replace with check if score should be sent.
+                    var s = 5; // Replace with the score counter value.
+                    var url = 'http://www.what.se/?a=' + a + '&s=' + btoa(s); // Score should be base64-encoded
+                    document.location.href = url;
+                }
+            })
+        }
+    }
+    */
 
     
 });
