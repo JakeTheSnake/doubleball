@@ -83,6 +83,8 @@ var createSplash = function() {
     madeBy.innerHTML = "made using";
     var afLogo = document.createElement('img');
     afLogo.src = "<%= asset_path 'generic/header_logo.png' %>";
+    afLogo.onclick = function() { window.location.href = "http://www.arcadeforge.io/"; }
+    afLogo.style.cursor = 'pointer';
     splash.appendChild(splashTitle);
     splash.appendChild(playButton);
     splash.appendChild(divider);
