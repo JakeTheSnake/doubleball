@@ -1,3 +1,5 @@
+(function() {
+
 $(document).ready(function() {
     var GCWidth = 1000;
     var GCHeight = 650;
@@ -8,6 +10,9 @@ $(document).ready(function() {
         GameCreator.height = GCHeight;
         GameCreator.width = GCWidth;
     }
+
+    createSplash();
+    createSplashOverlay();
 
     GameCreator.bgCanvas = document.createElement("canvas");
     GameCreator.bgCanvas.id = "bg-canvas"
@@ -22,6 +27,7 @@ $(document).ready(function() {
     GameCreator.mainCanvas.width = GameCreator.width;
     GameCreator.mainCanvas.height = GameCreator.height;
     $("#canvas-container").append(GameCreator.mainCanvas);
+
    
     GameCreator.state = 'playing';
     GameCreator.engineOnly = true;
@@ -30,7 +36,6 @@ $(document).ready(function() {
 
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
-        setTimeout(GameCreator.playGame, 0)
     }
     /*
     var getQueryParam = function(name) {
@@ -58,3 +63,40 @@ $(document).ready(function() {
     
 });
     
+var createSplash = function() {
+    var splash = document.getElementById('splash');
+    splash.style.width = GameCreator.width + "px";
+    splash.style.height = GameCreator.height + "px";
+    var splashTitle = document.createElement('h2');
+    var divider = document.createElement('span');
+    divider.innerHTML = "<br/><br/><br/></br>";
+    splashTitle.innerHTML = gon.gameName;
+    var playButton = document.createElement('a');
+    playButton.innerHTML = "&#9658;";
+    playButton.href = "#";
+    playButton.onclick = function() {
+        $('#splash').hide();
+        $('#splash-overlay').hide();
+        GameCreator.playGame();
+    }
+    var madeBy = document.createElement('p');
+    madeBy.innerHTML = "made using";
+    var afLogo = document.createElement('img');
+    afLogo.src = "<%= asset_path 'generic/header_logo.png' %>";
+    splash.appendChild(splashTitle);
+    splash.appendChild(playButton);
+    splash.appendChild(divider);
+    splash.appendChild(madeBy);
+    splash.appendChild(afLogo);
+}
+
+var createSplashOverlay = function() {
+    var splash = document.getElementById('splash');
+    var overlay = document.createElement('div');
+    overlay.id = 'splash-overlay';
+    overlay.style.width = GameCreator.width + "px";
+    overlay.style.height = GameCreator.height + "px";
+    splash.parentElement.appendChild(overlay);
+}
+
+})();
