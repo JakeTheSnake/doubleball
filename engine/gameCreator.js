@@ -563,6 +563,7 @@
                 }
                 e.preventDefault();
             };
+            window.ontouchend = window.onkeyup;
             $(GameCreator.mainCanvas).on("mousedown.gameKeyListener", function(e) {
                 switch (e.which) {
                     case 1:
