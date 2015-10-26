@@ -106,20 +106,30 @@ var createSplashOverlay = function() {
 }
 
 var resize = function() {
-    $('.border-right').hide();
+    $('.border-right').remove();
+    $('section').css('padding', '0px');
     var height = window.innerHeight;
-    var width = GameCreator.width * height/GameCreator.height;
+    GameCreator.canvasSizeFactor = height/GameCreator.height;
+    var width = GameCreator.width * GameCreator.canvasSizeFactor;
 
     GameCreator.bgCanvas.style.width = width + 'px';
     GameCreator.bgCanvas.style.height = height + 'px';
     GameCreator.mainCanvas.style.width = width + 'px';
     GameCreator.mainCanvas.style.height = height + 'px';
+    GameCreator.bgCanvas.top = 0;
+    GameCreator.mainCanvas.top = 0;
+    GameCreator.bgCanvas.left = 0;
+    GameCreator.mainCanvas.left = 0;
     var splash = document.getElementById('splash');
     var overlay = document.getElementById('splash-overlay');
     splash.style.width = width + 'px';
     overlay.style.width = width + 'px';
     splash.style.height = height + 'px';
     overlay.style.height = height + 'px';
+    splash.top = 0;
+    overlay.top = 0;
+    splash.left = 0;
+    overlay.left = 0;
 }
 
 

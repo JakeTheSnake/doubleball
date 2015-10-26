@@ -52,8 +52,10 @@
     GameCreator.MouseObject.prototype.move = function() {
         GameCreator.invalidate(this);
         var offset = $(GameCreator.mainCanvas).offset();
-        this.attributes.x = this.parent.latestMouseX - offset.left;
-        this.attributes.y = this.parent.latestMouseY - offset.top;
+
+        this.attributes.x = (this.parent.latestMouseX / GameCreator.canvasSizeFactor) - offset.left;
+        this.attributes.y = (this.parent.latestMouseY / GameCreator.canvasSizeFactor) - offset.top;
+
         if (this.attributes.x + this.attributes.width > this.attributes.maxX) {
             //This check is needed to prevent "flip-flopping" when the mousemove area is smaller than the object.
             if(this.attributes.maxX - this.attributes.minX >= this.attributes.width) {

@@ -14,6 +14,7 @@
         activeSceneId: 0,
 
         sounds: {}, //All sounds within the current game
+        canvasSizeFactor: 1,
 
         //The runtime arrays contain the current state of the game.
         collidableObjects: [],
