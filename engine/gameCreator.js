@@ -409,6 +409,8 @@
         },
         
         getClickedObject: function(x, y) {
+            x = x / GameCreator.canvasSizeFactor;
+            y = y / GameCreator.canvasSizeFactor;
             var i, runtimeObj;
             for (i = GameCreator.renderableObjects.length - 1; i >= 0; i -= 1) {
                 runtimeObj = GameCreator.renderableObjects[i];
