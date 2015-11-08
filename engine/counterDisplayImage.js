@@ -36,6 +36,9 @@ GameCreator.CounterDisplayImage.prototype.draw = function(context, obj) {
         } else if (counterCarrier.counters[obj.attributes.counterName]) {
             value = counterCarrier.counters[obj.attributes.counterName].value;
         }
+    } else if (GameCreator.globalCounters[obj.attributes.counterName]) {
+        // The counter carrier is nested within global counters.
+        value = GameCreator.globalCounterCarriers[obj.attributes.counterName].value;
     }
     var currentAttributes = obj.parent.getDefaultState().attributes;
     if ($(currentAttributes.image).data('loaded')) {

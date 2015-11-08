@@ -28,6 +28,8 @@ $(document).ready(function() {
     $("#canvas-container").append(GameCreator.mainCanvas);
 
     if (isMobile()) {
+        $('.border-right').remove();
+        $('section').css('padding', '0px');
         $('#splash > *').css('top', '10px');
         $('#splash > a').css('font-size', '80pt');
         window.addEventListener('load', resize, false);
@@ -71,39 +73,22 @@ var createSplash = function() {
     var splash = document.getElementById('splash');
     splash.style.width = GameCreator.width + "px";
     splash.style.height = GameCreator.height + "px";
-    var splashTitle = document.createElement('h1');
-    splashTitle.innerHTML = gon.gameName;
-    var playButton = document.createElement('a');
-    playButton.innerHTML = "<b>Play</b>";
-    playButton.onclick = function() {
+    document.getElementById('game-title').innerHTML = gon.gameName;
+    document.getElementById('play-button').onclick = function() {
         $('#splash').hide();
         $('#splash-overlay').hide();
         GameCreator.playGame();
     }
-    var madeBy = document.createElement('p');
-    madeBy.innerHTML = "made using";
-    var afLogo = document.createElement('img');
-    afLogo.src = "<%= asset_path 'generic/header_logo.png' %>";
-    afLogo.onclick = function() { window.location.href = "http://www.arcadeforge.io/"; }
-    afLogo.style.cursor = 'pointer';
-    splash.appendChild(splashTitle);
-    splash.appendChild(playButton);
-    splash.appendChild(madeBy);
-    splash.appendChild(afLogo);
 }
 
 var createSplashOverlay = function() {
     var splash = document.getElementById('splash');
-    var overlay = document.createElement('div');
-    overlay.id = 'splash-overlay';
+    var overlay = document.getElementById('splash-overlay');
     overlay.style.width = GameCreator.width + "px";
     overlay.style.height = GameCreator.height + "px";
-    splash.parentElement.appendChild(overlay);
 }
 
 var resize = function() {
-    $('.border-right').remove();
-    $('section').css('padding', '0px');
     var height = window.innerHeight;
     GameCreator.canvasSizeFactor = height/GameCreator.height;
     var width = GameCreator.width * GameCreator.canvasSizeFactor;

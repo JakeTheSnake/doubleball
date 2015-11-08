@@ -36,14 +36,17 @@ GameCreator.CounterDisplayText.objectAttributes = {
 GameCreator.CounterDisplayText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var value = 0;
-    var sceneObject = GameCreator.getSceneObjectById(obj.attributes.counterCarrier);
+    var counterCarrier = GameCreator.getSceneObjectById(obj.attributes.counterCarrier);
     var i;
-    if (sceneObject) {
-        if (sceneObject.parent.attributes.unique && sceneObject.parent.counters[obj.attributes.counterName]) {
-            value = sceneObject.parent.counters[obj.attributes.counterName].value;
-        } else if (sceneObject.counters[obj.attributes.counterName]) {
-            value = sceneObject.counters[obj.attributes.counterName].value;
+    if (counterCarrier) {
+        if (counterCarrier.parent.attributes.unique && counterCarrier.parent.counters[obj.attributes.counterName]) {
+            value = counterCarrier.parent.counters[obj.attributes.counterName].value;
+        } else if (counterCarrier.counters[obj.attributes.counterName]) {
+            value = counterCarrier.counters[obj.attributes.counterName].value;
         }
+    } else if (GameCreator.globalCounters[obj.attributes.counterName]) {
+        // The counter carrier is nested within global counters.
+        value = GameCreator.globalCounterCarriers[obj.attributes.counterName].value;
     }
     context.font = obj.attributes.size + "px " + obj.attributes.font;
     context.fillStyle = obj.attributes.color;

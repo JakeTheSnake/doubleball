@@ -148,6 +148,17 @@ test("Counter Action Test", function() {
     deepEqual(counter.value, 5, "Counter value was set.");
 });
 
+test("GlobalCounter Action Test", function() {
+    GameCreator.createGlobalCounter('testCounter');
+    
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {objId: 'globalCounters', counter: "testCounter", type: "set", value: 5});
+    var counter = GameCreator.globalCounterCarriers['testCounter'];
+
+    GameCreator.checkCollisions();
+
+    deepEqual(counter.value, 5, "GlobalCounter value was set.");
+});
+
 
 test("SwitchScene Action Test", function() {
     var newScene = new GameCreator.Scene();

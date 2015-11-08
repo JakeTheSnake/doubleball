@@ -89,24 +89,40 @@ test("Counter value preserved between scenes", function() {
 module("Counter", {
   setup: function() {
     var image = new Image();
-    image.src = '../assets/red_ball.gif';
     redBall = GameCreator.addGlobalObject({image: image, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     counter = GameCreator.scenes[0].objects[0].counters["testCounter"];
     testString = "";
     GameCreator.actions["testAction"] = new GameCreator.Action({
-                                                action: function(params) {testString = params.value;},
-                                                runnable: function() {return true;}
-                                            });
+        action: function(params) { testString = params.value; },
+        runnable: function() { return true; }
+    });
   },
   teardown: function() {
-    redBall.parentCounters["testCounter"].value = 0;
     delete GameCreator.actions["testAction"];
   }
 });
 
 commonCounterTests();
+
+module("GlobalCounter", {
+    setup: function() {
+        testString = "";
+        GameCreator.actions["testAction"] = new GameCreator.Action({
+            action: function(params) { testString = params.value; },
+            runnable: function() { return true; }
+        });
+        GameCreator.createGlobalCounter('testCounter');
+        counter = GameCreator.globalCounterCarriers['testCounter'];
+    },
+    teardown: function() {
+        delete GameCreator.actions["testAction"];
+    }
+});
+
+commonCounterTests();
+
 
 
 })();

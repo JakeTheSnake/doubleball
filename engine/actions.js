@@ -78,8 +78,9 @@ GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimePara
     } else if (this.timing.type === "every") {
         timerFunction = GameCreator.timerHandler.registerInterval;
     } else {
-        if (GameCreator.actions[this.name].runnable.call(runtimeObj) && this.hasRequiredParameters(GameCreator.actions[this.name].params)) {
-          GameCreator.actions[this.name].action.call(runtimeObj, combinedParameters);
+        var action = GameCreator.actions[this.name];
+        if ((!runtimeObj || action.runnable.call(runtimeObj)) && this.hasRequiredParameters(action.params)) {
+          action.action.call(runtimeObj, combinedParameters);
           return true;
         } else {
           return false;

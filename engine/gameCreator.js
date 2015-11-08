@@ -8,6 +8,7 @@
 
         globalObjects: {}, //Contains key value pairs where key is the (unique)name of the object.
         globalCounters: {},
+        globalCounterCarriers: {},
 
         //Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
         scenes: [],
@@ -374,7 +375,7 @@
             };
 
             if (selectedObjectId === 'globalCounters') {
-                changeValue(GameCreator.globalCounters[counterName]);
+                changeValue(GameCreator.globalCounterCarriers[counterName]);
             } else {
                 if (selectedObjectId && selectedObjectId !== 'this') {
                     runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));
@@ -458,7 +459,7 @@
             }
         },
 
-        resetGlobalCounters: function() {
+        resetGlobalObjectCounters: function() {
             Object.keys(GameCreator.globalObjects).forEach(function(key) {
                 if (GameCreator.globalObjects[key].counters) {
                     Object.keys(GameCreator.globalObjects[key].counters).forEach(function(counterKey) {
@@ -466,6 +467,20 @@
                     });
                 }
             });
+        },
+
+        resetGlobalCounters: function() {
+            var counterNames = Object.keys(GameCreator.globalCounters);
+            for (var i = 0; i < counterNames.length; i += 1) {
+                var globalCounterCarrier = GameCreator.globalCounterCarriers[counterNames[i]];
+                if (!globalCounterCarrier) {
+                    var globalCounter = GameCreator.globalCounters[counterNames[i]];
+                    GameCreator.globalCounterCarriers[counterNames[i]] = GameCreator.CounterCarrier.New(null, globalCounter);
+                    //globalCounterCarrier.reset();
+                } else {
+                    globalCounterCarrier.reset();
+                }
+            }
         },
 
         resetGlobalObjects: function() {

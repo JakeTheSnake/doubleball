@@ -157,8 +157,9 @@
 
         resetScene: function(scene) {
             GameCreator.resetGlobalObjects();
-            GameCreator.switchScene(scene);
+            GameCreator.resetGlobalObjectCounters();
             GameCreator.resetGlobalCounters();
+            GameCreator.switchScene(scene);
             GameCreator.then = Date.now();
         },
 

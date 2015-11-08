@@ -35,6 +35,7 @@ GameCreator.htmlStrings = {
 
   counterCarrierInput: function(attrName, value) {
       var ids = GameCreator.getUniqueIDsWithCountersInActiveScene();
+      ids['Global Counters'] = 'globalCounters';
       return GameCreator.htmlStrings.singleSelector(ids, attrName, value);
   },
 
@@ -62,6 +63,7 @@ GameCreator.htmlStrings = {
   counterInput: function(attrName, value, globalObj) {
       var counters = {};
       var counterNames = Object.keys(globalObj.parentCounters);
+      counters['Global Counters'] = 'globalCounters';
       for (var i = 0; i < counterNames.length; i += 1) {
           counters[counterNames[i]] = counterNames[i];
       }
@@ -69,18 +71,20 @@ GameCreator.htmlStrings = {
   },
 
   sceneObjectCounterInput: function(attrName, value, globalObj, dependancy) {
-      var counterNames, counters = {};
-      var sceneObject = GameCreator.getSceneObjectById(dependancy);
-      if (sceneObject) {
-          if(sceneObject.parent.attributes && sceneObject.parent.attributes.unique) {
-              counterNames = Object.keys(sceneObject.parent.counters);
+      var counterNames = [], counters = {};
+      var selectedCounterCarrier = GameCreator.getSceneObjectById(dependancy);
+      if (dependancy === 'globalCounters') {
+          counterNames = Object.keys(GameCreator.globalCounters);
+      } else if (selectedCounterCarrier) {
+          if(selectedCounterCarrier.parent.attributes && selectedCounterCarrier.parent.attributes.unique) {
+              counterNames = Object.keys(selectedCounterCarrier.parent.counters);
           } else {
-              counterNames = Object.keys(sceneObject.counters);
-          }
-          for (var i = 0; i < counterNames.length; i += 1) {
-              counters[counterNames[i]] = counterNames[i];
+              counterNames = Object.keys(selectedCounterCarrier.counters);
           }
       }
+      for (var i = 0; i < counterNames.length; i += 1) {
+            counters[counterNames[i]] = counterNames[i];
+        }
       return GameCreator.htmlStrings.singleSelector(counters, attrName, value);
   },
 

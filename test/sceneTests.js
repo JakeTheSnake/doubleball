@@ -46,4 +46,18 @@ test("It should be possible to change state for unique object in another state",
     deepEqual(40, GameCreator.scenes[1].objects[0].attributes.width, "Width should have been changed.");
 });
 
+test("Setting a global counter value on scene start should work", function() {
+    GameCreator.createGlobalCounter('testCounter');
+    var parameters = {objId: 'globalCounters', counter: 'testCounter', type: 'set', value: 5};
+    var timing = {type: "now"};
+    var action = new GameCreator.RuntimeAction('Counter', parameters, timing);
+    var caSet = new GameCreator.ConditionActionSet();
+    caSet.actions.push(action);
+    GameCreator.scenes[0].onCreateSet = caSet;
+
+    GameCreator.playScene(GameCreator.scenes[0]);
+
+    deepEqual(5, GameCreator.globalCounterCarriers['testCounter'].value);
+});
+
 })();

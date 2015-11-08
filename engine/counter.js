@@ -21,13 +21,18 @@
                         counterCarrier.counters[counter].reset();
                     }
                 } else {
-                    counterCarrier.counters[counter] = GameCreator.sceneObjectCounter.New(sceneObject, parentCounters[counter]);
+                    counterCarrier.counters[counter] = GameCreator.CounterCarrier.New(sceneObject, parentCounters[counter]);
                 }
             }
         }
     };
 
-    GameCreator.sceneObjectCounter = {
+    GameCreator.createGlobalCounter = function(name) {
+        GameCreator.globalCounters[name] = new GameCreator.Counter();
+        GameCreator.globalCounterCarriers[name] = GameCreator.CounterCarrier.New(null, GameCreator.globalCounters[name])
+    };
+
+    GameCreator.CounterCarrier = {
         parentCounter: null,
         parentObject: null,
         value: 0,
@@ -37,7 +42,7 @@
         belowValueStates: {},
 
         New: function(parentObject, parentCounter) {
-            var obj = Object.create(GameCreator.sceneObjectCounter);
+            var obj = Object.create(GameCreator.CounterCarrier);
 
             obj.parentObject = parentObject;
             obj.parentCounter = parentCounter;

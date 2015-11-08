@@ -17,7 +17,7 @@ var DialogueBottom = React.createClass({
 var GlobalCounterDialogueBottom = React.createClass({
     addNewCounter: function(name) {
         if (GameCreator.globalCounters[name] === undefined) {
-            GameCreator.globalCounters[name] = new GameCreator.Counter();    
+            GameCreator.createGlobalCounter(name);
             this.forceUpdate();
         }
     },

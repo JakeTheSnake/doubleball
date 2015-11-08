@@ -131,6 +131,7 @@
         editScene: function(scene) {
             var i, obj, dragFunc, mouseLeft, mouseTop;
             GameCreator.reset();
+            GameCreator.resetGlobalCounters();
             scene.reset();
             GameCreator.selectedObject = null;
             GameCreator.setupScenePropertiesForm();
