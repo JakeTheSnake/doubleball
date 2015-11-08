@@ -45,7 +45,7 @@ $(document).ready(function() {
     if (window.gon && gon.game != null) {
         GameCreator.restoreState(gon.game);
     }
-    /*
+    
     var getQueryParam = function(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -56,18 +56,37 @@ $(document).ready(function() {
     if (gon && gon.gameId === 88) {
         var checkScore = function() {
             if (GameCreator.activeSceneId === 4) {
-                var a = getQueryParam('t');
-                var s = GameCreator.globalObjects.actualPlayer.counters.PointCounter.value;
-                var url = 'http://www.what.se/?a=' + a + '&s=' + btoa(s);
-                document.location.href = url;
+                var token = getQueryParam('t');
+                var score = GameCreator.globalObjects.actualPlayer.counters.PointCounter.value;
+                post('http://squeedgame.meteor.com/commitscore/', {token: token, score: score});
             } else {
                 setTimeout(checkScore, 1000);
             }
-        });
+        };
         setTimeout(checkScore, 5000);
-    }*/
-
+    }
 });
+
+function post(path, params, method) {
+    method = method || "post";
+    var form = document.createElement("form");
+    form.setAttribute("method", method);
+    form.setAttribute("action", path);
+
+    for(var key in params) {
+        if(params.hasOwnProperty(key)) {
+            var hiddenField = document.createElement("input");
+            hiddenField.setAttribute("type", "hidden");
+            hiddenField.setAttribute("name", key);
+            hiddenField.setAttribute("value", params[key]);
+
+            form.appendChild(hiddenField);
+         }
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+}
     
 var createSplash = function() {
     var splash = document.getElementById('splash');
