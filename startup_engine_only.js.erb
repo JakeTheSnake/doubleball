@@ -54,16 +54,20 @@ $(document).ready(function() {
     };
 
     if (gon && gon.gameId === 88) {
-        var checkScore = function() {
-            if (GameCreator.activeSceneId === 4) {
-                var token = getQueryParam('t');
-                var score = GameCreator.globalObjects.actualPlayer.counters.PointCounter.value;
-                post('http://squeedgame.meteor.com/commitscore/', {token: token, score: score});
-            } else {
-                setTimeout(checkScore, 1000);
-            }
-        };
-        setTimeout(checkScore, 5000);
+        var token = getQueryParam('t');
+        if (token !== undefined && token !== '') {
+            var checkScore = function() {
+                if (GameCreator.activeSceneId === 4) {
+                    var score = btoa(GameCreator.globalObjects.actualPlayer.counters.PointCounter.value);
+                    post('http://squeedgame.meteor.com/commitscore/', {token: token, score: score});
+                } else {
+                    setTimeout(checkScore, 1000);
+                }
+            };
+            setTimeout(checkScore, 5000);
+        } else {
+            alert('Registration failed! No identifier.');
+        }
     }
 });
 
