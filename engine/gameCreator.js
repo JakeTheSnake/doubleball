@@ -581,9 +581,8 @@
                 }
                 e.preventDefault();
             };
-            window.ontouchstart = window.onkeydown;
-            window.ontouchend = window.onkeyup;
-            $(GameCreator.mainCanvas).on("mousedown.gameKeyListener", function(e) {
+            
+            window.onmousedown = function(e) {
                 switch (e.which) {
                     case 1:
                         GameCreator.keys.keyPressed.leftMouse = true;
@@ -595,8 +594,8 @@
                         return;
                 }
                 e.preventDefault();
-            });
-            $(GameCreator.mainCanvas).on("mouseup.gameKeyListener", function(e) {
+            };
+            window.onmouseup = function(e) {
                 switch (e.which) {
                     case 1:
                         GameCreator.keys.pendingRelease.leftMouse = true;
@@ -608,7 +607,9 @@
                         return;
                 }
                 e.preventDefault();
-            });
+            };
+            window.ontouchstart = window.onmousedown;
+            window.ontouchend = window.onmouseup;
         },
 
     };

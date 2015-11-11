@@ -55,7 +55,7 @@ $(document).ready(function() {
 
     if (gon && gon.gameId === 88) {
         var token = getQueryParam('t');
-        if (token !== undefined && token !== '') {
+        if (token && token !== '') {
             var checkScore = function() {
                 if (GameCreator.activeSceneId === 4) {
                     var score = btoa(GameCreator.globalObjects.actualPlayer.counters.PointCounter.value);
