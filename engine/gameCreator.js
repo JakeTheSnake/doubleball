@@ -261,11 +261,12 @@
             this.objectsToDestroy = [];
             this.eventableObjects = [];
             this.currentEffects = [];
-            $(document).off("keydown.gameKeyListener");
-            $(document).off("keyup.gameKeyListener");
-            $(document).off("mousemove.gameKeyListener");
-            $(document).off("mousedown.gameKeyListener");
-            $(document).off("mouseup.gameKeyListener");
+            window.onkeydown = null;
+            window.onkeyup = null;
+            window.ontouchstart = null;
+            window.ontouchend = null;
+            window.onmousedown = null;
+            window.onmouseup = null;
             $(GameCreator.mainCanvas).off(".runningScene");
             $(GameCreator.mainCanvas).css("cursor", "default");
             GameCreator.resetKeys();

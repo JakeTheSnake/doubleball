@@ -148,8 +148,8 @@
         },
 
         playScene: function(scene) {
-            GameCreator.initializeKeyListeners();
             GameCreator.resetScene(scene);
+            GameCreator.initializeKeyListeners();
             var startNewGameLoop = GameCreator.engineOnly || (GameCreator.state !== 'directing' && GameCreator.state !== 'playing');
             GameCreator.state = 'playing';
             if (startNewGameLoop) GameCreator.gameLoop();
@@ -165,9 +165,9 @@
 
         switchScene: function(scene) {
             var i, obj;
+            scene.reset();
             GameCreator.reset();
             GameCreator.activeSceneId = scene.id;
-            scene.reset();
             scene.drawBackground();
             for (i = 0; i < scene.objects.length; i += 1) {
                 obj = $.extend({}, scene.objects[i]);

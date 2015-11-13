@@ -1464,6 +1464,10 @@ assert = QUnit.assert = {
 		});
 	},
 
+	notOk: function(result ,msg) {
+		ok(!result, msg);
+	},
+
 	/**
 	 * Assert that the first two arguments are equal, with an optional message.
 	 * Prints out both actual and expected values.
