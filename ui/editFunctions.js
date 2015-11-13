@@ -196,7 +196,6 @@
                     dragFunc = GameCreator.hoveredObject.getDragFunction(mouseLeft, mouseTop);
                     GameCreator.selectedObject = GameCreator.hoveredObject;
                     GameCreator.UI.editSceneObject();
-                    GameCreator.UI.setSelectedSceneObjectInLibrary();
                     $('.route-node-container').addClass('dragging');
                 }
                 GameCreator.render(false);

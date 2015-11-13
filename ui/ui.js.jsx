@@ -188,10 +188,6 @@ GameCreator.UI = {
         $(tabElement).addClass('active');
     },
 
-    setSelectedSceneObjectInLibrary: function() {
-        GameCreator.UI.setObjectLibraryTab(document.getElementById('scene-object-library-tab'));
-    },
-
     setupSceneLibraryItemListeners: function(listElementButton, sceneObject) {
         $(listElementButton).on("click", function(e){
             $('.library-scene-object-button').removeClass('active');

@@ -12,8 +12,12 @@ GameCreator.Action = function(args) {
     }
 };
 
-GameCreator.Action.prototype.runnable = function() {
-  return !this.isDestroyed; 
+GameCreator.Action.prototype.runnable = function(runtimeObj) {
+  if (runtimeObj) {
+    return !runtimeObj.isDestroyed; 
+  } else {
+    return true;
+  }
 };  
 
 GameCreator.RuntimeAction = function(name, params, timing) {
@@ -79,7 +83,7 @@ GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimePara
         timerFunction = GameCreator.timerHandler.registerInterval;
     } else {
         var action = GameCreator.actions[this.name];
-        if ((!runtimeObj || action.runnable.call(runtimeObj)) && this.hasRequiredParameters(action.params)) {
+        if (action.runnable(runtimeObj) && this.hasRequiredParameters(action.params)) {
           action.action.call(runtimeObj, combinedParameters);
           return true;
         } else {
@@ -91,7 +95,7 @@ GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimePara
         timerFunction(
             GameCreator.helpers.getRandomFromRange(thisAction.timing.time),
             function() {
-                if (GameCreator.actions[thisAction.name].runnable.call(thisRuntimeObj)) {
+                if (GameCreator.actions[thisAction.name].runnable(thisRuntimeObj)) {
                     GameCreator.actions[thisAction.name].action.call(thisRuntimeObj, combinedParameters);
                     return true;
                 } else {
