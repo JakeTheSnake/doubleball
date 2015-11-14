@@ -3,6 +3,8 @@
 var redBall;
 var counter;
 var testString;
+var redBallSceneObj;
+var counterCarrierId;
 
 function assertCounter(value, message) {
     deepEqual(counter.value, value, message);
@@ -51,6 +53,41 @@ function commonCounterTests() {
         counter.changeValue(-1);
         deepEqual(testString, "changed", "OnDecrease action");
     });
+
+    test("Test AtValue counter event", function() {
+        var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: "changed"}, {type: "now"});
+        var caSet = new GameCreator.ConditionActionSet();
+        caSet.actions.push(runtimeAction);
+        counter.parentCounter.atValue["1"] = [caSet];
+
+        counter.changeValue(1);
+
+        deepEqual(testString, "changed", "AtValue should trigger");
+        testString = "";
+
+        counter.setValue(0);
+        deepEqual(testString, "", "AtValue should not trigger");
+
+        counter.changeValue(1);
+        deepEqual(testString, "changed", "AtValue should trigger again");
+    });
+
+    test("Nested actions manipulating counter should behave correctly", function() {
+        var testAction = new GameCreator.RuntimeAction("testAction", {value: "changed"}, {type: "now"});
+        var counterAction = new GameCreator.RuntimeAction("Counter", {objId: counterCarrierId, counter: "testCounter", type: "set", value: 0}, {type: "now"});
+        var caSet = new GameCreator.ConditionActionSet();
+        caSet.actions.push(testAction);
+        caSet.actions.push(counterAction);
+        counter.parentCounter.atValue["1"] = [caSet];
+
+        counter.changeValue(1); // counterAction should run, resetting the counter to 0 again.
+        deepEqual(testString, "changed", "AtValue should trigger");
+        testString = "";
+
+        counter.changeValue(1); // Since counter was set to 0 between the changeValues, atValue["1"]-actions should trigger again.
+        deepEqual(testString, "changed", "AtValue should trigger again");
+
+    });
 };
 
 module("UniqueCounter", {
@@ -59,11 +96,12 @@ module("UniqueCounter", {
         image.src = '../assets/red_ball.gif';
         redBall = GameCreator.addGlobalObject({image: image, unique: true, objectName: "red_ball", width:[20], height:[30]}, "FreeObject");
         redBall.parentCounters["testCounter"] = new GameCreator.Counter();
-        GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
+        redBallSceneObj = GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
         GameCreator.scenes.push(new GameCreator.Scene());
         GameCreator.createSceneObject(redBall, GameCreator.scenes[1], {x: 5, y: 6});
         counter = GameCreator.globalObjects["red_ball"].counters["testCounter"];
         testString = "";
+        counterCarrierId = redBall.id;
         GameCreator.actions["testAction"] = new GameCreator.Action({
                                                 action: function(params) {testString = params.value;},
                                                 runnable: function() {return true;}
@@ -94,6 +132,7 @@ module("Counter", {
     GameCreator.createSceneObject(redBall, GameCreator.scenes[0], {x: 5, y: 6});
     counter = GameCreator.scenes[0].objects[0].counters["testCounter"];
     testString = "";
+    counterCarrierId = redBall.id;
     GameCreator.actions["testAction"] = new GameCreator.Action({
         action: function(params) { testString = params.value; },
         runnable: function() { return true; }
@@ -115,6 +154,7 @@ module("GlobalCounter", {
         });
         GameCreator.createGlobalCounter('testCounter');
         counter = GameCreator.globalCounterCarriers['testCounter'];
+        counterCarrierId = 'globalCounters';
     },
     teardown: function() {
         delete GameCreator.actions["testAction"];

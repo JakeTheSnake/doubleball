@@ -94,9 +94,9 @@
                 if (this.parentCounter.atValue.hasOwnProperty(value)) {
                     if (parseInt(value, 10) === this.value && !this.atValueStates[value]) {
                         caSets = this.parentCounter.atValue[value];
-                        GameCreator.helpers.runEventActions(caSets, this.parentObject);
                         this.atValueStates[value] = true;
-                    } else if (parseInt(value, 10) !== this.value) {
+                        GameCreator.helpers.runEventActions(caSets, this.parentObject);
+                    } else {
                         this.atValueStates[value] = false;
                     }
                 }

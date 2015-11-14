@@ -142,6 +142,8 @@
         GameCreator.createRuntimeObject(objectToShoot, {x: x, y: y, speedX: speedX, speedY: speedY});
     };
 
+    GameCreator.MouseObject.prototype.stop = function() {};
+
     GameCreator.MouseObject.prototype.onDestroy = function() {
         $(GameCreator.mainCanvas).off("mousemove." + this.objectName);
         this.runOnDestroyActions();
