@@ -44,4 +44,13 @@ test("Edit mode should add remove listeners from window", function() {
 
     assertAllListenersUnset();
 });
+
+test("Listeners should be set after scene swap", function() {
+    GameCreator.scenes.push(new GameCreator.Scene());
+    GameCreator.playGame();
+
+    GameCreator.switchScene(GameCreator.scenes[1]);
+    
+    assertAllListenersSet();
+});
 })();

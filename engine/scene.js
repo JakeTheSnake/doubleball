@@ -167,6 +167,7 @@
             var i, obj;
             scene.reset();
             GameCreator.reset();
+            GameCreator.initializeKeyListeners();
             GameCreator.activeSceneId = scene.id;
             scene.drawBackground();
             for (i = 0; i < scene.objects.length; i += 1) {
