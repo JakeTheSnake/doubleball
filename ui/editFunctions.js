@@ -489,6 +489,7 @@
                         GameCreator.removeReferencesToGlobalObject(globalObj[prop], globalObjId);
                     }
                 }
+                GameCreator.removeCollisionReferencesToGlobalObj(globalObj, globalObjId);
             }
             for (var i = 0; i < GameCreator.scenes.length; i += 1) {
                 GameCreator.scenes[i].onCreateSet.removeReferencesToGlobalObject(globalObjId);
@@ -496,6 +497,14 @@
             GameCreator.removeGlobalObjectFromScenes(globalObjId);
             var globalObj = GameCreator.helpers.getGlobalObjectById(globalObjId);
             delete GameCreator.globalObjects[globalObj.objectName];
+        },
+
+        removeCollisionReferencesToGlobalObj: function(globalObj, globalObjId) {
+            if (globalObj.onCollideSets) {
+                globalObj.onCollideSets = globalObj.onCollideSets.filter(function(item) {
+                    return item.id !== globalObjId;
+                });
+            }
         },
 
         removeCounterReferencesToGlobalObject: function(globalObjId) {

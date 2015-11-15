@@ -157,11 +157,6 @@ GameCreator.htmlStrings = {
       return result;
   },
 
-  collisionMenuElement: function(object) {
-      return '<div class="collisionMenuElement headingNormalBlack" data-name="' + object.objectName + '" ><span>' + object.objectName + '</span>' + '<br/>' +
-      object.getDefaultState().attributes.image.outerHTML + '</div>';
-  },
-
   defaultMenuElement: function(text) {
       return '<a class="btn tab defaultMenuElement headingNormalBlack" data-name="' + text + '">' + text + '</a>';
   },

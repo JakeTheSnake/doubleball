@@ -151,6 +151,22 @@ test("Remove global object deletes it from the list", function() {
     deepEqual(GameCreator.globalObjects[redBall.objectName], undefined, "Global Object was removed from the list");
 });
 
+test("Remove global object removes on collision references", function() {
+    var redBall = createGlobalObject("PlatformObject");
+    var collidingObject = createGlobalObject("FreeObject");
+    var fill1 = {id: collidingObject.id+1, caSets: [new GameCreator.ConditionActionSet()]};
+    var collisionItem = {id: collidingObject.id, caSets: [new GameCreator.ConditionActionSet()]};
+    var fill2 = {id: collidingObject.id+2, caSets: [new GameCreator.ConditionActionSet()]};
+    redBall.onCollideSets.push(fill1);
+    redBall.onCollideSets.push(collisionItem);
+    redBall.onCollideSets.push(fill2);
+
+    GameCreator.removeGlobalObject(collidingObject.id);
+
+    deepEqual(redBall.onCollideSets.length, 2, "One element should have been removed.");
+    deepEqual(redBall.onCollideSets[0].id, collidingObject.id+1, "Element 1 should be fill1.");
+    deepEqual(redBall.onCollideSets[1].id, collidingObject.id+2, "Element 2 should be fill2.");
+});
 
 
 })();
