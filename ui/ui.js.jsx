@@ -95,6 +95,8 @@ GameCreator.UI = {
         globalObjectNames.forEach(function(globalObjName) {
             GameCreator.UI.createLibraryItem(GameCreator.globalObjects[globalObjName]);
         });
+        $('#library-preview').off('mousedown');
+        GameCreator.UI.setPreviewImage("");
     },
 
     saveNewGlobalObject: function(objectType) {
@@ -224,9 +226,13 @@ GameCreator.UI = {
     },
 
     setPreviewImage: function(imgSrc) {
-        var previewImage = document.createElement('img');
-        previewImage.src = imgSrc;
-        $('.library-preview').html(previewImage);
+        if (imgSrc && imgSrc.length > 0) {
+            var previewImage = document.createElement('img');
+            previewImage.src = imgSrc;
+            $('.library-preview').html(previewImage);
+        } else {
+            $('.library-preview').empty();
+        }
     },
 
     dragGlobalObjectToScene: function(e, globalObj) {
