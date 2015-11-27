@@ -78,7 +78,7 @@ var GlobalObjectParam = React.createClass({
             return '<Edit>';
         } else {
             if (id === 'this') {
-                return GameCreator.UI.state.selectedGlobalItem.objectName;
+                return 'this';
             } else if (id === 'globalCounters'){
                 return 'Global';
             }
@@ -114,7 +114,15 @@ var StateParam = React.createClass({
         }
     },
     getSelectableStates: function() {
-        var globalObj = GameCreator.helpers.getGlobalObjectById(Number(this.props.observedValue));
+        var selectedValue = this.props.observedValue,
+            globalObj;
+
+        if (this.props.observedValue === 'this') {
+            globalObj = GameCreator.UI.state.selectedGlobalItem;
+        } else {
+            globalObj = GameCreator.helpers.getGlobalObjectById(Number(this.props.observedValue));
+        }
+
         var selectableStates = {};
         if (globalObj !== undefined) {
             globalObj.states.forEach(function(state) {
