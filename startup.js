@@ -89,5 +89,25 @@ $(document).ready(function() {
     GameCreator.UI.initializeUI();
 
     setTimeout(GameCreator.editScene.bind(GameCreator, GameCreator.scenes[0]), 0);
+
+    //Disable backspace navigation
+    $(window).keydown(function (e) {
+        if (e.which === 8) {
+            GameCreator.UI.state.backspacePressed = true;
+        }
+    });
+
+    $(window).keyup(function (e) {
+        if (e.which === 8) {
+            GameCreator.UI.state.backspacePressed = false;
+        }
+    });
+
+    window.onbeforeunload = function() {
+        if (GameCreator.UI.state.backspacePressed) {
+            GameCreator.UI.state.backspacePressed = false;
+            return "Are you sure you want to leave the editor? Make sure you have saved all changes.";
+        }
+    }
 });
     
