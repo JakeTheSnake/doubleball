@@ -9,6 +9,7 @@
         object.createState = GameCreator.commonObjectFunctions.createState;
         object.removeAttributeFromState = GameCreator.commonObjectFunctions.removeAttributeFromState;
         object.resetStateAttributes = GameCreator.commonObjectFunctions.resetStateAttributes;
+        object.shoot = GameCreator.commonObjectFunctions.shoot;
     }
 
     GameCreator.addObjFunctions.bounceableObjectFunctions = function(object) {
@@ -167,5 +168,57 @@
     GameCreator.commonObjectFunctions.resetStateAttributes = function(stateId) {
         var state = this.getState(stateId);
         state.attributes = $.extend({}, this.getDefaultState().attributes);
+    };
+
+    GameCreator.commonObjectFunctions.shoot = function(staticParameters) {
+        var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
+        var x = 0, y = 0, speedX = 0, speedY = 0;
+        var target, unitVector;
+        var objectToShoot = GameCreator.helpers.getGlobalObjectById(Number(staticParameters.objectToShoot));
+        var projectileAttributes = objectToShoot.getDefaultState().attributes;
+        var projectileParams = {speedY: 0, speedX: 0, x: 0, y: 0};
+        var projectileOffset = this.parent.getProjectileOriginOffset.call(this, projectileAttributes);
+
+        switch (staticParameters.projectileDirection.type) {
+            case 'Default':
+                projectileParams = this.parent.getDefaultShootParameters.call(this, projectileSpeed, projectileAttributes);
+                break;
+            case 'Up':
+                projectileParams.x = this.attributes.x + this.attributes.width / 2 - projectileAttributes.width / 2;
+                projectileParams.y = this.attributes.y - projectileAttributes.height;
+                projectileParams.speedY = -projectileSpeed;
+                break;
+            case 'Down':
+                projectileParams.x = this.attributes.x + this.attributes.width / 2 - projectileAttributes.width / 2;
+                projectileParams.y = this.attributes.y + this.attributes.height;
+                projectileParams.speedY = projectileSpeed;
+                break;
+            case 'Left':
+                projectileParams.x = this.attributes.x - objectToShoot.width;
+                projectileParams.y = this.attributes.y + this.attributes.height / 2 - projectileAttributes.height / 2;
+                projectileParams.speedX = -projectileSpeed;
+                break;
+            case 'Right':
+                projectileParams.x = this.attributes.x + this.attributes.width;
+                projectileParams.y = this.attributes.y + this.attributes.height / 2 - projectileAttributes.height / 2;
+                projectileParams.speedX = projectileSpeed;
+                break;
+            case 'Towards':
+                var possibleTargets = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(staticParameters.projectileDirection.target));
+                if (!possibleTargets || possibleTargets.length === 0) {
+                    // We did not find the target, return without shooting anything.
+                    return;
+                }
+                target = possibleTargets[0];
+                projectileParams.x = this.attributes.x + projectileOffset.x;
+                projectileParams.y = this.attributes.y + projectileOffset.y;
+                unitVector = GameCreator.helpers.calcUnitVector(
+                    target.attributes.x - projectileParams.x,
+                    target.attributes.y - projectileParams.y
+                );
+                projectileParams.speedX = unitVector.x * projectileSpeed;
+                projectileParams.speedY = unitVector.y * projectileSpeed;
+        }
+        GameCreator.createRuntimeObject(objectToShoot, projectileParams);
     };
 }());

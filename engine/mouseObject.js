@@ -98,49 +98,20 @@
         sceneObject.keyCooldown = {space: false};
     };
 
-    GameCreator.MouseObject.prototype.shoot = function(staticParameters) {
-        var x = 0, y = 0, speedX = 0, speedY = 0;
-        var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
-        var target, unitVector;
-        var objectToShoot = GameCreator.helpers.getGlobalObjectById(Number(staticParameters.objectToShoot));
-        var objectToShootAttributes = objectToShoot.getDefaultState().attributes;
-        switch (staticParameters.projectileDirection.type) {
-        case 'Default':
-        case 'Up':
-            x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
-            y = this.attributes.y - objectToShootAttributes.height;
-            speedY = -projectileSpeed;
-            break;
-        case 'Down':
-            x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
-            y = this.attributes.y + this.attributes.height;
-            speedY = projectileSpeed;
-            break;
-        case 'Left':
-            x = this.attributes.x - objectToShootAttributes.width;
-            y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
-            speedX = -projectileSpeed;
-            break;
-        case 'Right':
-            x = this.attributes.x + this.attributes.width;
-            y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
-            speedX = projectileSpeed;
-            break;
-        case 'Towards':
-            var possibleTargets = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(staticParameters.projectileDirection.target));
-            if (!possibleTargets || possibleTargets.length === 0) {
-                // We did not find the target, return without shooting anything.
-                return;
-            }
-            target = possibleTargets[0];
-            x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
-            y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
-            unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - (this.attributes.x + this.attributes.width / 2), target.attributes.y - (this.attributes.y + this.attributes.height / 2));
-            speedX = unitVector.x * projectileSpeed;
-            speedY = unitVector.y * projectileSpeed;
-            break;
-        }
-        GameCreator.createRuntimeObject(objectToShoot, {x: x, y: y, speedX: speedX, speedY: speedY});
+    GameCreator.MouseObject.prototype.getDefaultShootParameters = function() {
+        var params = {};
+        params.x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
+        params.y = this.attributes.y - objectToShootAttributes.height;
+        params.speedY = -projectileSpeed;
+        params.speedX = 0;
+        return params;
+    };
+
+    GameCreator.MouseObject.prototype.getProjectileOriginOffset = function() {
+        var result = {};
+        result.x = this.attributes.width / 2;
+        result.y = this.attributes.height / 2;
+        return result;
     };
 
     GameCreator.MouseObject.prototype.stop = function() {};

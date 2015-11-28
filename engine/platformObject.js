@@ -115,52 +115,21 @@
         sceneObject.keyCooldown = {space: false};
     };
 
-    GameCreator.PlatformObject.prototype.shoot = function(staticParameters) {
-        var projectileSpeed = GameCreator.helpers.getRandomFromRange(staticParameters.projectileSpeed);
-        var x = 0, y = 0, speedX = 0, speedY = 0;
-        var target, unitVector;
-        var objectToShoot = GameCreator.helpers.getGlobalObjectById(Number(staticParameters.objectToShoot));
-        var objectToShootAttributes = objectToShoot.getDefaultState().attributes;
-        switch (staticParameters.projectileDirection.type) {
-        case 'Default':
-            x = this.attributes.x + (this.facingLeft ? -objectToShootAttributes.width : this.attributes.width);
-            y = this.attributes.y;
-            speedX = this.facingLeft ? -projectileSpeed : projectileSpeed;
-            break;
-        case 'Up':
-            x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
-            y = this.attributes.y - objectToShootAttributes.height;
-            speedY = -projectileSpeed;
-            break;
-        case 'Down':
-            x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
-            y = this.attributes.y + this.attributes.height;
-            speedY = projectileSpeed;
-            break;
-        case 'Left':
-            x = this.attributes.x - objectToShoot.width;
-            y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
-            speedX = -projectileSpeed;
-            break;
-        case 'Right':
-            x = this.attributes.x + this.attributes.width;
-            y = this.attributes.y + this.attributes.height / 2 - objectToShootAttributes.height / 2;
-            speedX = projectileSpeed;
-            break;
-        case 'Towards':
-            var possibleTargets = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(staticParameters.projectileDirection.target));
-            if (!possibleTargets || possibleTargets.length === 0) {
-                // We did not find the target, return without shooting anything.
-                return;
-            }
-            target = possibleTargets[0];
-            x = this.attributes.x + (this.facingLeft ? 0 : this.attributes.width);
-            y = this.attributes.y;
-            unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x - (this.facingLeft ? 0 : this.attributes.width), target.attributes.y - this.attributes.y);
-            speedX = unitVector.x * projectileSpeed;
-            speedY = unitVector.y * projectileSpeed;
-        }
-        GameCreator.createRuntimeObject(objectToShoot, {x: x, y: y, speedX: speedX, speedY: speedY});
+    GameCreator.PlatformObject.prototype.getDefaultShootParameters = function(projectileSpeed, projectileAttributes) {
+        var params = {};
+        params.x = this.attributes.x + (this.facingLeft ? -projectileAttributes.width : this.attributes.width);
+        params.y = this.attributes.y;
+        params.speedX = this.facingLeft ? -projectileSpeed : projectileSpeed;
+        params.speedY = 0;
+        return params;
     };
+
+    GameCreator.PlatformObject.prototype.getProjectileOriginOffset = function() {
+        var result = {};
+        result.x = (this.facingLeft ? 0 : this.attributes.width);
+        result.y = 0;
+        return result;
+    };
+
 }());
 
