@@ -827,6 +827,8 @@ GameCreator.UI = {
         document.getElementById('bg-canvas').height = props.height;
         document.getElementById('ui-canvas').width = props.width;
         document.getElementById('ui-canvas').height = props.height;
+        document.getElementById('canvas-container').width = props.width;
+        document.getElementById('canvas-container').height = props.height;
         GameCreator.width = props.width;
         GameCreator.height = props.height;
         GameCreator.editActiveScene();

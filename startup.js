@@ -30,9 +30,13 @@ $(document).ready(function() {
     GameCreator.uiCanvas.height = GameCreator.height;
     $("#canvas-container").append(GameCreator.uiCanvas);
     
-    GameCreator.initialize();
+    var canvasContainer = document.getElementById('canvas-container');
+    if (canvasContainer) {
+        canvasContainer.width = GameCreator.width;
+        canvasContainer.height = GameCreator.height;
+    }
 
-    
+    GameCreator.initialize();
  
     var selectedGameMode = "EDIT GAME";
     $("#edit-mode-label").html(selectedGameMode);
@@ -87,6 +91,11 @@ $(document).ready(function() {
         GameCreator.activeSceneId = startupScene.id;
     }
     GameCreator.UI.initializeUI();
+
+    if (window.gon && gon.isFirstGame && !gon.game) {
+        GameCreator.setupTutorial();
+        GameCreator.launchTutorial();
+    }
 
     setTimeout(GameCreator.editScene.bind(GameCreator, GameCreator.scenes[0]), 0);
 
