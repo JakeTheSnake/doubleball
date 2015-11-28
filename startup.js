@@ -113,7 +113,7 @@ $(document).ready(function() {
     //Setup sharing link button
     $("#get-url-button").on("click", function(evt){
         var path = $(evt.target).data("href");
-        prompt("Here is the direct link to your game, don't forget to make it public to make it playable by others.", path);
+        prompt("Here is the direct link to your game, don't forget to make it 'Unlisted' or 'Published' to make it playable by people with the link.", path);
     });
 });
     
