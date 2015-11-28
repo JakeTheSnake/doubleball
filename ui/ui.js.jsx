@@ -668,7 +668,7 @@ GameCreator.UI = {
         var objectGroups = [
             {text: 'Player Objects', value: 'playerObjectTypes'}, 
             {text: 'Game Objects', value: 'gameObjectTypes'},
-            {text: 'Counter Displays', value: 'counterDisplayTypes'}
+            {text: 'Counters', value: 'counterDisplayTypes'}
         ];
         objectGroups.forEach(function(group){
             listItem = document.createElement('a');

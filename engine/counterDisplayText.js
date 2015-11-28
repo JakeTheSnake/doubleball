@@ -33,6 +33,14 @@ GameCreator.CounterDisplayText.objectAttributes = {
                         "size": GameCreator.htmlStrings.numberInput
                      };
 
+GameCreator.CounterDisplayText.prototype.onAddedToGame = function() {
+    var globalCounterNames = Object.keys(GameCreator.globalCounters)
+
+    if(globalCounterNames.indexOf(this.objectName) === -1) {
+        GameCreator.createGlobalCounter(this.objectName);
+    }
+}
+
 GameCreator.CounterDisplayText.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var value = 0;
@@ -69,6 +77,6 @@ GameCreator.CounterDisplayText.prototype.instantiateSceneObject = function(scene
     sceneObject.attributes.font = state.attributes.font;
     sceneObject.attributes.color = state.attributes.color;
     sceneObject.attributes.size = state.attributes.size;
-    sceneObject.attributes.counterCarrier = args.counterCarrier || '';
-    sceneObject.attributes.counterName = args.counterName || '';
+    sceneObject.attributes.counterCarrier = args.counterCarrier || 'globalCounters';
+    sceneObject.attributes.counterName = args.counterName || this.objectName;
 };

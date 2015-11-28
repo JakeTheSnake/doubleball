@@ -483,9 +483,9 @@ GameCreator.htmlStrings = {
     var result = ' \
     <article> \
     <div id="global-object-image" class="counter"></div> \
-    <p class="global-object-description"><strong>Counter Displays</strong> are objects that display the value of a single counter. Every counter belongs to an object and the display can be connected to a counter once it exists in a scene.</p> \
+    <p class="global-object-description"><strong>Counters</strong> are objects that contain and display a value. They can also have actions that can trigger when the counter changes or reaches a certain value.</p> \
     </article>';
 
-    return GameCreator.htmlStrings.getDescriptionColumn('Counter Displays', result);
+    return GameCreator.htmlStrings.getDescriptionColumn('Counters', result);
   },
 };

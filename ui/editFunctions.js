@@ -45,6 +45,9 @@
             globalObj.id = GameCreator.globalIdCounter;
             GameCreator.UI.createLibraryItem(globalObj);
             GameCreator.globalObjects[globalObj.objectName] = globalObj;
+            if(globalObj.onAddedToGame) {
+                globalObj.onAddedToGame();
+            }
         },
 
         directActiveScene: function() {

@@ -25,6 +25,14 @@ GameCreator.CounterDisplayImage = function(args) {
 
 GameCreator.CounterDisplayImage.objectAttributes = GameCreator.helpers.getStandardAttributes();
 
+GameCreator.CounterDisplayImage.prototype.onAddedToGame = function() {
+    var globalCounterNames = Object.keys(GameCreator.globalCounters)
+
+    if(globalCounterNames.indexOf(this.objectName) === -1) {
+        GameCreator.createGlobalCounter(this.objectName);
+    }
+}
+
 GameCreator.CounterDisplayImage.prototype.draw = function(context, obj) {
     GameCreator.invalidate(obj); //TODO: Handle this in a better way.
     var counterCarrier = GameCreator.getSceneObjectById(obj.attributes.counterCarrier);
@@ -73,6 +81,6 @@ GameCreator.CounterDisplayImage.prototype.onCreate = function() {};
 GameCreator.CounterDisplayImage.prototype.objectEnteredGame = function() {};
 
 GameCreator.CounterDisplayImage.prototype.instantiateSceneObject = function(sceneObject, args) {
-    sceneObject.attributes.counterCarrier = args.counterCarrier || '';
-    sceneObject.attributes.counterName = args.counterName || '';
+    sceneObject.attributes.counterCarrier = args.counterCarrier || 'globalCounters';
+    sceneObject.attributes.counterName = args.counterName || this.objectName;
 };

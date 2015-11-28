@@ -404,9 +404,7 @@ var TimingParam = React.createClass({
 var CounterCarrierParam = React.createClass({
     render: function(){ 
         return (
-            <tbody>
-                <GlobalObjectParam addGlobalCountersOption={true} name={this.props.name} value={this.props.value} onUpdate={this.props.onUpdate}/>
-            </tbody>
+            <GlobalObjectParam addGlobalCountersOption={true} name={this.props.name} value={this.props.value} onUpdate={this.props.onUpdate}/>
         );
     }
 });

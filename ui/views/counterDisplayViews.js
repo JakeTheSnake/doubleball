@@ -40,8 +40,7 @@
   };
 
   GameCreator.CounterDisplayImage.prototype.getDescription = function() {
-    return "This object displays a counter value as symbols. To attach a counter,\
-    drag the created object to the scene and select it, and edit the Scene Object Properties.";
+    return "This object displays the counter value in the form of images.";
   };
 
   GameCreator.CounterDisplayImage.prototype.getPropertiesForm = function() {
@@ -66,8 +65,7 @@
 
 
   GameCreator.CounterDisplayText.prototype.getDescription = function() {
-    return "This object displays a counter value as a number. To attach a counter,\
-    drag the created object to the scene and select it, and edit the Scene Object Properties.";
+    return "This object displays the counter value as a number.";
   };
 
   GameCreator.CounterDisplayText.prototype.getSceneObjectForm = function() {
