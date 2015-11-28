@@ -121,7 +121,7 @@
         var target, unitVector;
         var objectToShoot = GameCreator.helpers.getGlobalObjectById(Number(staticParameters.objectToShoot));
         var objectToShootAttributes = objectToShoot.getDefaultState().attributes;
-        switch (staticParameters.projectileDirection) {
+        switch (staticParameters.projectileDirection.type) {
         case 'Default':
             x = this.attributes.x + (this.facingLeft ? -objectToShootAttributes.width : this.attributes.width);
             y = this.attributes.y;
@@ -148,11 +148,12 @@
             speedX = projectileSpeed;
             break;
         case 'Towards':
-            target = GameCreator.getRuntimeObject(staticParameters.target);
-            if (!target) {
+            var possibleTargets = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(staticParameters.projectileDirection.target));
+            if (!possibleTargets || possibleTargets.length === 0) {
                 // We did not find the target, return without shooting anything.
                 return;
             }
+            target = possibleTargets[0];
             x = this.attributes.x + (this.facingLeft ? 0 : this.attributes.width);
             y = this.attributes.y;
             unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x - (this.facingLeft ? 0 : this.attributes.width), target.attributes.y - this.attributes.y);

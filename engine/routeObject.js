@@ -57,7 +57,7 @@
         var unitVector = GameCreator.helpers.calcUnitVector(this.speedX, this.speedY);
         var x = 0, y = 0, speedX = 0, speedY = 0;
         var target;
-        switch (staticParameters.projectileDirection) {
+        switch (staticParameters.projectileDirection.type) {
         case "Default":
             if (unitVector.x === 0 && unitVector.y === 0) {
                 speedY = -projectileSpeed; // If shooting object is stationary
@@ -89,11 +89,12 @@
             speedX = projectileSpeed;
             break;
         default:
-            target = GameCreator.getRuntimeObject(staticParameters.projectileDirection);
-            if (!target) {
+            var possibleTargets = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(staticParameters.projectileDirection.target));
+            if (!possibleTargets || possibleTargets.length === 0) {
                 // We did not find the target, return without shooting anything.
                 return;
             }
+            target = possibleTargets[0];
             x = this.attributes.x + this.attributes.width / 2;
             y = this.attributes.y + this.attributes.height / 2;
             unitVector = GameCreator.helpers.calcUnitVector(target.attributes.x - this.attributes.x, target.attributes.y - this.attributes.y);

@@ -1,9 +1,11 @@
 GameCreator.version = {
     major: 0, // Incremented on model changes that are not fully or not at all backwards-compatible even with conversion
-    minor: 1, // Incremented on model changes that are fully backwards-compatible after conversion
-    patch: 1, // Incremented on model changes that are backwards-compatible without the need of conversion.
+    minor: 2, // Incremented on model changes that are fully backwards-compatible after conversion
+    patch: 0, // Incremented on model changes that are backwards-compatible without the need of conversion.
 
     changeMessages: [],
+
+
 
     convert: function(game) {
         if (game.version === undefined) {
@@ -15,9 +17,19 @@ GameCreator.version = {
             };
         }
 
+        if (GameCreator.version.isVersionOlderThan(0, 2, 0, game)) {
+            GameCreator.version.convertTo020(game);
+        }
+
         for (var i = 0; i < GameCreator.version.changeMessages.length; i += 1) {
             console.log(GameCreator.version.changeMessages[i]);
         }
+    },
+
+    isVersionOlderThan: function(major, minor, patch, game) {
+        return game.version.major < major ||
+            game.version.minor < minor ||
+            game.version.patch < patch;
     },
 
     convertTo010: function(game) {
@@ -102,6 +114,22 @@ GameCreator.version = {
         }
         if (wasCollidesWithConverted) {
             GameCreator.version.changeMessages.push('Your "Collides With"-conditions now always targets "this".');   
+        }
+    },
+
+    convertTo020: function(game) {
+        var actions = GameCreator.version.collectObject(game, 'actions');
+        var wasAnythingConverted;
+        for (var i = 0; i < actions.length; i += 1) {
+            var action = actions[i];
+            if (action.name === 'Shoot') {
+                var direction = action.parameters.projectileDirection;
+                var target = action.parameters.target;
+                action.parameters.projectileDirection = {
+                    type: direction,
+                    target: target
+                };
+            }
         }
     },
 

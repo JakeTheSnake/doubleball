@@ -93,9 +93,13 @@ var GlobalObjectParam = React.createClass({
         if(this.props.addGlobalCountersOption) {
             globalObjects.Global = 'globalCounters';
         }
-        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
-                value={this.props.value} onUpdate={this.onUpdate} collection={globalObjects}
-                label='Object'/>;
+        return (
+            <tbody>
+                <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+                    value={this.props.value} onUpdate={this.onUpdate} collection={globalObjects}
+                    label='Object'/>
+            </tbody>
+        );
     }
 });
 
@@ -141,18 +145,26 @@ var StateParam = React.createClass({
     },
     render: function() {
         var selectableStates = this.getSelectableStates();
-        return <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
-                value={this.props.value} onUpdate={this.onUpdate} collection={selectableStates}
-                label='State'/>;
+        return (
+            <tbody>
+                <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+                    value={this.props.value} onUpdate={this.onUpdate} collection={selectableStates}
+                    label='State'/>
+            </tbody>
+        );
     }
 });
 
 var ComparatorParam = React.createClass({
     render: function() {
         var selectableComparators = { 'Equals': 'equals', 'Greater than': 'greaterThan', 'Less than': 'lessThan'};
-        return <DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableComparators}
-                label='Comparator'/>;
+        return (
+            <tbody>
+                <DropdownParam name={this.props.name} 
+                    value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableComparators}
+                    label='Comparator'/>
+            </tbody>
+        );
     }
 });
 
@@ -162,38 +174,81 @@ var ShootableObjectParam = React.createClass({
     },
     render: function() {
         var selectables = GameCreator.helpers.getShootableObjectIds();
-        return <DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.onUpdate} collection={selectables}
-                label='Object'/>;
+        return (
+            <tbody>
+                <DropdownParam name={this.props.name} 
+                    value={this.props.value} onUpdate={this.onUpdate} collection={selectables}
+                    label='Object'/>
+            </tbody>
+        );
     }
 });
 
 var DirectionParam = React.createClass({
+    getInitialState: function() {
+        this.globalObjects = GameCreator.helpers.getGlobalObjectIds();
+        this.selectables = GameCreator.directions;
+        return {
+            type: this.props.value.type,
+            target: this.props.value.target
+        }
+    },
+
+    onUpdateType: function(name, type) {
+        this.setState({
+            type: type
+        })
+        this.props.onUpdate(name, {
+            type: this.state.type,
+            target: this.state.target
+        });
+    },
+
+    onUpdateTarget: function(name, target) {
+        this.setState({
+            target: target
+        })
+        this.props.onUpdate(name, {
+            type: this.state.type,
+            target: this.state.target
+        });
+    },
+
     render: function() {
-        var selectables = GameCreator.directions;
-        return <DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
-                label='Direction'/>;
+        var target;
+        var type = <DropdownParam name={this.props.name} 
+            value={this.state.type} onUpdate={this.onUpdateType} collection={this.selectables}
+            label='Direction'/>;
+
+        if (this.state.type === 'Towards') {
+            target = <DropdownParam name={this.props.name} 
+            value={this.state.target} onUpdate={this.onUpdateTarget} collection={this.globalObjects}
+            label='Target'/>;
+        }
+        return <tbody>{type}{target}</tbody>;
+
     }
 });
-
-
 
 var MovementTypeParam = React.createClass({
     render: function() {
         var selectables = {'Relative': 'relative', 'Absolute': 'absolute'};
-        return <DropdownParam name={this.props.name} 
+        return <tbody><DropdownParam name={this.props.name} 
                 value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
-                label='Type'/>;
+                label='Type'/></tbody>;
     }
 });
 
 var DestroyEffectParam = React.createClass({
     render: function() {
         var selectables = GameCreator.effects.destroyEffects;
-        return <DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
-                label='Effect'/>;
+        return (
+            <tbody>
+                <DropdownParam name={this.props.name} 
+                    value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
+                    label='Effect'/>
+            </tbody>
+        );
     }
 });
 
@@ -335,16 +390,24 @@ var TimingParam = React.createClass({
         } else {
             html = <span>{this.getDisplayText()}</span>;
         }
-        return  <tr>
+        return  (
+            <tbody>
+                <tr>
                     <td><label>Timing:</label></td>
                     <td onClick={this.select}>{html}</td>
-                </tr>;
+                </tr>
+            </tbody>
+        );
     }
 });
 
 var CounterCarrierParam = React.createClass({
     render: function(){ 
-        return <GlobalObjectParam addGlobalCountersOption={true} name={this.props.name} value={this.props.value} onUpdate={this.props.onUpdate}/>;
+        return (
+            <tbody>
+                <GlobalObjectParam addGlobalCountersOption={true} name={this.props.name} value={this.props.value} onUpdate={this.props.onUpdate}/>
+            </tbody>
+        );
     }
 });
 
@@ -373,17 +436,25 @@ var CounterParam = React.createClass({
     },
     render: function() {
         var selectableCounters = this.getSelectableCounters();
-        return <DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableCounters}
-                label='Counter'/>;
+        return (
+            <tbody>
+                <DropdownParam name={this.props.name} 
+                    value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableCounters}
+                    label='Counter'/>
+            </tbody>
+        );
     }
 });
 
 var CounterTypeParam = React.createClass({
     render: function(){
         var selectableTypes = {'Add': 'add', 'Reduce': 'reduce', 'Set': 'set'};
-        return <DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableTypes}
-                label='Operation'/>;
+        return (
+            <tbody>
+                <DropdownParam name={this.props.name} 
+                    value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableTypes}
+                    label='Operation'/>
+            </tbody>
+        );
     }
-})
+});

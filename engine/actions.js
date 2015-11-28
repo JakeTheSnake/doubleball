@@ -59,7 +59,7 @@ GameCreator.RuntimeAction.prototype.hasRequiredParameters = function(parameters)
 GameCreator.RuntimeAction.prototype.hasObservers = function(paramName) {
     var paramNames = Object.keys(this.getAllParameters());
     for (var i = 0; i < paramNames.length; i += 1) {
-        if (this.getParameter(paramNames[i]).observes !== paramName) {
+        if (this.getParameter(paramNames[i]).observes === paramName) {
             return true;
         }
     }

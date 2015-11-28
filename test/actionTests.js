@@ -129,12 +129,32 @@ test("Shoot Action Test", function() {
     var image = new Image();
     image.src = '../assets/red_ball.gif';
     var objToShoot = GameCreator.addGlobalObject({image: image, objectName: "projectile", width:[20], height:[30]}, "FreeObject");
-    setupCollisionEventForNewObject("Shoot", {objectToShoot: objToShoot.id, projectileSpeed: 500, projectileDirection: "Left"});
+    setupCollisionEventForNewObject("Shoot", {objectToShoot: objToShoot.id, projectileSpeed: 500, projectileDirection: {type: "Left"}});
 
     GameCreator.checkCollisions();
 
     deepEqual(GameCreator.renderableObjects.length, 2, "Object was shot");
-    deepEqual(GameCreator.renderableObjects[1].attributes.speedX, -500, "Correct X coordinate");
+    deepEqual(GameCreator.renderableObjects[1].attributes.speedX, -500, "Correct X speed");
+});
+test("Shoot Towards Action Test", function() {
+    var image = new Image();
+    image.src = '../assets/red_ball.gif';
+    var objToShoot = GameCreator.addGlobalObject({image: image, objectName: "projectile", width:[20], height:[30]}, "FreeObject");
+    var targetObject = GameCreator.addGlobalObject({image: image, objectName: "target", width:[20], height:[30]}, "FreeObject");
+    GameCreator.createRuntimeObject(targetObject, {x: -500, y: 6, speedX: 0, speedY: 0})
+    setupCollisionEventForNewObject("Shoot", {
+        objectToShoot: objToShoot.id,
+        projectileSpeed: 500,
+        projectileDirection: {
+            type: "Towards",
+            target: targetObject.id
+        }
+    });
+
+    GameCreator.checkCollisions();
+
+    deepEqual(GameCreator.renderableObjects.length, 3, "Object was shot");
+    deepEqual(GameCreator.renderableObjects[1].attributes.speedX, -500, "Correct X speed");
 });
 
 test("Counter Action Test", function() {
