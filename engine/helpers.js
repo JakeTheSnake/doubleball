@@ -273,7 +273,9 @@
         image.src = imgSrc;
         image.onload = function() {
             $(image).data('loaded', true);
-            GameCreator.render();
+            if (GameCreator.state === 'editing') {
+                GameCreator.render();
+            }
         };
         return image;
     };

@@ -142,6 +142,9 @@ $.extend(GameCreator, {
         img.src = src;
         img.onload = function(img) {
             $(img).data('loaded', true);
+            if (GameCreator.state === 'editing') {
+                GameCreator.render();
+            }
         }.bind(this, img);
         return img;
     },
