@@ -93,6 +93,9 @@
             previousElement.removeClass('tutorial-highlighted');
         }
 
+        tutorialOverlay.hide();
+        tutorialOverlay.show(0)
+
         var position = calculateDialoguePosition(currentElement);
 
         tutorialDialogue.offset({
