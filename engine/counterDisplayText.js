@@ -81,9 +81,9 @@ GameCreator.CounterDisplayText.prototype.onSceneObjectUpdated = function(sceneOb
 
 GameCreator.CounterDisplayText.prototype.instantiateSceneObject = function(sceneObject, args) {
     var state = sceneObject.parent.getDefaultState();
-    sceneObject.attributes.font = state.attributes.font;
-    sceneObject.attributes.color = state.attributes.color;
-    sceneObject.attributes.size = state.attributes.size;
+    sceneObject.attributes.font = args.font || state.attributes.font;
+    sceneObject.attributes.color = args.color || state.attributes.color;
+    sceneObject.attributes.size = args.size != undefined ? args.size : state.attributes.size;
     sceneObject.attributes.counterCarrier = args.counterCarrier || 'globalCounters';
     sceneObject.attributes.counterName = args.counterName || this.objectName;
 
