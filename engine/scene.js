@@ -73,7 +73,6 @@
             scene.addSceneObject(sceneObj);
             if (sceneObj.parent.isRenderable) {
                 GameCreator.renderableObjects.push(sceneObj);
-                GameCreator.render(false);
             }
             $(document).trigger('GameCreator.addedSceneObject');
             return sceneObj;

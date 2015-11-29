@@ -142,7 +142,6 @@ $.extend(GameCreator, {
         img.src = src;
         img.onload = function(img) {
             $(img).data('loaded', true);
-            GameCreator.render();
         }.bind(this, img);
         return img;
     },

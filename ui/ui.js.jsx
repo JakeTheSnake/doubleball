@@ -269,6 +269,7 @@ GameCreator.UI = {
                 var args = {x: x - offsetX - globalObj.getDefaultState().attributes.width[0] / 2, 
                             y: y - offsetY - globalObj.getDefaultState().attributes.height[0] / 2};
                 var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.getActiveScene(), args);
+                newInstance.parent.draw(GameCreator.mainContext, newInstance);
             }
             $(image).remove();
             $(window).off("mousemove.dragGlobalMenuItem");
