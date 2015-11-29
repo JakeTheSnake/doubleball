@@ -22,6 +22,7 @@
         this.isCollidable = true;
         this.isMovable = true;
         this.isRenderable = true;
+        this.isResizeable = true;
 
         this.objectType = "RouteObject";
     };

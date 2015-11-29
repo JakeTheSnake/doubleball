@@ -23,6 +23,7 @@
         this.isMovable = true;
         this.isRenderable = true;
         this.isEventable = true;
+        this.isResizeable = true;
 
         this.objectType = "PlatformObject";
     };

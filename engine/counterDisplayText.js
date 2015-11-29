@@ -22,6 +22,7 @@ GameCreator.CounterDisplayText = function(args) {
 
     this.objectName = args.objectName;
     this.isClickable =  false;
+    this.isResizeable = false;
     
     this.isRenderable = true;
     this.objectType = "CounterDisplayText";
@@ -72,6 +73,12 @@ GameCreator.CounterDisplayText.prototype.onCreate = function() {};
 
 GameCreator.CounterDisplayText.prototype.objectEnteredGame = function() {};
 
+GameCreator.CounterDisplayText.prototype.onSceneObjectUpdated = function(sceneObject) {
+    GameCreator.mainContext.font = sceneObject.attributes.size + "px " + sceneObject.attributes.font;
+    sceneObject.attributes.width = [GameCreator.mainContext.measureText("0").width];
+    sceneObject.attributes.height = [sceneObject.attributes.size + 5];
+};
+
 GameCreator.CounterDisplayText.prototype.instantiateSceneObject = function(sceneObject, args) {
     var state = sceneObject.parent.getDefaultState();
     sceneObject.attributes.font = state.attributes.font;
@@ -79,4 +86,8 @@ GameCreator.CounterDisplayText.prototype.instantiateSceneObject = function(scene
     sceneObject.attributes.size = state.attributes.size;
     sceneObject.attributes.counterCarrier = args.counterCarrier || 'globalCounters';
     sceneObject.attributes.counterName = args.counterName || this.objectName;
+
+    GameCreator.mainContext.font = sceneObject.attributes.size + "px " + sceneObject.attributes.font;
+    sceneObject.attributes.width = [GameCreator.mainContext.measureText("0").width]
+    sceneObject.attributes.height = [sceneObject.attributes.size + 5];
 };

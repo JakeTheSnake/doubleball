@@ -16,6 +16,7 @@
         this.isMovable = true;
         this.isRenderable = true;
         this.isEventable = true;
+        this.isResizeable = true;
 
         this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? 300 : args.maxSpeed;
         

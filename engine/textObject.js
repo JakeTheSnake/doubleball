@@ -30,6 +30,7 @@
 
         this.objectName = args.objectName;
         this.isClickable =  false;
+        this.isResizeable = false;
         
         this.isRenderable = true;
         this.objectType = "TextObject";
@@ -59,11 +60,21 @@
 
     GameCreator.TextObject.prototype.objectEnteredGame = function() {};
 
+    GameCreator.TextObject.prototype.onSceneObjectUpdated = function(sceneObject) {
+        GameCreator.mainContext.font = sceneObject.attributes.size + "px " + sceneObject.attributes.font;
+        sceneObject.attributes.width = [GameCreator.mainContext.measureText(sceneObject.attributes.text).width];
+        sceneObject.attributes.height = [sceneObject.attributes.size + 5];
+    };
+
     GameCreator.TextObject.prototype.instantiateSceneObject = function(sceneObject, args) {
         var state = sceneObject.parent.getDefaultState();
         sceneObject.attributes.font = args.font || state.attributes.font;
         sceneObject.attributes.color = args.color || state.attributes.color;
         sceneObject.attributes.size = args.size != undefined ? args.size : state.attributes.size;
         sceneObject.attributes.text = args.text != undefined ? args.text : state.attributes.text;
+        
+        GameCreator.mainContext.font = args.size + "px " + args.font;
+        sceneObject.attributes.width = [GameCreator.mainContext.measureText(sceneObject.attributes.text).width]
+        sceneObject.attributes.height = [sceneObject.attributes.size + 5];
     };
 }());

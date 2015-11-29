@@ -18,6 +18,7 @@ GameCreator.CounterDisplayImage = function(args) {
 
     this.objectName = args.objectName;
     this.isClickable =  false;
+    this.isResizeable = true;
     
     this.isRenderable = true;
     this.objectType = "CounterDisplayImage";

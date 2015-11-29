@@ -53,6 +53,10 @@
     };
 
     GameCreator.SceneObject.prototype.update = function() {
+        if (this.parent.onSceneObjectUpdated) {
+            this.parent.onSceneObjectUpdated(this);
+        }
+
         this.setDisplayValues();
 
         //If this is an instance of a unique object, the global object and all instances should be mirrored from this.
@@ -157,26 +161,31 @@
 
     GameCreator.SceneObject.prototype.getDragFunction = function(x, y) {
         var border = 8;
+        var resizeable = this.parent.isResizeable;
         if (y >= this.attributes.y && 
                 y <= this.attributes.y + this.displayHeight &&
                 x >= this.attributes.x &&
                 x <= this.attributes.x + this.displayWidth) {
-            if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.attributes.y - y) <= border) {
-                return this.resizeNW;
-            } else if (Math.abs(this.attributes.x + this.displayWidth - x) <= border && Math.abs(this.attributes.y - y) <= border) {
-                return this.resizeNE;
-            } else if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.attributes.y + this.displayHeight - y) <= border) {
-                return this.resizeSW;
-            } else if (Math.abs(this.attributes.y + this.displayHeight - y) <= border && Math.abs(this.attributes.x + this.displayWidth - x) <= border) {
-                return this.resizeSE;
-            } else if (Math.abs(this.attributes.x - x) <= border) {
-                return this.resizeW;
-            } else if (Math.abs(this.attributes.x + this.displayWidth - x) <= border) {
-                return this.resizeE;
-            } else if (Math.abs(this.attributes.y - y) <= border) {
-                return this.resizeN;
-            } else if (Math.abs(this.attributes.y + this.displayHeight - y) <= border) {
-                return this.resizeS;
+            if (this.parent.isResizeable) {
+                if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.attributes.y - y) <= border) {
+                    return this.resizeNW;
+                } else if (Math.abs(this.attributes.x + this.displayWidth - x) <= border && Math.abs(this.attributes.y - y) <= border) {
+                    return this.resizeNE;
+                } else if (Math.abs(this.attributes.x - x) <= border && Math.abs(this.attributes.y + this.displayHeight - y) <= border) {
+                    return this.resizeSW;
+                } else if (Math.abs(this.attributes.y + this.displayHeight - y) <= border && Math.abs(this.attributes.x + this.displayWidth - x) <= border) {
+                    return this.resizeSE;
+                } else if (Math.abs(this.attributes.x - x) <= border) {
+                    return this.resizeW;
+                } else if (Math.abs(this.attributes.x + this.displayWidth - x) <= border) {
+                    return this.resizeE;
+                } else if (Math.abs(this.attributes.y - y) <= border) {
+                    return this.resizeN;
+                } else if (Math.abs(this.attributes.y + this.displayHeight - y) <= border) {
+                    return this.resizeS;
+                } else {
+                    return this.moveObject;
+                }
             } else {
                 return this.moveObject;
             }
