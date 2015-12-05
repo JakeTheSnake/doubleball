@@ -140,12 +140,6 @@
             }
         },
 
-        nextScene: function() {
-            var currentIndex = GameCreator.helpers.getIndexOfSceneWithId(GameCreator.activeSceneId);
-            var nextIndex = (currentIndex + 1) % GameCreator.scenes.length;
-            GameCreator.switchScene(GameCreator.scenes[nextIndex]);
-        },
-
         playScene: function(scene) {
             GameCreator.resetScene(scene);
             GameCreator.initializeKeyListeners();
