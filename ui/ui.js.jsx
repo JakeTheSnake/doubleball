@@ -289,12 +289,12 @@ GameCreator.UI = {
 
     openSelectActionsDialogue: function(infoWindowHtml, caSet, eventType, objName) {
         GameCreator.UI.openDialogue(700, 400, GameCreator.htmlStrings.editActionsWindow(infoWindowHtml, objName));
-        React.render(<ActionColumn actions={caSet.actions} eventType={eventType}/>, document.getElementById('dialogue-right-action-column'));
-        React.render(<EventItemSelector/>, document.getElementById('dialogue-right-select-column'));
+        ReactDOM.render(<ActionColumn actions={caSet.actions} eventType={eventType}/>, document.getElementById('dialogue-right-action-column'));
+        ReactDOM.render(<EventItemSelector/>, document.getElementById('dialogue-right-select-column'));
     },
 
     openGlobalCountersDialogue: function() {       
-        React.render(
+        ReactDOM.render(
             <GlobalCounterDialogueBottom/>,
             document.getElementById('dialogue-window')
         );
@@ -302,7 +302,7 @@ GameCreator.UI = {
     },
 
     openGamePropertiesDialogue: function() {       
-        React.render(
+        ReactDOM.render(
             <DialogueLeft title="Game Properties">
                 <GamePropertiesForm properties={{width: GameCreator.width, height: GameCreator.height}}/>
             </DialogueLeft>,
@@ -329,7 +329,7 @@ GameCreator.UI = {
 
     populateOpenDialogue: function(globalObj) {
         $('#object-manager-object-name').html(globalObj.objectName);
-        globalObj.setupPropertiesForm($("#dialogue-window").find("#dialogue-edit-content"));
+        globalObj.setupPropertiesForm(document.getElementById('dialogue-edit-content'));
         $("#dialogue-panel-edit").find("a").removeClass("active");
         $("#dialogue-panel-edit").find("a:first-child").addClass("active");
 
@@ -391,7 +391,7 @@ GameCreator.UI = {
     
     closeDialogue: function() {
         $("#dialogue-window").hide();
-        React.unmountComponentAtNode(document.getElementById('dialogue-window'));
+        ReactDOM.unmountComponentAtNode(document.getElementById('dialogue-window'));
         $(".arrow_box").hide();
         $("#dialogue-overlay").hide();
         $(".global-object-list").trigger('recalculateActiveObject');
@@ -503,7 +503,7 @@ GameCreator.UI = {
 
     openImageSelectPopup: function(input) {
         var container = document.getElementById('image-select-popup');
-        React.render(<ImagePicker input={input} parent={container}/>, container);
+        ReactDOM.render(<ImagePicker input={input} parent={container}/>, container);
         
         $(container).show();
         

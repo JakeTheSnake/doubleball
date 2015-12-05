@@ -9,7 +9,7 @@ var CommonParamFunctions = {
         this.setState({selected: true});
     },
     saveValue: function() {
-        var node = this.getDOMNode();
+        var node = ReactDOM.findDOMNode(this);
         var input = $(node).find('select, input');
         var value;
 
@@ -30,7 +30,7 @@ var CommonParamFunctions = {
         });
     },
     componentDidUpdate: function() {
-        var node = this.getDOMNode();
+        var node = ReactDOM.findDOMNode(this);
         $(node).find('select, input').focus();
         $(node).find('input').select();
     },
@@ -342,7 +342,7 @@ var TimingParam = React.createClass({
         }
     },
     timingSelected: function() {
-        var node = this.getDOMNode();
+        var node = ReactDOM.findDOMNode(this);
         var type = $(node).find('select').val();
         this.setState({type: type});
     },
@@ -351,7 +351,7 @@ var TimingParam = React.createClass({
         if (!me.state.selected) {
             me.setState({selected: true});
             $(document).on('click.timingParamFocusout', function(){
-                var node = me.getDOMNode();
+                var node = ReactDOM.findDOMNode(me);
                 var select = $(node).find('select');
                 var input = $(node).find('input');
                 if(!$(select).is(":focus") && !$(input).is(":focus")) {
@@ -361,7 +361,7 @@ var TimingParam = React.createClass({
         }
     },
     saveValue: function() {
-        var node = this.getDOMNode();
+        var node = ReactDOM.findDOMNode(this);
         var type = $(node).find('select').val();
         var time = Number($(node).find('input').val());
         this.props.onUpdate({type: type, time: time});

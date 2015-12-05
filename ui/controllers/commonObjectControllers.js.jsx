@@ -39,7 +39,7 @@ GameCreator.commonObjectControllers = {
      * COMMON OBJECT CONTROLLERS  *
      *****************************/
     setupPropertiesForm: function(container) {
-        React.unmountComponentAtNode(container);
+        ReactDOM.unmountComponentAtNode(container);
         var globalObj = this;
         var html = this.getPropertiesContent();
         $(container).html(html);
@@ -61,7 +61,7 @@ GameCreator.commonObjectControllers = {
         $(container).append(eventEditorContainer);
         $(container).append(eventItemSelectContainer);
 
-        React.render(
+        ReactDOM.render(
             <EventItemSelector/>,
             eventItemSelectContainer
         );
@@ -97,7 +97,7 @@ GameCreator.commonObjectControllers = {
                     var index = globalObj.onCollideSets.indexOf(collisionItem);
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
-                    React.render(
+                    ReactDOM.render(
                         <EventEditor caSets={globalObj.onCollideSets[index].caSets} eventType='destroy' />,
                         eventEditorContainer
                     );
@@ -127,7 +127,7 @@ GameCreator.commonObjectControllers = {
 
     setupOnDestroyActionsForm: function(container) {
         GameCreator.commonObjectControllers.setupCaSet(this.onDestroySets);
-        React.render(
+        ReactDOM.render(
             (<div>
                 <EventEditor caSets={this.onDestroySets} eventType='destroy' />
                 <EventItemSelector/>
@@ -138,7 +138,7 @@ GameCreator.commonObjectControllers = {
 
     setupOnCreateActionsForm: function(container) {
         GameCreator.commonObjectControllers.setupCaSet(this.onCreateSets);
-        React.render(
+        ReactDOM.render(
             (<div>
                 <EventEditor caSets={this.onCreateSets} eventType='create' />
                 <EventItemSelector/>
@@ -150,7 +150,7 @@ GameCreator.commonObjectControllers = {
     setupOnClickActionsForm: function(container) {
         var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
         GameCreator.commonObjectControllers.setupCaSet(this.onClickSets);
-        React.render(
+        ReactDOM.render(
             (<div>
                 <EventEditor caSets={this.onClickSets} eventType='click' />
                 <EventItemSelector/>
@@ -160,7 +160,7 @@ GameCreator.commonObjectControllers = {
     },
 
     setupStatesColumn: function(container, selectedState) {
-        React.unmountComponentAtNode(container);
+        ReactDOM.unmountComponentAtNode(container);
         $(container).html(GameCreator.htmlStrings.getColumn("States", "dialogue-panel-states"));
         $(container).append('<div id="dialogue-state-content"></div>');
 
@@ -254,7 +254,7 @@ GameCreator.commonObjectControllers = {
     },
 
     setupEventsForm: function(container) {
-        React.unmountComponentAtNode(container);
+        ReactDOM.unmountComponentAtNode(container);
         var globalObj = this;
         var html = this.getEventsContent();
         $(container).html(html);
@@ -270,7 +270,7 @@ GameCreator.commonObjectControllers = {
         var globalObj = this;
 
         var renderCounterEditor = function() {
-            React.render(
+            ReactDOM.render(
                 <CountersEditor counters={globalObj.parentCounters} onAddCounter={addNewCounter} title="Counters"/>,
                 container
             );
@@ -303,7 +303,7 @@ GameCreator.commonObjectControllers = {
         $(container).append(eventItemSelectContainer);
         $("#dialogue-panel-keys").parent().append('<a id="add-new-key-button" class="btn tab success wide">Add</a>');
         var globalObj = this;
-        React.render(
+        ReactDOM.render(
             <EventItemSelector/>,
             eventItemSelectContainer
         );
@@ -314,7 +314,7 @@ GameCreator.commonObjectControllers = {
             $(this).parent().find('.defaultMenuElement').removeClass('active');
             $(this).addClass('active');
 
-            React.render(
+            ReactDOM.render(
                 <EventEditor caSets={keyCaSets} eventType='key'/>,
                 eventEditorContainer
             );

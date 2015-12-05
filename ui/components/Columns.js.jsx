@@ -142,7 +142,12 @@ var EventEditor = React.createClass({
     },
     onConditionSelected: function(itemName) {
         var activeCaSet = this.props.caSets[this.state.activeCaSetIndex];
-        activeCaSet.conditions.push(new GameCreator.RuntimeCondition(itemName));
+        var paramNames = Object.keys(GameCreator.conditions[itemName].params);
+        var parameters = {};
+        for (var i = 0; i < paramNames.length; i+=1) {
+            parameters[paramNames[i]] = GameCreator.conditions[itemName].params[paramNames[i]].defaultValue;
+        }
+        activeCaSet.conditions.push(new GameCreator.RuntimeCondition(itemName, parameters));
         this.forceUpdate();
     },
     onAddCondition: function() {
@@ -183,7 +188,12 @@ var ActionColumn = React.createClass({
         $(window).trigger("GC.showItemSelector", [selectableActionNames, this.onActionSelected]);
     },
     onActionSelected: function(itemName) {
-        this.props.actions.push(new GameCreator.RuntimeAction(itemName));
+        var paramNames = Object.keys(GameCreator.actions[itemName].params);
+        var parameters = {};
+        for (i = 0; i < paramNames.length; i += 1) {
+            parameters[paramNames[i]] = GameCreator.actions[itemName].params[paramNames[i]].defaultValue;
+        }
+        this.props.actions.push(new GameCreator.RuntimeAction(itemName, parameters));
         this.forceUpdate();
     },
     removeAction: function(actionIndex) {
@@ -373,9 +383,7 @@ var ActionItem = React.createClass({
                     <a className="btn warning" onClick={this.props.onRemove}>X</a>
                 </div>
                 <table>
-                    <tbody>
-                        {params}
-                    </tbody>
+                    {params}
                 </table>
             </li>
         );

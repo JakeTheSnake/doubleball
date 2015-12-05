@@ -24,15 +24,7 @@ GameCreator.RuntimeAction = function(name, params, timing) {
     var i;
     this.name = name;
     this.timing = timing || {type: 'now'};
-    if (params !== undefined) {
-        this.parameters = params;
-    } else {
-        var paramNames = Object.keys(GameCreator.actions[name].params);
-        this.parameters = {};
-        for (i = 0; i < paramNames.length; i+=1) {
-            this.parameters[paramNames[i]] = GameCreator.actions[name].params[paramNames[i]].defaultValue;
-        }
-    }
+    this.parameters = params || {};
 };
 
 GameCreator.RuntimeAction.prototype.getAllParameters = function() {
@@ -129,13 +121,6 @@ GameCreator.actions = {
         action: function(params) {
             this.parent.destroy.call(this, params);
         },
-        params: {
-            'effect': {
-                component: DestroyEffectParam,
-                mandatory: false,
-                defaultValue: 'none'
-            }
-        },
         timing: {
             at: true, every: false, after: true
         },
@@ -144,24 +129,6 @@ GameCreator.actions = {
         name: 'Shoot',
         action: function(params) {
             this.parent.shoot.call(this, params);
-        },
-        params: {
-            'objectToShoot': {
-                component: ShootableObjectParam,
-                mandatory: true
-            },
-            'projectileSpeed': {
-                component: RangeParam,
-                mandatory: false,
-                defaultValue: 500
-            },
-            'projectileDirection': {
-                component: DirectionParam,
-                mandatory: false,
-                defaultValue: {
-                    type: 'Default'
-                }
-            }
         },
         timing: {
             at: true, every: true, after: true
@@ -172,22 +139,6 @@ GameCreator.actions = {
         action: function(params) {
             GameCreator.createRuntimeObject(GameCreator.helpers.getGlobalObjectById(Number(params.objectToCreate)), {x: params.x, y: params.y});
         },
-        params: {
-            'objectToCreate': {
-                mandatory: true,
-                component: GlobalObjectParam
-            },
-            'x': {
-                mandatory: false,
-                defaultValue: 0,
-                component: RangeParam
-            },
-            'y': {
-                mandatory: false,
-                defaultValue: 0,
-                component: RangeParam
-            }
-        },
         timing: {at: true, every: true, after: true},
         runnableFunction: function() { return true; }
     }),
@@ -196,28 +147,6 @@ GameCreator.actions = {
         action: function(params) {
             GameCreator.changeCounter(this, params);
         },
-        params: {
-            'objId': {
-                mandatory: false,
-                observer: 'counter',
-                component: CounterCarrierParam
-            },
-            'counter': {
-                mandatory: true,
-                component: CounterParam,
-                observes: 'objId'
-            },
-            'type': {
-                mandatory: false,
-                defaultValue: 'add',
-                component: CounterTypeParam
-            },
-            'value': {
-                mandatory: false,
-                defaultValue: 1,
-                component: NumberParam
-            },
-        },
         timing: {
             at: true, every: true, after: true
         },
@@ -225,19 +154,7 @@ GameCreator.actions = {
     SwitchState: new GameCreator.Action({
         name: 'SwitchState',
         action: function(params) {
-            GameCreator.changeState(this, params);
-        },
-        params: {
-            'objectId': {
-                component: GlobalObjectParam,
-                mandatory: true,
-                observer: 'objectState'
-            },
-            'objectState': {
-                component: StateParam,
-                observes: 'objectId',
-                mandatory: true
-            }
+            GameCreator.changeState(this, params);  
         },
         timing: {
             at: true, every: true, after: true
@@ -254,12 +171,6 @@ GameCreator.actions = {
         name: 'SwitchScene',
         action: function(params){
             GameCreator.selectScene(params);
-        },
-        params: {
-            'scene': {
-                mandatory: true,
-                component: SceneParam
-            }
         },
         timing: {
             at: true, every: true, after: true
@@ -281,25 +192,8 @@ GameCreator.actions = {
         action: function (params) {
             this.parent.setPosition.call(this, params);
         },
-        params: {
-            'type': { 
-                component: MovementTypeParam,
-                defaultValue: 'absolute',
-                mandatory: true 
-            },
-            'x': { 
-                component: RangeParam,
-                mandatory: false,
-                defaultValue: 0
-            },
-            'y': {
-                component: RangeParam,
-                mandatory: false,
-                defaultValue: 0
-            }
-        },
         timing: { at: true, every: true, after: true },
-      })
+    })
 };
 
 GameCreator.actionGroups = {
