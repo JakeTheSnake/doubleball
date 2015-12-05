@@ -233,9 +233,11 @@ var DirectionParam = React.createClass({
 var MovementTypeParam = React.createClass({
     render: function() {
         var selectables = {'Relative': 'relative', 'Absolute': 'absolute'};
-        return <tbody><DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
-                label='Type'/></tbody>;
+        return (<tbody>
+                    <DropdownParam name={this.props.name} 
+                        value={this.props.value} onUpdate={this.props.onUpdate} collection={selectables}
+                        label='Type'/>
+                </tbody>);
     }
 });
 
@@ -258,9 +260,11 @@ var SceneParam = React.createClass({
     },
     render: function() {
         var scenes = GameCreator.helpers.getSelectableScenes();
-        return <DropdownParam name={this.props.name} 
-                value={this.props.value} onUpdate={this.onUpdate} collection={scenes}
-                label='Scene'/>;
+        return (<tbody>
+                    <DropdownParam name={this.props.name} 
+                        value={this.props.value} onUpdate={this.onUpdate} collection={scenes}
+                        label='Scene'/>
+                </tbody>);
     }
 });
 
@@ -273,10 +277,12 @@ var NumberParam = React.createClass({
         } else {
             html = <span>{this.state.value}</span>;
         }
-        return  <tr>
-                    <td><label>{GameCreator.helpers.labelize(this.props.name) + ':'}</label></td>
-                    <td onClick={this.select}>{html}</td>
-                </tr>;
+        return  (<tbody>
+                    <tr>
+                        <td><label>{GameCreator.helpers.labelize(this.props.name) + ':'}</label></td>
+                        <td onClick={this.select}>{html}</td>
+                    </tr>
+                </tbody>);
     }
 });
 
@@ -318,10 +324,12 @@ var RangeParam = React.createClass({
         } else {
             html = <span>{this.getValuePresentation()}</span>;
         }
-        return  <tr>
-                    <td><label>{GameCreator.helpers.labelize(this.props.name) + ':'}</label></td>
-                    <td onClick={this.select}>{html}</td>
-                </tr>;
+        return  (<tbody>
+                    <tr>
+                        <td><label>{GameCreator.helpers.labelize(this.props.name) + ':'}</label></td>
+                        <td onClick={this.select}>{html}</td>
+                    </tr>
+                </tbody>);
     }
 });
 
@@ -340,7 +348,7 @@ var TimingParam = React.createClass({
     },
     select: function() {
         var me = this;
-        if(!me.state.selected) {
+        if (!me.state.selected) {
             me.setState({selected: true});
             $(document).on('click.timingParamFocusout', function(){
                 var node = me.getDOMNode();
