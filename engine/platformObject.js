@@ -118,7 +118,7 @@
 
     GameCreator.PlatformObject.prototype.getDefaultShootParameters = function(projectileSpeed, projectileAttributes) {
         var params = {};
-        params.x = this.attributes.x + (this.facingLeft ? -projectileAttributes.width : this.attributes.width);
+        params.x = this.attributes.x + (this.facingLeft ? -GameCreator.helpers.getRandomFromRange(projectileAttributes.width) : this.attributes.width);
         params.y = this.attributes.y;
         params.speedX = this.facingLeft ? -projectileSpeed : projectileSpeed;
         params.speedY = 0;

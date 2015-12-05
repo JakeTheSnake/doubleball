@@ -110,22 +110,24 @@
 
     GameCreator.TopDownObject.prototype.getDefaultShootParameters = function(projectileSpeed, projectileAttributes) {
         var params = {};
+        var projectileWidth = GameCreator.helpers.getRandomFromRange(projectileAttributes.width);
+        var projectileHeight = GameCreator.helpers.getRandomFromRange(projectileAttributes.height);
         var angularSpeed = GameCreator.helpers.calcAngularSpeed(projectileSpeed);
         switch (this.facing) {
             case 1:
-                params.x = this.attributes.x + this.attributes.width / 2 - projectileAttributes.width / 2;
-                params.y = this.attributes.y - projectileAttributes.height;
+                params.x = this.attributes.x + this.attributes.width / 2 - projectileWidth / 2;
+                params.y = this.attributes.y - projectileHeight;
                 params.speedY = -projectileSpeed;
                 break;
             case 2:
                 params.x = this.attributes.x + this.attributes.width;
-                params.y = this.attributes.y - projectileAttributes.height;
+                params.y = this.attributes.y - projectileHeight;
                 params.speedX = angularSpeed;
                 params.speedY = -angularSpeed;
                 break;
             case 3:
                 params.x = this.attributes.x + this.attributes.width;
-                params.y = this.attributes.y + this.attributes.height / 2 - projectileAttributes.height / 2;
+                params.y = this.attributes.y + this.attributes.height / 2 - projectileHeight / 2;
                 params.speedX = projectileSpeed;
                 break;
             case 4:
@@ -135,24 +137,24 @@
                 params.speedY = angularSpeed;
                 break;
             case 5:
-                params.x = this.attributes.x + this.attributes.width / 2 - projectileAttributes.width / 2;
+                params.x = this.attributes.x + this.attributes.width / 2 - projectileWidth / 2;
                 params.y = this.attributes.y + this.attributes.height;
                 params.speedY = projectileSpeed;
                 break;
             case 6:
-                params.x = this.attributes.x - projectileAttributes.width;
+                params.x = this.attributes.x - projectileWidth;
                 params.y = this.attributes.y + this.attributes.height;
                 params.speedX = -angularSpeed;
                 params.speedY = angularSpeed;
                 break;
             case 7:
-                params.x = this.attributes.x - projectileAttributes.width;
-                params.y = this.attributes.y + this.attributes.height / 2 - projectileAttributes.height / 2;
+                params.x = this.attributes.x - projectileWidth;
+                params.y = this.attributes.y + this.attributes.height / 2 - projectileHeight / 2;
                 params.speedX = -projectileSpeed;
                 break;
             case 8:
-                params.x = this.attributes.x - projectileAttributes.width;
-                params.y = this.attributes.y - projectileAttributes.height;
+                params.x = this.attributes.x - projectileWidth;
+                params.y = this.attributes.y - projectileHeight;
                 params.speedX = -angularSpeed;
                 params.speedY = -angularSpeed;
                 break;
@@ -162,8 +164,8 @@
 
     GameCreator.TopDownObject.prototype.getProjectileOriginOffset = function(projectileAttributes) {
         var result = {};
-        result.x = this.attributes.width / 2 - projectileAttributes.width / 2;
-        result.y = this.attributes.height / 2 - projectileAttributes.height / 2;
+        result.x = this.attributes.width / 2 - GameCreator.helpers.getRandomFromRange(projectileAttributes.width) / 2;
+        result.y = this.attributes.height / 2 - GameCreator.helpers.getRandomFromRange(projectileAttributes.height) / 2;
         return result;
     };
 

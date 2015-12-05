@@ -128,13 +128,18 @@ test("Create Action Test", function() {
 function shootTest(objectType) {
     redBall = GameCreator.addGlobalObject({objectName: "red_ball", width:[20], height:[30]}, objectType);
     var objToShoot = GameCreator.addGlobalObject({objectName: "projectile", width:[20], height:[30]}, "FreeObject");
-    setupCollisionEventForNewObject("Shoot", {objectToShoot: objToShoot.id, projectileSpeed: 500, projectileDirection: {type: "Left"}});
+    var shooter = setupCollisionEventForNewObject("Shoot", {objectToShoot: objToShoot.id, projectileSpeed: 500, projectileDirection: {type: "Left"}});
 
     GameCreator.checkCollisions();
 
     deepEqual(GameCreator.renderableObjects.length, 2, objectType + ": Object was shot");
+    deepEqual(GameCreator.renderableObjects[1].parent.id, objToShoot.id, objectType + ": Correct object was shot");
     ok(GameCreator.renderableObjects[1].attributes.speedX >= -501, objectType + ": Correct X speed");
     ok(GameCreator.renderableObjects[1].attributes.speedX <= -499, objectType + ": Correct X speed");
+    
+    // Projectile should appear to the left of the shooter, thus -20
+    deepEqual(GameCreator.renderableObjects[1].attributes.x, shooter.attributes.x - 20, objectType + ": Correct X coordinate"); 
+    deepEqual(GameCreator.renderableObjects[1].attributes.y, shooter.attributes.y, objectType + ": Correct Y coordinate");
 }
 
 function shootTowardsTest(objectType) {
@@ -179,23 +184,36 @@ test("MouseObject Shoot Towards Action Test", function() {
 });
 
 test("FreeObject Shoot Action Test", function() {
-    shootTowardsTest('FreeObject');
+    shootTest('FreeObject');
 });
 
 test("PlatformObject Shoot Action Test", function() {
-    shootTowardsTest('PlatformObject');
+    shootTest('PlatformObject');
 });
 
 test("TopDownObject Shoot Action Test", function() {
-    shootTowardsTest('TopDownObject');
+    shootTest('TopDownObject');
 });
 
 test("RouteObject Shoot Action Test", function() {
-    shootTowardsTest('RouteObject');
+    shootTest('RouteObject');
 });
 
 test("MouseObject Shoot Action Test", function() {
-    shootTowardsTest('MouseObject');
+    shootTest('MouseObject');
+});
+
+test("PlatformObject Shoot Default", function() {
+    redBall = GameCreator.addGlobalObject({objectName: "red_ball", width:[20], height:[30]}, "PlatformObject");
+    var objToShoot = GameCreator.addGlobalObject({objectName: "projectile", width:[20], height:[30]}, "FreeObject");
+    var shooter = setupCollisionEventForNewObject("Shoot", {objectToShoot: objToShoot.id, projectileSpeed: 500, projectileDirection: {type: "Default"}});
+    shooter.facingLeft = false;
+
+    GameCreator.checkCollisions();
+
+    // Projectile should appear to the right of the shooter, thus -20
+    deepEqual(GameCreator.renderableObjects[1].attributes.x, shooter.attributes.x + 20, "Correct X coordinate"); 
+    deepEqual(GameCreator.renderableObjects[1].attributes.y, shooter.attributes.y, "Correct Y coordinate");
 });
 
 test("Counter Action Test", function() {

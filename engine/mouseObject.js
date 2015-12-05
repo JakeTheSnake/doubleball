@@ -99,10 +99,10 @@
         sceneObject.keyCooldown = {space: false};
     };
 
-    GameCreator.MouseObject.prototype.getDefaultShootParameters = function() {
+    GameCreator.MouseObject.prototype.getDefaultShootParameters = function(projectileSpeed, projectileAttributes) {
         var params = {};
-        params.x = this.attributes.x + this.attributes.width / 2 - objectToShootAttributes.width / 2;
-        params.y = this.attributes.y - objectToShootAttributes.height;
+        params.x = this.attributes.x + this.attributes.width / 2 - GameCreator.helpers.getRandomFromRange(projectileAttributes.width) / 2;
+        params.y = this.attributes.y - GameCreator.helpers.getRandomFromRange(projectileAttributes.height);
         params.speedY = -projectileSpeed;
         params.speedX = 0;
         return params;

@@ -197,9 +197,9 @@ var DirectionParam = React.createClass({
     onUpdateType: function(name, type) {
         this.setState({
             type: type
-        })
+        });
         this.props.onUpdate(name, {
-            type: this.state.type,
+            type: type,
             target: this.state.target
         });
     },
@@ -207,10 +207,10 @@ var DirectionParam = React.createClass({
     onUpdateTarget: function(name, target) {
         this.setState({
             target: target
-        })
+        });
         this.props.onUpdate(name, {
             type: this.state.type,
-            target: this.state.target
+            target: target
         });
     },
 

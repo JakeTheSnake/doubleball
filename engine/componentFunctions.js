@@ -178,29 +178,31 @@
         var projectileAttributes = objectToShoot.getDefaultState().attributes;
         var projectileParams = {speedY: 0, speedX: 0, x: 0, y: 0};
         var projectileOffset = this.parent.getProjectileOriginOffset.call(this, projectileAttributes);
+        var projectileWidth = GameCreator.helpers.getRandomFromRange(projectileAttributes.width);
+        var projectileHeight = GameCreator.helpers.getRandomFromRange(projectileAttributes.height);
 
         switch (staticParameters.projectileDirection.type) {
             case 'Default':
                 projectileParams = this.parent.getDefaultShootParameters.call(this, projectileSpeed, projectileAttributes);
                 break;
             case 'Up':
-                projectileParams.x = this.attributes.x + this.attributes.width / 2 - projectileAttributes.width / 2;
-                projectileParams.y = this.attributes.y - projectileAttributes.height;
+                projectileParams.x = this.attributes.x + this.attributes.width / 2 - projectileWidth / 2;
+                projectileParams.y = this.attributes.y - projectileHeight;
                 projectileParams.speedY = -projectileSpeed;
                 break;
             case 'Down':
-                projectileParams.x = this.attributes.x + this.attributes.width / 2 - projectileAttributes.width / 2;
+                projectileParams.x = this.attributes.x + this.attributes.width / 2 - projectileWidth / 2;
                 projectileParams.y = this.attributes.y + this.attributes.height;
                 projectileParams.speedY = projectileSpeed;
                 break;
             case 'Left':
-                projectileParams.x = this.attributes.x - objectToShoot.width;
-                projectileParams.y = this.attributes.y + this.attributes.height / 2 - projectileAttributes.height / 2;
+                projectileParams.x = this.attributes.x - projectileWidth;
+                projectileParams.y = this.attributes.y + this.attributes.height / 2 - projectileHeight / 2;
                 projectileParams.speedX = -projectileSpeed;
                 break;
             case 'Right':
                 projectileParams.x = this.attributes.x + this.attributes.width;
-                projectileParams.y = this.attributes.y + this.attributes.height / 2 - projectileAttributes.height / 2;
+                projectileParams.y = this.attributes.y + this.attributes.height / 2 - projectileHeight / 2;
                 projectileParams.speedX = projectileSpeed;
                 break;
             case 'Towards':
