@@ -341,9 +341,7 @@ var ConditionItem = React.createClass({
                     <a className="btn warning" onClick={this.props.onRemove}>X</a>
                 </div>
                 <table>
-                    <tbody>
-                        {params}
-                    </tbody>
+                    {params}
                 </table>
             </div>
         )
