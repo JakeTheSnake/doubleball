@@ -13,7 +13,7 @@ GameCreator.CounterDisplayImage = function(args) {
     }];
 
     this.getDefaultState().attributes.image = args.image;
-    this.getDefaultState().attributes.width = [100]; //TODO: Handle width and height of counters?
+    this.getDefaultState().attributes.width = [100];
     this.getDefaultState().attributes.height = [100];
 
     this.objectName = args.objectName;

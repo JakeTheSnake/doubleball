@@ -189,10 +189,18 @@ GameCreator.actions = {
     }),
     Teleport: new GameCreator.Action({
         name: 'Teleport',
-        action: function (params) {
+        action: function(params) {
             this.parent.setPosition.call(this, params);
         },
         timing: { at: true, every: true, after: true },
+    }),
+    RestartScene: new GameCreator.Action({
+        name: 'RestartScene',
+        action: function() {
+            var currentIndex = GameCreator.helpers.getIndexOfSceneWithId(GameCreator.activeSceneId);
+            GameCreator.switchScene(GameCreator.scenes[currentIndex]);
+        },
+        timing: { at: true, every: true, after: true }
     })
 };
 
@@ -209,6 +217,7 @@ GameCreator.actionGroups = {
         SwitchScene: GameCreator.actions.SwitchScene,
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
+        RestartScene: GameCreator.actions.RestartScene,
     },
 
     mouseCollisionActions: {
@@ -220,6 +229,7 @@ GameCreator.actionGroups = {
         SwitchScene: GameCreator.actions.SwitchScene,
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
+        RestartScene: GameCreator.actions.RestartScene,
     },
 
     nonCollisionActions: {
@@ -233,6 +243,7 @@ GameCreator.actionGroups = {
         SwitchScene: GameCreator.actions.SwitchScene,
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
+        RestartScene: GameCreator.actions.RestartScene,
     },
 
     mouseNonCollisionActions: {
@@ -244,6 +255,7 @@ GameCreator.actionGroups = {
         SwitchScene: GameCreator.actions.SwitchScene,
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
+        RestartScene: GameCreator.actions.RestartScene,
     },
 
     nonObjectActions: {
@@ -253,6 +265,7 @@ GameCreator.actionGroups = {
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
         Counter: GameCreator.actions.Counter,
+        ResetScene: GameCreator.actions.ResetScene,
     }
 };
 

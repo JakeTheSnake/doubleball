@@ -12,13 +12,12 @@ GameCreator.CounterDisplayText = function(args) {
         attributes: {}
     }];
 
-    this.getDefaultState().attributes.width = [100]; //TODO: Handle width and height of counters?
+    this.getDefaultState().attributes.width = [100];
     this.getDefaultState().attributes.height = [50];
     this.getDefaultState().attributes.font = args.font || 'Arial';
     this.getDefaultState().attributes.color = args.color || '#000';
     this.getDefaultState().attributes.size = args.size || 20;
     this.getDefaultState().attributes.image = new Image();
-    this.getDefaultState().attributes.image.src = 'assets/textcounter.png';
 
     this.objectName = args.objectName;
     this.isClickable =  false;

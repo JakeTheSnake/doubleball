@@ -477,7 +477,6 @@
                 if (!globalCounterCarrier) {
                     var globalCounter = GameCreator.globalCounters[counterNames[i]];
                     GameCreator.globalCounterCarriers[counterNames[i]] = GameCreator.CounterCarrier.New(null, globalCounter);
-                    //globalCounterCarrier.reset();
                 } else {
                     globalCounterCarrier.reset();
                 }

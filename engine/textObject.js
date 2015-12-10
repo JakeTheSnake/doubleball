@@ -26,7 +26,6 @@
         this.getDefaultState().attributes.size = args.size || 20;
         this.getDefaultState().attributes.text = args.text || "";
         this.getDefaultState().attributes.image = new Image();
-        this.getDefaultState().attributes.image.src = 'assets/textobject.png';
 
         this.objectName = args.objectName;
         this.isClickable =  false;
