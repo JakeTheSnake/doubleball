@@ -543,7 +543,9 @@
                     default:
                         return;
                 }
-                e.preventDefault();
+                if (!GameCreator.paused) {
+                    e.preventDefault();    
+                }
             };
             window.onkeyup = function(e) {
                 var key = e.keyCode || e.which;
@@ -579,7 +581,9 @@
                     default:
                         return;
                 }
-                e.preventDefault();
+                if (!GameCreator.paused) {
+                    e.preventDefault();    
+                }
             };
             
             window.onmousedown = function(e) {
@@ -593,7 +597,9 @@
                     default:
                         return;
                 }
-                e.preventDefault();
+                if (!GameCreator.paused) {
+                    e.preventDefault();    
+                }
             };
             window.onmouseup = function(e) {
                 switch (e.which) {
@@ -606,7 +612,9 @@
                     default:
                         return;
                 }
-                e.preventDefault();
+                if (!GameCreator.paused) {
+                    e.preventDefault();    
+                }
             };
             window.ontouchstart = window.onmousedown;
             window.ontouchend = window.onmouseup;
