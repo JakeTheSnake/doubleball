@@ -241,6 +241,7 @@
     };
 
     GameCreator.helpers.getValue = function(input) {
+        input = $(input);
         var i, range, value;
         if (input.attr("data-type") === "string") {
             return input.val() ? input.val().replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';

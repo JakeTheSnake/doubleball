@@ -8,10 +8,8 @@ var CommonParamFunctions = {
     select: function() {
         this.setState({selected: true});
     },
-    saveValue: function() {
-        var node = ReactDOM.findDOMNode(this);
-        var input = $(node).find('select, input');
-        var value;
+    saveValue: function(event) {
+        var input = event.target;
 
         try {
             value = GameCreator.helpers.getValue(input);
@@ -61,7 +59,7 @@ var DropdownParam = React.createClass({
             for(var i = 0; i < names.length; i += 1) {
                 options.push(<option key={i} value={collection[names[i]]}>{names[i]}</option>);
             }
-            html = <select className="selectorField" onBlur={this.saveValue} onChange={this.saveValue} value={this.state.value}>{options}</select>;
+            html = <select className="selectorField" onChange={this.saveValue} defaultValue={this.state.value}>{options}</select>;
         } else {
             html = <span>{this.getValuePresentation(this.state.value)}</span>;
         }
@@ -341,10 +339,9 @@ var TimingParam = React.createClass({
             selected: false
         }
     },
-    timingSelected: function() {
+    timingSelected: function(event) {
         var node = ReactDOM.findDOMNode(this);
-        var type = $(node).find('select').val();
-        this.setState({type: type});
+        this.setState({type: event.target.value});
     },
     select: function() {
         var me = this;
@@ -389,7 +386,7 @@ var TimingParam = React.createClass({
                     options.push(<option key={i} value={names[i]}>{names[i]}</option>);
                 }
             }
-            typeSelection = <select key="typeSelection" className="selectorField" onChange={this.timingSelected} value={this.state.type}>{options}</select>;
+            typeSelection = <select key="typeSelection" className="selectorField" onChange={this.timingSelected} defaultValue={this.state.type}>{options}</select>;
             if (this.state.type !== 'now') {
                 valueInput = <input key="numberInput" type="text" className="numberField" data-type="number" defaultValue={this.state.time}/>
             }
