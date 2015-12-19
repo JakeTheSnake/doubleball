@@ -361,8 +361,8 @@
 
 
         changeCounter: function(runtimeObj, params) {
-            var selectedObjectId = params.objId;
-            var counterName = params.counter;
+            var selectedObjectId = params.counter.carrier;
+            var counterName = params.counter.name;
             var counterCarrier, runtimeObjects;
 
             var changeValue = function(counter) {

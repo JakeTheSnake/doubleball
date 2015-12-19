@@ -45,15 +45,10 @@ GameCreator.actions.Create.params = {
 };
 
 GameCreator.actions.Counter.params = {
-    'objId': {
-        mandatory: false,
-        observer: 'counter',
-        component: CounterCarrierParam
-    },
     'counter': {
         mandatory: true,
         component: CounterParam,
-        observes: 'objId'
+        defaultValue: {}
     },
     'type': {
         mandatory: false,

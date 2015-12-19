@@ -219,7 +219,7 @@ test("PlatformObject Shoot Default", function() {
 test("Counter Action Test", function() {
     redBall.parentCounters["testCounter"] = new GameCreator.Counter();
     
-    var runtimeObj = setupCollisionEventForNewObject("Counter", {objId: 'this', counter: "testCounter", type: "set", value: 5});
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {counter: {carrier: 'this', name: "testCounter"}, type: "set", value: 5});
     var counter = runtimeObj.counters["testCounter"];
 
     GameCreator.checkCollisions();
@@ -230,7 +230,7 @@ test("Counter Action Test", function() {
 test("GlobalCounter Action Test", function() {
     GameCreator.createGlobalCounter('testCounter');
     
-    var runtimeObj = setupCollisionEventForNewObject("Counter", {objId: 'globalCounters', counter: "testCounter", type: "set", value: 5});
+    var runtimeObj = setupCollisionEventForNewObject("Counter", {counter: {carrier: 'globalCounters', name: "testCounter"}, type: "set", value: 5});
     var counter = GameCreator.globalCounterCarriers['testCounter'];
 
     GameCreator.checkCollisions();

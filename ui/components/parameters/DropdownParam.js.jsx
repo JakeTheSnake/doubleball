@@ -23,7 +23,7 @@ var DropdownParam = React.createClass({
             for(var i = 0; i < names.length; i += 1) {
                 options.push(<option key={i} value={collection[names[i]]}>{names[i]}</option>);
             }
-            html = <select className="selectorField" onChange={this.saveValue} defaultValue={this.state.value}>{options}</select>;
+            html = <select className="selectorField" onChange={this.saveValue} onBlur={this.saveValue} defaultValue={this.state.value}>{options}</select>;
         } else {
             html = <span>{this.getValuePresentation(this.state.value)}</span>;
         }

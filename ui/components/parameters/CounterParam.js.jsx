@@ -1,12 +1,19 @@
 var CounterParam = React.createClass({
+    getInitialState: function() {
+        return {
+            carrier: this.props.value.carrier,
+            name: this.props.value.name
+        }
+    },
+
     getSelectableCounters: function() {
         var counters, selectableCounters = {}, counterNames;
-        if(this.props.observedValue === 'globalCounters') {
+        if (this.state.carrier === 'globalCounters') {
             counters = GameCreator.globalCounters;
-        } else if(this.props.observedValue === 'this'){
+        } else if (this.state.carrier === 'this') {
             counters = GameCreator.UI.state.selectedGlobalItem.parentCounters;
         } else {
-            counters = GameCreator.helpers.getGlobalObjectById(Number(this.props.observedValue));
+            counters = GameCreator.helpers.getGlobalObjectById(Number(this.state.carrier));
             counters = counters !== undefined ? counters.parentCounters : {};
         }
 
@@ -16,18 +23,35 @@ var CounterParam = React.createClass({
         });
         return selectableCounters;
     },
-    componentWillReceiveProps: function(nextProps) {
-        if (this.props.observedValue !== nextProps.observedValue) {
-            this.props.onUpdate(this.props.name, undefined);
-        }
+
+    onUpdateCarrier: function(param, carrier) {
+        this.setState({
+            carrier: carrier
+        });
+        this.props.onUpdate(param, {
+            carrier: carrier,
+            name: this.state.name
+        });
     },
+
+    onUpdateName: function(param, counterName) {
+        this.setState({
+            name: counterName
+        });
+        this.props.onUpdate(param, {
+            name: counterName,
+            carrier: this.state.carrier
+        });
+    },
+
     render: function() {
         var selectableCounters = this.getSelectableCounters();
         return (
             <tbody>
-                <DropdownParam name={this.props.name} 
-                    value={this.props.value} onUpdate={this.props.onUpdate} collection={selectableCounters}
-                    label='Counter'/>
+                <GlobalObjectParam doNotWrapWithTbody={true} addGlobalCountersOption={true} name="Object" value={this.state.carrier} onUpdate={this.onUpdateCarrier}/>
+                <DropdownParam name="counter"
+                    value={this.state.name} onUpdate={this.onUpdateName} collection={selectableCounters}
+                    label='counter'/>
             </tbody>
         );
     }

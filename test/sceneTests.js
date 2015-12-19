@@ -48,7 +48,7 @@ test("It should be possible to change state for unique object in another state",
 
 test("Setting a global counter value on scene start should work", function() {
     GameCreator.createGlobalCounter('testCounter');
-    var parameters = {objId: 'globalCounters', counter: 'testCounter', type: 'set', value: 5};
+    var parameters = {counter: {carrier: 'globalCounters', name: 'testCounter'}, type: 'set', value: 5};
     var timing = {type: "now"};
     var action = new GameCreator.RuntimeAction('Counter', parameters, timing);
     var caSet = new GameCreator.ConditionActionSet();

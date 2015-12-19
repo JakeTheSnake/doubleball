@@ -19,12 +19,19 @@ var GlobalObjectParam = React.createClass({
         if(this.props.addGlobalCountersOption) {
             globalObjects.Global = 'globalCounters';
         }
-        return (
-            <tbody>
-                <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
+        var dropDownParam = <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
                     value={this.props.value} onUpdate={this.onUpdate} collection={globalObjects}
-                    label='Object'/>
-            </tbody>
-        );
+                    label='Object'/>;
+
+        if (this.props.doNotWrapWithTbody) {
+            // In case GlobalObjectParam is nested within a parent param, the tbody will be in the parent.
+            return dropDownParam;
+        } else {
+            return (
+                <tbody>
+                    {dropDownParam}
+                </tbody>
+            );
+        }
     }
 });

@@ -74,7 +74,7 @@ function commonCounterTests() {
 
     test("Nested actions manipulating counter should behave correctly", function() {
         var testAction = new GameCreator.RuntimeAction("testAction", {value: "changed"}, {type: "now"});
-        var counterAction = new GameCreator.RuntimeAction("Counter", {objId: counterCarrierId, counter: "testCounter", type: "set", value: 0}, {type: "now"});
+        var counterAction = new GameCreator.RuntimeAction("Counter", {counter: {carrier: counterCarrierId, name: "testCounter"}, type: "set", value: 0}, {type: "now"});
         var caSet = new GameCreator.ConditionActionSet();
         caSet.actions.push(testAction);
         caSet.actions.push(counterAction);

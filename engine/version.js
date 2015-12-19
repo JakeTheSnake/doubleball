@@ -1,6 +1,6 @@
 GameCreator.version = {
     major: 0, // Incremented on model changes that are not fully or not at all backwards-compatible even with conversion
-    minor: 2, // Incremented on model changes that are fully backwards-compatible after conversion
+    minor: 3, // Incremented on model changes that are fully backwards-compatible after conversion
     patch: 0, // Incremented on model changes that are backwards-compatible without the need of conversion.
 
     changeMessages: [],
@@ -19,6 +19,10 @@ GameCreator.version = {
 
         if (GameCreator.version.isVersionOlderThan(0, 2, 0, game)) {
             GameCreator.version.convertTo020(game);
+        }
+
+        if (GameCreator.version.isVersionOlderThan(0, 3, 0, game)) {
+            GameCreator.version.convertTo030(game);
         }
 
         for (var i = 0; i < GameCreator.version.changeMessages.length; i += 1) {
@@ -129,6 +133,24 @@ GameCreator.version = {
                     type: direction,
                     target: target
                 };
+                delete action.parameters.target;
+            }
+        }
+    },
+
+    convertTo030: function(game) {
+        var actions = GameCreator.version.collectObject(game, 'actions');
+        var wasAnythingConverted;
+        for (var i = 0; i < actions.length; i += 1) {
+            var action = actions[i];
+            if (action.name === 'Counter') {
+                var carrier = action.parameters.objId;
+                var counter = action.parameters.counter;
+                action.parameters.counter = {
+                    carrier: carrier,
+                    counter: counter
+                };
+                delete action.parameters.objId;
             }
         }
     },
