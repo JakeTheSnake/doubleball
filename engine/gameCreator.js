@@ -395,18 +395,21 @@
         },
 
         changeState: function(runtimeObj, params) {
-            var i, selectedObjectId = params.objectId;
+            var i, 
+                selectedObjectId = params.state.objId,
+                selectedStateId = Number(params.state.stateId);
+
             if (selectedObjectId && selectedObjectId !== 'this') {
                 var globalObj = GameCreator.helpers.getGlobalObjectById(selectedObjectId);
                 if (globalObj.attributes && globalObj.attributes.unique) {
-                    globalObj.currentState = Number(params.objectState);
+                    globalObj.currentState = selectedStateId;
                 }
                 var runtimeObjects = GameCreator.helpers.getActiveInstancesOfGlobalObject(Number(selectedObjectId));
                 for (i = 0; i < runtimeObjects.length; i += 1) {
-                    runtimeObjects[i].setState(Number(params.objectState));
+                    runtimeObjects[i].setState(selectedStateId);
                 }
             } else if (selectedObjectId === 'this') {
-                runtimeObj.setState(Number(params.objectState));
+                runtimeObj.setState(selectedStateId);
             }
         },
         

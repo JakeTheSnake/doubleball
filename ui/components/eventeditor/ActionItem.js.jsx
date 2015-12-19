@@ -1,9 +1,6 @@
 var ActionItem = React.createClass({
     onUpdate: function(paramName, value) {
         this.props.action.parameters[paramName] = value;
-        if (this.props.action.hasObservers(paramName)) {
-            this.forceUpdate();
-        }
     },
     onUpdateTiming: function(value) {
         this.props.action.timing = value;
@@ -14,13 +11,8 @@ var ActionItem = React.createClass({
         var i;
         for (i = 0; i < paramNames.length; i += 1) {
             var ParamComponent = this.props.action.getParameter(paramNames[i]).component;
-            var observedValue,
-                observedParam = this.props.action.getParameter(paramNames[i]).observes;
-            if (observedParam !== undefined) {
-                observedValue = this.props.action.parameters[observedParam];
-            }
             params.push(
-                <ParamComponent key={i} observedValue={observedValue} value={this.props.action.parameters[paramNames[i]]} onUpdate={this.onUpdate} name={paramNames[i]}/>
+                <ParamComponent key={i} value={this.props.action.parameters[paramNames[i]]} onUpdate={this.onUpdate} name={paramNames[i]}/>
             );
         }
         params.push(<TimingParam key={i+1} selectableTimings={GameCreator.actions[this.props.action.name].timing} timing={this.props.action.timing} onUpdate={this.onUpdateTiming}/>)

@@ -123,7 +123,6 @@ GameCreator.version = {
 
     convertTo020: function(game) {
         var actions = GameCreator.version.collectObject(game, 'actions');
-        var wasAnythingConverted;
         for (var i = 0; i < actions.length; i += 1) {
             var action = actions[i];
             if (action.name === 'Shoot') {
@@ -140,7 +139,6 @@ GameCreator.version = {
 
     convertTo030: function(game) {
         var actions = GameCreator.version.collectObject(game, 'actions');
-        var wasAnythingConverted;
         for (var i = 0; i < actions.length; i += 1) {
             var action = actions[i];
             if (action.name === 'Counter') {
@@ -151,6 +149,15 @@ GameCreator.version = {
                     counter: counter
                 };
                 delete action.parameters.objId;
+            } else if (action.name === 'SwitchState') {
+                var objectId = action.parameters.objectId;
+                var objectState = action.parameters.objectState;
+                action.parameters.state = {
+                    objId: objectId,
+                    stateId: objectState
+                };
+                delete action.parameters.objectId;
+                delete action.parameters.objectState;
             }
         }
     },

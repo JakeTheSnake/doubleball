@@ -37,7 +37,7 @@ test("State value preserved between scenes for unique object", function() {
 test("It should be possible to change state for unique object in another state", function() {
     redBall.attributes.unique = true;
     redBall.states[1].attributes.width = [40];
-    var selectStateParams = {objectId: redBall.id, objectState: 1};
+    var selectStateParams = {state: {objId: redBall.id, stateId: 1}};
     var selectSceneParams = {scene: GameCreator.scenes[1].id};
 
     GameCreator.changeState(null, selectStateParams);

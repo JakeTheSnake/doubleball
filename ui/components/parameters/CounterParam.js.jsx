@@ -28,7 +28,7 @@ var CounterParam = React.createClass({
         this.setState({
             carrier: carrier
         });
-        this.props.onUpdate(param, {
+        this.props.onUpdate(this.props.name, {
             carrier: carrier,
             name: this.state.name
         });
@@ -38,7 +38,7 @@ var CounterParam = React.createClass({
         this.setState({
             name: counterName
         });
-        this.props.onUpdate(param, {
+        this.props.onUpdate(this.props.name, {
             name: counterName,
             carrier: this.state.carrier
         });

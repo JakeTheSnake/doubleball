@@ -1,4 +1,11 @@
 var StateParam = React.createClass({
+    getInitialState: function() {
+        return {
+            objId: this.props.value.objId,
+            stateId: this.props.value.stateId
+        }
+    },
+
     getValuePresentation: function(id) {
         if (id === undefined) {
             return '<Edit>';
@@ -12,14 +19,15 @@ var StateParam = React.createClass({
             } 
         }
     },
+
     getSelectableStates: function() {
-        var selectedValue = this.props.observedValue,
+        var selectedGlobalObjId = this.state.objId,
             globalObj;
 
-        if (this.props.observedValue === 'this') {
+        if (selectedGlobalObjId === 'this') {
             globalObj = GameCreator.UI.state.selectedGlobalItem;
         } else {
-            globalObj = GameCreator.helpers.getGlobalObjectById(Number(this.props.observedValue));
+            globalObj = GameCreator.helpers.getGlobalObjectById(Number(selectedGlobalObjId));
         }
 
         var selectableStates = {};
@@ -30,20 +38,37 @@ var StateParam = React.createClass({
         }
         return selectableStates;
     },
-    componentWillReceiveProps: function(nextProps) {
-        if (this.props.observedValue !== nextProps.observedValue) {
-            this.props.onUpdate(this.props.name, undefined);
-        }
-    },
+
     onUpdate: function(name, value) {
         this.props.onUpdate(name, Number(value));
+    },
+
+    onUpdateGlobalObj: function(param, globalObj) {
+        this.setState({
+            objId: globalObj
+        });
+        this.props.onUpdate(this.props.name, {
+            objId: globalObj,
+            stateId: this.state.stateId
+        });
+    },
+
+    onUpdateState: function(param, stateId) {
+        this.setState({
+            stateId: stateId
+        });
+        this.props.onUpdate(this.props.name, {
+            objId: this.state.objId,
+            stateId: stateId,
+        });
     },
     render: function() {
         var selectableStates = this.getSelectableStates();
         return (
             <tbody>
-                <DropdownParam getValuePresentation={this.getValuePresentation} name={this.props.name} 
-                    value={this.props.value} onUpdate={this.onUpdate} collection={selectableStates}
+                <GlobalObjectParam doNotWrapWithTbody={true} name="object" value={this.state.objId} onUpdate={this.onUpdateGlobalObj} />
+                <DropdownParam getValuePresentation={this.getValuePresentation} name='state' 
+                    value={this.state.stateId} onUpdate={this.onUpdateState} collection={selectableStates}
                     label='State'/>
             </tbody>
         );

@@ -63,14 +63,9 @@ GameCreator.actions.Counter.params = {
 };
 
 GameCreator.actions.SwitchState.params = {
-    'objectId': {
-        component: GlobalObjectParam,
-        mandatory: true,
-        observer: 'objectState'
-    },
-    'objectState': {
+    'state': {
         component: StateParam,
-        observes: 'objectId',
+        defaultValue: {},
         mandatory: true
     }
 };

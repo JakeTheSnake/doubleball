@@ -38,10 +38,10 @@ test("Direction parameter should be converted from two parameters to one", funct
 
     var savedGame = convertGame();
 
-    var resultShootAction = savedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
-    deepEqual(resultShootAction.parameters.projectileDirection.type, 'Towards', "Type parameter should be set.");
-    deepEqual(resultShootAction.parameters.projectileDirection.target, 2, "Target parameter should be set.");
-    deepEqual(resultShootAction.parameters.target, undefined, "Old target-parameter should have been removed.");
+    var convertedAction = savedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
+    deepEqual(convertedAction.parameters.projectileDirection.type, 'Towards', "Type parameter should be set.");
+    deepEqual(convertedAction.parameters.projectileDirection.target, 2, "Target parameter should be set.");
+    deepEqual(convertedAction.parameters.target, undefined, "Old target-parameter should have been removed.");
 });
 
 module("Version 0.3.0 Conversion Tests", {
@@ -67,10 +67,28 @@ test("Counter parameter should be converted from two parameters to one", functio
 
     var savedGame = convertGame();
 
-    var resultCounterAction = savedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
-    deepEqual(resultCounterAction.parameters.counter.carrier, 1, "Carrier parameter should be set.");
-    deepEqual(resultCounterAction.parameters.counter.counter, "abcd", "Counter parameter should be set.");
-    deepEqual(resultCounterAction.parameters.objId, undefined, "Old objId-parameter should have been removed.");
+    var convertedAction = savedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
+    deepEqual(convertedAction.parameters.counter.carrier, 1, "Carrier parameter should be set.");
+    deepEqual(convertedAction.parameters.counter.counter, "abcd", "Counter parameter should be set.");
+    deepEqual(convertedAction.parameters.objId, undefined, "Old objId-parameter should have been removed.");
+});
+
+test("Switch State parameter should be converted from two parameters to one", function() {
+    var redBall = createGlobalObject('PlatformObject');
+    var switchStateAction = new GameCreator.RuntimeAction('SwitchState', {
+        objectId: 1,
+        objectState: 2
+    });
+    redBall.onCreateSets.push(new GameCreator.ConditionActionSet());
+    redBall.onCreateSets[0].actions.push(switchStateAction);
+
+    var savedGame = convertGame();
+
+    var convertedAction = savedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
+    deepEqual(convertedAction.parameters.state.objId, 1, "objId parameter should be set.");
+    deepEqual(convertedAction.parameters.state.stateId, 2, "state parameter should be set.");
+    deepEqual(convertedAction.parameters.objectId, undefined, "Old objectId-parameter should have been removed.");
+    deepEqual(convertedAction.parameters.objectState, undefined, "Old objectState-parameter should have been removed.");
 });
 
 })();

@@ -250,7 +250,7 @@ test("SwitchScene Action Test", function() {
 });
 
 test("SwitchState Action Test", function() {
-    var runtimeObj = setupCollisionEventForNewObject("SwitchState", {objectId: "this", objectState: 1});
+    var runtimeObj = setupCollisionEventForNewObject("SwitchState", {state: {objId: "this", stateId: "1"}});
     runtimeObj.parent.createState('TestState', {});
 
     GameCreator.checkCollisions();

@@ -48,16 +48,6 @@ GameCreator.RuntimeAction.prototype.hasRequiredParameters = function(parameters)
     return true;
 }
 
-GameCreator.RuntimeAction.prototype.hasObservers = function(paramName) {
-    var paramNames = Object.keys(this.getAllParameters());
-    for (var i = 0; i < paramNames.length; i += 1) {
-        if (this.getParameter(paramNames[i]).observes === paramName) {
-            return true;
-        }
-    }
-    return false;
-};
-
 GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimeParameters) {
     var timerFunction, combinedParameters = {};
 
