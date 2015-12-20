@@ -66,7 +66,7 @@
                             GameCreator.UI.openEditActionsWindow(
                                 GameCreator.htmlStrings.defaultEventInformationWindow("Pressed " + key + " actions for " + globalObj.objectName, this.getCurrentImage().src),
                                     keySets[0], 'key', globalObj.objectName
-                                );
+                            );
                             GameCreator.bufferedActions.push({actionArray: keySets[0].actions, runtimeObj: this});    
                         } else {
                             var conditionPassedCallback = function(){

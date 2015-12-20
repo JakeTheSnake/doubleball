@@ -95,7 +95,6 @@ GameCreator.UI = {
         globalObjectNames.forEach(function(globalObjName) {
             GameCreator.UI.createLibraryItem(GameCreator.globalObjects[globalObjName]);
         });
-        $('#library-preview').off('mousedown');
         GameCreator.UI.setPreviewImage("");
     },
 

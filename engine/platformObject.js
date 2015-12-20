@@ -18,7 +18,6 @@
         this.getDefaultState().attributes.acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
         this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
 
-        //Dictionary where key is the keycode of a key and value is the action to perform when that key is pressed.
         this.isCollidable = true;
         this.isMovable = true;
         this.isRenderable = true;

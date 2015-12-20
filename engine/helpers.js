@@ -100,15 +100,16 @@
         var y = object.attributes.y;
         var width = object.attributes.width;
         var height = object.attributes.height;
-        var i, j, runtimeObjectsItem, targetObject, collisionItem, colliding;
+        var i, j, runtimeObjectsItem, targetObject, collisionItem, isColliding;
 
         var borderObjects = Object.keys(GameCreator.borderObjects);
 
         for (i = 0; i < borderObjects.length; i++) {
             var borderObject = GameCreator.borderObjects[borderObjects[i]];
-            if (borderObject.collidesWith(object) && !object.alreadyCollidesWith(borderObject.objectName)) {
+            var isCollidingWithBorderObject = borderObject.collidesWith(object);
+            if (isCollidingWithBorderObject && !object.alreadyCollidesWith(borderObject.objectName)) {
                 GameCreator.helpers.doCollision(object, borderObject);
-            } else if (!borderObject.collidesWith(object)) {
+            } else if (!isCollidingWithBorderObject) {
                 object.removeFromCollidingList(borderObject.objectName);
             }
         }
@@ -119,10 +120,10 @@
                 runtimeObjectsItem = GameCreator.collidableObjects[j];
                 for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                     targetObject = runtimeObjectsItem.runtimeObjects[i];
-                    colliding = GameCreator.helpers.checkObjectCollision(object, targetObject);
-                    if (colliding && !object.alreadyCollidesWith(targetObject.attributes.instanceId)) {
+                    isColliding = GameCreator.helpers.checkObjectCollision(object, targetObject);
+                    if (isColliding && !object.alreadyCollidesWith(targetObject.attributes.instanceId)) {
                         GameCreator.helpers.doCollision(object, targetObject);
-                    } else if (!colliding) {
+                    } else if (!isColliding) {
                         object.removeFromCollidingList(targetObject.attributes.instanceId);
                     }
                 }
@@ -134,10 +135,10 @@
                 if (GameCreator.helpers.caSetsHaveActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
                         targetObject = runtimeObjectsItem.runtimeObjects[i];
-                        colliding = GameCreator.helpers.checkObjectCollision(object, targetObject);
-                        if (colliding && !object.alreadyCollidesWith(targetObject.attributes.instanceId)) {
+                        isColliding = GameCreator.helpers.checkObjectCollision(object, targetObject);
+                        if (isColliding && !object.alreadyCollidesWith(targetObject.attributes.instanceId)) {
                             GameCreator.helpers.doCollision(object, targetObject);
-                        } else if (!colliding) {
+                        } else if (!isColliding) {
                             object.removeFromCollidingList(targetObject.attributes.instanceId);
                         }
                     }

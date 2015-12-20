@@ -54,12 +54,13 @@
         GameCreator.invalidate(this);
         var offset = $(GameCreator.mainCanvas).offset();
 
+        // Recalculate x and y when the canvas has been resized (on mobile devices)
         this.attributes.x = (this.parent.latestMouseX / GameCreator.canvasSizeFactor) - offset.left;
         this.attributes.y = (this.parent.latestMouseY / GameCreator.canvasSizeFactor) - offset.top;
 
         if (this.attributes.x + this.attributes.width > this.attributes.maxX) {
             //This check is needed to prevent "flip-flopping" when the mousemove area is smaller than the object.
-            if(this.attributes.maxX - this.attributes.minX >= this.attributes.width) {
+            if (this.attributes.maxX - this.attributes.minX >= this.attributes.width) {
                 this.attributes.x = this.attributes.maxX - this.attributes.width;
             } else {
                 this.attributes.x = this.attributes.maxX;
