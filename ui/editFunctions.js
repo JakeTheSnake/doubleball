@@ -488,7 +488,7 @@
             for (var i = 0; i < globalObjects.length; i += 1) {
                 var globalObj = GameCreator.globalObjects[globalObjects[i]];
                 for (var prop in globalObj) {
-                    if (globalObj.hasOwnProperty(prop) && prop.includes("Sets")) {
+                    if (globalObj.hasOwnProperty(prop) && prop.indexOf("Sets") !== -1) {
                         GameCreator.removeReferencesToGlobalObject(globalObj[prop], globalObjId);
                     }
                 }
