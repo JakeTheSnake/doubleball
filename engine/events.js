@@ -28,22 +28,13 @@ GameCreator.ConditionActionSet.prototype.addCondition = function(condition) {
 
 GameCreator.ConditionActionSet.prototype.removeReferencesToGlobalObject = function(globalObjId) {
     for (var i = 0; i < this.actions.length; i += 1) {
-        if (Number(this.actions[i].parameters.objId) === globalObjId) {
-            this.actions.splice(i, 1);
-            i -= 1;
-        } else if (Number(this.actions[i].parameters.objectId) === globalObjId) {
-            this.actions.splice(i, 1);
-            i -= 1;
-        } else if (Number(this.actions[i].parameters.objectToCreate) === globalObjId) {
-            this.actions.splice(i, 1);
-            i -= 1;
-        } else if (Number(this.actions[i].parameters.objectToShoot) === globalObjId) {
+        if (this.actions[i].hasReferenceToGlobalObj(globalObjId)) {
             this.actions.splice(i, 1);
             i -= 1;
         }
     }
     for (var i = 0; i < this.conditions.length; i += 1) {
-        if (Number(this.conditions[i].parameters.objId) === globalObjId) {
+        if (this.conditions[i].hasReferenceToGlobalObj(globalObjId)) {
             this.conditions.splice(i, 1);
             i -= 1;
         }

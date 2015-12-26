@@ -121,6 +121,25 @@ GameCreator.RuntimeCondition.prototype.getParameter = function(name) {
     return GameCreator.conditions[this.name].params[name];
 }
 
+GameCreator.RuntimeCondition.prototype.hasReferenceToGlobalObj = function(globalObjId) {
+    var condition = GameCreator.conditions[this.name];
+    var parameters = Object.keys(this.parameters);
+    for (var i = 0; i < parameters.length; i += 1) {
+        var paramName = parameters[i];
+        var globalObjRef = condition.params[paramName].globalObjRef;
+        if (globalObjRef === true) {
+            if (this.parameters[paramName] == globalObjId) {
+                return true;
+            }
+        } else if (typeof(globalObjRef) === "string") { // Global Obj reference is nested 
+            if (this.parameters[paramName][globalObjRef] == globalObjId) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
+
 GameCreator.conditionGroups = {
     globalCounterConditions: {
         objectExists: GameCreator.conditions.objectExists,

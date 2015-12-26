@@ -4,6 +4,7 @@ GameCreator.conditions.objectExists.params = {
     objId: {
         component: GlobalObjectParam,
         mandatory: true,
+        globalObjRef: true
     },
     comparator: {
         component: ComparatorParam,
@@ -59,7 +60,8 @@ GameCreator.conditions.currentScene.params = {
 GameCreator.conditions.collidesWith.params = {
     objId: {
         component: GlobalObjectParam,
-        mandatory: true
+        mandatory: true,
+        globalObjRef: true
     },
 };
 

@@ -24,9 +24,9 @@ describe('Remove GlobalObject function', function() {
             var caSet = new GameCreator.ConditionActionSet();
             caSet.actions.push(new GameCreator.RuntimeAction("Shoot", {objectToShoot: blackBall.id}));
             caSet.actions.push(new GameCreator.RuntimeAction("Create", {objectToCreate: blackBall.id}));
-            caSet.actions.push(new GameCreator.RuntimeAction("Counter", {objId: blackBall.id}));
-            caSet.actions.push(new GameCreator.RuntimeAction("SwitchState", {objectId: blackBall.id}));
-            caSet.conditions.push(new GameCreator.RuntimeCondition("ojectExists", {objId: blackBall.id}));
+            caSet.actions.push(new GameCreator.RuntimeAction("Counter", {counter: {carrier: blackBall.id}}));
+            caSet.actions.push(new GameCreator.RuntimeAction("SwitchState", {state: {objId: blackBall.id, stateId: 0}}));
+            caSet.conditions.push(new GameCreator.RuntimeCondition("objectExists", {objId: blackBall.id}));
             caSet.conditions.push(new GameCreator.RuntimeCondition("collidesWith", {objId: blackBall.id}));
             return caSet;
         }    

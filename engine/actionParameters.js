@@ -11,7 +11,8 @@ GameCreator.actions.Destroy.params = {
 GameCreator.actions.Shoot.params = {
     'objectToShoot': {
         component: ShootableObjectParam,
-        mandatory: true
+        mandatory: true,
+        globalObjRef: true,
     },
     'projectileSpeed': {
         component: RangeParam,
@@ -30,7 +31,8 @@ GameCreator.actions.Shoot.params = {
 GameCreator.actions.Create.params = {
     'objectToCreate': {
         mandatory: true,
-        component: GlobalObjectParam
+        component: GlobalObjectParam,
+        globalObjRef: true,
     },
     'x': {
         mandatory: false,
@@ -48,7 +50,8 @@ GameCreator.actions.Counter.params = {
     'counter': {
         mandatory: true,
         component: CounterParam,
-        defaultValue: {}
+        defaultValue: {},
+        globalObjRef: 'carrier'
     },
     'type': {
         mandatory: false,
@@ -66,7 +69,8 @@ GameCreator.actions.SwitchState.params = {
     'state': {
         component: StateParam,
         defaultValue: {},
-        mandatory: true
+        mandatory: true,
+        globalObjRef: 'objId'
     }
 };
 
@@ -94,7 +98,6 @@ GameCreator.actions.Teleport.params = {
         defaultValue: 0
     }
 };
-
 
 
 })();

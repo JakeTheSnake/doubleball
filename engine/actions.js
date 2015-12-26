@@ -33,7 +33,26 @@ GameCreator.RuntimeAction.prototype.getAllParameters = function() {
 
 GameCreator.RuntimeAction.prototype.getParameter = function(name) {
     return GameCreator.actions[this.name].params[name];
-}
+};
+
+GameCreator.RuntimeAction.prototype.hasReferenceToGlobalObj = function(globalObjId) {
+    var action = GameCreator.actions[this.name];
+    var parameters = Object.keys(this.parameters);
+    for (var i = 0; i < parameters.length; i += 1) {
+        var paramName = parameters[i];
+        var globalObjRef = action.params[paramName].globalObjRef;
+        if (globalObjRef === true) {
+            if (this.parameters[paramName] == globalObjId) {
+                return true;
+            }
+        } else if (typeof(globalObjRef) === "string") { // Global Obj reference is nested 
+            if (this.parameters[paramName][globalObjRef] == globalObjId) {
+                return true;
+            }
+        }
+    }
+    return false;
+};
 
 GameCreator.RuntimeAction.prototype.hasRequiredParameters = function(parameters) {
     var i, keys;
