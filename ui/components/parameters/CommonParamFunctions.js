@@ -22,6 +22,12 @@ GameCreator.CommonParamFunctions = {
         this.setState({selected: false});
 
     },
+    keyPressed: function(event) {
+        var keycode = (event.keyCode ? event.keyCode : event.which);
+            if(keycode + '' === '13'){
+                this.saveValue(event);
+            }
+    },
     componentWillReceiveProps: function(nextProps) {
         this.setState({
             value: nextProps.value

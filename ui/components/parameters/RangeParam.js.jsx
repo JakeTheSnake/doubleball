@@ -32,7 +32,7 @@ var RangeParam = React.createClass({
     render: function() {
         var html;
         if (this.state.selected) {
-            html = <input type="text" className="rangeField" data-type="range" defaultValue={this.convertValueToString()} onBlur={this.saveValue}/>;
+            html = <input type="text" className="rangeField" data-type="range" defaultValue={this.convertValueToString()} onBlur={this.saveValue} onKeyDown={this.keyPressed}/>;
         } else {
             html = <span>{this.getValuePresentation()}</span>;
         }
