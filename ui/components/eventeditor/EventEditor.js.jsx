@@ -12,6 +12,7 @@ var EventEditor = React.createClass({
     },
     selectWhenGroup: function(index) {
         this.setState({activeCaSetIndex: index});
+        $(window).trigger('GC.hideItemSelector');
     },
     addCaSet: function() {
         this.props.caSets.push(new GameCreator.ConditionActionSet());

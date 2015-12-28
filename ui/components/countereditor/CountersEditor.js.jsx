@@ -19,6 +19,7 @@ var CountersEditor = React.createClass({
     },
     selectEvent: function(event) {
         this.setState({activeEvent: event, activeCASet: null});
+        $(window).trigger('GC.hideItemSelector');
     },
     selectCASet: function(caSet) {
         this.setState({activeCASet: caSet});

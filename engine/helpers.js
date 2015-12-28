@@ -474,7 +474,7 @@
                 $(this).addClass('properties-validation-flash'); // ANIMATION
                 var that = $(this);
                 setTimeout(function() { that.removeClass('properties-validation-flash'); }, 700);
-                GameCreator.UI.createValidationBox($(this), err);
+                GameCreator.UI.createValidationBox(this, err);
             }
         });
     };
