@@ -559,7 +559,6 @@ GameCreator.UI = {
 
         for (i = 0; i < keys.length; i++) {
             var listItem = document.createElement('a');
-            listItem.href = "#";
             $(listItem).addClass('btn tab');
             var actionName = keys[i];
 
@@ -584,7 +583,6 @@ GameCreator.UI = {
         ];
         objectGroups.forEach(function(group){
             listItem = document.createElement('a');
-            listItem.href = "#";
             $(listItem).addClass('btn tab');
             $(listItem).append(group.text);
             $(listItem).on('click', function() {
@@ -605,7 +603,6 @@ GameCreator.UI = {
         column.html('');
         for (i = 0; i < keys.length; i++) {
             var listItem = document.createElement('a');
-            listItem.href = "#";
             $(listItem).addClass('btn tab');
             $(listItem).append(keys[i]);
             $(listItem).on('click', function(index) {

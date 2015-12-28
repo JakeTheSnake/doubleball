@@ -181,7 +181,7 @@ GameCreator.commonObjectViews = {
     result += this.getPropertiesForm();
     result += ' \
     <div class="btn-group"> \
-    <a href="#" id="save-new-global-object-button" class="btn success grow">Save object</a> \
+    <a id="save-new-global-object-button" class="btn success grow">Save object</a> \
     </div> \
     </article> \
     </div> \
