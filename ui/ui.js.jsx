@@ -143,7 +143,7 @@ GameCreator.UI = {
                 try {
                     GameCreator.renameGlobalObject(globalObj.objectName, $(this).val());
                 } catch (e) {
-                    GameCreator.UI.createValidationBox($(this), e);
+                    GameCreator.UI.createValidationBox(this, e);
                 }
                 GameCreator.UI.redrawLibrary();
                 $(".global-object-list").trigger('recalculateActiveObject');
@@ -665,7 +665,7 @@ GameCreator.UI = {
             } catch (err) {
                 $(display).addClass('properties-validation-flash');
                 setTimeout(function() { $(display).removeClass('properties-validation-flash'); }, 700);
-                GameCreator.UI.createValidationBox(container, err);
+                GameCreator.UI.createValidationBox(container[0], err);
             }
             $(display).html(GameCreator.helpers.getPresentationForInputValue(attributes, attrName, inputType, obj));
             container.html(display);
@@ -710,7 +710,7 @@ GameCreator.UI = {
         var messageBox = document.createElement('div');
         $(messageBox).addClass('arrow_box');
         $(messageBox).html(message);
-        var targetBoundingBox = target[0].getBoundingClientRect();
+        var targetBoundingBox = target.getBoundingClientRect();
         messageBox.style.position = 'absolute';
         document.body.appendChild(messageBox);
         var msgBoxBoundingBox = messageBox.getBoundingClientRect();
