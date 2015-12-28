@@ -148,7 +148,7 @@
 
     var calculateDialoguePosition = function(targetElement) {
         var dialogueWidth = tutorialDialogue.innerWidth(),
-            dialogueHeight = tutorialDialogue.innerHeight(),
+            dialogueHeight = tutorialDialogue.innerHeight() + 60,
             targetX, targetY;
 
         if (targetElement[0]) {
