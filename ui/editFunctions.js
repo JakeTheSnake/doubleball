@@ -3,8 +3,6 @@
     "use strict";
     $.extend(GameCreator, {
 
-        selectedLibraryObject: undefined,
-
         directions: {
             Default: "Default",
             Up: "Up",

@@ -1,7 +1,8 @@
 GameCreator.UI = {    
     state: {
         selectedGlobalItem: null,
-        selectedItemType: null
+        selectedItemType: null,
+        selectedLibraryObject: null
     },
     setSelectedGlobalObject: function(globalObj) {
         GameCreator.UI.state.selectedGlobalItem = globalObj;
@@ -15,15 +16,15 @@ GameCreator.UI = {
         $("#dialogue-overlay").on("click", GameCreator.UI.closeDialogue);
         $("#add-global-object-button").on("click", GameCreator.UI.openAddGlobalObjectDialogue);
         $("#edit-global-object-button").on("click", function() {
-            GameCreator.UI.openEditGlobalObjectDialogue(GameCreator.selectedLibraryObject);
+            GameCreator.UI.openEditGlobalObjectDialogue(GameCreator.UI.state.selectedLibraryObject);
         });
 
         $("#rename-global-object-button").on("click", function() {
-            GameCreator.UI.renameGlobalObject(GameCreator.selectedLibraryObject);
+            GameCreator.UI.renameGlobalObject(GameCreator.UI.state.selectedLibraryObject);
         });
 
         $("#delete-global-object-button").on("click", function() {
-            GameCreator.UI.deleteGlobalObject(GameCreator.selectedLibraryObject);
+            GameCreator.UI.deleteGlobalObject(GameCreator.UI.state.selectedLibraryObject);
         });
         
         $("#toolbar-top button").on('click', function() {
@@ -32,7 +33,7 @@ GameCreator.UI = {
         });
 
         $('#library-preview').on('mousedown', 'img', function(e) {
-            GameCreator.UI.dragGlobalObjectToScene(e, GameCreator.selectedLibraryObject);
+            GameCreator.UI.dragGlobalObjectToScene(e, GameCreator.UI.state.selectedLibraryObject);
         });
 
         $("#library-tabs a").on('click', function() {
@@ -45,10 +46,18 @@ GameCreator.UI = {
         $(document).on('GameCreator.addedSceneObject GameCreator.removedSceneObject', function(){
             GameCreator.UI.drawSceneObjectLibrary();
         });
+
+
+        var keys = Object.keys(GameCreator.globalObjects);
+        if (keys.length > 0) {
+            GameCreator.UI.state.selectedLibraryObject = GameCreator.globalObjects[keys[0]];
+        }
+
         GameCreator.UI.setupPublishButtons();
         GameCreator.UI.redrawLibrary();
         GameCreator.UI.drawSceneTabs();
         GameCreator.UI.drawSceneObjectLibrary();
+        $(".global-object-list").trigger('recalculateActiveObject');
     },
 
     setupPublishButtons: function() {
@@ -112,12 +121,12 @@ GameCreator.UI = {
             globalObj = GameCreator.globalObjects[keys[i]];
             listElementButton = GameCreator.htmlStrings.globalObjectLibraryItem(globalObj);
 
-            if(GameCreator.selectedLibraryObject === globalObj) {
+            if(GameCreator.UI.state.selectedLibraryObject === globalObj) {
                 $(listElementButton).addClass('active');
             }
 
             $(listElementButton).on("click", function(iGlobalObject) {
-                GameCreator.selectedLibraryObject = iGlobalObject;
+                GameCreator.UI.state.selectedLibraryObject = iGlobalObject;
                 GameCreator.UI.populateOpenDialogue(iGlobalObject);
             }.bind(this, globalObj));
             $("#dialogue-window .global-object-list").append(listElementButton);
@@ -206,7 +215,7 @@ GameCreator.UI = {
         $(listElementButton).on("click", function(e){
             $('#edit-global-object-button').removeClass('disabled');
             $('#rename-global-object-button').removeClass('disabled');
-            GameCreator.selectedLibraryObject = globalObj;
+            GameCreator.UI.state.selectedLibraryObject = globalObj;
             GameCreator.UI.setPreviewImage(globalObj.getDefaultState().attributes.image.src);
             $('.library-global-object-button').removeClass('active');
             $(listElementButton).addClass('active');
@@ -214,7 +223,7 @@ GameCreator.UI = {
         });
 
         $(".global-object-list").on('recalculateActiveObject', function(){
-            if (GameCreator.selectedLibraryObject === globalObj) {
+            if (GameCreator.UI.state.selectedLibraryObject === globalObj) {
                 $(listElementButton).trigger('click');
             }
         });
