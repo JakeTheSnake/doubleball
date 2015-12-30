@@ -58,11 +58,13 @@
             GameCreator.UI.hideEditModeTools();
             var startNewGameLoop = GameCreator.state !== 'directing' && GameCreator.state !== 'playing';
             GameCreator.state = 'directing';
+            GameCreator.resizeCanvasToViewport();
             if (startNewGameLoop) GameCreator.gameLoop();
         },
 
         playGameEditing: function() {
             GameCreator.UI.hideEditModeTools();
+            GameCreator.resizeCanvasToViewport();
             GameCreator.playScene(GameCreator.scenes[0]);
         },
 
@@ -73,6 +75,30 @@
                 GameCreator.UI.createLibraryItem(GameCreator.globalObjects[objectName]);
             });
             GameCreator.editScene(GameCreator.scenes[0]);
+        },
+
+        resizeCanvasToViewport: function() {
+            var canvasContainer = document.getElementById('canvas-container');
+            canvasContainer.width = GameCreator.viewportWidth;
+            canvasContainer.height = GameCreator.viewportHeight;
+            GameCreator.bgCanvas.width = GameCreator.viewportWidth;
+            GameCreator.bgCanvas.height = GameCreator.viewportHeight;
+            GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
+            GameCreator.mainCanvas.width = GameCreator.viewportWidth;
+            GameCreator.mainCanvas.height = GameCreator.viewportHeight;
+            GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
+        },
+
+        resizeCanvasToFullsize: function() {
+            var canvasContainer = document.getElementById('canvas-container');
+            canvasContainer.width = GameCreator.width;
+            canvasContainer.height = GameCreator.height;
+            GameCreator.bgCanvas.width = GameCreator.width;
+            GameCreator.bgCanvas.height = GameCreator.height;
+            GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
+            GameCreator.mainCanvas.width = GameCreator.width;
+            GameCreator.mainCanvas.height = GameCreator.height;
+            GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
         },
 
         drawObjectSelectedUI: function() {
@@ -139,6 +165,7 @@
             GameCreator.UI.drawSceneObjectLibrary();
             scene.drawBackground();
             GameCreator.state = 'editing';
+            GameCreator.resizeCanvasToFullsize();
             GameCreator.UI.showEditModeTools();
 
             //Here we populate the renderableObjects only since the other kinds are unused for editing. Also we use the actual sceneObjects in the

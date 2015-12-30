@@ -1,12 +1,16 @@
 $(document).ready(function() {
     var GCWidth = 1000;
     var GCHeight = 650;
+    var GCviewportWidth = 1000;
+    var GCviewportHeight = 650;
     try {
         GameCreator.height = window.gon.game.height || GCHeight;
         GameCreator.width = window.gon.game.width || GCWidth;
+        GameCreator.viewportHeight = window.gon.game.viewportHeight || GCviewportHeight;
+        GameCreator.viewportWidth = window.gon.game.viewportWidth || GCviewportWidth;
     } catch (e) {
-        GameCreator.height = GCHeight;
-        GameCreator.width = GCWidth;
+        GameCreator.viewportHeight = GCviewportHeight;
+        GameCreator.viewportWidth = GCviewportWidth;
     }
     
     GameCreator.bgCanvas = document.createElement("canvas");
@@ -23,12 +27,14 @@ $(document).ready(function() {
     GameCreator.mainCanvas.height = GameCreator.height;
     $("#canvas-container").append(GameCreator.mainCanvas);
 
+    /*
     GameCreator.uiCanvas = document.createElement("canvas");
     GameCreator.uiCanvas.id = "ui-canvas"
     GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
     GameCreator.uiCanvas.width = GameCreator.width;
     GameCreator.uiCanvas.height = GameCreator.height;
     $("#canvas-container").append(GameCreator.uiCanvas);
+    */
     
     var canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {

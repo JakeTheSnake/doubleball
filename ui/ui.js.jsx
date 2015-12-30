@@ -312,7 +312,7 @@ GameCreator.UI = {
     openGamePropertiesDialogue: function() {       
         ReactDOM.render(
             <DialogueLeft title="Game Properties">
-                <GamePropertiesForm properties={{width: GameCreator.width, height: GameCreator.height}}/>
+                <GamePropertiesForm properties={{width: GameCreator.width, height: GameCreator.height, viewportWidth: GameCreator.viewportWidth, viewportHeight: GameCreator.viewportHeight}}/>
             </DialogueLeft>,
             document.getElementById('dialogue-window')
         );
@@ -734,12 +734,14 @@ GameCreator.UI = {
         document.getElementById('main-canvas').height = props.height;
         document.getElementById('bg-canvas').width = props.width;
         document.getElementById('bg-canvas').height = props.height;
-        document.getElementById('ui-canvas').width = props.width;
-        document.getElementById('ui-canvas').height = props.height;
+        /*document.getElementById('ui-canvas').width = props.width;
+        document.getElementById('ui-canvas').height = props.height;*/
         document.getElementById('canvas-container').width = props.width;
         document.getElementById('canvas-container').height = props.height;
         GameCreator.width = props.width;
         GameCreator.height = props.height;
+        GameCreator.viewportWidth = props.viewportWidth;
+        GameCreator.viewportHeight = props.viewportHeight;
         GameCreator.editActiveScene();
     },
 

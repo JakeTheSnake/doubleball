@@ -22,7 +22,7 @@ var GamePropertiesForm = React.createClass({
 	},
 	
 	onChange: function(event) {
-    if (Number(event.target.value) && Number(event.target.value) > 0 && Number(event.target.value) < 1500) {
+    if (Number(event.target.value) && Number(event.target.value) > 0) {
 		  this.state.properties[event.target.dataset.prop] = Number(event.target.value);
     }
 	},
@@ -44,6 +44,14 @@ var GamePropertiesForm = React.createClass({
 						<input type="text" placeholder="Height" defaultValue={this.state.properties.height} data-prop="height" onChange={this.onChange}/>
 						<label>Height</label>
 					</div>
+                    <div className="input-container">
+                        <input type="text" placeholder="Viewport Width" defaultValue={this.state.properties.viewportWidth} data-prop="viewportWidth" onChange={this.onChange}/>
+                        <label>Width</label>
+                    </div>
+                    <div className="input-container">
+                        <input type="text" placeholder="Viewport Height" defaultValue={this.state.properties.viewportHeight} data-prop="viewportHeight" onChange={this.onChange}/>
+                        <label>Height</label>
+                    </div>
 					<div className="btn-group sequenced">
                         <a className="btn success" onClick={this.saveForm}>Save</a>
                         <a className="btn warning" onClick={GameCreator.UI.closeDialogue}>Cancel</a>
