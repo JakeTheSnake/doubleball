@@ -730,18 +730,20 @@ GameCreator.UI = {
     },
 
     updateGameProperties: function(props) {
-        document.getElementById('main-canvas').width = props.width;
+        /*document.getElementById('main-canvas').width = props.width;
         document.getElementById('main-canvas').height = props.height;
         document.getElementById('bg-canvas').width = props.width;
         document.getElementById('bg-canvas').height = props.height;
-        /*document.getElementById('ui-canvas').width = props.width;
-        document.getElementById('ui-canvas').height = props.height;*/
+        document.getElementById('ui-canvas').width = props.width;
+        document.getElementById('ui-canvas').height = props.height;
         document.getElementById('canvas-container').width = props.width;
-        document.getElementById('canvas-container').height = props.height;
+        document.getElementById('canvas-container').height = props.height;*/
         GameCreator.width = props.width;
         GameCreator.height = props.height;
+        GameCreator.resizeCanvasToFullsize();
         GameCreator.viewportWidth = props.viewportWidth;
         GameCreator.viewportHeight = props.viewportHeight;
+        GameCreator.initializeBorderObjects();
         GameCreator.editActiveScene();
     },
 

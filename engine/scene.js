@@ -21,11 +21,11 @@
 
         if (this.attributes.bgImage != null) {
             if ($(this.attributes.bgImage).data('loaded')) {
-                context.drawImage(this.attributes.bgImage, 0, 0, GameCreator.width, GameCreator.height);
+                context.drawImage(this.attributes.bgImage, 0 - GameCreator.vpOffsetX, 0 - GameCreator.vpOffsetY, GameCreator.width, GameCreator.height);
             } else {
                 this.attributes.bgImage.onload = function() {
                     $(this).data('loaded', true);
-                    context.drawImage(this, 0, 0, GameCreator.width, GameCreator.height);
+                    context.drawImage(this, 0 - GameCreator.vpOffsetX, 0 - GameCreator.vpOffsetY, GameCreator.width, GameCreator.height);
                 }
             }
         }

@@ -10,6 +10,9 @@
         globalCounters: {},
         globalCounterCarriers: {},
 
+        vpOffsetX: 0,
+        vpOffsetY: 0,
+
         //Scene contains all objects that initially exist in one scene. It is used as a blueprint to create the runtime arrays of objects.
         scenes: [],
         activeSceneId: 0,
@@ -106,6 +109,7 @@
                 //}
                 obj.parent.draw(this.mainContext, obj);
             }
+            GameCreator.getActiveScene().drawBackground();
             GameCreator.drawEffects(this.mainContext);
         },
 

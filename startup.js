@@ -27,14 +27,12 @@ $(document).ready(function() {
     GameCreator.mainCanvas.height = GameCreator.height;
     $("#canvas-container").append(GameCreator.mainCanvas);
 
-    /*
     GameCreator.uiCanvas = document.createElement("canvas");
     GameCreator.uiCanvas.id = "ui-canvas"
     GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
     GameCreator.uiCanvas.width = GameCreator.width;
     GameCreator.uiCanvas.height = GameCreator.height;
     $("#canvas-container").append(GameCreator.uiCanvas);
-    */
     
     var canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {

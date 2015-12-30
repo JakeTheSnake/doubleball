@@ -87,10 +87,17 @@
             GameCreator.mainCanvas.width = GameCreator.viewportWidth;
             GameCreator.mainCanvas.height = GameCreator.viewportHeight;
             GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
+            GameCreator.uiCanvas.width = 0;
+            GameCreator.uiCanvas.height = 0;
+            GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
         },
 
         resizeCanvasToFullsize: function() {
             var canvasContainer = document.getElementById('canvas-container');
+
+            GameCreator.vpOffsetX = 0;
+            GameCreator.vpOffsetY = 0;
+
             canvasContainer.width = GameCreator.width;
             canvasContainer.height = GameCreator.height;
             GameCreator.bgCanvas.width = GameCreator.width;
@@ -99,6 +106,9 @@
             GameCreator.mainCanvas.width = GameCreator.width;
             GameCreator.mainCanvas.height = GameCreator.height;
             GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
+            GameCreator.uiCanvas.width = GameCreator.width;
+            GameCreator.uiCanvas.height = GameCreator.height;
+            GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
         },
 
         drawObjectSelectedUI: function() {
