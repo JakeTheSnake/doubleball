@@ -9,8 +9,11 @@ $(document).ready(function() {
         GameCreator.viewportHeight = window.gon.game.viewportHeight || GCviewportHeight;
         GameCreator.viewportWidth = window.gon.game.viewportWidth || GCviewportWidth;
     } catch (e) {
+        // If this is a new game (no saved version exists)
         GameCreator.viewportHeight = GCviewportHeight;
         GameCreator.viewportWidth = GCviewportWidth;
+        GameCreator.height = GCHeight;
+        GameCreator.width = GCWidth;
     }
     
     GameCreator.bgCanvas = document.createElement("canvas");
