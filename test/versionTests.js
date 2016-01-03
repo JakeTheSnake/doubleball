@@ -78,7 +78,7 @@ test("Counter parameter should be converted from two parameters to one", functio
 
     var convertedAction = loadedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
     deepEqual(convertedAction.parameters.counter.carrier, 1, "Carrier parameter should be set.");
-    deepEqual(convertedAction.parameters.counter.counter, "abcd", "Counter parameter should be set.");
+    deepEqual(convertedAction.parameters.counter.name, "abcd", "Counter parameter should be set.");
     deepEqual(convertedAction.parameters.objId, undefined, "Old objId-parameter should have been removed.");
 });
 

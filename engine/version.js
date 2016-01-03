@@ -150,7 +150,7 @@ GameCreator.version = {
                 var counter = action.parameters.counter;
                 action.parameters.counter = {
                     carrier: carrier,
-                    counter: counter
+                    name: counter
                 };
                 delete action.parameters.objId;
             } else if (action.name === 'SwitchState') {
@@ -168,10 +168,10 @@ GameCreator.version = {
 
     convertTo040: function(game) {
         game.props = {};
-        game.props.width = game.width;
-        game.props.height = game.height;
-        game.props.viewportWidth = game.width;
-        game.props.viewportHeight = game.height;
+        game.props.width = game.width || GameCreator.props.width;
+        game.props.height = game.height || GameCreator.props.height;
+        game.props.viewportWidth = game.width || GameCreator.props.width;
+        game.props.viewportHeight = game.height || GameCreator.props.height;
         delete game.width;
         delete game.height;
     },
