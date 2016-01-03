@@ -15,17 +15,17 @@
 
     GameCreator.Scene.prototype.drawBackground = function() {
         var context = GameCreator.bgContext;
-        context.clearRect(0, 0, GameCreator.width, GameCreator.height)
+        context.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height)
         context.fillStyle = this.attributes.bgColor;
-        context.fillRect(0, 0, GameCreator.width, GameCreator.height);
+        context.fillRect(0, 0, GameCreator.props.width, GameCreator.props.height);
 
         if (this.attributes.bgImage != null) {
             if ($(this.attributes.bgImage).data('loaded')) {
-                context.drawImage(this.attributes.bgImage, 0 - GameCreator.vpOffsetX, 0 - GameCreator.vpOffsetY, GameCreator.width, GameCreator.height);
+                context.drawImage(this.attributes.bgImage, 0 - GameCreator.vpOffsetX, 0 - GameCreator.vpOffsetY, GameCreator.props.width, GameCreator.props.height);
             } else {
                 this.attributes.bgImage.onload = function() {
                     $(this).data('loaded', true);
-                    context.drawImage(this, 0 - GameCreator.vpOffsetX, 0 - GameCreator.vpOffsetY, GameCreator.width, GameCreator.height);
+                    context.drawImage(this, 0 - GameCreator.vpOffsetX, 0 - GameCreator.vpOffsetY, GameCreator.props.width, GameCreator.props.height);
                 }
             }
         }

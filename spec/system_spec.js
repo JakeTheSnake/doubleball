@@ -34,7 +34,6 @@ describe("Direct Mode", function() {
     }
 
     beforeEach(function() {
-        $('body').append('<div id="fixture"></div>');
         redBall = createGlobalObject("PlatformObject");
         GameCreator.actions["testAction"] = new GameCreator.Action({
                                                 action: function() {actionWasRun = true;},

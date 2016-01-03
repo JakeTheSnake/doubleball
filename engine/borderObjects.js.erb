@@ -7,7 +7,7 @@ GameCreator.borderObjects = {
         attributes: {
             x: -500, 
             y: -500, 
-            height: GameCreator.height + 1000, 
+            height: GameCreator.props.height + 1000, 
             width: 500,
             instanceId: 'borderL',
             image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderLeft.png' %>"; return img; }()),
@@ -23,16 +23,16 @@ GameCreator.borderObjects = {
         id: -2, 
         isCollidable: true,
         attributes: {
-            x: GameCreator.width, 
+            x: GameCreator.props.width, 
             y: -500, 
-            height: GameCreator.height + 1000, 
+            height: GameCreator.props.height + 1000, 
             width: 500, 
             instanceId: 'borderR',
             image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderRight.png' %>"; return img; }()),
         },
         image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderRight.png' %>"; return img; }()),
         collidesWith: function(object) {
-            return object.attributes.x + object.attributes.width >= GameCreator.width;
+            return object.attributes.x + object.attributes.width >= GameCreator.props.width;
         }
     },
     borderT: {
@@ -44,7 +44,7 @@ GameCreator.borderObjects = {
             x: -500, 
             y: -500, 
             height: 500, 
-            width: GameCreator.width + 1000,
+            width: GameCreator.props.width + 1000,
             instanceId: 'borderT',
             image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderTop.png' %>"; return img; }()),
         },
@@ -60,15 +60,15 @@ GameCreator.borderObjects = {
         isCollidable: true,
         attributes: {
             x: -500, 
-            y: GameCreator.height, 
+            y: GameCreator.props.height, 
             height: 500, 
-            width: GameCreator.width + 1000,
+            width: GameCreator.props.width + 1000,
             instanceId: 'borderB',
             image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderBottom.png' %>"; return img; }()),
         },
         image: (function() {var img = (new Image()); $(img).css("width", "65"); img.src = "<%= asset_path 'game/borderBottom.png' %>"; return img; }()),
         collidesWith: function(object) {
-            return object.attributes.y + object.attributes.height >= GameCreator.height;
+            return object.attributes.y + object.attributes.height >= GameCreator.props.height;
         }
     },
 }

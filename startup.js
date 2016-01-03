@@ -3,44 +3,44 @@ $(document).ready(function() {
     var GCHeight = 650;
     var GCviewportWidth = 1000;
     var GCviewportHeight = 650;
-    try {
-        GameCreator.height = window.gon.game.height || GCHeight;
-        GameCreator.width = window.gon.game.width || GCWidth;
-        GameCreator.viewportHeight = window.gon.game.viewportHeight || GCviewportHeight;
-        GameCreator.viewportWidth = window.gon.game.viewportWidth || GCviewportWidth;
-    } catch (e) {
-        // If this is a new game (no saved version exists)
-        GameCreator.viewportHeight = GCviewportHeight;
-        GameCreator.viewportWidth = GCviewportWidth;
-        GameCreator.height = GCHeight;
-        GameCreator.width = GCWidth;
+
+    if (window.gon && window.gon.game) {
+        GameCreator.props.height = window.gon.game.height || GCHeight;
+        GameCreator.props.width = window.gon.game.width || GCWidth;
+        GameCreator.props.viewportHeight = window.gon.game.viewportHeight || GCviewportHeight;
+        GameCreator.props.viewportWidth = window.gon.game.viewportWidth || GCviewportWidth;
+    } else {
+        GameCreator.props.viewportHeight = GCviewportHeight;
+        GameCreator.props.viewportWidth = GCviewportWidth;
+        GameCreator.props.height = GCHeight;
+        GameCreator.props.width = GCWidth;
     }
     
     GameCreator.bgCanvas = document.createElement("canvas");
     GameCreator.bgCanvas.id = "bg-canvas"
     GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
-    GameCreator.bgCanvas.width = GameCreator.width;
-    GameCreator.bgCanvas.height = GameCreator.height;
+    GameCreator.bgCanvas.width = GameCreator.props.width;
+    GameCreator.bgCanvas.height = GameCreator.props.height;
     $("#canvas-container").append(GameCreator.bgCanvas);
 
     GameCreator.mainCanvas = document.createElement("canvas");
     GameCreator.mainCanvas.id = "main-canvas"
     GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
-    GameCreator.mainCanvas.width = GameCreator.width;
-    GameCreator.mainCanvas.height = GameCreator.height;
+    GameCreator.mainCanvas.width = GameCreator.props.width;
+    GameCreator.mainCanvas.height = GameCreator.props.height;
     $("#canvas-container").append(GameCreator.mainCanvas);
 
     GameCreator.uiCanvas = document.createElement("canvas");
     GameCreator.uiCanvas.id = "ui-canvas"
     GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
-    GameCreator.uiCanvas.width = GameCreator.width;
-    GameCreator.uiCanvas.height = GameCreator.height;
+    GameCreator.uiCanvas.width = GameCreator.props.width;
+    GameCreator.uiCanvas.height = GameCreator.props.height;
     $("#canvas-container").append(GameCreator.uiCanvas);
     
     var canvasContainer = document.getElementById('canvas-container');
     if (canvasContainer) {
-        canvasContainer.width = GameCreator.width;
-        canvasContainer.height = GameCreator.height;
+        canvasContainer.width = GameCreator.props.width;
+        canvasContainer.height = GameCreator.props.height;
     }
 
     GameCreator.initialize();

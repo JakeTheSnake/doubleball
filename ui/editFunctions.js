@@ -79,13 +79,13 @@
 
         resizeCanvasToViewport: function() {
             var canvasContainer = document.getElementById('canvas-container');
-            canvasContainer.width = GameCreator.viewportWidth;
-            canvasContainer.height = GameCreator.viewportHeight;
-            GameCreator.bgCanvas.width = GameCreator.viewportWidth;
-            GameCreator.bgCanvas.height = GameCreator.viewportHeight;
+            canvasContainer.width = GameCreator.props.viewportWidth;
+            canvasContainer.height = GameCreator.props.viewportHeight;
+            GameCreator.bgCanvas.width = GameCreator.props.viewportWidth;
+            GameCreator.bgCanvas.height = GameCreator.props.viewportHeight;
             GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
-            GameCreator.mainCanvas.width = GameCreator.viewportWidth;
-            GameCreator.mainCanvas.height = GameCreator.viewportHeight;
+            GameCreator.mainCanvas.width = GameCreator.props.viewportWidth;
+            GameCreator.mainCanvas.height = GameCreator.props.viewportHeight;
             GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
             GameCreator.uiCanvas.width = 0;
             GameCreator.uiCanvas.height = 0;
@@ -98,16 +98,16 @@
             GameCreator.vpOffsetX = 0;
             GameCreator.vpOffsetY = 0;
 
-            canvasContainer.width = GameCreator.width;
-            canvasContainer.height = GameCreator.height;
-            GameCreator.bgCanvas.width = GameCreator.width;
-            GameCreator.bgCanvas.height = GameCreator.height;
+            canvasContainer.width = GameCreator.props.width;
+            canvasContainer.height = GameCreator.props.height;
+            GameCreator.bgCanvas.width = GameCreator.props.width;
+            GameCreator.bgCanvas.height = GameCreator.props.height;
             GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
-            GameCreator.mainCanvas.width = GameCreator.width;
-            GameCreator.mainCanvas.height = GameCreator.height;
+            GameCreator.mainCanvas.width = GameCreator.props.width;
+            GameCreator.mainCanvas.height = GameCreator.props.height;
             GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
-            GameCreator.uiCanvas.width = GameCreator.width;
-            GameCreator.uiCanvas.height = GameCreator.height;
+            GameCreator.uiCanvas.width = GameCreator.props.width;
+            GameCreator.uiCanvas.height = GameCreator.props.height;
             GameCreator.uiContext = GameCreator.uiCanvas.getContext("2d");
         },
 
@@ -117,7 +117,7 @@
         },
 
         drawSelectionLine: function() {
-            GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            GameCreator.uiContext.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height);
             if (GameCreator.selectedObject) {
                 var selobj = GameCreator.selectedObject;
                 GameCreator.uiContext.beginPath();
@@ -376,8 +376,7 @@
                 minor: GameCreator.version.minor,
                 patch: GameCreator.version.patch
             };
-            results.width = GameCreator.width;
-            results.height = GameCreator.height;
+            results.props = GameCreator.props;
             return JSON.stringify(results);
         },
 

@@ -273,7 +273,7 @@ GameCreator.UI = {
             var y = e.pageY;
             var offsetX = $("#main-canvas").offset().left;
             var offsetY = $("#main-canvas").offset().top;
-            if (x > offsetX && x < offsetX + GameCreator.width && y > offsetY && y < offsetY + GameCreator.height) {
+            if (x > offsetX && x < offsetX + GameCreator.props.width && y > offsetY && y < offsetY + GameCreator.props.height) {
                 var args = {x: x - offsetX - globalObj.getDefaultState().attributes.width[0] / 2, 
                             y: y - offsetY - globalObj.getDefaultState().attributes.height[0] / 2};
                 var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.getActiveScene(), args);
@@ -312,7 +312,7 @@ GameCreator.UI = {
     openGamePropertiesDialogue: function() {       
         ReactDOM.render(
             <DialogueLeft title="Game Properties">
-                <GamePropertiesForm properties={{width: GameCreator.width, height: GameCreator.height, viewportWidth: GameCreator.viewportWidth, viewportHeight: GameCreator.viewportHeight}}/>
+                <GamePropertiesForm properties={{width: GameCreator.props.width, height: GameCreator.props.height, viewportWidth: GameCreator.props.viewportWidth, viewportHeight: GameCreator.props.viewportHeight}}/>
             </DialogueLeft>,
             document.getElementById('dialogue-window')
         );
@@ -730,19 +730,11 @@ GameCreator.UI = {
     },
 
     updateGameProperties: function(props) {
-        /*document.getElementById('main-canvas').width = props.width;
-        document.getElementById('main-canvas').height = props.height;
-        document.getElementById('bg-canvas').width = props.width;
-        document.getElementById('bg-canvas').height = props.height;
-        document.getElementById('ui-canvas').width = props.width;
-        document.getElementById('ui-canvas').height = props.height;
-        document.getElementById('canvas-container').width = props.width;
-        document.getElementById('canvas-container').height = props.height;*/
-        GameCreator.width = props.width;
-        GameCreator.height = props.height;
+        GameCreator.props.width = props.width;
+        GameCreator.props.height = props.height;
         GameCreator.resizeCanvasToFullsize();
-        GameCreator.viewportWidth = props.viewportWidth;
-        GameCreator.viewportHeight = props.viewportHeight;
+        GameCreator.props.viewportWidth = props.viewportWidth;
+        GameCreator.props.viewportHeight = props.viewportHeight;
         GameCreator.initializeBorderObjects();
         GameCreator.editActiveScene();
     },

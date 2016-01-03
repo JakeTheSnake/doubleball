@@ -674,7 +674,7 @@
         var offsetLeft = $("#main-canvas").offset().left;
 
         if (x < offsetLeft) x = offsetLeft;
-        if (x > offsetLeft + GameCreator.width) x = offsetLeft + GameCreator.width;
+        if (x > offsetLeft + GameCreator.props.width) x = offsetLeft + GameCreator.props.width;
         return x;
     };
 
@@ -682,7 +682,7 @@
         var offsetTop = $("#main-canvas").offset().top;
 
         if (y < offsetTop) y = offsetTop;
-        if (y > offsetTop + GameCreator.height) y = offsetTop + GameCreator.height;
+        if (y > offsetTop + GameCreator.props.height) y = offsetTop + GameCreator.props.height;
         return y;
     };
 

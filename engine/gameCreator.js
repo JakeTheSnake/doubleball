@@ -31,6 +31,8 @@
         currentEffects: [],
         bufferedActions: [],
 
+        props: {},
+
         addObjFunctions: {},
         commonObjectFunctions: {},
         helpers: {},
@@ -72,12 +74,12 @@
         },
 
         initializeBorderObjects: function() {
-            GameCreator.borderObjects.borderL.attributes.height = GameCreator.height + 1000;
-            GameCreator.borderObjects.borderR.attributes.x = GameCreator.width;
-            GameCreator.borderObjects.borderR.attributes.height = GameCreator.height + 1000;
-            GameCreator.borderObjects.borderT.attributes.width = GameCreator.width + 1000;
-            GameCreator.borderObjects.borderB.attributes.width = GameCreator.width + 1000;
-            GameCreator.borderObjects.borderB.attributes.y = GameCreator.height;
+            GameCreator.borderObjects.borderL.attributes.height = GameCreator.props.height + 1000;
+            GameCreator.borderObjects.borderR.attributes.x = GameCreator.props.width;
+            GameCreator.borderObjects.borderR.attributes.height = GameCreator.props.height + 1000;
+            GameCreator.borderObjects.borderT.attributes.width = GameCreator.props.width + 1000;
+            GameCreator.borderObjects.borderB.attributes.width = GameCreator.props.width + 1000;
+            GameCreator.borderObjects.borderB.attributes.y = GameCreator.props.height;
         },
 
         gameLoop: function() {
@@ -97,10 +99,10 @@
         render: function (forceRender) {
             var i, obj;
             if (GameCreator.uiContext) {
-                GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+                GameCreator.uiContext.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height);
                 GameCreator.drawObjectSelectedUI();
             }
-            GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            GameCreator.mainContext.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height);
             for (i = 0; i < GameCreator.renderableObjects.length; i += 1) {
                 obj = GameCreator.renderableObjects[i];
                 // TODO: Deactivated invalidation
@@ -254,10 +256,10 @@
 
         reset: function() {
             if (GameCreator.uiContext) {
-                GameCreator.uiContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+                GameCreator.uiContext.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height);
             }
-            GameCreator.mainContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
-            GameCreator.bgContext.clearRect(0, 0, GameCreator.width, GameCreator.height);
+            GameCreator.mainContext.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height);
+            GameCreator.bgContext.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height);
             GameCreator.timerHandler.clear();
             this.collidableObjects = [];
             this.movableObjects = [];

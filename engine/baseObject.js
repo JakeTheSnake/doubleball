@@ -174,16 +174,16 @@
             } else {
                 try {
                     if (obj.controlsCamera) {
-                        var vpWidth = GameCreator.viewportWidth,
-                            vpHeight = GameCreator.viewportHeight,
-                            gameWidth = GameCreator.width,
-                            gameHeight = GameCreator.height;
+                        var vpWidth = GameCreator.props.viewportWidth,
+                            vpHeight = GameCreator.props.viewportHeight,
+                            gameWidth = GameCreator.props.width,
+                            gameHeight = GameCreator.props.height;
 
                         GameCreator.vpOffsetX = Math.max(0, ((obj.attributes.x + obj.attributes.width / 2) - vpWidth / 2));
                         GameCreator.vpOffsetY = Math.max(0, ((obj.attributes.y + obj.attributes.height / 2) - vpHeight / 2));
 
-                        GameCreator.vpOffsetX = Math.min(GameCreator.vpOffsetX, (GameCreator.width - vpWidth));
-                        GameCreator.vpOffsetY = Math.min(GameCreator.vpOffsetY, (GameCreator.height - vpHeight));
+                        GameCreator.vpOffsetX = Math.min(GameCreator.vpOffsetX, (GameCreator.props.width - vpWidth));
+                        GameCreator.vpOffsetY = Math.min(GameCreator.vpOffsetY, (GameCreator.props.height - vpHeight));
                     } 
                     context.drawImage(image, obj.attributes.x - GameCreator.vpOffsetX, obj.attributes.y - GameCreator.vpOffsetY, obj.attributes.width, obj.attributes.height);
                     

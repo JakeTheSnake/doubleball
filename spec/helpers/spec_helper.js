@@ -50,3 +50,6 @@
 
 //= require doubleball/tutorial
 //= require sharing
+
+//= require doubleball/spec/helpers/test_suite_setup
+

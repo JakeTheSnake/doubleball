@@ -21,8 +21,8 @@
         this.latestMouseY = 0;
         this.isResizeable = true;
 
-        this.getDefaultState().attributes.maxX = (!args.maxX && args.maxX !== 0) ? GameCreator.width : args.maxX;
-        this.getDefaultState().attributes.maxY = (!args.maxY && args.maxY !== 0) ? GameCreator.height : args.maxY;
+        this.getDefaultState().attributes.maxX = (!args.maxX && args.maxX !== 0) ? GameCreator.props.width : args.maxX;
+        this.getDefaultState().attributes.maxY = (!args.maxY && args.maxY !== 0) ? GameCreator.props.height : args.maxY;
         this.getDefaultState().attributes.minX = args.minX || 0;
         this.getDefaultState().attributes.minY = args.minY || 0;
 
