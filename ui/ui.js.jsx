@@ -255,6 +255,7 @@ GameCreator.UI = {
         $(image).css("display", "none");
         $(image).css("width", width + "px");
         $(image).css("height", height + "px");
+        $(image).css("pointer-events", "none");
 
         $("body").append(image);
         var initialX = e.pageX;
@@ -273,7 +274,8 @@ GameCreator.UI = {
             var y = e.pageY;
             var offsetX = $("#main-canvas").offset().left;
             var offsetY = $("#main-canvas").offset().top;
-            if (x > offsetX && x < offsetX + GameCreator.props.width && y > offsetY && y < offsetY + GameCreator.props.height) {
+            if (x > offsetX && x < offsetX + GameCreator.props.width && y > offsetY && y < offsetY + GameCreator.props.height &&
+                e.target.id === 'main-canvas') {
                 var args = {x: x - offsetX - globalObj.getDefaultState().attributes.width[0] / 2, 
                             y: y - offsetY - globalObj.getDefaultState().attributes.height[0] / 2};
                 var newInstance = GameCreator.createSceneObject(globalObj, GameCreator.getActiveScene(), args);
