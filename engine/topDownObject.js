@@ -107,7 +107,7 @@
         sceneObject.attributes.maxSpeed = args.maxSpeed !== undefined ? args.maxSpeed : state.attributes.maxSpeed;
         sceneObject.keyCooldown = {space: false};
 
-        sceneObject.controlsCamera = true;
+        sceneObject.attributes.isControllingCamera = true;
     };
 
     GameCreator.TopDownObject.prototype.getDefaultShootParameters = function(projectileSpeed, projectileAttributes) {

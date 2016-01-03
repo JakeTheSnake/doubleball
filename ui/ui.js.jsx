@@ -664,6 +664,9 @@ GameCreator.UI = {
                 GameCreator.invalidate(obj);
             }
             try {
+                if (attrName === 'isControllingCamera') {
+                    GameCreator.getActiveScene().clearCameraControls();
+                }
                 var value = GameCreator.saveInputValueToObject($(input), attributes);
                 if (onChangeCallback) {
                     onChangeCallback(value);
@@ -687,7 +690,7 @@ GameCreator.UI = {
                 inputOpen = true;
                 container.html(GameCreator.htmlStrings[inputType](attrName, attributes[attrName], obj, attributes[$(container).data('dependancy')]));
                 input = container.find('input, select');
-                if (input[0].nodeName === 'INPUT') {
+                if (input[0].nodeName === 'INPUT' && input.attr('type') !== 'checkbox') {
                     paramLen = (attributes[attrName] || '').toString().length;
                     input[0].setSelectionRange(paramLen, paramLen);
                     input.on('blur', function() {

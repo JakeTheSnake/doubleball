@@ -173,7 +173,7 @@
                 context.drawImage(image, obj.attributes.x, obj.attributes.y, minWidth, minHeight);
             } else {
                 try {
-                    if (obj.controlsCamera) {
+                    if (obj.attributes.isControllingCamera) {
                         var vpWidth = GameCreator.props.viewportWidth,
                             vpHeight = GameCreator.props.viewportHeight,
                             gameWidth = GameCreator.props.width,

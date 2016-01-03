@@ -33,7 +33,8 @@ GameCreator.FreeObject.prototype.getPropertiesForm = function() {
     <div id="object-property-image-container" class="input-container hidden"> \
     </div> \
     <div id="global-object-image-upload-controls"> \
-    </div>';
+    </div>\
+  </article>';
       
   return result;
 };
@@ -87,6 +88,19 @@ GameCreator.FreeObject.prototype.getSceneObjectForm = function() {
           <tr> \
             <td><label>Acceleration Y:</label></td> \
             <td id="side-property-accY" data-inputtype="numberInput"></td> \
+          </tr> \
+        </table> \
+      </div> \
+    </li> \
+    <li> \
+      <div class="parameter"> \
+        <div class="parameter-header"> \
+          <span>Camera</span> \
+        </div> \
+        <table> \
+          <tr> \
+            <td><label>Controls Camera:</label></td> \
+            <td id="side-property-isControllingCamera" data-inputtype="checkboxInput"></td> \
           </tr> \
         </table> \
       </div> \

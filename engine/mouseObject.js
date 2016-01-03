@@ -77,6 +77,9 @@
         } else if (this.attributes.y < this.attributes.minY) {
             this.attributes.y = this.attributes.minY;
         }
+
+        this.attributes.x += GameCreator.vpOffsetX;
+        this.attributes.y += GameCreator.vpOffsetY;
     };
 
     GameCreator.MouseObject.prototype.onGameStarted = function() {

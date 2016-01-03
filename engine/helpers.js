@@ -597,6 +597,8 @@
                     return scene ? scene.attributes.name : '*Scene removed*';
                 case "imageInput":
                     return '<img src="' + value.src + '" width="40" height="40"/>';
+                case 'checkboxInput':
+                    return value ? 'Yes' : 'No';
                 default:
                     return value;
             }

@@ -32,7 +32,20 @@
     };
 
     GameCreator.Scene.prototype.addSceneObject = function(sceneObject) {
+        if (sceneObject.attributes.isControllingCamera) {
+            if (this.isCameraControlled()) {
+                sceneObject.attributes.isControllingCamera = false;
+            }
+        }
         this.objects.push(sceneObject);
+    };
+
+    GameCreator.Scene.prototype.isCameraControlled = function() {
+        return this.objects.some(sceneObject => sceneObject.attributes.isControllingCamera);
+    };
+
+    GameCreator.Scene.prototype.clearCameraControls = function() {
+        this.objects.forEach(sceneObject => sceneObject.attributes.isControllingCamera = false);
     };
 
     GameCreator.Scene.prototype.getSelectableCounters = function(globalObj) {

@@ -85,6 +85,7 @@
 
         this.attributes.x = args.x;
         this.attributes.y = args.y;
+        this.attributes.isControllingCamera = false;
 
         this.attributes.width = args.width !== undefined ? args.width.slice(0) : state.attributes.width.slice(0);
         this.attributes.height = args.height !== undefined ? args.height.slice(0) : state.attributes.height.slice(0);

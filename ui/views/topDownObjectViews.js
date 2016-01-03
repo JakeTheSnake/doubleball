@@ -73,6 +73,19 @@ GameCreator.TopDownObject.prototype.getSceneObjectForm = function() {
         </table> \
       </div> \
     </li> \
+    <li> \
+      <div class="parameter"> \
+        <div class="parameter-header"> \
+          <span>Camera</span> \
+        </div> \
+        <table> \
+          <tr> \
+            <td><label>Controls Camera:</label></td> \
+            <td id="side-property-isControllingCamera" data-inputtype="checkboxInput"></td> \
+          </tr> \
+        </table> \
+      </div> \
+    </li> \
   </ul>';
 
   return result;
