@@ -512,7 +512,6 @@
                 }
             }
         }
-        GameCreator.render();
     }
 
     GameCreator.helpers.populateSidePropertiesForm = function(sideObject, onChangeCallback) {

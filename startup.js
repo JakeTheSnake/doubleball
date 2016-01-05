@@ -4,11 +4,11 @@ $(document).ready(function() {
     var GCviewportWidth = 1000;
     var GCviewportHeight = 650;
 
-    if (window.gon && window.gon.game) {
-        GameCreator.props.height = window.gon.game.height || GCHeight;
-        GameCreator.props.width = window.gon.game.width || GCWidth;
-        GameCreator.props.viewportHeight = window.gon.game.viewportHeight || GCviewportHeight;
-        GameCreator.props.viewportWidth = window.gon.game.viewportWidth || GCviewportWidth;
+    if (window.gon && window.gon.game && window.gon.game.props) {
+        GameCreator.props.height = window.gon.game.props.height || GCHeight;
+        GameCreator.props.width = window.gon.game.props.width || GCWidth;
+        GameCreator.props.viewportHeight = window.gon.game.props.viewportHeight || GCviewportHeight;
+        GameCreator.props.viewportWidth = window.gon.game.props.viewportWidth || GCviewportWidth;
     } else {
         GameCreator.props.viewportHeight = GCviewportHeight;
         GameCreator.props.viewportWidth = GCviewportWidth;
