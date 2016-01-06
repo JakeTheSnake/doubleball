@@ -34,6 +34,7 @@ describe("Direct Mode", function() {
     }
 
     beforeEach(function() {
+        setup();
         redBall = createGlobalObject("PlatformObject");
         GameCreator.actions["testAction"] = new GameCreator.Action({
                                                 action: function() {actionWasRun = true;},
