@@ -172,25 +172,7 @@
                 context.globalAlpha = 1.0;
                 context.drawImage(image, obj.attributes.x, obj.attributes.y, minWidth, minHeight);
             } else {
-                try {
-                    if (obj.attributes.isControllingCamera) {
-                        var vpWidth = GameCreator.props.viewportWidth,
-                            vpHeight = GameCreator.props.viewportHeight,
-                            gameWidth = GameCreator.props.width,
-                            gameHeight = GameCreator.props.height;
-
-                        GameCreator.vpOffsetX = Math.max(0, ((obj.attributes.x + obj.attributes.width / 2) - vpWidth / 2));
-                        GameCreator.vpOffsetY = Math.max(0, ((obj.attributes.y + obj.attributes.height / 2) - vpHeight / 2));
-
-                        GameCreator.vpOffsetX = Math.min(GameCreator.vpOffsetX, (GameCreator.props.width - vpWidth));
-                        GameCreator.vpOffsetY = Math.min(GameCreator.vpOffsetY, (GameCreator.props.height - vpHeight));
-                    } 
-                    context.drawImage(image, obj.attributes.x - GameCreator.vpOffsetX, obj.attributes.y - GameCreator.vpOffsetY, obj.attributes.width, obj.attributes.height);
-                    
-                } catch (e) {
-                    console.log(obj);
-                    console.log(e);
-                }
+                GameCreator.drawImage(context, image, obj.attributes.x, obj.attributes.y, obj.attributes.width, obj.attributes.height, obj.attributes.isControllingCamera);
             }
             obj.invalidated = false;
         }

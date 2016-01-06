@@ -96,7 +96,7 @@
             GameCreator.then = now;
         },
 
-        render: function (forceRender) {
+        render: function(forceRender) {
             var i, obj;
             if (GameCreator.uiContext) {
                 GameCreator.uiContext.clearRect(0, 0, GameCreator.props.width, GameCreator.props.height);
@@ -113,6 +113,26 @@
             }
             GameCreator.getActiveScene().drawBackground();
             GameCreator.drawEffects(this.mainContext);
+        },
+
+        drawImage: function(context, image, x, y, width, height, isControllingCamera) {
+            try {
+                if (isControllingCamera) {
+                    var vpWidth = GameCreator.props.viewportWidth,
+                        vpHeight = GameCreator.props.viewportHeight,
+                        gameWidth = GameCreator.props.width,
+                        gameHeight = GameCreator.props.height;
+
+                    GameCreator.vpOffsetX = Math.max(0, ((x + width / 2) - vpWidth / 2));
+                    GameCreator.vpOffsetY = Math.max(0, ((y + height / 2) - vpHeight / 2));
+
+                    GameCreator.vpOffsetX = Math.min(GameCreator.vpOffsetX, (GameCreator.props.width - vpWidth));
+                    GameCreator.vpOffsetY = Math.min(GameCreator.vpOffsetY, (GameCreator.props.height - vpHeight));
+                } 
+                context.drawImage(image, x - GameCreator.vpOffsetX, y - GameCreator.vpOffsetY, width, height);
+            } catch (e) {
+                console.log(e);
+            }
         },
 
         drawEffects: function(context) {
