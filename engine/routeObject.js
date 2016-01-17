@@ -99,8 +99,10 @@
         preDiffX = this.attributes.x - targetX;
         preDiffY = this.attributes.y - targetY;
         unitVector = GameCreator.helpers.calcUnitVector(preDiffX, preDiffY);
-        this.attributes.x -= unitVector.x * this.attributes.speed * modifier;
-        this.attributes.y -= unitVector.y * this.attributes.speed * modifier;
+        this.attributes.speedX = -unitVector.x * this.attributes.speed;
+        this.attributes.speedY = -unitVector.y * this.attributes.speed;
+        this.attributes.x += this.attributes.speedX * modifier;
+        this.attributes.y += this.attributes.speedY * modifier;
         postDiffX = this.attributes.x - targetX;
         postDiffY = this.attributes.y - targetY;
         //Check if preDiff and postDiff have different "negativity" or are 0. If so we have reached (or moved past) our target.

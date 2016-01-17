@@ -98,7 +98,7 @@ GameCreator.commonObjectControllers = {
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
                     ReactDOM.render(
-                        <EventEditor caSets={globalObj.onCollideSets[index].caSets} eventType='destroy' />,
+                        <EventEditor caSets={globalObj.onCollideSets[index].caSets} eventType='collision' />,
                         eventEditorContainer
                     );
                     $(document).trigger('GC.hideItemSelector');
