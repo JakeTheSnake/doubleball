@@ -37,8 +37,8 @@
     };
 
 
-    GameCreator.SceneObject.prototype.insertNode = function(index) {
-        this.route.splice(index + 1, 0, {x: 10, y: 10});
+    GameCreator.SceneObject.prototype.insertNode = function(index, x, y) {
+        this.route.splice(index + 1, 0, {x: x + $("#editor-middle-column").scrollLeft(), y: y + $("#editor-middle-column").scrollTop()});
         GameCreator.drawRoute(this.route);
     };
 

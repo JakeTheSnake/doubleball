@@ -205,7 +205,7 @@ GameCreator.htmlStrings = {
 
   routeNode: function(node, index) {
     var result = ' \
-    <div class="route-node-container" style="position:absolute; top:' + (node.y + $("#main-canvas").offset().top) + 'px;left:' + (node.x + $("#main-canvas").offset().left) + 'px;"> \
+    <div class="route-node-container" style="position:absolute; top:' + node.y + 'px;left:' + node.x + 'px;"> \
     <div class="route-node" data-index="' + index + '"> \
     <span class="route-node-arrow"></span> \
     <span class="route-node-label">' + (index + 1) + '</span> \

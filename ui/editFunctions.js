@@ -196,8 +196,8 @@
                     mouseX = GameCreator.helpers.getValidXCoordinate(e.pageX);
                     mouseY = GameCreator.helpers.getValidYCoordinate(e.pageY);
 
-                    $(GameCreator.draggedNode).parent().css("top", mouseY);
-                    $(GameCreator.draggedNode).parent().css("left", mouseX);
+                    $(GameCreator.draggedNode).parent().css("top", mouseY - $("#main-canvas").offset().top);
+                    $(GameCreator.draggedNode).parent().css("left", mouseX - $("#main-canvas").offset().left);
                     return false;
                 }
             });
@@ -429,7 +429,7 @@
                 return false;
             });
             $(".route-node-actions .add-node-button").on("click", function() {
-                GameCreator.selectedObject.insertNode($(this).data('index'));
+                GameCreator.selectedObject.insertNode($(this).data('index'), $(this).closest(".route-node-container").position().left + 10, $(this).closest(".route-node-container").position().top + 10);
             });
             $(".route-node-actions .remove-node-button").on("click", function() {
                 GameCreator.selectedObject.removeNode($(this).data('index'));
@@ -440,7 +440,7 @@
         },
 
         setupRouteNode: function(node, i) {
-            $("body").append(GameCreator.htmlStrings.routeNode(node, i));
+            $("#editor-middle-column").append(GameCreator.htmlStrings.routeNode(node, i));
         },
 
         getObjectAtCoordinates: function(x, y) {
