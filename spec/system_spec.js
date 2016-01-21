@@ -25,7 +25,7 @@ describe('Play Mode - PlatformObject', function() {
 });
 
 describe("Direct Mode", function() {
-    var ReactTestUtils = React.addons.TestUtils;
+    ReactTestUtils = React.addons.TestUtils;
     var redBall, actionWasRun, runtimeObj;
 
     function addAction(actionName) {

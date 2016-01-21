@@ -7,7 +7,7 @@ var EventEditor = React.createClass({
     },
     componentWillReceiveProps: function(nextProps) {
         if (nextProps !== this.props) {
-            this.setState(this.getInitialState());    
+            this.setState(this.getInitialState());
         }
     },
     selectWhenGroup: function(index) {
