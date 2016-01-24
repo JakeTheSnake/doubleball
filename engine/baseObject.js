@@ -4,10 +4,10 @@
     GameCreator.BaseObject = function() {
         this.objectType = "baseObject";
     };
-        /**
-         * Called when an object is being destroyed through an action. Marks
-         * this object for imminent destruction and carries out onDestroy-actions.
-         */
+    /**
+     * Called when an object is being destroyed through an action. Marks
+     * this object for imminent destruction and carries out onDestroy-actions.
+     */
     GameCreator.BaseObject.prototype.destroy = function(params) {
         GameCreator.objectsToDestroy.push(this);
         if (params && GameCreator.effects.hasOwnProperty(params.effect)) {
@@ -23,16 +23,16 @@
     GameCreator.BaseObject.prototype.runOnDestroyActions = function() {
         var currentSet, globalObj = this.parent;
         if (!GameCreator.paused) {
-            if (GameCreator.state === 'directing' && globalObj.onDestroySets.length === 0) {
+            if (GameCreator.state === 'directing' && globalObj.events.onDestroySets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet();
-                globalObj.onDestroySets.push(currentSet);
+                globalObj.events.onDestroySets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been destroyed!", this.getCurrentImage().src),
                     currentSet, 'destroy', globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                GameCreator.helpers.runEventActions(globalObj.onDestroySets, this);
+                GameCreator.helpers.runEventActions(globalObj.events.onDestroySets, this);
             }
         }
     };
@@ -50,16 +50,16 @@
         var i, currentSet;
         var globalObj = this.parent;
         if (!GameCreator.paused) {
-            if (GameCreator.state === 'directing' && globalObj.onCreateSets.length === 0) {
+            if (GameCreator.state === 'directing' && globalObj.events.onCreateSets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet();
-                globalObj.onCreateSets.push(currentSet);
+                globalObj.events.onCreateSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("'" + globalObj.objectName + "' has been created!", this.getCurrentImage().src),
                     currentSet, 'create', globalObj.objectName
                 );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                GameCreator.helpers.runEventActions(globalObj.onCreateSets, this);
+                GameCreator.helpers.runEventActions(globalObj.events.onCreateSets, this);
             }
         }
     };
@@ -68,16 +68,16 @@
         var i, currentSet;
         var globalObj = this.parent;
         if (!GameCreator.paused) {
-            if (GameCreator.state === 'directing' && globalObj.onClickSets.length === 0) {
+            if (GameCreator.state === 'directing' && globalObj.events.onClickSets.length === 0) {
                 currentSet = new GameCreator.ConditionActionSet();
-                globalObj.onClickSets.push(currentSet);
+                globalObj.events.onClickSets.push(currentSet);
                 GameCreator.UI.openEditActionsWindow(
                     GameCreator.htmlStrings.defaultEventInformationWindow("Clicked on " + globalObj.objectName, this.getCurrentImage().src),
                      currentSet, 'click', globalObj.objectName
                     );
                 GameCreator.bufferedActions.push({actionArray: currentSet.actions, runtimeObj: this});
             } else {
-                GameCreator.helpers.runEventActions(globalObj.onClickSets, this);
+                GameCreator.helpers.runEventActions(globalObj.events.onClickSets, this);
             }                  
         }
     };

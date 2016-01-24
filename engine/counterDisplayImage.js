@@ -1,6 +1,7 @@
 GameCreator.CounterDisplayImage = function(args) {
     GameCreator.addObjFunctions.commonObjectFunctions(this);
-    
+    this.events = {};
+        
     if (GameCreator.state !== 'playing') {
         GameCreator.commonObjectControllers.addCounterObjectControllers(this);
         GameCreator.commonObjectViews.addCounterObjectViews(this);

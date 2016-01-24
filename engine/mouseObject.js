@@ -2,6 +2,7 @@
 (function() {
     "use strict";
     GameCreator.MouseObject = function(args) {
+        GameCreator.helpers.setStandardProperties(this, args);
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
         GameCreator.addObjFunctions.commonObjectFunctions(this);
@@ -11,7 +12,6 @@
             GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
         }
 
-        GameCreator.helpers.setStandardProperties(this, args);
 
         this.isCollidable = true;
         this.isMovable = true;

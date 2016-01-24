@@ -13,12 +13,12 @@ describe("Version conversion", function() {
             projectileDirection: 'Towards',
             target: 2
         });
-        redBall.onCreateSets.push(new GameCreator.ConditionActionSet());
-        redBall.onCreateSets[0].actions.push(shootAction);
+        redBall.events.onCreateSets.push(new GameCreator.ConditionActionSet());
+        redBall.events.onCreateSets[0].actions.push(shootAction);
 
         var loadedGame = convertGame();
 
-        var convertedAction = loadedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
+        var convertedAction = loadedGame.globalObjects[redBall.objectName].events.onCreateSets[0].actions[0];
         expect(convertedAction.parameters.projectileDirection.type).toBe('Towards');
         expect(convertedAction.parameters.projectileDirection.target).toBe(2);
         expect(convertedAction.parameters.target).toBe(undefined);
@@ -31,12 +31,12 @@ describe("Version conversion", function() {
             objId: 1,
             counter: "abcd"
         });
-        redBall.onCreateSets.push(new GameCreator.ConditionActionSet());
-        redBall.onCreateSets[0].actions.push(counterAction);
+        redBall.events.onCreateSets.push(new GameCreator.ConditionActionSet());
+        redBall.events.onCreateSets[0].actions.push(counterAction);
 
         var loadedGame = convertGame();
 
-        var convertedAction = loadedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
+        var convertedAction = loadedGame.globalObjects[redBall.objectName].events.onCreateSets[0].actions[0];
         expect(convertedAction.parameters.counter.carrier).toBe(1);
         expect(convertedAction.parameters.counter.name).toBe("abcd");
         expect(convertedAction.parameters.objId).toBe(undefined);
@@ -48,12 +48,12 @@ describe("Version conversion", function() {
             objectId: 1,
             objectState: 2
         });
-        redBall.onCreateSets.push(new GameCreator.ConditionActionSet());
-        redBall.onCreateSets[0].actions.push(switchStateAction);
+        redBall.events.onCreateSets.push(new GameCreator.ConditionActionSet());
+        redBall.events.onCreateSets[0].actions.push(switchStateAction);
 
         var loadedGame = convertGame();
 
-        var convertedAction = loadedGame.globalObjects[redBall.objectName].onCreateSets[0].actions[0];
+        var convertedAction = loadedGame.globalObjects[redBall.objectName].events.onCreateSets[0].actions[0];
         expect(convertedAction.parameters.state.objId).toBe(1);
         expect(convertedAction.parameters.state.stateId).toBe(2);
         expect(convertedAction.parameters.objectId).toBe(undefined);

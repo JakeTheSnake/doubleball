@@ -2,6 +2,7 @@
 (function() {
     "use strict";
     GameCreator.RouteObject = function(args) {
+        GameCreator.helpers.setStandardProperties(this, args);
         GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.clickableObjectAttributes(this);
@@ -11,7 +12,6 @@
             GameCreator.commonObjectControllers.addCommonObjectControllers(this);
         }
         
-        GameCreator.helpers.setStandardProperties(this, args);
 
         this.objectAttributes = $.extend(this.objectAttributes, {
                 

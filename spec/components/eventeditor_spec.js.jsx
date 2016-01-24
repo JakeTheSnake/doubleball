@@ -9,6 +9,6 @@ describe("Event Editor", function() {
         var eventEditorNode = TestUtils.renderIntoDocument(<EventEditor caSets={caSets} eventType={eventType}/>);
         
         var alwaysSpans = $(ReactDOM.findDOMNode(eventEditorNode)).find('span:contains("Always")');
-        expect(alwaysSpans.size()).toBe(2);
+        expect(alwaysSpans.size()).toBe(2); // One for title, one for content.
     });
 });

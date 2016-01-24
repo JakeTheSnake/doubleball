@@ -86,7 +86,7 @@ describe("Real Actions", function() {
         var bounceAction = new GameCreator.RuntimeAction(action, parameters, timing);
         var collideEvent = new GameCreator.ConditionActionSet();
         collideEvent.actions.push(bounceAction);
-        redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
+        redBall.events.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
         return GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
     }
 
@@ -289,7 +289,7 @@ describe("Real Actions", function() {
         caSet2.addCondition(new GameCreator.RuntimeCondition('currentScene', {scene: sceneTwo.id, comparator: 'equals'}));
         caSet2.actions.push(new GameCreator.RuntimeAction("SwitchScene", {scene: sceneThree.id}, 'now'));
 
-        redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [caSet1, caSet2]});
+        redBall.events.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [caSet1, caSet2]});
         GameCreator.createRuntimeObject(redBall, {x: -5, y: 6, speedX: -500, speedY: 50});
 
         GameCreator.checkCollisions();
@@ -365,7 +365,7 @@ describe("Action Triggers", function() {
         var key = "space";
         GameCreator.resetKeys();
         
-        platformZealot.onKeySets[key] = [newEvent];
+        platformZealot.events.onKeySets[key] = [newEvent];
         GameCreator.keys.keyPressed[key] = true;
 
         runtimeObject.parent.checkEvents.call(runtimeObject);
@@ -374,7 +374,7 @@ describe("Action Triggers", function() {
     });
 
     it("can trigger by creation", function() {
-        platformZealot.onCreateSets = [newEvent];
+        platformZealot.events.onCreateSets = [newEvent];
 
         GameCreator.callOnCreateForNewObjects();
 
@@ -383,7 +383,7 @@ describe("Action Triggers", function() {
 
 
     it("can trigger by destruction", function() {
-        platformZealot.onDestroySets = [newEvent];
+        platformZealot.events.onDestroySets = [newEvent];
 
         runtimeObject.parent.destroy.call(runtimeObject);
 

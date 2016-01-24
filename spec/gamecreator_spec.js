@@ -65,7 +65,7 @@ describe('GameCreator', function() {
         var runtimeAction = new GameCreator.RuntimeAction("testAction", {value: 1}, {type: "now"});
         var collideEvent = new GameCreator.ConditionActionSet();
         collideEvent.actions.push(runtimeAction);
-        redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
+        redBall.events.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [collideEvent]});
 
         GameCreator.checkCollisions();
 

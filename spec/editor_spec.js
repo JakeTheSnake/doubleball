@@ -31,25 +31,25 @@ describe('Remove GlobalObject function', function() {
             return caSet;
         }    
 
-        redBall.onCreateSets.push(createCaSet());
-        redBall.onDestroySets.push(createCaSet());
-        redBall.onClickSets.push(createCaSet());
-        redBall.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [createCaSet()]});
-        redBall.onKeySets.shift.push(createCaSet());
+        redBall.events.onCreateSets.push(createCaSet());
+        redBall.events.onDestroySets.push(createCaSet());
+        redBall.events.onClickSets.push(createCaSet());
+        redBall.events.onCollideSets.push({id: GameCreator.borderObjects.borderL.id, caSets: [createCaSet()]});
+        redBall.events.onKeySets.shift.push(createCaSet());
         GameCreator.scenes[0].onCreateSet = createCaSet();
 
         GameCreator.removeGlobalObject(blackBall.id);
 
-        expect(redBall.onCreateSets[0].actions.length).toBe(0);
-        expect(redBall.onCreateSets[0].conditions.length).toBe(0);
-        expect(redBall.onDestroySets[0].actions.length).toBe(0);
-        expect(redBall.onDestroySets[0].conditions.length).toBe(0);
-        expect(redBall.onClickSets[0].actions.length).toBe(0);
-        expect(redBall.onClickSets[0].conditions.length).toBe(0);
-        expect(redBall.onCollideSets[0].caSets[0].actions.length).toBe(0);
-        expect(redBall.onCollideSets[0].caSets[0].conditions.length).toBe(0);
-        expect(redBall.onKeySets.shift[0].actions.length).toBe(0);
-        expect(redBall.onKeySets.shift[0].conditions.length).toBe(0);
+        expect(redBall.events.onCreateSets[0].actions.length).toBe(0);
+        expect(redBall.events.onCreateSets[0].conditions.length).toBe(0);
+        expect(redBall.events.onDestroySets[0].actions.length).toBe(0);
+        expect(redBall.events.onDestroySets[0].conditions.length).toBe(0);
+        expect(redBall.events.onClickSets[0].actions.length).toBe(0);
+        expect(redBall.events.onClickSets[0].conditions.length).toBe(0);
+        expect(redBall.events.onCollideSets[0].caSets[0].actions.length).toBe(0);
+        expect(redBall.events.onCollideSets[0].caSets[0].conditions.length).toBe(0);
+        expect(redBall.events.onKeySets.shift[0].actions.length).toBe(0);
+        expect(redBall.events.onKeySets.shift[0].conditions.length).toBe(0);
         expect(GameCreator.scenes[0].onCreateSet.actions.length).toBe(0);
         expect(GameCreator.scenes[0].onCreateSet.conditions.length).toBe(0);
 
@@ -83,14 +83,14 @@ describe('Remove GlobalObject function', function() {
         var fill1 = {id: collidingObject.id+1, caSets: [new GameCreator.ConditionActionSet()]};
         var collisionItem = {id: collidingObject.id, caSets: [new GameCreator.ConditionActionSet()]};
         var fill2 = {id: collidingObject.id+2, caSets: [new GameCreator.ConditionActionSet()]};
-        redBall.onCollideSets.push(fill1);
-        redBall.onCollideSets.push(collisionItem);
-        redBall.onCollideSets.push(fill2);
+        redBall.events.onCollideSets.push(fill1);
+        redBall.events.onCollideSets.push(collisionItem);
+        redBall.events.onCollideSets.push(fill2);
 
         GameCreator.removeGlobalObject(collidingObject.id);
 
-        expect(redBall.onCollideSets.length).toBe(2);
-        expect(redBall.onCollideSets[0].id).toBe(collidingObject.id+1);
-        expect(redBall.onCollideSets[1].id).toBe(collidingObject.id+2);
+        expect(redBall.events.onCollideSets.length).toBe(2);
+        expect(redBall.events.onCollideSets[0].id).toBe(collidingObject.id+1);
+        expect(redBall.events.onCollideSets[1].id).toBe(collidingObject.id+2);
     });
 });

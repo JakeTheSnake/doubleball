@@ -2,6 +2,7 @@
 (function() {
     "use strict";
     GameCreator.PlatformObject = function(args) {
+        GameCreator.helpers.setStandardProperties(this, args);
         GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
@@ -12,7 +13,6 @@
             GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
         }
 
-        GameCreator.helpers.setStandardProperties(this, args);
 
         this.getDefaultState().attributes.accY = (!args.accY && args.accY !== 0) ? [5] : args.accY;
         this.getDefaultState().attributes.acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;

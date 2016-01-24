@@ -54,7 +54,7 @@
     };
 
     GameCreator.helpers.doCollision = function(object, targetObject) {
-        var event = GameCreator.helpers.getObjectById(object.parent.onCollideSets, targetObject.parent.id);
+        var event = GameCreator.helpers.getObjectById(object.parent.events.onCollideSets, targetObject.parent.id);
         var caSets = event ? event.caSets : undefined;
         var j, choosableActions, newSetsItem, currentSet;
         targetObject.invalidated = true;
@@ -65,7 +65,7 @@
         else if (GameCreator.state !== 'playing') {
             choosableActions = GameCreator.helpers.getCollisionActions(object.parent.objectType);
             newSetsItem = {id: targetObject.parent.id, caSets: [new GameCreator.ConditionActionSet()]};
-            object.parent.onCollideSets.push(newSetsItem);
+            object.parent.events.onCollideSets.push(newSetsItem);
             var titleString = "'" + object.parent.objectName + "' collided with '" + targetObject.objectName + "'";
             GameCreator.UI.openEditActionsWindow(
                 GameCreator.htmlStrings.collisionEventInformationWindow(titleString, object.getCurrentImage().src, targetObject.getCurrentImage().src),
@@ -129,8 +129,8 @@
                 }
             }
         } else {
-            for (j = 0; j < object.parent.onCollideSets.length; j += 1) {
-                collisionItem = object.parent.onCollideSets[j];
+            for (j = 0; j < object.parent.events.onCollideSets.length; j += 1) {
+                collisionItem = object.parent.events.onCollideSets[j];
                 runtimeObjectsItem = GameCreator.helpers.getObjectById(GameCreator.collidableObjects, collisionItem.id);
                 if (GameCreator.helpers.caSetsHaveActions(collisionItem) && runtimeObjectsItem) {
                     for (i = 0; i < runtimeObjectsItem.runtimeObjects.length; i += 1) {
@@ -344,8 +344,9 @@
         globalObj.parentCounters = {};
         globalObj.counters = {};
         globalObj.currentState = 0;
-        globalObj.onDestroySets = [];
-        globalObj.onCreateSets = [];
+        globalObj.events = {};
+        globalObj.events.onDestroySets = [];
+        globalObj.events.onCreateSets = [];
         globalObj.states = [{
             name: "Default",
             id: 0,

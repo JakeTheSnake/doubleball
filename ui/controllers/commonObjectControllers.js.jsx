@@ -79,9 +79,9 @@ GameCreator.commonObjectControllers = {
                 
 
                 $(deleteButton).on('click', function() {
-                    var index = globalObj.onCollideSets.indexOf(collisionItem);
+                    var index = globalObj.events.onCollideSets.indexOf(collisionItem);
                     if (index !== -1) {
-                        globalObj.onCollideSets.splice(index, 1);
+                        globalObj.events.onCollideSets.splice(index, 1);
                     }
                     if ($(this).parent().hasClass('active')) {
                         $(eventEditorContainer).empty();
@@ -94,11 +94,11 @@ GameCreator.commonObjectControllers = {
                 withColumn.append(collisionListItem);
 
                 collisionListItem.on('click', function() {
-                    var index = globalObj.onCollideSets.indexOf(collisionItem);
+                    var index = globalObj.events.onCollideSets.indexOf(collisionItem);
                     $(this).parent().find('.active').removeClass('active');
                     $(this).addClass('active');
                     ReactDOM.render(
-                        <EventEditor caSets={globalObj.onCollideSets[index].caSets} eventType='collision' />,
+                        <EventEditor caSets={globalObj.events.onCollideSets[index].caSets} eventType='collision' />,
                         eventEditorContainer
                     );
                     $(document).trigger('GC.hideItemSelector');
@@ -111,7 +111,7 @@ GameCreator.commonObjectControllers = {
                 var callback = function(itemName) {
                     var targetId = GameCreator.helpers.findGlobalObjectByName(itemName).id;
                     var collisionItem = {id: targetId, caSets: [new GameCreator.ConditionActionSet()]};
-                    globalObj.onCollideSets.push(collisionItem);
+                    globalObj.events.onCollideSets.push(collisionItem);
                     withColumn.trigger('redrawList');
                 };
 
@@ -126,10 +126,10 @@ GameCreator.commonObjectControllers = {
 
 
     setupOnDestroyActionsForm: function(container) {
-        GameCreator.commonObjectControllers.setupCaSet(this.onDestroySets);
+        GameCreator.commonObjectControllers.setupCaSet(this.events.onDestroySets);
         ReactDOM.render(
             (<div>
-                <EventEditor caSets={this.onDestroySets} eventType='destroy' />
+                <EventEditor caSets={this.events.onDestroySets} eventType='destroy' />
                 <EventItemSelector/>
             </div>),
             container
@@ -137,10 +137,10 @@ GameCreator.commonObjectControllers = {
     },
 
     setupOnCreateActionsForm: function(container) {
-        GameCreator.commonObjectControllers.setupCaSet(this.onCreateSets);
+        GameCreator.commonObjectControllers.setupCaSet(this.events.onCreateSets);
         ReactDOM.render(
             (<div>
-                <EventEditor caSets={this.onCreateSets} eventType='create' />
+                <EventEditor caSets={this.events.onCreateSets} eventType='create' />
                 <EventItemSelector/>
             </div>),
             container
@@ -149,10 +149,10 @@ GameCreator.commonObjectControllers = {
 
     setupOnClickActionsForm: function(container) {
         var selectableActions = GameCreator.helpers.getNonCollisionActions(this.objectType);
-        GameCreator.commonObjectControllers.setupCaSet(this.onClickSets);
+        GameCreator.commonObjectControllers.setupCaSet(this.events.onClickSets);
         ReactDOM.render(
             (<div>
-                <EventEditor caSets={this.onClickSets} eventType='click' />
+                <EventEditor caSets={this.events.onClickSets} eventType='click' />
                 <EventItemSelector/>
             </div>),
             container

@@ -35,11 +35,11 @@
     };
 
     GameCreator.addObjFunctions.collidableObjectAttributes = function(object) {
-        object.onCollideSets = [];
+        object.events.onCollideSets = [];
     };
 
     GameCreator.addObjFunctions.keyObjectAttributes = function(object) {
-        object.onKeySets = {
+        object.events.onKeySets = {
             shift: [],
             ctrl: [],
             alt: [],
@@ -57,7 +57,7 @@
             for (key in GameCreator.keys.keyPressed) {
                 if (GameCreator.keys.keyPressed.hasOwnProperty(key)) {
                     isKeyPressed = GameCreator.keys.keyPressed[key];
-                    keySets = globalObj.onKeySets[key];
+                    keySets = globalObj.events.onKeySets[key];
 
                     if (isKeyPressed && !this.keyCooldown[key]) {
                         if (GameCreator.state === 'directing' && keySets.length === 0) {
@@ -124,7 +124,7 @@
     };
 
     GameCreator.addObjFunctions.clickableObjectAttributes = function(object) {
-        object.onClickSets = [];
+        object.events.onClickSets = [];
         object.isClickable = true;
     };
 

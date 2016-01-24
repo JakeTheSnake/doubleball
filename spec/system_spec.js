@@ -50,7 +50,7 @@ describe("Direct Mode", function() {
 
     it("should be possible to add action through keypress", function() {
         var runtimeObj = GameCreator.createRuntimeObject(redBall, {x: 70, y: 70, speed: 300});
-        runtimeObj.parent.onCreateSets.push(new GameCreator.ConditionActionSet());
+        runtimeObj.parent.events.onCreateSets.push(new GameCreator.ConditionActionSet());
         $("#fixture").append('<div id="dialogue-window"></div>');
         GameCreator.keys.keyPressed.space = true;
 
@@ -60,8 +60,8 @@ describe("Direct Mode", function() {
 
         addAction("testAction");
 
-        expect(runtimeObj.parent.onKeySets.space.length).toBe(1);
-        expect(runtimeObj.parent.onKeySets.space[0].actions.length).toBe(1);
+        expect(runtimeObj.parent.events.onKeySets.space.length).toBe(1);
+        expect(runtimeObj.parent.events.onKeySets.space[0].actions.length).toBe(1);
 
         GameCreator.keys.pendingRelease.space = true;
         GameCreator.runFrame(10);
@@ -82,8 +82,8 @@ describe("Direct Mode", function() {
 
         addAction("testAction");
 
-        expect(runtimeObj.parent.onCreateSets.length).toBe(1);
-        expect(runtimeObj.parent.onCreateSets[0].actions.length).toBe(1);
+        expect(runtimeObj.parent.events.onCreateSets.length).toBe(1);
+        expect(runtimeObj.parent.events.onCreateSets[0].actions.length).toBe(1);
 
         GameCreator.runFrame(10);
 
@@ -93,15 +93,15 @@ describe("Direct Mode", function() {
     it("should be possible to add action through object destruction", function() {
         var runtimeObj = GameCreator.createRuntimeObject(redBall, {x: 70, y: 70, speed: 300});
         $("#fixture").append('<div id="dialogue-window"></div>');
-        runtimeObj.parent.onCreateSets.push(new GameCreator.ConditionActionSet());
+        runtimeObj.parent.events.onCreateSets.push(new GameCreator.ConditionActionSet());
         runtimeObj.parent.destroy.call(runtimeObj);
 
         expect($("#select-action-window").length).toBe(1);
 
         addAction("testAction");
 
-        expect(runtimeObj.parent.onDestroySets.length).toBe(1);
-        expect(runtimeObj.parent.onDestroySets[0].actions.length).toBe(1);
+        expect(runtimeObj.parent.events.onDestroySets.length).toBe(1);
+        expect(runtimeObj.parent.events.onDestroySets[0].actions.length).toBe(1);
 
         GameCreator.runFrame(10);
 

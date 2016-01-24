@@ -16,24 +16,24 @@ $.extend(GameCreator, {
     
             $.extend(newObject, oldObject);
 
-            if (newObject.onClickSets) {
-                newObject.onClickSets = newObject.onClickSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+            if (newObject.events.onClickSets) {
+                newObject.events.onClickSets = newObject.events.onClickSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
             }
-            if (newObject.onCreateSets) {
-                newObject.onCreateSets = newObject.onCreateSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+            if (newObject.events.onCreateSets) {
+                newObject.events.onCreateSets = newObject.events.onCreateSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
             }
-            if (newObject.onDestroySets) {
-                newObject.onDestroySets = newObject.onDestroySets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+            if (newObject.events.onDestroySets) {
+                newObject.events.onDestroySets = newObject.events.onDestroySets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
             }
-            if (newObject.onCollideSets) {
-                newObject.onCollideSets.forEach(function(collideArray){
+            if (newObject.events.onCollideSets) {
+                newObject.events.onCollideSets.forEach(function(collideArray){
                     collideArray.caSets = collideArray.caSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
                 });
             }
             if (newObject.onKeySets) {
                 var keys = Object.keys(newObject.onKeySets);
                 keys.forEach(function(key){
-                    newObject.onKeySets[key] = newObject.onKeySets[key].map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
+                    newObject.events.onKeySets[key] = newObject.events.onKeySets[key].map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
                 });
             }
 

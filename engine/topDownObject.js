@@ -2,6 +2,7 @@
 (function() {
     "use strict";
     GameCreator.TopDownObject = function(args) {
+        GameCreator.helpers.setStandardProperties(this, args);
         GameCreator.addObjFunctions.collidableObjectAttributes(this);
         GameCreator.addObjFunctions.commonObjectFunctions(this);
         GameCreator.addObjFunctions.keyObjectAttributes(this);
@@ -10,7 +11,6 @@
             GameCreator.commonObjectViews.addPlayerObjectViews(this);
             GameCreator.commonObjectControllers.addPlayerObjectControllers(this);
         }
-        GameCreator.helpers.setStandardProperties(this, args);
 
         this.isCollidable = true;
         this.isMovable = true;
