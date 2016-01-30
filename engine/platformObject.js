@@ -14,8 +14,8 @@
         }
 
 
-        this.getDefaultState().attributes.accY = (!args.accY && args.accY !== 0) ? [10] : args.accY;
-        this.getDefaultState().attributes.acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
+        this.getDefaultState().attributes.accY = (!args.accY && args.accY !== 0) ? [15] : args.accY;
+        this.getDefaultState().attributes.acceleration = (!args.acceleration && args.acceleration !== 0) ? [16] : args.acceleration;
         this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
 
         this.isCollidable = true;
@@ -60,7 +60,7 @@
             }
         } else if (this.objectsBeneath.length > 0) {
             this.attributes.accX = 0;
-            Math.abs(this.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.9;
+            Math.abs(this.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.8;
         } else {
             this.attributes.accX = 0;
         }
