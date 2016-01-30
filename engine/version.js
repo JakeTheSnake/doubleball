@@ -1,6 +1,6 @@
 GameCreator.version = {
     major: 0, // Incremented on model changes that are not fully or not at all backwards-compatible even with conversion
-    minor: 4, // Incremented on model changes that are fully backwards-compatible after conversion
+    minor: 5, // Incremented on model changes that are fully backwards-compatible after conversion
     patch: 0, // Incremented on model changes that are backwards-compatible without the need of conversion.
 
     changeMessages: [],
@@ -27,6 +27,10 @@ GameCreator.version = {
 
         if (GameCreator.version.isVersionOlderThan(0, 4, 0, game)) {
             GameCreator.version.convertTo040(game);
+        }
+
+        if (GameCreator.version.isVersionOlderThan(0, 5, 0, game)) {
+            GameCreator.version.convertTo050(game);
         }
 
         for (var i = 0; i < GameCreator.version.changeMessages.length; i += 1) {
@@ -174,6 +178,24 @@ GameCreator.version = {
         game.props.viewportHeight = game.height || GameCreator.props.height;
         delete game.width;
         delete game.height;
+    },
+
+    convertTo050: function(game) {
+        var globalObjNames = Object.keys(game.globalObjects);
+        for (i = 0; i < globalObjNames.length; i += 1) {
+            globalObj = game.globalObjects[globalObjNames[i]];
+            globalObj.events = {}
+            globalObj.events.onCreateSets = globalObj.onCreateSets;
+            globalObj.events.onDestroySets = globalObj.onDestroySets;
+            globalObj.events.onCollideSets = globalObj.onCollideSets;
+            globalObj.events.onClickSets = globalObj.onClickSets;
+            globalObj.events.onKeySets = globalObj.onKeySets;
+            delete globalObj.onCreateSets;
+            delete globalObj.onDestroySets;
+            delete globalObj.onCollideSets;
+            delete globalObj.onClickSets;
+            delete globalObj.onKeySets;
+        }
     },
 
     collectObject: function(object, targetName) {

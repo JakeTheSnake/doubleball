@@ -30,8 +30,8 @@ $.extend(GameCreator, {
                     collideArray.caSets = collideArray.caSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
                 });
             }
-            if (newObject.onKeySets) {
-                var keys = Object.keys(newObject.onKeySets);
+            if (newObject.events.onKeySets) {
+                var keys = Object.keys(newObject.events.onKeySets);
                 keys.forEach(function(key){
                     newObject.events.onKeySets[key] = newObject.events.onKeySets[key].map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
                 });
