@@ -140,6 +140,21 @@ GameCreator.RuntimeCondition.prototype.hasReferenceToGlobalObj = function(global
     return false;
 };
 
+GameCreator.RuntimeCondition.prototype.validate = function() {
+    var i, keys, errorMsgs;
+    var parameters = GameCreator.conditions[this.name].params;
+    keys = Object.keys(parameters);
+    errorMsgs = [];
+    for (i = 0; i < keys.length; i += 1) {
+        if (parameters[keys[i]] && parameters[keys[i]].mandatory) {
+            if (this.parameters[keys[i]] === null || this.parameters[keys[i]] === undefined) {
+                errorMsgs.push("Condition '" + this.name + "' is missing required parameter '" + GameCreator.helpers.getPrettyName(keys[i]) + "'");
+            }
+        }
+    }
+    return errorMsgs;
+}
+
 GameCreator.conditionGroups = {
     globalCounterConditions: {
         objectExists: GameCreator.conditions.objectExists,

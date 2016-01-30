@@ -297,6 +297,16 @@ describe("Real Actions", function() {
         expect(GameCreator.activeSceneId).toBe(sceneTwo.id);
     });
 
+    it("can throw validation errors when parameters are missing", function() {
+        var runtimeAction = new GameCreator.RuntimeAction('Shoot', {
+            objectToShoot: undefined
+        });
+
+        var errorMsgs = runtimeAction.validate();
+
+        expect(errorMsgs.length).toBe(1);
+    });
+
 });
 
 describe("Action Errors", function() {

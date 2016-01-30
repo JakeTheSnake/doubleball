@@ -57,14 +57,29 @@ GameCreator.RuntimeAction.prototype.hasReferenceToGlobalObj = function(globalObj
 GameCreator.RuntimeAction.prototype.hasRequiredParameters = function(parameters) {
     var i, keys;
     keys = Object.keys(this.parameters);
-    for(i = 0; i < keys.length; i += 1) {
+    for (i = 0; i < keys.length; i += 1) {
         if (parameters[keys[i]] && parameters[keys[i]].mandatory) {
-            if (this.parameters[keys[i]] === null || this.parameters[keys[i]] === undefined){
+            if (this.parameters[keys[i]] === null || this.parameters[keys[i]] === undefined) {
                 return false;
             }
         }
     }
     return true;
+}
+
+GameCreator.RuntimeAction.prototype.validate = function() {
+    var i, keys, errorMsgs;
+    var parameters = GameCreator.actions[this.name].params;
+    keys = Object.keys(parameters);
+    errorMsgs = [];
+    for (i = 0; i < keys.length; i += 1) {
+        if (parameters[keys[i]] && parameters[keys[i]].mandatory) {
+            if (this.parameters[keys[i]] === null || this.parameters[keys[i]] === undefined) {
+                errorMsgs.push("Action '" + this.name + "' is missing required parameter '" + GameCreator.helpers.getPrettyName(keys[i]) + "'");
+            }
+        }
+    }
+    return errorMsgs;
 }
 
 GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimeParameters) {
@@ -85,10 +100,10 @@ GameCreator.RuntimeAction.prototype.runAction = function(runtimeObj, runtimePara
     } else {
         var action = GameCreator.actions[this.name];
         if (action.runnable(runtimeObj) && this.hasRequiredParameters(action.params)) {
-          action.action.call(runtimeObj, combinedParameters);
-          return true;
+            action.action.call(runtimeObj, combinedParameters);
+            return true;
         } else {
-          return false;
+            return false;
         }
     }
 

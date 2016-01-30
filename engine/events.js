@@ -26,6 +26,18 @@ GameCreator.ConditionActionSet.prototype.addCondition = function(condition) {
     this.conditions.push(condition);
 }
 
+GameCreator.ConditionActionSet.prototype.validate = function() {
+    var errorMsgs = [];
+    for (var i = 0; i < this.actions.length; i++) {
+        errorMsgs = errorMsgs.concat(this.actions[i].validate());
+    }
+
+    for (var i = 0; i < this.conditions.length; i++) {
+        errorMsgs = errorMsgs.concat(this.conditions[i].validate());
+    }
+    return errorMsgs;
+}
+
 GameCreator.ConditionActionSet.prototype.removeReferencesToGlobalObject = function(globalObjId) {
     for (var i = 0; i < this.actions.length; i += 1) {
         if (this.actions[i].hasReferenceToGlobalObj(globalObjId)) {

@@ -14,7 +14,7 @@
         }
 
 
-        this.getDefaultState().attributes.accY = (!args.accY && args.accY !== 0) ? [5] : args.accY;
+        this.getDefaultState().attributes.accY = (!args.accY && args.accY !== 0) ? [10] : args.accY;
         this.getDefaultState().attributes.acceleration = (!args.acceleration && args.acceleration !== 0) ? [8] : args.acceleration;
         this.getDefaultState().attributes.maxSpeed = (!args.maxSpeed && args.maxSpeed !== 0) ? [300] : args.maxSpeed;
 

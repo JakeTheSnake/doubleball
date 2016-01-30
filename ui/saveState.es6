@@ -5,6 +5,10 @@
 $.extend(GameCreator, {
     saveState: function() {
         var results = {globalObjects: {}, scenes: [], globalCounters: {}};
+        var errors = GameCreator.validateGame();
+        for (let i = 0; i < errors.length; i += 1) {
+            console.log(errors[i]);
+        }
 
         results.globalObjects = GameCreator.saveGlobalObjects();
         results.scenes = GameCreator.saveScenes();
@@ -78,10 +82,29 @@ $.extend(GameCreator, {
     },
 
     validateGame: function() {
-        let errors = [];
-        Object.keys(GameCreator.globalObjects).forEach(function(globalObj) {
-            let obj = GameCreator.globalObjects[globalObj];
+        var errors = [];
+
+        var enrichMessages = function(messages, eventName, objectName) {
+            var enrichedMessages = [];
+            var prefix = "Object '" + objectName + "', event '" + eventName + "': ";
+            for (let i = 0; i < messages.length; i += 1) {
+                enrichedMessages.push(prefix + messages[i]);
+            }
+            return enrichedMessages;
+        }
+
+        Object.keys(GameCreator.globalObjects).forEach(globalObj => {
+            var obj = GameCreator.globalObjects[globalObj];
+            Object.keys(obj.events).forEach(event => {
+                for (let i = 0; i < obj.events[event].length; i += 1) {
+                    var caSet = obj.events[event][i];
+                    var caSetErrors = caSet.validate();
+                    errors = errors.concat(enrichMessages(caSetErrors, event, globalObj));
+                }
+            });
         });
+
+        return errors;
     }
 });
 

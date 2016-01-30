@@ -98,4 +98,17 @@ describe("Conditions", function() {
         expect(caSet.checkConditions()).toBe(true);
     });
 
+    it('can throw validation error when containing missing parameters', function() {
+        var runtimeCondition = new GameCreator.RuntimeCondition('objectExists', {
+            objId: undefined,
+            comparator: undefined,
+        });
+
+        var errorMsgs = runtimeCondition.validate();
+
+        expect(errorMsgs.length).toBe(2);
+
+
+    })
+
 });

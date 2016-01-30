@@ -70,7 +70,7 @@ GameCreator.commonObjectControllers = {
         withColumn.parent().append('<a id="add-new-collision-button" class="btn tab success wide">Add</a>');
         withColumn.on('redrawList', function(evt) {
             withColumn.empty();
-            globalObj.onCollideSets.forEach(function(collisionItem) {
+            globalObj.events.onCollideSets.forEach(function(collisionItem) {
                 var collisionListItem = $(document.createElement('div'));
                 collisionListItem.addClass("btn tab collision-with-item");
                 collisionListItem.append(GameCreator.htmlStrings.selectGlobalObjectPresentation(collisionItem.id));
