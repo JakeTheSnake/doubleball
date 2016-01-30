@@ -353,7 +353,7 @@
                 return false;
             });
             $(".route-node-actions .add-node-button").on("click", function() {
-                GameCreator.selectedObject.insertNode($(this).data('index'), $(this).closest(".route-node-container").position().left + 10, $(this).closest(".route-node-container").position().top + 10);
+                GameCreator.selectedObject.insertNode($(this).data('index'));
             });
             $(".route-node-actions .remove-node-button").on("click", function() {
                 GameCreator.selectedObject.removeNode($(this).data('index'));
