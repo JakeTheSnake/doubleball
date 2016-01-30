@@ -87,8 +87,8 @@
             if (this.objectsLeft.length === 0) this.attributes.speedX = -angularMaxSpeed;
             if (this.objectsAbove.length === 0) this.attributes.speedY = -angularMaxSpeed;
         } else {
-            Math.abs(this.attributes.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.9;
-            Math.abs(this.attributes.speedY) < 0.1 ? this.attributes.speedY = 0 : this.attributes.speedY *= 0.9;
+            Math.abs(this.attributes.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.6;
+            Math.abs(this.attributes.speedY) < 0.1 ? this.attributes.speedY = 0 : this.attributes.speedY *= 0.6;
         }
     };
 
