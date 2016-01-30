@@ -182,19 +182,14 @@ GameCreator.version = {
 
     convertTo050: function(game) {
         var globalObjNames = Object.keys(game.globalObjects);
-        for (i = 0; i < globalObjNames.length; i += 1) {
+        for (var i = 0; i < globalObjNames.length; i += 1) {
             globalObj = game.globalObjects[globalObjNames[i]];
-            globalObj.events = {}
-            globalObj.events.onCreateSets = globalObj.onCreateSets;
-            globalObj.events.onDestroySets = globalObj.onDestroySets;
-            globalObj.events.onCollideSets = globalObj.onCollideSets;
-            globalObj.events.onClickSets = globalObj.onClickSets;
-            globalObj.events.onKeySets = globalObj.onKeySets;
-            delete globalObj.onCreateSets;
-            delete globalObj.onDestroySets;
-            delete globalObj.onCollideSets;
-            delete globalObj.onClickSets;
-            delete globalObj.onKeySets;
+            globalObj.events = globalObj.events || {};
+            globalObj.events.onCreateSets = globalObj.events.onCreateSets || globalObj.onCreateSets;
+            globalObj.events.onDestroySets = globalObj.events.onDestroySets || globalObj.onDestroySets;
+            globalObj.events.onCollideSets = globalObj.events.onCollideSets || globalObj.onCollideSets;
+            globalObj.events.onClickSets = globalObj.events.onClickSets || globalObj.onClickSets;
+            globalObj.events.onKeySets = globalObj.events.onKeySets || globalObj.onKeySets;
         }
     },
 
