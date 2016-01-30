@@ -287,19 +287,25 @@
             this.objectsToDestroy = [];
             this.eventableObjects = [];
             this.currentEffects = [];
+            GameCreator.removeKeyListeners();
+            $(GameCreator.mainCanvas).off(".runningScene");
+            $(GameCreator.mainCanvas).css("cursor", "default");
+            GameCreator.resetKeys();
+        },
+
+        removeKeyListeners: function() {
             window.onkeydown = null;
             window.onkeyup = null;
             window.ontouchstart = null;
             window.ontouchend = null;
             window.onmousedown = null;
             window.onmouseup = null;
-            $(GameCreator.mainCanvas).off(".runningScene");
-            $(GameCreator.mainCanvas).css("cursor", "default");
-            GameCreator.resetKeys();
         },
+
         pauseGame: function() {
             var objectName, obj, keyName;
             GameCreator.paused = true;
+            GameCreator.removeKeyListeners();
             $(document).off("keydown.gameKeyListener");
             $(document).off("keyup.gameKeyListener");
             $(document).off("mousemove.gameKeyListener");
@@ -309,6 +315,7 @@
             //Set all keypresses to false here since we turn off keyUp.
             GameCreator.resetKeys();
         },
+
         restartGame: function() {
             if (GameCreator.state === 'directing') {
                 GameCreator.resetScene(GameCreator.scenes[0]);
@@ -316,13 +323,15 @@
                 GameCreator.resetScene(GameCreator.scenes[0]);
             }
         },
+
         resumeGame: function() {
             GameCreator.paused = false;
-            Object.keys(GameCreator.globalObjects).forEach(function(objectName){
+            GameCreator.initializeKeyListeners();
+            Object.keys(GameCreator.globalObjects).forEach(function(objectName) {
                 GameCreator.globalObjects[objectName].onGameStarted();
             });
 
-            GameCreator.renderableObjects.forEach(function(runtimeObject){
+            GameCreator.renderableObjects.forEach(function(runtimeObject) {
                 runtimeObject.parent.objectEnteredGame();
             });
         },
@@ -359,6 +368,7 @@
             runtimeObj.parent.initialize.call(runtimeObj);
             GameCreator.newlyCreatedObjects.push(runtimeObj);
         },
+
         getGlobalObjects: function() {
             var globalObj;
             var allGlobalObjects = {};
