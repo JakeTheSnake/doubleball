@@ -190,6 +190,21 @@ GameCreator.version = {
             globalObj.events.onCollideSets = globalObj.events.onCollideSets || globalObj.onCollideSets;
             globalObj.events.onClickSets = globalObj.events.onClickSets || globalObj.onClickSets;
             globalObj.events.onKeySets = globalObj.events.onKeySets || globalObj.onKeySets;
+            if (!globalObj.events.onKeySets) {
+                delete globalObj.events.onKeySets;
+            }
+            if (!globalObj.events.onClickSets) {
+                delete globalObj.events.onClickSets;
+            }
+            if (!globalObj.events.onCollideSets) {
+                delete globalObj.events.onCollideSets;
+            }
+            if (!globalObj.events.onDestroySets) {
+                delete globalObj.events.onDestroySets;
+            }
+            if (!globalObj.events.onCreateSets) {
+                delete globalObj.events.onCreateSets;
+            }
         }
     },
 

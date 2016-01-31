@@ -97,9 +97,20 @@ $.extend(GameCreator, {
             var obj = GameCreator.globalObjects[globalObj];
             Object.keys(obj.events).forEach(event => {
                 for (let i = 0; i < obj.events[event].length; i += 1) {
-                    var caSet = obj.events[event][i];
-                    var caSetErrors = caSet.validate();
-                    errors = errors.concat(enrichMessages(caSetErrors, event, globalObj));
+
+                    if (event === "onCollideSets") {
+                        var caSets = obj.events[event][i].caSets;
+                        for (let j = 0; j < caSets.length; j += 1) {
+                            var caSet = caSets[j];
+                            var caSetErrors = caSet.validate();
+                            errors = errors.concat(enrichMessages(caSetErrors, event, globalObj));    
+                        }                      
+                    } else {
+                        var caSet = obj.events[event][i];
+                        var caSetErrors = caSet.validate();
+                        errors = errors.concat(enrichMessages(caSetErrors, event, globalObj));
+                    }
+
                 }
             });
         });
