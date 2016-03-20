@@ -102,6 +102,13 @@
         if (index !== -1) {
             GameCreator.objectsToDestroy.splice(index, 1);
         }
+        var instances;
+        for(var i = 0; i < GameCreator.collidableObjects.length; i += 1) {
+            instances = GameCreator.collidableObjects[i].runtimeObjects;
+            for(var j = 0; j < instances.length; j += 1) {
+                instances[j].removeFromCollidingList(this.attributes.instanceId);
+            }
+        }
         this.isDestroyed = true;
     };
 
