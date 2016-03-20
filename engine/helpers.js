@@ -366,7 +366,7 @@
         for (objName in selectableObjects) {
             objId = GameCreator.helpers.findGlobalObjectByName(objName).id;
             if (selectableObjects.hasOwnProperty(objName) && 
-                !GameCreator.helpers.getObjectById(globalObj.onCollideSets, objId) && 
+                !GameCreator.helpers.getObjectById(globalObj.events.onCollideSets, objId) && 
                 selectableObjects[objName].isCollidable) {
                     result.push(objName);
             }
