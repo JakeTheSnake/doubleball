@@ -41,6 +41,7 @@
                     var gainNode = context.createGain();
                     gainNode.gain.value = Math.min(1.0, volume);
                     gainNode.connect(context.destination);
+                    source.connect(gainNode);
                 } else {
                     source.connect(context.destination);
                 }
