@@ -63,13 +63,13 @@
         { 
             name: 'creatures',
             audio: [
-                {id: 41, name: 'Bird', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/creatures/bird.mp3'},
-                {id: 42, name: 'Crow', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/creatures/crow.mp3'},
-                {id: 43, name: 'Elephant', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/creatures/elephant.mp3'},
-                {id: 44, name: 'Frog', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/creatures/frog.mp3'},
-                {id: 45, name: 'Monster Roar', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/creatures/monster_roar.mp3'},
-                {id: 46, name: 'Pig', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/creatures/pig.mp3'},
-                {id: 47, name: 'Zombie', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/creatures/zombie.mp3'}
+                {id: 41, name: 'Bird', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/animals/bird.mp3'},
+                {id: 42, name: 'Crow', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/animals/crow.mp3'},
+                {id: 43, name: 'Elephant', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/animals/elephant.mp3'},
+                {id: 44, name: 'Frog', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/animals/frog.mp3'},
+                {id: 45, name: 'Monster Roar', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/animals/monster_roar.mp3'},
+                {id: 46, name: 'Pig', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/animals/pig.mp3'},
+                {id: 47, name: 'Zombie', url: 'https://s3.eu-central-1.amazonaws.com/arcadeforge/audio_library/animals/zombie.mp3'}
             ]
         },
     ]
