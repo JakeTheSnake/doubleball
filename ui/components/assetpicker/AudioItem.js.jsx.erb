@@ -1,0 +1,35 @@
+var AudioItem = React.createClass({
+    getInitialState: function() {
+        return {
+            state: 'idle'
+        }
+    },
+    previewAudio: function(url) {
+        GameCreator.audioHandler.playUrl(url, this.loadingDone, this.playingDone);
+        this.setState({state: 'loading'});
+    },
+    playingDone: function() {
+        this.setState({state: 'idle'});
+    },
+    loadingDone: function() {
+        this.setState({state: 'playing'});
+    },
+    render: function() {
+        var previewButton;
+        if (this.state.state === 'playing') {
+            previewButton = <div className="audio-select-library-item-stop" onClick={GameCreator.audioHandler.stopUrl}>&#9611;</div>;
+        } else if (this.state.state === 'loading') {
+            previewButton = <img src="<%= asset_path 'editor/spinner.gif' %>" width="32"/>;
+        } else {
+            previewButton = <div className="audio-select-library-item-play" onClick={this.previewAudio.bind(this, this.props.audio.url)}>&#9658;</div>
+        }
+        
+        return (
+            <div className='audio-select-library-item'>
+                <div className="audio-select-library-item-name" onClick={this.props.onSelect}>{this.props.audio.name}</div>
+                {previewButton}
+            </div>
+        );
+    }
+});
+

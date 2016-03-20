@@ -644,7 +644,7 @@
     GameCreator.helpers.getGlobalObjectIds = function(includeThis) {
         var i, result = {};
         var objectNames = Object.keys(GameCreator.globalObjects);
-        for(i = 0; i < objectNames.length; i += 1) {
+        for (i = 0; i < objectNames.length; i += 1) {
             result[objectNames[i]] = GameCreator.globalObjects[objectNames[i]].id;
         }
         if (includeThis) {

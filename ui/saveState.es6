@@ -21,6 +21,7 @@ $.extend(GameCreator, {
             patch: GameCreator.version.patch
         };
         results.props = GameCreator.props;
+        results.gameAudio = GameCreator.gameAudio;
         return JSON.stringify(results);
     },
 

@@ -30,7 +30,7 @@ var ImagePickerCollection = React.createClass({
         oReq.open("POST", "/images/destroy_image", true);
         oReq.onload = function() {
             if (this.responseText === 'OK') {
-                images = component.state.images.slice();
+                var images = component.state.images.slice();
                 images.splice(imgNumber, 1);
                 component.setState({images: images});
             } else {

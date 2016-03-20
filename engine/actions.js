@@ -225,6 +225,30 @@ GameCreator.actions = {
             GameCreator.switchScene(GameCreator.scenes[currentIndex]);
         },
         timing: { at: true, every: true, after: true }
+    }),
+    PlaySound: new GameCreator.Action({
+        name: 'PlaySound',
+        action: function(params) {
+            var volume = params.volume / 100 / 2;
+            var playbackRate = GameCreator.helpers.getRandomFromRange(params.speed) / 100;
+            GameCreator.audioHandler.playSound(params.audioId, playbackRate, volume);
+        },
+        timing: { at: true, every: true, after: true }
+    }),
+    PlayMusic: new GameCreator.Action({
+        name: 'PlayMusic',
+        action: function(params) {
+            var volume = params.volume / 100 / 2;
+            GameCreator.audioHandler.playMusic(params.audioId, volume);
+        },
+        timing: { at: true, every: false, after: true }
+    }),
+    StopMusic: new GameCreator.Action({
+        name: 'StopMusic',
+        action: function() {
+            GameCreator.audioHandler.stopMusic();
+        },
+        timing: { at: true, every: false, after: true }
     })
 };
 
@@ -242,6 +266,9 @@ GameCreator.actionGroups = {
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
         RestartScene: GameCreator.actions.RestartScene,
+        PlaySound: GameCreator.actions.PlaySound,
+        PlayMusic: GameCreator.actions.PlayMusic,
+        StopMusic: GameCreator.actions.StopMusic
     },
 
     mouseCollisionActions: {
@@ -254,6 +281,9 @@ GameCreator.actionGroups = {
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
         RestartScene: GameCreator.actions.RestartScene,
+        PlaySound: GameCreator.actions.PlaySound,
+        PlayMusic: GameCreator.actions.PlayMusic,
+        StopMusic: GameCreator.actions.StopMusic
     },
 
     nonCollisionActions: {
@@ -268,6 +298,9 @@ GameCreator.actionGroups = {
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
         RestartScene: GameCreator.actions.RestartScene,
+        PlaySound: GameCreator.actions.PlaySound,
+        PlayMusic: GameCreator.actions.PlayMusic,
+        StopMusic: GameCreator.actions.StopMusic
     },
 
     mouseNonCollisionActions: {
@@ -280,6 +313,9 @@ GameCreator.actionGroups = {
         NextScene: GameCreator.actions.NextScene,
         SwitchState: GameCreator.actions.SwitchState,
         RestartScene: GameCreator.actions.RestartScene,
+        PlaySound: GameCreator.actions.PlaySound,
+        PlayMusic: GameCreator.actions.PlayMusic,
+        StopMusic: GameCreator.actions.StopMusic
     },
 
     nonObjectActions: {
@@ -290,6 +326,9 @@ GameCreator.actionGroups = {
         SwitchState: GameCreator.actions.SwitchState,
         Counter: GameCreator.actions.Counter,
         ResetScene: GameCreator.actions.ResetScene,
+        PlaySound: GameCreator.actions.PlaySound,
+        PlayMusic: GameCreator.actions.PlayMusic,
+        StopMusic: GameCreator.actions.StopMusic
     }
 };
 

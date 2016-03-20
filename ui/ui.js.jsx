@@ -512,23 +512,35 @@ GameCreator.UI = {
     },
 
     openImageSelectPopup: function(input) {
-        var container = document.getElementById('image-select-popup');
+        var container = document.getElementById('asset-select-popup');
         ReactDOM.render(<ImagePicker input={input} parent={container}/>, container);
         
         $(container).show();
         
-        $("#image-select-overlay").show();
+        $("#asset-select-overlay").show();
 
-        $("#image-select-overlay").one('click', function(){
-            GameCreator.UI.closeImageSelectPopup($(container));
+        $("#asset-select-overlay").one('click', function(){
+            GameCreator.UI.closeAssetSelectPopup($(container));
         });
     },
 
+    openAudioSelectPopup: function(callback) {
+        var container = document.getElementById('asset-select-popup');
+        ReactDOM.render(<AudioPicker callback={callback} parent={container}/>, container);
+        
+        $(container).show();
+        
+        $("#asset-select-overlay").show();
 
-    closeImageSelectPopup: function(container) {
+        $("#asset-select-overlay").one('click', function(){
+            GameCreator.UI.closeAssetSelectPopup($(container));
+        });
+    },
+
+    closeAssetSelectPopup: function(container) {
         container.empty();
         container.hide();
-        $("#image-select-overlay").hide();
+        $("#asset-select-overlay").hide();
     },
 
     populateSelectConditionList: function(activeCASetVM) {

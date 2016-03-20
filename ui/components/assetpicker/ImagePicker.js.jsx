@@ -1,4 +1,10 @@
 var ImagePicker = React.createClass({
+    tabs: [
+        {title: 'Library', id: 'library'},
+        {title: 'My Images', id: 'collection'},
+        {title: 'Upload', id: 'upload'},
+        {title: 'Image Link', id: 'url'},
+    ],
     getInitialState: function() {
         return {activeView: 'library'};
     },
@@ -9,7 +15,7 @@ var ImagePicker = React.createClass({
         this.props.input.val(url);
         this.props.input.trigger('blur');
         $('.selected-image-preview').attr('src', url);
-        GameCreator.UI.closeImageSelectPopup($(this.props.parent));
+        GameCreator.UI.closeAssetSelectPopup($(this.props.parent));
     },
     render: function() {
         var activeContent;
@@ -24,7 +30,7 @@ var ImagePicker = React.createClass({
         }
         return (
             <div style={{'display': 'block'}}>
-                <ImagePickerTabList onTabClick={this.switchTab}/>
+                <AssetPickerTabList onTabClick={this.switchTab} initialTab='library' tabs={this.tabs}/>
                 {activeContent}
             </div>
             );

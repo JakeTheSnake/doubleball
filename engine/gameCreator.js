@@ -52,6 +52,8 @@
         draggedNode: undefined,
         globalIdCounter: 0, // Counter used for global objects ID
 
+        gameAudio: [],
+
         initialize: function() {
             var borderKeys = Object.keys(GameCreator.borderObjects);
             GameCreator.initializeBorderObjects();
@@ -70,6 +72,12 @@
                 };
                 borderObj.states = [];
                 GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
+            }
+        },
+
+        loadAllAudio: function() {
+            for (var i = 0; i < GameCreator.gameAudio.length; i += 1) {
+                GameCreator.audioHandler.loadAudio(GameCreator.gameAudio[i].id, GameCreator.gameAudio[i].url);
             }
         },
 
@@ -291,6 +299,7 @@
             $(GameCreator.mainCanvas).off(".runningScene");
             $(GameCreator.mainCanvas).css("cursor", "default");
             GameCreator.resetKeys();
+            GameCreator.audioHandler.stopMusic();
         },
 
         removeKeyListeners: function() {

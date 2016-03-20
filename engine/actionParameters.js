@@ -99,5 +99,34 @@ GameCreator.actions.Teleport.params = {
     }
 };
 
+GameCreator.actions.PlaySound.params = {
+    'audioId': { 
+        component: AudioParam,
+        mandatory: true 
+    },
+    'speed': {
+        component: RangeParam,
+        mandatory: false,
+        defaultValue: 100
+    },
+    'volume': {
+        component: PercentParam,
+        mandatory: false,
+        defaultValue: 100
+    }
+};
+
+GameCreator.actions.PlayMusic.params = {
+    'audioId': { 
+        component: AudioParam,
+        mandatory: true 
+    },
+    'volume': {
+        component: PercentParam,
+        mandatory: false,
+        defaultValue: 100
+    }
+};
+
 
 })();

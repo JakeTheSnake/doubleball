@@ -6,6 +6,7 @@ $.extend(GameCreator, {
         GameCreator.globalObjects = {};
         GameCreator.renderableObjects = [];
         GameCreator.props = savedGame.props;
+        GameCreator.gameAudio = savedGame.gameAudio || [];
 
         //Load globalObjects
         var globalObjects = Object.keys(savedGame.globalObjects);
@@ -71,6 +72,8 @@ $.extend(GameCreator, {
         GameCreator.globalIdCounter = savedGame.globalIdCounter;
         GameCreator.uniqueSceneId = savedGame.uniqueSceneId;
         GameCreator.activeSceneId = GameCreator.scenes[0].id;
+
+        GameCreator.loadAllAudio();
     },
 
     restoreGlobalCounters: function(savedGlobalCounters) {
