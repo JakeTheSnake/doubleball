@@ -26,6 +26,7 @@
         this.getDefaultState().attributes.size = args.size || 20;
         this.getDefaultState().attributes.text = args.text || "";
         this.getDefaultState().attributes.image = new Image();
+        this.getDefaultState().attributes.image.src = "<%= asset_path 'game/abc.png' %>"
 
         this.objectName = args.objectName;
         this.isClickable =  false;
@@ -41,6 +42,8 @@
         "color": GameCreator.htmlStrings.stringInput,
         "size": GameCreator.htmlStrings.numberInput
      };
+
+     GameCreator.TextObject.objectNonStateAttributes = {};
 
     GameCreator.TextObject.prototype.draw = function(context, obj) {
         context.font = obj.attributes.size + "px " + obj.attributes.font;

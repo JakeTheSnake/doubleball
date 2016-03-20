@@ -95,13 +95,15 @@ $.extend(GameCreator, {
 
         Object.keys(GameCreator.globalObjects).forEach(globalObj => {
             var obj = GameCreator.globalObjects[globalObj];
-            Object.keys(obj.events).forEach(event => {
-                for (let i = 0; i < obj.events[event].length; i += 1) {
-                    var caSet = obj.events[event][i];
-                    var caSetErrors = caSet.validate();
-                    errors = errors.concat(enrichMessages(caSetErrors, event, globalObj));
-                }
-            });
+            if(obj.events) {
+                Object.keys(obj.events).forEach(event => {
+                    for (let i = 0; i < obj.events[event].length; i += 1) {
+                        var caSet = obj.events[event][i];
+                        var caSetErrors = caSet.validate();
+                        errors = errors.concat(enrichMessages(caSetErrors, event, globalObj));
+                    }
+                });
+            }
         });
 
         return errors;

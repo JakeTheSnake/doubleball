@@ -16,16 +16,16 @@ $.extend(GameCreator, {
     
             $.extend(newObject, oldObject);
 
-            if (newObject.events.onClickSets) {
+            if (newObject.events && newObject.events.onClickSets) {
                 newObject.events.onClickSets = newObject.events.onClickSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
             }
-            if (newObject.events.onCreateSets) {
+            if (newObject.events && newObject.events.onCreateSets) {
                 newObject.events.onCreateSets = newObject.events.onCreateSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
             }
-            if (newObject.events.onDestroySets) {
+            if (newObject.events && newObject.events.onDestroySets) {
                 newObject.events.onDestroySets = newObject.events.onDestroySets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
             }
-            if (newObject.events.onCollideSets) {
+            if (newObject.events && newObject.events.onCollideSets) {
                 newObject.events.onCollideSets.forEach(function(collideArray){
                     collideArray.caSets = collideArray.caSets.map(function(caSet){ return GameCreator.restoreCaSet(caSet); });
                 });
