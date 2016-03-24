@@ -75,12 +75,6 @@
             }
         },
 
-        loadAllAudio: function() {
-            for (var i = 0; i < GameCreator.gameAudio.length; i += 1) {
-                GameCreator.audioHandler.loadAudio(GameCreator.gameAudio[i].id, GameCreator.gameAudio[i].url);
-            }
-        },
-
         initializeBorderObjects: function() {
             GameCreator.borderObjects.borderL.attributes.height = GameCreator.props.height + 1000;
             GameCreator.borderObjects.borderR.attributes.x = GameCreator.props.width;
@@ -299,7 +293,8 @@
             $(GameCreator.mainCanvas).off(".runningScene");
             $(GameCreator.mainCanvas).css("cursor", "default");
             GameCreator.resetKeys();
-            GameCreator.audioHandler.stopMusic();
+            GameCreator.vpOffsetY = 0;
+            GameCreator.vpOffsetX = 0;            
         },
 
         removeKeyListeners: function() {
@@ -539,6 +534,7 @@
         },
 
         playGame: function() {
+            GameCreator.audioHandler.stopMusic();
             GameCreator.playScene(GameCreator.scenes[0]);
         },
 

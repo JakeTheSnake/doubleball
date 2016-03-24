@@ -49,6 +49,7 @@
         },
 
         directActiveScene: function() {
+            GameCreator.audioHandler.stopMusic();
             GameCreator.directScene(GameCreator.getActiveScene());
         },
 
@@ -155,6 +156,7 @@
         },
 
         editActiveScene: function() {
+            GameCreator.audioHandler.stopMusic();
             GameCreator.editScene(GameCreator.getActiveScene());
         },
 

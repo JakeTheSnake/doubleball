@@ -50,7 +50,7 @@ $(document).ready(function() {
     GameCreator.initialize();
 
     if (window.gon && gon.game != null) {
-        GameCreator.restoreState(gon.game);
+        GameCreator.restoreState(gon.game, onAssetLoad);
     }
     
 });
@@ -60,6 +60,10 @@ var createSplash = function() {
     splash.style.width = GameCreator.props.viewportWidth + "px";
     splash.style.height = GameCreator.props.viewportHeight + "px";
     document.getElementById('game-title').innerHTML = gon.gameName;
+}
+
+var onAssetLoad = function() {
+    document.getElementById('play-button').innerHTML = '<b>Play</b>';
     document.getElementById('play-button').onclick = function() {
         $('#splash').hide();
         $('#splash-overlay').hide();

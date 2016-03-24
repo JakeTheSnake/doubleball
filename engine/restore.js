@@ -1,5 +1,5 @@
 $.extend(GameCreator, {
-    restoreState: function(savedGame) {
+    restoreState: function(savedGame, onLoadCallback) {
         var i, n, name, oldObject, newObject, newScene, savedScene;
         GameCreator.version.convert(savedGame);
         GameCreator.scenes = [];
@@ -73,7 +73,7 @@ $.extend(GameCreator, {
         GameCreator.uniqueSceneId = savedGame.uniqueSceneId;
         GameCreator.activeSceneId = GameCreator.scenes[0].id;
 
-        GameCreator.loadAllAudio();
+        GameCreator.audioHandler.loadAudio(GameCreator.gameAudio, onLoadCallback);
     },
 
     restoreGlobalCounters: function(savedGlobalCounters) {

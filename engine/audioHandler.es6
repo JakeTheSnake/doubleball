@@ -14,22 +14,38 @@
             })
             if (!existingItem) {
                 GameCreator.gameAudio.push(newItem);
-                this.loadAudio(newItem.id, newItem.url);
+                this.loadAudio([newItem]);
             }
         },
 
-        loadAudio: function(audioId, url) {
-            var request = new XMLHttpRequest();
-            request.open('GET', url, true);
-            request.responseType = 'arraybuffer';
-
-            // Decode asynchronously
-            request.onload = function() {
-                context.decodeAudioData(request.response, function(buffer) {
-                    audio[audioId] = buffer;
-                });
+        loadAudio: function(audioList, onLoadCallback) {
+            if (audioList.length === 0 && onLoadCallback) {
+                onLoadCallback();
             }
-            request.send();
+            
+            var noOfLoadedAudio = 0;
+            var loader = () => {
+                noOfLoadedAudio += 1;
+                if (noOfLoadedAudio >= audioList.length && onLoadCallback) {
+                    onLoadCallback();
+                }
+            };
+
+            audioList.forEach(audioItem => {
+                var request = new XMLHttpRequest();
+                request.open('GET', audioItem.url, true);
+                request.responseType = 'arraybuffer';
+
+                // Decode asynchronously
+                request.onload = function() {
+                    context.decodeAudioData(request.response, function(buffer) {
+                        audio[audioItem.id] = buffer;
+                        loader();
+                    });
+                }
+                request.send();    
+            })
+            
         },
 
         playSound: function(audioId, playbackRate, volume) {
