@@ -3,6 +3,7 @@ var AudioPicker = React.createClass({
         {title: 'Library', id: 'library'},
         {title: 'My Audio', id: 'collection'},
         {title: 'Upload', id: 'upload'},
+        {title: 'Record', id: 'record'},
     ],
     getInitialState: function() {
         return {activeView: 'library'};
@@ -25,6 +26,9 @@ var AudioPicker = React.createClass({
         } 
         else if (this.state.activeView === 'upload') {
             activeContent = <AudioPickerUpload setResult={this.setResult}/>
+        }
+        else if (this.state.activeView === 'record') {
+            activeContent = <AudioPickerRecord setResult={this.setResult}/>
         }
         return (
             <div style={{'display': 'block'}}>

@@ -4,6 +4,7 @@
     var audio = {};
     var musicGainNode = context.createGain();
     var anonymousSource;
+    var audioRecorder;
 
     GameCreator.audioHandler = {
         currentMusic: null,
@@ -123,6 +124,46 @@
             } catch (e) {
                 // Music was never started
             }
-        }
+        },
+
+        setupRecording: function(stream) {
+            var getUserMedia;
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                getUserMedia = navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
+            } else {
+                getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia).bind(navigator);
+            }
+            getUserMedia({
+                "audio": true
+            }, (stream) => {
+                var volume = context.createGain();
+
+                // Create an AudioNode from the stream.
+                var input = context.createMediaStreamSource(stream);
+                input.connect(volume);
+
+                //audioInput = convertToMono( input );
+
+                audioRecorder = new Recorder(input);
+            }, (e) => {
+                console.log(e);
+            });
+        },
+
+        startRecording: function() {
+            audioRecorder.clear();
+            audioRecorder.record();
+        },
+
+        stopRecording: function(getAudioFileCallback) {
+            onAudioFileComplete = getAudioFileCallback;
+            audioRecorder.stop();
+            audioRecorder.getBuffers((buffers) => {
+                audioRecorder.exportWAV((blob) => {
+                    console.log("Holy shit it worked");
+                    Recorder.setupDownload(blob, "myRecording" + ((recIndex<10)?"0":"") + recIndex + ".wav" );
+                });
+            });
+        },
     }
 }());
