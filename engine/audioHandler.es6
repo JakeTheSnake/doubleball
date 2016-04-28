@@ -1,5 +1,5 @@
 (function() {
-    var contextFunc = AudioContext || webkitAudioContext;
+    var contextFunc = window.AudioContext || window.webkitAudioContext;
     var context = new contextFunc();
     var musicSource;
     var audio = {};
