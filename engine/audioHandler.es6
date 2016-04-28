@@ -1,5 +1,6 @@
 (function() {
-    var context = new AudioContext();
+    var contextFunc = AudioContext || webkitAudioContext;
+    var context = new contextFunc();
     var musicSource;
     var audio = {};
     var musicGainNode = context.createGain();
