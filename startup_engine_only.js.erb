@@ -80,8 +80,8 @@ var createSplashOverlay = function() {
 
 var resize = function() {
     var height = window.innerHeight;
-    GameCreator.canvasSizeFactor = height/GameCreator.props.height;
-    var width = GameCreator.props.width * GameCreator.canvasSizeFactor;
+    GameCreator.canvasSizeFactor = height/GameCreator.props.viewportHeight;
+    var width = GameCreator.props.viewportWidth * GameCreator.canvasSizeFactor;
 
     GameCreator.bgCanvas.style.width = width + 'px';
     GameCreator.bgCanvas.style.height = height + 'px';
