@@ -309,7 +309,7 @@ GameCreator.commonObjectControllers = {
         );
         $(container).find(".defaultMenuElement").on("click", function() {
             var keyName = $(this).data("name");
-            var keyCaSets = globalObj.onKeySets[keyName]
+            var keyCaSets = globalObj.events.onKeySets[keyName]
 
             $(this).parent().find('.defaultMenuElement').removeClass('active');
             $(this).addClass('active');
@@ -322,14 +322,14 @@ GameCreator.commonObjectControllers = {
         $("#add-new-key-button").on("click", function(){
             //$("#dialogue-panel-add-list").html(globalObj.getKeySelector());
             var callback = function(itemName) {
-                globalObj.onKeySets[itemName].push(new GameCreator.ConditionActionSet());
+                globalObj.events.onKeySets[itemName].push(new GameCreator.ConditionActionSet());
                 globalObj.setupKeyEventsForm(container);
             };
             $(document).trigger("GC.showItemSelector", [GameCreator.helpers.getSelectableKeys(globalObj), callback]);
         });
         $("#dialogue-panel-keys .remove-item-button").on('click', function(evt) {
             var keyName = $(this).parent().data('name');
-            globalObj.onKeySets[keyName] = [];
+            globalObj.events.onKeySets[keyName] = [];
             if($(this).parent().hasClass('active')) {
                 $('#dialogue-panel-actions').trigger('clearColumn');
                 $("#dialogue-panel-conditions").trigger('clearColumn');

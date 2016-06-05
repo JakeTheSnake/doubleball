@@ -776,7 +776,7 @@
     GameCreator.helpers.getSelectableKeys = function(globalObj) {
         var selectableKeys = Object.keys(GameCreator.keys.keyPressed);
         selectableKeys = selectableKeys.filter(function(key) {
-            return globalObj.onKeySets[key].length === 0;
+            return globalObj.events.onKeySets[key].length === 0;
         });
         return selectableKeys;
     };
