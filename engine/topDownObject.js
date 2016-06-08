@@ -51,6 +51,14 @@
     };
 
     GameCreator.TopDownObject.prototype.calculateSpeed = function() {
+        if (window.isMobile()) {
+            this.parent.calculateTouchSpeed.call(this);
+        } else {
+            this.parent.calculateKeyboardSpeed.call(this);
+        }
+    };
+
+    GameCreator.TopDownObject.prototype.calculateKeyboardSpeed = function() {
         var maxSpeed = this.attributes.maxSpeed;
         var angularMaxSpeed = GameCreator.helpers.calcAngularSpeed(maxSpeed);
         //Should only be able to affect movement if there is something beneath object.
@@ -86,6 +94,22 @@
             this.facing = 8;
             if (this.objectsLeft.length === 0) this.attributes.speedX = -angularMaxSpeed;
             if (this.objectsAbove.length === 0) this.attributes.speedY = -angularMaxSpeed;
+        } else {
+            Math.abs(this.attributes.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.6;
+            Math.abs(this.attributes.speedY) < 0.1 ? this.attributes.speedY = 0 : this.attributes.speedY *= 0.6;
+        }  
+    };
+
+    GameCreator.TopDownObject.prototype.calculateTouchSpeed = function() {
+        if (GameCreator.touch.isActive) {
+            var x = this.attributes.x + this.attributes.width / 2;
+            var y = this.attributes.y + this.attributes.height / 2;
+            var vectorX = GameCreator.touch.x / GameCreator.canvasSizeFactor - x;
+            var vectorY = GameCreator.touch.y / GameCreator.canvasSizeFactor - y;
+            var distance = Math.sqrt(Math.pow(vectorX, 2) + Math.pow(vectorY, 2));
+
+            this.attributes.speedX = vectorX * this.attributes.maxSpeed / distance;
+            this.attributes.speedY = vectorY * this.attributes.maxSpeed / distance;
         } else {
             Math.abs(this.attributes.speedX) < 0.1 ? this.attributes.speedX = 0 : this.attributes.speedX *= 0.6;
             Math.abs(this.attributes.speedY) < 0.1 ? this.attributes.speedY = 0 : this.attributes.speedY *= 0.6;

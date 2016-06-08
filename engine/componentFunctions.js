@@ -59,7 +59,7 @@
                     isKeyPressed = GameCreator.keys.keyPressed[key];
                     keySets = globalObj.events.onKeySets[key];
 
-                    if (isKeyPressed && !this.keyCooldown[key]) {
+                    if (keySets && isKeyPressed && !this.keyCooldown[key]) {
                         if (GameCreator.state === 'directing' && keySets.length === 0) {
                             keySets.push(new GameCreator.ConditionActionSet());
                             actions = GameCreator.helpers.getNonCollisionActions(globalObj.objectType);

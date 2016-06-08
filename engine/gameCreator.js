@@ -1,6 +1,10 @@
 /*global GameCreator, $, Image, window, requestAnimationFrame, document*/
 (function() {
     "use strict";
+    window.isMobile = function() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    };
+
     window.GameCreator = {
         paused: false,
         state: 'editing', //State can be editing, directing or playing. 
@@ -32,6 +36,10 @@
         bufferedActions: [],
 
         props: {},
+        touch: {
+            isActive: false,
+            x: 0, y: 0
+        },
 
         addObjFunctions: {},
         commonObjectFunctions: {},
@@ -553,78 +561,52 @@
 
         initializeKeyListeners: function() {
             GameCreator.resetKeys();
-            window.onkeydown = function(e) {
-                var key = e.keyCode || e.which;
-                switch (e.which) {
+            var updateKeyPressedStatus = function(keycode, status) {
+                switch (keycode) {
                     case 16:
-                        GameCreator.keys.keyPressed.shift = true;
+                        GameCreator.keys.keyPressed.shift = status;
                         break;
                     case 17:
-                        GameCreator.keys.keyPressed.ctrl = true;
+                        GameCreator.keys.keyPressed.ctrl = status;
                         break;
                     case 18:
-                        GameCreator.keys.keyPressed.alt = true;
+                        GameCreator.keys.keyPressed.alt = status;
                         break;
                     case 32:
-                        GameCreator.keys.keyPressed.space = true;
+                        GameCreator.keys.keyPressed.space = status;
                         break;
                     case 65:
                     case 37:
-                        GameCreator.keys.keyLeftPressed = true;
+                        GameCreator.keys.keyLeftPressed = status;
                         break;
                     case 87:
                     case 38:
-                        GameCreator.keys.keyUpPressed = true;
+                        GameCreator.keys.keyUpPressed = status;
                         break;
                     case 68:
                     case 39:
-                        GameCreator.keys.keyRightPressed = true;
+                        GameCreator.keys.keyRightPressed = status;
                         break;
                     case 83:
                     case 40:
-                        GameCreator.keys.keyDownPressed = true;
+                        GameCreator.keys.keyDownPressed = status;
                         break;
                     default:
                         return;
                 }
+            }
+
+
+            window.onkeydown = function(e) {
+                var key = e.keyCode || e.which;
+                updateKeyPressedStatus(key, true);
                 if (!GameCreator.paused) {
                     e.preventDefault();    
                 }
             };
             window.onkeyup = function(e) {
                 var key = e.keyCode || e.which;
-                switch (e.which) {
-                    case 16:
-                        GameCreator.keys.keyPressed.shift = false;
-                        break;
-                    case 17:
-                        GameCreator.keys.keyPressed.ctrl = false;
-                        break;
-                    case 18:
-                        GameCreator.keys.keyPressed.alt = false;
-                        break;
-                    case 32:
-                        GameCreator.keys.keyPressed.space = false;
-                        break;
-                    case 65:
-                    case 37:
-                        GameCreator.keys.keyLeftPressed = false;
-                        break;
-                    case 87:
-                    case 38:
-                        GameCreator.keys.keyUpPressed = false;
-                        break;
-                    case 68:
-                    case 39:
-                        GameCreator.keys.keyRightPressed = false;
-                        break;
-                    case 83:
-                    case 40:
-                        GameCreator.keys.keyDownPressed = false;
-                        break;
-                    default:
-                        return;
-                }
+                updateKeyPressedStatus(key, false);
                 if (!GameCreator.paused) {
                     e.preventDefault();    
                 }
@@ -660,8 +642,19 @@
                     e.preventDefault();    
                 }
             };
-            window.ontouchstart = window.onmousedown;
-            window.ontouchend = window.onmouseup;
+            var updateTouch = function(e) { 
+                window.onmousedown(e);
+                GameCreator.touch.x = e.touches[0].clientX;
+                GameCreator.touch.y = e.touches[0].clientY;
+                GameCreator.touch.isActive = true;
+            };
+            
+            GameCreator.mainCanvas.addEventListener("touchstart", updateTouch, false);
+            GameCreator.mainCanvas.addEventListener("touchmove", updateTouch, false);
+            GameCreator.mainCanvas.addEventListener("touchend", function(e) {
+                window.onmouseup(e);
+                GameCreator.touch.isActive = false;
+            }, false);
         },
 
     };
