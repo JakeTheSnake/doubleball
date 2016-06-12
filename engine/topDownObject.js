@@ -102,8 +102,8 @@
 
     GameCreator.TopDownObject.prototype.calculateTouchSpeed = function() {
         if (GameCreator.touch.isActive) {
-            var x = this.attributes.x + this.attributes.width / 2;
-            var y = this.attributes.y + this.attributes.height / 2;
+            var x = this.attributes.x - GameCreator.vpOffsetX + this.attributes.width / 2;
+            var y = this.attributes.y - GameCreator.vpOffsetY + this.attributes.height / 2;
             var vectorX = GameCreator.touch.x / GameCreator.canvasSizeFactor - x;
             var vectorY = GameCreator.touch.y / GameCreator.canvasSizeFactor - y;
             var distance = Math.sqrt(Math.pow(vectorX, 2) + Math.pow(vectorY, 2));
