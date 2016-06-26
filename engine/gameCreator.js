@@ -52,7 +52,9 @@
                 space: false,
                 leftMouse: false,
                 rightMouse: false
-            }
+            },
+            latestMouseX: 0,
+            latestMouseY: 0
         },
 
         selectedObject: undefined, //The currently selected scene object.
@@ -313,17 +315,13 @@
             window.ontouchstart = null;
             window.ontouchmove = null;
             window.ontouchend = null;
+            window.onmousemove = null;
         },
 
         pauseGame: function() {
             var objectName, obj, keyName;
             GameCreator.paused = true;
             GameCreator.removeKeyListeners();
-            $(document).off("keydown.gameKeyListener");
-            $(document).off("keyup.gameKeyListener");
-            $(document).off("mousemove.gameKeyListener");
-            $(document).off("mousedown.gameKeyListener");
-            $(document).off("mouseup.gameKeyListener");
             $(GameCreator.mainCanvas).css("cursor", "default");
             //Set all keypresses to false here since we turn off keyUp.
             GameCreator.resetKeys();
@@ -566,6 +564,7 @@
             window.onkeyup = GameCreator.listeners.keyUp;
             window.onmousedown = GameCreator.listeners.mouseDown;
             window.onmouseup = GameCreator.listeners.mouseUp;
+            window.onmousemove = GameCreator.listeners.mouseMove;
             window.ontouchstart = GameCreator.listeners.updateTouch;
             window.ontouchmove = GameCreator.listeners.updateTouch;
             window.ontouchend = GameCreator.listeners.touchEnd;

@@ -55,8 +55,8 @@
         var offset = $(GameCreator.mainCanvas).offset();
 
         // Recalculate x and y when the canvas has been resized (on mobile devices)
-        this.attributes.x = (this.parent.latestMouseX / GameCreator.canvasSizeFactor) - offset.left;
-        this.attributes.y = (this.parent.latestMouseY / GameCreator.canvasSizeFactor) - offset.top;
+        this.attributes.x = (GameCreator.keys.latestMouseX / GameCreator.canvasSizeFactor) - offset.left;
+        this.attributes.y = (GameCreator.keys.latestMouseY / GameCreator.canvasSizeFactor) - offset.top;
 
         if (this.attributes.x + this.attributes.width > this.attributes.maxX) {
             //This check is needed to prevent "flip-flopping" when the mousemove area is smaller than the object.
@@ -83,11 +83,6 @@
     };
 
     GameCreator.MouseObject.prototype.onGameStarted = function() {
-        var me = this;
-        $(document).on("mousemove.gameKeyListener", function(evt) {
-            me.latestMouseX = evt.pageX;
-            me.latestMouseY = evt.pageY;
-        });
     };
 
     GameCreator.MouseObject.prototype.objectEnteredGame = function() {
@@ -122,7 +117,6 @@
     GameCreator.MouseObject.prototype.stop = function() {};
 
     GameCreator.MouseObject.prototype.onDestroy = function() {
-        $(GameCreator.mainCanvas).off("mousemove." + this.objectName);
         this.runOnDestroyActions();
     };
 }());

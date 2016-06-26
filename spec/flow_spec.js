@@ -3,6 +3,8 @@ describe("Game Flow", function() {
         expect(window.onkeyup).toBeTruthy();
         expect(window.onkeydown).toBeTruthy();
         expect(window.ontouchstart).toBeTruthy();
+        expect(window.ontouchmove).toBeTruthy();
+        expect(window.onmousemove).toBeTruthy();
         expect(window.ontouchend).toBeTruthy();
         expect(window.onmouseup).toBeTruthy();
         expect(window.onmousedown).toBeTruthy();
@@ -12,6 +14,8 @@ describe("Game Flow", function() {
         expect(window.onkeyup).toBeFalsy();
         expect(window.onkeydown).toBeFalsy();
         expect(window.ontouchstart).toBeFalsy();
+        expect(window.ontouchmove).toBeFalsy();
+        expect(window.onmousemove).toBeFalsy();
         expect(window.ontouchend).toBeFalsy();
         expect(window.onmouseup).toBeFalsy();
         expect(window.onmousedown).toBeFalsy();

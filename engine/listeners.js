@@ -59,6 +59,11 @@ GameCreator.listeners = {
         }
     },
 
+    mouseMove: function(e) {
+        GameCreator.keys.latestMouseX = e.pageX;
+        GameCreator.keys.latestMouseY = e.pageY;
+    },
+
     updateKeyPressedStatus: function(keycode, status) {
         switch (keycode) {
             case 16:
