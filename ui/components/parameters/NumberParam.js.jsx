@@ -10,7 +10,7 @@ var NumberParam = React.createClass({
         if (this.state.selected) {
             html = <input type="text" className="numberField" data-type="number" defaultValue={this.state.value} onBlur={this.saveValue}/>;
         } else {
-            html = <span>{"" + this.state.value + "" + this.props.unit}</span>;
+            html = <span>{"" + this.state.value + "" + unit}</span>;
         }
         return  (<tbody>
                     <tr>
