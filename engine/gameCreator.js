@@ -308,10 +308,11 @@
         removeKeyListeners: function() {
             window.onkeydown = null;
             window.onkeyup = null;
-            window.ontouchstart = null;
-            window.ontouchend = null;
             window.onmousedown = null;
             window.onmouseup = null;
+            window.ontouchstart = null;
+            window.ontouchmove = null;
+            window.ontouchend = null;
         },
 
         pauseGame: function() {
@@ -561,100 +562,13 @@
 
         initializeKeyListeners: function() {
             GameCreator.resetKeys();
-            var updateKeyPressedStatus = function(keycode, status) {
-                switch (keycode) {
-                    case 16:
-                        GameCreator.keys.keyPressed.shift = status;
-                        break;
-                    case 17:
-                        GameCreator.keys.keyPressed.ctrl = status;
-                        break;
-                    case 18:
-                        GameCreator.keys.keyPressed.alt = status;
-                        break;
-                    case 32:
-                        GameCreator.keys.keyPressed.space = status;
-                        break;
-                    case 65:
-                    case 37:
-                        GameCreator.keys.keyLeftPressed = status;
-                        break;
-                    case 87:
-                    case 38:
-                        GameCreator.keys.keyUpPressed = status;
-                        break;
-                    case 68:
-                    case 39:
-                        GameCreator.keys.keyRightPressed = status;
-                        break;
-                    case 83:
-                    case 40:
-                        GameCreator.keys.keyDownPressed = status;
-                        break;
-                    default:
-                        return;
-                }
-            }
-
-
-            window.onkeydown = function(e) {
-                var key = e.keyCode || e.which;
-                updateKeyPressedStatus(key, true);
-                if (!GameCreator.paused) {
-                    e.preventDefault();    
-                }
-            };
-            window.onkeyup = function(e) {
-                var key = e.keyCode || e.which;
-                updateKeyPressedStatus(key, false);
-                if (!GameCreator.paused) {
-                    e.preventDefault();    
-                }
-            };
-            
-            window.onmousedown = function(e) {
-                switch (e.which) {
-                    case 1:
-                        GameCreator.keys.keyPressed.leftMouse = true;
-                        break;
-                    case 3:
-                        GameCreator.keys.keyPressed.rightMouse = true;
-                        break;
-                    default:
-                        return;
-                }
-                if (!GameCreator.paused) {
-                    e.preventDefault();    
-                }
-            };
-            window.onmouseup = function(e) {
-                switch (e.which) {
-                    case 1:
-                        GameCreator.keys.pendingRelease.leftMouse = true;
-                        break;
-                    case 3:
-                        GameCreator.keys.pendingRelease.rightMouse = true;
-                        break;
-                    default:
-                        return;
-                }
-                if (!GameCreator.paused) {
-                    e.preventDefault();    
-                }
-            };
-            var updateTouch = function(e) { 
-                window.onmousedown(e);
-                GameCreator.touch.x = e.touches[0].clientX;
-                GameCreator.touch.y = e.touches[0].clientY;
-                GameCreator.touch.isActive = true;
-            };
-            
-            GameCreator.mainCanvas.addEventListener("touchstart", updateTouch, false);
-            GameCreator.mainCanvas.addEventListener("touchmove", updateTouch, false);
-            GameCreator.mainCanvas.addEventListener("touchend", function(e) {
-                window.onmouseup(e);
-                GameCreator.touch.isActive = false;
-            }, false);
+            window.onkeydown = GameCreator.listeners.keyDown;
+            window.onkeyup = GameCreator.listeners.keyUp;
+            window.onmousedown = GameCreator.listeners.mouseDown;
+            window.onmouseup = GameCreator.listeners.mouseUp;
+            window.ontouchstart = GameCreator.listeners.updateTouch;
+            window.ontouchmove = GameCreator.listeners.updateTouch;
+            window.ontouchend = GameCreator.listeners.touchEnd;
         },
 
     };
