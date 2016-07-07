@@ -64,6 +64,14 @@ GameCreator.listeners = {
         GameCreator.keys.latestMouseY = e.pageY;
     },
 
+    visibilityChange: function(e) {
+        GameCreator.windowActive = !document.hidden;
+        if (GameCreator.windowActive) {
+            GameCreator.then = Date.now();
+            GameCreator.gameLoop();
+        }
+    },
+
     updateKeyPressedStatus: function(keycode, status) {
         switch (keycode) {
             case 16:

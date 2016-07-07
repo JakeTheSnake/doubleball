@@ -7,6 +7,7 @@
 
     window.GameCreator = {
         paused: false,
+        windowActive: true, //Whether the browser window is active or not
         state: 'editing', //State can be editing, directing or playing. 
         then: undefined, // The time before last frame
 
@@ -83,7 +84,9 @@
                 borderObj.states = [];
                 GameCreator.commonObjectFunctions.createState.call(borderObj, 'default', {});
             }
-        },
+
+            document.addEventListener("visibilitychange", GameCreator.listeners.visibilityChange);
+    },
 
         initializeBorderObjects: function() {
             GameCreator.borderObjects.borderL.attributes.height = GameCreator.props.height + 1000;
@@ -98,13 +101,14 @@
             var now = Date.now();
             var delta = now - GameCreator.then;
 
-            if (!GameCreator.paused) {
+            if (!GameCreator.paused && GameCreator.windowActive) {
                 GameCreator.runFrame(delta);
+                GameCreator.render(false);
+                if (GameCreator.state !== 'editing') {
+                    requestAnimationFrame(GameCreator.gameLoop);
+                }
             }
-            GameCreator.render(false);
-            if (GameCreator.state !== 'editing') {
-                requestAnimationFrame(GameCreator.gameLoop);
-            }
+            
             GameCreator.then = now;
         },
 
@@ -345,7 +349,10 @@
             GameCreator.renderableObjects.forEach(function(runtimeObject) {
                 runtimeObject.parent.objectEnteredGame();
             });
+            GameCreator.then = Date.now();
+            GameCreator.gameLoop();
         },
+        
         createRuntimeObject: function(globalObj, args) {
             var runtimeObj = new GameCreator.SceneObject();
             if (globalObj.hasOwnProperty("objectToCreate")) {
