@@ -1,73 +1,6 @@
 (function() {
 $(document).ready(function() {
-    var GCWidth = 1000;
-    var GCHeight = 650;
-    try {
-        GameCreator.height = window.gon.game.height || GCHeight;
-        GameCreator.width = window.gon.game.width || GCWidth;
-    } catch (e) {
-        GameCreator.height = GCHeight;
-        GameCreator.width = GCWidth;
-    }
-
-    createSplash();
-    createSplashOverlay();
-
-    GameCreator.bgCanvas = document.createElement("canvas");
-    GameCreator.bgCanvas.id = "bg-canvas"
-    GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
-    GameCreator.bgCanvas.width = GameCreator.width;
-    GameCreator.bgCanvas.height = GameCreator.height;
-    $("#canvas-container").append(GameCreator.bgCanvas);
-
-    GameCreator.mainCanvas = document.createElement("canvas");
-    GameCreator.mainCanvas.id = "main-canvas"
-    GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
-    GameCreator.mainCanvas.width = GameCreator.width;
-    GameCreator.mainCanvas.height = GameCreator.height;
-    $("#canvas-container").append(GameCreator.mainCanvas);
-
-    if (isMobile()) {
-        $('.border-right').remove();
-        $('section').css('padding', '0px');
-        $('#splash > *').css('top', '10px');
-        $('#splash > a').css('font-size', '80pt');
-        window.addEventListener('load', resize, false);
-        window.addEventListener('resize', resize, false);
-    }
-
-   
-    GameCreator.state = 'playing';
-    GameCreator.engineOnly = true;
-
-    GameCreator.initialize();
-
-    if (window.gon && gon.game != null) {
-        GameCreator.restoreState(gon.game);
-    }
-    
-    var getQueryParam = function(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    };
-
-    if (gon && gon.gameId === 88) {
-        var checkScore = function() {
-            if (GameCreator.activeSceneId === 4) {
-                var token = getQueryParam('t');
-                var score = GameCreator.globalObjects.actualPlayer.counters.PointCounter.value;
-                post('http://squeedgame.meteor.com/commitscore/', {token: token, score: score});
-            } else {
-                setTimeout(checkScore, 1000);
-            }
-        };
-        setTimeout(checkScore, 5000);
-    }
-});
-
-function post(path, params, method) {
+    var post = function(path, params, method) {
     method = method || "post";
     var form = document.createElement("form");
     form.setAttribute("method", method);
@@ -87,12 +20,16 @@ function post(path, params, method) {
     document.body.appendChild(form);
     form.submit();
 }
-    
+
 var createSplash = function() {
     var splash = document.getElementById('splash');
-    splash.style.width = GameCreator.width + "px";
-    splash.style.height = GameCreator.height + "px";
+    splash.style.width = GameCreator.props.viewportWidth + "px";
+    splash.style.height = GameCreator.props.viewportHeight + "px";
     document.getElementById('game-title').innerHTML = gon.gameName;
+}
+
+var onAssetLoad = function() {
+    document.getElementById('play-button').innerHTML = '<b>Play</b>';
     document.getElementById('play-button').onclick = function() {
         $('#splash').hide();
         $('#splash-overlay').hide();
@@ -103,14 +40,14 @@ var createSplash = function() {
 var createSplashOverlay = function() {
     var splash = document.getElementById('splash');
     var overlay = document.getElementById('splash-overlay');
-    overlay.style.width = GameCreator.width + "px";
-    overlay.style.height = GameCreator.height + "px";
+    overlay.style.width = GameCreator.props.viewportWidth + "px";
+    overlay.style.height = GameCreator.props.viewportHeight + "px";
 }
 
 var resize = function() {
     var height = window.innerHeight;
-    GameCreator.canvasSizeFactor = height/GameCreator.height;
-    var width = GameCreator.width * GameCreator.canvasSizeFactor;
+    GameCreator.canvasSizeFactor = height/GameCreator.props.viewportHeight;
+    var width = GameCreator.props.viewportWidth * GameCreator.canvasSizeFactor;
 
     GameCreator.bgCanvas.style.width = width + 'px';
     GameCreator.bgCanvas.style.height = height + 'px';
@@ -131,10 +68,81 @@ var resize = function() {
     splash.left = 0;
     overlay.left = 0;
 }
+    var GCWidth = 1000;
+    var GCHeight = 650;
+    var GCviewportWidth = 1000;
+    var GCviewportHeight = 650;
+    
+    if (window.gon && window.gon.game && window.gon.game.props) {
+        GameCreator.props.height = window.gon.game.props.height || GCHeight;
+        GameCreator.props.width = window.gon.game.props.width || GCWidth;
+        GameCreator.props.viewportHeight = window.gon.game.props.viewportHeight || GCviewportHeight;
+        GameCreator.props.viewportWidth = window.gon.game.props.viewportWidth || GCviewportWidth;
+    } else {
+        GameCreator.props.viewportHeight = GCviewportHeight;
+        GameCreator.props.viewportWidth = GCviewportWidth;
+        GameCreator.props.height = GCHeight;
+        GameCreator.props.width = GCWidth;
+    }
+
+    createSplash();
+    createSplashOverlay();
+
+    GameCreator.bgCanvas = document.createElement("canvas");
+    GameCreator.bgCanvas.id = "bg-canvas"
+    GameCreator.bgContext = GameCreator.bgCanvas.getContext("2d");
+    GameCreator.bgCanvas.width = GameCreator.props.viewportWidth;
+    GameCreator.bgCanvas.height = GameCreator.props.viewportHeight;
+    $("#canvas-container").append(GameCreator.bgCanvas);
+
+    GameCreator.mainCanvas = document.createElement("canvas");
+    GameCreator.mainCanvas.id = "main-canvas"
+    GameCreator.mainContext = GameCreator.mainCanvas.getContext("2d");
+    GameCreator.mainCanvas.width = GameCreator.props.viewportWidth;
+    GameCreator.mainCanvas.height = GameCreator.props.viewportHeight;
+    $("#canvas-container").append(GameCreator.mainCanvas);
+
+    if (window.isMobile()) {
+        $('.border-right').remove();
+        $('section').css('padding', '0px');
+        $('#splash > *').css('top', '10px');
+        $('#splash > a').css('font-size', '80pt');
+        window.addEventListener('load', resize, false);
+        window.addEventListener('resize', resize, false);
+    }
+
+   
+    GameCreator.state = 'playing';
+    GameCreator.engineOnly = true;
+
+    GameCreator.initialize();
+
+    var getQueryParam = function(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    };
+
+    if (gon && gon.gameId === 88) {
+        var checkScore = function() {
+            if (GameCreator.activeSceneId === 3) {
+                var token = getQueryParam('t');
+                var score = GameCreator.globalObjects.actualPlayer.counters.PointCounter.value;
+                post('http://squeedgame.herokuapp.com/commitscore/', {token: token, score: score});
+            } else {
+                setTimeout(checkScore, 1000);
+            }
+        };
+        setTimeout(checkScore, 5000);
+    }
+
+    if (window.gon && gon.game != null) {
+        GameCreator.restoreState(gon.game, onAssetLoad);
+    }
+});
 
 
-var isMobile = function() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
+
 
 })();
